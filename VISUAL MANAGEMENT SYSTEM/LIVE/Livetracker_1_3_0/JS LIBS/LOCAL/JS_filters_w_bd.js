@@ -127,7 +127,7 @@ $(document).ready(function(){
             rows.show();
             $('table.filterable tfoot tr').hide();
             selected_value = $(this).children("option:selected").val();
-
+console.log(selected_value);
             jobs.not("[product= " + $(this).children("option:selected").val() + "]").hide();
 
             $.each($('.row').not('#select_product'),function(){

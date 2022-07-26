@@ -239,7 +239,8 @@
                                             $results[$i]["Weeks Open"],
                                             $results[$i]["Planned Hrs"],
                                             $results[$i]["Est Prod Hrs"] < 0 ? 0 : $results[$i]["Est Prod Hrs"] ,
-                                            $results[$i]["Product Group"]
+                                            
+                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Product Group"]))
                                         );
         
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer))
