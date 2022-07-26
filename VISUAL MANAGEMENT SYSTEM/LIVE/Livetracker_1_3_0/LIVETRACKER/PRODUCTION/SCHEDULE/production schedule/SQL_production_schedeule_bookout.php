@@ -30,12 +30,15 @@ t0.[Comments_2],
 
 t0.[DueDate],
 CASE 
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
-    ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
+
+
+WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) < 0 THEN (0 -1)
+WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) > 14 AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),(0-1)) < (14 + 7) THEN (14 +1)
+WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14+7) AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),(0-1)) < (14 + 14) THEN (14 +2)
+WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14+14)  THEN (14 +3)
+ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1))
 END [Promise Diff Week],
+
 t0.[Process Order],
 t0.[Planned Hrs],
 t0.[Floor Date],

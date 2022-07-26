@@ -27,10 +27,12 @@
 
         <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
         <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
-        <?php include './SQL_production_schedule_new.php'; ?>
+        <?php //include './SQL_production_schedule_new.php'; ?>
+        <?php include './SQL_production_schedeule_bookout.php'; ?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
 
         <?php 
+        //print_r($results);
         $days = array(
             7 => 'Sun',
             1 => 'Mon',
@@ -97,8 +99,9 @@
                             <thead>
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
-                                    <th style = 'width:6%;'>Week -3</th>
-                                    <th style = 'width:6%;'>Week -2</th>
+                                    
+                                    <th style = 'width:6%;'>Week -1</th>
+                                    <th style = 'width:6%;'>Week -1</th>
                                     <th style = 'width:6%;'>Week -1</th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
                                         <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$i%7+1?></th>
@@ -109,7 +112,11 @@
                             <tbody class = "medium btext">
                                 <?php 
                                     $active_project = $str = $engineers_str = $base_color = $border_color = $overwrite =  "";                                        
-                                    $project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                    //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                    /* foreach ($project_button_buffer as $p)
+                                    {
+                                        echo ($p);
+                                    } */
                                     $project_engineers_buffer = array(null);                         
                                     $first = 1;
                                 ?>
@@ -122,12 +129,15 @@
                                         if($i == sizeof($results)){goto printrow;}
                                         if(($results[$i]["Project"] != $active_project && $first == 0) || $i == sizeof($results)){
                                             printrow:
+                                            
                                             $engineers_str = implode(" ",$project_engineers_buffer);
         
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
                                             echo "<tr class = 'row white smedium' productgp = '".$productgp."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
-                                                print_values_2($project_button_buffer,$start_range,$end_range);
+                                                print_values_22($project_button_buffer,$start_range,$end_range);
+                                                //echo ($start_range);
+                                                //echo ($end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
                                             echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
@@ -147,7 +157,9 @@
                                         if($results[$i]["Project"] != $active_project || $first == 1){
                                             $active_project = $results[$i]["Project"];
                                             $project_engineers_buffer = array();
-                                            $project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                            $project_button_buffer = $sum = array_fill(($start_range-1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                            //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                            //print_r($project_button_buffer);
                                             $engineers_str = "";
         
                                             $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"] == '000_NO PROJECT_000' ? '000_NO_PROJECT_000' : $results[$i]["Customer"]));
@@ -227,7 +239,7 @@
                                             str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
                                             $results[$i]["Sales Person"],
                                             str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
-                                            $results[$i]["Promise Date"],
+                                            $results[$i]["Promise Date UNP"],
                                             $results[$i]["Promise Week Due"],
                                             $results[$i]["Est Prod Hrs"],
                                             $results[$i]["Status"],
@@ -247,9 +259,10 @@
                                         {
                                             array_push($project_engineers_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])));
                                         }
-        
+                                        //echo($results[$i]["Promise Diff Week"]);
+                                        //echo("<br>");
                                         $project_button_buffer[$results[$i]["Promise Diff Week"]] = $project_button_buffer[$results[$i]["Promise Diff Week"]].$str;
-                                        $sum[$results[$i]["Promise Diff Week"]] = $sum[$results[$i]["Promise Diff Week"]] + $results[$i]["Est Prod Hrs"];                                                    
+                                        //$sum[$results[$i]["Promise Diff Week"]] = $sum[$results[$i]["Promise Diff Week"]] + $results[$i]["Est Prod Hrs"];                                                    
                                         
                                         $base_color = "";
                                         $border_color = "";

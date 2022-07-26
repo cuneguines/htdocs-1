@@ -52,6 +52,44 @@
         }
     }
 
+
+
+
+    function print_values_22(array $data, $start_range, $end_range){
+        $date = new DateTime();
+        $week = $date->format("W");
+        if($week == 53){
+            $week = 52;
+        }
+        // HOW MANY WEEKS AHEAD OF THE CURRENT DATE THE BACKGROUND COLORS SHOULD EXTEND ON SCHEDULE
+        $red = 4;       // 0 - 4
+        $orange = 8;    // 4 - 8
+        $green = 11;    // 8 - 11
+        $concept = 15;    // 15
+
+        for($j = $start_range-1 ; $j <= $end_range + 3; $j++){
+            // READS FROM PROJECT_BUTTON_BUFFER
+            $str_t = $data[$j];
+
+            // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
+            if($j >= 0 && $j <= $red){
+                
+                echo "<td class = 'small' style = 'background-color:#ff9595'>".$str_t."</td>";
+            }
+          elseif($j >= 0 && $j <= $orange){
+                echo "<td class = 'small' style = 'background-color:#ffc795'>".$str_t."</td>";
+            }
+            elseif($j >= 0 && $j <= $green){
+                echo "<td class = 'small' style = 'background-color:#97ff95'>".$str_t."</td>";
+            }
+            else if($j == $concept){
+                echo "<td class = 'small' style = 'border-right:2px solid #454545;'>".$str_t."</td>";
+            } 
+            else{
+                echo "<td  class = 'small'>".$str_t."</td>";
+            }
+        }
+    }
     // FOR SCEDHULE PAGES //
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //
     function generate_schedule_button($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs){
