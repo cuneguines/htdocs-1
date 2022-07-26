@@ -1,0 +1,1 @@
+[{"name":"Date","type":"date","format":"%d-%m-%y"},{"name":"BU","type":"string"},{"name":"Sales Value","type":"number"}]
