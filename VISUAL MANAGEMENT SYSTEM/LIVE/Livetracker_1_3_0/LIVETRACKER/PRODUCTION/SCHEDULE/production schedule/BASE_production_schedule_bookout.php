@@ -100,8 +100,8 @@
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
                                     
-                                    <th style = 'width:6%;'>Week -1</th>
-                                    <th style = 'width:6%;'>Week -1</th>
+                                    <th style = 'width:6%;'>Week -3</th>
+                                    <th style = 'width:6%;'>Week -2</th>
                                     <th style = 'width:6%;'>Week -1</th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
                                         <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$i%7+1?></th>
@@ -112,7 +112,7 @@
                             <tbody class = "medium btext">
                                 <?php 
                                     $active_project = $str = $engineers_str = $base_color = $border_color = $overwrite =  "";                                        
-                                    //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                    $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                     /* foreach ($project_button_buffer as $p)
                                     {
                                         echo ($p);
@@ -141,7 +141,7 @@
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
                                             echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
-                                                print_values_2($sum,$start_range,$end_range);
+                                                print_values_22($sum,$start_range,$end_range);
                                             echo "</tr>";
         
                                             // IF IF STATMENT WAS ENTERED BY SKIPPING INTO ON LAST ROW OF QUERY BREAK OUT OF LOOP
@@ -157,7 +157,7 @@
                                         if($results[$i]["Project"] != $active_project || $first == 1){
                                             $active_project = $results[$i]["Project"];
                                             $project_engineers_buffer = array();
-                                            $project_button_buffer = $sum = array_fill(($start_range-1), ($end_range + (-$start_range) + 2 + 3),NULL);
+                                            $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //print_r($project_button_buffer);
                                             $engineers_str = "";

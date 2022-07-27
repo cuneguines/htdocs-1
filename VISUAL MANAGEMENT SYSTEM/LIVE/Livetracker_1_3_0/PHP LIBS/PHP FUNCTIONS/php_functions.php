@@ -64,19 +64,19 @@
         // HOW MANY WEEKS AHEAD OF THE CURRENT DATE THE BACKGROUND COLORS SHOULD EXTEND ON SCHEDULE
         $red = 4;       // 0 - 4
         $orange = 8;    // 4 - 8
-        $green = 11;    // 8 - 11
+        $green = 13;    // 8 - 11
         $concept = 15;    // 15
 
-        for($j = $start_range-1 ; $j <= $end_range + 3; $j++){
+        for($j = $start_range-3 ; $j <= $end_range ; $j++){
             // READS FROM PROJECT_BUTTON_BUFFER
             $str_t = $data[$j];
 
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
-            if($j >= 0 && $j <= $red){
+            if($j >= 0 && $j <= $green){
                 
-                echo "<td class = 'small' style = 'background-color:#ff9595'>".$str_t."</td>";
+                echo "<td class = 'small' style = 'background-color:#97ff95'>".$str_t."</td>";
             }
-          elseif($j >= 0 && $j <= $orange){
+          /* elseif($j >= 0 && $j <= $orange){
                 echo "<td class = 'small' style = 'background-color:#ffc795'>".$str_t."</td>";
             }
             elseif($j >= 0 && $j <= $green){
@@ -84,11 +84,11 @@
             }
             else if($j == $concept){
                 echo "<td class = 'small' style = 'border-right:2px solid #454545;'>".$str_t."</td>";
-            } 
+            }  */
             else{
                 echo "<td  class = 'small'>".$str_t."</td>";
             }
-        }
+        } 
     }
     // FOR SCEDHULE PAGES //
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //

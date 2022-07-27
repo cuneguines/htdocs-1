@@ -1,4 +1,11 @@
 
+ <!-- WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-21)." THEN ".($start_range -3)."
+    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-14)." THEN ".($start_range -2)."
+    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-7)." THEN ".($start_range -1)."
+    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 7)." THEN ".($end_range +1)."
+    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+7)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 14)." THEN ".($end_range +2)."
+    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+14)." THEN ".($end_range +3)."
+    ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") -->
 <?php
 
 $tsql="select 
@@ -29,13 +36,12 @@ t0.[Comments],
 t0.[Comments_2],
 
 t0.[DueDate],
+
 CASE 
 
 
 WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) < 0 THEN (0 -1)
-WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) > 14 AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),(0-1)) < (14 + 7) THEN (14 +1)
-WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14+7) AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),(0-1)) < (14 + 14) THEN (14 +2)
-WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14+14)  THEN (14 +3)
+WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14)  THEN (13 +1)
 ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1))
 END [Promise Diff Week],
 
