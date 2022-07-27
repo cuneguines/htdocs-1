@@ -307,32 +307,43 @@
     array_push($branded_products_civil_engineers, "Sean Keating");
     array_push($branded_products_building_engineers, "Stephen Roche");
     array_push($engineering_contracts_engineers, "Ger Maguire");
-    array_push($r_and_d_engineers, "Declan Heffernan");
+    array_push($r_and_d_engineers, "Declan Heffernan"); 
+    array_push($branded_products_civil_engineers_capacity, 0);
+    array_push($branded_products_building_engineers_capacity, 0);
+    array_push($engineering_contracts_engineers_capacity, 0);
+    array_push($r_and_d_engineers_capacity, 0); 
     foreach($engineers_c as $row)
     {
         switch($row["Department"]){
             case 6:
                 array_push($branded_products_building_engineers, $row ["Engineer Name"]);
+                //print_r($branded_products_building_engineers);
                 array_push($branded_products_building_engineers_capacity, $row["Capacity"]);
+                //print_r($branded_products_building_engineers_capacity);
                 break;
             case 7:
                 array_push($branded_products_civil_engineers, $row ["Engineer Name"]);
+                
                 array_push($branded_products_civil_engineers_capacity, $row["Capacity"]);
+                
                 break;
             case 8:
                 array_push($engineering_contracts_engineers, $row["Engineer Name"]);
+                
                 array_push($engineering_contracts_engineers_capacity, $row["Capacity"]);
+
                 break;
-            case 9:
+            /* case 9:
                 array_push($engineering_contracts_engineers, $row["Engineer Name"]);
                 array_push($engineering_contracts_engineers_capacity, $row["Capacity"]);
-                break;
+                break; */
             case 10:
                 array_push($r_and_d_engineers, $row["Engineer Name"]);
                 array_push($r_and_d_engineers_capacity, $row["Capacity"]);
                 break;
         }
     }
+    
     foreach($results as $row)
     {
         if($row["Promise Week Due"] == 53)
@@ -537,6 +548,8 @@
     array_push($total_hours_dp, array('y' => $total[1], 'label' => 'Branded Products Building'));
     array_push($total_hours_dp, array('y' => $total[2], 'label' => 'Engineering Contracts & Solids Technology'));
     array_push($total_hours_dp, array('y' => $total[3], 'label' => 'R & D'));
+  
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -871,8 +884,59 @@
         </script>
     </head>
     <body>
+        
         <div id = "background">
-            <div id="engineer_names" style="height: 28vh; width: 8%; margin-left:1%; margin-top:1%; float:left; background-color:white;"><div style = "width:80%; display:inline-block; color:white;"><?php print_engineers($branded_products_civil_engineers); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($branded_products_civil_engineers_capacity); ?></div></div>
+        <?php
+        $k=sizeof($branded_products_civil_engineers );
+        $p=sizeof($branded_products_civil_engineers_capacity);
+        //echo($k);
+        //echo($p);
+        for ($i=1;$i<$k;$i++)
+        {
+            if(($branded_products_civil_engineers_capacity[$i])==null)
+            {
+                $branded_products_civil_engineers_capacity[$i]=0;
+            }
+                //echo ($branded_products_civil_engineers[$i].'-'.$branded_products_civil_engineers_capacity[$i]);
+            
+        }
+        $k=sizeof($branded_products_building_engineers );
+        echo($k);
+        for ($i=1;$i<$k;$i++)
+        {
+            if(empty($branded_products_building_engineers_capacity[$i]))
+            {
+                $branded_products_building_engineers_capacity[$i]=0;
+            }
+                //echo ($branded_products_building_engineers[$i].'-'.$branded_products_building_engineers_capacity[$i]);
+            
+        }
+        $k=sizeof($engineering_contracts_engineers );
+        echo($k);
+        for ($i=1;$i<$k;$i++)
+        {
+            if(empty($engineering_contracts_engineers_capacity[$i]))
+            {
+                $engineering_contracts_engineers_capacity[$i]=0;
+            }
+                //echo ($engineering_contracts_engineers[$i].'-'.$engineering_contracts_engineers_capacity[$i]);
+            
+        }
+        $k=sizeof($r_and_d_engineers);
+        echo($k);
+        for ($i=1;$i<$k;$i++)
+        {
+            if(empty($r_and_d_engineers_capacity[$i]))
+            {
+                $r_and_d_engineers_capacity[$i]=0;
+            }
+                //echo ($r_and_d_engineers[$i].'-'.$r_and_d_engineers_capacity[$i]);
+            
+        }
+    
+
+    ?>
+            <div id="engineer_names" style="height: 28vh; width: 8%; margin-left:1%; margin-top:1%; float:left; background-color:white;"><div style = "width:80%; display:inline-block; color:white;"><?php print_engineers($branded_products_civil_engineers ); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($branded_products_civil_engineers_capacity); ?></div></div>
             <div id="chartContainer" style="height: 28vh; width: 40%; margin-top:1%; float:left;"></div>
 
             <div id="engineer_names" style="height: 28vh; width: 8%; margin-right:1%; margin-top:1%; float:right; background-color:white;"><div style = "width:80%; display:inline-block;"><?php print_engineers($branded_products_building_engineers); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($branded_products_building_engineers_capacity); ?></div></div>
