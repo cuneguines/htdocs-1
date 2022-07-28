@@ -39,14 +39,14 @@
     {
         for($i = 1; $i < sizeof($input_array) ; $i++)
         {
-            echo "<p style = 'margin-top:0px; margin-top:2px; font-size:13px; padding:0; text-align:left; padding-left:5px; color:black;'>".$input_array[$i]."</p>";
+            echo "<p style = 'margin-top:0px; margin-top:2px; font-size:10px; padding:0; text-align:left; padding-left:5px; color:black;'>".$input_array[$i]."</p>";
         }
     }
     function print_engineers_capacity($input_array)
     {
         for($i = 1; $i < sizeof($input_array) ; $i++)
         {
-            echo "<p style = 'margin-top:0px; margin-top:2px; font-size:13px; padding:0; color:black;'>".$input_array[$i]."</p>";
+            echo "<p style = 'margin-top:0px; margin-top:2px; font-size:10px; padding:0; color:black;'>".$input_array[$i]."</p>";
         }
     }
     function buildplan_calculator($input_array, $week, $print)
@@ -901,7 +901,7 @@
             
         }
         $k=sizeof($branded_products_building_engineers );
-        echo($k);
+        //echo($k);
         for ($i=1;$i<$k;$i++)
         {
             if(empty($branded_products_building_engineers_capacity[$i]))
@@ -912,7 +912,7 @@
             
         }
         $k=sizeof($engineering_contracts_engineers );
-        echo($k);
+        //echo($k);
         for ($i=1;$i<$k;$i++)
         {
             if(empty($engineering_contracts_engineers_capacity[$i]))
@@ -923,7 +923,7 @@
             
         }
         $k=sizeof($r_and_d_engineers);
-        echo($k);
+        //echo($k);
         for ($i=1;$i<$k;$i++)
         {
             if(empty($r_and_d_engineers_capacity[$i]))
@@ -939,7 +939,7 @@
             <div id="engineer_names" style="height: 28vh; width: 8%; margin-left:1%; margin-top:1%; float:left; background-color:white;"><div style = "width:80%; display:inline-block; color:white;"><?php print_engineers($branded_products_civil_engineers ); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($branded_products_civil_engineers_capacity); ?></div></div>
             <div id="chartContainer" style="height: 28vh; width: 40%; margin-top:1%; float:left;"></div>
 
-            <div id="engineer_names" style="height: 28vh; width: 8%; margin-right:1%; margin-top:1%; float:right; background-color:white;"><div style = "width:80%; display:inline-block;"><?php print_engineers($branded_products_building_engineers); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($branded_products_building_engineers_capacity); ?></div></div>
+            <div id="engineer_names" style="height: 28vh; width: 9%; margin-right:1%; margin-top:1%; float:right; background-color:white;"><div style = "width:80%; display:inline-block;"><?php print_engineers($branded_products_building_engineers); ?></div><div style = "width:17%; display:inline-block;"><?php print_engineers_capacity($branded_products_building_engineers_capacity); ?></div></div>
             <div id="chartContainer1" style="height: 28vh; width: 40%; margin-top:1%; float:right;"></div><br>
 
             <div id="engineer_names" style="height: 28vh; width: 8%; margin-left:1%; margin-top:1%; float:left; background-color:white;"><div style = "width:80%; display:inline-block;"><?php print_engineers($engineering_contracts_engineers); ?></div><div style = "width:20%; display:inline-block;"><?php print_engineers_capacity($engineering_contracts_engineers_capacity); ?></div></div>
