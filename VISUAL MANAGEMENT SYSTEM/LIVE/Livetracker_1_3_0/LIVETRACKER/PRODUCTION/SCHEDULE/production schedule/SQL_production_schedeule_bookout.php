@@ -8,7 +8,14 @@
     ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") -->
 <?php
 
-$tsql="select 
+
+$tsql="DECLARE @now datetime = GETDATE();
+
+-- strip the time part from your date
+DECLARE @date datetime = CONVERT(date, @now);
+
+-- do the day of week math
+DECLARE @start datetime = DATEADD(d, 1 - DATEPART(w, @date)+1, @date); select 
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -40,9 +47,9 @@ t0.[DueDate],
 CASE 
 
 
-WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) < 0 THEN (0 -1)
-WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1)) >= (14)  THEN (13 +1)
-ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),(0-1))
+WHEN ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1)) < 0 THEN (0 -1)
+WHEN ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1)) >= (14)  THEN (13 +1)
+ELSE ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1))
 END [Promise Diff Week],
 
 t0.[Process Order],
