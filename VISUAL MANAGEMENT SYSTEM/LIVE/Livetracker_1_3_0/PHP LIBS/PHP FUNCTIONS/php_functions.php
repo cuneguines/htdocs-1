@@ -74,7 +74,7 @@
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
             if($j >= 0 && $j <= $green){
                 
-                echo "<td class = 'small' style = 'background-color:#97ff95'>".$str_t."</td>";
+                echo "<td class = 'small' style = 'border: 1px dotted white;background-color:#97ff95'>".$str_t."</td>";
             }
           /* elseif($j >= 0 && $j <= $orange){
                 echo "<td class = 'small' style = 'background-color:#ffc795'>".$str_t."</td>";

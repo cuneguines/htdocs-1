@@ -67,10 +67,10 @@
                         <p class = "smedium">Engineer</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Promise Date and Week Number</p>
+                        <p class = "smedium">Delivery Date and Week Number</p>
                         <h2 class = "inner fourteenth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Floor Date And Week On Floor</p>
+                        <p class = "smedium">New Title</p>
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
@@ -100,7 +100,7 @@
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
                                     
-                                    <th style = 'width:6%;'>Week -3</th> 
+                                    <th style = 'width:6%;'>Week <<</th> 
                                     <th style = 'width:6%;'>Week -2</th> 
                                     <th style = 'width:6%;'>Week -1</th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
@@ -232,14 +232,14 @@
                                             $overwrite,
                                             $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                             $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
-                                            $results[$i]["Floor Date"] == NULL ? "NO FLOOR DATE" : $results[$i]["Floor Date"],
-                                            $results[$i]["Weeks On Floor"],
+                                            NULL,
+                                            NULL,
                                             $results[$i]["Customer"],
                                             $results[$i]["Engineer"],
                                             str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
                                             $results[$i]["Sales Person"],
                                             str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
-                                            $results[$i]["Promise Date UNP"],
+                                            $results[$i]["Del Date Due UNP"],
                                             $results[$i]["Promise Week Due"],
                                             $results[$i]["Est Prod Hrs"],
                                             $results[$i]["Status"],
@@ -259,10 +259,10 @@
                                         {
                                             array_push($project_engineers_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])));
                                         }
-                                        //echo($results[$i]["Promise Diff Week"]);
+                                        //echo($results[$i]["Promise Diff Days"]);
                                         //echo("<br>");
-                                        $project_button_buffer[$results[$i]["Promise Diff Week"]] = $project_button_buffer[$results[$i]["Promise Diff Week"]].$str;
-                                        //$sum[$results[$i]["Promise Diff Week"]] = $sum[$results[$i]["Promise Diff Week"]] + $results[$i]["Est Prod Hrs"];                                                    
+                                        $project_button_buffer[$results[$i]["Promise Diff Days"]] = $project_button_buffer[$results[$i]["Promise Diff Days"]].$str;
+                                        //$sum[$results[$i]["Promise Diff Days"]] = $sum[$results[$i]["Promise Diff Days"]] + $results[$i]["Est Prod Hrs"];                                                    
                                         
                                         $base_color = "";
                                         $border_color = "";
@@ -413,12 +413,12 @@
                                     </div>
                                     <div class = "filter">
                                         <div class = "text">
-                                            <button class = "fill red medium wtext">ProductGroup</button>
+                                            <button class = "fill red medium wtext">Sales Person</button>
                                         </div>
                                         <div class = "content">
-                                            <select id = "select_productgp" class = "selector fill medium">
+                                            <select id = "select_sales_person" class = "selector fill medium">
                                                 <option value = "All" selected>All</option>
-                                                <?php generate_filter_options($results,"Product Group"); ?>
+                                                <?php generate_filter_options($results,"Sales Person"); ?>
                                             </select>
                                         </div>
                                     </div>

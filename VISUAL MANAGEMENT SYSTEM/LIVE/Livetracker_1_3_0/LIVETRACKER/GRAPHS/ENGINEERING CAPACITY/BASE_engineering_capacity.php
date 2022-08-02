@@ -291,6 +291,8 @@
     $week = $date->format("W") == 53 ? 52 : $date->format("W");
     $backlog = 0;
 
+    
+
     // PADS OUT THE ARRAYS TO 53 COLUMNS (WEEKS 1 TO 52)
     for($i = 0 ; $i <= 52 ; $i++)
     {
@@ -308,6 +310,7 @@
     array_push($branded_products_building_engineers, "Stephen Roche");
     array_push($engineering_contracts_engineers, "Ger Maguire");
     array_push($r_and_d_engineers, "Declan Heffernan"); 
+
     array_push($branded_products_civil_engineers_capacity, 0);
     array_push($branded_products_building_engineers_capacity, 0);
     array_push($engineering_contracts_engineers_capacity, 0);
@@ -323,20 +326,13 @@
                 break;
             case 7:
                 array_push($branded_products_civil_engineers, $row ["Engineer Name"]);
-                
                 array_push($branded_products_civil_engineers_capacity, $row["Capacity"]);
-                
                 break;
             case 8:
+            case 9:
                 array_push($engineering_contracts_engineers, $row["Engineer Name"]);
-                
                 array_push($engineering_contracts_engineers_capacity, $row["Capacity"]);
-
                 break;
-            /* case 9:
-                array_push($engineering_contracts_engineers, $row["Engineer Name"]);
-                array_push($engineering_contracts_engineers_capacity, $row["Capacity"]);
-                break; */
             case 10:
                 array_push($r_and_d_engineers, $row["Engineer Name"]);
                 array_push($r_and_d_engineers_capacity, $row["Capacity"]);

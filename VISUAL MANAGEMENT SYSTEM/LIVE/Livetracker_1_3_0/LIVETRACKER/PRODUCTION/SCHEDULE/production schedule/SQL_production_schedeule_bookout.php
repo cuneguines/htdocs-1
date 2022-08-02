@@ -1,21 +1,9 @@
 
- <!-- WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-21)." THEN ".($start_range -3)."
-    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-14)." THEN ".($start_range -2)."
-    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($start_range-7)." THEN ".($start_range -1)."
-    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 7)." THEN ".($end_range +1)."
-    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+7)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 14)." THEN ".($end_range +2)."
-    WHEN ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+14)." THEN ".($end_range +3)."
-    ELSE ISNULL(DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") -->
+
 <?php
 
 
-$tsql="DECLARE @now datetime = GETDATE();
-
--- strip the time part from your date
-DECLARE @date datetime = CONVERT(date, @now);
-
--- do the day of week math
-DECLARE @start datetime = DATEADD(d, 1 - DATEPART(w, @date)+1, @date); select 
+$tsql="select 
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -24,6 +12,16 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
+CASE 
+
+
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < -14 THEN -3
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < -7 THEN -2
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < 0 THEN -1
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= 14 THEN 14
+ELSE DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP])
+END [Promise Diff Days], /* DAYS HERE */
+
 
 t0.[Dscription],
 t0.[Non Deliverable],
@@ -31,7 +29,7 @@ t0.[Quantity],
 t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
-t0.[Promise Date UNP],
+t0.[Del Date Due UNP],
 
 
 t0.[Engineer],
@@ -44,24 +42,15 @@ t0.[Comments_2],
 
 t0.[DueDate],
 
-CASE 
-
-
-WHEN ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1)) < 0 THEN (0 -1)
-WHEN ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1)) >= (14)  THEN (13 +1)
-ELSE ISNULL(DATEDIFF(DAY,@start,t0.[Promise Date UNP]),(0-1))
-END [Promise Diff Week],
-
 t0.[Process Order],
 t0.[Planned Hrs],
-t0.[Floor Date],
-t0.[Weeks On Floor],
 t0.[Sub Contract Status],
 t0.[Complete],
 CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
 isnull(t0.[Product Group],'No Group') [Product Group]
 FROM(
 SELECT
+	DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
     t0.DocDueDate[DueDate],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
@@ -78,11 +67,11 @@ SELECT
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
     FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
-       t0.DocDueDate [Promise Date UNP],
+    CAST(t0.DocDueDate AS DATE) [Del Date Due UNP],
     (CASE 
-        WHEN DATEPART(iso_week,t1.U_Promise_Date) = 53 THEN 52 
-        WHEN DATEPART(iso_week,t1.U_Promise_Date) IS NULL THEN 52
-        ELSE DATEPART(iso_week,t1.U_Promise_Date) 
+        WHEN DATEPART(iso_week,t0.DocDueDate) = 53 THEN 52 
+        WHEN DATEPART(iso_week,t0.DocDueDate) IS NULL THEN 52
+        ELSE DATEPART(iso_week,t0.DocDueDate) 
     END) [Promise Week Due],
     ISNULL(t2.SlpName,'NO NAME') [Engineer],
     t1.U_risk_rating [risk],
@@ -95,8 +84,6 @@ SELECT
     
     t4.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
-    FORMAT(ISNULL(t4.U_FLOORDATE,t0.U_FLOORDATE), 'yyyy-MM-dd')[Floor Date],
-    DATEDIFF(WEEK, ISNULL(t4.U_FLOORDATE,t0.U_FLOORDATE), GETDATE())[Weeks On Floor],
     t1.U_In_Sub_Con [Sub Contract Status],
     CAST(t4.PlannedQty - t4.CmpltQty AS DECIMAL(12,2)) [Complete],
     CAST((CASE
@@ -159,7 +146,8 @@ SELECT
 UNION ALL
 
 SELECT
-   t0.CardCode[cardcode],
+	DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+	t0.CardCode[cardcode],
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
@@ -175,7 +163,7 @@ SELECT
     CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
     FORMAT(CONVERT(DATE,(t0.DueDate)),'dd-MM-yyyy') [Promise Date],
-    t0.DueDate [Promise Date UNP],
+    CAST(t0.DueDate AS DATE) [Del Date Due UNP],
     (CASE 
         WHEN DATEPART(iso_week,t0.DueDate) = 53 THEN 52 
         WHEN DATEPART(iso_week,t0.DueDate) IS NULL THEN 52
@@ -192,8 +180,6 @@ SELECT
   
     t0.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
-    FORMAT(t0.U_FloorDate , 'dd-MM-yyyy')[Floor Date],
-    DATEDIFF(WEEK, t0.U_FloorDate, GETDATE())[Weeks On Floor],
     NULL [Sub Contract Status],
     CAST(t0.PlannedQty - t0.CmpltQty AS DECIMAL(12,2)) [Complete],
     CAST((CASE
