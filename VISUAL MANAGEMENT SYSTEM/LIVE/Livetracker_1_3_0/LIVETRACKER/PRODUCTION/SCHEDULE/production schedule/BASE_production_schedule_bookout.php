@@ -92,7 +92,7 @@
                 </div><!--
              --><div id = "sched_right">
                     <div class = "table_title green">
-                        <h1>PRODUCTION SCHEDULE</h1>
+                        <h1>PRODUCTION SCHEDULE/BOOKOUT</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
                         <table id = "production_schedule" class = "filterable">
@@ -100,14 +100,14 @@
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
                                     
-                                    <th style = 'width:6%;'>Week -3</th>
-                                    <th style = 'width:6%;'>Week -2</th>
+                                    <th style = 'width:6%;'>Week -3</th> 
+                                    <th style = 'width:6%;'>Week -2</th> 
                                     <th style = 'width:6%;'>Week -1</th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
-                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$i%7+1?></th>
+                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[$i%7+1]?></th>
                                     <?php endfor; ?>
                                     <th style = 'width:6%;'><?=$end_range?> +1</th>
-                                </tr>
+                                    
                             </thead>
                             <tbody class = "medium btext">
                                 <?php 

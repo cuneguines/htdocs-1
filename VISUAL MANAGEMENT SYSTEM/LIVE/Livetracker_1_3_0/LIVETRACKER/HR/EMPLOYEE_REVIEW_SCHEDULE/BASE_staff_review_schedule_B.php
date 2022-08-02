@@ -174,6 +174,7 @@
                                     <div class = "content">
                                         <select id = "select_supervisor" class = "selector fill medium">
                                             <option value = "All" selected>All</option>
+                                        
                                             <?php generate_filter_options($full_emp_list, "emp_supervisor"); ?>
                                         </select>
                                     </div>
