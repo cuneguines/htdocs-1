@@ -12,15 +12,35 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
+
 CASE 
 
 
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < -14 THEN -3
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < -7 THEN -2
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) < 0 THEN -1
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) >= 14 THEN 14
-ELSE DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP])
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -3
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -2
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < 0 THEN -1
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= 14 THEN 14
+ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
 END [Promise Diff Days], /* DAYS HERE */
+CASE 
+
+
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) = 0 THEN 'MondayTW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =1 THEN 'TuesdayTW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =2 THEN 'WednesdayTW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =3 THEN 'ThursdayTW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =4 THEN 'FridayTW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =7 THEN 'MondayNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =8 THEN 'TuesdayNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =9 THEN 'WednesdayNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =10 THEN 'ThursdayNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =11 THEN 'FridayNW'
+
+ELSE 'Other'
+END [Days of the Week], /* DAYS HERE */
+
+
+
 
 
 t0.[Dscription],

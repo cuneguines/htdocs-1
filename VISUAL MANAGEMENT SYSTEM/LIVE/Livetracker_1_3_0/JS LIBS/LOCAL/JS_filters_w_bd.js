@@ -75,36 +75,7 @@ $(document).ready(function(){
         }
     });
 
-    ($('#select_engineer')).on("change",function filter()
-    {
-        $('.selector').not(this).prop('selectedIndex',0);
-        if($(this).children("option:selected").val() === 'All')
-        {
-            $('#bd').prop('disabled', false);
-            $('table.filterable tfoot tr').show();
-            rows.show();
-            jobs.show();
-        }
-        else
-        {
-            $('#bd').prop('disabled', true);
-
-            jobs.show();
-            rows.show();
-            $('table.filterable tfoot tr').hide();
-            selected_value = $(this).children("option:selected").val();
-
-            jobs.not("[engineer_nsp = " + $(this).children("option:selected").val() + "]").hide();
-
-            $.each($('.row').not('#select_engineer'),function(){
-                if(!JSON.stringify($(this).attr("engineers")).includes(selected_value))
-                {
-                    $(this).hide();
-                }
-                rows.filter('[type = data]').hide();
-            });
-        }
-    });
+    
 
 
 
@@ -140,7 +111,39 @@ console.log(selected_value);
             });
         }
     });
-    
+    //button for selecting Weekdays (schedule_bookout page)
+    ($('#select_days_week')).on("change",function filter()
+    {
+        
+        $('.selector').not(this).prop('selectedIndex',0);
+        if($(this).children("option:selected").val() === 'All')
+        {
+            $('#bd').prop('disabled', false);
+            $('table.filterable tfoot tr').show();
+            rows.show();
+            jobs.show();
+        }
+        else
+        {
+            $('#bd').prop('disabled', true);
+
+            jobs.show();
+            rows.show();
+            $('table.filterable tfoot tr').hide();
+            selected_value = $(this).children("option:selected").val();
+console.log(selected_value);
+            jobs.not("[days_week= " + $(this).children("option:selected").val() + "]").hide();
+
+            $.each($('.row').not('#select_days_week'),function(){
+                if(!JSON.stringify($(this).attr("days_week")).includes(selected_value))
+                {
+                    $(this).hide();
+                }
+                rows.filter('[type = data]').hide();
+                
+            });
+        }
+    });
 
     $('#bd').click(function(){
         if(status === 1){
