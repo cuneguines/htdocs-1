@@ -364,6 +364,7 @@
 									</div>
 									<div style = "height:100%; width:50%; float:right;">
 										<p style = "font-size:2vh; margin:0;"><?= "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Lab Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Lab Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".number_format($comp_po_week_d[$qlb_this]["Difference_Lab"])." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".(($comp_po_week_d[$qlb_this]["Difference_Lab"] != 0 ? number_format($comp_po_week_d[$qlb_this]["Difference_Lab"]) : 0 )*-1)."</p>")?></p>
+										<!-- <p style = "font-size:2vh; margin:0;"><?= "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Lab Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Lab Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".number_format($comp_po_week_d[$qlb_this]["Difference_Lab"])." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".(($comp_po_week_d[$qlb_this]["Difference_Lab"]))."</p>")?></p> -->
 									</div>
 								</div>
 								<div>

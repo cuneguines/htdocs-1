@@ -317,11 +317,6 @@ inner join (select t0.PrOrder
 WHERE t1.CmpltQty >= t1.PlannedQty AND 
 DATEPART(year,GETDATE()) = DATEPART(year,t1.CloseDate) ";
 
-
-
-
-    
-
 $comp_po_m_q =
     "SELECT   
     COUNT(t1.DocNum)[Process Orders],   
