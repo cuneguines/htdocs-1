@@ -67,5 +67,73 @@ case 'jpg':
 break;
 case 'docx':
 break;
+case 'pptx':
+    {
+?> <div style="height:600px;width:600px;float:left;overflow-y:scroll;border:1px solid #666CCC ;"><?php
+$content = read_file_docx($str);
+if ($content !== false) {
+    
+    $content = '<p>' . str_replace("\n", "</p><p>", $content) . '</p>';
+    echo ($content);
+} else {
+    echo 'Couldn\'t the file. Please check that file.';
 }
+function readZippedImages($filename) {
+    $paths=[];
+    $zip = new ZipArchive;
+    if( true === $zip->open( $filename ) ) {
+        for( $i=0; $i < $zip->numFiles;$i++ ) {
+            $zip_element = $zip->statIndex( $i );
+            if( preg_match( "([^\s]+(\.(?i)(jpg|jpeg|png|gif|bmp))$)", $zip_element['name'] ) ) {
+                $paths[ $zip_element['name'] ]=base64_encode( $zip->getFromIndex( $i ) );
+            }
+        }
+    }
+    $zip->close();
+    return $paths;
+}
+//$document="//Kptsvsp/b1_shr/Attachments/TEST REPORT WITH PICS.docx";
+$paths=readZippedImages( $str );
+readZippedImages($str);
+foreach($paths as $name => $data ){
+    $filepath=__DIR__ . '/' . $name;
+    $dirpath=pathinfo( $filepath, PATHINFO_DIRNAME );
+    $ext=pathinfo( $name, PATHINFO_EXTENSION );
+    if( !file_exists( $dirpath ) )mkdir( $dirpath,0777, true );
+    if( !file_exists( $filepath ) )file_put_contents( $filepath, base64_decode( $data ) );
+
+    printf('<img src="data:image/%s;base64, %s" style=height:400px;width:400px/>', $ext, $data );
+    echo("<br>");
+    echo("<br>");
+    
+}
+$name = pathinfo($str)["filename"].".".pathinfo($str)["extension"];
+echo $name." <a href='$str' download='$name'>Download</a><br>";;
 ?>
+
+</div>
+<?php
+        }
+    break;
+}
+
+
+function read_file_docx($filename)
+{
+    $striped_content = '';
+    $content = '';
+    if (!$filename || !file_exists($filename)) return false;
+    $zip = zip_open($filename);
+    if (!$zip || is_numeric($zip)) return false;
+    while ($zip_entry = zip_read($zip)) {
+        if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
+        if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+        $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+        zip_entry_close($zip_entry);
+    } // end while  
+    zip_close($zip);
+    $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+    $content = str_replace('</w:r></w:p>', "\r\n", $content);
+    $striped_content = strip_tags($content);
+    return $striped_content;
+}

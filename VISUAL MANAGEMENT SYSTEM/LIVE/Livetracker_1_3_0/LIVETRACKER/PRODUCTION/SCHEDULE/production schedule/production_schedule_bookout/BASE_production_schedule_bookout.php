@@ -6,27 +6,36 @@
         <meta name = "viewpport" content = "width=device-width, initial-scale = 1">
         
         <!-- EXTERNAL JAVASCRIPT -->
-        <script type = "text/javascript" src = "../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
+        <script type = "text/javascript" src = "../../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
 
         <!-- LOCAL JAVASCRIPT -->
-        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
-        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
+        <script type = "text/javascript" src = "../../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
+        <script type = "text/javascript" src = "../../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
         <script type = "text/javascript" src = "./JS_job_info_buttons.js"></script>   
 
         <!-- STYLESHEET -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-        <link href='../../../../CSS/LT_STYLE.css' rel='stylesheet' type='text/css'>
+        <link href='../../../../../CSS/LT_STYLE.css' rel='stylesheet' type='text/css'>
 
         <!-- PHP INITALISATION -->
         <?php 
             $start_time = time()-60*60*24*7*5;
             $start_range = 0;
-            $end_range = 14;
+            $end_range = 14;#function array_sort($array){sort($array); return $array;}
+
+            function generate_filter_optionss($table, $field){
+                foreach(array_sort(array_unique(array_column($table, $field))) as $element){
+                    if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other' )
+                    {
+                    echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+                    }
+                }
+            }
         ?>
 
-        <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
-        <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
+        <?php include '../../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
+        <?php include '../../../../../SQL CONNECTIONS/conn.php'; ?>
         <?php //include './SQL_production_schedule_new.php'; ?>
         <?php include './SQL_production_schedeule_bookout.php'; ?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
@@ -74,7 +83,7 @@
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
-                        <p class = "smedium">Status</p>
+                        <p class = "smedium">Address</p>
                         <h2 class = "inner sixth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Stage</p>
@@ -137,13 +146,16 @@
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
                                             echo "<tr class = 'row white smedium' productgp = '".$productgp."'days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
-                                                print_values_22($project_button_buffer,$start_range,$end_range);
+                                                print_values_22($project_button_buffer,$start_range,$end_range-1);
+                                                 //Empty table data 
+                                                 echo "<td style = 'border-right:1px solid #454545;'></td>";
                                                 //echo ($start_range);
                                                 //echo ($end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
                                             echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
-                                                print_values_22($sum,$start_range,$end_range);
+                                                print_values_22($sum,$start_range,$end_range-1);
+                                                echo "<td style = 'background-color:#DCDCDC;color:white;'></td>";
                                             echo "</tr>";
         
                                             // IF IF STATMENT WAS ENTERED BY SKIPPING INTO ON LAST ROW OF QUERY BREAK OUT OF LOOP
@@ -247,7 +259,7 @@
                                             $results[$i]["Del Date Due UNP"],
                                             $results[$i]["Promise Week Due"],
                                             $results[$i]["Est Prod Hrs"],
-                                            $results[$i]["Status"],
+                                            $results[$i]["Addr"],
                                             $results[$i]["Stage"],
                                             $comments,
                                             $comments_2,
@@ -439,7 +451,7 @@
                                         <div class = "content">
                                             <select id = "select_days_week" class = "selector fill medium">
                                                 <option value = "All" selected>All</option>
-                                                <?php generate_filter_options($results,"Days of the Week"); ?>
+                                                <?php generate_filter_optionss($results,"Days of the Week"); ?>
                                             </select>
                                         </div>
                                     </div>

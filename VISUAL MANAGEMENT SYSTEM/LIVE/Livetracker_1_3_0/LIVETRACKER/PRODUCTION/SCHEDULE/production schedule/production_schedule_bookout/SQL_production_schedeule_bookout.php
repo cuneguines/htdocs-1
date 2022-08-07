@@ -25,18 +25,24 @@ END [Promise Diff Days], /* DAYS HERE */
 CASE 
 
 
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) = 0 THEN 'MondayTW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =1 THEN 'TuesdayTW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =2 THEN 'WednesdayTW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =3 THEN 'ThursdayTW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =4 THEN 'FridayTW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =7 THEN 'MondayNW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =8 THEN 'TuesdayNW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =9 THEN 'WednesdayNW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =10 THEN 'ThursdayNW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =11 THEN 'FridayNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) = 0 THEN 'Monday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =1 THEN 'Tuesday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =2 THEN 'Wednesday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =3 THEN 'Thursday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =4 THEN 'Friday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =7 THEN 'MNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =8 THEN 'TNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =9 THEN 'WNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =10 THEN 'TNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =11 THEN 'FNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =13 THEN 'MNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =14 THEN 'TNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =15 THEN 'WNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =16 THEN 'TNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) <0 THEN 'Other'
+ELSE 'Ot'
 
-ELSE 'Other'
+
 END [Days of the Week], /* DAYS HERE */
 
 
@@ -59,7 +65,7 @@ t0.[Stage],
 t0.[Paused],
 t0.[Comments],
 t0.[Comments_2],
-
+t0.[Addr],
 t0.[DueDate],
 
 t0.[Process Order],
@@ -81,7 +87,7 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(MONTH, GETDATE(),t1.U_Promise_Date) [Month Difference PD],
     
-
+    t0.Address[Addr],
     t1.Dscription [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
@@ -177,7 +183,7 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(month, GETDATE(), t0.DueDate) [Month Difference PD],
 
-        
+    t0.CardCode[CardCode],     
     t5.ItemName [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
