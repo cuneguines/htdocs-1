@@ -27,7 +27,7 @@
 
         <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
         <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
-        <?php include './SQL_production_schedule_new.php'; ?>
+        <?php include './SQL_production_schedule_productgroup.php'; ?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
         
     </head>
@@ -79,7 +79,7 @@
                 </div><!--
              --><div id = "sched_right">
                     <div class = "table_title green">
-                        <h1>PRODUCTION SCHEDULE</h1>
+                        <h1>PRODUCTION SCHEDULE/ProductGroup</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
                         <table id = "production_schedule" class = "filterable">
