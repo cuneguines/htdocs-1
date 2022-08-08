@@ -87,7 +87,7 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(MONTH, GETDATE(),t1.U_Promise_Date) [Month Difference PD],
     
-    t0.Address[Addr],
+    t0.Address2[Addr],
     t1.Dscription [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
