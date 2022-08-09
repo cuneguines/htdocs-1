@@ -38,7 +38,7 @@
         <?php include '../../../../../SQL CONNECTIONS/conn.php'; ?>
         <?php //include './SQL_production_schedule_new.php'; ?>
         <?php include './SQL_production_schedeule_bookout.php'; ?>
-        <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
+        <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);print_r(count($results));?>
 
         <?php 
         
@@ -89,14 +89,14 @@
                         <p class = "smedium">Stage</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Production</p>
+                       <!--  <p class = "smedium">Production</p>
                         <h2 class = "inner eighth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Comments</p>
                         <h2 class = "inner eleventh medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Comments 2</p>
-                        <h2 class = "inner twent medium">Nothing Selected</h2>
+                        <h2 class = "inner twent medium">Nothing Selected</h2> -->
                     </div>
                 </div><!--
              --><div id = "sched_right">

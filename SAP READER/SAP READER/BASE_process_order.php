@@ -21,6 +21,9 @@
             if(!$process_order){
                 echo "<h1 class = 'black'>Invalid Process Order</h1>"; die();
             }
+            if($process_order=='NO PO'){
+                echo "<h1 class = 'black'>Invalid Process Order</h1>";die();
+            }
         ?>
 
         <?php include './conn.php'; ?>        

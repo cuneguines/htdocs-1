@@ -1,7 +1,7 @@
+
 <?php
-$tsql =
-"SELECT
-/* SALES ORDER RELATED CONTENT */
+
+$tsql="select 
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -10,15 +10,6 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
-
-/* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE)*/
-t0.[Dscription],
-t0.[Non Deliverable],
-t0.[Quantity],
-t0.[On Hand],
-t0.[Promise Date],
-t0.[Promise Week Due],
-t0.[Promise Date UNP],
 CASE 
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
@@ -26,6 +17,16 @@ CASE
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
     ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 END [Promise Diff Week],
+
+t0.[Dscription],
+t0.[Non Deliverable],
+t0.[Quantity],
+t0.[On Hand],
+t0.[Promise Date],
+t0.[Promise Week Due],
+t0.[Promise Date UNP],
+
+
 t0.[Engineer],
 t0.[risk],
 t0.[Status],
@@ -34,17 +35,18 @@ t0.[Paused],
 t0.[Comments],
 t0.[Comments_2],
 
-/* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
+
 t0.[Process Order],
 t0.[Planned Hrs],
 t0.[Floor Date],
 t0.[Weeks On Floor],
 t0.[Sub Contract Status],
 t0.[Complete],
-CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs]
+CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
+isnull(t0.[Product Group],'No Group') [Product Group]
 FROM(
 SELECT
-    /* SALES ORDER RELATED CONTENT */
+    
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -53,14 +55,14 @@ SELECT
     DATEPART(ISO_WEEK, t0.CreateDate)[Week Opened],
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(MONTH, GETDATE(),t1.U_Promise_Date) [Month Difference PD],
-    /* SALES ORDER ITEMS RELATED CONTENT */
+    
 
     t1.Dscription [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
     FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
-	t1.U_Promise_Date [Promise Date UNP],
+       t1.U_Promise_Date [Promise Date UNP],
     (CASE 
         WHEN DATEPART(iso_week,t1.U_Promise_Date) = 53 THEN 52 
         WHEN DATEPART(iso_week,t1.U_Promise_Date) IS NULL THEN 52
@@ -74,7 +76,7 @@ SELECT
     t1.U_BOY_38_EXT_REM [Comments],
     t99.Remarks [Comments_2],
 
-    /* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
+    
     t4.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
     FORMAT(ISNULL(t4.U_FLOORDATE,t0.U_FLOORDATE), 'yyyy-MM-dd')[Floor Date],
@@ -90,7 +92,7 @@ SELECT
                 WHEN t4.CmpltQty < t4.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
                 ELSE 0 
             END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
    
     FROM ordr t0
     INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
@@ -120,7 +122,7 @@ SELECT
     left join [dbo].[@PRE_PRODUCTION] as t13 on t13.code     = t1.U_PP_Stage
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
 
-       /* PROCESS ORDERs where they are closed and cancelled without any time or material issue */
+       
        left join (select t1.U_IIS_proPrOrder, sum(t0.issuedqty) [Issued], sum(t1.CmpltQty) [Completed]
                            from wor1 t0
                            inner join owor t1 on t1.DocEntry = t0.DocEntry
@@ -135,13 +137,13 @@ SELECT
     WHERE t1.LineStatus = 'O'
     AND t1.ItemCode <> 'TRANSPORT' 
     AND t0.CANCELED <> 'Y' 
-        /* Remove PROCESS ORDERs where they are closed and cancelled without any time or material issue */
+       
        and t15.U_IIS_proPrOrder is null
 
 UNION ALL
 
 SELECT
-    /* SALES ORDER RELATED CONTENT  (SELF DEFINED OR TAKEN FROM PRODUCTION ORDER IN THIS CASE) */
+   
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
@@ -151,13 +153,13 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(month, GETDATE(), t0.DueDate) [Month Difference PD],
 
-        /* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE) */
+        
     t5.ItemName [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
     FORMAT(CONVERT(DATE,(t0.DueDate)),'dd-MM-yyyy') [Promise Date],
-	t0.DueDate [Promise Date UNP],
+       t0.DueDate [Promise Date UNP],
     (CASE 
         WHEN DATEPART(iso_week,t0.DueDate) = 53 THEN 52 
         WHEN DATEPART(iso_week,t0.DueDate) IS NULL THEN 52
@@ -171,7 +173,7 @@ SELECT
     t7.Remarks [Comments],
     t7.Remarks [Comments_2],
 
-   /* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
+  
     t0.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
     FORMAT(t0.U_FloorDate , 'dd-MM-yyyy')[Floor Date],
@@ -185,7 +187,7 @@ SELECT
             WHEN t0.CmpltQty < t0.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
             ELSE 0 
         END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
    
    FROM owor t0
    
@@ -214,7 +216,9 @@ SELECT
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
             ) t0
-   ORDER BY t0.[Project]
+   ORDER BY t0.[Project]";
+   ?>
 
-"
-?>
+
+
+

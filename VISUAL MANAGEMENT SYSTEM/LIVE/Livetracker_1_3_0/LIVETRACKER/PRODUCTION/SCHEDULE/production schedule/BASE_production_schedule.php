@@ -27,7 +27,7 @@
 
         <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
         <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
-        <?php include './SQL_production_schedule_new.php'; ?>
+        <?php include './SQL_production_schedule.php'; ?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
         
     </head>

@@ -18,18 +18,39 @@ where t0.code='$item'";
 $getResults = $conn->prepare($result);
 $getResults->execute();
 $file_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+function data_uri($file, $mime)
+    {
+        $contents = file_get_contents($file);
+        $base64 = base64_encode($contents);
+        return ('data:' . $mime . ';base64,' . $base64);
+    }
 
-foreach ($file_results as $fname) {
-    $filename = json_encode($fname[0]);
-}
+
+    function readZippedImages($filename) {
+        $paths=[];
+        $zip = new ZipArchive;
+        if( true === $zip->open( $filename ) ) {
+            for( $i=0; $i < $zip->numFiles;$i++ ) {
+                $zip_element = $zip->statIndex( $i );
+                if( preg_match( "([^\s]+(\.(?i)(jpg|jpeg|png|gif|bmp))$)", $zip_element['name'] ) ) {
+                    $paths[ $zip_element['name'] ]=base64_encode( $zip->getFromIndex( $i ) );
+                }
+            }
+        }
+        $zip->close();
+        return $paths;
+    }
+foreach ($file_results as $fname[0]) {
+    $filename = json_encode($fname[0][0]);
+
 echo ($filename);
 
 //Removing backslash
 $str = str_replace('\\', '/', $filename);
-echo ($str);
+//echo ($str);
 
 $str = str_replace('//', '/', $str);
-echo ($str);;
+//echo ($str);;
 //$file = new SplFileInfo($str);
 //$file = new SplFileInfo($str);#
 
@@ -37,36 +58,39 @@ echo ($str);;
 //echo($extension); 
 
 
-function data_uri($file, $mime)
-{
-    $contents = file_get_contents($file);
-    $base64 = base64_encode($contents);
-    return ('data:' . $mime . ';base64,' . $base64);
-}
+
 $ext = pathinfo($str, PATHINFO_EXTENSION);
 //echo ($ext);
 $file_parts = pathinfo($str);
 //echo ($file_parts['extension']);
 $x = $file_parts['extension'];
-echo ("<br>");
+//echo ("<br>");
 //echo ($x);
 $x = str_replace('"', '', $x);
-echo ("<br>");
+//echo ("<br>");
 //echo ($x);
-echo ("<br>");
+//echo ("<br>");
 //echo($str);
 $str = str_replace('"', '', $str);
 //echo($str);
 switch($x)
 {
 case 'jpg':
-
+    
     ?>
-        <img style='height:600px; width:600px;' src="<?php echo data_uri($str, 'image/jpg'); ?>"> 
+        <img style='height:400px; width:400px;float:left;margin-left:2%' src="<?php echo data_uri($str, 'image/jpg'); ?>"> 
         <?php
 break;
 case 'docx':
+
 break;
+case 'msg':
+    
+    
+ $x=base64_encode($str);
+      //echo base64_decode($str);
+      //echo base64_encode($str);
+      
 case 'pptx':
     {
 ?> <div style="height:600px;width:600px;float:left;overflow-y:scroll;border:1px solid #666CCC ;"><?php
@@ -78,20 +102,7 @@ if ($content !== false) {
 } else {
     echo 'Couldn\'t the file. Please check that file.';
 }
-function readZippedImages($filename) {
-    $paths=[];
-    $zip = new ZipArchive;
-    if( true === $zip->open( $filename ) ) {
-        for( $i=0; $i < $zip->numFiles;$i++ ) {
-            $zip_element = $zip->statIndex( $i );
-            if( preg_match( "([^\s]+(\.(?i)(jpg|jpeg|png|gif|bmp))$)", $zip_element['name'] ) ) {
-                $paths[ $zip_element['name'] ]=base64_encode( $zip->getFromIndex( $i ) );
-            }
-        }
-    }
-    $zip->close();
-    return $paths;
-}
+
 //$document="//Kptsvsp/b1_shr/Attachments/TEST REPORT WITH PICS.docx";
 $paths=readZippedImages( $str );
 readZippedImages($str);
@@ -117,7 +128,7 @@ echo $name." <a href='$str' download='$name'>Download</a><br>";;
     break;
 }
 
-
+}
 function read_file_docx($filename)
 {
     $striped_content = '';

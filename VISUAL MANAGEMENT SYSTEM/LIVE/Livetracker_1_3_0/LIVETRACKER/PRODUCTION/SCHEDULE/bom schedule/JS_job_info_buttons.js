@@ -1,5 +1,34 @@
 $(document).ready(function(){
     $(".project_item").click(function(){
+        
+            test=$(this).attr('process_order')
+            console.log(test);
+            $.ajax({
+    
+                type: "POST",
+                url: "SQL_subcontract_schedule_test.php",
+                data: {
+                    'item': test
+    
+                },
+    
+                dataType: 'json',
+                success: function(data) {
+    
+    console.log(data[0]);
+                   
+                    if (data[0].length==0)
+                    {
+                        $('.brred').css({'background-color': 'yellow'}); 
+                    }
+                    else
+                    {
+                    $('.brred').css({'background-color': 'blue'}); 
+                    }
+                   
+                   
+                }
+            });
     $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+$(this).attr('process_order')+ "," + $('.page_type').attr('type') + "'" +'">'+$(this).attr('process_order')+"</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");
