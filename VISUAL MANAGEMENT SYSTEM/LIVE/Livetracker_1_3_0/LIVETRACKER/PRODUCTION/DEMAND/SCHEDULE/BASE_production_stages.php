@@ -11,7 +11,7 @@
         <script type = "text/javascript" src = "../../../../JS LIBS/THIRD PARTY/jquery.tablesorter.widgets.js"></script>
 
         <!-- LOCAL JS -->
-        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters.js"></script>
+        <script type = "text/javascript" src = "./JS_filters.js"></script>
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_search_table.js"></script>
 
         <!-- STYLEING -->
