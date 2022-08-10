@@ -87,10 +87,14 @@ break;
 case 'msg':
     
     
- $x=base64_encode($str);
-      //echo base64_decode($str);
-      //echo base64_encode($str);
-      
+
+    header("Content-Type: application/download");
+    header("Content-disposition: attachment; filename=\"".$str."\"");
+    header("Content-Transfer-Encoding: Binary");
+    
+    readfile($str);
+    exit;
+      break;
 case 'pptx':
     {
 ?> <div style="height:600px;width:600px;float:left;overflow-y:scroll;border:1px solid #666CCC ;"><?php

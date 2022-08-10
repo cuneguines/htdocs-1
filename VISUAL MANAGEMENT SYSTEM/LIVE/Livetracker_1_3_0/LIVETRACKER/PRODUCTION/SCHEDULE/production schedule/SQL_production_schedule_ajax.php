@@ -5,7 +5,7 @@
             $end_range = 30;
         ?>
 <?php
-$item=(!empty($_POST['item'])? $_POST['item'] : 0);
+//$item=(!empty($_POST['item'])? $_POST['item'] : 0);
 
 // IF P EXCEPTIONS DETECTS PROCESS ORDER POST INCLUDE ALL BOM ITEMS NOT ISSUED INCLUDING THOSE IN STOCK
 // OTHERWiSE PULL ALL BOM ITEMS ON ALL PROCESS ORDERS THAT ARE IN MATERIAL SHORTAGE REGARDLESS OF IF ITS ISSUED OR NOT
@@ -27,10 +27,18 @@ if (isset($_GET['po'])) {
     $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
     $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
 }
+if(isset($_POST['item'])) {
+    $item=(!empty($_POST['item'])? $_POST['item'] : 0);
+    $clause = "WHERE [Process Order] =  $item";
+    $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+    $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
+}
 ?>
 
 <?php
-$subcontracting_results=
+
+
+$production_exceptions =
 "SELECT 
 ISNULL(t0.[Process Order],'N/A')[Process Order],
 t2.docnum [Prod Ord],
@@ -62,11 +70,7 @@ t0.[Purchase Overdue],
 t0.[Engineer],
 t0.[Comments_PO],
 t0.[Comments_SO],
-t0.[Stock Check], 
-FORMAT(CAST(t0.Sub_Con_Date AS DATE),'dd-MM-yyyy')[Sub_Con_Date], 
-t0.Sub_Con_Remarks,
-isnull(t0.Sub_Con_Status,'No stat')[Sub_Con_Status]
-
+t0.[Stock Check]
 
 FROM (
 
@@ -108,10 +112,7 @@ FROM (
             CAST(ISNULL(t4.U_FloorDate,t1.U_Floordate) AS DATE) [Floor Date],
             (CASE WHEN CAST(t8.DocDueDate AS DATE) < CAST (GETDATE() AS DATE) THEN 'yes' ELSE 'no' END)[Purchase Overdue],
             t7.U_BOY_38_EXT_REM [Comments_SO],
-            t9.Comments [Comments_PO], 
-                    t0.U_sc_date [Sub_Con_Date], 
-                    t0.U_sc_remarks [Sub_Con_Remarks], 
-                    t13.Name [Sub_Con_Status]
+            t9.Comments [Comments_PO]
             FROM  wor1 t0
 
             LEFT JOIN 
@@ -134,19 +135,16 @@ FROM (
             left JOIN oslp t10 ON t10.SlpCode = t4.SlpCode
             LEFT JOIN opor t9 ON t9.docnum = t8.DocNum
             inner join ousr t12 on t12.USERID = t1.UserSign
-                     left join [dbo].[@SUB_CON_STATUS] t13 on t13.Code = t0.U_sc_status
             where 1=1 
-            AND t1.Status in ('R')
-            ---AND t0.IssuedQty < t0.PlannedQty
+            AND t1.Status = 'R'
+            AND t0.IssuedQty < t0.PlannedQty
             AND t2.ItemType <> 'L'
-            AND t2.PrcrmntMtd = 'B' --AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty
-            AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')
-            $clause2_a
+           $clause2_a
            
 
     UNION ALL
 
-            -----sales order buy items -----
+             -----sales order buy items -----
     SELECT  NULL [Process Order], 
             NULL [Prod Ord],
             t0.ItemCode,
@@ -183,10 +181,7 @@ FROM (
             CAST(t1.U_FloorDate AS DATE) [Floor Date],
             (CASE WHEN CAST(t8.DocDueDate AS DATE) < CAST (GETDATE() AS DATE) THEN 'yes' ELSE 'no' END)[Purchase Overdue],
             t0.U_BOY_38_EXT_REM [Comments_SO],
-            t9.Comments[Comments_PO] , 
-                    NULL [Sub_Con_Date], 
-                    NULL [Sub_Con_Remarks], 
-                    NULL [Sub_Con_Status]
+            t9.Comments[Comments_PO] 
             from rdr1 t0
 
             LEFT JOIN 
@@ -209,11 +204,9 @@ FROM (
             where
             t0.LineStatus = 'o'
             AND t2.ItemCode <> 'TRANSPORT'
-            AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty)
             $clause2_b
             AND t5.ItmsGrpNam not like '%Sheet%'
             AND t5.ItmsGrpNam not like '%SITE%'
-                    AND t5.ItmsGrpCod IN (168,232)
                 ) t0
 
 LEFT JOIN ordr t1 ON t1.DocNum = t0.[Sales Order]
@@ -221,14 +214,16 @@ LEFT JOIN owor t2 ON t2.DocNum = t0.[Prod Ord]
 INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
 LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
 
-WHERE [Process Order]=$item
-ORDER BY t2.docnum, [Date_Diff]";
-$getResults = $conn->prepare($subcontracting_results);
+$clause
+
+ORDER BY [Date_Diff]";
+
+$getResults = $conn->prepare($production_exceptions);
 $getResults->execute();
 $production_exceptions_results = $getResults->fetchAll(PDO::FETCH_BOTH);
 //$json_array = array();
 //var_dump($production_exceptions_results);
-echo json_encode(array($production_exceptions_results));
+echo json_encode(array($production_exceptions_results)); 
 ?>
 
 

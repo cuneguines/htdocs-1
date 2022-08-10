@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html style="overflow:hidden"xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
@@ -76,7 +76,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><strong>Company name</strong></a>
+                <a class="navbar-brand" href=""><strong>KENT STAINLESS</strong></a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -297,7 +297,7 @@
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a class="active-menu" href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a>
+                        <a class="active-menu" href=""><i class="fa fa-dashboard"></i> Dashboard</a>
                     </li>
 
 
@@ -331,11 +331,11 @@
         <div id="page-wrapper">
             <div class="header">
                 <h1 class="page-header">
-                    Dashboard <small>Summary of Issues</small>
+                   <small>Summary of Issues</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">Products</a></li>
+                    <li><a href="">Products</a></li>
                     <li class="active">Issues</li>
                 </ol>
 
@@ -349,7 +349,7 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" style="overflow-x:scroll;overflow-y:scroll;min-height:800px;max-height:800px; width:100%;">
+                    <div class="card-body" style="overflow-x:scroll;overflow-y:scroll;min-height:600px;max-height:600px; width:100%;">
 
 
                         <table id="products" style="position: sticky;overflow-x:scroll">

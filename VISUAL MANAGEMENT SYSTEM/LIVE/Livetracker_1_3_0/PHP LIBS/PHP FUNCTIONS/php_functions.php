@@ -65,12 +65,17 @@
         $red = 4;       // 0 - 4
         $orange = 8;    // 4 - 8
         $green = 13;    // 8 - 11
-        $concept = 15;    // 15
-
-        for($j = $start_range-3 ; $j <= $end_range ; $j++){
+        $concept = 15;   
+       
+        
+        for($j = $start_range-3 ; $j <= $end_range-1 ; $j++){
             // READS FROM PROJECT_BUTTON_BUFFER
             $str_t = $data[$j];
-
+            if($j ==-1)
+                {
+                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:pink'>".$str_t."</td>";
+            }
+            else
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
             if($j >= 0 && $j <= $green){
                 

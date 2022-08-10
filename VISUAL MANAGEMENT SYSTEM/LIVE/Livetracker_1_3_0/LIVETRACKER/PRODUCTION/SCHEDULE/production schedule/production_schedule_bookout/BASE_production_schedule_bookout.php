@@ -21,7 +21,7 @@
         <!-- PHP INITALISATION -->
         <?php 
             $start_time = time()-60*60*24*7*5;
-            $start_range = 0;
+            $start_range = -1;
             $end_range = 14;#function array_sort($array){sort($array); return $array;}
 
             function generate_filter_optionss($table, $field){
@@ -113,7 +113,7 @@
                                     <th style = 'width:6%;'>Week -2</th> 
                                     <th style = 'width:6%;'>Week -1</th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
-                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[(date("w")+$i) %7]?></th>
+                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 1 ? 'background-color:red;' : "")?>'><?=$days[(date("w")-1+$i) %7]?></th>
                                     <?php endfor; ?>
                                     <th style = 'width:6%;'><?=$end_range?> +1</th>
                                     
