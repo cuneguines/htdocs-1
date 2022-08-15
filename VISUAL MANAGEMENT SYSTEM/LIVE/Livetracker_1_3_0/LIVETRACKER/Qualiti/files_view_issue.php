@@ -76,6 +76,7 @@ $str = str_replace('"', '', $str);
 switch($x)
 {
 case 'jpg':
+case 'JPG':
     
     ?>
         <img style='height:400px; width:400px;float:left;margin-left:2%' src="<?php echo data_uri($str, 'image/jpg'); ?>"> 

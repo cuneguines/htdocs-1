@@ -334,8 +334,8 @@
                    <small>Summary of Issues</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="">Products</a></li>
+                    <li><a href="">Home</a></li>
+                    <li><a href="chart_page.php">Charts</a></li>
                     <li class="active">Issues</li>
                 </ol>
 
@@ -349,13 +349,13 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" style="overflow-x:scroll;overflow-y:scroll;min-height:600px;max-height:600px; width:100%;">
+                    <div class="card-body" style="overflow-x:scroll;overflow-y:scroll;height:68vh; width:100%;">
 
 
-                        <table id="products" style="position: sticky;overflow-x:scroll">
+                        <table id="products" style="position: sticky;overflow-x:scroll;">
                             <thead style="position:sticky;top:0;z-index:+2">
                                 <tr class="head">
-                                    <th style="position: sticky;width:100px;left:0px;color:white">Code</th>
+                                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
                                     <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
                                     <th style="position: sticky;width:200px;left:300px;color:white">Issue</th>
                                     <th style="width:100px">ItemCode</th>
@@ -382,9 +382,9 @@
 
                                 <?php foreach ($quality_results as $row) : ?>
                                     <tr>
-                                        <td style="position: sticky;left:0px;background:#0a8dce"><?= $row["code"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#0a8dce"><?= $row["ItemName"] ?></td>
-                                        <td style="position: sticky;left:300px;background:#0a8dce"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
+                                        <td style="position: sticky;left:0px;background:#0a8dcea6"><?= $row["code"] ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#0a8dcea6"><?= $row["ItemName"] ?></td>
+                                        <td style="position: sticky;left:300px;background:#0a8dcea6"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
                                         </td>
                                         <td><?= $row["ItemCode"] ?></td>
                                         <td><?= $row["Item Group"] ?></td>
@@ -433,7 +433,7 @@
 
                 <div class="filtercontainer" style="background-color: #337ab7;
                              width: 100%;
-                             height: 50px;display:none">
+                             height: 50px;">
                     <div class="filter">
                         <div class="text">
                             <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#337ab7;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
