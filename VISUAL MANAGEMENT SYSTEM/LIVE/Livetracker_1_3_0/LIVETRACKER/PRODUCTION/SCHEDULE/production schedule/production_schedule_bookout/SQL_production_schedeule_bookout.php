@@ -3,8 +3,7 @@
 <?php
 
 
-$tsql="select 
-t0.[Sales Order],
+$tsql="select t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
 t0.[Sales Person],
@@ -15,7 +14,6 @@ t0.[Month Difference PD],
 
 CASE 
 
-
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -4
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -3
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -1 THEN -2
@@ -24,8 +22,6 @@ WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= 14 THEN 14
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
 END [Promise Diff Days], /* DAYS HERE */
 CASE 
-
-
 
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) = 0 THEN 'Monday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =1 THEN 'Tuesday'
@@ -44,10 +40,7 @@ WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =16 THEN 'TNNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) <0 THEN 'Other'
 ELSE 'Ot'
 
-
 END [Days of the Week], /* DAYS HERE */
-
-
 
 
 
@@ -58,7 +51,6 @@ t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
 t0.[Del Date Due UNP],
-
 
 t0.[Engineer],
 t0.[risk],
@@ -75,10 +67,12 @@ t0.[Planned Hrs],
 t0.[Sub Contract Status],
 t0.[Complete],
 CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
-isnull(t0.[Product Group],'No Group') [Product Group]
+isnull(t0.[Product Group],'No Group') [Product Group],
+t0.U_EORI [EORI], 
+t0.U_BNComCod [Commodity Code]
 FROM(
 SELECT
-	DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
     t0.DocDueDate[DueDate],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
@@ -123,7 +117,8 @@ SELECT
                 WHEN t4.CmpltQty < t4.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
                 ELSE 0 
             END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group],
+                t20.U_EORI, t5.U_BNComCod
    
     FROM ordr t0
     INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
@@ -163,7 +158,7 @@ SELECT
                            group by t1.U_IIS_proPrOrder
                            Having sum(t0.issuedqty) = 0 and sum(t1.CmpltQty) = 0
                            ) t15 on t15.U_IIS_proPrOrder = t4.U_IIS_proPrOrder
-
+                                                left join  ocrd t20 on t20.CardCode = t0.CardCode
     
     WHERE t1.LineStatus = 'O'
     AND t1.ItemCode <> 'TRANSPORT' 
@@ -174,8 +169,8 @@ SELECT
 UNION ALL
 
 SELECT
-	DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
-	t0.CardCode[cardcode],
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+    t0.CardCode[cardcode],
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
@@ -217,7 +212,8 @@ SELECT
             WHEN t0.CmpltQty < t0.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
             ELSE 0 
         END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group],
+                t12.U_EORI, t5.U_BNComCod
    
    FROM owor t0
    
@@ -242,11 +238,12 @@ SELECT
                WHERE t2.ItemType = 'L'                         
                GROUP BY t1.U_IIS_proPrOrder,t1.ItemCode
    ) t11 ON t11.U_IIS_proPrOrder = t0.U_IIS_proPrOrder and t11.ItemCode = t0.ItemCode
-   
+   left join  ocrd t12 on t12.CardCode = t0.CardCode
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
             ) t0
-   ORDER BY t0.[Project]";
+   ORDER BY t0.[Project]
+";
    ?>
 
 

@@ -311,7 +311,16 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-sitemap"></i> Services<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Health and Safety<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level_services" style="overflow-y:scroll">
+
+
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit Findings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -352,10 +361,7 @@
                     <div class="card-body" style="min-height:700px;max-height:700px; width:100%;">
 
 
-                        <?php 
- include './graph.php';
-
-?>
+                        <?php include './graph.php'; ?>
 
 
                     </div>

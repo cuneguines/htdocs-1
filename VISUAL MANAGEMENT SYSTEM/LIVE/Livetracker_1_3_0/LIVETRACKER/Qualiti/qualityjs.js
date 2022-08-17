@@ -60,8 +60,8 @@ $(document).ready(function () {
             rows.hide();
             rows.filter(":contains('" + data + "')").show();
         }
-
-
+//Array to store groups
+        var queryArr = [];   
         //AJAX FOR PRODUCT SUB GROUP
         $.ajax({
 
@@ -97,7 +97,7 @@ $(document).ready(function () {
 
                             //$(event.currentTarget).append('<li class=newli  value="' + Product_Group_Two + '"><a  href="#"><span class="tab">' + Product_Group_Two + '</span></a></li>');
                          
-                           
+                            queryArr.push(Product_Group_Two);
        
                         }
 
@@ -106,7 +106,10 @@ $(document).ready(function () {
 
             }
         });
-
+        
+        $.each(queryArr, function(index, value) {
+            alert(index + ': ' + value);
+          });
 
     });
 

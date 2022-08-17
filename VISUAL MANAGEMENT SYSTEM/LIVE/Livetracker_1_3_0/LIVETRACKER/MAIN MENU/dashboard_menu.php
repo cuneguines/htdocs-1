@@ -281,14 +281,14 @@
 							</div>
 							<div style = "height:17.5vh; margin-top:0px;">
 								<div style = "width:100%; height:4vh; margin-bottom:1vh;">
-										<h1 style = "font-size:4vh;"><?php // $comp_po_year_d[$qlb_this]["Process Orders"];?></h1>
+										<h1 style = "font-size:4vh;"><?=$comp_po_year_d[$qlb_this]["Process Orders"];?></h1>
 								</div>
 								<div style = "width:100%; height:7vh;  margin-bottom:1vh;">
 									<div style = "height:100%; width:50%; float:left; text-align:center;">
-										<p style = "font-size:2vh; margin:0;"><?php // "Material</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Mat Efficiency"]."<br>".($comp_po_year_d[$qlb_this]["Difference_Mat"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>€".$comp_po_year_d[$qlb_this]["Difference_Mat"]."</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>€".($comp_po_year_d[$qlb_this]["Difference_Mat"]*-1)."</p>")?></p>
+										<p style = "font-size:2vh; margin:0;"><?="Material</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Mat Efficiency"]."<br>".($comp_po_year_d[$qlb_this]["Difference_Mat"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>€".$comp_po_year_d[$qlb_this]["Difference_Mat"]."</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>€".($comp_po_year_d[$qlb_this]["Difference_Mat"]*-1)."</p>")?></p>
 									</div>
 									<div style = "height:100%; width:50%; float:right;">
-										<p style = "font-size:2vh; margin:0;"><?php // "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Lab Efficiency"]."<br>".($comp_po_year_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Difference_Lab"]." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_year_d[$qlb_this]["Difference_Lab"]*-1)." Hrs</p>")?></p>
+										<p style = "font-size:2vh; margin:0;"><?="Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Lab Efficiency"]."<br>".($comp_po_year_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_year_d[$qlb_this]["Difference_Lab"]." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_year_d[$qlb_this]["Difference_Lab"]*-1)." Hrs</p>")?></p>
 									</div>
 								</div>
 								<div>
@@ -361,11 +361,10 @@
 								</div>
 								<div style = "width:100%; height:7vh;  margin-bottom:1vh;">
 									<div style = "height:100%; width:50%; float:left; text-align:center;">
-									<p style = "font-size:2vh; margin:0;"><?= "Material</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Mat Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Mat Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Mat"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>€".$comp_po_week_d[$qlb_this]["Difference_Mat"]."</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>€".(($comp_po_week_d[$qlb_this]["Difference_Mat"] != 0 ? $comp_po_week_d[$qlb_this]["Difference_Mat"] : 0 )*-1)."</p>")?></p>  
+										<p style = "font-size:2vh; margin:0;"><?= "Material</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Mat Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Mat Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Mat"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>€".$comp_po_week_d[$qlb_this]["Difference_Mat"]."</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>€".(($comp_po_week_d[$qlb_this]["Difference_Mat"] != 0 ? $comp_po_week_d[$qlb_this]["Difference_Mat"] : 0 )*-1)."</p>")?></p>  
 									</div>
 									<div style = "height:100%; width:50%; float:right;">
-										<p style = "font-size:2vh; margin:0;"><?= "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Lab Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Lab Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".number_format($comp_po_week_d[$qlb_this]["Difference_Lab"])." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".(($comp_po_week_d[$qlb_this]["Difference_Lab"] != 0 ? number_format($comp_po_week_d[$qlb_this]["Difference_Lab"]) : 0 )*-1)."</p>")?></p>
-										<!-- <p style = "font-size:2vh; margin:0;"><?= "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Lab Efficiency"] == null ? "0.00%" : $comp_po_week_d[$qlb_this]["Lab Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".number_format($comp_po_week_d[$qlb_this]["Difference_Lab"])." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".(($comp_po_week_d[$qlb_this]["Difference_Lab"]))."</p>")?></p> -->
+										<p style = "font-size:2vh; margin:0;"><?= "Labour</p><p style = 'font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Lab Efficiency"] == 0 ? "0.00%" : $comp_po_week_d[$qlb_this]["Lab Efficiency"]."<br>").($comp_po_week_d[$qlb_this]["Difference_Lab"] >= 0 ? "<p style = 'color:green;font-size:2vh;margin:0;font-weight:bold;'>".$comp_po_week_d[$qlb_this]["Difference_Lab"]." Hrs</p>" : "<p style = 'color:red;font-size:2vh;margin:0;font-weight:bold;'>".($comp_po_week_d[$qlb_this]["Difference_Lab"]*-1)." Hrs</p>")?></p>
 									</div>
 								</div>
 								<div>

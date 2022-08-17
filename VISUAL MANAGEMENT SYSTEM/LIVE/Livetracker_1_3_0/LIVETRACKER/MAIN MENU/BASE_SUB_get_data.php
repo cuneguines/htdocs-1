@@ -1,5 +1,16 @@
 <?php
+    /* NEW LINES THAT FIXES CLAUSES ERROR ON UPDATE BUTTON FOR MAIN PAGE (LINE 4 5 AND 6) EXPLANATION BELOW*/
+        
+    $clause = "";
+    $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+    $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
 
+    /*  
+        WHAT HAPPENS IS THAT FOR THE NUMBER ON THE PRODUCTION EXCEPTIONS BUTTON THIS PAGES CALLS AND EXECUTES THE PRODUCTION EXCEPTIONS  QUERY AND COUNT OVERDUE items (LINES 36 TO 48)
+        NORMALLY THIS QUERY EXPECTS THE CLAUSES TO ALREADY BE DEFINED WHICH IS DONE VIA A POST ON THE BASE OF THE PROD EXCEPTions FILE WHICH WOULD HAPPEN BEFORE THIS QUERY IS INCLUDED ON THAT PAGE
+        
+        HERE HOWEVER IN THIS CASE THAT DOESENT HAPPEN SO I MANUALLY DEFINE THE CLAUSES TO THE DEFALT CASE AS IT APPEARS IN THE BASE PROD EXCEPTIONS FILE SO IT RUNS AS IT USED TO FROM HERON
+    */
 
     include '../../SQL CONNECTIONS/conn.php';
     include "../../PHP LIBS/PHP SETTINGS/php_settings.php";
@@ -77,7 +88,7 @@
     $getResults->execute();
     $comp_po_month_d = $getResults->fetchAll(PDO::FETCH_BOTH);
     $getResults = $conn->prepare($comp_po_y_q);
-    //$getResults->execute();
+    $getResults->execute();
     $comp_po_year_d = $getResults->fetchAll(PDO::FETCH_BOTH);
 
     $getResults = $conn->prepare($p_hours_w_q);

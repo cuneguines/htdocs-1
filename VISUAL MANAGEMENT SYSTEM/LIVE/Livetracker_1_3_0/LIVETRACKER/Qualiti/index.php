@@ -311,7 +311,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-sitemap"></i> Services<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Health and Safety<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -319,6 +319,16 @@
                         </ul>
 
                     </li>
+                    <li>
+                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit findings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level_services" style="overflow-y:scroll">
+
+
+
+                        </ul>
+
+                    </li>
+                    
                 </ul>
                 </li>
                 </ul>
