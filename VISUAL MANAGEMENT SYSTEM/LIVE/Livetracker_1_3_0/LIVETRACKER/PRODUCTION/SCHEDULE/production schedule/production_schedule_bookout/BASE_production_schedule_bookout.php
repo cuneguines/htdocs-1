@@ -86,17 +86,17 @@
                         <p class = "smedium">Address</p>
                         <h2 class = "inner sixth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Stage</p>
+                        <p class = "smedium">EORI</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
-                       <!--  <p class = "smedium">Production</p>
+             <!--  <p class = "smedium">Production</p>
                         <h2 class = "inner eighth medium">Nothing Selected</h2>
-                        <br>
-                        <p class = "smedium">Comments</p>
+                        <br> -->
+                        <p class = "smedium">Commodity Code</p>
                         <h2 class = "inner eleventh medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Comments 2</p>
-                        <h2 class = "inner twent medium">Nothing Selected</h2> -->
+                        <!-- <p class = "smedium">Comments 2</p>
+                        <h2 class = "inner twent medium">Nothing Selected</h2>  -->
                     </div>
                 </div><!--
              --><div id = "sched_right">
@@ -260,8 +260,8 @@
                                             $results[$i]["Promise Week Due"],
                                             $results[$i]["Est Prod Hrs"],
                                             $results[$i]["Addr"],
-                                            $results[$i]["Stage"],
-                                            $comments,
+                                            $results[$i]["EORI"] == NULL ? "NO EORI" : $results[$i]["EORI"],
+                                            $results[$i]["Commodity Code"],
                                             $comments_2,
                                             
                                             $results[$i]["Quantity"],

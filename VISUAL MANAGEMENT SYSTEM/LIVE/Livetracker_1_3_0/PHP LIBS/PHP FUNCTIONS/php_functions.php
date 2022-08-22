@@ -170,6 +170,7 @@
     }
 
     function generate_schedule_buttonsss($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week){
+       
         $str = 
         "<button id = 'eng_btn'
             style = 'margin-bottom:3px;' 

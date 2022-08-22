@@ -405,7 +405,7 @@ if (isset($_GET['po'])) {
                             <?php if (!isset($_GET['po'])) : ?><th width="10%">Customer</th><?php endif; ?>
                             <th width="4%">Sales Order</th>
                             <th width="5%">Process Order</th>
-                            <th width="11%">Description</th>
+                            <th width="19%">Description</th>
                             <?php if (isset($_GET['po'])) : ?><th width="5%">Stock</th><?php endif; ?>
                             <th width="6%">ItemCode</th>
                             <?php if (isset($_GET['po'])) : ?><th width="5%">Comitt.</th><?php endif; ?>
@@ -413,7 +413,7 @@ if (isset($_GET['po'])) {
                             <th width="5%">SC Date</th>
                             <th width="4%">PO</th>
                             <th width="6%">Due In</th>
-                            <th width="8%">Status</th>
+                            
                             <th width="8%">Promise Date</th>
 
                             <th width="9%">Engineer</th>
@@ -524,7 +524,7 @@ if (isset($_GET['po'])) {
                                 <td><?='' ?></td>
                                 <td><?= $row["Latest Purchase Ord"] == NULL ? 'N/A' : $row["Latest Purchase Ord"] ?></td>
                                 <td><?= $row["Purchase Due"] == NULL ? 'N/A' : $row["Purchase Due"] ?></td>
-                                <td class='lefttext'><?=''?></td>
+                               
                                 <td><?= $row["Due Date"] == NULL ? "NO FLOOR DATE" : $row["Due Date"] ?></td>
 
                                 <td><?= $row["Engineer"] ?></td>
@@ -548,23 +548,23 @@ if (isset($_GET['po'])) {
                 </div>
                 <div id="filter_container" style="width:75%;margin-left:2%;margin-right:2%">
                     <div id="filters" class="fill red rounded">
-                        <div class="filter widers">
+                        <!-- <div class="filter widers">
                             <div class="text">
                                 <button class="fill red medium wtext">Status</button>
                             </div>
                             <div class="content">
                                 <select id="select_status" class="selector fill medium">
                                     <option value="All" selected>All</option>
-                                    <?php generate_filter_options($production_exceptions_results, "Sub_Con_Status"); ?>
+                                    <?php generate_filter_options($production_exceptions_results, "Due Within"); ?>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="filter widers">
                             <div class="text">
-                                <button class="fill red medium wtext">Customer</button>
+                                <button style="margin-left:40%"class="fill red medium wtext">Customer</button>
                             </div>
                             <div class="content">
-                                <select id="select_customer" class="selector fill medium">
+                                <select id="select_customer" style="margin-left:40%"class="selector fill medium">
                                     <option value="All" selected>All</option>
                                     <?php generate_filter_options($production_exceptions_results, "Customer"); ?>
                                 </select>
@@ -572,10 +572,10 @@ if (isset($_GET['po'])) {
                         </div>
                         <div class="filter widers">
                             <div class="text">
-                                <button class="fill red medium wtext">Supplier</button>
+                                <button class="fill red medium wtext"style="margin-left:40%">Supplier</button>
                             </div>
                             <div class="content">
-                                <select id="select_supplier" class="selector fill medium">
+                                <select id="select_supplier" class="selector fill medium"style="margin-left:40%">
                                     <option value="All" selected>All</option>
                                     <?php generate_filter_options($production_exceptions_results, "Supplier");    ?>
                                 </select>
@@ -592,7 +592,7 @@ if (isset($_GET['po'])) {
                                 </select>
                             </div>
                         </div>
-                        <div class="filter widers" style="float:left;margin-left:5%">
+                        <div class="filter widers" style="float:left;margin-left:15%">
                             <div class="text" style="width:70%">
                                 <button class="search_option_button fill white medium rtext " id="multiselect_customer" style="width:100%;border-radius: 12px;">SELECT CUSTOMERS</button>
                             </div>
