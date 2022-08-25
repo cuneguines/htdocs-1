@@ -26,7 +26,16 @@
 
             function generate_filter_optionss($table, $field){
                 foreach(array_sort(array_unique(array_column($table, $field))) as $element){
-                    if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other' )
+                   //IF TODAY IS MONDAY GET LASTWORKINGDAY FROM TABLE
+                    if(date("w")==1)
+                    {
+                    if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other'||$element=='LastworkingDay' )
+                    {
+                    echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+                    }
+                }
+                else
+                if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other')
                     {
                     echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
                     }
@@ -38,18 +47,18 @@
         <?php include '../../../../../SQL CONNECTIONS/conn.php'; ?>
         <?php //include './SQL_production_schedule_new.php'; ?>
         <?php include './SQL_production_schedeule_bookout.php'; ?>
-        <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);print_r(count($results));?>
+        <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>
 
         <?php 
         
         $days = array(
-            0 => 'Sun',
-            1 => 'Mon',
-            2 => 'Tue',
-            3 => 'Wed',
-            4 => 'Thur',
-            5 => 'Fri',
-            6 => 'Sat');
+           
+            0 => 'Mon',
+            1 => 'Tue',
+            2 => 'Wed',
+            3 => 'Thur',
+            4 => 'Fri');
+           
         ?>
         
     </head>
@@ -112,8 +121,15 @@
                                     <th style = 'width:6%;'>Week <<</th> 
                                     <th style = 'width:6%;'>Week -2</th> 
                                     <th style = 'width:6%;'>Week -1</th>
-                                    <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
-                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 1 ? 'background-color:red;' : "")?>'><?=$days[(date("w")-1+$i) %7]?></th>
+                                    <th style = 'width:6%;'>Ship List</th>
+                                    
+                                    <?php for($i = 1 ; $i < $end_range ; $i++) : ?>
+                                        
+                                        
+                                           
+                                
+                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 1 ? 'background-color:red;' : "")?><?=($i == 0 ? 'color:black;' : "")?>'><?=$days[(date("w")-1+$i+4) %5]?></th>
+                                   
                                     <?php endfor; ?>
                                     <th style = 'width:6%;'><?=$end_range?> +1</th>
                                     
@@ -130,7 +146,8 @@
                                     $project_days_buffer = array(null);                        
                                     $first = 1;
                                 ?>
-                                <?php for($i = 0 ; $i <= sizeof($results) ; $i++):?>
+                                
+                                <?php for($i = 0; $i <= sizeof($results) ; $i++):?>
                                     <?php 
 
 
@@ -149,8 +166,7 @@
                                                 print_values_22($project_button_buffer,$start_range,$end_range-1);
                                                  //Empty table data 
                                                  echo "<td style = 'border-right:1px solid #454545;'></td>";
-                                                //echo ($start_range);
-                                                //echo ($end_range);
+                                                
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
                                             echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";

@@ -392,9 +392,9 @@
 
                                 <?php foreach ($quality_results as $row) : ?>
                                     <tr>
-                                        <td style="position: sticky;left:0px;background:#0a8dcea6"><?= $row["code"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#0a8dcea6"><?= $row["ItemName"] ?></td>
-                                        <td style="position: sticky;left:300px;background:#0a8dcea6"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
+                                        <td style="position: sticky;left:0px;background:#3fa5d3"><?= $row["code"] ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#3fa5d3"><?= $row["ItemName"] ?></td>
+                                        <td style="position: sticky;left:300px;background:#3fa5d3"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
                                         </td>
                                         <td><?= $row["ItemCode"] ?></td>
                                         <td><?= $row["Item Group"] ?></td>
@@ -405,7 +405,7 @@
                                         <td><?= $row["U_area_nc_raised"] ?></td>
                                         
                                        
-                                        <td><?= $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
+                                        <td class="Group1"><?= $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
                                         <td class="Group2"><?= $row["U_Product_Group_Two"] ?></td>
                                         <td class="Group3"><?= $row["U_Product_Group_Three"] ?></td>
                                         <td><?= $row["U_prev_action_owner"] ?></td>

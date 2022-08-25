@@ -18,11 +18,11 @@ console.log(data[0]);
                
                 if (data[0].length==0)
                 {
-                    $('.brred').css({'background-color': 'yellow'}); 
+                    $('.brred').css({'background-color': ''}); 
                 }
                 else
                 {
-                $('.brred').css({'background-color': 'blue'}); 
+                $('.brred').css({'background-color': 'yellow'}); 
                 }
                
                

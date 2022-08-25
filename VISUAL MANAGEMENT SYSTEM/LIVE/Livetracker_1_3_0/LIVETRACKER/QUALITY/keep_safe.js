@@ -17,7 +17,8 @@ $(document).ready(function () {
             rowss.show();
         } else {
             rowss.hide();
-            rowss.filter(":contains('" + data + "')").show();
+            $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
+            $("#products td.Group2 tr:visible:contains('" + data + "')").parent().show();
 
         }
 
@@ -43,7 +44,8 @@ $(document).ready(function () {
             //var rows = $("table tbody tr:visible td").find("tr:not('.head')");
             
                 rowss.hide();
-                rowss.filter(":contains('" + data + "')").show();
+               // rowss.filter(":contains('" + data + "')").show();
+               $("#products td visible.Group3:contains('" + data + "')").parent().show();
 
             
         });
@@ -75,7 +77,7 @@ $(document).ready(function () {
             rows.show();
         } else {
             rows.hide();
-            rows.filter(":contains('" + data + "')").show();
+          $("#products td visible.Group1:contains('" + data + "')").parent().show();
         }
 
 

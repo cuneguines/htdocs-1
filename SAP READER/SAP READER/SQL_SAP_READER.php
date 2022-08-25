@@ -166,8 +166,12 @@ if(isset($sales_order)){
 	t0.U_Act_Eng_Time[Act Eng Time],
 	t0.U_Est_Prod_Hrs[Est Production Time],
     t0.DelivrdQty [Delivered Qty],
+    
 	t1.OnHand [On Hand],
-	FORMAT(t0.U_Promise_Date,'dd-MM-yyyy')[Promise Date]
+	FORMAT(t0.U_Promise_Date,'dd-MM-yyyy')[Promise Date],
+    t0.DelivrdQty,
+    t0.OrderedQty,
+          t0.LineStatus
 		FROM RDR1 t0
         LEFT JOIN OITM t1 ON t1.ItemCode = t0.ItemCode
         LEFT JOIN ORDR t2 ON t2.DocEntry = t0.DocEntry

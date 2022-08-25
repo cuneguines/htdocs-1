@@ -5,7 +5,7 @@
             $end_range = 30;
         ?>
 <?php
-$item=(!empty($_POST['item'])? $_POST['item'] : 0);
+//$item=(!empty($_POST['item'])? $_POST['item'] : 0);
 
 // IF P EXCEPTIONS DETECTS PROCESS ORDER POST INCLUDE ALL BOM ITEMS NOT ISSUED INCLUDING THOSE IN STOCK
 // OTHERWiSE PULL ALL BOM ITEMS ON ALL PROCESS ORDERS THAT ARE IN MATERIAL SHORTAGE REGARDLESS OF IF ITS ISSUED OR NOT
@@ -24,6 +24,12 @@ if (isset($_GET['po'])) {
     }
 } else {
     $clause = '';
+    $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+    $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
+}
+if(isset($_POST['item'])) {
+    $item=(!empty($_POST['item'])? $_POST['item'] : 0);
+    $clause = "WHERE [Process Order] =  $item";
     $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
     $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
 }

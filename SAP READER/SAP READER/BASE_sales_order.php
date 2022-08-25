@@ -127,9 +127,10 @@
                             <thead>
                                 <tr class = "dark_grey wtext smedium head" style = "z-index:+3;">
                                     <th width = "3%">#</th>
-                                    <th class = "lefttext" width = "27%">Item Name</th>
+                                    <th class = "lefttext" width = "24%">Item Name</th>
                                     <th class = "lefttext" width = "8%">Item Code</th>
                                     <th class = "lefttext" width = "3%">Qty</th>
+                                    <th class = "lefttext" width = "3%">Ordered Qty</th>
                                     <th class = "lefttext" width = "8%">Price</th>
                                     <th class = "lefttext" width = "11%">Sales Value</th>
                                     <th class = "lefttext" width = "5%">Quantity Delivered</th>
@@ -145,23 +146,32 @@
                             <tbody class = "btext white smedium">
                                 <?php foreach($sales_order_content as $row): ?>
                                     <tr>
+                                        <?php
+                                    if ($row["LineStatus"] =="C") {
+                                $rowcolor = "style = 'background-color:pink;'";
+                            }
+                            else $rowcolor='white';
+                            ?>
+                            
+                                
                                         <td><?=$row["Line Number"]+1?></td>
-                                        <td class = "lefttext"><?=$row["Item Name"]?></td>
-                                        <td class = "lefttext"><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Item Code']?>'"><?=$row["Item Code"]?></button></td>
-                                        <td class = "righttext"><?=number_format($row["Quantity"])?></td>
-                                        <td class = "righttext"><?=$row["Currency"]." ".number_format($row["Price"],2)?></th>
-                                        <td class = "righttext"><?="EUR ".number_format($row["Total"],2).($sales_order_header[0]["Currency"] != "EUR" ? " (".$row["Currency"]." ".number_format($row["Total In FC"],2).")" : "")?></td>
+                                        <td  class="lefttext"<?= $rowcolor ?>><?=$row["Item Name"]?></td>
+                                        <td class = "lefttext"<?= $rowcolor ?>><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Item Code']?>'"><?=$row["Item Code"]?></button></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Quantity"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["OrderedQty"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=$row["Currency"]." ".number_format($row["Price"],2)?></th>
+                                        <td class = "righttext"<?= $rowcolor ?>><?="EUR ".number_format($row["Total"],2).($sales_order_header[0]["Currency"] != "EUR" ? " (".$row["Currency"]." ".number_format($row["Total In FC"],2).")" : "")?></td>
                                         
                                         <!-- IF ITEM CODE IS A TARIFF OR TRANSPORT DONT PRINT REMAINING TD ELEMENTS SEE SALES ORDER 166111 FOR EX -->
                                         <?php if($row["Item Code"] != '2018 US STEEL TARIFF' && $row["Item Code"] != 'TRANSPORT'):?>
-                                        <td class = "righttext"><?=floatval($row["Delivered Qty"])?></td>
-                                        <td class = "righttext"><?=floatval($row["On Hand"])?></td>
-                                        <td class = "righttext"><?=number_format($row["Est Eng Time"])?></td>
-                                        <td class = "righttext"><?=number_format($row["Act Eng Time"])?></td>
-                                        <td class = "righttext"><?=number_format($row["Est Production Time"])?></td>
-                                        <td><?php if($row['Process Order']):?> <button onclick = "location.href='./BASE_process_order.php?process_order=<?=$row['Process Order']?>'"><?=$row["Process Order"]?></button><?php endif; ?></td>
-                                        <td><?=$row["U_In_Sub_Con"]?></td>
-                                        <td><?=$row["Promise Date"]?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["Delivered Qty"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["On Hand"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Est Eng Time"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Act Eng Time"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Est Production Time"])?></td>
+                                        <td <?= $rowcolor ?>><?php if($row['Process Order']):?> <button onclick = "location.href='./BASE_process_order.php?process_order=<?=$row['Process Order']?>'"><?=$row["Process Order"]?></button><?php endif; ?></td>
+                                        <td <?= $rowcolor ?>><?=$row["U_In_Sub_Con"]?></td>
+                                        <td <?= $rowcolor ?>><?=$row["Promise Date"]?></td>
                                         <?php endif; ?>
                                     </tr>   
                                 <?php endforeach; ?>
