@@ -85,10 +85,10 @@
                         <p class = "smedium">Engineer</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Delivery Date and Week Number</p>
+                        <p class = "smedium">Delivery Date </p>
                         <h2 class = "inner fourteenth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">New Title</p>
+                        <p class = "smedium">Promise Date</p>
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
@@ -98,14 +98,14 @@
                         <p class = "smedium">EORI</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
-             <!--  <p class = "smedium">Production</p>
-                        <h2 class = "inner eighth medium">Nothing Selected</h2>
-                        <br> -->
+               <!-- <p class = "smedium">Production</p>
+                        <h2 class = "inner eighth medium">Nothing Selected</h2> -->
+                        
                         <p class = "smedium">Commodity Code</p>
                         <h2 class = "inner eleventh medium">Nothing Selected</h2>
                         <br>
-                        <!-- <p class = "smedium">Comments 2</p>
-                        <h2 class = "inner twent medium">Nothing Selected</h2>  -->
+                        <p class = "smedium">Comments 1</p>
+                        <h2 class = "inner twenty medium">Nothing Selected</h2>  
                     </div>
                 </div><!--
              --><div id = "sched_right">
@@ -256,7 +256,7 @@
                                             $overwrite = "redshadow";
                                         }
                                        
-                                        $comments = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
+                                        $commentss = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];
                                         
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
@@ -273,12 +273,12 @@
                                             $results[$i]["Sales Person"],
                                             str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
                                             $results[$i]["Del Date Due UNP"],
-                                            $results[$i]["Promise Week Due"],
+                                            $results[$i]["Promise Date"],
                                             $results[$i]["Est Prod Hrs"],
                                             $results[$i]["Addr"],
                                             $results[$i]["EORI"] == NULL ? "NO EORI" : $results[$i]["EORI"],
                                             $results[$i]["Commodity Code"],
-                                            $comments_2,
+                                            $commentss,
                                             
                                             $results[$i]["Quantity"],
                                             $results[$i]["Days Open"],
@@ -491,7 +491,7 @@
                                 <button onclick = "export_to_excel('production_schedule')" class = "grouping_page_corner_buttons fill medium green wtext rounded" style = "float:left; width:100%">EXCEL</button>
                             </div>
                             <div id = "button_container_sched_btn">
-                                <button onclick = "location.href='../../../MAIN MENU/dashboard_menu.php'" class = "grouping_page_corner_buttons fill medium purple wtext rounded" style = "float:left; width:100%">MAIN MENU</button>
+                                <button onclick = "location.href='../../../../MAIN MENU/dashboard_menu.php'" class = "grouping_page_corner_buttons fill medium purple wtext rounded" style = "float:left; width:100%">MAIN MENU</button>
                             </div>
                         </div>
                     </div>

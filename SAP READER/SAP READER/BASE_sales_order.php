@@ -131,10 +131,11 @@
                                     <th class = "lefttext" width = "8%">Item Code</th>
                                     <th class = "lefttext" width = "3%">Qty</th>
                                     <th class = "lefttext" width = "3%">Ordered Qty</th>
-                                    <th class = "lefttext" width = "8%">Price</th>
-                                    <th class = "lefttext" width = "11%">Sales Value</th>
                                     <th class = "lefttext" width = "5%">Quantity Delivered</th>
                                     <th class = "lefttext" width = "4%">On Hand</th>
+                                    <th class = "lefttext" width = "8%">Price</th>
+                                    <th class = "lefttext" width = "11%">Sales Value</th>
+                                   
                                     <th class = "lefttext" width = "4%" >Est Eng Time</th>
                                     <th class = "lefttext" width = "4%" >Act Eng Time</th>
                                     <th class = "lefttext" width = "5%" >Est Fab Hours</th>
@@ -159,13 +160,14 @@
                                         <td class = "lefttext"<?= $rowcolor ?>><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Item Code']?>'"><?=$row["Item Code"]?></button></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Quantity"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["OrderedQty"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["Delivered Qty"])?></td>
+                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["On Hand"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=$row["Currency"]." ".number_format($row["Price"],2)?></th>
                                         <td class = "righttext"<?= $rowcolor ?>><?="EUR ".number_format($row["Total"],2).($sales_order_header[0]["Currency"] != "EUR" ? " (".$row["Currency"]." ".number_format($row["Total In FC"],2).")" : "")?></td>
                                         
                                         <!-- IF ITEM CODE IS A TARIFF OR TRANSPORT DONT PRINT REMAINING TD ELEMENTS SEE SALES ORDER 166111 FOR EX -->
                                         <?php if($row["Item Code"] != '2018 US STEEL TARIFF' && $row["Item Code"] != 'TRANSPORT'):?>
-                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["Delivered Qty"])?></td>
-                                        <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["On Hand"])?></td>
+                                        
                                         <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Est Eng Time"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Act Eng Time"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=number_format($row["Est Production Time"])?></td>

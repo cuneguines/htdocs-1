@@ -9,18 +9,24 @@ t0.[Weeks Open],
 t0.[Month Difference PD],
 
 CASE
+WHEN DATEDIFF(DAY,[Monday LW Date],t0.[Del Date Due UNP]) < -6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] ) =-3 THEN -1/*LAST FRIDAY*/
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -4
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])  >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -3
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -4 THEN -2
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) =-3 THEN -1
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < =-3THEN -2
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])=-1 Then-1
+
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= 15 THEN 14
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=3 THEN @counter+1
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=4THEN @counter+2
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=5THEN @counter+3
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=6THEN @counter+4
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=7THEN @counter+5
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=8THEN @counter+6
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=11THEN @counter+7
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=3 THEN @counter+1
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=4THEN @counter+2
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=5THEN @counter+3
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=6THEN @counter+4
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=7THEN @counter+5
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=8THEN @counter+6
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=9THEN @counter+7
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=10THEN @counter+8
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=11THEN @counter+9
+
+
 
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
 END [Promise Diff Days] ,/* DAYS HERE */
@@ -97,6 +103,7 @@ FROM(
 
                                                 SELECT
                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+                                                               DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 isnull(t1.U_delivery_date, t0.DocDueDate)[DueDate],
                                                                 t0.docnum [Sales Order],
                                                                 t0.cardname [Customer],
@@ -208,6 +215,7 @@ FROM(
                                                 ----STOCK ORDERS ONLY-----
                                                 SELECT
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 t0.CardCode[cardcode],
                                                                 000000 [Sales Order],
                                                                 'Kent Stainless'[Customer], 
