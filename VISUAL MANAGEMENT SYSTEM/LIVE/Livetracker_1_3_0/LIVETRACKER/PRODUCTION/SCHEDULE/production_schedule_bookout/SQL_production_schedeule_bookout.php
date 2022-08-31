@@ -14,18 +14,25 @@ WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -4
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])  >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -3
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < =-3THEN -2
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])=-1 Then-1
+/*next week*/
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= 17 THEN 14
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=3 THEN @counter+1
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=4THEN @counter+2
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=5THEN @counter+3
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=6THEN @counter+4
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=7THEN @counter+5
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=8THEN @counter+6
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=9THEN @counter+7
 
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] ) >= 15 THEN 14
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=3 THEN @counter+1
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=4THEN @counter+2
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=5THEN @counter+3
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=6THEN @counter+4
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=7THEN @counter+5
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=8THEN @counter+6
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=9THEN @counter+7
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=10THEN @counter+8
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP] )=11THEN @counter+9
-
+/*next next week*/
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=16THEN @counter+12
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=15THEN @counter+11
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=14THEN @counter+10
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=13THEN @counter+9
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=12THEN @counter+8
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=11THEN @counter+7
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=10THEN @counter+6
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP] )=9THEN @counter+5
 
 
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
@@ -288,6 +295,7 @@ FROM(
                                                    WHERE t0.Status not in ('D','L','C')
                                                    and t0.OriginNum is null
                                                                                                 ) t0
+                                                                                                where t0.[Del Date Due UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+18)
    ORDER BY t0.[Project]";
    ?>
 

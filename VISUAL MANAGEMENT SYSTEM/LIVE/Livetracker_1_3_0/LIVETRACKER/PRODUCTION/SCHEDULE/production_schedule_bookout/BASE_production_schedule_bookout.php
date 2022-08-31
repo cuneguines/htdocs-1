@@ -6,17 +6,17 @@
         <meta name = "viewpport" content = "width=device-width, initial-scale = 1">
         
         <!-- EXTERNAL JAVASCRIPT -->
-        <script type = "text/javascript" src = "../../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
+        <script type = "text/javascript" src = "../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
 
         <!-- LOCAL JAVASCRIPT -->
-        <script type = "text/javascript" src = "../../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
-        <script type = "text/javascript" src = "../../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
+        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
+        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
         <script type = "text/javascript" src = "./JS_job_info_buttons.js"></script>   
 
         <!-- STYLESHEET -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-        <link href='../../../../../CSS/LT_STYLE.css' rel='stylesheet' type='text/css'>
+        <link href='../../../../CSS/LT_STYLE.css' rel='stylesheet' type='text/css'>
 
         <!-- PHP INITALISATION -->
         <?php 
@@ -43,8 +43,8 @@
             }
         ?>
 
-        <?php include '../../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
-        <?php include '../../../../../SQL CONNECTIONS/conn.php'; ?>
+        <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
+        <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
         <?php //include './SQL_production_schedule_new.php'; ?>
         <?php include './SQL_production_schedeule_bookout.php'; ?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>

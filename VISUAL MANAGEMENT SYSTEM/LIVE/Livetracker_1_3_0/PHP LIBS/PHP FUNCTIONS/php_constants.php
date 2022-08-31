@@ -136,4 +136,51 @@
             8 => "" 
         ))
     );
+
+    // PRODUCTION GROUP CODES
+    $group_steps_template_intel = array(
+        1 => array(
+        "name" => "material_prep",
+        "stringname" => "Matrial Prep",
+        "color" => "#ffa500",
+        "steps" => array(
+            1 => "SEQ001",
+            2 => "SEQ004",
+            3 => "SEQ002"
+        )),
+        2 => array(
+        "name" => "fabrication_1",
+        "stringname" => "Fabrication 1",
+        "color" => "#ffa500",
+        "steps" => array(
+            3 => "SEQ010B"
+        )),
+        3 => array(
+        "name" => "fabrication_2",
+        "stringname" => "Fabrication 2",
+        "color" => "#ffa500",
+        "steps" => array(
+            1 => "SEQ012"
+        )),
+        4 => array(
+        "name" => "finishing",
+        "stringname" => "Finishing",
+        "color" => "#ffa500",
+        "steps" => array(
+            2 => "SEQ021"
+        )),
+        5 => array(
+        "name" => "docs_and_deliverables",
+        "stringname" => "Docs & Delivs",
+        "color" => "#ffa500", 
+        "steps" => array(
+        )),
+        6 => array(
+        "name" => "stores",
+        "stringname" => "Stores",
+        "color" => "#ffa500",
+        "steps" => array(
+            2 => "SEQ019",
+        ))
+    );
 ?>
