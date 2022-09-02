@@ -68,10 +68,10 @@
         $concept = 15;   
        
         
-        for($j = $start_range-3 ; $j <= $end_range-1 ; $j++){
+        for($j = $start_range-3 ; $j <= $end_range ; $j++){
             // READS FROM PROJECT_BUTTON_BUFFER
             $str_t = $data[$j];
-            if($j ==-1)
+            if($j ==-1||$j ==-2||$j ==-3)
                 {
                 echo "<td class = 'small' style = 'border: 1px dotted black;background-color:pink'>".$str_t."</td>";
             }
