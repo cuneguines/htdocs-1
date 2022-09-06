@@ -139,9 +139,11 @@
                                 <th width = "70px"  class = "sticky darker_grey lefttext" style = "left:80px;">Process Order</th>
                                 <th width = "90px" class = "sticky darker_grey lefttext" style = "left:160px;">Due Date</th>
                                 <th width = "190px" class = "sticky darker_grey lefttext" style = "left:260px;">Item Name</th>
+                                <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:360px;">Fabricator</th>
                                 <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:460px;">PLanned</th>
                                 <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:460px;">EXecuted</th>
                                 <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:460px;">Status</th>
+                                
                                 <?php foreach($group_steps_template_intel as $group): ?>
                                     <?php foreach($group["steps"] as $step):?>
                                         <?php if(!$step){continue;}?>
@@ -179,9 +181,11 @@
                                     <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box; left:80px;"><button onclick = "alert('<?=$remarks_line_details?>');" class = "btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : "";?>" style = "height:80%; width:90%;"><?= $row["Process Order"]?></button></td>
                                     <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box;left:160px;"><?= $row["Promise Date"]?></td>
                                     <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box;left:260px;"><?= $row["ItemName"]?></td>
+                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:360px;"><?= $row["Most_Hours"]?></td>
                                     <td class = "sticky righttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"]?></td>
                                     <td class = "sticky righttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:460px;"><?= $row["Total Act Time"]?></td>
                                     <td class = "sticky righttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:460px;"><?= $row["Labour Efficiency"]?></td>
+                                    
                                     <!-- LOOPS THROUGH THE STEPS IN EACH GROUP FROM THE GROUP TEMPLATE -->
                                     <!-- IF THE STEP EXISTS FOR THE CURRENT PO IT WILL PRINT A VISIBLE FILLBAR WITH RESPECTIVE FILLEVEL OF BOOKED VS PLANNED TIME FOR THAT STEP -->
                                     <!-- IF THE STEP DOES NOT EXIST IN THE CURRENT PO IT WILL PRINT A OPAQUE ELEMENT -->

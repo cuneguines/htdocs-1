@@ -124,6 +124,28 @@ console.log(selected_value);
             jobs.show();
         }
         else
+        //button for selecting last three days(schedule_bookout page)
+        if($(this).children("option:selected").val() === 'LastthreeDays')
+        {
+            $('#bd').prop('disabled', true);
+
+            jobs.show();
+            rows.show();
+            $('table.filterable tfoot tr').hide();
+            selected_value = $(this).children("option:selected").val();
+console.log(selected_value);
+jobs.not("[lastthreedays= " + $(this).children("option:selected").val() + "]").hide();
+
+            $.each($('.row').not('#select_days_week'),function(){
+                if(!JSON.stringify($(this).attr("lastthreedays")).includes(selected_value))
+                {
+                    $(this).hide();
+                }
+                rows.filter('[type = data]').hide();
+                
+            });
+        }
+        else
         {
             $('#bd').prop('disabled', true);
 

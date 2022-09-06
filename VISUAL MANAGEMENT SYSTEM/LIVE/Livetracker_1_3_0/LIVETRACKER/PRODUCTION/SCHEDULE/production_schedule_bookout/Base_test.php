@@ -24,10 +24,18 @@
             $start_time = time()-60*60*24*7*5;
             $start_range = -3;
             $end_range = 14;#function array_sort($array){sort($array); return $array;}
-
             function generate_filter_optionss($table, $field){
                 foreach(array_sort(array_unique(array_column($table, $field))) as $element){
-                    if ($element=='LastworkingDay'||$element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other' )
+                   //IF TODAY IS MONDAY GET LASTWORKINGDAY FROM TABLE
+                    if(date("w")==1)
+                    {
+                    if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other'||$element=='LastWorkingDay' )
+                    {
+                    echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+                    }
+                }
+                else
+                if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other')
                     {
                     echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
                     }
@@ -112,25 +120,29 @@
                                     <th style = 'width:6%;'>Week <<</th> 
                                     <th style = 'width:6%;'>Week <<</th> 
                                     <th style = 'width:6%;'>Week <<</th> 
-                                    <th style = 'width:3.647%;'><?= $days[date("w")-3] ?></th> 
-                                    <th style = 'width:3.647%;'><?=$days[date("w")-2] ?></th> 
-                                    <th style = 'width:3.647%;'><?=$days[date("w")-1] ?></th>
+                                    <!-- NEGATIVE NUMBERS -->
+                                    <th style = 'width:3.647%;'><?= $days[date("w")-3<0?date("w")%7+4:date("w")-3] ?></th> 
+                                    <th style = 'width:3.647%;'><?=$days[date("w")-2<0?date("w")%7+5:date("w")-2] ?></th> 
+                                    <th style = 'width:3.647%;'><?=$days[date("w")-1<0?date("w")%7+6:date("w")-1] ?></th>
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
-                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[(date("w")+$i) %7]?></th>
+                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%;<?=($days[(date("w")+$i) %7]=='Sun'||$days[(date("w")+$i) %7]=='Sat'?'background-color:#25ac9975;' : "")?> <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[(date("w")+$i) %7]?></th>
+                                        
+                                        
                                     <?php endfor; ?>
                                     <th style = 'width:6%;'><?=$end_range?> +1</th>
                                     
                             </thead>
                             <tbody class = "medium btext">
                                 <?php 
-                                    $active_project = $str = $engineers_str = $days_str= $base_color = $border_color = $overwrite =  "";                                        
+                                    $active_project = $str = $engineers_str = $days_lthree=$days_str= $base_color = $border_color = $overwrite =  "";                                        
                                     $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                     /* foreach ($project_button_buffer as $p)
                                     {
                                         echo ($p);
                                     } */
                                     $project_engineers_buffer = array(null);   
-                                    $project_days_buffer = array(null);                        
+                                    $project_days_buffer = array(null);   
+                                    $project_days_lthree_buffer = array(null);                     
                                     $first = 1;
                                 ?>
                                 <?php for($i = 0 ; $i <= sizeof($results) ; $i++):?>
@@ -145,18 +157,21 @@
                                             
                                             $engineers_str = implode(" ",$project_engineers_buffer);
                                             $days_str = implode(" ",$project_days_buffer);
+                                            $days_lthree=implode(" ",$project_days_lthree_buffer);
         
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
-                                            echo "<tr class = 'row white smedium' productgp = '".$productgp."'days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
+                                            echo "<tr class = 'row white smedium' lastthreedays = '".$days_lthree."'productgp = '".$productgp."'days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
+                                                
                                                 print_values_22($project_button_buffer,$start_range,$end_range-1);
+                                                
                                                  //Empty table data 
                                                  echo "<td style = 'border-right:1px solid #454545;'></td>";
                                                 //echo ($start_range);
                                                 //echo ($end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
-                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
+                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' lastthreedays = '".$days_lthree."'days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
                                                 print_values_22($sum,$start_range,$end_range-1);
                                                 echo "<td style = 'background-color:#DCDCDC;color:white;'></td>";
                                             echo "</tr>";
@@ -175,12 +190,14 @@
                                             $active_project = $results[$i]["Project"];
                                             $project_engineers_buffer = array();
                                             $project_days_buffer = array();
+                                            $project_days_lthree_buffer = array();     
                                             $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //print_r($project_button_buffer);
                                             $engineers_str = "";
                                             $days_str="";
-                                            
+                                            $days_lthree="";
+
                                             $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"] == '000_NO PROJECT_000' ? '000_NO_PROJECT_000' : $results[$i]["Customer"]));
                                             $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"]));
                                             $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]));
@@ -273,7 +290,8 @@
                                             $results[$i]["Weeks Open"],
                                             $results[$i]["Planned Hrs"],
                                             $results[$i]["Est Prod Hrs"] < 0 ? 0 : $results[$i]["Est Prod Hrs"],
-                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Days of the Week"]))
+                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Days of the Week"])),
+                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Last three days"]))
                                         );
         
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer))
@@ -283,6 +301,10 @@
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])), $project_days_buffer))
                                         {
                                             array_push($project_days_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])));
+                                        }
+                                        if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])), $project_days_lthree_buffer))
+                                        {
+                                            array_push($project_days_lthree_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])));
                                         }
                                         //echo($results[$i]["Promise Diff Days"]);
                                         //echo("<br>");
@@ -454,6 +476,7 @@
                                         <div class = "content">
                                             <select id = "select_days_week" class = "selector fill medium">
                                                 <option value = "All" selected>All</option>
+                                                <option value = "LastthreeDays" selected>Last three Days</option>
                                                 <?php generate_filter_optionss($results,"Days of the Week"); ?>
                                             </select>
                                         </div>

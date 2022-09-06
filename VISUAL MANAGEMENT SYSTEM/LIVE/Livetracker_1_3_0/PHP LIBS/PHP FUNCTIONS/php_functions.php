@@ -56,6 +56,15 @@
 
 
     function print_values_22(array $data, $start_range, $end_range){
+        $days = array(
+            0 => 'Sun',
+            1 => 'Mon',
+            2 => 'Tue',
+            3 => 'Wed',
+            4 => 'Thur',
+            5 => 'Fri',
+            6 => 'Sat');
+        
         $date = new DateTime();
         $week = $date->format("W");
         if($week == 53){
@@ -72,14 +81,20 @@
             // READS FROM PROJECT_BUTTON_BUFFER
             $str_t = $data[$j];
             if($j ==-1||$j ==-2||$j ==-3)
-                {
+                
                 echo "<td class = 'small' style = 'border: 1px dotted black;background-color:pink'>".$str_t."</td>";
-            }
+            
             else
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
-            if($j >= 0 && $j <= $green){
+            if($j >= 0 && $j <= $green)
+            {
+                if($days[(date("w")+$j) %7]=='Sun'||$days[(date("w")+$j) %7]=='Sat')
                 
-                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#97ff95'>".$str_t."</td>";
+                    echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#25ac9975'>".$str_t."</td>";
+                   
+                    else
+                  echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#97ff95'>".$str_t."</td>";
+                
             }
           /* elseif($j >= 0 && $j <= $orange){
                 echo "<td class = 'small' style = 'background-color:#ffc795'>".$str_t."</td>";
@@ -169,7 +184,7 @@
         return $str;
     }
 
-    function generate_schedule_buttonsss($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week){
+    function generate_schedule_buttonsss($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
        
         $str = 
         "<button id = 'eng_btn'
@@ -199,6 +214,7 @@
             weeks_open = '$weeks_open'
             planned_hrs = '$planned_hrs'
             days_week='$days_week'
+            lastthreedays='$lthree_days'
         >$est_prod_hrs
         </button>";
 

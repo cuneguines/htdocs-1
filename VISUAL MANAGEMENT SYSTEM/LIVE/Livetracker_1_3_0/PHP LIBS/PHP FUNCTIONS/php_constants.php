@@ -146,7 +146,9 @@
         "steps" => array(
             1 => "SEQ001",
             2 => "SEQ004",
+            4 => "SEQ008",
             3 => "SEQ002"
+            
         )),
         2 => array(
         "name" => "fabrication_1",

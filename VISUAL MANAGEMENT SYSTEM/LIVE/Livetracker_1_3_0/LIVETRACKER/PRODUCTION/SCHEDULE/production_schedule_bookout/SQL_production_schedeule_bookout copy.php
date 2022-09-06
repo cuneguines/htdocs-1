@@ -37,29 +37,33 @@ WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) > 10 and  DATEDIFF(DAY
 
 
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
-END [Promise Diff Days] ,/* DAYS HERE */
+END [Promise Diff Daystest] ,/* DAYS HERE */
 
 CASE 
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -4
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -3
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -4 THEN -2
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) =-3 THEN -1
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -5
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) <= -4 THEN -4
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) =-1 THEN -1
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) =-2 THEN -2
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) =-3 THEN -3
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= 15 THEN 14
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 6 THEN 4
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 7 THEN 5
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 8 THEN 6
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 9 THEN 7
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 10 THEN 8
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 13 THEN 9
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 14 THEN 10
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 6 THEN 6
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 7 THEN 7
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 8 THEN 8
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 9 THEN 9
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 10 THEN 10
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 11 THEN 11
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) = 12THEN 12
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
-END [Promise Diff Daystest], /* DAYS HERE */
+END [Promise Diff Days], /* DAYS HERE */
 CASE 
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) = 0 THEN 'Monday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =1 THEN 'Tuesday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =2 THEN 'Wednesday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =3 THEN 'Thursday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =4 THEN 'Friday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =5 THEN 'Saturday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =6 THEN 'Sunday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =7 THEN 'MNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =8 THEN 'TNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =9 THEN 'WNW'
@@ -71,14 +75,18 @@ WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =15 THEN 'WNNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =16 THEN 'TNNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) <-4 THEN 'Other'
 when  DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =-3 THEN 'LastworkingDay'
+
+
 ELSE 'Ot'
 
 
 
 END [Days of the Week], /* DAYS HERE */
-
-
-
+case
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-3 THEN 'LastthreeDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-2 THEN 'LastthreeDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-1 THEN 'LastthreeDays'
+END [Last three days], /* DAYS HERE */
 t0.[Dscription],
 t0.[Non Deliverable],
 t0.[Quantity],

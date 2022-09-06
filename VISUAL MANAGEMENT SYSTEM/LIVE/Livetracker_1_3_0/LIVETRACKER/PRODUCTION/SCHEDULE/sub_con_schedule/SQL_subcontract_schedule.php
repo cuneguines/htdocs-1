@@ -1,8 +1,7 @@
-
 <?php
-
-
-$tsql="select
+$tsql =
+"declare @counter INT = 0 SELECT
+/* SALES ORDER RELATED CONTENT */
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -11,21 +10,82 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
-CASE 
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
-ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
-END [Promise Diff Week],
 
+/* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE)*/
 t0.[Dscription],
 t0.[Non Deliverable],
 t0.[Quantity],
 t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
-t0.[Promise Date UNP],
+CASE
+WHEN DATEDIFF(DAY,[Monday LW Date],t0.[Promise Date]) < -6 and  DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date] ) =-3 THEN -1/*LAST FRIDAY*/
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) < -4 THEN -4
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date])  =-3 then -3
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date] ) =-2 then -2
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date])=-1 Then-1
+/*next week*/
+/*next week*/
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date] ) >= 17 THEN 14
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=3 THEN @counter+1
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=4THEN @counter+2
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=5THEN @counter+3
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=6THEN @counter+4
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=7THEN @counter+5
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=8THEN @counter+6
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 6 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=9THEN @counter+7
+
+/*next next week*/
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=16THEN @counter+12
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=15THEN @counter+11
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=14THEN @counter+10
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=13THEN @counter+9
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=12THEN @counter+8
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=11THEN @counter+7
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=10THEN @counter+6
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) > 10 and  DATEDIFF(DAY,GETDATE(),t0.[Promise Date] )=9THEN @counter+5
+
+
+ELSE DATEDIFF(DAY,GETDATE(),t0.[Promise Date])
+END [Promise Diff Days] ,/* DAYS HERE */
+
+CASE 
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) < -14 THEN -4
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) < -7 THEN -3
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) < -4 THEN -2
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) =-3 THEN -1
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) >= 15 THEN 14
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 6 THEN 4
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 7 THEN 5
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 8 THEN 6
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 9 THEN 7
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 10 THEN 8
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 13 THEN 9
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date]) = 14 THEN 10
+ELSE DATEDIFF(DAY,GETDATE(),t0.[Promise Date])
+END [Promise Diff Daystest], /* DAYS HERE */
+CASE 
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) = 0 THEN 'Monday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =1 THEN 'Tuesday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =2 THEN 'Wednesday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =3 THEN 'Thursday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =4 THEN 'Friday'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =7 THEN 'MNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =8 THEN 'TNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =9 THEN 'WNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =10 THEN 'TNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =11 THEN 'FNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =13 THEN 'MNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =14 THEN 'TNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =15 THEN 'WNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =16 THEN 'TNNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) <-4 THEN 'Other'
+when  DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date]) =-3 THEN 'LastworkingDay'
+ELSE 'Ot'
+
+
+
+END [Days of the Week], /* DAYS HERE */
 
 t0.[Engineer],
 t0.[risk],
@@ -35,17 +95,19 @@ t0.[Paused],
 t0.[Comments],
 t0.[Comments_2],
 
+/* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
 t0.[Process Order],
 t0.[Planned Hrs],
 t0.[Floor Date],
 t0.[Weeks On Floor],
 t0.[Sub Contract Status],
 t0.[Complete],
-CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
-isnull(t0.[Product Group],'No Group') [Product Group]
+CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs]
 FROM(
 SELECT
-    
+    /* SALES ORDER RELATED CONTENT */
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -54,14 +116,15 @@ SELECT
     DATEPART(ISO_WEEK, t0.CreateDate)[Week Opened],
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(MONTH, GETDATE(),t1.U_Promise_Date) [Month Difference PD],
-    
+    /* SALES ORDER ITEMS RELATED CONTENT */
 
     t1.Dscription [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
-    FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
-       t1.U_Promise_Date [Promise Date UNP],
+    
+	CAST(t1.U_Promise_Date AS DATE) [Promise Date],
+    FORMAT(CONVERT(DATE,(t1.U_Promise_Date)),'yyyy-MM-dd') [Promise Date UNP],
     (CASE 
         WHEN DATEPART(iso_week,t1.U_Promise_Date) = 53 THEN 52 
         WHEN DATEPART(iso_week,t1.U_Promise_Date) IS NULL THEN 52
@@ -75,10 +138,10 @@ SELECT
     t1.U_BOY_38_EXT_REM [Comments],
     t99.Remarks [Comments_2],
 
-    
+    /* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
     t4.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
-    FORMAT(ISNULL(t1.U_floor_date,t0.U_FLOORDATE), 'yyyy-MM-dd')[Floor Date],
+    FORMAT(ISNULL(t4.U_FLOORDATE,t0.U_FLOORDATE), 'yyyy-MM-dd')[Floor Date],
     DATEDIFF(WEEK, ISNULL(t4.U_FLOORDATE,t0.U_FLOORDATE), GETDATE())[Weeks On Floor],
     t1.U_In_Sub_Con [Sub Contract Status],
     CAST(t4.PlannedQty - t4.CmpltQty AS DECIMAL(12,2)) [Complete],
@@ -91,7 +154,7 @@ SELECT
                 WHEN t4.CmpltQty < t4.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
                 ELSE 0 
             END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs]
    
     FROM ordr t0
     INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
@@ -120,29 +183,18 @@ SELECT
     ) t11 ON t11.U_IIS_proPrOrder = t4.U_IIS_proPrOrder and t11.ItemCode = t1.ItemCode
     left join [dbo].[@PRE_PRODUCTION] as t13 on t13.code     = t1.U_PP_Stage
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
-
-       
-       left join (select t1.U_IIS_proPrOrder, sum(t0.issuedqty) [Issued], sum(t1.CmpltQty) [Completed]
-                           from wor1 t0
-                           inner join owor t1 on t1.DocEntry = t0.DocEntry
-                           where 1 = 1 
-                           and t1.Status in ('L','C')
-                           
-                           group by t1.U_IIS_proPrOrder
-                           Having sum(t0.issuedqty) = 0 and sum(t1.CmpltQty) = 0
-                           ) t15 on t15.U_IIS_proPrOrder = t4.U_IIS_proPrOrder
-
     
-    WHERE t1.LineStatus = 'O'
+    WHERE t1.LineStatus = 'O' 
     AND t1.ItemCode <> 'TRANSPORT' 
     AND t0.CANCELED <> 'Y' 
-       
-       and t15.U_IIS_proPrOrder is null
+    AND (isnull(t4.Status,'R')) <> 'C'
 
 UNION ALL
 
 SELECT
-   
+    /* SALES ORDER RELATED CONTENT  (SELF DEFINED OR TAKEN FROM PRODUCTION ORDER IN THIS CASE) */
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
@@ -152,13 +204,13 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(month, GETDATE(), t0.DueDate) [Month Difference PD],
 
-        
+        /* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE) */
     t5.ItemName [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
     FORMAT(CONVERT(DATE,(t0.DueDate)),'dd-MM-yyyy') [Promise Date],
-       t0.DueDate [Promise Date UNP],
+    FORMAT(CONVERT(DATE,(t0.DueDate)),'yyyy-MM-dd') [Promise Date UNP],
     (CASE 
         WHEN DATEPART(iso_week,t0.DueDate) = 53 THEN 52 
         WHEN DATEPART(iso_week,t0.DueDate) IS NULL THEN 52
@@ -172,7 +224,7 @@ SELECT
     t7.Remarks [Comments],
     t7.Remarks [Comments_2],
 
-  
+   /* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
     t0.U_IIS_proPrOrder [Process Order],
     ISNULL(CAST(t11.Planned_Lab as DECIMAL(12,0)),0)[Planned Hrs],
     FORMAT(t0.U_FloorDate , 'dd-MM-yyyy')[Floor Date],
@@ -186,7 +238,7 @@ SELECT
             WHEN t0.CmpltQty < t0.PlannedQty THEN ISNULL(ISNULL(t11.[Planned_Lab],0)-ISNULL(t10.[Actual_Lab],0),t11.[Planned_Lab]) 
             ELSE 0 
         END)
-    END) AS DECIMAL (12,0)) [Est Prod Hrs], t5.U_Product_Group_One [Product Group]
+    END) AS DECIMAL (12,0)) [Est Prod Hrs]
    
    FROM owor t0
    
@@ -215,10 +267,7 @@ SELECT
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
             ) t0
-   ORDER BY t0.[Project]
-";
-   ?>
-
-
-
-
+    WHERE t0.[Sub Contract Status] NOT IN ('', 'No', '1001', '1003')
+    ORDER BY t0.[Project]
+"
+?>
