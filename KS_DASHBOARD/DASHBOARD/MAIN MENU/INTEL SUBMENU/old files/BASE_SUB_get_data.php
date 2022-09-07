@@ -57,12 +57,10 @@
     $labour_achieved = array();
     $released_labour = array();
     $gross_labour = array();
-    $labour_efficiency = array();
-    $labour_efficiency_detail = array();
+    $labour_efficiency =array();
     $labour_margin = array();
     $net_labour = array();
     $reaquisitioned_labour = array();
-    $reaquisitioned_labour_detail = array();
     $overplanned_labour = array();
     $diff_labour = array();
 
@@ -83,11 +81,9 @@
         array_push($released_labour, 0);
         array_push($gross_labour, 0);
         array_push($labour_efficiency, 0);
-        array_push($labour_efficiency_detail, NULL);
         array_push($labour_margin, 0);
         array_push($net_labour, 0);
         array_push($reaquisitioned_labour, 0);
-        array_push($reaquisitioned_labour_detail, 0);
         array_push($overplanned_labour, 0);
         array_push($diff_labour, 0);
 
@@ -146,7 +142,6 @@
             if(($hours_hist[$i-1][7] == 'Yes' || $hours_hist[$i-1][7] == '1002' || $hours_hist[$i-1][7] == '1003' || $hours_hist[$i-1][8] == 'L' || $hours_hist[$i-1][9] == 'Y' || $hours_hist[$i-1][5] >= $hours_hist[$i-1][6])  && $planned_hrs_buff < $hours_hist[$i-1]["Planned Labour"])
             {
                 $reaquisitioned_labour[$hours_hist[$i-1]["Week Created"] + ($hours_hist[$i-1]["Year Created"] - $start_year)*52] += ($hours_hist[$i-1]["Planned Labour"] - $planned_hrs_buff);
-                $reaquisitioned_labour_detail[$hours_hist[$i-1]["Week Created"] + ($hours_hist[$i-1]["Year Created"] - $start_year)*52].="\n ".$hours_hist[$i-1]["Process Order"]." ".($hours_hist[$i-1]["Planned Labour"] - $planned_hrs_buff);
             }
             if(($hours_hist[$i-1][7] == 'Yes' || $hours_hist[$i-1][7] == '1002' || $hours_hist[$i-1][7] == '1003' || $hours_hist[$i-1][8] == 'L' || $hours_hist[$i-1][9] == 'Y' || $hours_hist[$i-1][5] >= $hours_hist[$i-1][6])  && $planned_hrs_buff > $hours_hist[$i-1]["Planned Labour"])
             {
@@ -173,7 +168,6 @@
             {
                 // PLACE THE EXCESS HOURS IN POSITION (SEE EXAMPLES ABOVE FOR DETAILS ON POSITION)
                 $labour_efficiency[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] += (($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs);
-                $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round((($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs),0);
             }
             $passed = 1;
         }
@@ -191,7 +185,6 @@
             {
                 // INCREMENT HOURS IN POSITION (SEE EXAMPLES ABOVE FOR DETAILS ON POSITION)
                 $labour_efficiency[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] += $hours_hist[$i][3];
-                $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round($hours_hist[$i][3],0);
             }
         }
         $planned_hrs_buff += $hours_hist[$i]["Entry Hours Logged"];
@@ -286,10 +279,8 @@
     file_put_contents("CACHED/released_labour.json", json_encode($released_labour));
     file_put_contents("CACHED/gross_labour.json", json_encode($gross_labour));
     file_put_contents("CACHED/labour_efficiency.json", json_encode($labour_efficiency));
-    file_put_contents("CACHED/labour_efficiency_detail.json", json_encode($labour_efficiency_detail));
     file_put_contents("CACHED/net_labour.json", json_encode($net_labour));
     file_put_contents("CACHED/reaquisitioned_labour.json", json_encode($reaquisitioned_labour));
-    file_put_contents("CACHED/reaquisitioned_labour_detail.json", json_encode($reaquisitioned_labour_detail));
     file_put_contents("CACHED/diff_labour.json", json_encode($diff_labour));
     file_put_contents("CACHED/labour_margin.json", json_encode($labour_margin));
     file_put_contents("CACHED/cum_labour_achieved.json", json_encode($cum_labour_achieved));

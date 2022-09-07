@@ -6,11 +6,9 @@
     $released_labour = json_decode(file_get_contents('CACHED/released_labour.json'),true);
     $gross_labour = json_decode(file_get_contents('CACHED/gross_labour.json'),true);
     $labour_efficiency = json_decode(file_get_contents('CACHED/labour_efficiency.json'),true);
-    $labour_efficiency_detail = json_decode(file_get_contents('CACHED/labour_efficiency_detail.json'),true);
     $labour_margin = json_decode(file_get_contents('CACHED/labour_margin.json'),true);
     $net_labour = json_decode(file_get_contents('CACHED/net_labour.json'),true);
     $reaquisitioned_labour = json_decode(file_get_contents('CACHED/reaquisitioned_labour.json'),true);
-    $reaquisitioned_labour_detail = json_decode(file_get_contents('CACHED/reaquisitioned_labour_detail.json'),true);
     $diff_labour = json_decode(file_get_contents('CACHED/diff_labour.json'),true);
 
     $cum_labour_achieved = json_decode(file_get_contents('CACHED/cum_labour_achieved.json'),true);
@@ -41,6 +39,7 @@
             <script type = "text/javascript" src = "../../../JS/LOCAL/JS_menu_select.js"></script>
             <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
             <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+            <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
             <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
             <script type = "text/javascript">$(document).ready(function() {$.ajaxSetup({ cache: false });});</script>
             <?php date_default_timezone_set('Europe/London'); ?>
@@ -117,13 +116,6 @@
                             <div id = "table_container" class = "intel_table_checkbox" style = "width:85%">
                                 <table id = "inteltotal" class = "rh_med">
                                     <tbody>
-                                        <script type = 'text/javascript'>
-                                            $("document").ready(function(){
-                                                $(".detail").click(function(){
-                                                    alert($(this).attr('detail'));
-                                                });
-                                            });
-                                        </script>
                                         <tr><td colspan = 27 style = "text-align:center;">Previous 25 Weeks</td></tr>
                                         <tr >
                                             <td style = "width:16%; color:black; border-bottom:1px solid green;">Title</td>
@@ -148,7 +140,7 @@
                                             <?php 
                                                 for($i = $week-$visibility; $i <= $week ; $i++)
                                                 {
-                                                    echo "<td class = 'detail' detail = '".$labour_efficiency_detail[$i]."'>".round($labour_efficiency[$i],0)."</td>";
+                                                    echo "<td>".round($labour_efficiency[$i],0)."</td>";
                                                 }
                                             ?>
                                         </tr>
@@ -157,7 +149,147 @@
                                             <?php 
                                                 for($i = $week-$visibility; $i <= $week ; $i++)
                                                 {
-                                                    echo "<td class = 'detail' detail = '".$reaquisitioned_labour_detail[$i]."'>".round($reaquisitioned_labour[$i],0)."</td>";
+                                                    echo "<td>".round($reaquisitioned_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Net Labour</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td style = 'border-top:1px solid green;'>".round($net_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Released Hours</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td style = 'background-color:#5D62B5;'>".round($released_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Reamaining Labour Hours</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td style = 'border-top:1px solid green;border-bottom:3px double green;'>".round($diff_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cum Labour Achieved</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($cum_labour_achieved[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulative Labour Over planned</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($cum_labour_efficiency[$i]*-1,0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumlative Requisitioned Labour</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($cum_reaquisitioned_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulative Net Labour</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td style = 'border-top:1px solid green;'>".round($cum_net_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumlative Released Labour</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($cum_released_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumlative Requisitioned Labour</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($cum_reaquisitioned_labour[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Cumulative Labour Remaining</td>
+                                            <?php
+                                                $final_val = ""; 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    
+                                                    if($i == $week)
+                                                    {
+                                                        $final_val = 'border-left:1px solid red; border-right:1px solid red;';
+                                                    }
+                                                    echo "<td style = 'border-top:1px solid red;border-bottom:3px double red; $final_val'>".round($cum_diff_labour[$i],0)."</td>";
+                                                    
+                                                }
+                                            ?>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- Table with more weeks not to be displayed but to export to excel -->
+                                <table id = "inteltotal_table2" class = "rh_med" style="display:none">
+                                    <tbody>
+                                        <tr><td colspan = 27 style = "text-align:center;">Previous 25 Weeks</td></tr>
+                                        <tr >
+                                            <td style = "width:16%; color:black; border-bottom:1px solid green;">Title</td>
+                                            <?php 
+                                            $visibility=26;
+                                                for($i = $week-$visibility; $i <= $week; $i++)
+                                                {
+                                                    echo "<td style = 'width:6%; color:white;background-color:#404040'>".($i > 52 ? ($i - floor($i/52.00)*52)." (Y".(floor($i/52)+1).")" : $i)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Booked Hours</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td style = 'background-color:#29C3BE;'>".round($labour_achieved[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Hours Over Planned</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($labour_efficiency[$i],0)."</td>";
+                                                }
+                                            ?>
+                                        </tr>
+                                        <tr>
+                                            <td>Reaquisitioned Hours</td>
+                                            <?php 
+                                                for($i = $week-$visibility; $i <= $week ; $i++)
+                                                {
+                                                    echo "<td>".round($reaquisitioned_labour[$i],0)."</td>";
                                                 }
                                             ?>
                                         </tr>
@@ -280,12 +412,13 @@
                             </div>
                     </div>
                     <div id = "bottom_banner" class = "white sector banner fullwidth">
-                        <button class = "banner_button green br_green">TEST BUTTON ONE</button>
-                        <button class = "banner_button yellow br_yellow">TEST BUTTON TWO</button>
-                        <button class = "banner_button red br_red">TEST BUTTON THREE</button>
-                        <button class = "banner_button green br_green">TEST BUTTON FOUR</button>
-                        <button class = "banner_button red br_red">TEST BUTTON FIVE</button>
-                    </div>
+                        <button style="width:14%;margin-left:3%" class = "banner_button green br_green">TEST BUTTON ONE</button>
+                        <button style="width:14%"class = "banner_button yellow br_yellow">TEST BUTTON TWO</button>
+                        <button style="width:14%"class = "banner_button red br_red">TEST BUTTON THREE</button>
+                        <button style="width:14%"class = "banner_button green br_green">TEST BUTTON FOUR</button>
+                        <button style="width:14%"class = "banner_button red br_red">TEST BUTTON FIVE</button>
+                        <button style="width:14%"class = "banner_button red br_red"onclick = "export_to_excel('inteltotal_table2')" >EXPORT</button>
+                        </div>
                 </div>
                 <?php include("../BASE_TEMPLATE.html")?>
             </div>
