@@ -280,7 +280,7 @@
                                             $results[$i]["Promise Week Due"],
                                             $results[$i]["Est Prod Hrs"],
                                             $results[$i]["Addr"],
-                                            $results[$i]["Stage"],
+                                            $results[$i]["EORI"],
                                             $comments,
                                             $comments_2,
                                             

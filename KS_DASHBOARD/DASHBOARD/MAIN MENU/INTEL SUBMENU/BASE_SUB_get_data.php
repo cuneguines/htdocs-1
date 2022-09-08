@@ -59,6 +59,7 @@
     $gross_labour = array();
     $labour_efficiency = array();
     $labour_efficiency_detail = array();
+    $labour_efficiency_detail_str = array();
     $labour_margin = array();
     $net_labour = array();
     $reaquisitioned_labour = array();
@@ -84,6 +85,7 @@
         array_push($gross_labour, 0);
         array_push($labour_efficiency, 0);
         array_push($labour_efficiency_detail, NULL);
+        array_push($labour_efficiency_detail_str, "");
         array_push($labour_margin, 0);
         array_push($net_labour, 0);
         array_push($reaquisitioned_labour, 0);
@@ -173,7 +175,14 @@
             {
                 // PLACE THE EXCESS HOURS IN POSITION (SEE EXAMPLES ABOVE FOR DETAILS ON POSITION)
                 $labour_efficiency[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] += (($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs);
-                $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round((($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs),0);
+                if(isset($labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]])){
+                    $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]] += (($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs);
+                }
+                else{
+                    $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]] = (($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs);
+                }
+
+                //$labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round((($hours_hist[$i]["Entry Hours Logged"] + $planned_hrs_buff) - $planned_hrs),0);
             }
             $passed = 1;
         }
@@ -191,7 +200,13 @@
             {
                 // INCREMENT HOURS IN POSITION (SEE EXAMPLES ABOVE FOR DETAILS ON POSITION)
                 $labour_efficiency[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] += $hours_hist[$i][3];
-                $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round($hours_hist[$i][3],0);
+                if(isset($labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]])){
+                    $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]] += $hours_hist[$i][3];
+                }
+                else{
+                    $labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52][$hours_hist[$i]["Process Order"]] = $hours_hist[$i][3];
+                }
+                //$labour_efficiency_detail[$hours_hist[$i]["Week Created"] + ($hours_hist[$i]["Year Created"] - $start_year)*52] .= "\n ".$hours_hist[$i]["Process Order"]." ".round($hours_hist[$i][3],0);
             }
         }
         $planned_hrs_buff += $hours_hist[$i]["Entry Hours Logged"];
@@ -273,6 +288,18 @@
     array_push($json_data_chart_js, array('seriesname' => 'Margin', 'data' => $chart_data_labour_margin));
 
 
+
+    foreach($labour_efficiency_detail as $keyw => $week){
+        if(gettype($week) != 'array'){
+            continue;
+        }
+        foreach($week as $keyp => $po){
+            //print($keyw." ".$keyp." ".$po.' ');
+            $labour_efficiency_detail_str[$keyw] .= $keyp." ".round($po)."\n";
+        }
+    }
+
+
     file_put_contents("CACHED/intel_chart_data.json", json_encode($json_data_chart_js));
     file_put_contents('CACHED/intel_chart_data_cat.json',json_encode($json_data_chart_cat));
 
@@ -286,7 +313,7 @@
     file_put_contents("CACHED/released_labour.json", json_encode($released_labour));
     file_put_contents("CACHED/gross_labour.json", json_encode($gross_labour));
     file_put_contents("CACHED/labour_efficiency.json", json_encode($labour_efficiency));
-    file_put_contents("CACHED/labour_efficiency_detail.json", json_encode($labour_efficiency_detail));
+    file_put_contents("CACHED/labour_efficiency_detail.json", json_encode($labour_efficiency_detail_str));
     file_put_contents("CACHED/net_labour.json", json_encode($net_labour));
     file_put_contents("CACHED/reaquisitioned_labour.json", json_encode($reaquisitioned_labour));
     file_put_contents("CACHED/reaquisitioned_labour_detail.json", json_encode($reaquisitioned_labour_detail));
