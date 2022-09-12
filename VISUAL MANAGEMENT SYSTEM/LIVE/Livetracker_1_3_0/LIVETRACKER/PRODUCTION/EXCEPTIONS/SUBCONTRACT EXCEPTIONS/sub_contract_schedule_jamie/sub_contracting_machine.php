@@ -526,7 +526,7 @@ if (isset($_GET['po'])) {
                                 <td><?= $row["ItemCode"] ?></td>
                                 <?php if (isset($_GET['po'])) : ?><td width="5%"><?= $row["Commited"] ?></td><?php endif; ?>
                                 <td><?= $row["Planned Qty"] ?></td>
-                                <td><?='' ?></td>
+                                <td><?=$row["Sub_Con_Date"] ?></td>
                                 <td><?= $row["Latest Purchase Ord"] == NULL ? 'N/A' : $row["Latest Purchase Ord"] ?></td>
                                 <td><?= $row["Purchase Due"] == NULL ? 'N/A' : $row["Purchase Due"] ?></td>
                                

@@ -23,6 +23,8 @@ SELECT
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
 FORMAT(CAST(t5.DocDueDate AS DATE), 'dd-MM-yyyy') [Promise Date],
+t22.U_risk_rating[Risk],
+
 t9.ItemName,
 t9.ItemCode,
 t21.Most_Hours[Most_Hours],

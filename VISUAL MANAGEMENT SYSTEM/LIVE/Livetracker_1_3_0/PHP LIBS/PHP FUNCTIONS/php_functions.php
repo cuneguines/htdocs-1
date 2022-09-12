@@ -220,6 +220,43 @@
 
         return $str;
     }
+    function generate_schedule_buttons_forsc($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
+       
+        $str = 
+        "<button id = 'eng_btn'
+            style = 'margin-bottom:3px;background-color:green' 
+            class = 'rounded project_item $base_color $border_color $overwrite' 
+            sales_order = '$sales_order'
+            process_order = '$process_order'
+            floor_date = '$floor_date'
+            weeks_on_floor = '$weeks_on_floor'
+            customer = '$customer'
+            engineer = '$engineer'
+            
+            engineer_nsp = '$engineer_nsp'
+            sales_person = '$sales_person' 
+            description = '$description'
+            promise_date = '$promise_date'
+            promise_week_due = '$promise_week_due'
+            
+            est_fab_hrs = '$est_fab_hrs'
+            status = '$status'
+            stage = '$stage'
+            comments = '".$comments."'
+            comments_2 = '".$comments_2."'
+            qty = '$qty'
+            days_open = '$days_open'
+            week_opened = '$week_opened'
+            weeks_open = '$weeks_open'
+            planned_hrs = '$planned_hrs'
+            days_week='$days_week'
+            lastthreedays='$lthree_days'
+        >$est_prod_hrs
+        </button>";
+
+        return $str;
+    }
+
 
     function generate_cache_dir_prefix($depth){
         if($depth == 0){return '.';}

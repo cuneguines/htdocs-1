@@ -1,3 +1,23 @@
+<?php if (isset($_GET['po'])) {
+            $clause = "WHERE [Process Order] = " . explode(',', $_GET['po'])[0];
+        
+            if (explode(',', $_GET['po'])[1] == 'OBAR') {
+                $clause2_a = "AND (t5.ItmsGrpNam LIKE '%Sheet%' OR t5.ItmsGrpNam LIKE '%Bar%' OR t5.ItmsGrpNam LIKE '%Box%')";
+                $clause2_b = "AND (t5.ItmsGrpNam LIKE '%Sheet%' OR t5.ItmsGrpNam LIKE '%Bar%' OR t5.ItmsGrpNam LIKE '%Box%')";
+            } elseif (explode(',', $_GET['po'])[1] == 'NBAR') {
+                $clause2_a = "AND t5.ItmsGrpNam NOT LIKE '%Sheet%' AND t5.ItmsGrpNam NOT LIKE '%Bar%' AND t5.ItmsGrpNam NOT LIKE '%Box%'";
+                $clause2_b = "AND t5.ItmsGrpNam NOT LIKE '%Sheet%' AND t5.ItmsGrpNam NOT LIKE '%Bar%' AND t5.ItmsGrpNam NOT LIKE '%Box%'";
+            } elseif (explode(',', $_GET['po'])[1] == 'NORMAL') {
+                $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+                $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
+            }
+        } else {
+            $clause = "";
+            $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+            $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
+        }
+        ?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,12 +28,11 @@
         <!-- EXTERNAL JAVASCRIPT -->
         <script type = "text/javascript" src = "../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
 
-
         <!-- LOCAL JAVASCRIPT -->
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
-        <script type = "text/javascript" src = "./JS_job.js"></script>   
+        <script type = "text/javascript" src = "./JS_job_info_buttons.js"></script>   
 
         <!-- STYLESHEET -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -27,7 +46,16 @@
 
             function generate_filter_optionss($table, $field){
                 foreach(array_sort(array_unique(array_column($table, $field))) as $element){
-                    if ($element=='LastworkingDay'||$element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other' )
+                   //IF TODAY IS MONDAY GET LASTWORKINGDAY FROM TABLE
+                    if(date("w")==1)
+                    {
+                    if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other'||$element=='Last Working Day' )
+                    {
+                    echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+                    }
+                }
+                else
+                if ($element=='Monday'|| $element=='Friday' ||$element=='Tuesday'||$element=='Wednesday'||$element=='Thursday'||$element=='Friday'||$element=='Other')
                     {
                     echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
                     }
@@ -43,6 +71,7 @@
 
         <?php 
         
+         
         $days = array(
             0 => 'Sun',
             1 => 'Mon',
@@ -77,27 +106,27 @@
                         <p class = "smedium">Engineer</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Delivery Date and Week Number</p>
+                        <p class = "smedium">Delivery Date </p>
                         <h2 class = "inner fourteenth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">New Title</p>
+                        <p class = "smedium">Promise Date</p>
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
                         <p class = "smedium">Address</p>
                         <h2 class = "inner sixth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Stage</p>
+                        <p class = "smedium">EORI</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
-                       <!--  <p class = "smedium">Production</p>
-                        <h2 class = "inner eighth medium">Nothing Selected</h2>
-                        <br>
-                        <p class = "smedium">Comments</p>
+               <!-- <p class = "smedium">Production</p>
+                        <h2 class = "inner eighth medium">Nothing Selected</h2> -->
+                        
+                        <p class = "smedium">Commodity Code</p>
                         <h2 class = "inner eleventh medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Comments 2</p>
-                        <h2 class = "inner twent medium">Nothing Selected</h2> -->
+                        <p class = "smedium">Comments 1</p>
+                        <h2 class = "inner twenty medium">Nothing Selected</h2>  
                     </div>
                 </div><!--
              --><div id = "sched_right">
@@ -109,28 +138,38 @@
                             <thead>
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
+                                    
                                     <th style = 'width:6%;'>Week <<</th> 
-                                    <th style = 'width:6%;'>Week <<</th> 
-                                    <th style = 'width:6%;'>Week <<</th> 
-                                    <th style = 'width:3.647%;'><?= $days[date("w")-3] ?></th> 
-                                    <th style = 'width:3.647%;'><?=$days[date("w")-2] ?></th> 
-                                    <th style = 'width:3.647%;'><?=$days[date("w")-1] ?></th>
+                                    <th style = 'width:6%;'>Week -2</th> 
+                                    <th style = 'width:6%;'>Week -1</th>
+                                    
+                                     <!-- NEGATIVE NUMBERS -->
+                                     <th style = 'width:3.647%;'><?= $days[date("w")-3<0?date("w")%7+4:date("w")-3] ?></th> 
+                                    <th style = 'width:3.647%;'><?=$days[date("w")-2<0?date("w")%7+5:date("w")-2] ?></th> 
+                                    <th style = 'width:3.647%;'><?=$days[date("w")-1<0?date("w")%7+6:date("w")-1] ?></th>
+                                    
                                     <?php for($i = 0 ; $i < $end_range ; $i++) : ?>
-                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%; <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[(date("w")+$i) %7]?></th>
+                                        
+                                        
+                                           
+                                
+                                        <th style = 'width:<?=(string)(62/($end_range+(-$start_range)))?>%;<?=($days[(date("w")+$i) %7]=='Sun'||$days[(date("w")+$i) %7]=='Sat'?'background-color:#25ac9975;' : "")?> <?=($i == 0 ? 'background-color:red;' : "")?>'><?=$days[(date("w")+$i) %7]?></th>
+                                   
                                     <?php endfor; ?>
                                     <th style = 'width:6%;'><?=$end_range?> +1</th>
                                     
                             </thead>
                             <tbody class = "medium btext">
                                 <?php 
-                                    $active_project = $str = $engineers_str = $days_str= $base_color = $border_color = $overwrite =  "";                                        
+                                    $active_project = $str = $engineers_str = $days_lthree=$days_str= $base_color = $border_color = $overwrite =  "";                                        
                                     $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                     /* foreach ($project_button_buffer as $p)
                                     {
                                         echo ($p);
                                     } */
                                     $project_engineers_buffer = array(null);   
-                                    $project_days_buffer = array(null);                        
+                                    $project_days_buffer = array(null);   
+                                    $project_days_lthree_buffer = array(null);                     
                                     $first = 1;
                                 ?>
                                 <?php for($i = 0 ; $i <= sizeof($results) ; $i++):?>
@@ -145,18 +184,21 @@
                                             
                                             $engineers_str = implode(" ",$project_engineers_buffer);
                                             $days_str = implode(" ",$project_days_buffer);
+                                            $days_lthree=implode(" ",$project_days_lthree_buffer);
         
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
-                                            echo "<tr class = 'row white smedium' days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
+                                            echo "<tr class = 'row white smedium' lastthreedays = '".$days_lthree."'productgp = '".$productgp."'days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
+                                                
                                                 print_values_22($project_button_buffer,$start_range,$end_range-1);
+                                                
                                                  //Empty table data 
                                                  echo "<td style = 'border-right:1px solid #454545;'></td>";
                                                 //echo ($start_range);
                                                 //echo ($end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
-                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
+                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' lastthreedays = '".$days_lthree."'days_week = '".$days_str."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
                                                 print_values_22($sum,$start_range,$end_range-1);
                                                 echo "<td style = 'background-color:#DCDCDC;color:white;'></td>";
                                             echo "</tr>";
@@ -175,30 +217,32 @@
                                             $active_project = $results[$i]["Project"];
                                             $project_engineers_buffer = array();
                                             $project_days_buffer = array();
+                                            $project_days_lthree_buffer = array();     
                                             $project_button_buffer = $sum = array_fill(($start_range-3), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             //print_r($project_button_buffer);
                                             $engineers_str = "";
                                             $days_str="";
-                                            
+                                            $days_lthree="";
+
                                             $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"] == '000_NO PROJECT_000' ? '000_NO_PROJECT_000' : $results[$i]["Customer"]));
                                             $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"]));
                                             $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]));
                                             $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sales Person"]));
-                                           // $productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
+                                            $productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
                                             
                                             $days_week = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"]));
-                                            $promise_week_due = $results[$i]["Promise Week Due"];
+                                           // $promise_week_due = $results[$i]["Promise Week Due"];
                                             $project_unp = $results[$i]["Project"];
                                             $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
                                             $first = 0;
                                         }
 
-                                        if($results[$i]["Promise Date"]==){
+
                                         
                                         
 
-                                        if($results[$i]["Stage"] == "8. Design Concept"){
+                                        /* if($results[$i]["Stage"] == "8. Design Concept"){
                                             $base_color = "lime_blue";
                                         }
                                         else if($results[$i]["Non Deliverable"] == 'yes'){
@@ -243,38 +287,52 @@
                                             $overwrite = "redshadow";
                                         }
                                        
-                                        $comments = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
-                                        $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];
+                                        $commentss = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
+                                        $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"]; */
                                         
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
-                                        $str = generate_schedule_buttonsss($base_color,
-                                            $border_color,
-                                            $overwrite,
-                                            $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
-                                            $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
-                                            NULL,
-                                            NULL,
-                                            $results[$i]["Customer"],
-                                            $results[$i]["Engineer"],
-                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
-                                            $results[$i]["Sales Person"],
-                                            str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
-                                            $results[$i]["Promise Date"],
-                                            $results[$i]["Promise Week Due"],
-                                            $results[$i]["Est Prod Hrs"],
-                                            NULL,
-                                            $results[$i]["Stage"],
-                                            $comments,
-                                            $comments_2,
-                                            
-                                            $results[$i]["Quantity"],
-                                            $results[$i]["Days Open"],
-                                            $results[$i]["Week Opened"],
-                                            $results[$i]["Weeks Open"],
-                                            $results[$i]["Planned Hrs"],
-                                            $results[$i]["Est Prod Hrs"] < 0 ? 0 : $results[$i]["Est Prod Hrs"],
-                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Days of the Week"]))
-                                        );
+                                        $str =generate_schedule_buttons_forsc($base_color,
+                                        $border_color,
+                                        $overwrite,
+                                        $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
+                                        $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
+                                        NULL,
+                                        NULL,
+                                        $results[$i]["Customer"],
+                                        $results[$i]["Engineer"],
+                                        str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
+                                        $results[$i]["Sales Person"],
+                                      
+                                        //str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
+                                        NULL,
+                                        //$results[$i]["Promise Date"],
+                                        NULL,
+                                        //$results[$i]["Promise Week Due"],
+                                        NULL,
+                                        //$results[$i]["Est Prod Hrs"],
+                                        NULL,
+                                        //$results[$i]["Stage"],
+                                        NULL,
+                                        //$comments,
+                                        NULL,
+                                        //$comments_2,
+                                        NULL,
+                                        NULL,
+                                        //$results[$i]["Quantity"],
+                                        NULL,
+                                        //$results[$i]["Days Open"],
+                                        NULL,
+                                        //$results[$i]["Week Opened"],
+                                        NULL,
+                                        //$results[$i]["Weeks Open"],
+                                        NULL,
+                                        //$results[$i]["Planned Hrs"],
+                                        NULL,
+                                        //$results[$i]["Est Prod Hrs"] < 0 ? 0 : $results[$i]["Est Prod Hrs"],
+                                        NULL,
+                                        str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Days of the Week"])),
+                                        NULL
+                                    );
         
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer))
                                         {
@@ -283,6 +341,10 @@
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])), $project_days_buffer))
                                         {
                                             array_push($project_days_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])));
+                                        }
+                                        if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])), $project_days_lthree_buffer))
+                                        {
+                                            array_push($project_days_lthree_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])));
                                         }
                                         //echo($results[$i]["Promise Diff Days"]);
                                         //echo("<br>");
@@ -454,6 +516,7 @@
                                         <div class = "content">
                                             <select id = "select_days_week" class = "selector fill medium">
                                                 <option value = "All" selected>All</option>
+                                                <option value = "LastthreeDays" selected>Last three Days</option>
                                                 <?php generate_filter_optionss($results,"Days of the Week"); ?>
                                             </select>
                                         </div>
@@ -478,7 +541,7 @@
                                 <button onclick = "export_to_excel('production_schedule')" class = "grouping_page_corner_buttons fill medium green wtext rounded" style = "float:left; width:100%">EXCEL</button>
                             </div>
                             <div id = "button_container_sched_btn">
-                                <button onclick = "location.href='../../../MAIN MENU/dashboard_menu.php'" class = "grouping_page_corner_buttons fill medium purple wtext rounded" style = "float:left; width:100%">MAIN MENU</button>
+                                <button onclick = "location.href='../../../../MAIN MENU/dashboard_menu.php'" class = "grouping_page_corner_buttons fill medium purple wtext rounded" style = "float:left; width:100%">MAIN MENU</button>
                             </div>
                         </div>
                     </div>

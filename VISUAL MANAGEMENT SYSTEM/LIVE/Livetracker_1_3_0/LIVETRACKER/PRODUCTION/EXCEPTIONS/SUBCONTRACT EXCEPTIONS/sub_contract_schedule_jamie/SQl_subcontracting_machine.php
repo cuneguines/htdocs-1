@@ -31,7 +31,7 @@ t0.[Engineer],
 t0.[Comments_PO],
 t0.[Comments_SO],
 t0.[Stock Check],
-
+FORMAT(CAST(t0.Sub_Con_Date AS DATE),'dd-MM-yyyy')[Sub_Con_Date], 
 
 (case 
 when t0.[Due Date] < GETDATE() then '1.OverDue'
@@ -65,6 +65,8 @@ FROM (
             ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
             isnull(t10.SlpName,t12.U_NAME) [Engineer], 
             CAST(t8.DocDueDate AS DATE) [Purchase Due],
+            t0.U_sc_date [Sub_Con_Date], 
+
             (CASE WHEN t0.PlannedQty < (t2.ONhand - t2.IsCommited + t0.PlannedQty) THEN 'IN STOCK' ELSE 'NOT IN STOCK' END)[Stock Check],
             (case when t8.DocDueDate > t4.DocDueDate then 'PO DUE AFTER DISPATCH DATE' else '' end) [Shortage Warning],
             (case when t8.DocDueDate < GETDATE() then 'PURCHASE OVERDUE' else '' end) [PO Warning],
@@ -134,6 +136,7 @@ FROM (
             t1.DocDueDate [Dispatch Date], 
             t9.docnum [Latest Purchase Ord],
             ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
+            t10.SlpName [Engineer], 
             t10.SlpName [Engineer], 
             CAST(t8.DocDueDate AS DATE) [Purchase Due], 
             (CASE WHEN t0.OpenQty < (t2.ONhand - t2.IsCommited + t0.OpenQty) THEN 'IN STOCK' ELSE 'NOT IN STOCK' END) [Stock Check],
