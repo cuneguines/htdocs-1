@@ -32,7 +32,7 @@
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>  
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>   
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
-        <script type = "text/javascript" src = "./JS_job_info_buttons.js"></script>   
+        <script type = "text/javascript" src = "./JS_job.js"></script>   
 
         <!-- STYLESHEET -->
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -106,11 +106,11 @@
                         <p class = "smedium">Engineer</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Delivery Date </p>
+                        <p class = "smedium">SC Date </p>
                         <h2 class = "inner fourteenth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Promise Date</p>
-                        <h2 class = "inner fifteenth medium">Nothing Selected</h2>
+                        <!-- <p class = "smedium">Promise Date</p>
+                        <h2 class = "inner fifteenth medium">Nothing Selected</h2> -->
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
                         <p class = "smedium">Address</p>
@@ -131,7 +131,7 @@
                 </div><!--
              --><div id = "sched_right">
                     <div class = "table_title green">
-                        <h1>PRODUCTION SCHEDULE/BOOKOUT</h1>
+                        <h1>SUB CONTRACT SCHEDULE/BOOKOUT</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
                         <table id = "production_schedule" class = "filterable">
@@ -139,9 +139,9 @@
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
                                     
-                                    <th style = 'width:6%;'>Week <<</th> 
-                                    <th style = 'width:6%;'>Week -2</th> 
-                                    <th style = 'width:6%;'>Week -1</th>
+                                    <th style = 'width:3.647%;'>Week <<</th> 
+                                    <th style = 'width:3.647%;'>Week -2</th> 
+                                    <th style = 'width:3.647%;'>Week -1</th>
                                     
                                      <!-- NEGATIVE NUMBERS -->
                                      <th style = 'width:3.647%;'><?= $days[date("w")-3<0?date("w")%7+4:date("w")-3] ?></th> 
@@ -185,7 +185,8 @@
                                             $engineers_str = implode(" ",$project_engineers_buffer);
                                             $days_str = implode(" ",$project_days_buffer);
                                             $days_lthree=implode(" ",$project_days_lthree_buffer);
-        
+                                            $productgp='r';
+                                            $promise_week_due='10';
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
                                             echo "<tr class = 'row white smedium' lastthreedays = '".$days_lthree."'productgp = '".$productgp."'days_week = '".$days_str."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
@@ -229,7 +230,7 @@
                                             $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"]));
                                             $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]));
                                             $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sales Person"]));
-                                            $productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
+                                            //$productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
                                             
                                             $days_week = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"]));
                                            // $promise_week_due = $results[$i]["Promise Week Due"];
@@ -291,7 +292,16 @@
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"]; */
                                         
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
-                                        $str =generate_schedule_buttons_forsc($base_color,
+                                        if($results[$i]["Process Order"]=='N/A')
+                                        $border_color='';
+                                        else
+                                        $border_color="bryellow";
+
+                                        if ($results[$i]["Sub_Con_Date"]=='')
+                                        $color='green';
+                                        else
+                                        $color='grey';
+                                        $str =generate_schedule_buttons_forsc($color,$base_color,
                                         $border_color,
                                         $overwrite,
                                         $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
@@ -305,8 +315,8 @@
                                       
                                         //str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
                                         NULL,
-                                        //$results[$i]["Promise Date"],
-                                        NULL,
+                                        $results[$i]["Promise Date UNP"],
+                                     
                                         //$results[$i]["Promise Week Due"],
                                         NULL,
                                         //$results[$i]["Est Prod Hrs"],
@@ -331,7 +341,8 @@
                                         //$results[$i]["Est Prod Hrs"] < 0 ? 0 : $results[$i]["Est Prod Hrs"],
                                         NULL,
                                         str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Days of the Week"])),
-                                        NULL
+                                        str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '' ,$results[$i]["Last three days"]))
+                                    
                                     );
         
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer))
@@ -352,7 +363,7 @@
                                         //$sum[$results[$i]["Promise Diff Days"]] = $sum[$results[$i]["Promise Diff Days"]] + $results[$i]["Est Prod Hrs"];                                                    
                                         
                                         $base_color = "";
-                                        $border_color = "";
+                                       $border_color = "";
                                         $overwrite = "";
                                         
                                     ?>
@@ -418,7 +429,7 @@
                             </div><!--
                          --><div class = "subdividor light_grey">
                                 <div class = "half">
-                                    <div class = "textholder"><p>Live Make</p></div><div class = "button_holder"><button class = "green"></div>
+                                    <div class = "textholder"><p>SC no SCdate</p></div><div class = "button_holder"><button class = "green"></div>
                                 </div>
                                 <div class = "half">
                                     <div class = "textholder"><p>Live Bought In</p></div><div class = "button_holder"><button class = "orange"></div>
@@ -429,7 +440,7 @@
                             </div><!--
                          --><div class = "subdividor light_grey">
                                 <div class = "half">
-                                    <div class = "textholder"><p>In Subcontract</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button></div>
+                                    <div class = "textholder"><p>PO Raised</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button></div>
                                 </div>
                                 <div class = "half">
                                     <div class = "textholder"><p>In Man Subcon</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid #E601BA; height:20px;"></button></div>

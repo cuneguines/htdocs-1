@@ -139,7 +139,7 @@ FROM (
             ELSE DATEDIFF(week,GETDATE(),ISNULL(t7.U_Promise_date,t1.DueDate)) END),-100) [Date_Diff],
             CAST(ISNULL(t7.U_Promise_date,t1.DueDate) AS DATE) [Due Date],
             CAST(ISNULL(t4.U_FloorDate,t1.U_Floordate) AS DATE) [Floor Date],
-            CAST(isnull(t0.U_sc_date,t7.U_Promise_Date) AS DATE) [Promise Date UNP],
+            CAST(isnull(t0.U_sc_date,DATEADD(d,-14,t7.U_Promise_date)) AS DATE) [Promise Date UNP],
             (CASE WHEN CAST(t8.DocDueDate AS DATE) < CAST (GETDATE() AS DATE) THEN 'yes' ELSE 'no' END)[Purchase Overdue],
             t7.U_BOY_38_EXT_REM [Comments_SO],
             t9.Comments [Comments_PO], 
@@ -264,7 +264,7 @@ INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
 LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
 
 $clause
-ORDER BY t2.docnum, [Date_Diff]";
+ORDER BY  t0.[Project]";
 ?>
 
 
