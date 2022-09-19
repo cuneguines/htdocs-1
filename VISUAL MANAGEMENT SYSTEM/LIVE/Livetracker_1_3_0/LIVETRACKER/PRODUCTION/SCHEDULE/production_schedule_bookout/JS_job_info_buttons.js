@@ -9,7 +9,11 @@ $(document).ready(function(){
     $("h2.third").replaceWith( " <h2 style = 'color:red;' class = 'inner third medium'>"+$(this).attr('Description')+"        "+$(this).attr('qty')+"</h2>");
     $("h2.fourth").replaceWith( "<h2 class = 'inner fourth medium'>"+$(this).attr('sales_person')+"</h2>");
     $("h2.fourteenth").replaceWith( "<h2 class = 'inner fourteenth medium'>"+$(this).attr('promise_date')+"</h2>");
-    $("h2.fifteenth").replaceWith( "<h2 class = 'inner fifteenth medium'>"+$(this).attr('promise_week_due')+" "+$(this).attr('weeks_on_floor')+"</h2>");
+    var x =$(this).attr('color_for_date');
+   console.log(x);
+    value='red';
+    $("p.smediums").replaceWith( "<p class='smediums'style='font-size:1.7vh;background-color:"+x+";'>"+"Promise Date"+"</p>");
+    $("h2.fifteenth").replaceWith( "<h2 style='background-color:"+x+";'class = 'inner fifteenth medium'>"+$(this).attr('promise_week_due')+" "+$(this).attr('weeks_on_floor')+"</h2>");
     $("h2.fifth").replaceWith( "<h2 class = 'inner fifth medium'>"+$(this).attr('engineer')+"</h2>");
     $("h2.sixth").replaceWith( "<h2 class = 'inner sixth medium'>"+$(this).attr('status')+"</h2>");
     $("h2.seventh").replaceWith( "<h2 class = 'inner seventh medium'>"+$(this).attr('stage')+"</h2>");
@@ -20,5 +24,6 @@ $(document).ready(function(){
     $("h2.twenty").replaceWith( "<h2 class = 'inner twenty medium'>"+$(this).attr('comments_2')+"</h2>");
     $(".project_item").removeClass("eng_active");
     $(this).addClass("eng_active");
+    x="";
     });
 });

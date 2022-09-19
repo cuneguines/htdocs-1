@@ -305,6 +305,8 @@ FROM(
                                                    and t0.OriginNum is null
                                                                                                 ) t0
                                                                                                 where t0.[Del Date Due UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+18)
+                                                                                                and t0.[Project] not like 'Training'
+   
    ORDER BY t0.[Project]";
    ?>
 

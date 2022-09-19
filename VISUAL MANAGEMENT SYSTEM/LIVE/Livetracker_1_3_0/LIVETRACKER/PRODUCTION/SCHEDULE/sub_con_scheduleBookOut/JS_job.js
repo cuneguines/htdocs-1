@@ -28,7 +28,8 @@ console.log(data[0]);
                
             }
         });
-    $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
+   // $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
+    $("h2.first").replaceWith( '<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href='+ "'" +'/../SAP READER/SAP READER/BASE_sales_order.php?sales_order='+$(this).attr('sales_order')+ "'" +'">'+$(this).attr('sales_order')+"</button></h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/subcontract exceptions/subcontracting_schedule.php?po='+$(this).attr('process_order')+ ",NORMAL'" +'">'+$(this).attr('process_order')+"</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");
     $("h2.third").replaceWith( " <h2 style = 'color:red;' class = 'inner third medium'>"+$(this).attr('Description')+"        "+$(this).attr('qty')+"</h2>");

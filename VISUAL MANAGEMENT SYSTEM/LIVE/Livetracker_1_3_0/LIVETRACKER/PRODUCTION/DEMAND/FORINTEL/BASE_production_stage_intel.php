@@ -298,17 +298,22 @@
                                             }
                                         } ?>
                                     <?php endif;
-                                    $status = 'ss'; ?>
+                                    //Stages are over 
+                                    if ($group["name"] == 'stores' && $step_status == '&#x2714') {
+                                        $status = 'complete';
+                                    } else {
 
+                                        $status = 'notcomplete';
+                                    }
 
-
+                                    ?>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
 
 
 
 
-                            <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> customer=<?= $customer ?>>
+                            <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
@@ -398,6 +403,7 @@
                                 </div>
                             </div>
                             <div class="filter">
+                            
                                 <div class="text">
                                     <button class="fill red medium wtext">Production Group</button>
                                 </div>
@@ -408,6 +414,9 @@
                                             <option value="<?= $group["name"] ?>"><?= $group["name"] ?></option>
                                         <?php endforeach; ?>
                                     </select>
+                                </div>
+                                <div class="text">
+                                    <button class="fill bred medium wtext">Remove</button>
                                 </div>
                             </div>
                         </div>

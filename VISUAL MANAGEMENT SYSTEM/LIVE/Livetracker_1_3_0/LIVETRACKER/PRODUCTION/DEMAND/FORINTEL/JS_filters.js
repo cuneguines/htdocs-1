@@ -51,7 +51,13 @@ $(document).ready(function () {
             }
         }
     });
-
+//Button on click 
+$(".bred").click(function()
+{
+    //jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
+    rows.filter("[status = complete]").hide();
+}
+);
     // IF A COL SELECTOR FILTER IS CHANGED
     // IF FILTER IS CHANGED FROM ONE OPTION TO ALL SHOW ALL COLUMNS
     // OTHERWIE SHOW/HIDE COLUMNS BY MACTHHING CLASS NAME PER EACH FILTER OPTION
@@ -64,4 +70,5 @@ $(document).ready(function () {
             $('td.' + $(this).val()).show();
         }
     });
+
 });

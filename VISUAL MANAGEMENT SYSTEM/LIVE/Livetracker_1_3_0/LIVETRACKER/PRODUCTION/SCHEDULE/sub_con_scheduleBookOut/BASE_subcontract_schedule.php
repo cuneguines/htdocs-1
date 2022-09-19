@@ -81,7 +81,9 @@
             5 => 'Fri',
             6 => 'Sat');
         ?>
-        
+        <style>
+        .bred{   border: 1px solid #eb3434;}
+        </style>
     </head>
     <body>
         <div id = "background">
@@ -100,8 +102,8 @@
                         <p class = "smedium">Description & Qty.</p>
                         <h2 class = "inner third medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Sales Person</p>
-                        <h2 class = "inner fourth medium">Nothing Selected</h2>
+                        <!-- <p class = "smedium">Sales Person</p>
+                        <h2 class = "inner fourth medium">Nothing Selected</h2> -->
                         <br>
                         <p class = "smedium">Engineer</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
@@ -243,13 +245,13 @@
                                         
                                         
 
-                                        /* if($results[$i]["Stage"] == "8. Design Concept"){
+                                      /*  if($results[$i]["Stage"] == "8. Design Concept"){
                                             $base_color = "lime_blue";
-                                        }
-                                        else if($results[$i]["Non Deliverable"] == 'yes'){
+                                        } */
+                                      /*  if($results[$i]["Non Deliverable"] == 'yes'){
                                             $base_color = 'pink';
-                                        }
-                                        else if($results[$i]["Status"] == 'Pre Production Confirmed' || $results[$i]["Status"] == 'Pre Production Potential' || $results[$i]["Status"] == 'Pre Production Forecast'){
+                                        } */
+                                        /* else if($results[$i]["Status"] == 'Pre Production Confirmed' || $results[$i]["Status"] == 'Pre Production Potential' || $results[$i]["Status"] == 'Pre Production Forecast'){
                                             $base_color = 'light_blue';
                                         }
                                         else if(($results[$i]["Status"] == 'Live' || $results[$i]["Status"] == '') && $results[$i]["Process Order"] != null){
@@ -260,8 +262,8 @@
                                         }
                                         else{
                                             $base_color = 'Light_grey';
-                                        }
-                                        
+                                        } */
+                                        /*
                                         // BORDER COLOR
                                         if($results[$i]["Sub Contract Status"] == 'Gone To Sub Con' || $results[$i]["Sub Contract Status"] == 'Yes' || $results[$i]["Sub Contract Status"] == '1002'){
                                             $border_color = "bryellow";
@@ -292,15 +294,23 @@
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"]; */
                                         
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
-                                        if($results[$i]["Process Order"]=='N/A')
-                                        $border_color='';
-                                        else
+                                      
+                                     
+                                        if($results[$i]["IssuedQty"]>=$results[$i]["PlannedQty"])
                                         $border_color="bryellow";
+                                        else
+                                        
+                                        $border_color='';
+                                        if($results[$i]["Latest Purchase Ord"]==NULL)
+                                        $base_color='';
+                                        else
+                                        $base_color="blueshadow";
 
                                         if ($results[$i]["Sub_Con_Date"]=='')
                                         $color='green';
                                         else
                                         $color='grey';
+
                                         $str =generate_schedule_buttons_forsc($color,$base_color,
                                         $border_color,
                                         $overwrite,
@@ -313,8 +323,8 @@
                                         str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
                                         $results[$i]["Sales Person"],
                                       
-                                        //str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
-                                        NULL,
+                                        str_replace("''","Inch",str_replace("'","",$results[$i]["Dscription"])),
+                                       
                                         $results[$i]["Promise Date UNP"],
                                      
                                         //$results[$i]["Promise Week Due"],

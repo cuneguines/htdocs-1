@@ -16,7 +16,9 @@ CAST (t0.IsCommited as decimal)[Commited],
 CAST (t0.ONHand as decimal)[ONHand],  
 t0.[On Order],
 t0.[Promise Date UNP],
-
+t0.[IssuedQty],
+t0.[PlannedQty],
+t0.Dscription,
 CASE 
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
@@ -101,6 +103,9 @@ FROM (
 
       -------Material needed for process orders for customers
     SELECT  
+    t7.Dscription[Dscription],
+    t0.IssuedQty[IssuedQty],
+	t0.PlannedQty[PlannedQty],
     DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
     t1.U_IIS_proPrOrder [Process Order],
             t1.docnum [Prod Ord],
@@ -174,15 +179,17 @@ FROM (
             AND t1.Status in ('R')
             ---AND t0.IssuedQty < t0.PlannedQty
             AND t2.ItemType <> 'L'
-            AND t2.PrcrmntMtd = 'B' --AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty
+            AND t2.PrcrmntMtd = 'B' 
             AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')
-            $clause2_a
-           
+          
 
     UNION ALL
 
             -----sales order buy items -----
     SELECT  
+    t0.Dscription,
+    t0.ActBaseNum[NUM],
+	t0.ActBaseNum[NUM],
     DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
     NULL [Process Order], 
             NULL [Prod Ord],
@@ -251,8 +258,7 @@ FROM (
             where
             t0.LineStatus = 'o'
             AND t2.ItemCode <> 'TRANSPORT'
-            AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty)
-            $clause2_b
+            
             AND t5.ItmsGrpNam not like '%Sheet%'
             AND t5.ItmsGrpNam not like '%SITE%'
                     AND t5.ItmsGrpCod IN (168,232)
@@ -263,7 +269,7 @@ LEFT JOIN owor t2 ON t2.DocNum = t0.[Prod Ord]
 INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
 LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
 
-$clause
+
 ORDER BY  t0.[Project]";
 ?>
 
