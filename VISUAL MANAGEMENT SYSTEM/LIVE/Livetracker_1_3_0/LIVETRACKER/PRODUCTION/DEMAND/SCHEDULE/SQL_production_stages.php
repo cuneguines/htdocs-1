@@ -3,7 +3,7 @@ $process_order_step_efficiency_sql =
 "SELECT 
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
-FORMAT(CAST(t5.DocDueDate AS DATE), 'dd-MM-yyyy') [Promise Date],
+FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
 t9.ItemName,
 t9.ItemCode,
 t5.CardName [Customer], 
@@ -13,7 +13,7 @@ t0.CloseDate,
 CAST(isnull(t10.Planned_Lab,0) AS DECIMAL (12,0)) [Total Planned Time],
 CAST(isnull(t11.Actual_lab,0) AS DECIMAL (12,0)) [Total Act Time],
 FORMAT(isnull(t11.Actual_Lab/t10.Planned_Lab,0),'P0') [Labour Efficiency],
-t5.DocDueDate [Due_Date],  
+ISNULL(t22.U_Delivery_Date, t5.DocDueDate) [Due_Date],  
 t7.firstname + ' ' + t7.lastName [Sales Person],   
 t8.SlpName [Engineer],
 CASE WHEN t0.CmpltQty >= t0.PlannedQty THEN 'Y' ELSE 'N' END [Complete],
@@ -119,6 +119,7 @@ left join (
        group by t1.PrOrder, t5.Stepitem
 )t15 on t15.PrOrder = t0.U_IIS_proPrOrder and t15.StepItem = t0.ItemCode
 
+left join rdr1 t22 on t22.DocEntry = t5.DocEntry and t22.ItemCode = t0.ItemCode
 
 where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')

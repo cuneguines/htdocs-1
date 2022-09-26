@@ -24,8 +24,9 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
+
 ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
-END [Promise Diff Daystest],
+END [Promise Diff Week],
 CASE 
 when t0.[Promise Date UNP] is null  then 14
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) < -14 THEN -4
@@ -42,6 +43,9 @@ WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) = 9 THEN 9
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) = 10 THEN 10
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) = 11 THEN 11
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) = 12THEN 12
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) = 13THEN 13
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) =14THEN 14
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) >=15 THEN 15
 ELSE DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP])
 END [Promise Diff Days], /* DAYS HERE */
 CASE 
@@ -64,10 +68,7 @@ WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =16 THEN 'TNNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) <-4 THEN 'Other'
 when  DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =-3 THEN 'LastworkingDay'
 
-
 ELSE 'Ot'
-
-
 
 END [Days of the Week], /* DAYS HERE */
 case
@@ -105,8 +106,9 @@ FROM (
     SELECT  
     t7.Dscription[Dscription],
     t0.IssuedQty[IssuedQty],
-	t0.PlannedQty[PlannedQty],
+        t0.PlannedQty[PlannedQty],
     DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
     t1.U_IIS_proPrOrder [Process Order],
             t1.docnum [Prod Ord],
             t2.ItemCode,
@@ -121,13 +123,13 @@ FROM (
             CAST(t2.ONorder AS DECIMAL(12,0)) [On Order], 
             isnull(t6.cardname,'Stock') [Customer], 
             t4.docnum [Sales Order],
-            isnull(t4.DocDueDate, t1.DueDate) [Dispatch Date], 
+            isnull(ISNULL(t7.U_Delivery_Date,t4.DocDueDate), t1.DueDate) [Dispatch Date], 
             t9.docnum [Latest Purchase Ord],
             ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
             isnull(t10.SlpName,t12.U_NAME) [Engineer], 
             CAST(t8.DocDueDate AS DATE) [Purchase Due],
             (CASE WHEN t0.PlannedQty < (t2.ONhand - t2.IsCommited + t0.PlannedQty) THEN 'IN STOCK' ELSE 'NOT IN STOCK' END)[Stock Check],
-            (case when t8.DocDueDate > t4.DocDueDate then 'PO DUE AFTER DISPATCH DATE' else '' end) [Shortage Warning],
+            (case when t8.DocDueDate > ISNULL(t7.U_Delivery_Date,t4.DocDueDate) then 'PO DUE AFTER DISPATCH DATE' else '' end) [Shortage Warning],
             (case when t8.DocDueDate < GETDATE() then 'PURCHASE OVERDUE' else '' end) [PO Warning],
             (CASE
                 WHEN t5.ItmsGrpNam LIKE '%Sheet%' OR t5.ItmsGrpNam LIKE '%Bar%' OR t5.ItmsGrpNam LIKE '%Box%' OR t5.ItmsGrpNam LIKE '%Angle%' OR t5.ItmsGrpNam LIKE '%Pipe%' THEN 'SH'
@@ -176,11 +178,12 @@ FROM (
             inner join ousr t12 on t12.USERID = t1.UserSign
                      left join [dbo].[@SUB_CON_STATUS] t13 on t13.Code = t0.U_sc_status
             where 1=1 
-            AND t1.Status in ('R')
-            ---AND t0.IssuedQty < t0.PlannedQty
+            AND t1.Status in ('P','R')
             AND t2.ItemType <> 'L'
             AND t2.PrcrmntMtd = 'B' 
             AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')
+            AND t1.CmpltQty < t0.PlannedQty
+            AND t4.DocStatus <> 'C'
           
 
     UNION ALL
@@ -189,15 +192,17 @@ FROM (
     SELECT  
     t0.Dscription,
     t0.ActBaseNum[NUM],
-	t0.ActBaseNum[NUM],
+        t0.ActBaseNum[NUM],
     DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
+    
+    DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
     NULL [Process Order], 
             NULL [Prod Ord],
-            t0.ItemCode,
-            t0.ItemCode,
+        t2.ItemCode,
             t2.ItemName,
             t13.firstName,
             t2.PrcrmntMtd,
+                                                ISNULL(t1.U_Client,'000_NO PROJECT_000') [Project],
             CAST(t0.Quantity AS DECIMAL(12,0)) [Planned Qty],
             isnull(t0.DelivrdQty,0) [Issued Qty], 
             t2.ONHand,
@@ -257,6 +262,7 @@ FROM (
 
             where
             t0.LineStatus = 'o'
+            AND t1.DocStatus <> 'C'
             AND t2.ItemCode <> 'TRANSPORT'
             
             AND t5.ItmsGrpNam not like '%Sheet%'
@@ -268,9 +274,13 @@ LEFT JOIN ordr t1 ON t1.DocNum = t0.[Sales Order]
 LEFT JOIN owor t2 ON t2.DocNum = t0.[Prod Ord]
 INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
 LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
-
-
-ORDER BY  t0.[Project]";
+----added (29/09/22) get jobs with BOM issued --
+----where t0.[Issued Qty]<t0.[Planned Qty]--
+WHERE
+t0.[Promise Date UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+20) AND t2.Cmpltqty < t2.PlannedQty
+ORDER BY  t0.[Project]
+";
 ?>
+
 
 

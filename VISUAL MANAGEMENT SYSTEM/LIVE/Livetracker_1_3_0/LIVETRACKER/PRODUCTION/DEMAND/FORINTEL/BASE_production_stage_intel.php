@@ -33,6 +33,7 @@
     $step_status_lookup = array();
     foreach ($step_status_lookup_data as $step_per_lookup_list) {
         $step_status_lookup[$step_per_lookup_list["Process Order"]][$step_per_lookup_list["Sub Item Code"]][$step_per_lookup_list["Sequence Code"]] = array("status" => $step_per_lookup_list["Step Status"], "line_id" => $step_per_lookup_list["Step Line ID"], "planned_time" => $step_per_lookup_list["ProcessTime"], "booked_time" => $step_per_lookup_list["BookedTime"]);
+       
     }
     ?>
 
@@ -246,6 +247,9 @@
                     </thead>
                     <tbody class="btext smedium">
                         <?php foreach ($process_order_step_efficiency_data as $row) : ?>
+                            <?php if ($row["Complete"] == 'Y') {
+                                        continue;
+                                    } ?>
                             <?php $sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Sales Person"])); ?>
                             <?php $engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Engineer"])); ?>
                             <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>

@@ -62,7 +62,7 @@
     );
     ?>
 <style>
-   
+    .bred{   border: 1px solid #eb3434;}
     </style>
 </head>
 
@@ -198,7 +198,6 @@
 
 
 
-
                                 // IF PROJECT ON CURRENT ROW DOES NOT MATCH THE CURRENT ACTIVE PROJECT OR WE ARE ON FIRST ROW OF QUERY
                                 // RESET BUFFERS AND ASSIGN ROW DETAILS TO TRACKER VARIABLES
                                 // NOTE: IF A SALES ORDER DOES NOT HAVE A PROJECT THE CUSTOMER DEFAULTS TO "000_NO_PROJECT_000"
@@ -268,9 +267,10 @@
 
                                 $commentss = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                 $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];
-                              $now = time(); // or your date as well
-                                $your_date = strtotime($results[$i]["Promise Date"]);
-                                $datediff = ceil(($your_date-$now) / 86400);
+                               // find the diff between promise date and del date 
+                               $del_date=strtotime($results[$i]["Del Date Due UNP"]);
+                                $prom_date = strtotime($results[$i]["Promise Date"]);
+                                $datediff = ceil(($prom_date-$del_date) / 86400);
                                
                                 if ($datediff<=-3)
                                 {
@@ -503,6 +503,12 @@
                                             <option value="Wednesday" selected>Wednesday</option>
                                             <option value="Thursday" selected>Thursday</option>
                                             <option value="Friday" selected>Friday</option>
+                                            <option value="MNW" selected>MondayN</option>
+                                            <option value="TNW" selected>TuesdayN</option>
+                                            <option value="WNW" selected>WednesdayN</option>
+                                            <option value="THNW" selected>ThursdayN</option>
+                                            <option value="FNW" selected>FridayN</option>
+
                                             <option value="Other" selected>Other</option>
                                             <?php //generate_filter_optionss($results, "Days of the Week"); ?>
                                         </select>

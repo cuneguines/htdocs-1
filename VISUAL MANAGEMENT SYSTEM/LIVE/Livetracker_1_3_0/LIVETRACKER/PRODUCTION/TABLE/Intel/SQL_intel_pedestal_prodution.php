@@ -163,7 +163,7 @@ FROM
     t21 ON t21.PrOrder = t0.Prorder  
 
 
-    WHERE t5.CardName Like 'Intel Ireland Ltd' AND (t5.U_Client LIKE 'P1276 Pedestals' OR t5.U_Client LIKE 'P1272 Pedestals' OR t5.U_Client LIKE 'P1276 AMHS' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland Ltd') AND ((CAST(t5.DocDueDate AS DATE)) > '2020/04/01')
+    WHERE t5.CardName Like 'Intel Ireland Ltd' AND (t5.U_Client LIKE 'P1276 Pedestals' OR t5.U_Client LIKE 'P1272 Pedestals' OR t5.U_Client LIKE 'P1276 AMHS' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland Ltd') AND ((CAST(ISNULL(t20.U_Delivery_Date,t5.DocDueDate) AS DATE)) > '2020/04/01')
     and t1.status <> 'C'
 )t0
 ORDER BY [DELTA]";

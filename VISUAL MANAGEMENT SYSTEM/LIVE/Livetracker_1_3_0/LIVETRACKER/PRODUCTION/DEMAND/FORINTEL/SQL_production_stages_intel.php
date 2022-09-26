@@ -22,7 +22,7 @@ group by t0.PrOrder)
 SELECT 
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
-FORMAT(CAST(t5.DocDueDate AS DATE), 'dd-MM-yyyy') [Promise Date],
+FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
 t22.U_risk_rating[Risk],
 
 t9.ItemName,
@@ -36,7 +36,7 @@ CAST(isnull(t10.Planned_Lab,0) AS DECIMAL (12,0)) [Total Planned Time],
 CAST(isnull(t11.Actual_lab,0) AS DECIMAL (12,0)) [Total Act Time],
 FORMAT(isnull(t11.Actual_Lab/t10.Planned_Lab,0),'P0') [Labour Efficiency],
 isnull(t21.Most_Hours,'No Hours Booked') [Most Hours], isnull(t22.U_Floor_date, t5.U_floordate) [Floordate],
-CAST(t5.DocDueDate AS DATE)[Due_Date],  
+CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE)[Due_Date],  
 t7.firstname + ' ' + t7.lastName [Sales Person],   
 t8.SlpName [Engineer],
 CASE WHEN t0.CmpltQty >= t0.PlannedQty THEN 'Y' ELSE 'N' END [Complete],

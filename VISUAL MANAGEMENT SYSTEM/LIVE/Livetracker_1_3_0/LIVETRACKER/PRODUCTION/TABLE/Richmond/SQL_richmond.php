@@ -16,7 +16,7 @@ $richmond_query =
 	t20.LineStatus [Line Status],
     ISNULL(CAST(CAST(ISNULL(t10.UTM/t9.Planned_Lab,0) AS DECIMAL(12,2))*100 AS INT),0)[Fab Status %],
     ISNULL(FORMAT(CAST(t5.U_FLOORDATE AS DATE), 'dd-MM-yyyy'), 'NO FLOOR DATE') [Floor Date],
-	FORMAT(CAST(t5.DocDueDate AS DATE), 'dd-MM-yyyy') [Dispatch Date],
+	FORMAT(CAST(ISNULL(t20.U_Delivery_Date,t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Dispatch Date],
     FORMAT(CAST(t20.U_Promise_Date AS DATE), 'dd-MM-yyyy') [Promise Date],
     ISNULL(CAST(t9.Planned_Lab AS DECIMAL (12,0)), 0)[Planned Lab],
     ISNULL(CAST(t10.[UTM] AS DECIMAL(12,0)),0) [UTM],

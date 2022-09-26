@@ -67,7 +67,7 @@ WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =6 THEN 'Sunday'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =7 THEN 'MNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =8 THEN 'TNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =9 THEN 'WNW'
-WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =10 THEN 'TNW'
+WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =10 THEN 'THNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =11 THEN 'FNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =13 THEN 'MNNW'
 WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Del Date Due UNP]) =14 THEN 'TNNW'
@@ -93,7 +93,8 @@ t0.[Quantity],
 t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
-t0.[Del Date Due UNP],
+FORMAT(CONVERT(DATE,t0.[Del Date Due UNP]),'dd-MM-yyyy' )[Del Date Due UNP],
+  
 
 t0.[Engineer],
 t0.[risk],
@@ -141,7 +142,11 @@ FROM(
                                                                 CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
-                                                                CAST(isnull(t1.U_delivery_date, t0.DocDueDate) AS DATE) [Del Date Due UNP],
+                                                                /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/
+                                                                (case                  when DATEDIFF(DAY,getdate(),isnull(t1.U_delivery_date, t0.DocDueDate) )< =-4 then t1.U_Promise_Date
+                                                                else isnull(t1.U_delivery_date, t0.DocDueDate)
+end)[Del Date Due UNP],
+
                                                                 ----get the week of due date ----
                                                                 (CASE 
                                                                                 WHEN DATEPART(iso_week,isnull(t1.U_delivery_date, t0.DocDueDate)) = 53 THEN 52 
@@ -305,7 +310,7 @@ FROM(
                                                    and t0.OriginNum is null
                                                                                                 ) t0
                                                                                                 where t0.[Del Date Due UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+18)
-                                                                                                and t0.[Project] not like 'Training'
+                                                                                                and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
    
    ORDER BY t0.[Project]";
    ?>

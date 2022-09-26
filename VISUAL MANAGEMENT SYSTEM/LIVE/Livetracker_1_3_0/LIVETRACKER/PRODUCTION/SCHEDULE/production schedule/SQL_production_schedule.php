@@ -43,6 +43,7 @@ t0.[Sub Contract Status],
 t0.[Complete],
 CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
 isnull(t0.[Product Group],'No Group') [Product Group]
+
 FROM(
 SELECT
     
@@ -97,7 +98,7 @@ SELECT
     INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
     INNER join oslp t2 on t2.SlpCode = ISNULL(t1.SlpCode,t0.SlpCode)
     INNER join ohem t3 on t3.empID = t0.OwnerCode
-    LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode
+    LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode and t4.Status <> 'C'
     INNER JOIN oitm t5 on t5.ItemCode = t1.ItemCode
     INNER JOIN oitb t6 on t6.ItmsGrpCod = t5.ItmsGrpCod
     LEFT JOIN IIS_EPC_PRO_ORDERH t99 ON t99.PrOrder = t4.U_IIS_proPrOrder
@@ -137,7 +138,7 @@ SELECT
     AND t1.ItemCode <> 'TRANSPORT' 
     AND t0.CANCELED <> 'Y' 
        
-       and t15.U_IIS_proPrOrder is null
+     ----  and t15.U_IIS_proPrOrder is null
 
 UNION ALL
 
@@ -216,7 +217,9 @@ SELECT
    and t0.OriginNum is null
             ) t0
    ORDER BY t0.[Project]
-";
+
+"
+;
    ?>
 
 

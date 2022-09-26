@@ -48,13 +48,13 @@ FROM (
             CAST(t2.ONorder AS DECIMAL(12,0)) [On Order], 
             isnull(t6.cardname,'Stock') [Customer], 
             t4.docnum [Sales Order],
-            isnull(t4.DocDueDate, t1.DueDate) [Dispatch Date], 
+            isnull(ISNULL(t7.U_Delivery_Date, t4.DocDueDate), t1.DueDate) [Dispatch Date], 
             t9.docnum [Latest Purchase Ord],
             ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
             isnull(t10.SlpName,t12.U_NAME) [Engineer], 
             CAST(t8.DocDueDate AS DATE) [Purchase Due],
             (CASE WHEN t0.PlannedQty < (t2.ONhand - t2.IsCommited + t0.PlannedQty) THEN 'IN STOCK' ELSE 'NOT IN STOCK' END)[Stock Check],
-            (case when t8.DocDueDate > t4.DocDueDate then 'PO DUE AFTER DISPATCH DATE' else '' end) [Shortage Warning],
+            (case when t8.DocDueDate > ISNULL(t7.U_Delivery_Date, t4.DocDueDate) then 'PO DUE AFTER DISPATCH DATE' else '' end) [Shortage Warning],
             (case when t8.DocDueDate < GETDATE() then 'PURCHASE OVERDUE' else '' end) [PO Warning],
             (CASE
                 WHEN t5.ItmsGrpNam LIKE '%Sheet%' OR t5.ItmsGrpNam LIKE '%Bar%' OR t5.ItmsGrpNam LIKE '%Box%' OR t5.ItmsGrpNam LIKE '%Angle%' OR t5.ItmsGrpNam LIKE '%Pipe%' THEN 'SH'
