@@ -87,6 +87,13 @@ when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-3 THEN 'LastthreeDays'
 when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-2 THEN 'LastthreeDays'
 when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-1 THEN 'LastthreeDays'
 END [Last three days], /* DAYS HERE */
+case
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-5 THEN 'LastfiveDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-4 THEN 'LastfiveDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-3 THEN 'LastfiveDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-2 THEN 'LastfiveDays'
+when  DATEDIFF(DAY,getdate(),t0.[Del Date Due UNP]) =-1 THEN 'LastfiveDays'
+END [Last five days], /* DAYS HERE */
 t0.[Dscription],
 t0.[Non Deliverable],
 t0.[Quantity],

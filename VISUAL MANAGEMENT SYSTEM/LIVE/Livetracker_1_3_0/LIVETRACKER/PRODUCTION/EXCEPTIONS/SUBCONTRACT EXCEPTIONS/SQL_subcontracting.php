@@ -113,7 +113,7 @@ FROM (
             AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')
             $clause2_a
            
-
+            AND t0.IssuedQty < t0.PlannedQty
     UNION ALL
 
             -----sales order buy items -----
@@ -179,7 +179,7 @@ FROM (
             where
             t0.LineStatus = 'o'
             AND t2.ItemCode <> 'TRANSPORT'
-            AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty)
+            
             $clause2_b
             AND t5.ItmsGrpNam not like '%Sheet%'
             AND t5.ItmsGrpNam not like '%SITE%'

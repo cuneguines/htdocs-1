@@ -19,8 +19,8 @@ if (isset($_GET['po'])) {
         $clause2_a = "AND t5.ItmsGrpNam NOT LIKE '%Sheet%' AND t5.ItmsGrpNam NOT LIKE '%Bar%' AND t5.ItmsGrpNam NOT LIKE '%Box%'";
         $clause2_b = "AND t5.ItmsGrpNam NOT LIKE '%Sheet%' AND t5.ItmsGrpNam NOT LIKE '%Bar%' AND t5.ItmsGrpNam NOT LIKE '%Box%'";
     } elseif (explode(',', $_GET['po'])[1] == 'NORMAL') {
-        $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
-        $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
+    $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
+    $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
     }
 } else {
     $clause = '';
@@ -29,7 +29,7 @@ if (isset($_GET['po'])) {
 }
 if(isset($_POST['item'])) {
     $item=(!empty($_POST['item'])? $_POST['item'] : 0);
-    $clause = "WHERE [Process Order] =  $item";
+$clause = "WHERE [Process Order] =  $item";
     $clause2_a = "AND t2.PrcrmntMtd = 'B' AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty";
     $clause2_b = "AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty) ";
 }
@@ -215,7 +215,7 @@ FROM (
             where
             t0.LineStatus = 'o'
             AND t2.ItemCode <> 'TRANSPORT'
-            AND t2.PrcrmntMtd = 'B' AND t0.OpenQty > (t2.ONhand - t2.IsCommited + t0.OpenQty)
+            
             $clause2_b
             AND t5.ItmsGrpNam not like '%Sheet%'
             AND t5.ItmsGrpNam not like '%SITE%'
@@ -227,7 +227,7 @@ LEFT JOIN owor t2 ON t2.DocNum = t0.[Prod Ord]
 INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
 LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
 
-WHERE [Process Order]=$item
+WHERE [Process Order]=$item  and t0.[Issued Qty]<t0.[Planned Qty]
 ORDER BY t2.docnum, [Date_Diff]";
 $getResults = $conn->prepare($subcontracting_results);
 $getResults->execute();

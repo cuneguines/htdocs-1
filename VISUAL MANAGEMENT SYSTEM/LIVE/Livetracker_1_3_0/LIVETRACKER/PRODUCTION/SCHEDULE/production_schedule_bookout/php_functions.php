@@ -150,7 +150,7 @@
 
 
 
-    function generate_schedule_buttonsss($color,$base_color, $border_color, $overwrite, $sales_order, $color_for_date,$process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
+    function generate_schedule_buttonsss($color,$base_color, $border_color, $overwrite, $sales_order, $color_for_date,$process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days,$lfive_days){
        
         $str = 
         "<button id = 'eng_btn'
@@ -182,6 +182,7 @@
             planned_hrs = '$planned_hrs'
             days_week='$days_week'
             lastthreedays='$lthree_days'
+            lastfivedays='$lfive_days'
         >$est_prod_hrs
         </button>";
 

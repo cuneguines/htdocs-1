@@ -135,11 +135,33 @@ console.log(selected_value);
             rows.show();
             $('table.filterable tfoot tr').hide();
             selected_value = $(this).children("option:selected").val();
-console.log(selected_value);
-jobs.not("[lastthreedays= " + $(this).children("option:selected").val() + "]").hide();
+            console.log(selected_value);
+            jobs.not("[lastthreedays= " + $(this).children("option:selected").val() + "]").hide();
 
             $.each($('.row').not('#select_days_week'),function(){
                 if(!JSON.stringify($(this).attr("lastthreedays")).includes(selected_value))
+                {
+                    $(this).hide();
+                }
+                rows.filter('[type = data]').hide();
+                
+            });
+        }
+        else
+        //Last five days selection 
+        if($(this).children("option:selected").val() === 'LastfiveDays')
+        {
+            $('#bd').prop('disabled', true);
+
+            jobs.show();
+            rows.show();
+            $('table.filterable tfoot tr').hide();
+            selected_value = $(this).children("option:selected").val();
+            console.log(selected_value);
+            jobs.not("[lastfivedays= " + $(this).children("option:selected").val() + "]").hide();
+
+            $.each($('.row').not('#select_days_week'),function(){
+                if(!JSON.stringify($(this).attr("lastfivedays")).includes(selected_value))
                 {
                     $(this).hide();
                 }

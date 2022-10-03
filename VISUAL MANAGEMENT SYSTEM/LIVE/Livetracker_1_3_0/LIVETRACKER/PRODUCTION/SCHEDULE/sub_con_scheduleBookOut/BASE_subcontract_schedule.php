@@ -130,20 +130,20 @@
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2> -->
                 </div>
                 <div style="width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class="btext rounded brgreen white">
-                    <p class="smedium">Address</p>
+                    <p class="smedium">Purchase Order</p>
                     <h2 class="inner sixth medium">Nothing Selected</h2>
                     <br>
-                    <p class="smedium">EORI</p>
+                    <p class="smedium">Supplier</p>
                     <h2 class="inner seventh medium">Nothing Selected</h2>
                     <br>
                     <!-- <p class = "smedium">Production</p>
                         <h2 class = "inner eighth medium">Nothing Selected</h2> -->
 
-                    <p class="smedium">Commodity Code</p>
+                    <p class="smedium">Purchase due date</p>
                     <h2 class="inner eleventh medium">Nothing Selected</h2>
                     <br>
-                    <p class="smedium">Comments 1</p>
-                    <h2 class="inner twenty medium">Nothing Selected</h2>
+                    <!-- <p class="smedium">Comments 1</p> -->
+                    <!-- <h2 class="inner twenty medium">Nothing Selected</h2> -->
                 </div>
             </div>
             <!--
@@ -158,7 +158,7 @@
                             <tr class="dark_grey wtext smedium">
                                 <th style="width:14%">Project</th>
 
-                                <th style='width:5.0%;'>Week <<< /th>
+                                <th style='width:5.0%;'>Week <<</th>
                                 <th style='width:5.0%;'>Week -2</th>
                                 <th style='width:5.0%;'>Week -1</th>
 
@@ -323,20 +323,27 @@
                                         $commentss = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"]; */
 
-                                if ($results[$i]["Issued Qty"] >= $results[$i]["Planned Qty"])
+                                if ($results[$i]["Issued Qty"]!='0'&&$results[$i]["Planned Qty"]!='0')
+                                {
+                                    
+                                if($results[$i]["Issued Qty"]>= $results[$i]["Planned Qty"])
                                     $border_color = "brorange";
                                 else
                                     $border_color =  '';
-
+                                }
+                                
+                                
                                 /* if ($results[$i]["Issued Qty"] == NULL || $results[$i]["Planned Qty"] == NULL)
 
                                 $border_color = '';
                                 else
                                 $border_color =  ''; */
-                                if ($results[$i]["Latest Purchase Ord"] == NULL)
-                                    $overwrite = '';
-                                else
+                                if ($results[$i]["Latest Purchase Ord"] != NULL)
                                     $overwrite = 'brired';
+                                    else
+                                    $overwrite = '';
+                                 if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
+                                   $overwrite = 'brdottedyellow';
 
                                 if ($results[$i]["Sub_Con_Date"] == '')
                                     $base_color = 'green';
@@ -367,11 +374,11 @@
                                     //$results[$i]["Est Prod Hrs"],
                                     NULL,
                                     //$results[$i]["Stage"],
-                                    NULL,
+                                    $results[$i]["Latest Purchase Ord"] == NULL ? "NO PrO" :$results[$i]["Latest Purchase Ord"],
                                     //$comments,
-                                    NULL,
+                                    $results[$i]["supplier"] == NULL ? "NO Sup":$results[$i]["supplier"],
                                     //$comments_2,
-                                    NULL,
+                                    $results[$i]["PO Due Date"] == NULL ? " ":$results[$i]["PO Due Date"],
                                     NULL,
                                     //$results[$i]["Quantity"],
                                     NULL,
@@ -464,20 +471,18 @@
                         <div class="subdividor light_grey rounded-left">
                             <div class="half">
                                 <div class="textholder">
-                                    <p>Pre Production</p>
+                                    <p>SC Date</p>
                                 </div>
-                                <div class="button_holder"><button class="light_blue"></button></div>
+                                <div class="button_holder"><button class="light_green"></button></div>
                             </div>
                             <div class="half">
                                 <div class="textholder">
-                                    <p>Non Del</p>
+                                    <!-- <p>Non Del</p> -->
                                 </div>
-                                <div class="button_holder"><button class="pink"></button></div>
+                                <!-- <div class="button_holder"><button class="pink"></button></div> -->
                             </div>
-                        </div>
-                        <!--
-                         -->
-                        <div class="subdividor light_grey">
+                        </div><!--
+                         --><div class="subdividor light_grey">
                             <div class="half">
                                 <div class="textholder">
                                     <p>SC no SCdate</p>
@@ -486,51 +491,46 @@
                             </div>
                             <div class="half">
                                 <div class="textholder">
-                                    <p>Live Bought In</p>
+                                    <!-- <p>Live Bought In</p> -->
                                 </div>
-                                <div class="button_holder"><button class="orange"></div>
+                                <!-- <div class="button_holder"><button class="orange"></div> -->
                             </div>
-                        </div>
-                        <!--
-                         -->
-                        <div id="centergroup_left" class="subdividor light_grey">
-                            <p style="margin-bottom:0%;margin-top:0.5vh;">In Stock/ Complete</p><button style="background-color:#DBDBDB; border:5px solid #9964ED; height:20px;"></button>
-                        </div>
-                        <!--
-                         -->
-                        <div class="subdividor light_grey">
+                        </div><!--
+                         --><div id="centergroup_left" class="subdividor light_grey">
+                            <!-- <p style="margin-bottom:0%;margin-top:0.5vh;">In Stock/ Complete</p><button style="background-color:#DBDBDB; border:5px solid #9964ED; height:20px;"></button> -->
+                             <p style="margin-bottom:0%;margin-top:0.5vh;">Advice note</p>
+                             <button style="background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button> 
+                        </div><!--
+                         --><div class="subdividor light_grey">
                             <div class="half">
                                 <div class="textholder">
                                     <p>PO Raised</p>
                                 </div>
-                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button></div>
+                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid red; height:20px;"></button></div>
                             </div>
                             <div class="half">
                                 <div class="textholder">
-                                    <p>In Man Subcon</p>
+                                    <!-- <p>BOM Issued</p> -->
                                 </div>
-                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid #E601BA; height:20px;"></button></div>
+                                <!-- <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid orange; height:20px;"></button></div> -->
                             </div>
-                        </div>
-                        <!--
-                         -->
-                        <div id="centergroup_right" class="subdividor light_grey">
+                        </div><!--
+                         --><div id="centergroup_right" class="subdividor light_grey">
                             <div class="half">
                                 <div class="textholder">
-                                    <p>Back From SC</p>
+                                   <p>BOM Issued</p>
                                 </div>
-                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button></div>
+                                <!-- <div class="button_holder"><button style="background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button></div> -->
+                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid orange; height:20px;"></button></div>
                             </div>
                             <div class="half">
                                 <div class="textholder">
-                                    <p>Req Man Sc</p>
+                                    <!-- <p>Req Man Sc</p> -->
                                 </div>
-                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px dotted #E601BA; height:20px;"></button></div>
+                                <!-- <div class="button_holder"><button style="background-color:#DBDBDB; border:5px dotted #E601BA; height:20px;"></button></div> -->
                             </div>
-                        </div>
-                        <!--
-                         -->
-                        <div class="subdividor light_grey">
+                        </div><!--
+                         --><div class="subdividor light_grey">
                             <div class="half">
                                 <div class="textholder">
                                     <p>Notification</p>
@@ -543,10 +543,8 @@
                                 </div>
                                 <div class="button_holder"><button class="light_grey brlightgrey redshadow"></button></div>
                             </div>
-                        </div>
-                        <!--
-                         -->
-                        <div class="subdividor light_grey rounded-right">
+                        </div><!--
+                         --><div class="subdividor light_grey rounded-right">
                             <div class="half">
                                 <div class="textholder">
                                     <p>Next Year</p>

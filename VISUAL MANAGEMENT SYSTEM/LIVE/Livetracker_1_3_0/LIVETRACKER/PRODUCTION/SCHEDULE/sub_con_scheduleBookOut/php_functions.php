@@ -82,7 +82,7 @@
             $str_t = $data[$j];
             if($j ==-1||$j ==-2||$j ==-3)
                 
-                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#f4433694'>".$str_t."</td>";
+                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#ff9595'>".$str_t."</td>";
             
             else
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
@@ -93,7 +93,7 @@
                     echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#25ac9975'>".$str_t."</td>";
                    
                     else
-                  echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#ffeb3bb3'>".$str_t."</td>";
+                  echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#ffc975'>".$str_t."</td>";
                 
             }
           /* elseif($j >= 0 && $j <= $orange){
@@ -112,81 +112,6 @@
     }
     // FOR SCEDHULE PAGES //
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //
-    function generate_schedule_button($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs){
-        $str = 
-        "<button id = 'eng_btn'
-            style = 'margin-bottom:3px;' 
-            class = 'rounded project_item $base_color $border_color $overwrite' 
-            sales_order = '$sales_order'
-            process_order = '$process_order'
-            floor_date = '$floor_date'
-            weeks_on_floor = '$weeks_on_floor'
-            customer = '$customer'
-            engineer = '$engineer'
-            engineer_nsp = '$engineer_nsp'
-            sales_person = '$sales_person' 
-            description = '$description'
-            promise_date = '$promise_date'
-            promise_week_due = '$promise_week_due'
-            
-            est_fab_hrs = '$est_fab_hrs'
-            status = '$status'
-            stage = '$stage'
-            comments = '".$comments."'
-            comments_2 = '".$comments_2."'
-            qty = '$qty'
-            days_open = '$days_open'
-            week_opened = '$week_opened'
-            weeks_open = '$weeks_open'
-            planned_hrs = '$planned_hrs'
-            
-        >$est_prod_hrs
-        </button>";
-
-        return $str;
-    }
-
-
-
-
-
-    function generate_schedule_buttonsss($color,$base_color, $border_color, $overwrite, $sales_order, $color_for_date,$process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
-       
-        $str = 
-        "<button id = 'eng_btn'
-            style = 'margin-bottom:3px ;'
-            class = 'rounded project_item $base_color $border_color $overwrite' 
-            color_for_date='$color_for_date'
-            sales_order = '$sales_order'
-            process_order = '$process_order'
-            floor_date = '$floor_date'
-            weeks_on_floor = '$weeks_on_floor'
-            customer = '$customer'
-            engineer = '$engineer'
-            
-            engineer_nsp = '$engineer_nsp'
-            sales_person = '$sales_person' 
-            description = '$description'
-            promise_date = '$promise_date'
-            promise_week_due = '$promise_week_due'
-            
-            est_fab_hrs = '$est_fab_hrs'
-            status = '$status'
-            stage = '$stage'
-            comments = '".$comments."'
-            comments_2 = '".$comments_2."'
-            qty = '$qty'
-            days_open = '$days_open'
-            week_opened = '$week_opened'
-            weeks_open = '$weeks_open'
-            planned_hrs = '$planned_hrs'
-            days_week='$days_week'
-            lastthreedays='$lthree_days'
-        >$est_prod_hrs
-        </button>";
-
-        return $str;
-    }
     
     function generate_schedule_buttons_forsc($color,$base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
        
