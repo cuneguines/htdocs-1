@@ -5,7 +5,7 @@ $(document).ready(function(){
         $.ajax({
 
             type: "POST",
-            url: "SQL_subcontract_schedule_test.php",
+            url: "SQL_subcontract_schedule_exception.php",
             data: {
                 'item': test
 
@@ -37,7 +37,8 @@ console.log(data[0]);
     $("h2.fourteenth").replaceWith( "<h2 class = 'inner fourteenth medium'>"+$(this).attr('promise_date')+" "+$(this).attr('promise_week_due')+" ("+$(this).attr('week_opened')+"-"+$(this).attr('weeks_open')+")</h2>");
     $("h2.fifteenth").replaceWith( "<h2 class = 'inner fifteenth medium'>"+$(this).attr('floor_date')+" "+$(this).attr('weeks_on_floor')+"</h2>");
     $("h2.fifth").replaceWith( "<h2 class = 'inner fifth medium'>"+$(this).attr('engineer')+"</h2>");
-    $("h2.sixth").replaceWith( "<h2 class = 'inner sixth medium'>"+$(this).attr('status')+"</h2>");
+    $("h2.sixth").replaceWith( '<h2 class = "inner sixth medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href='+ "'" +'/../SAP READER/SAP READER/BASE_sales_order.php?po='+$(this).attr('status')+ "'" +'">'+$(this).attr('status')+"</button></h2>");
+   // $("h2.sixth").replaceWith( "<h2 class = 'inner sixth medium'>"+$(this).attr('status')+"</h2>");
     $("h2.seventh").replaceWith( "<h2 class = 'inner seventh medium'>"+$(this).attr('stage')+"</h2>");
     $("h2.eighth").replaceWith( "<h2 class = 'inner eighth medium'>"+$(this).attr('est_fab_hrs')+" ("+$(this).attr('planned_hrs')+")</h2>");
     $("h2.eleventh").replaceWith( "<h2 class = 'inner eleventh medium'>"+$(this).attr('comments')+"</h2>");

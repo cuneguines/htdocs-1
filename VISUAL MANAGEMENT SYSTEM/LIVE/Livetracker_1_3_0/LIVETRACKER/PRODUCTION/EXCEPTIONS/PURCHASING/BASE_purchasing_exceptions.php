@@ -1,3 +1,11 @@
+<?php if (isset($_GET['po'])) {
+    $clause = "AND T0.DocNum  = '" . explode(',', $_GET['po'])[0] ."'";
+$clause_a="and t3.ItmsGrpNam='Sub Con - Purchases'";
+    
+}
+//print_r($clause);
+?>
+
 <!DOCTYPE html>
 <html>
     <head>

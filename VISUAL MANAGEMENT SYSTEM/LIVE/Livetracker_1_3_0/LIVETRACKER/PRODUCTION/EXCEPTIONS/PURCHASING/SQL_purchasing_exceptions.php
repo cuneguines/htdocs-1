@@ -2,6 +2,7 @@
 $production_exceptions =
 "SELECT 
     T0.[DocNum] [Purchase Order Number], 
+  T0.DocNum,
     FORMAT(t0.docdate,'dd-MM-yyyy') [Order Date],
     FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
     T0.[CardName] [Supplier],
@@ -16,6 +17,8 @@ $production_exceptions =
             WHERE T1.LineStatus = 'O' AND  
 (T0.[U_Destination] = 'Plant' OR T0.[U_Destination] = 'Service') AND T1.ItemCode <> 'Transport' 
 AND T1.[Dscription] <> 'Transport'
+$clause
+$clause_a
 ORDER BY T0.[DocDueDate] asc, T0.[CardName]
 ";
 ?>
