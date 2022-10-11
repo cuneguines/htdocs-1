@@ -97,6 +97,7 @@
         .brired {
             outline: 4px solid red;
         }
+        
     </style>
 </head>
 
@@ -142,8 +143,8 @@
                     <p class="smedium">Purchase due date</p>
                     <h2 class="inner eleventh medium">Nothing Selected</h2>
                     <br>
-                    <!-- <p class="smedium">Comments 1</p> -->
-                    <!-- <h2 class="inner twenty medium">Nothing Selected</h2> -->
+                    <p class="smedium">Comments </p>
+                    <h2 class="inner twenty medium">Nothing Selected</h2>
                 </div>
             </div>
             <!--
@@ -327,10 +328,12 @@
                                 {
                                     
                                 if($results[$i]["Issued Qty"]>= $results[$i]["Planned Qty"])
-                                    $border_color = "brorange";
+                                    $color = "brorange";
                                 else
-                                    $border_color =  '';
+                                    $color =  '';
                                 }
+                                else
+                                $color='';
                                 
                                 
                                 /* if ($results[$i]["Issued Qty"] == NULL || $results[$i]["Planned Qty"] == NULL)
@@ -339,17 +342,18 @@
                                 else
                                 $border_color =  ''; */
                                 if ($results[$i]["Latest Purchase Ord"] != NULL)
-                                    $overwrite = 'brired';
-                                    else
-                                    $overwrite = '';
+                                    $border_color = 'brired';
+                                    
                                  if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
                                    $overwrite = 'brdottedyellow';
+                                   else
+                                   $overwrite='';
 
                                 if ($results[$i]["Sub_Con_Date"] == '')
                                     $base_color = 'green';
                                 else
                                     $base_color = 'lightgreen';
-                                $color = 'blue';
+                                //$color = 'blue';
 
                                 $str = generate_schedule_buttons_forsc(
                                     $color,
@@ -379,7 +383,8 @@
                                     $results[$i]["supplier"] == NULL ? "NO Sup":$results[$i]["supplier"],
                                     //$comments_2,
                                     $results[$i]["PO Due Date"] == NULL ? " ":$results[$i]["PO Due Date"],
-                                    NULL,
+                                    //str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sub_Con_Remarks"])),
+                                    $results[$i]["Sub_Con_Remarks"] == NULL ? "NO R":$results[$i]["Sub_Con_Remarks"],
                                     //$results[$i]["Quantity"],
                                     NULL,
                                     //$results[$i]["Days Open"],
@@ -614,9 +619,23 @@
                                     </div>
                                     <div class="content">
                                         <select id="select_days_week" class="selector fill medium">
+                                            
                                             <option value="All" selected>All</option>
-                                            <option value="LastthreeDays" selected>Last three Days</option>
-                                            <?php generate_filter_optionss($results, "Days of the Week"); ?>
+                                            <!-- <option value="LastthreeDays" selected>Last three Days</option> -->
+                                            <!-- <option value="LastfiveDays" selected>Last five Days</option>  -->
+                                            <option value="Monday" selected>Monday</option>
+                                            <option value="Tuesday" selected>Tuesday</option>
+                                            <option value="Wednesday" selected>Wednesday</option>
+                                            <option value="Thursday" selected>Thursday</option>
+                                            <option value="Friday" selected>Friday</option>
+                                            <option value="MNW" selected>MondayN</option>
+                                            <option value="TNW" selected>TuesdayN</option>
+                                            <option value="WNW" selected>WednesdayN</option>
+                                            <option value="THNW" selected>ThursdayN</option>
+                                            <option value="FNW" selected>FridayN</option>
+
+                                            <option value="Other" selected>Other</option>
+                                            
                                         </select>
                                     </div>
                                 </div>

@@ -112,7 +112,7 @@ t0.[Comments],
 t0.[Comments_2],
 t0.[Addr],
 t0.[DueDate],
-
+t0.[Account Status],
 t0.[Process Order],
 t0.[Planned Hrs],
 t0.[Sub Contract Status],
@@ -126,6 +126,8 @@ FROM(
                                                 ----CUSTOMER ORDERS ONLY-----
 
                                                 SELECT
+												  (CASE WHEN t20.Balance + t7.[Order Value] <= 0 THEN 'OK' ELSE 'ON HOLD' END) 
+            [Account Status],
                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 isnull(t1.U_delivery_date, t0.DocDueDate)[DueDate],
@@ -231,6 +233,13 @@ end)[Del Date Due UNP],
                                                                                                                                                    Having sum(t0.issuedqty) = 0 and sum(t1.CmpltQty) = 0
                                                                                                                                                    ) t15 on t15.U_IIS_proPrOrder = t4.U_IIS_proPrOrder
                                                                                                                                                                                                                                                 left join  ocrd t20 on t20.CardCode = t0.CardCode
+																																																												LEFT JOIN 
+        (
+            SELECT DocEntry, SUM(LineTotal) [Order Value]
+            FROM rdr1
+            GROUP BY DocEntry
+        )
+        t7 ON t7.DocEntry = t0.DocEntry
    
                                                                 WHERE t1.LineStatus = 'O'
                                                                 AND t1.ItemCode <> 'TRANSPORT' 
@@ -242,6 +251,7 @@ end)[Del Date Due UNP],
 
                                                 ----STOCK ORDERS ONLY-----
                                                 SELECT
+												NULL,
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 t0.CardCode[cardcode],
@@ -319,6 +329,9 @@ end)[Del Date Due UNP],
                                                                                                 where t0.[Del Date Due UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+18)
                                                                                                 and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
    
-   ORDER BY t0.[Project]";
+   ORDER BY t0.[Project]
+
+
+";
    ?>
 

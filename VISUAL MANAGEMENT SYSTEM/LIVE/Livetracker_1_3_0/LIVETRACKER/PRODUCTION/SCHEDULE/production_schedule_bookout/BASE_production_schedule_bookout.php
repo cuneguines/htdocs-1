@@ -174,10 +174,16 @@
                                     $days_str = implode(" ", $project_days_buffer);
                                     $days_lthree = implode(" ", $project_days_lthree_buffer);
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
+                                    $promise_week_due = '10';
+                                    if(($account_stat=="ON HOLD"))
+                                    $bgcolor='red';
+                                    else
+                                    $bgcolor=''; 
+                                   // $bgcolor = '';
 
                                     // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
                                     echo "<tr class = 'row white smedium' lastthreedays = '" . $days_lthree ."'lastfivedays = '". $days_lfive . "'productgp = '" . $productgp . "'days_week = '" . $days_str . "'customer = '" . $customer . "' project = '" . $project . "' engineers = '" . $engineers_str . "' sales_person = '" . $sales_person . "' promise_week_due = '" . $promise_week_due . "' type =  breakdown>";
-                                    echo "<td style = 'border-right:1px solid #454545;'>" . $customer_unp . "<br><br>" . $project_unp . "</td>";
+                                    echo "<td style = 'background-color:$bgcolor;border-right:1px solid #454545;'>" . $customer_unp . "<br><br>" . $project_unp . "</td>";
 
                                     print_values_22($project_button_buffer, $start_range, $end_range - 1);
 
@@ -226,6 +232,7 @@
                                     $days_week = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"]));
                                     $promise_week_due = $results[$i]["Promise Week Due"];
                                     $project_unp = $results[$i]["Project"];
+                                    $account_stat=$results[$i]["Account Status"];
                                     $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
                                     $first = 0;
                                 }

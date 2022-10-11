@@ -82,7 +82,7 @@
             $str_t = $data[$j];
             if($j ==-1||$j ==-2||$j ==-3)
                 
-                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#ff9595'>".$str_t."</td>";
+                echo "<td class = 'small' style = 'border: 1px dotted black;background-color:#ff9595bd'>".$str_t."</td>";
             
             else
             // PRINTS PROJECT JOB BUTTON DATA IN PLACE TO HTML
@@ -118,7 +118,7 @@
         $str = 
         "<button id = 'eng_btn'
             style = 'width:70%;margin-bottom:2px;background-color:' 
-            class = 'rounded project_item $base_color $border_color $overwrite' 
+            class = 'rounded project_item $base_color $border_color $overwrite $color' 
             sales_order = '$sales_order'
             process_order = '$process_order'
             floor_date = '$floor_date'

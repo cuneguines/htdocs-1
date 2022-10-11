@@ -42,7 +42,7 @@ console.log(data[0]);
     $("h2.seventh").replaceWith( "<h2 class = 'inner seventh medium'>"+$(this).attr('stage')+"</h2>");
     $("h2.eighth").replaceWith( "<h2 class = 'inner eighth medium'>"+$(this).attr('est_fab_hrs')+" ("+$(this).attr('planned_hrs')+")</h2>");
     $("h2.eleventh").replaceWith( "<h2 class = 'inner eleventh medium'>"+$(this).attr('comments')+"</h2>");
-    $("h2.twent").replaceWith( "<h2 class = 'inner twent medium'>"+$(this).attr('comments_2')+"</h2>");
+    $("h2.twenty").replaceWith( "<h2 class = 'inner twenty medium'>"+$(this).attr('comments_2')+"</h2>");
     $(".project_item").removeClass("eng_active");
     $(this).addClass("eng_active");
     });

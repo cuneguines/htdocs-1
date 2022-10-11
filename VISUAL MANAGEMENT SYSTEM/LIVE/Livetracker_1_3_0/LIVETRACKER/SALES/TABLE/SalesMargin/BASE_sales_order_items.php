@@ -57,7 +57,7 @@
     <div id="background">
         <div id="content">
             <div class="table_title green">
-                <h1>NEW SALES ORDERS</h1>
+                <h1>SALES ORDER DETAILS</h1>
             </div>
 
            <!--  <table id="products" style="position: sticky;overflow-x:scroll;">
@@ -69,16 +69,16 @@
                                     <th style="width:100px">ItemCode</th>
                                     <th style="width:200px">ItemGroup</th> -->
 
-            <div id="pages_table_container"style="position: sticky;overflow-x:scroll;" class="table_container">
+            <div id="pages_table_container"style="overflow-x:scroll;" class="table_container">
                 <table id="new_sales_orders_margin" class="filterable sortable colborders">
                 <thead style="position:sticky;top:0;z-index:+2">
                     <!-- 		LineNum	so_status	PrcrmntMtd	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
 
                         <tr class="dark_grey wtext smedium head">
-                            <th style="width:100px;left:0px;color:white;padding-left:3px">Sales Order</th>
-                            <th style="width:300px;left:100px;color:white">Item Name</th>
-                            <th style="width:200px;left:200px;color:white">Customer</th>
-                            <th width="200px">Project</th>
+                            <th style="position:sticky;width:100px;left:0px;;padding-left:3px;background-color:#454545">Sales Order</th>
+                            <th style="position:sticky;width:300px;left:100px;color:white;background-color:#454545">Item Name</th>
+                            <th style="position:sticky;width:200px;left:400px;color:white;background-color:#454545">Customer</th>
+                            <th style="position:sticky;width:200px;left:600px;background-color:#454545">Project</th>
                             <th width="100px">PP Status</th>
                             <th width="100px">Doc Date</th>
                             <th width="100px">Due Date</th>
@@ -122,10 +122,10 @@
                             <?php $sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
 
                             <tr class='smedium btext' customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>' sales_person='<?= $sales_person ?>'>
-                                <td class="bold"><?= $sales_order["Sales Order"]?></td>
-                                <td class='lefttext'><?= $sales_order["Dscription"] ?></td>
-                                <td><?= $sales_order["CardName"] ?></td>
-                                <td><?= $sales_order["U_client"] ?></td>
+                                <td  style="position:sticky;left:0px;background-color:white"class="bold"><?= $sales_order["Sales Order"]?></td>
+                                <td style="position:sticky;left:100px;background-color:white"class='lefttext'><?= $sales_order["Dscription"] ?></td>
+                                <td style="position:sticky;left:400px;background-color:white"><?= $sales_order["CardName"] ?></td>
+                                <td style="position:sticky;left:600px;background-color:white"><?= $sales_order["U_client"] ?></td>
                                 <td ><?= $sales_order["PP Status"]==NULL?'NULL':$sales_order["PP Status"]?></td>
                                 <td ><?= $sales_order["DocDate"]?></td>
                                 <td ><?=$sales_order["Due_Date"]?></td>

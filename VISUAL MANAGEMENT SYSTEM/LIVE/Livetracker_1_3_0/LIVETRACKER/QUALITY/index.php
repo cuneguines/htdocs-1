@@ -344,8 +344,9 @@
                    <small>Summary of Issues</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="chart_page.php">Charts</a></li>
+                    <li><a href="edit_page.php">Edit</a></li>
                     <li class="active">Issues</li>
                 </ol>
 
@@ -359,7 +360,7 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" style="overflow-x:scroll;overflow-y:scroll;height:68vh; width:100%;">
+                    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:68vh; width:100%;">
 
 
                         <table id="products" style="position: sticky;overflow-x:scroll;">
@@ -430,6 +431,8 @@
 
 
                         </table>
+                        
+                        
 
 
 
@@ -437,11 +440,12 @@
 
 
                     </div>
+                   
 
                 </div>
                 <!-- Filter Starts here -->
 
-                <div class="filtercontainer" style="background-color: #337ab7;
+                <div class="filtercontainer" style="background-color: #337ab7;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
                              width: 100%;
                              height: 50px;">
                     <div class="filter">

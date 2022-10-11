@@ -70,13 +70,13 @@ $dataPoints1 = array(
 <div style="margin-left:2%;width:100%;height:100vh;background-color:#eee;">
 
 
-        <div style="position:relative;border-radius: 10px;background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Quality</h3><h1 style="position:relative;margin-left:40%">52.2%</h1></div>
-        <div style="position:relative;border-radius: 10px;background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Engineering</h3><h1 style="position:relative;margin-left:40%">26.3%</h1></div>
-        <div style="position:relative;border-radius: 10px;background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Customer</h3><h1 style="position:relative;margin-left:40%">19.0%</h1></div>
-        <div style="position:relative;border-radius: 10px;background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Polishing</h3><h1 style="position:relative;margin-left:40%">21.2%</h1></div>
+        <div style="position:relative;border-radius: 10px;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Quality</h3><h1 style="font-weight: bold;position:relative;margin-left:40%;font-size: 35px;">52.2%</h1></div>
+        <div style="position:relative;border-radius: 10px;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Engineering</h3><h1 style="font-weight: bold;position:relative;margin-left:40%;font-size: 35px;">26.3%</h1></div>
+        <div style="position:relative;border-radius: 10px;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Customer</h3><h1 style="font-weight: bold;position:relative;margin-left:40%;font-size: 35px;">19.0%</h1></div>
+        <div style="position:relative;border-radius: 10px;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);background-color:#2196f3;height: 15%; width: 20%;float:left;margin-left:4%"><h3>Polishing</h3><h1 style="font-weight: bold;position:relative;margin-left:40%;font-size: 35px;">21.2%</h1></div>
   
     
-        <div id="chartContainer" style="position:relative;height: 53%; width: 44%;float:left;margin-top:2%;margin-left:4%"></div>
-        <div id="chartContainer1" style="position:relative;height: 53%; width: 44%;float:left;margin-top:2%;margin-left:4%"></div>
+        <div id="chartContainer" style="box-shadow: 0px -10px 10px 0px rgba(0, 0, 0, 0.5);position:relative;height: 53%; width: 44%;float:left;margin-top:2%;margin-left:4%"></div>
+        <div id="chartContainer1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);position:relative;height: 53%; width: 44%;float:left;margin-top:2%;margin-left:4%"></div>
     </div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

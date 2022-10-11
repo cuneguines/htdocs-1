@@ -283,5 +283,14 @@ $(document).ready(function () {
 
 
     });
+   
+
 });
 
+
+$(document).ready(function () {
+    $('#services_button').click(function () {
+        $("#card_body1").hide();
+        $("#card_body2").show();
+    });
+});

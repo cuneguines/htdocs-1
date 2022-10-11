@@ -320,7 +320,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit Findings<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit findings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -328,6 +328,7 @@
                         </ul>
 
                     </li>
+                    
                 </ul>
                 </li>
                 </ul>
@@ -344,8 +345,7 @@
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="index.php">Home</a></li>
-                    
-                    <li><a href="">Charts</a></li>
+                    <li><a href="chart_page.php">Charts</a></li>
                     <li><a href="edit_page.php">Edit</a></li>
                     <li class="active">Issues</li>
                 </ol>
@@ -360,10 +360,81 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" style="min-height:700px;max-height:700px; width:100%;">
+                    <div class="card-body" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:68vh; width:100%;">
 
 
-                        <?php include './graph.php'; ?>
+                        <table id="products" style="position: sticky;overflow-x:scroll;">
+                            <thead style="position:sticky;top:0;z-index:+2">
+                                <tr class="head">
+                                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
+                                    <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
+                                    <th style="position: sticky;width:200px;left:300px;color:white">Issue</th>
+                                    <th style="width:100px">ItemCode</th>
+                                    <th style="width:200px">ItemGroup</th>
+                                    <th style="width:100px">CreatedDate</th>
+                                    <th style="width: 100px">UpdatedDate</th>
+                                    <th style="width: 200px">Raised Area</th>
+                                    <th style="width: 100px">Raised By</th>
+                                    <th style="width: 100px">ProductGp</th>
+                                    <th style="width: 100px;">SubGp2</th>
+                                    <th style="width: 100px">SubGp3</th>
+
+                                    <th style="width: 200px">PrevActionOwner</th>
+                                    <th style="width:200px">Type</th>
+                                    <th style="width:200px">Status</th>
+                                    <th style="width:200px">RootCauseAnalysis</th>
+                                    <th style="width:200px">Preventive action reports</th>
+                                    
+                                    <th style="width:200px">Attachements</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+                                <?php foreach ($quality_results as $row) : ?>
+                                    <tr>
+                                        <td style="position: sticky;left:0px;background:#3fa5d3"><?= $row["code"] ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#3fa5d3"><?= $row["ItemName"] ?></td>
+                                        <td style="position: sticky;left:300px;background:#3fa5d3"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
+                                        </td>
+                                        <td><?= $row["ItemCode"] ?></td>
+                                        <td><?= $row["Item Group"] ?></td>
+                                        <td><?= $row["CreateDate"] ?></td>
+                                        <td><?= $row["UpdateDate"] ?></td>
+                                        <td><?= $row["U_area_nc"] ?></td>
+
+                                        <td><?= $row["U_area_nc_raised"] ?></td>
+                                        
+                                       
+                                        <td class="Group1"><?= $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
+                                        <td class="Group2"><?= $row["U_Product_Group_Two"] ?></td>
+                                        <td class="Group3"><?= $row["U_Product_Group_Three"] ?></td>
+                                        <td><?= $row["U_prev_action_owner"] ?></td>
+                                        <td><?= $row["U_nc_type"] ?></td>
+                                        <td><?= $row["U_Status"] ?></td>
+
+                                        <?
+                                        $uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
+                                        echo $uploadfile; ?>
+
+                                        <td><input type="button" onclick=location.href="files_view_cause.php?q=<?= $row['code'] ?>" name='<?= $row["code"] ?>' id='<?= $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                        <td><input type="button" onclick=location.href="files_view_prev.php?q=<?= $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?= $row['code'] ?>" value='<?= '' ?>' value='<?= $row["attachements_issues"] ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 0 ? 'has_attachment' : '' ?>'></td>
+
+
+
+
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+
+
+
+                        </table>
+
+
+
+
 
 
                     </div>
@@ -371,9 +442,9 @@
                 </div>
                 <!-- Filter Starts here -->
 
-                <div class="filtercontainer" style="background-color: #337ab7;
+                <div class="filtercontainer" style="background-color: #337ab7;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
                              width: 100%;
-                             height: 50px;display:none">
+                             height: 50px;">
                     <div class="filter">
                         <div class="text">
                             <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#337ab7;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
