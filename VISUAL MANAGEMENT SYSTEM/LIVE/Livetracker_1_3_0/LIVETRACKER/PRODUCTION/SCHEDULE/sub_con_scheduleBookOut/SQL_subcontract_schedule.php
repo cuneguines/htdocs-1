@@ -20,6 +20,7 @@ $tsql =
         t0.[IssuedQty],
         t0.[PlannedQty],
         t0.Dscription,
+        
         CASE 
         WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
         WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
@@ -100,7 +101,8 @@ $tsql =
         t0.Sub_Con_Remarks,
         isnull(t0.Sub_Con_Status,'No stat')[Sub_Con_Status],
         t0.[Project], t5.latest_po_date[Latest Puchase Ord], t5.supplier[supplier], 
-        FORMAT(CAST(t5.earliest_po_due_date AS DATE),'dd-MM-yyyy') [PO Due Date]
+        FORMAT(CAST(t5.earliest_po_due_date AS DATE),'dd-MM-yyyy') [PO Due Date],
+        t22.Comments
         
         FROM (
         
@@ -108,7 +110,7 @@ $tsql =
             SELECT  
             t7.Dscription[Dscription],
             t0.IssuedQty[IssuedQty],
-                t0.PlannedQty[PlannedQty],
+            t0.PlannedQty[PlannedQty],
             DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
             DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
             t1.U_IIS_proPrOrder [Process Order],
@@ -290,7 +292,15 @@ $tsql =
                                                         
                                                         group by t0.ItemCode, t1.CardName)t5 on t5.ItemCode = t0.ItemCode
         
-        
+                                                        left join(select t0.Comments,t1.ItemCode  FROM OPOR T0  
+        INNER JOIN POR1 T1 ON T0.DocEntry = T1.DocEntry 
+        inner join oitm t2 on t2.ItemCode = t1.ItemCode
+        inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
+            WHERE T1.LineStatus = 'O'
+			 and t1.LineStatus = 'o'
+             and t0.DocType = 'I'
+)t22 on t22.ItemCode = t0.ItemCode
+                                                        
         
         WHERE
         t0.[Promise Date UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+28) AND t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')

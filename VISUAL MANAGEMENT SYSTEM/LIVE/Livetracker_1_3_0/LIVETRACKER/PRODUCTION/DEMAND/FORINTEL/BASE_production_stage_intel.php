@@ -229,11 +229,14 @@
                             <th width="70px" class="sticky darker_grey lefttext" style="left:0px;">Sales<br>Order</th>
                             <th width="70px" class="sticky darker_grey lefttext" style="left:80px;">Process Order</th>
                             <th width="90px" class="sticky darker_grey lefttext" style="left:160px;">Due Date</th>
-                            <th width="190px" class="sticky darker_grey lefttext" style="left:260px;">Item Name</th>
-                            <th width="60px" class="sticky darker_grey lefttext" style="left:360px;">Fabricator</th>
-                            <th width="60px" class="sticky darker_grey lefttext" style="left:460px;">PLanned</th>
-                            <th width="60px" class="sticky darker_grey lefttext" style="left:460px;">EXecuted</th>
-                            <th width="60px" class="sticky darker_grey lefttext" style="left:460px;">Plan-Exe</th>
+                            
+                            <th width="190px" class="sticky darker_grey lefttext" style="left:160px;">Item Name</th>
+                            <th width="60px" class="sticky darker_grey lefttext" style="left:360px;">SCon Date</th>
+                            <th width="70px" class="sticky darker_grey lefttext" style="left:360px;">Fabricator</th>
+                            <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">PLanned</th>
+                            <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">EXecuted</th>
+                            <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">Plan-Exe</th>
+                           
 
                             <?php foreach ($group_steps_template_intel as $group) : ?>
                                 <?php foreach ($group["steps"] as $step) : ?>
@@ -321,7 +324,9 @@
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["ItemName"] ?></td>
+                                
+                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["ItemName"] ?></td>
+                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] ==NULL?'NULL':$row["SubConDate"]?></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
@@ -396,7 +401,7 @@
                                 </div>
                             </div>
                             <div class="filter">
-                                <div class="text">
+                                <!-- <div class="text">
                                     <button class="fill red medium wtext">Engineer</button>
                                 </div>
                                 <div class="content">
@@ -404,6 +409,13 @@
                                         <option value="All" selected>All</option>
                                         <?php generate_filter_options($process_order_step_efficiency_data, "Engineer") ?>
                                     </select>
+                                </div> -->
+                                <div class="text">
+                                    <button class="fill bred medium btext" style ="background-color:blue;float:left;margin-left: 21%">Hide</button>
+                                    <button class="fill bblue medium btext"style="float:left;position: relative;
+    margin-left: 106%;
+    margin-top: -23%;
+    float: left">Show</button>
                                 </div>
                             </div>
                             <div class="filter">
@@ -419,9 +431,10 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="text">
-                                    <button class="fill bred medium wtext">Remove</button>
-                                </div>
+                                <!-- <div class="text">
+                                    <button class="fill bred medium btext" style ="background-color:blue">Hide</button>
+                                    <button class="fill bred medium btext">Show</button>
+                                </div> -->
                             </div>
                         </div>
                     </div>

@@ -56,6 +56,13 @@ $(".bred").click(function()
 {
     //jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
     rows.filter("[status = complete]").hide();
+    alert('removed');
+});
+$(".bblue").click(function()
+{
+    //jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
+    rows.show();
+    alert('y');
 }
 );
     // IF A COL SELECTOR FILTER IS CHANGED

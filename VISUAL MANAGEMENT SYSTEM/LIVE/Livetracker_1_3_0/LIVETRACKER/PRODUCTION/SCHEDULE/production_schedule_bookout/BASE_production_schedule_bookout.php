@@ -176,7 +176,7 @@
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
                                     $promise_week_due = '10';
                                     if(($account_stat=="ON HOLD"))
-                                    $bgcolor='red';
+                                    $bgcolor='#eb3434e0';
                                     else
                                     $bgcolor=''; 
                                    // $bgcolor = '';

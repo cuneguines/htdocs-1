@@ -1,5 +1,5 @@
 <?php
-$process_order_step_efficiency_sql = 
+$process_order_step_efficiency_sql =
 "with user_hours as (select t0.PrOrder, t0.UserId, sum(isnull(t0.quantity,0)) [Hours]
 from iis_epc_pro_ordert t0
 group by t0.PrOrder, t0.UserId),
@@ -20,12 +20,13 @@ group by t0.PrOrder)
 
 
 SELECT 
+FORMAT(CAST(t17.U_sc_date AS DATE), 'dd-MM-yyyy') [SubConDate],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
 FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
 t22.U_risk_rating[Risk],
-
 t9.ItemName,
+
 t9.ItemCode,
 t21.Most_Hours[Most_Hours],
 t5.CardName [Customer], 
@@ -53,6 +54,16 @@ t14.[SEQ027],                    t14.[SEQ028],                    t14.[SEQ029], 
 t14.[SEQ031]
 
 from owor t0
+left join (
+              select t1.docnum, t0.U_sc_date, t0.U_sc_remarks, t0.U_sc_status
+
+              from wor1 t0
+              inner join owor t1 on t1.docentry = t0.docentry 
+              inner join oitm t2 on t2. ItemCode = t0.itemcode
+              inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
+
+              where t3.ItmsGrpNam = 'Sub Con - Purchases'
+              and t2.ItemName not like 'Assembly of%') t17 on t17.DocNum = t0.DocNum
 
 inner join ordr t5 on t5.docnum = t0.OriginNum
 inner join ohem t7 on t7.empID = t5.OwnerCode
@@ -156,23 +167,35 @@ where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')
 and isnull(t22.U_Floor_date, t5.U_floordate) is not null
 and t0.CardCode = 'INT002'
-order by t0.U_IIS_proPrOrder, t16.LineID"
+order by t0.U_IIS_proPrOrder, t16.LineID
+"
 
 ;
 
 $sql_step_lookup = 
-"SELECT t0.PrORder[Process Order], t0.LineID[Sub Item Line ID], t0.StepItem[Sub Item Code], t0.StepDesc, t1.StepItem, t1.StepDesc, t2.U_OldCode[Sequence Code], t1.LineID[Step Line ID], t1.Status[Step Status], t1.ProcessTime, t4.BookedTime FROM IIS_EPC_PRO_ORDERL t0
-LEFT JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrORder = t0.PrORder AND t1.ParentLine = t0.LineID
+"SELECT t0.PrORder[Process Order], t0.LineID[Sub Item Line ID], 
+t0.StepItem[Sub Item Code], 
+t0.StepDesc, t1.StepItem, 
+t1.StepDesc, t2.U_OldCode[Sequence Code], t1.LineID[Step Line ID], 
+t1.Status[Step Status], t1.ProcessTime, t4.BookedTime
+
+
+
+FROM IIS_EPC_PRO_ORDERL t0
+LEFT JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrORder = t0.PrORder AND t1.ParentLine = t0.LineID and t0.StepItem <> 'B'
 LEFT JOIN OITM t2 ON t2.ItemCode = t1.StepItem
 LEFT JOIN IIS_EPC_pro_ORDERH t3 ON t3.PrORder = t0.PrORder
 LEFT JOIN(
-    SELECT PrORder, LineID, SUM(Quantity)[BookedTime] 
-        FROM IIS_EPC_PRO_ORDERT 
-            GROUP BY PrORder, LineID
-)t4 ON t4.PrORder = t0.PrORder AND t4.LineID = t1.LineID
+              SELECT PrORder, LineID, SUM(Quantity)[BookedTime] 
+                           FROM IIS_EPC_PRO_ORDERT 
+                                  GROUP BY PrORder, LineID
+              )t4 ON t4.PrORder = t0.PrORder AND t4.LineID = t1.LineID
 
-    WHERE t0.Steptype = 'B' AND t0.UseStock IN ('N') AND t1.UseStock IN ('N') AND t3.Status IN ('P','R','S','I')
-    ORDER BY t0.PrOrder, t0.LineID, t1.LineID";
+WHERE t0.Steptype = 'B' 
+AND t0.UseStock not like 'Y'
+AND t1.UseStock not like 'Y'
+AND t3.Status IN ('P','R','S','I') 
+ORDER BY t0.PrOrder, t0.LineID, t1.LineID";
 
 $sql_logged_entries = 
 "SELECT 

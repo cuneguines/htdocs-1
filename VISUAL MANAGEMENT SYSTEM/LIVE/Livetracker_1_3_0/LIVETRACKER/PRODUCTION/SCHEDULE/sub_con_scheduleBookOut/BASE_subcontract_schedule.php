@@ -384,7 +384,8 @@
                                     //$comments_2,
                                     $results[$i]["PO Due Date"] == NULL ? " ":$results[$i]["PO Due Date"],
                                     //str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sub_Con_Remarks"])),
-                                    $results[$i]["Sub_Con_Remarks"] == NULL ? "NO R":$results[$i]["Sub_Con_Remarks"],
+                                    //$results[$i]["Comments"] == NULL ? "NO R":$results[$i][""],
+                                    NULL,
                                     //$results[$i]["Quantity"],
                                     NULL,
                                     //$results[$i]["Days Open"],
@@ -621,7 +622,7 @@
                                         <select id="select_days_week" class="selector fill medium">
                                             
                                             <option value="All" selected>All</option>
-                                            <!-- <option value="LastthreeDays" selected>Last three Days</option> -->
+                                            <option value="LastthreeDays" selected>Last three Days</option>
                                             <!-- <option value="LastfiveDays" selected>Last five Days</option>  -->
                                             <option value="Monday" selected>Monday</option>
                                             <option value="Tuesday" selected>Tuesday</option>

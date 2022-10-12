@@ -3,6 +3,8 @@
 $clause_a="and t3.ItmsGrpNam='Sub Con - Purchases'";
     
 }
+else $clause='';
+$clause_a='';
 //print_r($clause);
 ?>
 
