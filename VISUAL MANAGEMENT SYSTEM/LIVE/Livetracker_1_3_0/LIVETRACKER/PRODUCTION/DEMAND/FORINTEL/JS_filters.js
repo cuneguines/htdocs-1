@@ -65,6 +65,28 @@ $(".bblue").click(function()
     alert('y');
 }
 );
+
+$(".laserph").click(function()
+{
+    alert('hello');
+    //jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
+    //rows.filter("[step_laser = SEQ001\u2714]").parent().hide();
+    $('#custom_hr_table').find('tbody').find('[step_laser = SEQ001\u2714]').each(function() {
+        
+        $(this).parent().hide();
+            
+        
+});
+$(".laserps").click(function()
+{
+   rows.show();
+            
+        
+});
+    
+    $("#table td.col1:not(:contains('" + $(this).val() + "'))").parent().hide();
+    alert('removed');
+});
     // IF A COL SELECTOR FILTER IS CHANGED
     // IF FILTER IS CHANGED FROM ONE OPTION TO ALL SHOW ALL COLUMNS
     // OTHERWIE SHOW/HIDE COLUMNS BY MACTHHING CLASS NAME PER EACH FILTER OPTION

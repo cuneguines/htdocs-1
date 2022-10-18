@@ -61,7 +61,7 @@ $tsql =
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =7 THEN 'MNW'
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =8 THEN 'TNW'
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =9 THEN 'WNW'
-        WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =10 THEN 'TNW'
+        WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =10 THEN 'THNW'
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =11 THEN 'FNW'
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =13 THEN 'MNNW'
         WHEN DATEDIFF(DAY,[Monday TW Date],t0.[Promise Date UNP]) =14 THEN 'TNNW'
@@ -101,8 +101,8 @@ $tsql =
         t0.Sub_Con_Remarks,
         isnull(t0.Sub_Con_Status,'No stat')[Sub_Con_Status],
         t0.[Project], t5.latest_po_date[Latest Puchase Ord], t5.supplier[supplier], 
-        FORMAT(CAST(t5.earliest_po_due_date AS DATE),'dd-MM-yyyy') [PO Due Date],
-        t22.Comments
+        FORMAT(CAST(t5.earliest_po_due_date AS DATE),'dd-MM-yyyy') [PO Due Date]
+        ----t22.Comments
         
         FROM (
         
@@ -292,14 +292,6 @@ $tsql =
                                                         
                                                         group by t0.ItemCode, t1.CardName)t5 on t5.ItemCode = t0.ItemCode
         
-                                                        left join(select t0.Comments,t1.ItemCode  FROM OPOR T0  
-        INNER JOIN POR1 T1 ON T0.DocEntry = T1.DocEntry 
-        inner join oitm t2 on t2.ItemCode = t1.ItemCode
-        inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
-            WHERE T1.LineStatus = 'O'
-			 and t1.LineStatus = 'o'
-             and t0.DocType = 'I'
-)t22 on t22.ItemCode = t0.ItemCode
                                                         
         
         WHERE

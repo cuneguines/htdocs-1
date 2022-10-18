@@ -108,7 +108,9 @@
                 <div style="width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class="btext rounded brgreen white">
                     <p class="smedium">Sales Order</p>
                     <h2 class="inner first medium">Nothing Selected</h2>
-                    <br>
+                    
+                     <h2 class = "inner fourth medium">Nothing Selected</h2>
+                        <br>
                     <p class="smedium">Process Order</p>
                     <h2 class="inner thirteenth medium">Nothing Selected</h2>
                     <br>
@@ -118,13 +120,12 @@
                     <p class="smedium">Description & Qty.</p>
                     <h2 class="inner third medium">Nothing Selected</h2>
                     <br>
-                    <!-- <p class = "smedium">Sales Person</p>
-                        <h2 class = "inner fourth medium">Nothing Selected</h2> -->
+                    
                     <br>
                     <p class="smedium">Engineer</p>
                     <h2 class="inner fifth medium">Nothing Selected</h2>
                     <br>
-                    <p class="smedium">SC Date </p>
+                    <p class="smedium">SC BookOut Date </p>
                     <h2 class="inner fourteenth medium">Nothing Selected</h2>
                     <br>
                     <!-- <p class = "smedium">Promise Date</p>
@@ -145,6 +146,12 @@
                     <br>
                     <p class="smedium">Comments </p>
                     <h2 class="inner twenty medium">Nothing Selected</h2>
+                </div>
+                <div style="width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class="btext rounded brgreen white">
+                    <p class="smedium">Subcon comments</p>
+                    <h2 class="inner twentyone medium">Nothing Selected</h2>
+                    <br>
+                    
                 </div>
             </div>
             <!--
@@ -362,8 +369,9 @@
                                     $overwrite,
                                     $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                     $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
-                                    NULL,
-                                    NULL,
+                                    //Description in sales order
+                                    $results[$i]["Dscription"],
+                                    $results[$i]["Sub_Con_Remarks"]==NULL? "NO Rem":$results[$i]["Sub_Con_Remarks"],
                                     $results[$i]["Customer"],
                                     $results[$i]["Engineer"],
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
@@ -378,11 +386,11 @@
                                     //$results[$i]["Est Prod Hrs"],
                                     NULL,
                                     //$results[$i]["Stage"],
-                                    $results[$i]["Latest Purchase Ord"] == NULL ? "NO PrO" :$results[$i]["Latest Purchase Ord"],
+                                    $results[$i]["Latest Purchase Ord"] == NULL ? "NO PurO" :$results[$i]["Latest Purchase Ord"],
                                     //$comments,
                                     $results[$i]["supplier"] == NULL ? "NO Sup":$results[$i]["supplier"],
                                     //$comments_2,
-                                    $results[$i]["PO Due Date"] == NULL ? " ":$results[$i]["PO Due Date"],
+                                    $results[$i]["Purchase Due"] == NULL ? " ":$results[$i]["Purchase Due"],
                                     //str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sub_Con_Remarks"])),
                                     //$results[$i]["Comments"] == NULL ? "NO R":$results[$i][""],
                                     NULL,

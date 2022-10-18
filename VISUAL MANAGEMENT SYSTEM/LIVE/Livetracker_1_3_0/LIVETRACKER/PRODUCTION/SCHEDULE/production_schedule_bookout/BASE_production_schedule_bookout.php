@@ -176,9 +176,10 @@
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
                                     $promise_week_due = '10';
                                     if(($account_stat=="ON HOLD"))
-                                    $bgcolor='#eb3434e0';
+                                    $bgcolor='#eb3434ab';
                                     else
                                     $bgcolor=''; 
+                                    
                                    // $bgcolor = '';
 
                                     // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
@@ -233,6 +234,7 @@
                                     $promise_week_due = $results[$i]["Promise Week Due"];
                                     $project_unp = $results[$i]["Project"];
                                     $account_stat=$results[$i]["Account Status"];
+                                    $date_check=str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Promise_date_now"]));
                                     $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
                                     $first = 0;
                                 }
@@ -282,19 +284,31 @@
                                $del_date=strtotime($results[$i]["Del Date Due UNP"]);
                                 $prom_date = strtotime($results[$i]["Promise Date"]);
                                 $datediff = ceil(($prom_date-$del_date) / 86400);
-                               
-                                if ($datediff<=-3)
+                                if ($del_date>$prom_date)
                                 {
-                                $color_for_date = 'red';
+                                    $datediff = ceil(($del_date-$prom_date) / 86400);
+                                    $color_for_date = 'red';
                                 }
-                                else if($datediff>=3)
+                               else
+                                if ($prom_date>$del_date && $datediff<=-3)
+                                {
+                                $color_for_date = 'purple';
+                                }
+                                else if($prom_date>$del_date && $datediff>=3)
                                 {
                                 $color_for_date='GoldenRod';
                                 }
                                 else  $color_for_date='#39FF14';  
                                 $color='green';
+                            
+                                if(($date_check=='Yes'))
+                                    $border_color_for_date='purple';
+                                    else
+                                    $border_color_for_date='0';
+                                    
                                 // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                 $str = generate_schedule_buttonsss(
+                                    $border_color_for_date,
                                     $color,
                                     $base_color,
                                     $border_color,
@@ -350,7 +364,7 @@
                                 $border_color = "";
                                 $overwrite = "";
                                 $color_for_date="";
-
+                                $border_color_for_date="";
                                 ?>
                             <?php endfor; ?>
                         </tbody>

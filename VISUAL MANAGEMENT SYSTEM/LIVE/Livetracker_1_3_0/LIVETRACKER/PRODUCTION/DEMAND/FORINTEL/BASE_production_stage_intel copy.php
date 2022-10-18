@@ -25,8 +25,8 @@
     <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php' ?>
     <?php include './SQL_production_stages_intel copy.php'; ?>
     <style>
-        .bluee{
-box-shadow:5px 10px red;
+        .bluee {
+            box-shadow: 5px 10px red;
         }
     </style>
     <?php
@@ -38,7 +38,6 @@ box-shadow:5px 10px red;
     $step_status_lookup = array();
     foreach ($step_status_lookup_data as $step_per_lookup_list) {
         $step_status_lookup[$step_per_lookup_list["Process Order"]][$step_per_lookup_list["Sub Item Code"]][$step_per_lookup_list["Sequence Code"]] = array("status" => $step_per_lookup_list["Step Status"], "line_id" => $step_per_lookup_list["Step Line ID"], "planned_time" => $step_per_lookup_list["ProcessTime"], "booked_time" => $step_per_lookup_list["BookedTime"]);
-       
     }
     ?>
 
@@ -234,14 +233,14 @@ box-shadow:5px 10px red;
                             <th width="70px" class="sticky darker_grey lefttext" style="left:0px;">Sales<br>Order</th>
                             <th width="70px" class="sticky darker_grey lefttext" style="left:80px;">Process Order</th>
                             <th width="90px" class="sticky darker_grey lefttext" style="left:160px;">Due Date</th>
-                            
+
                             <th width="190px" class="sticky darker_grey lefttext" style="left:160px;">Item Name</th>
                             <th width="60px" class="sticky darker_grey lefttext" style="left:360px;">SCon Date</th>
                             <th width="70px" class="sticky darker_grey lefttext" style="left:360px;">Fabricator</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">PLanned</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">EXecuted</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">Plan-Exe</th>
-                           
+
 
                             <?php foreach ($group_steps_template_intel as $group) : ?>
                                 <?php foreach ($group["steps"] as $step) : ?>
@@ -256,8 +255,8 @@ box-shadow:5px 10px red;
                     <tbody class="btext smedium">
                         <?php foreach ($process_order_step_efficiency_data as $row) : ?>
                             <?php if ($row["Complete"] == 'Y') {
-                                        continue;
-                                    } ?>
+                                continue;
+                            } ?>
                             <?php $sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Sales Person"])); ?>
                             <?php $engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Engineer"])); ?>
                             <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>
@@ -282,19 +281,19 @@ box-shadow:5px 10px red;
                                 $backcolor = 'red';
                             } else
                                 $backcolor = '';
-                                /* if ($row["Status"]=='R') {
+                            /* if ($row["Status"]=='R') {
                                     $color = 'bluee';
                                 } else
                                     $color = ''; */
-    
-//print_r($row["Status"]);
-if($row["Status"] == 'Pre Production Confirmed' || $row["Status"] == 'Pre Production Potential' || $row["Status"] == 'Pre Production Forecast'){
-    $base_color = 'light_blue';
-}
-else  $base_color = 'light_grey';
 
-//print_r($base_color);
+                            //print_r($row["Status"]);
+                            if ($row["Status"] == 'Pre Production Confirmed' || $row["Status"] == 'Pre Production Potential' || $row["Status"] == 'Pre Production Forecast') {
+                                $base_color = 'light_blue';
+                            } else  $base_color = 'light_grey';
+
+                            //print_r($base_color);
                             ?>
+
 
                             <!-- TO FIND THE ROWS WITH COMPLETE PACKAGING -->
                             <?php foreach ($group_steps_template_intel as $group) : ?>
@@ -328,20 +327,28 @@ else  $base_color = 'light_grey';
                                         $status = 'notcomplete';
                                     }
 
+
+                                    /* if ($step == 'SEQ001' &&  $step_status == '&#x2714')
+                                        {
+                                           $statuslaserp ='completed';
+
+                                        } */
+
+
                                     ?>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
 
 
 
-
                             <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
-                                <td class="sticky lefttext step_detail  <?= $base_color ?>" style="background-color:<?= $backcolor ?>"background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
+
+                                <td class="sticky lefttext step_detail  <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
-                                
+
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["ItemName"] ?></td>
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] ==NULL?'NULL':$row["SubConDate"]?></td>
+                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
@@ -375,9 +382,7 @@ else  $base_color = 'light_grey';
                                             } ?>
                                         <?php endif; ?>
 
-
-
-                                        <td class="<?= $group["name"] ?>" style="background-color:<?= $group['color'] ?>" onclick="alert('<?= $booked_hrs_line_details ?>')">
+                                        <td step_laser=<?= $step.$step_status ?> class="<?= $group['name'] ?>" style="background-color:<?= $group['color'] ?>" onclick="alert('<?= $booked_hrs_line_details ?>')">
                                             <div class="progress_bar_container <?= !$step_exists ? 'opaque' : '' ?>">
                                                 <div class="progress_bar <?= $fill_level_color ?>" style="width:<?= $width ?>px; position:absolute;"></div>
                                                 <div style="width:100%; height:100%; position:absolute;"><?= $step_status ?></div>
@@ -385,8 +390,31 @@ else  $base_color = 'light_grey';
                                     <?php endforeach; ?>
                                 <?php endforeach; ?>
                             </tr>
+
                         <?php endforeach; ?>
+
                     </tbody>
+                    <tfoot style = "position:sticky; bottom: 0; z-index:+2;">
+                    <tr class = "lighter_blue btext">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td ><button class="laserph fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button class="laserps fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td ><button class="laserph fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button class="laserps fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tfoot>
                 </table>
             </div>
             <div id="table_pages_footer" class="footer">
@@ -395,7 +423,7 @@ else  $base_color = 'light_grey';
                         <div id="filters" class="red fill rounded">
                             <div class="filter">
                                 <div class="text">
-                                    <button class="fill red medium wtext">Customer</button>
+                                    <button class="red medium wtext">Customer</button>
                                 </div>
                                 <div class="content">
                                     <select id="select_customer" class="selector fill medium">
@@ -426,15 +454,15 @@ else  $base_color = 'light_grey';
                                     </select>
                                 </div> -->
                                 <div class="text">
-                                    <button class="fill bred medium btext" style ="background-color:blue;float:left;margin-left: 21%">Hide</button>
-                                    <button class="fill bblue medium btext"style="float:left;position: relative;
+                                    <button class="fill bred medium btext" style="background-color:blue;float:left;margin-left: 21%">Hide</button>
+                                    <button class="fill bblue medium btext" style="float:left;position: relative;
     margin-left: 106%;
     margin-top: -23%;
     float: left">Show</button>
                                 </div>
                             </div>
                             <div class="filter">
-                            
+
                                 <div class="text">
                                     <button class="fill red medium wtext">Production Group</button>
                                 </div>

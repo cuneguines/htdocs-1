@@ -20,6 +20,7 @@ group by t0.PrOrder)
 
 
 SELECT 
+case when t24.[Name] is null then t22.U_PP_Status else t24.[Name] end [Status],
 FORMAT(CAST(t17.U_sc_date AS DATE), 'dd-MM-yyyy') [SubConDate],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
@@ -161,14 +162,13 @@ from max_user t0
 inner join ohem t1 on t1.empID = t0.Max_User) t21 on t21.PrOrder = t0.U_IIS_proPrOrder
 
 left join rdr1 t22 on t22.DocEntry = t5.DocEntry and t22.ItemCode = t0.ItemCode
-
+left join [dbo].[@PRE_PROD_STATUS] as t24 on t24.code    = t22.U_PP_Status
 
 where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')
-and isnull(t22.U_Floor_date, t5.U_floordate) is not null
+
 and t0.CardCode = 'INT002'
-order by t0.U_IIS_proPrOrder, t16.LineID
-"
+order by t0.U_IIS_proPrOrder, t16.LineID"
 
 ;
 
