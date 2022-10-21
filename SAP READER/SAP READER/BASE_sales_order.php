@@ -129,7 +129,7 @@
                                     <th width = "3%">#</th>
                                     <th class = "lefttext" width = "24%">Item Name</th>
                                     <th class = "lefttext" width = "8%">Item Code</th>
-                                    <!-- <th class = "lefttext" width = "3%">Qty</th> -->
+                                    <th class = "lefttext" width = "3%">Qty</th>
                                     <th class = "lefttext" width = "3%">Ordered Qty</th>
                                     <th class = "lefttext" width = "5%">Quantity Delivered</th>
                                     <th class = "lefttext" width = "4%">In Stock</th>
@@ -158,7 +158,7 @@
                                         <td><?=$row["Line Number"]+1?></td>
                                         <td  class="lefttext"<?= $rowcolor ?>><?=$row["Item Name"]?></td>
                                         <td class = "lefttext"<?= $rowcolor ?>><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Item Code']?>'"><?=$row["Item Code"]?></button></td>
-                                        <!-- <td class = "righttext"<?php //$rowcolor ?>><?php //number_format($row["Quantity"])?></td> -->
+                                        <td class = "righttext"<?=$rowcolor ?>><?=number_format($row["Quantity"])?></td> 
                                    <td class = "righttext"<?php $rowcolor ?>><?=number_format($row["OrderedQty"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["Delivered Qty"])?></td>
                                         <td class = "righttext"<?= $rowcolor ?>><?=floatval($row["On Hand"])?></td>

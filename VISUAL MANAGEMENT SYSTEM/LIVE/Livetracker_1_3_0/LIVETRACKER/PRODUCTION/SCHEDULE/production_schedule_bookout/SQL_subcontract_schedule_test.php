@@ -1,5 +1,3 @@
-<!-- SQL FOR AJAX (1) -->
-
 <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
 <?php 
             $start_time = time()-60*60*24*7*5;

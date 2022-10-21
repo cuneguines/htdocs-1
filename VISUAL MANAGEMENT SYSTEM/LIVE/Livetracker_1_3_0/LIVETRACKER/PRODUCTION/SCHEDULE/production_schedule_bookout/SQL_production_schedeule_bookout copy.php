@@ -155,8 +155,8 @@ FROM(
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
                                                                 /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/
-                                                                (case                  when DATEDIFF(DAY,getdate(),isnull(t1.U_delivery_date, t0.DocDueDate) )< =-4 then t1.U_Promise_Date
-                                                                else isnull(t1.U_delivery_date, t0.DocDueDate)
+                                                                (case                  when DATEDIFF(DAY,getdate(),isnull(t1.U_delivery_date, t1.U_Promise_Date) )< =-4 then t1.U_Promise_Date
+                                                                else isnull(t1.U_delivery_date, t1.U_Promise_Date)
 end)[Del Date Due UNP],
 -----to see if the job s new date is Promise date -----
 (case                  when DATEDIFF(DAY,getdate(),t1.U_delivery_date )< =-4 then 'Yes' else 'No'  end)[Promise_date_now],

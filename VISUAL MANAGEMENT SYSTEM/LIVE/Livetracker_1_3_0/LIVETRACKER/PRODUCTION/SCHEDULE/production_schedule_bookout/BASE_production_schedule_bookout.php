@@ -89,7 +89,7 @@
                     <p class="smedium">Engineer</p>
                     <h2 class="inner fifth medium">Nothing Selected</h2>
                     <br>
-                    <p class="smedium">Delivery Date </p>
+                    <p class="smedium">BookOut Date </p>
                     <h2 class="inner fourteenth medium">Nothing Selected</h2>
                     <br>
                     <p class="smediums">Promise Date</p>
@@ -176,7 +176,7 @@
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
                                     $promise_week_due = '10';
                                     if(($account_stat=="ON HOLD"))
-                                    $bgcolor='#eb3434ab';
+                                    $bgcolor='pink';
                                     else
                                     $bgcolor=''; 
                                     
@@ -305,7 +305,11 @@
                                     $border_color_for_date='purple';
                                     else
                                     $border_color_for_date='0';
-                                    
+                                    if ($del_date!=$prom_date) 
+                                    {
+                                        $base_color='light_green';
+                                    }
+
                                 // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                 $str = generate_schedule_buttonsss(
                                     $border_color_for_date,
@@ -317,13 +321,14 @@
                                     $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                     $color_for_date,
                                     $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
+                                    //$weeks on floor is now itemname
                                     NULL,
                                     NULL,
                                     $results[$i]["Customer"],
                                     $results[$i]["Engineer"],
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
                                     $results[$i]["Sales Person"],
-                                    str_replace("''", "Inch", str_replace("'", "", $results[$i]["Dscription"])),
+                                    $results[$i]["Dscription"],
                                     $results[$i]["Del Date Due UNP"],
                                     $results[$i]["Promise Date"],
                                     $results[$i]["Est Prod Hrs"],

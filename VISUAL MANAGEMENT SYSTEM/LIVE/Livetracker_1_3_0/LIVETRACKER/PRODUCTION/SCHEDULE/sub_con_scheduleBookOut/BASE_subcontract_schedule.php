@@ -351,9 +351,11 @@
                                 if ($results[$i]["Latest Purchase Ord"] != NULL)
                                     $border_color = 'brired';
                                     
-                                 if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
+                                 if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con'||$results[$i]["Sub_Con_Status"]=='1002')
                                    $overwrite = 'brdottedyellow';
-                                   else
+                                else if($results[$i]["Sub_Con_Status"] == "1005")
+                                  $overwrite = "brdottedpink";
+                                else
                                    $overwrite='';
 
                                 if ($results[$i]["Sub_Con_Date"] == '')
@@ -519,14 +521,14 @@
                             <div class="half">
                                 <div class="textholder">
                                     <p>PO Raised</p>
-                                </div>
-                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid red; height:20px;"></button></div>
+                                </div><!--
+                                -->&nbsp;<div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid red; height:20px;"></button></div>
                             </div>
                             <div class="half">
                                 <div class="textholder">
-                                    <!-- <p>BOM Issued</p> -->
+                                    <p>AtSub Con</p>
                                 </div>
-                                <!-- <div class="button_holder"><button style="background-color:#DBDBDB; border:5px solid orange; height:20px;"></button></div> -->
+                                <div class="button_holder"><button style="background-color:#DBDBDB; border:5px dotted #E601BA; height:20px;"></button></div> 
                             </div>
                         </div><!--
                          --><div id="centergroup_right" class="subdividor light_grey">
