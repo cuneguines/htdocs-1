@@ -6,7 +6,7 @@ $(document).ready(function(){
             $.ajax({
     
                 type: "POST",
-                url: "SQL_production_schedule_ajax.php",
+                url: "SQL_production_schedule_ajax_testaideen.php",
                 data: {
                     'item': test
     

@@ -274,7 +274,8 @@
                                 // CONDITIONAL APPLICATIONS
                                 if ($results[$i]["Paused"] == 'Yes') {
                                     $overwrite = "greenshadow";
-                                } else if ($results[$i]["risk"] == 'R3') {
+                                }
+                                else if ($results[$i]["risk"] == 'R3') {
                                     $overwrite = "redshadow";
                                 }
 
@@ -305,13 +306,16 @@
                                     $border_color_for_date='purple';
                                     else
                                     $border_color_for_date='0';
-                                    if ($del_date!=$prom_date) 
+                                    //Highlight jobs says jobs are their coz of the promise date ot delivery date
+                                    if ($results[$i]["Del Date Due PD_DD"] == 'DD') 
                                     {
-                                        $base_color='light_green';
+                                        $color_for_dates='lightblue';
                                     }
-
+                                    else 
+                                    $color_for_dates='';
                                 // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                 $str = generate_schedule_buttonsss(
+                                    $color_for_dates,
                                     $border_color_for_date,
                                     $color,
                                     $base_color,
@@ -329,7 +333,7 @@
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])),
                                     $results[$i]["Sales Person"],
                                     $results[$i]["Dscription"],
-                                    $results[$i]["Del Date Due UNP"],
+                                    $results[$i]["Del Date Due PD_DD"] == 'DD' ? $results[$i]["Del Date Due UNP"] : NULL,
                                     $results[$i]["Promise Date"],
                                     $results[$i]["Est Prod Hrs"],
                                     $results[$i]["Addr"],
@@ -468,10 +472,10 @@
                             </div><!--
                          --><div class = "subdividor light_grey rounded-right">
                                 <div class = "half">
-                                    <!--<div class = "textholder"><p>Next Year</p></div><div class = "button_holder"><button class = "green brpurple opaque"></button></div>-->
+                                    <div class = "textholder"><p>Booked Out</p></div><div class = "button_holder"><button class = "blueshadow"></button></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>Obsolete</p></div><div class = "button_holder"><button class = "black"></button></div>
+                                    <!--<div class = "textholder"><p>Obsolete</p></div><div class = "button_holder"><button class = "black"></button></div>-->
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
     <script type="text/javascript" src="../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
     <!-- <script type="text/javascript" src="./qualityjs.js"></script> -->
-    <script type="text/javascript" src="./keep_safe.js"></script>
+    <script type="text/javascript" src="./new.js"></script>
     <link rel="stylesheet" href="assets/css/table.css">
 
 </head>
@@ -51,10 +51,33 @@
 
 
 <body>
-    <?php include './conn.php'; ?>
+    <script>
+        function isImage(url) {
+        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+      }
+   //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
+   https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
+
+        console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
+        console.log(extension);
+        </script>
+<?php
+	try
+	{
+		// CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
+		$conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
+		// CREATE QUERY EXECUTION FUNCTION
+		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+	catch(Exception $e)
+	{
+		// REPORT ERROR
+		die(print_r($e->getMessage()));
+	}
+?>
     <?php include './SQL_Quality_ItemCode.php'; ?>
     <?php
-    $getResults = $conn->prepare($Quality_results);
+    $getResults = $conn->prepare($Quality_results_non_conformance);
     $getResults->execute();
     $quality_results = $getResults->fetchAll(PDO::FETCH_BOTH);
     //$json_array = array();
@@ -296,13 +319,11 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 
-                    <li>
-                        <a class="active-menu" href=""><i class="fa fa-dashboard"></i> Dashboard</a>
-                    </li>
+                    
 
 
                     <li>
-                        <a id="product_button" href="#"><i class="fa fa-sitemap"></i> Products<span class="fa arrow"></span></a>
+                        <a id="product_button" href="#"><i class="fa fa-sitemap"></i> Non Conformance<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
 
@@ -311,7 +332,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Health and Safety<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Customer complaints<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -320,7 +341,25 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit findings<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-search"></i> Health and Safety<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level_services" style="overflow-y:scroll">
+
+
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Audit Findings<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level_services" style="overflow-y:scroll">
+
+
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Improvement Ideas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -338,20 +377,20 @@
         </nav>
         <!-- /. NAV SIDE  -->
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" >
             <div class="header">
                 <h1 class="page-header">
-                   <small>Summary of Issues</small>
+                   <small>QUALITY MANAGEMENT SYSTEM</small>
                 </h1>
-                <ol class="breadcrumb non_confirmance">
-                    <li><a href="index.php">Home</a></li>
+                <ol class="breadcrumb"style=display:none>
+                    
                     <li><a href="chart_page.php">Charts</a></li>
                     <li><a href="edit_page.php">Edit</a></li>
-                    <li class="active">Issues</li>
+                    <li class="active">Table</li>
                 </ol>
 
             </div>
-            <div id="page-inner">
+            <div id="page-inner"style=display:none;>
 
                 <!-- /. ROW  -->
 
@@ -360,67 +399,87 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:68vh; width:100%;">
+                    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
 
 
                         <table id="products" style="position: sticky;overflow-x:scroll;">
                             <thead style="position:sticky;top:0;z-index:+2">
                                 <tr class="head">
                                     <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
-                                    <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
+                              <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
                                     <th style="position: sticky;width:200px;left:300px;color:white">Issue</th>
+                                   
                                     <th style="width:100px">ItemCode</th>
-                                    <th style="width:200px">ItemGroup</th>
-                                    <th style="width:100px">CreatedDate</th>
-                                    <th style="width: 100px">UpdatedDate</th>
+                                    <th style="width:200px">Sales order</th>
+                                    <th style="width:200px">Process order</th>
+
+                                    <th style="width:100px">Completion time</th>
+                                    
                                     <th style="width: 200px">Raised Area</th>
                                     <th style="width: 100px">Raised By</th>
-                                    <th style="width: 100px">ProductGp</th>
+                                    <!-- <th style="width: 200px">cc_name</th>
+                                    <th style="width: 200px">cc_sales_order</th>
+                                    <th style="width: 200px">cc_process_order</th>
+                                    <th style="width: 200px">cc_itemcode</th>
+                                    <th style="width: 200px">cc_raised_by</th>
+                                     -->
+                                    <!-- <th style="width: 100px">ProductGp</th>
                                     <th style="width: 100px;">SubGp2</th>
-                                    <th style="width: 100px">SubGp3</th>
+                                    <th style="width: 100px">SubGp3</th> -->
 
-                                    <th style="width: 200px">PrevActionOwner</th>
+                                    <!-- <th style="width: 200px">PrevActionOwner</th>
                                     <th style="width:200px">Type</th>
                                     <th style="width:200px">Status</th>
                                     <th style="width:200px">RootCauseAnalysis</th>
-                                    <th style="width:200px">Preventive action reports</th>
+                                    <th style="width:200px">Preventive action reports</th> -->
                                     
                                     <th style="width:200px">Attachements</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                           
 
 
                                 <?php foreach ($quality_results as $row) : ?>
                                     <tr>
-                                        <td style="position: sticky;left:0px;background:#3fa5d3"><?= $row["code"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#3fa5d3"><?= $row["ItemName"] ?></td>
-                                        <td style="position: sticky;left:300px;background:#3fa5d3"><?= $row["U_nc_observation"] ? $row["U_nc_observation"]  : '--------' ?></td>
-                                        </td>
-                                        <td><?= $row["ItemCode"] ?></td>
-                                        <td><?= $row["Item Group"] ?></td>
-                                        <td><?= $row["CreateDate"] ?></td>
-                                        <td><?= $row["UpdateDate"] ?></td>
-                                        <td><?= $row["U_area_nc"] ?></td>
-
-                                        <td><?= $row["U_area_nc_raised"] ?></td>
+                                        <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["ID"] ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["email"] ?></td>
+                                        <td style="position: sticky;left:300px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+                                       
+                                        <td><?= $row["nc_itemcode"] ?></td>
+                                        <td><?= $row["nc_sales_order"] ?></td>
+                                        <td><?= $row["nc_process_order"] ?></td>
+                                        <td><?= $row["completion_time"] ?></td>
+                                        
+                                        <td><?= $row["nc_area_caused"] ?></td>
+                                        <td><?= $row["nc_raised_by"] ?></td>
+                                       <!--  <td><?// $row["cc_sales_order"] ?></td>
+                                        <td><?//$row["cc_process_order"] ?></td>
+                                        <td><// $row["cc_itemcode"] ?></td>
+                                        <td><?//$row["cc_raised_by"] ?></td> -->
+                                      
+                               
                                         
                                        
-                                        <td class="Group1"><?= $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
-                                        <td class="Group2"><?= $row["U_Product_Group_Two"] ?></td>
-                                        <td class="Group3"><?= $row["U_Product_Group_Three"] ?></td>
-                                        <td><?= $row["U_prev_action_owner"] ?></td>
-                                        <td><?= $row["U_nc_type"] ?></td>
-                                        <td><?= $row["U_Status"] ?></td>
+                                        <!-- <td class="Group1"><?// $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
+                                        <td class="Group2"><?// $row["U_Product_Group_Two"] ?></td>
+                                        <td class="Group3"><?// $row["U_Product_Group_Three"] ?></td>
+                                        <td><?//$row["U_prev_action_owner"] ?></td>
+                                        <td><?//$row["form_type"] ?></td>
+                                        <td><// $row["U_Status"] ?></td>
 
                                         <?
-                                        $uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
-                                        echo $uploadfile; ?>
+                                        //$uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
+                                        //echo $uploadfile; ?> -->
 
-                                        <td><input type="button" onclick=location.href="files_view_cause.php?q=<?= $row['code'] ?>" name='<?= $row["code"] ?>' id='<?= $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
-                                        <td><input type="button" onclick=location.href="files_view_prev.php?q=<?= $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td>
-                                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?= $row['code'] ?>" value='<?= '' ?>' value='<?= $row["attachements_issues"] ?>' style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 0 ? 'has_attachment' : '' ?>'></td>
-
+                                       <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<?// $row['code'] ?>" name='<?// $row["code"] ?>' id='<?// $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                        
+                                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<?// $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td> -->
+                                       <?php
+                                       $x=$row["ID"];
+                                       print_r($x);
+                                       ?>
+                                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
+                                        
 
 
 
@@ -445,12 +504,12 @@
                 </div>
                 <!-- Filter Starts here -->
 
-                <div class="filtercontainer" style="background-color: #337ab7;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+                <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
                              width: 100%;
                              height: 50px;">
                     <div class="filter">
                         <div class="text">
-                            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#337ab7;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
+                            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
                         </div>
                         <div class="content" style="float:left;margin-right:40px;">
                             <select class="selector" id="select_group2" style="width:250px;height:40px;margin-top:5px">
@@ -462,7 +521,7 @@
                     </div>
                     <div class="filter">
                         <div class="text">
-                            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#337ab7;color:white;font-size:medium;" class="medium wtext">By Group2</button>
+                            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;" class="medium wtext">By Group2</button>
                         </div>
                         <div class="content" style="float:left">
                             <select id="select_group3" style="width:250px;height:40px;margin-top:5px">
@@ -474,26 +533,6 @@
                     </div>
                 </div>
                 <!-- Filter Ends here -->
-                <!-- modal starts here  -->
-                <div id="dataModal" class="modal fade">
-                    <div class="modal-dialog">
-                        <div class="modal-content" id="modal_content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Details</h4>
-                            </div>
-                            <div class="modal-body" id="attachments">
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal end here -->
-
-            </div><br>
 
 
         </div><br>

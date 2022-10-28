@@ -17,11 +17,11 @@ $tsql =
         CAST (t0.ONHand as decimal)[ONHand],  
         t0.[On Order],
         FORMAT(CAST(t0.[Promise Date UNP] AS DATE),'dd-MM-yyyy') [Promise Date UNP],
-        CASE 
-        WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
-        WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
-        WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
-        WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
+      CASE 
+      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
         
         ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
         END [Promise Diff Week],
@@ -159,7 +159,7 @@ $tsql =
                             t0.U_sc_date [Sub_Con_Date], 
                             t0.U_sc_remarks [Sub_Con_Remarks], 
                             ---Changed today 21/10/22---
-                            t7.U_In_Sub_Con[Sub_Con_Status]
+                            t13.Name[Sub_Con_Status]
                     FROM  wor1 t0
         
                     LEFT JOIN 
@@ -274,7 +274,6 @@ $tsql =
                     AND t5.ItmsGrpNam not like '%SITE%'
                             AND t5.ItmsGrpCod IN (168,232)
 
-
                                 UNION ALL
         
                     -----stock order items -----
@@ -327,7 +326,7 @@ $tsql =
                     t9.Comments[Comments_PO] , 
                     t0.U_sc_date[Sub_Con_date],
                     t0.U_sc_remarks[Sub_Con_Remarks] , 
-                    t0.U_sc_status[Sub_Con_Status]
+                    t6.name[Sub_Con_Status]
                     from wor1 t0
         
                     LEFT JOIN 
@@ -346,7 +345,7 @@ $tsql =
                     INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
                     LEFT JOIN opor t9 ON t9.docnum = t8.DocNum
                     INNER JOIN oitb t5 ON t5.ItmsGrpCod = t2.ItmsGrpCod
-        
+                                                                                left join [dbo].[@SUB_CON_STATUS] t6 on t6.Code = t0.U_sc_status
                     where
                                                                                 1 = 1
                     AND t1.Status not in ('C','L')
@@ -379,6 +378,7 @@ $tsql =
        WHERE
         t0.[Promise Date UNP] between ([Monday LW Date]-24) and ([Monday TW Date]+28) AND t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')
         ORDER BY  t0.[Project]
+
 
 
 

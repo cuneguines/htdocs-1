@@ -1,7 +1,10 @@
-<?php include '../../SQL CONNECTIONS/conn.php'; ?>
+
+	
+
+
 <?php
 //echo json_encode($_POST);
-$item=(!empty($_GET['q'])? $_GET['q'] : 0);
+ /* $item=(!empty($_GET['q'])? $_GET['q'] : 0);
 if(isset($_GET['q']))
 $item=$_GET['q'];
 echo($item);
@@ -44,20 +47,20 @@ switch($ext)
     
     case 'pptx':
         {
-        ?> <div style="height:600px;width:600px;float:left;overflow-y:scroll;border:1px solid #666CCC ;"><?php
-$content = read_file_docx($str);
-if ($content !== false) {
+         ?> <div style="height:600px;width:600px;float:left;overflow-y:scroll;border:1px solid #666CCC ;"><?php
+           $content = read_file_docx($str);
+         if ($content !== false) {
     
-    $content = '<p>' . str_replace("\n", "</p><p>", $content) . '</p>';
-    echo ($content);
-} else {
-    echo 'Couldn\'t the file. Please check that file.';
-}
-function readZippedImages($filename) {
-    $paths=[];
-    $zip = new ZipArchive;
-    if( true === $zip->open( $filename ) ) {
-        for( $i=0; $i < $zip->numFiles;$i++ ) {
+             $content = '<p>' . str_replace("\n", "</p><p>", $content) . '</p>';
+                echo ($content);
+            } else {
+            echo 'Couldn\'t the file. Please check that file.';
+           }
+          function readZippedImages($filename) {
+           $paths=[];
+              $zip = new ZipArchive;
+         if( true === $zip->open( $filename ) ) {
+              for( $i=0; $i < $zip->numFiles;$i++ ) {
             $zip_element = $zip->statIndex( $i );
             if( preg_match( "([^\s]+(\.(?i)(jpg|jpeg|png|gif|bmp))$)", $zip_element['name'] ) ) {
                 $paths[ $zip_element['name'] ]=base64_encode( $zip->getFromIndex( $i ) );
@@ -91,7 +94,7 @@ echo $name." <a href='$str' download='$name'>Download</a><br>";;
         }
     break;
 }
-
+ */
 
 function read_file_docx($filename)
 {
@@ -111,4 +114,115 @@ function read_file_docx($filename)
     $content = str_replace('</w:r></w:p>', "\r\n", $content);
     $striped_content = strip_tags($content);
     return $striped_content;
+} 
+function read_doc_file($filename) {
+    if(file_exists($filename))
+   {
+       if(($fh = fopen($filename, 'r')) !== false ) 
+       {
+          $headers = fread($fh, 0xA00);
+
+          // 1 = (ord(n)*1) ; Document has from 0 to 255 characters
+          $n1 = ( ord($headers[0x21C]) - 1 );
+
+          // 1 = ((ord(n)-8)*256) ; Document has from 256 to 63743 characters
+          $n2 = ( ( ord($headers[0x21D]) - 8 ) * 256 );
+
+          // 1 = ((ord(n)*256)*256) ; Document has from 63744 to 16775423 characters
+          $n3 = ( ( ord($headers[0x21E]) * 256 ) * 256 );
+
+          // 1 = (((ord(n)*256)*256)*256) ; Document has from 16775424 to 4294965504 characters
+          $n4 = ( ( ( ord($headers[0x21F]) * 256 ) * 256 ) * 256 );
+
+          // Total length of text in the document
+          $textLength = ($n1 + $n2 + $n3 + $n4);
+
+          $extracted_plaintext = fread($fh, $textLength);
+
+          // simple print character stream without new lines
+          //echo $extracted_plaintext;
+
+          // if you want to see your paragraphs in a new line, do this
+          return nl2br($extracted_plaintext);
+          // need more spacing after each paragraph use another nl2br
+       }
+   }   
+   }
+/* $result="select attachments 
+
+from ms_qual_log t0
+where ID=23";
+$getResults = $conn->prepare($result);
+$getResults->execute();
+$file_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+
+foreach($file_results as $fname)
+{
+$filename=json_encode($fname[0]);
+//echo($filename);
+} */
+
+/*$isFolder = is_dir("\\\\kptsv01\groups");
+var_dump($isFolder); 
+$str='\\kptsv01\groups\Daily Meetings\NCRs\NCR 234456\Rootcause and Corrective action.docx';
+echo($str);
+//var_dump($file_results[0]);
+$content = read_file_docx($str);
+if ($content !== false) {
+    
+    //$content = '<p>' . str_replace("\n", "</p><p>", $content) . '</p>';
+       echo ($content);
+   } else {
+   echo 'Couldn\'t the file. Please check that file.';
+  } */
+ 
+/* $path = '\\\\groups(\\kptsv01)(H:)\\Daily Meetings'; 
+$handle = fopen('test.txt', 'r');
+if($handle){ */
+   /*  while (!feof($handle)){
+        $buffer = fgets($handle);
+        echo $buffer."<br />";
+    }
+} */
+//$file=fopen(file://F:/eventscript.txt', "r")
+/* $file=fopen('file://kptsv01/groups/test.txt', 'r'); 
+if($file){
+    while (!feof($handle)){
+        $buffer = fgets($handle);
+        echo $buffer."<br />";
+    }
 }
+
+if($fh=opendir('\\\\kptsv01\\groups\\Daily Meetings\\NCRs')) {
+  while (false !== ($fi =readdir($fh))) {
+    echo "$fi\n";
+  }
+} */ 
+
+// $WshShell = new COM("WScript.Shell");
+// $oExec = $WshShell->Run("notepad.exe", 7, false);
+
+
+
+if($fh=opendir('\\\\kptsv01\\groups\\Daily Meetings\\NCRs')) {
+  while (false !== ($fi =readdir($fh))) {
+    echo "$fi\n";
+  }
+}
+$file1=read_file_docx('\\\\kptsv01\\groups\\Daily Meetings\\NCRs\\NCR 234456\\Root cause and Corrective Document.docx');
+
+echo($file1);
+
+
+$file1 = "\\\\kptsv01\\groups\\Daily Meetings\\NCRs\\NCR 234456\\Rootcause and Corrective action.docx"; //Let say If I put the file name Bang.png
+$file2 = "\\\\kptsv01\\groups\\Daily Meetings\\NCRs\\NCR 234456\\tes.pdf";
+//echo "<a href='download1.php?nama=".$file2."'>download</a> "; 
+
+
+
+ob_end_clean();
+header('Content-Type: application/octet-stream');
+header("Content-Transfer-Encoding: Binary"); 
+header("Content-disposition: attachment; filename=\"" . basename($file1) . "\""); 
+readfile($file1); 
+exit();

@@ -24,7 +24,13 @@ inner join (select t0.code, SUM(case when t0.U_Attachments is null then 0 else 1
                      from [dbo].[@QUAL_ATTACH] t0
                      group by t0.code) t4 on t4.Code = t0.Code
 ";
-
+$Quality_results_non_conformance="select *,
+(case 
+WHEN  t0.attachments ='' then 'N'  else t0.attachments
+END) [attachements_issues]
+from ms_qual_log t0
+where t0.form_type = 'Non Conformance'
+";
 
 ?>
 <!-- select t0.code, FORMAT(CAST(t0.CreateDate AS DATE), 'dd-MM-yyyy')[CreateDate], FORMAT(CAST(t0.UpdateDate AS DATE), 'dd-MM-yyyy')[UpdateDate], t0.U_area_nc, t0.U_area_nc_raised, 

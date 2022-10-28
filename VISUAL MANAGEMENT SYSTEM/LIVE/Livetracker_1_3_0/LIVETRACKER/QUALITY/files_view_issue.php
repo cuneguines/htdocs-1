@@ -1,4 +1,17 @@
-<?php include '../../SQL CONNECTIONS/conn.php'; ?>
+<?php
+	try
+	{
+		// CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
+		$conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
+		// CREATE QUERY EXECUTION FUNCTION
+		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	}
+	catch(Exception $e)
+	{
+		// REPORT ERROR
+		die(print_r($e->getMessage()));
+	}
+?>
 <?php
 //echo json_encode($_POST);
 $item = (!empty($_GET['q']) ? $_GET['q'] : 0);
@@ -6,18 +19,29 @@ if (isset($_GET['q']))
     $item = $_GET['q'];
 echo ($item);
 
-$result = "select
+$result = "select t0.attachments,
 (case 
-        WHEN  t1.U_Attachments is null  then 'N' else t1.U_Attachments
+WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
-from [dbo].[@QUALITY] t0
-inner join [dbo].[@QUAL_ATTACH] t1 on t1.Code = t0.Code
-left join oitm t2 on t2.ItemCode = t0.U_itemcode
-left join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
-where t0.code='$item'";
+from ms_qual_log t0
+where t0.form_type = 'Non Conformance'
+and t0.ID=25";
+
+
+
+$file="https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
+
+    ?>
+<a href="https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx">Click</a>
+<a href="https://kentstainlesswex-my.sharepoint.com/personal/bcleary_kentstainless_com/Documents/Apps/Microsoft%20Forms/Non%20Conformance%20Log/Question/Process%20Sheet%2044963_Barry%20Cleary.pdf">cliuck</a>
+<a href ="https://kentstainlesswex-my.sharepoint.com/personal/bcleary_kentstainless_com/Documents/Apps/Microsoft%20Forms/Non%20Conformance%20Log/Question/20221017_143815_Sean%20O%27Brien.jpg">click me</a>
+<a href ="https://kentstainlesswex-my.sharepoint.com/:f:/g/personal/cnixon_kentstainless_com/EmISr9waMW9EoocYQsEWAMIBknQAescMTXTHD9b2bcqeRQ?e=33lrtU">click for files </a>
+<a href="https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/onedrive.aspx?ga=1&id=%2Fpersonal%2Fcnixon%5Fkentstainless%5Fcom%2FDocuments%2FNCRs%2FNCR%20234456">click here </a>
+<?php
 $getResults = $conn->prepare($result);
 $getResults->execute();
 $file_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+//print_r($file_results);
 function data_uri($file, $mime)
     {
         $contents = file_get_contents($file);
@@ -40,12 +64,57 @@ function data_uri($file, $mime)
         $zip->close();
         return $paths;
     }
-foreach ($file_results as $fname[0]) {
-    $filename = json_encode($fname[0][0]);
+foreach ($file_results as $fname) {
+    $filename = json_encode($fname[0]);
 
 echo ($filename);
+echo ("<br>");
+$string = $filename; 
+$str_arr = preg_split ("/\}/", $string); 
+//print_r($str_arr);
+echo ("<br>");
+  foreach ($str_arr as $arr)
+  {
+   echo ("<br>");
+//echo($arr);
 
+
+$stringParts = explode('link\":\"', $arr);
+echo ("<br>");
+//print_r($stringParts[1]);
+echo ("<br>");
+$stringspliagain=explode('\",\"id', $stringParts[1]);
+echo ("<br>");
+print_r($stringspliagain[0]);
+$str = str_replace('\\', '/', $stringspliagain[0]);
+echo ($str);
+$str = str_replace('//', '/', $str);
+echo ($str);
+?>
+<a href=<?=$str?>>Click me </a>
+<a href = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png">click me <a>
+<img style='height:400px; width:400px;float:left;margin-left:2%' src="<?php echo data_uri("https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png", 'image/png'); ?>"> 
+    <?php
+    $ext = pathinfo($str, PATHINFO_EXTENSION);
+    //echo ($ext);
+    $file_parts = pathinfo($str);
+    //echo ($file_parts['extension']);
+    $x = $file_parts['extension'];
+    echo($x);
+echo ("<br>");
+
+
+  }
+
+
+  
+  
 //Removing backslash
+foreach ($stringspliagain as $filename)
+{
+ echo($filename)   ;
+}
+echo($stringspliagain[0]);
 $str = str_replace('\\', '/', $filename);
 //echo ($str);
 

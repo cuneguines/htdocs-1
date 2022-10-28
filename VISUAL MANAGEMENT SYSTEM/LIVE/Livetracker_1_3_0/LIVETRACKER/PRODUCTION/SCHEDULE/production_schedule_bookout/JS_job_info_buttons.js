@@ -104,7 +104,10 @@ $("h2.thirteenth").replaceWith('<h2 class = "inner thirteenth medium"><button cl
 $("h2.second").replaceWith("<h2 class = 'inner second medium'>" + $(this).attr('customer') + "</h2>");
 $("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('Description') +"        "+$(this).attr('qty')+"</h2>");
 $("h2.fourth").replaceWith("<h2 class = 'inner fourth medium'>" + $(this).attr('sales_person') + "</h2>");
-$("h2.fourteenth").replaceWith("<h2 class = 'inner fourteenth medium'>" + $(this).attr('promise_date') + "</h2>");
+var z=$(this).attr('color_for_dates');
+console.log(z);
+
+$("h2.fourteenth").replaceWith("<h2 class = 'inner fourteenth medium' style='font-size:1.7vh;background-color:" + z + ";'>" + $(this).attr('promise_date') + "</h2>");
 var x = $(this).attr('color_for_date');
 console.log(x);
 

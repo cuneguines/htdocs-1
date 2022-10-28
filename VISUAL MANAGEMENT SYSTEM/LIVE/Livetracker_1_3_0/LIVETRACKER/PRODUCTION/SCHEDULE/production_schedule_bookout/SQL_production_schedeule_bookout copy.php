@@ -101,6 +101,7 @@ t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
 FORMAT(CONVERT(DATE,t0.[Del Date Due UNP]),'dd-MM-yyyy' )[Del Date Due UNP],
+[Del Date Due PD_DD],
   
 t0.[Promise_date_now],
 t0.[Engineer],
@@ -155,9 +156,11 @@ FROM(
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
                                                                 /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/
-                                                                (case                  when DATEDIFF(DAY,getdate(),isnull(t1.U_delivery_date, t1.U_Promise_Date) )< =-4 then t1.U_Promise_Date
-                                                                else isnull(t1.U_delivery_date, t1.U_Promise_Date)
-end)[Del Date Due UNP],
+                                                                ISNULL(t1.U_delivery_date, t1.U_Promise_Date) [Del Date Due UNP],
+                                                                (case 
+                                                                    WHEN t1.U_delivery_date IS NOT NULL THEN 'DD'
+                                                                    else 'PD'
+                                                                end)[Del Date Due PD_DD],
 -----to see if the job s new date is Promise date -----
 (case                  when DATEDIFF(DAY,getdate(),t1.U_delivery_date )< =-4 then 'Yes' else 'No'  end)[Promise_date_now],
                                                                 ----get the week of due date ----
@@ -275,6 +278,7 @@ end)[Del Date Due UNP],
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,(t0.DueDate)),'dd-MM-yyyy') [Promise Date],
                                                                 CAST(t0.DueDate AS DATE) [Del Date Due UNP],
+                                                                NULL [Del Date Due PD_DD],
                                                                 NULL,
                                                                 (CASE 
                                                                                 WHEN DATEPART(iso_week,t0.DueDate) = 53 THEN 52 

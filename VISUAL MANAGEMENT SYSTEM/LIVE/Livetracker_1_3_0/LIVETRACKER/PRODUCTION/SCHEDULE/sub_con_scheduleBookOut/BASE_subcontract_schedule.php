@@ -351,9 +351,9 @@
                                 if ($results[$i]["Latest Purchase Ord"] != NULL)
                                     $border_color = 'brired';
                                     
-                                 if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con'||$results[$i]["Sub_Con_Status"]=='1002')
+                                 if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
                                    $overwrite = 'brdottedyellow';
-                                else if($results[$i]["Sub_Con_Status"] == "1005")
+                                else if($results[$i]["Sub_Con_Status"] == "At Manufacturing Sub Con")
                                   $overwrite = "brdottedpink";
                                 else
                                    $overwrite='';
