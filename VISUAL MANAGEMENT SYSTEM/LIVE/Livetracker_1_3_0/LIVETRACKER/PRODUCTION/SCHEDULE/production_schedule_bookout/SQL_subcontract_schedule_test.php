@@ -143,10 +143,10 @@ FROM (
                      left join [dbo].[@SUB_CON_STATUS] t13 on t13.Code = t0.U_sc_status
             where 1=1 
             AND t1.Status in ('R')
-            ---AND t0.IssuedQty < t0.PlannedQty
+         AND t0.IssuedQty < t0.PlannedQty
             AND t2.ItemType <> 'L'
             AND t2.PrcrmntMtd = 'B' --AND t0.PlannedQty > (t2.ONhand - t2.IsCommited + t0.PlannedQty)  AND t1.CmpltQty < t1.PlannedQty
-            AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')
+            ---AND (t5.ItmsGrpCod IN (168,232) or t2.ItemName like 'Sub Con%')1/11/22
             $clause2_a
            
 
