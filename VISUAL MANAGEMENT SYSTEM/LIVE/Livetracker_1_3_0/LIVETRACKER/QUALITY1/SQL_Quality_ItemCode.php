@@ -30,6 +30,7 @@ WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
 from ms_qual_log t0
 where t0.form_type = 'Non Conformance'
+
 ";
 $Quality_results_customer_complaints="select *,
 (case 
@@ -43,7 +44,7 @@ $Quality_results_health_safety="select *,
 WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
 from ms_qual_log t0
-where t0.form_type = 'Health & Safety-Accidents'
+where t0.form_type = 'Health & Safety - Accidents'
 ";
 ?>
 <!-- select t0.code, FORMAT(CAST(t0.CreateDate AS DATE), 'dd-MM-yyyy')[CreateDate], FORMAT(CAST(t0.UpdateDate AS DATE), 'dd-MM-yyyy')[UpdateDate], t0.U_area_nc, t0.U_area_nc_raised, 
