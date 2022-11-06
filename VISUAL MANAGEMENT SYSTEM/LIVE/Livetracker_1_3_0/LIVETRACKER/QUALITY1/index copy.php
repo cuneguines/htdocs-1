@@ -16,11 +16,15 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
+   
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
+    <!-- <script type="text/javascript" src="../../JS/LIBS/jquery-3.4.1.js"></script> -->
     <script type="text/javascript" src="../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
     <!-- <script type="text/javascript" src="./qualityjs.js"></script> -->
     <script type="text/javascript" src="./new.js"></script>
     <link rel="stylesheet" href="assets/css/table.css">
-
+    
 </head>
 <style>
     .active1,
@@ -56,10 +60,10 @@
         return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
       }
    //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
-   https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
+   ////https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
 
-        console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
-        console.log(extension);
+        ////console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
+        ////console.log(extension);
         </script>
 <?php
 	try
@@ -83,6 +87,9 @@
     $getResults = $conn->prepare($Quality_results_customer_complaints);
     $getResults->execute();
     $quality_results_cc = $getResults->fetchAll(PDO::FETCH_BOTH);
+    $getResults = $conn->prepare($Quality_results_health_safety);
+    $getResults->execute();
+    $quality_results_hs = $getResults->fetchAll(PDO::FETCH_BOTH);
     //$json_array = array();
     //var_dump($production_exceptions_results);
     //echo json_encode(array($quality_results));
@@ -335,7 +342,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Customer complaints<span class="fa arrow"></span></a>
+                        <a id="services_button_cc" href="#"><i class="fa fa-ambulance"></i> Customer complaints<span class="fa arrow"></span></a>
                      <ul class="nav nav-second-level_services" style="overflow-y:scroll"> 
 
 
@@ -344,7 +351,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-search"></i> Health and Safety<span class="fa arrow"></span></a>
+                        <a id="services_button_hs" href="#"><i class="fa fa-search"></i> Health and Safety<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -409,10 +416,10 @@
                             <thead style="position:sticky;top:0;z-index:+2">
                                 <tr class="head">
                                     <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
-                              <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
-                                    <th style="position: sticky;width:200px;left:300px;color:white">Issue</th>
+                              <th style="position: sticky;width:100px;left:100px;color:white">ItemCode</th>
+                                    <th style="position: sticky;width:300px;left:200px;color:white">Issue</th>
                                    
-                                    <th style="width:100px">ItemCode</th>
+                                    <th style="width:200px">Email</th>
                                     <th style="width:200px">Sales order</th>
                                     <th style="width:200px">Process order</th>
 
@@ -420,6 +427,7 @@
                                     
                                     <th style="width: 200px">Raised Area</th>
                                     <th style="width: 100px">Raised By</th>
+                                    <th style="width: 85px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
                                     <th style="width: 200px">cc_sales_order</th>
                                     <th style="width: 200px">cc_process_order</th>
@@ -445,16 +453,17 @@
                                 <?php foreach ($quality_results_nc as $row) : ?>
                                     <tr>
                                         <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["ID"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["email"] ?></td>
-                                        <td style="position: sticky;left:300px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["nc_itemcode"]?></td>
+                                        <td style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
                                        
-                                        <td><?= $row["nc_itemcode"] ?></td>
+                                        <td><?= $row["email"] ?></td>
                                         <td><?= $row["nc_sales_order"] ?></td>
                                         <td><?= $row["nc_process_order"] ?></td>
                                         <td><?= $row["completion_time"] ?></td>
                                         
                                         <td><?= $row["nc_area_caused"] ?></td>
                                         <td><?= $row["nc_raised_by"] ?></td>
+                                        <td><div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div></td>
                                        <!--  <td><?// $row["cc_sales_order"] ?></td>
                                         <td><?//$row["cc_process_order"] ?></td>
                                         <td><// $row["cc_itemcode"] ?></td>
@@ -505,6 +514,39 @@
                    
 
                 </div>
+                <!-- MODAL STARTS HERE -->
+                <!-- <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal">Update</button></div> -->
+                <div id="contact-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <a class="close" data-dismiss="modal">×</a>
+                                <h3>Status Form</h3>
+                            </div>
+                            
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="name">ID</label>
+                                        <input id="id"type="text" name="name" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Status</label>
+                                        <input id="status"type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message">Comments</label>
+                                        <textarea id="comm"name="message" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="submit()">Submit</button>
+                                </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal ENDS HERE -->
                 <!-- Filter Starts here -->
 
                 <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
@@ -538,7 +580,7 @@
                 <!-- Filter Ends here -->
 
 
-        </div><br>
+        </div>
 
 <div id="page-inner_two"style=display:none;>
 
@@ -651,10 +693,11 @@
     </div>
    
 
-</div>
-<!-- Filter Starts here -->
+   </div>
 
-<div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+   <!-- Filter Starts here -->
+
+  <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
              width: 100%;
              height: 50px;">
     <div class="filter">
@@ -681,12 +724,158 @@
         </div>
 
     </div>
+  </div>
+ <!-- Filter Ends here -->
+
+
 </div>
-<!-- Filter Ends here -->
+<div id="page-inner_three"style=display:none;>
+
+  <!-- /. ROW  -->
 
 
-</div><br>
+  <div class="card">
+    <div class="card-header">
 
+    </div>
+    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
+
+
+        <table id="products" style="position: sticky;overflow-x:scroll;">
+            <thead style="position:sticky;top:0;z-index:+2">
+                <tr class="head">
+                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">ACCcategory</th>
+              <th style="position: sticky;width:200px;left:100px;color:white">Desciption</th>
+                    <th style="position: sticky;width:200px;left:300px;color:white">Location</th>
+                   
+                    <th style="width:100px">Treatment</th>
+                    <th style="width:200px">Treated By</th>
+                    <!-- <th style="width:200px">Process order</th>
+
+                    <th style="width:100px">Completion time</th>
+                    
+                    <th style="width: 200px">Raised Area</th>
+                    <th style="width: 100px">Raised By</th> -->
+                    <!-- <th style="width: 200px">cc_name</th>
+                    <th style="width: 200px">cc_sales_order</th>
+                    <th style="width: 200px">cc_process_order</th>
+                    <th style="width: 200px">cc_itemcode</th>
+                    <th style="width: 200px">cc_raised_by</th>
+                     -->
+                    <!-- <th style="width: 100px">ProductGp</th>
+                    <th style="width: 100px;">SubGp2</th>
+                    <th style="width: 100px">SubGp3</th> -->
+
+                    <!-- <th style="width: 200px">PrevActionOwner</th>
+                    <th style="width:200px">Type</th>
+                    <th style="width:200px">Status</th>
+                    <th style="width:200px">RootCauseAnalysis</th>
+                    <th style="width:200px">Preventive action reports</th> -->
+                    
+                    <th style="width:200px">Attachements</th>
+                </tr>
+            </thead>
+           
+
+
+                <?php foreach ($quality_results_hs as $row) : ?>
+                    <tr>
+                        <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["acc_category"] ?></td>
+                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["acc_description"] ?></td>
+                        <td style="position: sticky;left:300px;background:#a6cbf7"><?= $row["acc_location"] ? $row["acc_location"]  : '--------' ?></td>
+                       
+                        <td><?= $row["acc_treatment"] ?></td>
+                       <td><?= $row["acc_treated_by"] ?></td>
+                        <!--<td><? //$row["nc_process_order"] ?></td>
+                        <td><? //$row["completion_time"] ?></td>
+                        
+                        <td><?//$row["nc_area_caused"] ?></td>
+                        <td><?//$row["nc_raised_by"] ?></td> -->
+                       <!--  <td><?// $row["cc_sales_order"] ?></td>
+                        <td><?//$row["cc_process_order"] ?></td>
+                        <td><// $row["cc_itemcode"] ?></td>
+                        <td><?//$row["cc_raised_by"] ?></td> -->
+                      
+               
+                        
+                       
+                        <!-- <td class="Group1"><?// $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
+                        <td class="Group2"><?// $row["U_Product_Group_Two"] ?></td>
+                        <td class="Group3"><?// $row["U_Product_Group_Three"] ?></td>
+                        <td><?//$row["U_prev_action_owner"] ?></td>
+                        <td><?//$row["form_type"] ?></td>
+                        <td><// $row["U_Status"] ?></td>
+
+                        <?
+                        //$uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
+                        //echo $uploadfile; ?> -->
+
+                       <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<?// $row['code'] ?>" name='<?// $row["code"] ?>' id='<?// $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                        
+                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<?// $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td> -->
+                       <?php
+                       $x=$row["ID"];
+                       //print_r($x);
+                       ?>
+                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
+                        
+
+
+
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+
+
+        </table>
+        
+        
+
+
+
+
+
+
+    </div>
+   
+
+   </div>
+
+   <!-- Filter Starts here -->
+
+  <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
+             width: 100%;
+             height: 50px;">
+    <div class="filter">
+        <div class="text">
+            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
+        </div>
+        <div class="content" style="float:left;margin-right:40px;">
+            <select class="selector" id="select_group2" style="width:250px;height:40px;margin-top:5px">
+                <option value="All" selected>All</option>
+
+            </select>
+        </div>
+
+    </div>
+    <div class="filter">
+        <div class="text">
+            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;" class="medium wtext">By Group2</button>
+        </div>
+        <div class="content" style="float:left">
+            <select id="select_group3" style="width:250px;height:40px;margin-top:5px">
+                <option value="All" selected>All</option>
+
+            </select>
+        </div>
+
+    </div>
+  </div>
+ <!-- Filter Ends here -->
+
+
+</div>
         <!-- <footer>
             <p class="test">All right reserved by <a href="">Company name</a>
 

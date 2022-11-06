@@ -1,6 +1,6 @@
 
-<?php include '../../PHP LIBS/PHP FUNCTIONS/php_function.php';?>
-<?php include '../../SQL/CONNECTIONS/conn.php';?>
+<?php include '../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
+<?php include '../../SQL CONNECTIONS/conn.php';?>
 
 <?php
 

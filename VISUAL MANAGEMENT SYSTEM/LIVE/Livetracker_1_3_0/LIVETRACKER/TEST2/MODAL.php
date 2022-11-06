@@ -140,7 +140,7 @@
             var CurrentRow = $(event.target).closest("tr");
             // alert(CurrentRow);
             var ItemId = $("td:eq(0)", $(CurrentRow)).html(); // Can Trim also if needed
-
+console.log(ItemId);
             var x = ItemId;
             $.ajax({
 
@@ -162,10 +162,18 @@
                         });
 
                     });
+                    var url='https://kentstainlesswex-my.sharepoint.com/:w:/r/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx';
                     console.log(Documentnumber);
                     console.log(Customer);
+                    Documentnumber='https://kentstainlesswex-my.sharepoint.com/:w:/r/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx';
                     //$('#employee_detail').html($('<b> Order Id selected: ' + Documentnumber + '</b><b> Customer : ' + Customer + '</b>'));
-                    $('#employee_detail').html('<b> Order Id selected: ' + Documentnumber + '</b><br><b> Customer : ' + Customer + '</b>');
+                    $('#employee_details').val('<b> Order Id selected: ' + Documentnumber + '</b><br><b> Customer : ' + Customer + '</b>');
+                    
+                    var anchor = $('<a />', {
+  "href": url,
+  "text": "Click to read more"
+})
+$('#employee_detail').append(anchor).dialog();
                 },
             });
         }
@@ -220,7 +228,7 @@
                         <h4 class="modal-title">Details</h4>
                     </div>
                     <div class="modal-body" id="employee_detail">
-
+                  <input type="email" name="email" class="form-control" id="employee_details">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
