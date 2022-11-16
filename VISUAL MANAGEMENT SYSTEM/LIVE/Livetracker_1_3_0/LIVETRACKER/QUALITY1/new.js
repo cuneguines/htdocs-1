@@ -25,6 +25,13 @@ $(document).ready(function ()
         $('#page-inner_three').show();
 
     });
+
+   
+      //refreshTable();
+    
+
+    
+
 });
 
 
@@ -48,14 +55,17 @@ $(document).ready(function ()
        
 		submitForm();
         
-       
+        
     
     return false;
 	};
     function submitForm(){
         var x = $("#id").val();
-        var y = $("#status").val();
-        var z = $("#comm").val();
+        var y = $("#owner").val();
+        var z = $("#action").val();
+        var a = $("#status").val();
+        var b = $("#ddate").val();
+        
         console.log(x);
         $.ajax({
            type: "POST",
@@ -63,8 +73,11 @@ $(document).ready(function ()
            cache:false,
            data: {
             'id': x,
-            'status':y,
-            'comments':z,
+            'owner':y,
+            'action':z,
+            'status':a,
+            'date':b,
+
         },
         dataType: 'json',
            success: function(response){
@@ -77,4 +90,6 @@ $(document).ready(function ()
                alert("Error");
            }
        });
+       
     }
+    

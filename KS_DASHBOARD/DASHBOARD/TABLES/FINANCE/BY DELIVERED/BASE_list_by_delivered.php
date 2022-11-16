@@ -99,7 +99,7 @@
 								<tr style = 'font-size:15px;'>
 									<th width = "6%;"> 		Issue Date 				</th>
 									<th width = "6%;"> 		Promse Date 			</th>
-									<th width = "6%;"> 	    Delivery Note			</th>
+									<th width = "6%;" style = "display:none;"> 	    Delivery Note			</th>
                                     <th width = "5%;"> 	    Item Code 				</th>  
 									<th width = "22%;"> 	Item Description		</th>
                                     <th width = "5%;"> 	    Delivered Qty			</th>  
@@ -135,7 +135,7 @@
 										echo "<tr customer = $customer engineer = $engineer ontime_status = $ontime_status>";
 											echo "<td>"							.$row["Issue Date"]																	."</td>";
 											echo "<td>"							.$row["Promise Date"]																."</td>";
-											echo "<td>"	                        .$row["Delivery Note Number"]														."</td>";
+											echo "<td style = 'display:none;'>"	                        .$row["Delivery Note Number"]														."</td>";
 											echo "<td>"	                        .$row["Item Code"]																	."</td>";
 											echo "<td id = 'td_stringdata'>"	.$row["Description"]																."</td>";
 											echo "<td>"							.$row["Delivery Qty"]																."</td>";

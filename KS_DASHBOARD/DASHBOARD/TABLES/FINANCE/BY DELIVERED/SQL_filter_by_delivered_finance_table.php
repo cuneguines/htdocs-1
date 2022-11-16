@@ -29,6 +29,8 @@ LEFT JOIN RDR1 t1 ON t1.DocEntry = t2.BaseEntry and t1.Itemcode = t2.ItemCode an
 LEFT JOIN ORDR t0 ON t0.DocEntry = t1.DocEntry
 LEFT JOIN OHEM t6 on t6.empID = t0.OwnerCode
 LEFT JOIN OSLP t7 on t7.SlpCode = ISNULL(t1.SlpCode, t0.SlpCode)
+LEFT JOIN OITM t8 ON t8.ItemCode = t2.ItemCode
+LEFT JOIN OITB t9 ON t8.ItmsGrpCod = t9.ItemsGrpCod
 
 
 where t2.ItemCode <> 'TRANSPORT' AND ISNULL(t4.ItemCode,'NONE') <> 'TRANSPORT' AND t3.DocDate >= dateadd(mm, datediff(mm, 0, getDate()) - 12, 0) AND t3.DocDate <= dateadd(mm, datediff(mm, 0, getDate()) + 13, 0)

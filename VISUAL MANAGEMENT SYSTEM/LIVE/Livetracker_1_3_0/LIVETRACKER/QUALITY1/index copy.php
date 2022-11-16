@@ -51,6 +51,10 @@
         vertical-align: middle;
 
     }
+
+    .lefttext{  text-align:left; padding-left:10px;}
+.righttext{ text-align:right; padding-right:10px;}
+.bold{      font-weight:bold;}
 </style>
 
 
@@ -342,7 +346,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button_cc" href="#"><i class="fa fa-ambulance"></i> Customer complaints<span class="fa arrow"></span></a>
+                        <a id="services_button_cc" href="#"><i class="fa fa-users"></i> Customer complaints<span class="fa arrow"></span></a>
                      <ul class="nav nav-second-level_services" style="overflow-y:scroll"> 
 
 
@@ -351,7 +355,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button_hs" href="#"><i class="fa fa-search"></i> Health and Safety<span class="fa arrow"></span></a>
+                        <a id="services_button_hs" href="#"><i class="fa fa-ambulance"></i> Health and Safety<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -360,7 +364,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Audit Findings<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-search"></i> Audit Findings<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -369,7 +373,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button" href="#"><i class="fa fa-ambulance"></i> Improvement Ideas<span class="fa arrow"></span></a>
+                        <a id="services_button" href="#"><i class="fa fa-lightbulb-o"></i> Improvement Ideas<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level_services" style="overflow-y:scroll">
 
 
@@ -394,8 +398,8 @@
                 </h1>
                 <ol class="breadcrumb"style=display:none>
                     
-                    <li><a href="chart_page.php">Charts</a></li>
-                    <li><a href="edit_page.php">Edit</a></li>
+                    <li><a href="edit_page.php">Forms</a></li>
+                    <li><a href="updated_page.php">Newpage</a></li>
                     <li class="active">Table</li>
                 </ol>
 
@@ -419,15 +423,15 @@
                               <th style="position: sticky;width:100px;left:100px;color:white">ItemCode</th>
                                     <th style="position: sticky;width:300px;left:200px;color:white">Issue</th>
                                    
-                                    <th style="width:200px">Email</th>
-                                    <th style="width:200px">Sales order</th>
-                                    <th style="width:200px">Process order</th>
+                                   
+                                    <th style="width:100px">Sales order</th>
+                                    <th style="width:100px">Process order</th>
 
-                                    <th style="width:100px">Completion time</th>
+                                   
                                     
-                                    <th style="width: 200px">Raised Area</th>
+                                    <th style="width: 200px">Area Non Conformance Raised</th>
                                     <th style="width: 100px">Raised By</th>
-                                    <th style="width: 85px">Edit</th>
+                                    <th style="width: 70px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
                                     <th style="width: 200px">cc_sales_order</th>
                                     <th style="width: 200px">cc_process_order</th>
@@ -444,7 +448,7 @@
                                     <th style="width:200px">RootCauseAnalysis</th>
                                     <th style="width:200px">Preventive action reports</th> -->
                                     
-                                    <th style="width:200px">Attachements</th>
+                                    <th style="width:200px;"> Attachements</th>
                                 </tr>
                             </thead>
                            
@@ -452,14 +456,14 @@
 
                                 <?php foreach ($quality_results_nc as $row) : ?>
                                     <tr>
-                                        <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["ID"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["nc_itemcode"]?></td>
-                                        <td style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+                                        <td style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
+                                        <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"]?></td>
+                                        <td class="bold"style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
                                        
-                                        <td><?= $row["email"] ?></td>
-                                        <td><?= $row["nc_sales_order"] ?></td>
-                                        <td><?= $row["nc_process_order"] ?></td>
-                                        <td><?= $row["completion_time"] ?></td>
+                                        
+                                        <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
+                                        <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
+                                        
                                         
                                         <td><?= $row["nc_area_caused"] ?></td>
                                         <td><?= $row["nc_raised_by"] ?></td>
@@ -490,7 +494,7 @@
                                        $x=$row["ID"];
                                        //print_r('NON CONFIRMANCE');
                                        ?>
-                                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
+                                        <td><input type="button" onclick=location.href="files_view_issue%20copy.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
                                         
 
 
@@ -528,14 +532,42 @@
                                     <div class="form-group">
                                         <label for="name">ID</label>
                                         <input id="id"type="text" name="name" class="form-control">
+                                        <a href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">Status</label>
-                                        <input id="status"type="text" class="form-control">
+                                        <label for="email">Owner</label>
+                                        
+                                        <select id="owner" style=width:100%;height:34px>
+                                        <option value="cnixon@kentstainless.com" selected>cnixon@kentstainless.com</option>
+                                        <option value="lkent@kentstainless.com" selected>lkent@kentstainless.com</option>
+                                        
+                                        
+                                </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Required Action</label>
+                                        
+                                        <select id="action" style=width:100%;height:34px>
+                                        <option value="Toolbox Talk" selected>Toolbox Talk</option>
+                                        <option value="Eight Disciplines Process" selected>Eight Disciplines Process</option>
+                                        
+                                     </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="message">Comments</label>
-                                        <textarea id="comm"name="message" class="form-control"></textarea>
+                                        <label for="status">Status</label>
+                                        
+                                        <select id="status" style=width:100%;height:34px>
+                                        <option value="Open" selected>Open</option>
+                                        <option value="Closed" selected>Closed</option>
+                                        <option value="Cancelled" selected>Cancelled</option>
+                                        
+                                     </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message">Date</label>
+                                        <input id="ddate"name="message" type = "date" class="form-control"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

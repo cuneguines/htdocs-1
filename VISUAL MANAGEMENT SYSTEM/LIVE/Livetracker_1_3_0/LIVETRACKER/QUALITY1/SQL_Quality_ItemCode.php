@@ -24,12 +24,24 @@ inner join (select t0.code, SUM(case when t0.U_Attachments is null then 0 else 1
                      from [dbo].[@QUAL_ATTACH] t0
                      group by t0.code) t4 on t4.Code = t0.Code
 ";
-$Quality_results_non_conformance="select *,
+//Query to filters the rows that are cancelled from the second table and join with the first table which is not a match 
+$Quality_results_non_conformance="select *,t0.Id as ID,t20.Status,
 (case 
 WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
 from ms_qual_log t0
+left join (select t1.ID,max(t1.date_updated) as Maxdate
+    from  dbo.Table_2 t1
+       where t1.Status='Cancelled' group by t1.ID )t2 on t2.ID = t0.ID
+left join(select t8.Status,t8.ID,t8.date_updated from dbo.Table_2 t8
+                    inner join(select t1.ID,max(t1.date_updated) as Mmaxdate
+                    from  dbo.Table_2 t1
+                    where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
 where t0.form_type = 'Non Conformance'
+and t2.ID is null
+
+
+
 
 ";
 $Quality_results_customer_complaints="select *,

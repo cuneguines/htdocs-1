@@ -12,7 +12,7 @@
 
         <!-- LOCAL JAVASCRIPT -->
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters.js"></script>
-        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_exceptions_buttons.js"></script>
+        <script type = "text/javascript" src = "./JS_exceptions_buttons.js"></script>
         <script type = "text/javascript" src = "./JS_comments.js"></script>
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
 

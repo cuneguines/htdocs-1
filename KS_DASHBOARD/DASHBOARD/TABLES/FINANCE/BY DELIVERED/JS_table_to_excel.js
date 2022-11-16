@@ -9,6 +9,7 @@ function export_pre_production_table_to_excel(tableID)
         tableHTML = tableHTML.replace( /€/g, '%20');                   
         tableHTML = tableHTML.replace( / /g, '%20');
         tableHTML = tableHTML.replace( /#/g, '%20');
+        tableHTML = tableHTML.replace( /display:none;/g, '%20');
 
         // GET TODAYS DATE AND NAME THE FILE WITH IT
         var today = new Date();
