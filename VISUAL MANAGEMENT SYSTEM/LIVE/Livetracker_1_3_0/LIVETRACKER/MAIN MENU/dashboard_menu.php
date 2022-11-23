@@ -61,11 +61,11 @@
 								<h1 style = "color:white; font-size:3vh;">Page Groups</h1>
 							</div>
 							<div style = "height:55%; position:relative;">
-								<button class = 'button_group green active' id = 'production' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; vertical-align:top;">Production</button>
-								<button class = 'button_group orange' id = 'supply_chain' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Supply Chain</button>
-								<button class = 'button_group red' id = 'hr' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">HR</button>
-								<button class = 'button_group green' id = 'sales' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Sales</button>
-								<button class = 'button_group orange' id = 'other' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Other</button>
+								<button class = 'button_group purple active' id = 'production' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; vertical-align:top;">Production</button>
+								<button class = 'button_group purple' id = 'supply_chain' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Supply Chain</button>
+								<button class = 'button_group purple' id = 'hr' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">HR</button>
+								<button class = 'button_group purple' id = 'sales' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Sales</button>
+								<button class = 'button_group purple' id = 'other' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Other</button>
 							</div>
 						</div>
 					</div>
@@ -99,7 +99,7 @@
 							<button class = "green sales" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../SALES/EXCEPTIONS/sales exceptions/BASE_sales_exceptions.php';">Sales Exceptions</button>
                             <button class = "green sales" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../SALES/TABLE/new sales orders margin/BASE_new_sales_orders_margin.php';">New Sales Margins</button>
 							<button class = "green production" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../PRODUCTION/DEMAND/SCHEDULE/BASE_production_stages.php';">Production Steps</button>
-							<button class = "green production" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../PRODUCTION/DEMAND/FORINTEL/BASE_production_stage_intel.php';">Intel Fab Progress</button>
+							<button class = "orange production" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../PRODUCTION/DEMAND/FORINTEL/BASE_production_stage_intel.php';">Intel Fab Progress</button>
 							<button class = "green production" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../KS_DASHBOARD/DASHBOARD/MAIN%20MENU/PRODUCTION%20SUBMENU/BASE_production_menu.php';">Production DB</button>
                             <button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../SAP READER/SAP READER/BASE_document_search.php';">SAP Reader</button>
                             <button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../HR/SERVICE PLANNER/Base_service_planner.php';">Service Planner</button>

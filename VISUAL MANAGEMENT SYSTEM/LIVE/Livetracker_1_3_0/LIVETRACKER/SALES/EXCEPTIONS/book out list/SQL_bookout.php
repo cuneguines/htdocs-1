@@ -7,6 +7,7 @@ t0.[Source],
 t1.itemcode [Item Code], 
 t0.itemname [Item Name], 
 t0.[Customer],
+ISNULL(t0.[Project],'000_NO PROJECT_000')[Project],
 t0.U_Location [Location],
 CAST(t0.Qty_on_Order AS DECIMAL (12,0)) [Qty On Order],
 t0.[In Stock],
@@ -49,6 +50,7 @@ CASE WHEN t0.[Promise Date] IS NOT NULL THEN 'Y' ELSE 'N' END [DEL ALL]
 
 FROM (
 SELECT 
+ISNULL(t1.U_Client,'000_NO PROJECT_000') [Project],
     t0.U_IIS_proPrOrder [Prod Order], 
 	t0.OriginNum [Sales Order],
 	(case when t2.PrcrmntMtd = 'B' then 'Bought In' else 'Made' end) [Source],
@@ -94,7 +96,9 @@ and (t3.LineStatus = 'o' or t3.LineStatus is null)
 UNION ALL
 
 
-select NULL [Prod Order], t0.docnum [Sales Order],
+select 
+NULL [Projectin],
+NULL [Prod Order], t0.docnum [Sales Order],
 (case when t2.PrcrmntMtd = 'B' then 'Bought In' else 'Made' end) [Source], 
  t2.ItemCode, t2.ItemName, t2.U_Location [Location],
 t1.Quantity [Qty on SO], CAST(t2.onhand AS DECIMAL (12,0)) [In Stock],  

@@ -28,6 +28,7 @@
         .bluee {
             box-shadow: 5px 10px red;
         }
+        .ButtonState:checked + .Button{background:#fff;}
     </style>
     <?php
     $process_order_step_efficiency_data = get_sap_data($conn, $process_order_step_efficiency_sql, DEFAULT_DATA);
@@ -405,14 +406,14 @@
       <td></td>
       <td></td>
       <td></td>
-      <td ><button class="laserph fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button class="laserps fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
-      <td ><button class="laserph fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button class="laserps fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td ><button value="laserh"class="button_group fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value="lasers"class="button_group fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td ><button value='sawh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='saws'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='millingh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='millings'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='lasermh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='laserms'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='fabch'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='fabcs'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='qualch'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='qualcs'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='pklh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='pkls'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
+      <td><button value='pckh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:13%;width:35%;height:40%;float:left">H</button><button value='pcks'class="button_group saws fill red medium wtext" style="border-radius:50%;margin-left:2%;width:35%;float:left;"class="fill red small wtext">S</button></td>
     </tr>
   </tfoot>
                 </table>
@@ -454,10 +455,10 @@
                                     </select>
                                 </div> -->
                                 <div class="text">
-                                    <button class="fill bred medium btext" style="background-color:blue;float:left;margin-left: 21%">Hide</button>
-                                    <button class="fill bblue medium btext" style="float:left;position: relative;
+                                    <button name="Button" class="fill bred medium btext ButtonState" style="background-color:blue;float:left;margin-left: 21%;display:none">Hide</button>
+                                    <button class="fill bblue medium wtext" style="float:left;position: relative;background-color:blue;
     margin-left: 106%;
-    margin-top: -23%;
+    margin-top: -.8%;
     float: left">Show</button>
                                 </div>
                             </div>

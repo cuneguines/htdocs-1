@@ -155,7 +155,8 @@
                                 <th width = "6%">Bkd User</th>
                                 <th width = "6%">Sales Person</th>
                                 <th width = "6%">Engineer</th>
-                                <th width = "15%">Ship To</th>
+                                <th width = "5%">Project</th>
+                                <th width = "10%">Ship To</th>
                                 <th width = "10%">Customer</th>
                             </tr>
                         </thead>
@@ -166,8 +167,9 @@
                             <?php $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"])); ?>
                             <?php $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Sales Person"])); ?>
                             <?php $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Engineer"])); ?>
+                            <?php $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>
 
-                            <tr class = 'active_in_selection' sales_order = '<?=$sales_order?>' sales_person = '<?=$sales_person?>' engineer = '<?=$engineer?>' customer = '<?=$customer?>' nbi = '<?=$row["Not Booked In"]?>' exp = '<?=$row["Due Date Passed"]?>' booked_in_today = '<?=$row["BI TD"]?>' booked_in_yesterday = '<?=$row["BI YD"]?>' booked_in_this_week = '<?=$row["BI TW"]?>' booked_in_last_week = '<?=$row["BI LW"]?>' booked_in_this_month = '<?=$row["BI TM"]?>' booked_in_last_month = '<?=$row["BI LM"]?>' booked_in_this_year = '<?=$row["BI TY"]?>' booked_in_all = '<?=$row["BI ALL"]?>' due_today = '<?=$row["DEL TD"]?>' due_tomorrow = '<?=$row["DEL ND"]?>' due_this_week = '<?=$row["DEL TW"]?>' due_next_week = '<?=$row["DEL NW"]?>' due_this_month = '<?=$row["DEL TM"]?>' due_next_month = '<?=$row["DEL NM"]?>' due_this_year = '<?=$row["DEL TY"]?>' due_all = '<?=$row["DEL ALL"]?>'>
+                            <tr class = 'active_in_selection' project = '<?=$project?>'sales_order = '<?=$sales_order?>' sales_person = '<?=$sales_person?>' engineer = '<?=$engineer?>' customer = '<?=$customer?>' nbi = '<?=$row["Not Booked In"]?>' exp = '<?=$row["Due Date Passed"]?>' booked_in_today = '<?=$row["BI TD"]?>' booked_in_yesterday = '<?=$row["BI YD"]?>' booked_in_this_week = '<?=$row["BI TW"]?>' booked_in_last_week = '<?=$row["BI LW"]?>' booked_in_this_month = '<?=$row["BI TM"]?>' booked_in_last_month = '<?=$row["BI LM"]?>' booked_in_this_year = '<?=$row["BI TY"]?>' booked_in_all = '<?=$row["BI ALL"]?>' due_today = '<?=$row["DEL TD"]?>' due_tomorrow = '<?=$row["DEL ND"]?>' due_this_week = '<?=$row["DEL TW"]?>' due_next_week = '<?=$row["DEL NW"]?>' due_this_month = '<?=$row["DEL TM"]?>' due_next_month = '<?=$row["DEL NM"]?>' due_this_year = '<?=$row["DEL TY"]?>' due_all = '<?=$row["DEL ALL"]?>'>
                                 <td><?=$row["Producrion Order"]?></td>
                                 <td><?=$row["Sales Order"]?></td>
                                 <td><?=($row["Source"] == 'Made' ? "M" : "BI")?></td>
@@ -185,6 +187,7 @@
                                 <td><?=($row["User"] == null ? "N/A" : $row["User"])?></td>
                                 <td><?=$row["Sales Person"]?></td>
                                 <td><?=$row["Engineer"]?></td>
+                                <td><?=$row["Project"]?></td>
                                 <td class = 'lefttext'><?=$row["Ship_To"]?></td>
                                 <td class = 'lefttext'><?=$row["Customer"]?></td>
                             </tr>
@@ -223,12 +226,12 @@
                             </div>
                             <div class = "filter wider">
                                 <div class = "text">
-                                    <button class = "fill red medium wtext">Engineer</button>
+                                    <button class = "fill red medium wtext">Project</button>
                                 </div>
                                 <div class = "content">
-                                    <select id = "select_engineer" class = "selector fill medium">
+                                    <select id = "select_project" class = "selector fill medium">
                                         <option value = "All" selected>All</option>
-                                        <?php generate_filter_options($bookout_list_data, "Engineer")?>
+                                        <?php generate_filter_options($bookout_list_data, "Project")?>
                                     </select>
                                 </div>
                             </div>

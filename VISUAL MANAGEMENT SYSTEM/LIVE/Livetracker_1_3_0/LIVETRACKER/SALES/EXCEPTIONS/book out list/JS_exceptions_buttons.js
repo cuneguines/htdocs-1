@@ -9,7 +9,7 @@ $(document).ready(function()
         // IF ANY FILTER IS ACTIVE CALL ITS RESPECTIVE FUNTION
         function updatefilter()
         {
-            if(document.getElementById("select_customer").value != 'All'){filter()}
+            if(document.getElementById("select_project").value != 'All'){filter()}
             if(document.getElementById("select_sales_person").value != 'All'){filter2()};
             if(document.getElementById("select_engineer").value != 'All'){filter3()};
         }
@@ -65,15 +65,15 @@ $(document).ready(function()
 
         function filter()
         {
-            var customer = document.getElementById("select_customer").value;
-            console.log("TEST");
-            if(customer != "All")
+            var project = document.getElementById("select_project").value;
+            console.log(project);
+            if(project != "All")
             {
                 rows.filter("[customer =" + customer + "][class = active_in_selection]").show();
                 rows.not("[class = active_in_selection]").hide();
-                rows.not("[customer =" +customer+"]").hide();
+                rows.not("[project =" +project+"]").hide();
             }
-            else if(customer == "All")
+            else if(project == "All")
             {
                 rows.filter("[class = active_in_selection]").show();
             }

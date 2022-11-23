@@ -54,7 +54,7 @@ $(document).ready(function ()
 	function submit(){
        
 		submitForm();
-        
+      
         
     
     return false;
@@ -79,12 +79,12 @@ $(document).ready(function ()
             'date':b,
 
         },
-        dataType: 'json',
+       
            success: function(response){
                //$("#contact").html(response)
                //$("#contact-modal").modal('hide');
                alert('input recieved');
-              
+               location.reload();
            },
            error: function(){
                alert("Error");
@@ -93,3 +93,5 @@ $(document).ready(function ()
        
     }
     
+  
+     

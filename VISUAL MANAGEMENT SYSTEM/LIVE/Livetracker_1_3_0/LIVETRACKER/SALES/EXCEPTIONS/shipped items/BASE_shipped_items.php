@@ -203,7 +203,9 @@
                         </div>
                     </div>
                     <div id = "button_container">
-                        <button onclick = "export_to_excel('shipping')" class = "grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
+                    <button style=width:40% onclick = "" class = "reset_buttons fill medium grey rtext rounded">RESET</button>
+                        <button style=width:40% onclick = "export_to_excel('shipping')" class = "grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
+                        
                     </div>
                 </div>
             </div>

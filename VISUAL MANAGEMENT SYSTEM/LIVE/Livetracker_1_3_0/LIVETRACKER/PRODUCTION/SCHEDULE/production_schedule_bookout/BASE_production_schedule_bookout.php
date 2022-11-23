@@ -285,7 +285,7 @@
                                $del_date=strtotime($results[$i]["Del Date Due UNP"]);
                                 $prom_date = strtotime($results[$i]["Promise Date"]);
                                 $datediff = ceil(($prom_date-$del_date) / 86400);
-                                if ($del_date>$prom_date)
+                                if ($del_date>$prom_date) 
                                 {
                                     $datediff = ceil(($del_date-$prom_date) / 86400);
                                     $color_for_date = 'red';

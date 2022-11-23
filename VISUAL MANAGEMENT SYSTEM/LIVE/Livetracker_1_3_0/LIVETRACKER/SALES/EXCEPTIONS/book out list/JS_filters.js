@@ -13,12 +13,12 @@ $(document).ready(function()
         filter2();
     });
 
-    $('#select_engineer').on("change", function t2() {
+    $('#select_project').on("change", function t2() {
         $('.selector').not($(this)).prop('selectedIndex', 0);
         filter3();
     });
 
-    function filter()
+   function filter()
     {
         var customer = document.getElementById("select_customer").value;
         console.log(customer);
@@ -31,7 +31,7 @@ $(document).ready(function()
         else if(customer == "All")
         {
             row.filter("[class = active_in_selection]").show();
-        }
+        } 
     }
     function filter2()
     {
@@ -47,7 +47,7 @@ $(document).ready(function()
             row.filter("[class = active_in_selection]").show();
         }
     }
-    function filter3()
+  /*  function filter3()
     {
         var engineer = document.getElementById("select_engineer").value;
         if(engineer != "All")
@@ -60,7 +60,22 @@ $(document).ready(function()
         {
             row.filter("[class = active_in_selection]").show();
         }
-    }
+    }  */
+    function filter3()
+    {
+        var project = document.getElementById("select_project").value;
+        console.log(project);
+        if(project != "All")
+        {
+            row.filter("[project =" + project + "][class = active_in_selection]").show();
+            row.not("[class = active_in_selection]").hide();
+            row.not("[project =" + project + "]").hide();
+        }
+        else if(project == "All")
+        {
+            row.filter("[class = active_in_selection]").show();
+        }
+    } 
 });
 
 

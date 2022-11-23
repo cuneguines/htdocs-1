@@ -365,6 +365,7 @@
                                 //$color = 'blue';
 
                                 $str = generate_schedule_buttons_forsc(
+                                    $results[$i]["Planned Qty"],
                                     $color,
                                     $base_color,
                                     $border_color,

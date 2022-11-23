@@ -40,7 +40,7 @@ ELSE DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP])
 END [Promise Diff Daystest] ,/* DAYS HERE */
 
 CASE 
-WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -4
+WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -14 THEN -6
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -14 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) < -7 THEN -5
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) >= -7 AND DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) <= -4 THEN -4
 WHEN DATEDIFF(DAY,GETDATE(),t0.[Del Date Due UNP]) =-1 THEN -1
@@ -335,7 +335,7 @@ FROM(
                                                    WHERE t0.Status not in ('D','L','C')
                                                    and t0.OriginNum is null
                                                                                                 ) t0
-                                                                                                where t0.[Del Date Due UNP] between ([Monday LW Date]-14) and ([Monday TW Date]+18)
+                                                                                                where t0.[Del Date Due UNP] <= [Monday TW Date]+18
                                                                                                 and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
    
    ORDER BY t0.[Project]

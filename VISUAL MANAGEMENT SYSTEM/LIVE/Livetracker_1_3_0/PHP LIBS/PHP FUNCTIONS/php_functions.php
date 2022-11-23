@@ -256,7 +256,21 @@
 
         return $str;
     }
+    function generate_schedule_buttons_forpc($color,$base_color,$border_color,$overwrite,$purchaseorder,$project){
+       
+        $str = 
+        "<button id = 'eng_btn'
+            style = 'width:70%;margin-bottom:2px;background-color:$color' 
+            class = 'rounded project_item $base_color $border_color $overwrite' 
+            purchase_order = '$purchaseorder'
+            project = '$project'
 
+            
+        >
+        *</button>";
+
+        return $str;
+    }
 
     function generate_cache_dir_prefix($depth){
         if($depth == 0){return '.';}

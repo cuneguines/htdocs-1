@@ -113,7 +113,7 @@
     // FOR SCEDHULE PAGES //
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //
     
-    function generate_schedule_buttons_forsc($color,$base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
+    function generate_schedule_buttons_forsc($quantity,$color,$base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs,$days_week,$lthree_days){
        
         $str = 
         "<button id = 'eng_btn'
@@ -138,6 +138,7 @@
             comments = '".$comments."'
             comments_2 = '".$comments_2."'
             qty = '$qty'
+            quantity = '$quantity'
             days_open = '$days_open'
             week_opened = '$week_opened'
             weeks_open = '$weeks_open'
@@ -166,7 +167,7 @@
     function get_sap_data($connection, $sql_query, $rtype){
         $getResults = $connection->prepare($sql_query);                                  
         $getResults->execute();
-
+print_r($getResults->execute());
         switch ($rtype){
             case 0: return $getResults->fetchAll(PDO::FETCH_BOTH);
             case 1: return $getResults->fetchAll(PDO::FETCH_NUM)[0][0];
