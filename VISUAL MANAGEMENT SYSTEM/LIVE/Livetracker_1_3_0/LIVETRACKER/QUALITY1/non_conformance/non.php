@@ -537,7 +537,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="message">Attachments</label>
-        <a href=""><br>Attachments</a>
+        <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a>
                                         
                                     </div>
                                 </div>

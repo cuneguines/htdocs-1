@@ -39,8 +39,8 @@
                     "dateFormat" : "ddmmyyyy",
                     "headers" : {
                         10: {sorter : "shortDate"},
-                        11: {sorter : "shortDate"},
-                        12: {sorter : false}
+                        11: {sorter : "shortDate"}
+                      
                     }
                 });
             });
@@ -150,7 +150,7 @@
                                 <th width = "2.4%">Bkd In</th>
                                 <th width = "6%">Date Booked In</th>
                                 <th width = "6%">Promise Date</th>
-                                <th width = "6%">Del Date</th>
+                                <th width = "6%">Book Out Date</th>
                                 <th width = "3%">Location</th>
                                 <th width = "6%">Bkd User</th>
                                 <th width = "6%">Sales Person</th>

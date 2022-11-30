@@ -61,11 +61,11 @@
 								<h1 style = "color:white; font-size:3vh;">Page Groups</h1>
 							</div>
 							<div style = "height:55%; position:relative;">
-								<button class = 'button_group purple active' id = 'production' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; vertical-align:top;">Production</button>
-								<button class = 'button_group purple' id = 'supply_chain' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Supply Chain</button>
-								<button class = 'button_group purple' id = 'hr' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">HR</button>
-								<button class = 'button_group purple' id = 'sales' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Sales</button>
-								<button class = 'button_group purple' id = 'other' style = "height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Other</button>
+								<button class = 'button_group active' id = 'production' style = "background-color:#ad06cf;height:100%; width:17%; margin-left:2%; font-size:2.5vh; vertical-align:top;">Production</button>
+								<button class = 'button_group' id = 'supply_chain' style = "background-color:#ad06cf;height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Supply Chain</button>
+								<button class = 'button_group' id = 'hr' style = "background-color:#ad06cf;height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">HR</button>
+								<button class = 'button_group' id = 'sales' style = "background-color:#ad06cf;height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Sales</button>
+								<button class = 'button_group' id = 'other' style = "background-color:#ad06cf;height:100%; width:17%; margin-left:2%; font-size:2.5vh; position:relative; top:0%; vertical-align:top;">Other</button>
 							</div>
 						</div>
 					</div>

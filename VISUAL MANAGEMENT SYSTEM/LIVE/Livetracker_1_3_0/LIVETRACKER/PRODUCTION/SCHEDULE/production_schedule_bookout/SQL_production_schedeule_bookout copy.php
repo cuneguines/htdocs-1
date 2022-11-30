@@ -156,7 +156,10 @@ FROM(
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
                                                                 /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/
-                                                                ISNULL(t1.U_delivery_date, t1.U_Promise_Date) [Del Date Due UNP],
+                                                                /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/	
+                                                                (case when t1.U_delivery_date is null then t1.U_Promise_Date 	
+                                                          when DATEDIFF(DAY,getdate(),t1.U_delivery_date )< =-4 then t1.U_Promise_Date	
+                                                        else t1.U_delivery_date end ) [Del Date Due UNP],
                                                                 (case 
                                                                     WHEN t1.U_delivery_date IS NOT NULL THEN 'DD'
                                                                     else 'PD'
