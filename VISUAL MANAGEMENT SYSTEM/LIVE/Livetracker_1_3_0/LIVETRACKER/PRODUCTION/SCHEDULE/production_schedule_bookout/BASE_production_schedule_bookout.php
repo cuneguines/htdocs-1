@@ -321,7 +321,8 @@
                                     $base_color,
                                     $border_color,
                                     $overwrite,
-                                   
+                                    $results[$i]["Phone"],
+                                    $results[$i]["Contact"],
                                     $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                     $color_for_date,
                                     $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
@@ -506,7 +507,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter">
+                                <div class="filter" style="display:none">
                                     <div class="text">
                                         <button class="fill red medium wtext">Engineer</button>
                                     </div>
@@ -517,7 +518,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter" style="display:none">
+                                <div class="filter">
                                     <div class="text">
                                         <button class="fill red medium wtext">Sales Person</button>
                                     </div>

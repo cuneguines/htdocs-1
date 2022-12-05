@@ -119,7 +119,8 @@ value = 'red';
 $("p.smediums").replaceWith("<p class='smediums'style='font-size:1.7vh;background-color:" + x + ";'>" + "Promise Date" + "</p>");
 $("h2.fifteenth").replaceWith("<h2 style='background-color:" + x + ";'class = 'inner fifteenth medium'>" + $(this).attr('promise_week_due') + " " + $(this).attr('weeks_on_floor') + "</h2>");
 $("h2.fifth").replaceWith("<h2 class = 'inner fifth medium'>" + $(this).attr('engineer') + "</h2>");
-$("h2.sixth").replaceWith("<h2 class = 'inner sixth medium'>" + $(this).attr('status') + "</h2>");
+//Status is address 
+$("h2.sixth").replaceWith("<h2 class = 'inner sixth medium'>" + $(this).attr('status') + " Ph: " + $(this).attr('phone') + " ,Ct: " + $(this).attr('contact') +"</h2>");
 $("h2.seventh").replaceWith("<h2 class = 'inner seventh medium'>" + $(this).attr('stage') + "</h2>");
 $("h2.eighth").replaceWith("<h2 class = 'inner eighth medium'>" + $(this).attr('est_fab_hrs') + " (" + $(this).attr('planned_hrs') + ")</h2>");
 //comments has commodity code in it

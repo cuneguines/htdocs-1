@@ -403,14 +403,28 @@ $days = array(
                                         $comments = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];
                                          */
+
+                                        if($results[$i]["Comments"] != NULL){
+                                            $overwrite = "greenshadow";
+                                        }
+                                        else 
+                                        $overwrite="";
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
-                                        $str = generate_schedule_buttons_forpc(
+                                        if($results[$i]["Sub Contract Status"] == 'Gone To Sub Con' || $results[$i]["Sub Contract Status"] == 'Yes' || $results[$i]["Sub Contract Status"] == '1002'){
+                                            $border_color = "bryellow";}
+                                            else 
+                                            $border_color = "";
+                                           $str = generate_schedule_buttons_forpc(
                                            'green',
+                                            $overwrite,
                                             NULL,
-                                            NULL,
+                                          NULL,
                                             $results[$i]["Due Date"],
                                             $results[$i]["Purchase Order Number"] == NULL ? "NO SO" : $results[$i]["Purchase Order Number"],
                                             $results[$i]["Project"] == NULL ? "NO SO" : $results[$i]["Project"],
+                                            $results[$i]["Dscription"],
+                                            $results[$i]["Quantity"],
+                                            $results[$i]["Comments"],
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])),
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])),
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last five days"]))

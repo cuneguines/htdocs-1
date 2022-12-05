@@ -20,7 +20,7 @@
    
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
     <!-- <script type="text/javascript" src="../../JS/LIBS/jquery-3.4.1.js"></script> -->
-    <script type="text/javascript" src="../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
+    <script type="text/javascript" src="./THIRD PARTY/jquery-3.4.1.js"></script>
     <!-- <script type="text/javascript" src="./qualityjs.js"></script> -->
     <script type="text/javascript" src="./new.js"></script>
     <link rel="stylesheet" href="assets/css/table.css">

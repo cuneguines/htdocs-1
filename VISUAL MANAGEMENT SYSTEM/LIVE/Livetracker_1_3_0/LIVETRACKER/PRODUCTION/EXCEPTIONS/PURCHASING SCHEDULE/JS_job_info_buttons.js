@@ -102,7 +102,7 @@ $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bre
 //$("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'/../SAP READER/SAP READER/BASE_process_order.php?process_order='+$(this).attr('process_order')+ "'" +'">'+$(this).attr('process_order')+"</button></h2>");
 //$("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = location.href="/../SAP READER/BASE_document_search.php">'+$(this).attr('process_order')+"</button></h2>");
 $("h2.second").replaceWith("<h2 class = 'inner second medium'>" + $(this).attr('customer') + "</h2>");
-$("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('Description') +"        "+$(this).attr('qty')+"</h2>");
+$("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('desc') +"        "+$(this).attr('qty')+"</h2>");
 $("h2.fourth").replaceWith("<h2 class = 'inner fourth medium'>" + $(this).attr('sales_person') + "</h2>");
 var z=$(this).attr('color_for_dates');
 console.log(z);
@@ -131,6 +131,8 @@ $(this).addClass("eng_active");
 
 x = ""; */
 x='red';
+$("h2.eleventh").replaceWith("<h2 class = 'inner eleventh medium rtext'>" + $(this).attr('comments') + "</h2>");
+$("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('desc') +"        ("+$(this).attr('qty')+")</h2>");
 $("h2.fifteenth").replaceWith("<h2 style='background-color:" + x + ";'class = 'inner fifteenth medium'>" + $(this).attr('date') + "</h2>");
 $(".project_item").removeClass("eng_active");
 $(this).addClass("eng_active");

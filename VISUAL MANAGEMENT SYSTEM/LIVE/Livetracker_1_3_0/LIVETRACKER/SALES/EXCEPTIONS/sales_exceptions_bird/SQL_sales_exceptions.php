@@ -66,14 +66,14 @@ where t0.CardType = 'C' and t0.validFor = 'Y')
 
 
 select t1.docnum [Sales Order], t6.PrOrder [Process Order], t1.CardCode, 
-t1.cardname, t0.ItemCode, left(t0.Dscription,40) [Item Desc], t0.LineTotal [Item Value], t2.[Open SO Value], --t3.Name [Pre Prod Status],
+t1.cardname, t0.ItemCode, t0.Dscription, t0.LineTotal [Item Value], t2.[Open SO Value], t3.Name [Pre Prod Status],
 CAST(isnull(t0.U_delivery_date, t1.DocDueDate) AS DATE) [Book Out Date], 
 CAST(t0.U_Promise_Date  AS DATE) [Promise Date], --t4.Within_Line,
 case 
 when t4.Within_Line like 'ON HOLD%' then t4.Within_Line
 when t5.country not like 'IE' and (t2.[Open SO Value FC] + t4.[Del ValueFC] + t5.BalanceFC) > t4.creditline then 'ON HOLD - THIS WILL PUSH OVER TERMS'
 when t5.country  like 'IE' and (t2.[Open SO Value] + t4.[Del Value] + t4.Balance) > t4.creditline + 100 then 'ON HOLD - THIS WILL PUSH OVER TERMS'
-else t4.Within_Line end [Acc Status], t5.CreditLine [Credit Terms], (case when t5.Currency = 'EUR' then t5.Balance else t5.BalanceFC end) [Balance], t5.currency [Curr], t10.firstname + ' ' + t10.lastName [Sales Person], t20.SlpName [Engineer]
+else t4.Within_Line end [Acc Status], t5.CreditLine, t5.Balance, t5.BalanceFC
 
 from rdr1 t0
 inner join ordr t1 on t1.DocEntry = t0.DocEntry
@@ -90,24 +90,23 @@ inner join [dbo].[@PRE_PROD_STATUS] t3 on t0.U_PP_Status = t3.Code
 left join credit_status t4 on t4.CardCode = t1.CardCode
 
 inner join ocrd t5 on t5.CardCode = t1.CardCode
-
+left join [dbo].[@BP_CREDIT_CONTROL] t7 on t7.U_credit_choice = t5.U_credit_control
+left join [dbo].[@SO_CREDIT_CONTROL] t8 on t8.U_credit_choice = t1.U_credit_control
 left join iis_epc_pro_orderh t6 on t6.SONum = t1.docnum and t6.EndProduct = t0.ItemCode
-
-inner join ohem t10 on t10.empID = t1.OwnerCode
-inner join oslp t20 on t20.SlpCode = t1.SlpCode
 
 where t0.LineStatus = 'o'
 and t3.Name not like 'Pre Production Potential'
 and t0.ItemCode <> 'TRANSPORT'
-and ((t2.[Open SO Value FC] + t4.[Del ValueFC] + t5.BalanceFC) > t4.creditline OR (t2.[Open SO Value] + t4.[Del Value] + t4.Balance) > t4.creditline + 100) 
 AND 
 (case 
 when t4.Within_Line like 'ON HOLD%' then t4.Within_Line
 when t5.country not like 'IE' and (t2.[Open SO Value FC] + t4.[Del ValueFC] + t5.BalanceFC) > t4.creditline then 'ON HOLD - THIS WILL PUSH OVER TERMS'
 when t5.country  like 'IE' and (t2.[Open SO Value] + t4.[Del Value] + t4.Balance) > t4.creditline + 100 then 'ON HOLD - THIS WILL PUSH OVER TERMS'
 else t4.Within_Line end ) like 'ON HOLD%'
-and t1.CardCode <> 'KEN021'
-
+and (t7.U_credit_choice not like 'OK to Go' or t7.U_credit_choice is null or t7.U_credit_choice like 'On Hold')
+and (t8.U_credit_choice not like 'OK to Go' or t8.U_credit_choice is null or t8.U_credit_choice like 'On Hold')
 order by t0.U_Promise_Date,isnull(t0.U_delivery_date, t1.DocDueDate)
+
+
 ";
 ?>

@@ -21,13 +21,15 @@ group by t0.PrOrder)
 
 SELECT 
 case when t24.[Name] is null then t22.U_PP_Status else t24.[Name] end [Status],
-FORMAT(CAST(t17.U_sc_date AS DATE), 'dd-MM-yyyy') [SubConDate],
+---Changed 1-12-22--
+FORMAT(CAST(ISNULL(t17.U_sc_date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [SubConDate],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
 FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
 t22.U_risk_rating[Risk],
 t9.ItemName,
 ---t0.Status,
+t17.U_sc_status,
 t9.ItemCode,
 t21.Most_Hours[Most_Hours],
 t5.CardName [Customer], 

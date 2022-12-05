@@ -4,6 +4,8 @@ $purchasing =
 T0.[DocNum] [Purchase Order Number], 
 T0.DocNum,
 FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
+T1.[U_In_Sub_con][Sub Contract Status],
+T0.Comments,
 CASE 
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -14 THEN -6
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) >= -14 AND DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -7 THEN -5

@@ -11,12 +11,20 @@ class ComposerStaticInit0272f36130919b257b1f4b6d170afa70
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'O' => 
+        array (
+            'Office365\\' => 10,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Office365\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vgrem/php-spo/src',
         ),
     );
 

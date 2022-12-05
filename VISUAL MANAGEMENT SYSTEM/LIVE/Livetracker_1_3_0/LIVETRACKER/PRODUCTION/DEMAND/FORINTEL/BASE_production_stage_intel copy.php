@@ -126,7 +126,7 @@
                         sorter: true
                     },
                     9: {
-                        sorter: false
+                        sorter: true
                     },
                     10: {
                         sorter: false
@@ -215,6 +215,8 @@
                     38: {
                         sorter: false
                     }
+                    
+                    
                 }
             });
         });
@@ -241,6 +243,7 @@
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">PLanned</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">EXecuted</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">Plan-Exe</th>
+                            <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">SC status</th>
 
 
                             <?php foreach ($group_steps_template_intel as $group) : ?>
@@ -339,7 +342,31 @@
                                     ?>
                                 <?php endforeach; ?>
                             <?php endforeach; ?>
+<?php
+if($row["SubConDate"]==$row["Promise Date"]) 
+{
+$date_color='light_blue';
+}
+else
+{
+    $date_color='light_grey';
+}
+if($row["U_sc_status"]=='1002')
+{
+    $sc_status='GonetoSC';
+}
+else if ($row["U_sc_status"]=='1003')
+{
+    $sc_status='BackSubCon';
 
+}
+else if ($row["U_sc_status"]=='1005')
+{
+    $sc_status='InSubCon';
+}
+else 
+$sc_status='NULL';
+?>
 
 
                             <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
@@ -349,11 +376,12 @@
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
 
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["ItemName"] ?></td>
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
+                                <td class="sticky lefttext step_detail <?= $date_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
-                                <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]
+                                <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]?></td>
+                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $sc_status //$row["Labour Efficiency"]
                                                                                                                                                                                         ?></td>
 
                                 <!-- LOOPS THROUGH THE STEPS IN EACH GROUP FROM THE GROUP TEMPLATE -->
@@ -397,6 +425,7 @@
                     </tbody>
                     <tfoot style = "position:sticky; bottom: 0; z-index:+2;">
                     <tr class = "lighter_blue btext">
+      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -459,7 +488,7 @@
                                     <button class="fill bblue medium wtext" style="float:left;position: relative;background-color:blue;
     margin-left: 106%;
     margin-top: -.8%;
-    float: left">ShowAll</button>
+    float: left">Reset Hide</button>
                                 </div>
                             </div>
                             <div class="filter">

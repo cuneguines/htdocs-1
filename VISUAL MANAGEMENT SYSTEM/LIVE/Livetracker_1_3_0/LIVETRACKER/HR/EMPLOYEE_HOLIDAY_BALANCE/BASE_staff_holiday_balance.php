@@ -126,9 +126,16 @@
                             <!-- WHILE WE HAVE NOT REACHED END OF DATA ON SPREADSHEET PRINT ROWS WITH ASSIGEND DOM VALUES AND SUBSEQUENCT TABLE DATA FOR ROW FROM EACH ROW IN SPREADSHEET-->
                             <!-- IF AN EMPLOYEE IS LISTED ON THE SPREADSHEET BU NOT ON THE MASTER DATA SKIP TO THE NEXT ROW ON SPREADSHEET WITHOUT PRINTING ANYTHING -->
                             <?php  while($spreadsheet->getActiveSheet()->getCell('B'.$row)->getValue() != 'Overall Total'):  ?>
-
+                                
+                               
                                 <?php $employee = (int)$spreadsheet->getSheet(0)->getCell('A'.$row)->getValue()?>
+                                <!-- Removed Management team from the list. -->
                                 <?php if(!check_emp_on_master($employee)){$row++; continue;} ?>
+                                <?php if(get_emp_dept_name($employee)=='Management Team')
+                                {$row++; continue;} ?>
+                              
+                               
+
 
                                 <?php $supervisor_filter = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', get_emp_supervisor($employee))); ?>
                                 <?php $department_filter = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', get_emp_dept_name($employee))); ?>

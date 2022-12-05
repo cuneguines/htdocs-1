@@ -1,4 +1,5 @@
 <?php
+//Query changed 30-11-22
 $intel_query = 
 "SELECT 
 t0.*,
@@ -12,7 +13,7 @@ CASE
         WHEN t0.[Status] = 'G Complete in Intel' THEN 999
         WHEN t0.[Status] = 'F Complete in Kilkishen' THEN 999
         WHEN t0.[Status] = 'E In Kilkishen Powdercoating' THEN 999
-		WHEN t0.[Status] = 'C Paused' THEN (DateDiff(dd,GETDATE(),t0.[Kilkishen Date UNP]) + 1) - DATEDIFF(ww, GETDATE(), t0.[Kilkishen Date UNP]) * 2 - (CASE WHEN DateName(DW,GETDATE()) = 'Sunday' THEN 1 ELSE 0 END) - (CASE WHEN DateName(DW,t0.[Kilkishen Date UNP]) = 'Saturday' THEN 1 ELSE 0 END) - CAST((t0.[Lab Remainder]/(10))*0.85 AS DECIMAL(12,0))
+        WHEN t0.[Status] = 'C Paused' THEN (DateDiff(dd,GETDATE(),t0.[Kilkishen Date UNP]) + 1) - DATEDIFF(ww, GETDATE(), t0.[Kilkishen Date UNP]) * 2 - (CASE WHEN DateName(DW,GETDATE()) = 'Sunday' THEN 1 ELSE 0 END) - (CASE WHEN DateName(DW,t0.[Kilkishen Date UNP]) = 'Saturday' THEN 1 ELSE 0 END) - CAST((t0.[Lab Remainder]/(10))*0.85 AS DECIMAL(12,0))
         WHEN t0.[Status] = 'B Not Started' THEN (DateDiff(dd,GETDATE(),t0.[Kilkishen Date UNP]) + 1) - DATEDIFF(ww, GETDATE(), t0.[Kilkishen Date UNP]) * 2 - (CASE WHEN DateName(DW,GETDATE()) = 'Sunday' THEN 1 ELSE 0 END) - (CASE WHEN DateName(DW,t0.[Kilkishen Date UNP]) = 'Saturday' THEN 1 ELSE 0 END) - CAST((t0.[Lab Remainder]/(10))*0.85 AS DECIMAL(12,0))
     ELSE  (DateDiff(dd,GETDATE(),t0.[Kilkishen Date UNP]) + 1) - DATEDIFF(ww, GETDATE(), t0.[Kilkishen Date UNP]) * 2 - (CASE WHEN DateName(DW,GETDATE()) = 'Sunday' THEN 1 ELSE 0 END) - (CASE WHEN DateName(DW,t0.[Kilkishen Date UNP]) = 'Saturday' THEN 1 ELSE 0 END) - 2- CAST(t0.[Lab Remainder]/(16*0.85) AS DECIMAL(12,0)) END [Delta]
 
@@ -22,7 +23,7 @@ FROM
     t1.OriginNum [Sales Order], 
     t1.DocNum [Prod Order],
     t0.PrOrder [Process Order],
-    t5.CardName [Customer],
+    t5.U_Client [Project],
     t20.U_BOY_38_EXT_REM [Comments],
     t6.ItemCode [Item Code],
     CAST(t1.PlannedQty AS DECIMAL(12,0)) [Quantity],
@@ -154,7 +155,6 @@ FROM
     INNER JOIN oslp t8 ON t8.SlpCode = t5.SlpCode
     left JOIN rdr1 t20 ON t20.DocEntry = t5.DocEntry AND t20.ItemCode = t1.ItemCode and t20.ItemCode = t0.EndProduct
 
-
     LEFT JOIN (SELECT t0.PrOrder, 
         max(t0.created) [Last_Fab_Date]
             FROM iis_epc_pro_ordert t0                                                            
@@ -162,10 +162,17 @@ FROM
                     GROUP BY t0.PrOrder) 
     t21 ON t21.PrOrder = t0.Prorder  
 
-
-    WHERE t5.CardName Like 'Intel Ireland Ltd' AND (t5.U_Client LIKE 'P1276 Pedestals' OR t5.U_Client LIKE 'P1272 Pedestals' OR t5.U_Client LIKE 'P1276 AMHS' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland' OR ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland Ltd') AND ((CAST(ISNULL(t20.U_Delivery_Date,t5.DocDueDate) AS DATE)) > '2020/04/01')
+    WHERE t5.CardName Like 'Intel Ireland Ltd' AND 
+--             (t5.U_Client LIKE 'P1276 Pedestals' 
+--             OR t5.U_Client LIKE 'P1272 Pedestals' OR 
+--             t5.U_Client LIKE 'P1276 AMHS' OR 
+--             ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland' OR 
+--             ISNULL(t5.U_Client,t5.CardName) LIKE 'Intel Ireland Ltd') AND 
+                t5.U_Client not like 'Intel Non Ped' and
+                ((CAST(ISNULL(t20.U_Delivery_Date,t5.DocDueDate) AS DATE)) > '2020/04/01')
     and t1.status <> 'C'
 )t0
-ORDER BY [DELTA]";
+ORDER BY [DELTA]
+";
 ?>
 

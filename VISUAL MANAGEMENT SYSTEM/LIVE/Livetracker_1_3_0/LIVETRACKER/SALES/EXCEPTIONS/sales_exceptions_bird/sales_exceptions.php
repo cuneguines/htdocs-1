@@ -93,9 +93,9 @@
                             <th width="9%">AccStatus</th>
                             <th width="7%">Credit Terms</th>
                             <th width="7%">Balance</th>
-                            <th width="5%">Curr</th>
-                            <th width="5%">Sales Person</th>
-                            <th width="5%">Engineer</th>
+                            <!-- <th width="5%">Curr</th> -->
+                            <th width="5%">Balance FC</th>
+                            <!-- <th width="5%">Engineer</th> -->
                             
                             
                         </tr>
@@ -115,18 +115,18 @@
                                 <td ><?= $sales_order["CardCode"] ?></td>
                                 <td class="lefttext"><?= $sales_order["cardname"] ?></td>
                                 <td ><?= $sales_order["ItemCode"] ?></td>
-                                <td class='lefttext'><?= $sales_order["Item Desc"] ?></td>
+                                <td class='lefttext'><?= $sales_order["Dscription"] ?></td>
                                 <td class="righttext"><?= number_format($sales_order["Item Value"]) ?></td>
                                 <td class="righttext"><?= number_format($sales_order["Open SO Value"]) ?></td>
                                 <!-- <td ><?php // $sales_order["Pre Prod Status"] ?></td> -->
                                 <td ><?=$sales_order["Book Out Date"]?></td>
                                 <td ><?= $sales_order["Promise Date"] ?></td>
                                 <td class="lefttext"><?= $sales_order["Acc Status"] ?></td>
-                                <td class="righttext"><?=number_format($sales_order["Credit Terms"]) ?></td>
+                                <td class="righttext"><?=number_format($sales_order["CreditLine"]) ?></td>
                                 <td class="righttext"><?= number_format($sales_order["Balance"])?></td>
-                                <td class='lefttext'><?= $sales_order["Curr"] ?></td>
-                                <td class='lefttext'><?= $sales_order["Sales Person"] ?></td>
-                                <td class='lefttext'><?= $sales_order["Engineer"] ?></td>
+                                <!-- <td class='lefttext'><?php //$sales_order["Curr"] ?></td> -->
+                                <td class='lefttext'><?= number_format($sales_order["BalanceFC"]) ?></td>
+                                <!-- <td class='lefttext'><?php //$sales_order["Engineer"] ?></td> -->
                                 
                                 
                                 

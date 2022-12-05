@@ -112,6 +112,9 @@ t0.[Paused],
 t0.[Comments],
 t0.[Comments_2],
 t0.[Addr],
+--Changed 30/11/22--
+t0.[Contact],
+t0.[Phone],
 t0.[DueDate],
 t0.[Account Status],
 t0.[Process Order],
@@ -131,7 +134,9 @@ FROM(
                                                 ELSE 
                                                     (CASE WHEN t20.Balance + t7.[Order Value] <= 0 THEN 'OK' ELSE 'ON HOLD' END) 
                                                 END)[Account Status],
-												              
+                                                --Changed 30-11-22--
+                                                t0.U_site_contact[Contact],
+                                                t0.U_site_phone[Phone],
                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
                                                                DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 isnull(t1.U_delivery_date, t0.DocDueDate)[DueDate],
@@ -262,6 +267,8 @@ FROM(
                                                 ----STOCK ORDERS ONLY-----
                                                 SELECT
 												NULL,
+                                                NULL,
+                                                NULL,
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
                                                                 t0.CardCode[cardcode],

@@ -76,11 +76,14 @@ function generate_filter_options($table, $field)
                 <th width="5%">Notes</th>
             </tr>
         <tbody>
+        <?php //print_r($data);?>
             <?php foreach($data as $row): ?>
+               
                 <?php $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"])); ?>
                 <?php $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>
                 <?php $stat = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Prev Step Status"])); ?>
-
+                <!-- changed 2-11-22 -->
+<?php if ($row["Sequence Code"]=='SEQ010F'||$row["Sequence Code"]=='SEQ010G'){continue;}?>
                 <?php $booked_hrs_line_details = constant($row["Sequence Code"])[0].'\n'.floatval($row["Planned Hours"]).' Hours\n'; ?>
                 <?php if(isset($bkd_hrs_details[$row["Process Order"]][(string)$row["Step Number"]])){
                     foreach($bkd_hrs_details[$row["Process Order"]][$row["Step Number"]] as $entry){

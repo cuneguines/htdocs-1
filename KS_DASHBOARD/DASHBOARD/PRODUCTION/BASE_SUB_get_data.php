@@ -156,11 +156,11 @@
         }
 
         // INSERT THE REMAINING HOURS AND BACKLOG HOURS PER WEEK ARRAY FOR THIS LABOUR STEP IN PLACE ON THE MAIN PIVOT ARRAY
-        $pivot_graph_week_demand2[$key] = array(array("seriesname" => "NS", "initiallyHidden"=>"1","color" => "#5D62B5", "data" => $pivot_graph_week_demand_buffer["NS"]),
-                                                array("seriesname" => "IP", "initiallyHidden"=>"1","color" => "#FACB57", "data" => $pivot_graph_week_demand_buffer["IP"]),
-                                                array("seriesname" => "NC", "initiallyHidden"=>"1","color" => "#AFD8C5", "data" => $pivot_graph_week_demand_buffer["NC"]),
-                                                array("seriesname" => "RD", "initiallyHidden"=>"0","color" => "#7cbfa0", "data" => $pivot_graph_week_demand_buffer["RD"]),
-                                                array("seriesname" => "BKLG", "initiallyHidden"=>"1","color" => "#f08787", "data" => $pivot_graph_week_demand_buffer["BKLG"])
+        $pivot_graph_week_demand2[$key] = array(array("seriesname" => "NS", "color" => "#5D62B5", "data" => $pivot_graph_week_demand_buffer["NS"]),
+                                                array("seriesname" => "IP", "color" => "#FACB57", "data" => $pivot_graph_week_demand_buffer["IP"]),
+                                                array("seriesname" => "NC", "color" => "#AFD8C5", "data" => $pivot_graph_week_demand_buffer["NC"]),
+                                                array("seriesname" => "RD", "color" => "#7cbfa0", "data" => $pivot_graph_week_demand_buffer["RD"]),
+                                                array("seriesname" => "BKLG", "color" => "#f08787", "data" => $pivot_graph_week_demand_buffer["BKLG"])
                                                 );
     }
     file_put_contents("CACHED/pivot_week_demand2.json", json_encode($pivot_graph_week_demand2));

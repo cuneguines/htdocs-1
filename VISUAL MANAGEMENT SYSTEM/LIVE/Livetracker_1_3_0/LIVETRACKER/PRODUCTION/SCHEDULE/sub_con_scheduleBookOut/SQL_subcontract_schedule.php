@@ -130,7 +130,7 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                     isnull(t6.cardname,'Stock') [Customer], 
                     t4.docnum [Sales Order],
                     isnull(ISNULL(t7.U_Delivery_Date,t4.DocDueDate), t1.DueDate) [Dispatch Date], 
-                    t9.docnum [Latest Purchase Ord],
+                    t45.docnum [Latest Purchase Ord],
                     ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
                     isnull(t10.SlpName,t12.U_NAME) [Engineer], 
                     CAST(t8.DocDueDate AS DATE) [Purchase Due],
@@ -174,6 +174,12 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                     ) t8 ON t8.ItemCode = t0.ItemCode
                 
                     INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry
+                    left join(select t0.U_IIS_proPrOrder,t1.DocNum,t0.ItemCode
+                           
+                            from por1 t0
+        
+                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry        
+                            where t1.DocStatus = 'O')t45 ON  t45.U_IIS_proPrOrder=   t1.U_IIS_proPrOrder and t45.ItemCode = t0.ItemCode
                     INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
                     LEFT JOIN ordr t4 ON t4.docnum = t1.OriginNum
                     INNER join ohem t3 on t3.empID = t4.OwnerCode
