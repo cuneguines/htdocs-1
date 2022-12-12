@@ -28,7 +28,15 @@
         .bluee {
             box-shadow: 5px 10px red;
         }
+        
+      
         .ButtonState:checked + .Button{background:#fff;}
+        .brsolidpink{border: solid 6px #E601BA;}
+
+        .bryellow{border: solid 6px yellow;
+    }
+        .brdottedyellow{border: dashed 6px yellow;}
+    
     </style>
     <?php
     $process_order_step_efficiency_data = get_sap_data($conn, $process_order_step_efficiency_sql, DEFAULT_DATA);
@@ -235,7 +243,7 @@
                         <tr class="head">
                             <th width="70px" class="sticky darker_grey lefttext" style="left:0px;">Sales<br>Order</th>
                             <th width="70px" class="sticky darker_grey lefttext" style="left:80px;">Process Order</th>
-                            <th width="90px" class="sticky darker_grey lefttext" style="left:160px;">Due Date</th>
+                            <th width="90px" class="sticky darker_grey lefttext" style="left:160px;">Promise Date</th>
 
                             <th width="190px" class="sticky darker_grey lefttext" style="left:160px;">Item Name</th>
                             <th width="60px" class="sticky darker_grey lefttext" style="left:360px;">SCon Date</th>
@@ -351,18 +359,18 @@ else
 {
     $date_color='light_grey';
 }
-if($row["U_sc_status"]=='1002')
+if($row["U_In_Sub_Con"]=='1002')
 {
-    $sc_status='GonetoSC';
+    $sc_status='bryellow';
 }
-else if ($row["U_sc_status"]=='1003')
+else if ($row["U_In_Sub_Con"]=='1003')
 {
-    $sc_status='BackSubCon';
+    $sc_status='brdottedyellow';
 
 }
-else if ($row["U_sc_status"]=='1005')
+else if ($row["U_In_Sub_Con"]=='1005')
 {
-    $sc_status='InSubCon';
+    $sc_status='brsolidpink';
 }
 else 
 $sc_status='NULL';
@@ -375,14 +383,14 @@ $sc_status='NULL';
                                 <td class="sticky lefttext step_detail <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
 
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["ItemName"] ?></td>
+                                <td class="sticky lefttext step_detail  <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><button class="btext lefttext <?=$sc_status?>" style="font-size: 1.5vh;height:80%; width:95%;background-color:#DCDCDC;"><?= $row["ItemName"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $date_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]?></td>
-                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $sc_status //$row["Labour Efficiency"]
-                                                                                                                                                                                        ?></td>
+                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?=  $row["U_In_Sub_Con"]?>
+                                                                                                                                                                                        </td>
 
                                 <!-- LOOPS THROUGH THE STEPS IN EACH GROUP FROM THE GROUP TEMPLATE -->
                                 <!-- IF THE STEP EXISTS FOR THE CURRENT PO IT WILL PRINT A VISIBLE FILLBAR WITH RESPECTIVE FILLEVEL OF BOOKED VS PLANNED TIME FOR THAT STEP -->

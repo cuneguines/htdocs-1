@@ -505,7 +505,7 @@
                                         
                                         <select id="owner" style=width:100%;height:34px>
                                         <option value="cnixon@kentstainless.com" selected>cnixon@kentstainless.com</option>
-                                        <option value="lkent@kentstainless.com" selected>lkent@kentstainless.com</option>
+                                       
                                         
                                         
                                 </select>
@@ -524,9 +524,10 @@
                                         <label for="status">Status</label>
                                         
                                         <select id="status" style=width:100%;height:34px>
+                                        <option value="Cancelled" selected>Cancelled</option>
                                         <option value="Open" selected>Open</option>
                                         <option value="Closed" selected>Closed</option>
-                                        <option value="Cancelled" selected>Cancelled</option>
+                                        
                                         
                                      </select>
                                     </div>
@@ -537,11 +538,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="message">Attachments</label>
-        <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a>
-                                        
+        <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
+        <input id="sortpicture" type="file" name="sortpic" />
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="submit()">Submit</button>
                                 </div>

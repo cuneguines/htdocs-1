@@ -252,7 +252,8 @@ $(document).ready(function() {
                 {
                     console.log("REMOVING ATTR");
                     selected_eng = $(this).val();
-
+console.log(selected_eng);
+console.log(jobs);
                     jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
                     jobs.filter("[engineer_nsp = " + $(this).val() + "]");
 
@@ -283,7 +284,8 @@ $(document).ready(function() {
             else {
                 console.log("ADDING ATTR");
                 selected_eng = $(this).val();
-
+                console.log(selected_eng);
+                console.log(rows);
                 jobs.filter("[engineer_nsp = " + $(this).val() + "]").show();
                 jobs.filter("[engineer_nsp = " + $(this).val() + "]");
 

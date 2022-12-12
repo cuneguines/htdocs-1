@@ -30,7 +30,7 @@ $mail->SMTPAuth   = true;
 $mail->Username = 'cnixon@kentstainless.com';
 $mail->Password = 'CNks2022??';
 $mail->SetFrom('cnixon@kentstainless.com', 'FromEmail');
-$mail->addAddress('mcodd@kentstainless.com', 'ToEmail');
+$mail->addAddress('cnixon@kentstainless.com', 'ToEmail');
 //$mail->SMTPDebug  = 3;
 //$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";}; //$mail->Debugoutput = 'echo';
 $mail->IsHTML(true);

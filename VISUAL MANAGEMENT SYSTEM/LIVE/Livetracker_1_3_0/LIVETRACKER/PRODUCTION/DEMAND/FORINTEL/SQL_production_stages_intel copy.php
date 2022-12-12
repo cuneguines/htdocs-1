@@ -22,13 +22,15 @@ group by t0.PrOrder)
 SELECT 
 case when t24.[Name] is null then t22.U_PP_Status else t24.[Name] end [Status],
 ---Changed 1-12-22--
-FORMAT(CAST(ISNULL(t17.U_sc_date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [SubConDate],
+t22.U_In_Sub_Con,
+FORMAT(CAST(ISNULL(t17.U_sc_date, t22.U_Promise_date) AS DATE), 'dd-MM-yyyy') [SubConDate],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
-FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
+FORMAT(t22.U_Promise_date, 'dd-MM-yyyy') [Promise Date],
 t22.U_risk_rating[Risk],
 t9.ItemName,
 ---t0.Status,
+t17.ItemName[ItemName_pr],
 t17.U_sc_status,
 t9.ItemCode,
 t21.Most_Hours[Most_Hours],
@@ -58,7 +60,7 @@ t14.[SEQ031]
 
 from owor t0
 left join (
-              select t1.docnum, t0.U_sc_date, t0.U_sc_remarks, t0.U_sc_status
+              select t0.ItemName,t1.docnum, t0.U_sc_date, t0.U_sc_remarks, t0.U_sc_status
 
               from wor1 t0
               inner join owor t1 on t1.docentry = t0.docentry 

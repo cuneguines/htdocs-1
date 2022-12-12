@@ -134,6 +134,8 @@ x='red';
 $("h2.eleventh").replaceWith("<h2 class = 'inner eleventh medium rtext'>" + $(this).attr('comments') + "</h2>");
 $("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('desc') +"        ("+$(this).attr('qty')+")</h2>");
 $("h2.fifteenth").replaceWith("<h2 style='background-color:" + x + ";'class = 'inner fifteenth medium'>" + $(this).attr('date') + "</h2>");
+$("h2.fourth").replaceWith("<h2 class = 'inner fourth medium'>" + $(this).attr('qty') + "</h2>");
+$("h2.fifth").replaceWith("<h2 class = 'inner fifth medium'>" + $(this).attr('outqty') + "</h2>");
 $(".project_item").removeClass("eng_active");
 $(this).addClass("eng_active");
     });

@@ -382,7 +382,7 @@
 
                                     str_replace("''", "Inch", str_replace("'", "", $results[$i]["ItemName"])),
 
-                                    $results[$i]["Promise Date UNP"],
+                                    $results[$i]["Promise Date UNP"]==$results[$i]["Due Date"]?"":$results[$i]["Promise Date UNP"],
 
                                     //$results[$i]["Promise Week Due"],
                                     NULL,

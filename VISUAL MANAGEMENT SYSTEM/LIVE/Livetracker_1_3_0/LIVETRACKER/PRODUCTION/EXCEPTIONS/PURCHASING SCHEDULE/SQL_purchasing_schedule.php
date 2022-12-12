@@ -66,6 +66,7 @@ FORMAT(t0.docdate,'dd-MM-yyyy') [Order Date],
 FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
 T0.[CardName][Project],
 cast(T1.[Quantity] as decimal)[Quantity], 
+cast((t1.[Quantity]-T1.openqty)as decimal)[OutQty],
 T1.[Dscription], cast(t1.Quantity as decimal), 
 t3.ItmsGrpNam [stock_group],
 t0.Comments [Comments]

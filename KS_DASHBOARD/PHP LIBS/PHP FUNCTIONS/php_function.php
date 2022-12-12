@@ -120,7 +120,7 @@ function generate_filter_options($table, $field)
                 ?>
                
                 <?php if($row["Sequence Code"] != $step_list[$exclude_step]){continue;}?>
-                <?php if($row["Prev Step Status"] != 'RD' && $row["Prev Step Status"] != 'FS'){$hide = "display:none;";}else{$hide = "";}?>
+                <?php //if($row["Prev Step Status"] != 'RD' && $row["Prev Step Status"] != 'FS'){$hide = "display:none;";}else{$hide = "";}?>
                 <tr customer = '<?=$customer?>' project = '<?=$project?>' est_step_start_due = "<?=(int)($row["Est LS Start Date DIFFWEEK"] <= -5 ? $week_five_weeks_ago : ($row["Est LS Start Date DIFFWEEK"] >= 25 ? $week_twenty_five_weeks_ahead : $row["Est LS Start Date WEEKNO"]))?>" prev_step_status = "<?=$row["Prev Step Status"] == 'FS' ? 'RD' :  $row["Prev Step Status"]?>" class = "active_p_row" style = "<?=$hide." ";?> <?=$row["Complete_Prd"] == 'Y' ? 'background-color:#7cbfa0' : ($row["Sub Component"] == 'Y' ? 'background-color:#FCF9A1' : '')?>" active_in_multiselect = 'Y'>
                     <td><button class = 'smedium so' onclick="alert('Customer:\n<?=$row['Customer']?> \n\n Project:\n<?=$row['Project']?> \n\nEngineer:\n<?=$row['Engineer']?> \n\nSales Person:\n<?=$row['Sales Person']?> \n\nEst Start Date + Workdays + Days + Remaining + Promise Date + SC Detail:\n<?=$row['Est LS Start Date']?> \t <?=$row['WORKDAYS']?> \t <?=$row['DAYS']?> \t <?=$row['REMAINING']?> \t <?=$row['Promise Date']?> \t <?=$row['SUBCON']?>');" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Sales Order"]?></button></td>
                     <td class = "hide"><?=$row["Customer"]?></td>

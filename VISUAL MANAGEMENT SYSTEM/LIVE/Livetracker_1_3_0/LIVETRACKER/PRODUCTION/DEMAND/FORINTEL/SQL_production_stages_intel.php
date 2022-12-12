@@ -23,7 +23,7 @@ SELECT
 FORMAT(CAST(t17.U_sc_date AS DATE), 'dd-MM-yyyy') [SubConDate],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
-FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
+FORMAT(CAST( t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],
 t22.U_risk_rating[Risk],
 t9.ItemName,
 ---t0.Status,
