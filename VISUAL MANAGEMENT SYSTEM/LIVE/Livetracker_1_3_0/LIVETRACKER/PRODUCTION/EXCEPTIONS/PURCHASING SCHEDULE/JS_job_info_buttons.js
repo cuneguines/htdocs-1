@@ -123,7 +123,7 @@ $("h2.sixth").replaceWith("<h2 class = 'inner sixth medium'>" + $(this).attr('st
 $("h2.seventh").replaceWith("<h2 class = 'inner seventh medium'>" + $(this).attr('stage') + "</h2>");
 $("h2.eighth").replaceWith("<h2 class = 'inner eighth medium'>" + $(this).attr('est_fab_hrs') + " (" + $(this).attr('planned_hrs') + ")</h2>");
 //comments has commodity code in it
-$("h2.eleventh").replaceWith("<h2 class = 'inner eleventh medium'>" + $(this).attr('comments') + "</h2>");
+
 //Comments_2 is replaced with comments_1
 $("h2.twenty").replaceWith("<h2 class = 'inner twenty medium'>" + $(this).attr('comments_2') + "</h2>");
 $(".project_item").removeClass("eng_active");
@@ -136,6 +136,7 @@ $("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium
 $("h2.fifteenth").replaceWith("<h2 style='background-color:" + x + ";'class = 'inner fifteenth medium'>" + $(this).attr('date') + "</h2>");
 $("h2.fourth").replaceWith("<h2 class = 'inner fourth medium'>" + $(this).attr('qty') + "</h2>");
 $("h2.fifth").replaceWith("<h2 class = 'inner fifth medium'>" + $(this).attr('outqty') + "</h2>");
+$("h2.twent").replaceWith("<h2 class = 'inner twent medium'>" + $(this).attr('comment2') + "</h2>");
 $(".project_item").removeClass("eng_active");
 $(this).addClass("eng_active");
     });

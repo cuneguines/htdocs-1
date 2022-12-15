@@ -6,6 +6,9 @@ T0.DocNum,
 FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
 T1.[U_In_Sub_con][Sub Contract Status],
 T0.Comments,
+T1.LineStatus,
+T2.AvgPrice,
+T1.U_BOY_38_EXT_REM[comment2],
 CASE 
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -14 THEN -6
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) >= -14 AND DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -7 THEN -5
@@ -66,7 +69,7 @@ FORMAT(t0.docdate,'dd-MM-yyyy') [Order Date],
 FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
 T0.[CardName][Project],
 cast(T1.[Quantity] as decimal)[Quantity], 
-cast((t1.[Quantity]-T1.openqty)as decimal)[OutQty],
+cast((T1.[Quantity]-T1.openqty)as decimal)[OutQty],
 T1.[Dscription], cast(t1.Quantity as decimal), 
 t3.ItmsGrpNam [stock_group],
 t0.Comments [Comments]

@@ -215,12 +215,12 @@ $days = array(
                         <p class = "smedium">Purchase Order</p>
                         <h2 class = "inner first medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Process Order</p>
+                        <!-- <p class = "smedium">Process Order</p>
                         <h2 class = "inner thirteenth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Customer</p>
                         <h2 class = "inner second medium">Nothing Selected</h2>
-                        <br>
+                        <br> -->
                         <p class = "smedium">Description & Qty.</p>
                         <h2 class = "inner third medium">Nothing Selected</h2>
                         <br>
@@ -237,14 +237,14 @@ $days = array(
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
-                        <p class = "smedium">Status</p>
+                        <!-- <p class = "smedium">Status</p>
                         <h2 class = "inner sixth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Stage</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Production</p>
-                        <h2 class = "inner eighth medium">Nothing Selected</h2>
+                        <h2 class = "inner eighth medium">Nothing Selected</h2> -->
                         <br>
                         <p class = "smedium">Comments</p>
                         <h2 class = "inner eleventh medium">Nothing Selected</h2>
@@ -408,28 +408,37 @@ $days = array(
                                         if($results[$i]["Comments"] != NULL){
                                             $overwrite = "greenshadow";
                                         }
-                                        else 
-                                        $overwrite="";
+                                        if($results[$i]["AvgPrice"] == NULL){
+                                            $overwrite = "redshadow";
+                                        }
+                                        
+
+                                        
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                         if($results[$i]["Sub Contract Status"] == 'Gone To Sub Con' || $results[$i]["Sub Contract Status"] == 'Yes' || $results[$i]["Sub Contract Status"] == '1002'){
                                             $border_color = "bryellow";}
-                                            else 
-                                            $border_color = "";
+                                            if ($results[$i]["LineStatus"]=='C' )
+                                            {
+                                                $border_color="brpurple";
+                                            }
+                                            else
+                                            $border_color="";
                                            $str = generate_schedule_buttons_forpc(
                                            'green',
                                             $overwrite,
                                             NULL,
-                                          NULL,
+                                            $border_color,
                                             $results[$i]["Due Date"],
                                             $results[$i]["Purchase Order Number"] == NULL ? "NO SO" : $results[$i]["Purchase Order Number"],
                                             $results[$i]["Project"] == NULL ? "NO SO" : $results[$i]["Project"],
                                             // for filter replace enginner with project
                                             $results[$i]["Project"],
                                             str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"])),
-                                            $results[$i]["Dscription"],
+                                            $results[$i]["Dscription"]=htmlentities(str_replace('"', "'", $results[$i]["Dscription"])),
                                             $results[$i]["Quantity"],
                                             $results[$i]["OutQty"],
                                             $results[$i]["Comments"],
+                                            $results[$i]["comment2"],
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])),
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])),
                                             str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last five days"]))

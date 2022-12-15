@@ -82,8 +82,6 @@ function generate_filter_options($table, $field)
                 <?php $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"])); ?>
                 <?php $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>
                 <?php $stat = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Prev Step Status"])); ?>
-                <!-- changed 2-11-22 -->
-<?php if ($row["Sequence Code"]=='SEQ010F'||$row["Sequence Code"]=='SEQ010G'){continue;}?>
                 <?php $booked_hrs_line_details = constant($row["Sequence Code"])[0].'\n'.floatval($row["Planned Hours"]).' Hours\n'; ?>
                 <?php if(isset($bkd_hrs_details[$row["Process Order"]][(string)$row["Step Number"]])){
                     foreach($bkd_hrs_details[$row["Process Order"]][$row["Step Number"]] as $entry){
@@ -118,15 +116,17 @@ function generate_filter_options($table, $field)
                         $booked_cell_color = 'green';
                     }
                 ?>
-               
+                <!-- changed 13-12-22 -->
                 <?php if($row["Sequence Code"] != $step_list[$exclude_step]){continue;}?>
+                <?php $so = "location.href='http://vms/SAP%20READER/BASE_sales_order.php?sales_order=".$row["Sales Order"]."'" ?>
+                <?php $po = "location.href='http://vms/SAP%20READER/BASE_process_order.php?process_order=".$row["Process Order"]."'" ?>
                 <?php //if($row["Prev Step Status"] != 'RD' && $row["Prev Step Status"] != 'FS'){$hide = "display:none;";}else{$hide = "";}?>
                 <tr customer = '<?=$customer?>' project = '<?=$project?>' est_step_start_due = "<?=(int)($row["Est LS Start Date DIFFWEEK"] <= -5 ? $week_five_weeks_ago : ($row["Est LS Start Date DIFFWEEK"] >= 25 ? $week_twenty_five_weeks_ahead : $row["Est LS Start Date WEEKNO"]))?>" prev_step_status = "<?=$row["Prev Step Status"] == 'FS' ? 'RD' :  $row["Prev Step Status"]?>" class = "active_p_row" style = "<?=$hide." ";?> <?=$row["Complete_Prd"] == 'Y' ? 'background-color:#7cbfa0' : ($row["Sub Component"] == 'Y' ? 'background-color:#FCF9A1' : '')?>" active_in_multiselect = 'Y'>
-                    <td><button class = 'smedium so' onclick="alert('Customer:\n<?=$row['Customer']?> \n\n Project:\n<?=$row['Project']?> \n\nEngineer:\n<?=$row['Engineer']?> \n\nSales Person:\n<?=$row['Sales Person']?> \n\nEst Start Date + Workdays + Days + Remaining + Promise Date + SC Detail:\n<?=$row['Est LS Start Date']?> \t <?=$row['WORKDAYS']?> \t <?=$row['DAYS']?> \t <?=$row['REMAINING']?> \t <?=$row['Promise Date']?> \t <?=$row['SUBCON']?>');" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Sales Order"]?></button></td>
+                    <td><button class = 'smedium so' onclick="<?=$so?>" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Sales Order"]?></button></td>
                     <td class = "hide"><?=$row["Customer"]?></td>
                     <td class="hide"><?=$row["Project"]?></td>
                     <td class="hide"><?=$row["Engineer"]?></td>
-                    <td><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="alert('<?=$remarks_line_details;?>')"><?=$row["Process Order"]?></button></td>
+                    <td><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="<?=$po?>"><?=$row["Process Order"]?></button></td>
                     <td class = "lefttext"><?=$row["Item Name"]?></td>
                     <td><?=$row["Est LS Start Date"] ? $row["Est LS Start Date"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
                     <td class = "light_green righttext"><?=$row["Step Number"]?></td>

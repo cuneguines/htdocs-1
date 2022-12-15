@@ -9,7 +9,7 @@
         <script type = "text/javascript" src = "../../../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
 
         <!-- LOCAL JAVASCRIPT -->
-        <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_filters_w_bd.js"></script>
+        <script type = "text/javascript" src = "./JS_filters_w_bd.js"></script>
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
         <script type = "text/javascript" src = "./JS_job_info_button.js"></script>   
 
@@ -32,8 +32,171 @@
             $getResults->execute();                             
             $results = $getResults->fetchAll(PDO::FETCH_BOTH);
         ?>
+        <style>
+        .box {
+
+            width: 15%;
+            height: 15%;
+            border: 1px solid rgba(0, 0, 0, .2);
+        }
+
+        #button_containers {
+            float: left;
+            width: 10%;
+            height: 100%;
+        }
+
+        .footer #grouping_pages_footer #filter_containers {
+            width: 80%;
+            margin-left: 2%;
+            margin-right: 2%;
+        }
+
+        .filter widers {
+            width: 20%;
+
+        }
+
+        .filter {
+            float: left;
+        }
+
+        .checkmark {
+            position: relative;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        .fill {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input.checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+
+        /* Show the checkmark when checked */
+        .container input.checked~.checkmark {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container input.checked~.checkmark div {
+            position: relative;
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+
+        }
+
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 0px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /*/////////////////////////////////////////////////////////////////////////*/
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            margin-left: 0%;
+            margin-top: 0%;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        .search_option_button:hover {
+            background-color: rgb(240, 135, 135);
+            ;
+            color: #000000;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .grouping_category {
+            float: left;
+        }
+
+        /*/////////////////////////////////////////////////////////////////////////*/
+    </style>
     </head>
     <body>
+        <?php
+    function generate_multiselect_filter_options($table, $field)
+    {
+        echo "<tr class = 'btext' style = 'border:none;'><td width = '90%' class = 'lefttext'>All</td><td width = '10%'><label class='container fill' style = 'margin-bottom:25px;'><input class = 'multiselector_checkbox checked' type='checkbox' name = 'check_list[]' value='All'><span class='checkmark'><div></div></span></label></td></tr>";
+        foreach (array_sort(array_unique(array_column($table, $field))) as $element) {
+            echo "<tr class = 'btext' style = 'border:none;'><td width = '90%' class = 'lefttext'>$element</td><td width = '10%'><label class='container fill' style = 'margin-bottom:25px;'><input class = 'multiselector_checkbox checked' type='checkbox' name = 'check_list[]' value='" . str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $element)) . "'><span class='checkmark'><div></div></span></label></td></tr>";
+        }
+    }
+    ?>
         <div id = "background">
             <div id = "content">
                 <div id = "sched_left">
@@ -86,7 +249,7 @@
                         <h1>PRE PRODUCTION SCHEDULE</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
-                        <table id = "pre_production_schedule" class = "filterable">
+                        <table id = "pre_production_schedule" class = "filterable searchable">
                             <thead>
                                 <tr class = "dark_grey wtext smedium">
                                     <th style = "width:14%">Project</th>
@@ -308,7 +471,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class = "filter">
+                                   <!--  <div class = "filter">
                                         <div class = "text">
                                             <button class = "fill red medium wtext">Engineer</button>
                                         </div>
@@ -318,7 +481,9 @@
                                                 <?php generate_filter_options($results,"Engineer"); ?>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    
+                                    
                                     <div class = "filter">
                                         <div class = "text">
                                             <button class = "fill red medium wtext">Salesperson</button>
@@ -329,6 +494,13 @@
                                                 <?php generate_filter_options($results,"Sales Person"); ?>
                                             </select>
                                         </div>
+                                    </div>
+                                    <div class="filter widers">
+                                       <div class="text" style="width:70%">
+                                          <button class="search_option_button fill white medium rtext" id="multiselect_engineer" style="width:100%;border-radius: 12px;">SELECT ENGINEERS</button>
+                                       </div>
+
+
                                     </div>
                                 </div>
                             </div>
@@ -352,6 +524,10 @@
                             <div id = "button_container_sched_btn">
                                 <button onclick = "location.href='../../../MAIN MENU/dashboard_menu.php'" class = "grouping_page_corner_buttons fill medium purple wtext rounded" style = "float:left; width:100%">MAIN MENU</button>
                             </div>
+                            <div id="multiselect_engineer" class="search_option_field white" style="opacity:1; height:600%; width:20%; position:relative; bottom:900%; left:72%; z-index:+4; border-radius:25px; border:5px solid #f08787; overflow-y:scroll; display:none;">
+                        <table style="width:100%;" class="rh_small">
+                    <?php generate_multiselect_filter_options($results, "Engineer"); ?>
+                </div>
                         </div>
                     </div>
                 </div>

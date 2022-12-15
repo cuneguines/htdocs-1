@@ -14,7 +14,7 @@
     <!-- LOCAL JS -->
     <script type="text/javascript" src="./JS_filters.js"></script>
     <script type="text/javascript" src="../../../../JS LIBS/LOCAL/JS_search_table.js"></script>
-
+    <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
     <!-- STYLEING -->
     <link rel="stylesheet" href="../../../../css/LT_STYLE.css">
     <link rel="stylesheet" href="../../../../css/theme.blackice.min.css">
@@ -251,7 +251,7 @@
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">PLanned</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">EXecuted</th>
                             <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">Plan-Exe</th>
-                            <th width="50px" class="sticky darker_grey lefttext" style="left:460px;">SC status</th>
+                            
 
 
                             <?php foreach ($group_steps_template_intel as $group) : ?>
@@ -389,8 +389,7 @@ $sc_status='NULL';
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]?></td>
-                                 <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?=  $row["U_In_Sub_Con"]?>
-                                                                                                                                                                                        </td>
+                                 
 
                                 <!-- LOOPS THROUGH THE STEPS IN EACH GROUP FROM THE GROUP TEMPLATE -->
                                 <!-- IF THE STEP EXISTS FOR THE CURRENT PO IT WILL PRINT A VISIBLE FILLBAR WITH RESPECTIVE FILLEVEL OF BOOKED VS PLANNED TIME FOR THAT STEP -->
@@ -433,7 +432,6 @@ $sc_status='NULL';
                     </tbody>
                     <tfoot style = "position:sticky; bottom: 0; z-index:+2;">
                     <tr class = "lighter_blue btext">
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -529,9 +527,9 @@ $sc_status='NULL';
                     <div id="button_container_wide">
                         <button onclick="location.href='../../../MAIN MENU/dashboard_menu.php'" class="grouping_page_corner_buttons fill medium purple wtext rounded">MAIN MENU</button>
                     </div>
-                    <div id="button_container">
-                        <button class="grouping_page_corner_buttons fill medium green wtext rounded">UNUSED</button>
-                    </div>
+                    <div id = "button_container">
+                            <button onclick="export_to_excel('custom_hr_table')" class = "grouping_page_corner_buttons fill medium green wtext rounded">EXCEL</button>
+                        </div>
                 </div>
             </div>
         </div>

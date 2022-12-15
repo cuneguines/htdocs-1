@@ -83,7 +83,7 @@
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //
     
     
-    function generate_schedule_buttons_forpc($color,$overwrite,$base_color,$border_color,$date,$purchaseorder,$project,$engineer,$engineer_nsp,$description,$qty,$outqty,$comments,$days_week,$lthree_days,$lfive_days){
+    function generate_schedule_buttons_forpc($color,$overwrite,$base_color,$border_color,$date,$purchaseorder,$project,$engineer,$engineer_nsp,$description,$qty,$outqty,$comments,$comment2,$days_week,$lthree_days,$lfive_days){
        
         $str = 
         "<button id = 'eng_btn'
@@ -98,6 +98,8 @@
 qty='$qty'
 outqty='$outqty'
 comments='$comments'
+comment2='$comment2'
+
             days_week='$days_week'
             lastthreedays='$lthree_days'
             lastfivedays='$lfive_days'

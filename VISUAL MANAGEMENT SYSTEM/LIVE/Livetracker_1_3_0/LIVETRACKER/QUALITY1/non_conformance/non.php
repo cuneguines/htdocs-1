@@ -363,7 +363,9 @@
                 <ol class="breadcrumb">
                     
                     <li><a href="edit_page.php">Forms</a></li>
-                    <li><a href="updated_page.php">Newpage</a></li>
+                    <li><a href="new_page.php">Issue Log</a></li>
+                    <li><a href="new_page.php">NC Page</a></li>
+                    <li><a href="../../QUALITY1/index copy.php">Home</a></li>
                     <li class="active">Table</li>
                 </ol>
 
@@ -396,7 +398,7 @@
                                     <th style="width: 200px">Area Non Conformance Raised</th>
                                     <th style="width: 100px">Raised By</th>
                                     <th style="width: 200px">Status</th>
-                                    <th style="width: 90px">Edit</th>
+                                    <th style="width: 73px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
                                     <th style="width: 200px">cc_sales_order</th>
                                     <th style="width: 200px">cc_process_order</th>
@@ -504,7 +506,9 @@
                                         <label for="email">Owner</label>
                                         
                                         <select id="owner" style=width:100%;height:34px>
-                                        <option value="cnixon@kentstainless.com" selected>cnixon@kentstainless.com</option>
+                                      
+                                     <option value="lkent@kentstainless.com" >lkent@kentstainless.com</option>
+                                        <option value="seanobrien@kentstainless.com" >seanobrien@kentstainless.com</option>
                                        
                                         
                                         

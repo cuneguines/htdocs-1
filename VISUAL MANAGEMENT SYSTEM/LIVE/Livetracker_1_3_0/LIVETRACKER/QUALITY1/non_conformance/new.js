@@ -90,8 +90,11 @@ $(document).ready(function ()
                alert("Error");
            }
        });
-
+       
        var file_data = $('#sortpicture').prop('files')[0];   
+      
+       if (file_data!=undefined)
+       {
        var form_data = new FormData();
 		form_data.append('file', file_data);
         form_data.append('data',x);
@@ -106,9 +109,13 @@ $(document).ready(function ()
 				type		: 'post',
 				success		: function(output){
 					alert(output); 				// display response from the PHP script, if any
-				}
+				},
+                error: function (response) {
+                    $('#sortpicture').html(response); // display error response from the server
+                }
 		 });
 		 $('#pic').val('');						/* Clear the file container */
+        }
     }
 
        

@@ -52,7 +52,7 @@
 
 <body>
     <?php //include './conn.php'; ?>
-    <?php //include './SQL_Quality_ItemCode.php'; ?>
+    <?php// include './SQL_Quality_ItemCode.php'; ?>
     <?php
     //$getResults = $conn->prepare($Quality_results);
     //$getResults->execute();
@@ -291,7 +291,7 @@
             </ul>
         </nav>
         <!--/. NAV TOP  -->
-        <nav class="navbar-default navbar-side" role="navigation">
+        <!-- <nav class="navbar-default navbar-side" role="navigation">
             <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
@@ -334,7 +334,7 @@
 
             </div>
 
-        </nav>
+        </nav> -->
         <!-- /. NAV SIDE  -->
 
         <div id="page-wrapper">
@@ -343,11 +343,11 @@
                    <small>Summary of Issues</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="chart_page.php">Charts</a></li>
+                <li><a href="../../QUALITY1/index copy.php">Home</a></li>
+                   <!--  <li><a href="chart_page.php">Charts</a></li>
                     <li><a href="edit_page.php">Edit</a></li>
-                    <li class="active">Issues</li>
-                </ol>
+                    <li class="active">Issues</li> -->
+                </ol> 
 
             </div>
             <div id="page-inner">
@@ -361,7 +361,7 @@
                     </div>
                     <div class="card-body" style="min-height:700px;max-height:700px; width:100%;">
                     <!-- https://forms.office.com/r/hvUXiBMEX6 -->
-                    <iframe width="100%" height= "50%" src= "https://forms.office.com/Pages/ResponsePage.aspx?id=PY3aTWG7nEmn3pHaUKj7yu8Tk1hDSRJLqPbj1aFz9KhUNjFBUE44Sko0QjVYOVRTQkgxV1E4Vk1VQy4u" style= "border: none; width:100%; height:76vh"> </iframe>
+                    <iframe width="100%" height= "50%" src= " https://forms.office.com/r/hvUXiBMEX6" style= "border: none; width:100%; height:76vh"> </iframe>
                         <!-- <?php include ''; ?> -->
 
 

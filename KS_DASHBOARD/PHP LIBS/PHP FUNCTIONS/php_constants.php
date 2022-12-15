@@ -31,6 +31,8 @@
     define("SEQ010C", array('Fabrication Drainage',     'Fab Drain'));
     define("SEQ010D", array('Fabrication Str Furnature','Fab St F'));
     define("SEQ010E", array('Fabrication Machine Build','Fab MB'));
+    define("SEQ010F", array('Robotic Wleding Trumf',    'Robot Machine'));
+    define("SEQ010G", array('Robotic Welding Labour',   'Robot Labour'));
     define("SEQ011",  array('Stamping & Min Assembily', 'Min Ass'));
     define("SEQ013",  array('Deburr and Polishing',     'Dbr & Pol'));
 
@@ -79,7 +81,7 @@
         "name" => "fabrication_1",
         "stringname" => "Fabrication 1",
         "steps" => array(
-            1 => "SEQ010",
+            1 => "SEQ010G",
             2 => "SEQ010A",
             3 => "SEQ010B",
             4 => "SEQ010C",
@@ -139,6 +141,32 @@
             6 => "",
             7 => "",
             8 => "" 
+        )),
+        7 => array(
+            "name" => "miscellaneous",
+            "stringname" => "Miscellaneous",
+            "steps" => array(
+                1 => "SEQ010G",
+                2 => "SEQ010F",
+                3 => "",
+                4 => "",
+                5 => "",
+                6 => "",
+                7 => "",
+                8 => "" 
+        )),
+        8 => array(
+            "name" => "Other",
+            "stringname" => "Other",
+            "steps" => array(
+                1 => "",
+                2 => "",
+                3 => "",
+                4 => "",
+                5 => "",
+                6 => "",
+                7 => "",
+                8 => "" 
         ))
     );
 ?>
