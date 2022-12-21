@@ -204,6 +204,9 @@ $days = array(
         .grouping_category {
             float: left;
         }
+        .bred{
+border:1px solid red;
+        }
 
         /*/////////////////////////////////////////////////////////////////////////*/
     </style>
@@ -227,7 +230,7 @@ $days = array(
                         <p class = "smedium">Quantity Ordered</p>
                         <h2 class = "inner fourth medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Oustanding Quantity</p>
+                        <p class = "smedium">Oustanding Quantity(OpnQty)</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Promise Date and Week Number</p>

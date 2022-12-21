@@ -57,11 +57,54 @@ $(document).ready(function () {
     // OTHERWIE SHOW/HIDE COLUMNS BY MACTHHING CLASS NAME PER EACH FILTER OPTION
     $(".col_selector").on("change", function filter() {
         if ($(this).children("option:selected").val() === 'All') {
-            $('td').show();
+           $('td').show();
+            //$('tfoot').show();
         }
         else {
             $('td').not($('td.step_detail')).hide();
             $('td.' + $(this).val()).show();
+           // $('tfoot').show();
         }
     });
+
+
+//For the hide buttons
+
+    $(".button_group").click(function () {
+        //alert('hello');
+        $(this).addClass("pressed");
+        var x=$(this).val();
+        console.log(x);
+       
+
+
+
+       x= x +"\u2714]";
+
+       //x=\u2714]';
+       console.log(x);
+        $('#custom_hr_table tr:visible').find(x).each(function () {
+    
+            $(this).parent().hide();
+    
+    
+        });
+        
+    });
+
+
+    $(".bblue").click(function () {
+        $('.selector').not(this).prop('selectedIndex', 0);
+        $('.col_selector').not(this).prop('selectedIndex', 0);
+        $(".button_group").removeClass("pressed");
+        $(".button_groupl").removeClass("pressed");
+        //jobs.filter("[engineer_nsp = " + $(this).val() + "]").hide();
+        rows.show();
+        if ($("#select_production_group").children("option:selected").val() === 'All') {
+            $('td').show();
+        }
+       
+        //alert('y');
+    }
+    );
 });

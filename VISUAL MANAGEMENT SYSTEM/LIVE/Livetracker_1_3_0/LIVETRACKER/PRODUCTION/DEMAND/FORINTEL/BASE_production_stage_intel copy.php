@@ -36,7 +36,10 @@
         .bryellow{border: solid 6px yellow;
     }
         .brdottedyellow{border: dashed 6px yellow;}
-    
+        .pre_prod_color{background-color:#4d79ef;}
+        .risk_color{background-color:red;}
+       .back_grey{background-color:#DCDCDC;}
+    .exce{background-color:pink;}
     </style>
     <?php
     $process_order_step_efficiency_data = get_sap_data($conn, $process_order_step_efficiency_sql, DEFAULT_DATA);
@@ -289,10 +292,10 @@
                                 $has_comment = 0;
                             }
                             //For risks
-                            if ($row["Risk"] == 'R3') {
-                                $backcolor = 'red';
-                            } else
-                                $backcolor = '';
+                            if ($row["Risk"] == 'R3') 
+                                $risk=true;
+                            else
+                           $risk=false;
                             /* if ($row["Status"]=='R') {
                                     $color = 'bluee';
                                 } else
@@ -300,10 +303,43 @@
 
                             //print_r($row["Status"]);
                             if ($row["Status"] == 'Pre Production Confirmed' || $row["Status"] == 'Pre Production Potential' || $row["Status"] == 'Pre Production Forecast') {
-                                $base_color = 'light_blue';
-                            } else  $base_color = 'light_grey';
+                                $pre_prod=true;
+                            } 
+                           else
+                           $pre_prod=false;
+                            $base_color = 'light_grey';
+                            /* //print_r($base_color);
+                            if ($risk && $pre_prod)
+                            $back_color='pre_prod_color';
+                            else if ($risk && !$pre_prod)
+                            $back_color='risk_color';
+                           
+else if(!$risk && !$pre_prod)
+$back_color='back_grey'; */
+if($pre_prod && $risk)
+{
+  $back_color='pre_prod_color';
+  print_r('true');
+  $backg_color='risk_color';
+}
+else if($pre_prod && !$risk)
+{
+    $back_color='pre_prod_color';
+    $backg_color='back_grey';
 
-                            //print_r($base_color);
+}
+else if(!$pre_prod && $risk)
+{
+$back_color='risk_color';
+$backg_color='risk_color';
+}
+else if(!$pre_prod && !$risk)
+{
+$back_color='back_grey';
+$backg_color='back_grey';
+}
+
+
                             ?>
 
 
@@ -379,16 +415,16 @@ $sc_status='NULL';
 
                             <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
 
-                                <td class="sticky lefttext step_detail  <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
-                                <td class="sticky lefttext step_detail <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
+                                <td class="sticky lefttext step_detail  <?= $back_color ?> <?= $base_color ?>" style="background-color:<?php // $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
+                                <td class="sticky lefttext step_detail <?= $back_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
+                                <td class="sticky lefttext step_detail  <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?php //$backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
 
                                 <td class="sticky lefttext step_detail  <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><button class="btext lefttext <?=$sc_status?>" style="font-size: 1.5vh;height:80%; width:95%;background-color:#DCDCDC;"><?= $row["ItemName"] ?></button></td>
-                                <td class="sticky lefttext step_detail <?= $date_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
-                                <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
-                                <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
-                                <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
-                                <td class="sticky righttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]?></td>
+                                <td class="sticky lefttext step_detail <?= $date_color ?> " style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
+                                <td class="sticky lefttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
+                                <td class="sticky righttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
+                                <td class="sticky righttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>
+                                <td class="sticky righttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] - $row["Total Act Time"] //$row["Labour Efficiency"]?></td>
                                  
 
                                 <!-- LOOPS THROUGH THE STEPS IN EACH GROUP FROM THE GROUP TEMPLATE -->
@@ -441,7 +477,7 @@ $sc_status='NULL';
       <td></td>
       <td></td>
       <td></td>
-      <td ><button id="laserh_id"value="laserh"class="button_group fill red medium wtext" style="border-radius:50%;margin-left:25%;width:50%;height:40%;float:left">Hide</button>
+      <td ><button value="SEQ001\u2714"id="laserh_id"class="button_group fill red medium wtext" style="border-radius:50%;margin-left:25%;width:50%;height:40%;float:left">Hide</button>
       <td ><button id="sawh_id"value='sawh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:25%;width:50%;height:40%;float:left">Hide</button>
       <td><button id="millingh_id"value='millingh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:25%;width:50%;height:40%;float:left">Hide</button>
       <td><button id="lasermh_id"value='lasermh'class="button_group  fill red medium wtext" style="border-radius:50%;margin-left:25%;width:50%;height:40%;float:left">Hide</button>

@@ -365,6 +365,7 @@
                     <li><a href="edit_page.php">Forms</a></li>
                     <li><a href="new_page.php">Issue Log</a></li>
                     <li><a href="new_page.php">NC Page</a></li>
+                    <li><a href="../../QUALITYREPORT/Quality_report.php">Report</a></li>
                     <li><a href="../../QUALITY1/index copy.php">Home</a></li>
                     <li class="active">Table</li>
                 </ol>
@@ -398,7 +399,9 @@
                                     <th style="width: 200px">Area Non Conformance Raised</th>
                                     <th style="width: 100px">Raised By</th>
                                     <th style="width: 200px">Status</th>
-                                    <th style="width: 73px">Edit</th>
+                                   
+                                    <th style="width: 200px">Date/time</th>
+                                    <th style="width: 78px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
                                     <th style="width: 200px">cc_sales_order</th>
                                     <th style="width: 200px">cc_process_order</th>
@@ -435,6 +438,8 @@
                                         <td><?= $row["nc_area_caused"] ?></td>
                                         <td><?= $row["nc_raised_by"] ?></td>
                                         <td><?= $row["Status"] ?></td>
+                                        <td><?= $row["time_stamp"] ?></td>
+
                                         <td><div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div></td>
                                        <!--  <td><?// $row["cc_sales_order"] ?></td>
                                         <td><?//$row["cc_process_order"] ?></td>
@@ -591,300 +596,7 @@
 
         </div>
 
-<div id="page-inner_two"style=display:none;>
 
-  <!-- /. ROW  -->
-
-
-  <div class="card">
-    <div class="card-header">
-
-    </div>
-    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
-
-
-        <table id="products" style="position: sticky;overflow-x:scroll;">
-            <thead style="position:sticky;top:0;z-index:+2">
-                <tr class="head">
-                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
-              <th style="position: sticky;width:200px;left:100px;color:white">ItemName</th>
-                    <th style="position: sticky;width:200px;left:300px;color:white">Issue</th>
-                   
-                    <th style="width:100px">ItemCode</th>
-                    <th style="width:200px">Sales order</th>
-                    <th style="width:200px">Process order</th>
-
-                    <th style="width:100px">Completion time</th>
-                    
-                    <th style="width: 200px">Raised Area</th>
-                    <th style="width: 100px">Raised By</th>
-                    <!-- <th style="width: 200px">cc_name</th>
-                    <th style="width: 200px">cc_sales_order</th>
-                    <th style="width: 200px">cc_process_order</th>
-                    <th style="width: 200px">cc_itemcode</th>
-                    <th style="width: 200px">cc_raised_by</th>
-                     -->
-                    <!-- <th style="width: 100px">ProductGp</th>
-                    <th style="width: 100px;">SubGp2</th>
-                    <th style="width: 100px">SubGp3</th> -->
-
-                    <!-- <th style="width: 200px">PrevActionOwner</th>
-                    <th style="width:200px">Type</th>
-                    <th style="width:200px">Status</th>
-                    <th style="width:200px">RootCauseAnalysis</th>
-                    <th style="width:200px">Preventive action reports</th> -->
-                    
-                    <th style="width:200px">Attachements</th>
-                </tr>
-            </thead>
-           
-
-
-                <?php foreach ($quality_results_cc as $row) : ?>
-                    <tr>
-                        <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["ID"] ?></td>
-                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["email"] ?></td>
-                        <td style="position: sticky;left:300px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
-                       
-                        <td><?= $row["nc_itemcode"] ?></td>
-                        <td><?= $row["nc_sales_order"] ?></td>
-                        <td><?= $row["nc_process_order"] ?></td>
-                        <td><?= $row["completion_time"] ?></td>
-                        
-                        <td><?= $row["nc_area_caused"] ?></td>
-                        <td><?= $row["nc_raised_by"] ?></td>
-                       <!--  <td><?// $row["cc_sales_order"] ?></td>
-                        <td><?//$row["cc_process_order"] ?></td>
-                        <td><// $row["cc_itemcode"] ?></td>
-                        <td><?//$row["cc_raised_by"] ?></td> -->
-                      
-               
-                        
-                       
-                        <!-- <td class="Group1"><?// $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
-                        <td class="Group2"><?// $row["U_Product_Group_Two"] ?></td>
-                        <td class="Group3"><?// $row["U_Product_Group_Three"] ?></td>
-                        <td><?//$row["U_prev_action_owner"] ?></td>
-                        <td><?//$row["form_type"] ?></td>
-                        <td><// $row["U_Status"] ?></td>
-
-                        <?
-                        //$uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
-                        //echo $uploadfile; ?> -->
-
-                       <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<?// $row['code'] ?>" name='<?// $row["code"] ?>' id='<?// $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
-                        
-                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<?// $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td> -->
-                       <?php
-                       $x=$row["ID"];
-                       print_r($x);
-                       ?>
-                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
-                        
-
-
-
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-
-
-
-        </table>
-        
-        
-
-
-
-
-
-
-    </div>
-   
-
-   </div>
-
-   <!-- Filter Starts here -->
-
-  <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-             width: 100%;
-             height: 50px;">
-    <div class="filter">
-        <div class="text">
-            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
-        </div>
-        <div class="content" style="float:left;margin-right:40px;">
-            <select class="selector" id="select_group2" style="width:250px;height:40px;margin-top:5px">
-                <option value="All" selected>All</option>
-
-            </select>
-        </div>
-
-    </div>
-    <div class="filter">
-        <div class="text">
-            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;" class="medium wtext">By Group2</button>
-        </div>
-        <div class="content" style="float:left">
-            <select id="select_group3" style="width:250px;height:40px;margin-top:5px">
-                <option value="All" selected>All</option>
-
-            </select>
-        </div>
-
-    </div>
-  </div>
- <!-- Filter Ends here -->
-
-
-</div>
-<div id="page-inner_three"style=display:none;>
-
-  <!-- /. ROW  -->
-
-
-  <div class="card">
-    <div class="card-header">
-
-    </div>
-    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
-
-
-        <table id="products" style="position: sticky;overflow-x:scroll;">
-            <thead style="position:sticky;top:0;z-index:+2">
-                <tr class="head">
-                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">ACCcategory</th>
-              <th style="position: sticky;width:200px;left:100px;color:white">Desciption</th>
-                    <th style="position: sticky;width:200px;left:300px;color:white">Location</th>
-                   
-                    <th style="width:100px">Treatment</th>
-                    <th style="width:200px">Treated By</th>
-                    <!-- <th style="width:200px">Process order</th>
-
-                    <th style="width:100px">Completion time</th>
-                    
-                    <th style="width: 200px">Raised Area</th>
-                    <th style="width: 100px">Raised By</th> -->
-                    <!-- <th style="width: 200px">cc_name</th>
-                    <th style="width: 200px">cc_sales_order</th>
-                    <th style="width: 200px">cc_process_order</th>
-                    <th style="width: 200px">cc_itemcode</th>
-                    <th style="width: 200px">cc_raised_by</th>
-                     -->
-                    <!-- <th style="width: 100px">ProductGp</th>
-                    <th style="width: 100px;">SubGp2</th>
-                    <th style="width: 100px">SubGp3</th> -->
-
-                    <!-- <th style="width: 200px">PrevActionOwner</th>
-                    <th style="width:200px">Type</th>
-                    <th style="width:200px">Status</th>
-                    <th style="width:200px">RootCauseAnalysis</th>
-                    <th style="width:200px">Preventive action reports</th> -->
-                    
-                    <th style="width:200px">Attachements</th>
-                </tr>
-            </thead>
-           
-
-
-                <?php foreach ($quality_results_hs as $row) : ?>
-                    <tr>
-                        <td style="position: sticky;left:0px;background:#a6cbf7"><?= $row["acc_category"] ?></td>
-                        <td style="position: sticky;left:100px;px;background:#a6cbf7"><?= $row["acc_description"] ?></td>
-                        <td style="position: sticky;left:300px;background:#a6cbf7"><?= $row["acc_location"] ? $row["acc_location"]  : '--------' ?></td>
-                       
-                        <td><?= $row["acc_treatment"] ?></td>
-                       <td><?= $row["acc_treated_by"] ?></td>
-                        <!--<td><? //$row["nc_process_order"] ?></td>
-                        <td><? //$row["completion_time"] ?></td>
-                        
-                        <td><?//$row["nc_area_caused"] ?></td>
-                        <td><?//$row["nc_raised_by"] ?></td> -->
-                       <!--  <td><?// $row["cc_sales_order"] ?></td>
-                        <td><?//$row["cc_process_order"] ?></td>
-                        <td><// $row["cc_itemcode"] ?></td>
-                        <td><?//$row["cc_raised_by"] ?></td> -->
-                      
-               
-                        
-                       
-                        <!-- <td class="Group1"><?// $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
-                        <td class="Group2"><?// $row["U_Product_Group_Two"] ?></td>
-                        <td class="Group3"><?// $row["U_Product_Group_Three"] ?></td>
-                        <td><?//$row["U_prev_action_owner"] ?></td>
-                        <td><?//$row["form_type"] ?></td>
-                        <td><// $row["U_Status"] ?></td>
-
-                        <?
-                        //$uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
-                        //echo $uploadfile; ?> -->
-
-                       <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<?// $row['code'] ?>" name='<?// $row["code"] ?>' id='<?// $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
-                        
-                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<?// $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td> -->
-                       <?php
-                       $x=$row["ID"];
-                       //print_r($x);
-                       ?>
-                        <td><input type="button" onclick=location.href="files_view_issue.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
-                        
-
-
-
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-
-
-
-        </table>
-        
-        
-
-
-
-
-
-
-    </div>
-   
-
-   </div>
-
-   <!-- Filter Starts here -->
-
-  <div class="filtercontainer" style="background-color: #0866c6;box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);
-             width: 100%;
-             height: 50px;">
-    <div class="filter">
-        <div class="text">
-            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
-        </div>
-        <div class="content" style="float:left;margin-right:40px;">
-            <select class="selector" id="select_group2" style="width:250px;height:40px;margin-top:5px">
-                <option value="All" selected>All</option>
-
-            </select>
-        </div>
-
-    </div>
-    <div class="filter">
-        <div class="text">
-            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;" class="medium wtext">By Group2</button>
-        </div>
-        <div class="content" style="float:left">
-            <select id="select_group3" style="width:250px;height:40px;margin-top:5px">
-                <option value="All" selected>All</option>
-
-            </select>
-        </div>
-
-    </div>
-  </div>
- <!-- Filter Ends here -->
-
-
-</div>
         <!-- <footer>
             <p class="test">All right reserved by <a href="">Company name</a>
 
