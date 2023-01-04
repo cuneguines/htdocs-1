@@ -112,17 +112,27 @@
 											case 6: $quantity_reference = "In Stock"; break;
 										}
 									?>
-									<th width = "5%;" class = "lefttext">SO 						</th>
-									<th width = "5%;" class = "lefttext"> 						Status		 						</th>
-									<th width = "15%;"class = "lefttext"> 	Customer 							</th> 
-									<th width = "20%;"class = "lefttext"> 	Item Description					</th> 
-									<th width = "10%;"class = "lefttext"> 	Project 							</th> 
-									<th width = "6%;" class = "lefttext"> 						Order Quantity 					    </th> 
-									<th width = "6%;" class = "lefttext">                      <?php echo $quantity_reference; ?>	</th> 
-									<th width = "6%;" class = "lefttext"> 						Unit Price 							</th>  
-									<th width = "6%;" class = "lefttext"> 						Value 								</th> 
-									<th width = "8%;" class = "lefttext"> 						Promise Date 						</th>
-									<th width = "8%;" class = "lefttext"> 						Sales Person 						</th>
+									<th width = "5%;" class = "lefttext">SO 						        </th>
+									<th width = "5%;" class = "lefttext">Status		 						</th>
+									<th width = "15%;"class = "lefttext">Customer 							</th> 
+									<th width = "20%;"class = "lefttext">Item Description					</th>
+                                    <th style = "display:none;">SAP Code                                    </th>
+                                    <th style = "display:none;">Item Group Name                             </th> 
+                                    <th style = "display:none;">Product Group 1                             </th> 
+                                    <th style = "display:none;">Product Group 2                             </th> 
+                                    <th style = "display:none;">Date Master Created                         </th> 
+									<th width = "10%;"class = "lefttext">Project 							</th> 
+									<th width = "6%;" class = "lefttext"> Order Quantity 					</th> 
+									<th width = "6%;" class = "lefttext"><?php echo $quantity_reference; ?>	</th> 
+									<th width = "6%;" class = "lefttext">Unit Price 					    </th>  
+									<th width = "6%;" class = "lefttext">Value 								</th> 
+									<th width = "8%;" class = "lefttext">Promise Date 						</th>
+                                    <th style = "display:none">Promise Week                                 </th>
+                                    <th style = "display:none">Promise Month                                </th>
+                                    <th style = "display:none">Promise Year                                 </th>
+									<th width = "8%;" class = "lefttext">Sales Person 						</th>
+                                    <th style = "display:none">Business Unit                                </th>
+                                    <th style = "display:none">Country                                      </th>
 								</tr>
 							</thead>
 							<tbody>
@@ -182,17 +192,27 @@
 
 										// ECHO ROW AND ASSIGN FILTERABLE ATTRIBUTES FOLLOWED BY TD ELEMENTS FOR EACH OF THE ROWS FIGURES
 										echo "<tr sales_person = $sales_person customer = $customer>";
-											echo "<td class = 'lefttext'>"							.$row["Sales Order"]																			."</td>";
-											echo "<td class = 'lefttext'>"							.$row["Status Name"]																			."</td>";
+											echo "<td class = 'lefttext'>"	.$row["Sales Order"]																			."</td>";
+											echo "<td class = 'lefttext'>"  .$row["Status Name"]																			."</td>";
 											echo "<td class = 'lefttext'>"	.$row["Customer"]																				."</td>";
 											echo "<td class = 'lefttext'>"	.$row["Description"]																			."</td>";
+                                            echo "<th style = 'display:none;'>".$row["Item Code"]                                                                           ."</th>";
+                                            echo "<th style = 'display:none;'>".$row["Item Group Name"]                                                                     ."</th>"; 
+                                            echo "<th style = 'display:none;'>".$row["Product Group One"]                                                                   ."</th>"; 
+                                            echo "<th style = 'display:none;'>".$row["Product Group Two"]                                                                   ."</th>"; 
+                                            echo "<th style = 'display:none;'>".$row["Date Master Created"]                                                                 ."</th>";
 											echo "<td class = 'lefttext'>"	.$row["Project"]																				."</td>";
-											echo "<td class = 'righttext'>"							.(($drilldown_conditions[$status_index] == 6 ? floatval($row["Remaining Qty"]) : floatval($row["Full Order Qty"])))."</td>";
-											echo "<td class = 'righttext'>"							.floatval($qty)																			."</td>";
-											echo "<td class = 'righttext'>"							."€ ".number_format($row["Unit Price"],2)														."</td>";
-											echo "<td class = 'righttext'>"							."€ ".number_format($value,2)																	."</td>";
-											echo "<td class = 'righttext'>"							.$row["Promise Date"]																			."</td>";
-											echo "<td class = 'lefttext'>"							.$row["Sales Person"]																			."</td>";
+											echo "<td class = 'righttext'>"	.(($drilldown_conditions[$status_index] == 6 ? floatval($row["Remaining Qty"]) : floatval($row["Full Order Qty"])))."</td>";
+											echo "<td class = 'righttext'>"	.floatval($qty)																			        ."</td>";
+											echo "<td class = 'righttext'>"	."€ ".number_format($row["Unit Price"],2)														."</td>";
+											echo "<td class = 'righttext'>"	."€ ".number_format($value,2)																	."</td>";
+											echo "<td class = 'righttext'>"	.$row["Promise Date"]																			."</td>";
+                                            echo "<th style = 'display:none;'>".$row["Week"]                                                                        ."</th>"; 
+                                            echo "<th style = 'display:none;'>".$row["Month"]                                                                       ."</th>"; 
+                                            echo "<th style = 'display:none;'> ".$row["Year"]                                                                       ."</th>";
+											echo "<td class = 'lefttext'>"	.$row["Sales Person"]																			."</td>";
+                                            echo "<th style = 'display:none;'>".$row["Business Unit"]                                                                       ."</th>"; 
+                                            echo "<th style = 'display:none;'>".$row["Country"]                                                                             ."</th>";
 										echo "</tr>";
 
 										// ADD VALUE TO TOTAL

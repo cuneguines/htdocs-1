@@ -389,7 +389,7 @@ $backg_color='back_grey';
 <?php
 if($row["SubConDate"]==$row["Promise Date"]) 
 {
-$date_color='light_blue';
+$date_color='green';
 }
 else
 {
@@ -420,7 +420,7 @@ $sc_status='NULL';
                                 <td class="sticky lefttext step_detail  <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?php //$backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
 
                                 <td class="sticky lefttext step_detail  <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><button class="btext lefttext <?=$sc_status?>" style="font-size: 1.5vh;height:80%; width:95%;background-color:#DCDCDC;"><?= $row["ItemName"] ?></button></td>
-                                <td class="sticky lefttext step_detail <?= $date_color ?> " style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"] ?></td>
+                                <td class="sticky lefttext step_detail <?= $date_color ?> " style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:260px;"><?= $row["SubConDate"] == NULL ? 'NULL' : $row["SubConDate"];//subtract 14 days?></td>
                                 <td class="sticky lefttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:360px;"><?= $row["Most_Hours"] ?></td>
                                 <td class="sticky righttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"] ?></td>
                                 <td class="sticky righttext step_detail <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:460px;"><?= $row["Total Act Time"] ?></td>

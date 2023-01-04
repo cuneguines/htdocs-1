@@ -21,6 +21,7 @@ group by t0.PrOrder)
 
 SELECT 
 FORMAT(CAST(t17.U_sc_date AS DATE), 'dd-MM-yyyy') [SubConDate],
+
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
 FORMAT(CAST( t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],

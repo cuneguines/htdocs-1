@@ -241,8 +241,8 @@ FROM IIS_EPC_PRO_ORDERH t0
             FROM iis_epc_pro_ordert t0  				
                 GROUP BY t0.PrOrder) 
     t3 ON t3.PrOrder = t0.Prorder
-    LEFT JOIN ORDR t4 ON t4.DocNum = t0.SoNum
+    LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
     LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
-    WHERE t1.CmpltQty < t1.PlannedQty AND t0.Status NOT IN ('D','C') AND t1.Status NOT IN ('C','L') AND t5.U_PP_status IN ('Live','1001')";
+    WHERE t1.CmpltQty < t1.PlannedQty AND t0.Status NOT IN ('D','C') AND t1.Status NOT IN ('C','L') AND t5.U_PP_status IN ('Live','1001')"; 
 
 ?>

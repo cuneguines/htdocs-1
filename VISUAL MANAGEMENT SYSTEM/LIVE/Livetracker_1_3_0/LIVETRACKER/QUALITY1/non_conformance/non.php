@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html style="overflow:hidden"xmlns="http://www.w3.org/1999/xhtml">
+<html style="overflow:hidden" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8" />
@@ -17,14 +17,14 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> -->
-   
+
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
     <!-- <script type="text/javascript" src="../../JS/LIBS/jquery-3.4.1.js"></script> -->
     <script type="text/javascript" src="./THIRD PARTY/jquery-3.4.1.js"></script>
     <!-- <script type="text/javascript" src="./qualityjs.js"></script> -->
     <script type="text/javascript" src="./new.js"></script>
     <link rel="stylesheet" href="assets/css/table.css">
-    
+
 </head>
 <style>
     .active1,
@@ -52,42 +52,49 @@
 
     }
 
-    .lefttext{  text-align:left; padding-left:10px;}
-.righttext{ text-align:right; padding-right:10px;}
-.bold{      font-weight:bold;}
+    .lefttext {
+        text-align: left;
+        padding-left: 10px;
+    }
+
+    .righttext {
+        text-align: right;
+        padding-right: 10px;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
 </style>
 
 
 <body>
     <script>
         function isImage(url) {
-        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-      }
-   //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
-   ////https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
+            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+        }
+        //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
+        ////https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
 
         ////console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
         ////console.log(extension);
-        </script>
-<?php
-	try
-	{
-		// CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
-		$conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
-		// CREATE QUERY EXECUTION FUNCTION
-		$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	}
-	catch(Exception $e)
-	{
-		// REPORT ERROR
-		die(print_r($e->getMessage()));
-	}
-?>
+    </script>
+    <?php
+    try {
+        // CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
+        $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
+        // CREATE QUERY EXECUTION FUNCTION
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (Exception $e) {
+        // REPORT ERROR
+        die(print_r($e->getMessage()));
+    }
+    ?>
     <?php include './SQL_Quality_ItemCode.php'; ?>
     <?php
     $getResults = $conn->prepare($Quality_results_non_conformance);
     $getResults->execute();
-    $quality_results_nc= $getResults->fetchAll(PDO::FETCH_BOTH);
+    $quality_results_nc = $getResults->fetchAll(PDO::FETCH_BOTH);
     $getResults = $conn->prepare($Quality_results_customer_complaints);
     $getResults->execute();
     $quality_results_cc = $getResults->fetchAll(PDO::FETCH_BOTH);
@@ -333,11 +340,11 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 
-                    
+
 
 
                     <li>
-                        <a id="product_button" ><i class="fa fa-sitemap"></i> Non Conformance<span class="fa arrow"></span></a>
+                        <a id="product_button"><i class="fa fa-sitemap"></i> Non Conformance<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
 
@@ -345,7 +352,7 @@
                         </ul>
 
                     </li>
-                    
+
                 </ul>
                 </li>
                 </ul>
@@ -355,13 +362,13 @@
         </nav>
         <!-- /. NAV SIDE  -->
 
-        <div id="page-wrapper" >
+        <div id="page-wrapper">
             <div class="header">
                 <h1 class="page-header">
-                   <small>QUALITY MANAGEMENT SYSTEM</small>
+                    <small>QUALITY MANAGEMENT SYSTEM</small>
                 </h1>
                 <ol class="breadcrumb">
-                    
+
                     <li><a href="edit_page.php">Forms</a></li>
                     <li><a href="new_page.php">Issue Log</a></li>
                     <li><a href="new_page.php">NC Page</a></li>
@@ -387,19 +394,19 @@
                             <thead style="position:sticky;top:0;z-index:+2">
                                 <tr class="head">
                                     <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
-                              <th style="position: sticky;width:100px;left:100px;color:white">ItemCode</th>
+                                    <th style="position: sticky;width:100px;left:100px;color:white">ItemCode</th>
                                     <th style="position: sticky;width:300px;left:200px;color:white">Issue</th>
-                                   
-                                   
+
+
                                     <th style="width:100px">Sales order</th>
                                     <th style="width:100px">Process order</th>
 
-                                   
-                                    
+
+
                                     <th style="width: 200px">Area Non Conformance Raised</th>
                                     <th style="width: 100px">Raised By</th>
                                     <th style="width: 200px">Status</th>
-                                   
+
                                     <th style="width: 200px">Date/time</th>
                                     <th style="width: 78px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
@@ -417,70 +424,87 @@
                                     <th style="width:200px">Status</th>
                                     <th style="width:200px">RootCauseAnalysis</th>
                                     <th style="width:200px">Preventive action reports</th> -->
-                                    
+
                                     <th style="width:200px;"> Attachements</th>
                                 </tr>
                             </thead>
-                           
 
 
-                                <?php foreach ($quality_results_nc as $row) : ?>
-                                    <tr>
-                                        <td style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
-                                        <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"]?></td>
-                                        <td class="bold"style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
-                                       
-                                        
-                                        <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
-                                        <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
-                                        
-                                        
-                                        <td><?= $row["nc_area_caused"] ?></td>
-                                        <td><?= $row["nc_raised_by"] ?></td>
-                                        <td><?= $row["Status"] ?></td>
-                                        <td><?= $row["time_stamp"] ?></td>
 
-                                        <td><div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div></td>
-                                       <!--  <td><?// $row["cc_sales_order"] ?></td>
-                                        <td><?//$row["cc_process_order"] ?></td>
+                            <?php foreach ($quality_results_nc as $row) : ?>
+                                <tr>
+                                    <td style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
+                                    <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"] ?></td>
+                                    <td class="bold" style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+
+
+                                    <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
+                                    <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
+
+
+                                    <td><?= $row["nc_area_caused"] ?></td>
+                                    <td><?= $row["nc_raised_by"] ?></td>
+                                    <td><?= $row["Status"] ?></td>
+                                    <td><?= $row["time_stamp"] ?></td>
+
+                                    <td>
+                                        <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div>
+                                    </td>
+                                    <!--  <td><? // $row["cc_sales_order"] 
+                                                ?></td>
+                                        <td><? //$row["cc_process_order"] 
+                                            ?></td>
                                         <td><// $row["cc_itemcode"] ?></td>
-                                        <td><?//$row["cc_raised_by"] ?></td> -->
-                                      
-                               
-                                        
-                                       
-                                        <!-- <td class="Group1"><?// $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' ?></td>
-                                        <td class="Group2"><?// $row["U_Product_Group_Two"] ?></td>
-                                        <td class="Group3"><?// $row["U_Product_Group_Three"] ?></td>
-                                        <td><?//$row["U_prev_action_owner"] ?></td>
-                                        <td><?//$row["form_type"] ?></td>
+                                        <td><? //$row["cc_raised_by"] 
+                                            ?></td> -->
+
+
+
+
+                                    <!-- <td class="Group1"><? // $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' 
+                                                            ?></td>
+                                        <td class="Group2"><? // $row["U_Product_Group_Two"] 
+                                                            ?></td>
+                                        <td class="Group3"><? // $row["U_Product_Group_Three"] 
+                                                            ?></td>
+                                        <td><? //$row["U_prev_action_owner"] 
+                                            ?></td>
+                                        <td><? //$row["form_type"] 
+                                            ?></td>
                                         <td><// $row["U_Status"] ?></td>
 
                                         <?
                                         //$uploadfile = file_get_contents(data_uri('//Kptsvsp\b1_shr/Attachments/PHOTO-2022-06-21-12-22-16.jpg', 'image/jpg'));
-                                        //echo $uploadfile; ?> -->
+                                        //echo $uploadfile; 
+                                        ?> -->
 
-                                       <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<?// $row['code'] ?>" name='<?// $row["code"] ?>' id='<?// $row["attachments_cause_analysis"] ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                    <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<? // $row['code'] 
+                                                                                                                    ?>" name='<? // $row["code"] 
+                                                                                                                                                ?>' id='<? // $row["attachments_cause_analysis"] 
+                                                                                                                                                                        ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' 
+                                                                                                                                                                                                                                                                                                        ?>'></td>
                                         
-                                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<?// $row['code'] ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <?// $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' ?>'></td> -->
-                                       <?php
-                                       $x=$row["ID"];
-                                       //print_r('NON CONFIRMANCE');
-                                       ?>
-                                        <td><input type="button" onclick=location.href="files_view_issue%20copy.php?q=<?=trim($row['ID'])?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N'? 'has_attachment' : '' ?>'></td>
-                                        
+                                       <td><input type="button" onclick=location.href="files_view_prev.php?q=<? // $row['code'] 
+                                                                                                                ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' 
+                                                                                                                                                                                                                        ?>'></td> -->
+                                    <?php
+                                    $x = $row["ID"];
+                                    //print_r('NON CONFIRMANCE');
+                                    ?>
+                                    <td><input type="button" onclick=location.href="files_view_issue%20copy.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
 
 
 
-                                    </tr>
-                                <?php endforeach; ?>
+
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
 
 
 
                         </table>
-                        
-                        
+
+
 
 
 
@@ -488,7 +512,7 @@
 
 
                     </div>
-                   
+
 
                 </div>
                 <!-- MODAL STARTS HERE -->
@@ -500,63 +524,63 @@
                                 <a class="close" data-dismiss="modal">×</a>
                                 <h3>Status Form</h3>
                             </div>
-                            
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="name">ID</label>
-                                        <input id="id"type="text" name="name" class="form-control" readonly>
-                                        <a href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Owner</label>
-                                        
-                                        <select id="owner" style=width:100%;height:34px>
-                                      
-                                     <option value="lkent@kentstainless.com" >lkent@kentstainless.com</option>
-                                        <option value="seanobrien@kentstainless.com" >seanobrien@kentstainless.com</option>
-                                       
-                                        
-                                        
-                                </select>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="email">Required Action</label>
-                                        
-                                        <select id="action" style=width:100%;height:34px>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="name">ID</label>
+                                    <input id="id" type="text" name="name" class="form-control" readonly>
+                                    <a href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Owner</label>
+
+                                    <select id="owner" style=width:100%;height:34px>
+
+                                        <option value="lkent@kentstainless.com">lkent@kentstainless.com</option>
+                                        <option value="seanobrien@kentstainless.com">seanobrien@kentstainless.com</option>
+
+
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email">Required Action</label>
+
+                                    <select id="action" style=width:100%;height:34px>
                                         <option value="Toolbox Talk" selected>Toolbox Talk</option>
                                         <option value="Eight Disciplines Process" selected>Eight Disciplines Process</option>
-                                        
-                                     </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="status">Status</label>
-                                        
-                                        <select id="status" style=width:100%;height:34px>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+
+                                    <select id="status" style=width:100%;height:34px>
                                         <option value="Cancelled" selected>Cancelled</option>
                                         <option value="Open" selected>Open</option>
                                         <option value="Closed" selected>Closed</option>
-                                        
-                                        
-                                     </select>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="message">Date</label>
-                                        <input id="ddate"name="message" type = "date" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message">Attachments</label>
-        <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
-        <input id="sortpicture" type="file" name="sortpic" />
-                                    </div>
+
+                                    </select>
                                 </div>
-                                <div class="modal-footer">
-                                
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="submit()">Submit</button>
+
+                                <div class="form-group">
+                                    <label for="message">Date</label>
+                                    <input id="ddate" name="message" type="date" class="form-control"></textarea>
                                 </div>
-                          
+                                <div class="form-group">
+                                    <label for="message">Attachments</label>
+                                    <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
+                                    <input id="sortpicture" type="file" name="sortpic" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="submit()">Submit</button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -594,16 +618,16 @@
                 <!-- Filter Ends here -->
 
 
-        </div>
+            </div>
 
 
-        <!-- <footer>
+            <!-- <footer>
             <p class="test">All right reserved by <a href="">Company name</a>
 
 
         </footer> -->
-    </div>
-    <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
     </div>
