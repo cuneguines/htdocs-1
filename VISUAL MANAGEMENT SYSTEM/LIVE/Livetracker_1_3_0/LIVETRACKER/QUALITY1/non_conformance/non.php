@@ -65,6 +65,10 @@
     .bold {
         font-weight: bold;
     }
+    .fill {
+    width: 100%;
+    height: 100%;
+}
 </style>
 
 
@@ -94,6 +98,9 @@
     <?php
     $getResults = $conn->prepare($Quality_results_non_conformance);
     $getResults->execute();
+    $getResults_email = $conn->prepare($emails);
+    $getResults_email->execute();
+    $getResults_email = $getResults_email->fetchAll(PDO::FETCH_BOTH);
     $quality_results_nc = $getResults->fetchAll(PDO::FETCH_BOTH);
     $getResults = $conn->prepare($Quality_results_customer_complaints);
     $getResults->execute();
@@ -102,13 +109,21 @@
     $getResults->execute();
     $quality_results_hs = $getResults->fetchAll(PDO::FETCH_BOTH);
     //$json_array = array();
-    //var_dump($production_exceptions_results);
+    //var_dump($getResults_email);
     //echo json_encode(array($quality_results));
     function data_uri($file, $mime)
     {
         $contents = file_get_contents($file);
         $base64 = base64_encode($contents);
         return ('data:' . $mime . ';base64,' . $base64);
+    }
+
+    function array_sort($array){sort($array); return $array;}
+
+    function generate_filter_options($table, $field ){
+        foreach(array_sort(array_unique(array_column($table, $field))) as $element){
+            echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+        }
     }
     ?>
     <div id="wrapper">
@@ -534,11 +549,14 @@
                                 <div class="form-group">
                                     <label for="email">Owner</label>
 
+                                   
+
+                                    <div class="content">
                                     <select id="owner" style=width:100%;height:34px>
-
-                                        <option value="lkent@kentstainless.com">lkent@kentstainless.com</option>
-                                        <option value="seanobrien@kentstainless.com">seanobrien@kentstainless.com</option>
-
+                                            <option value="All" selected>All</option>
+                                            <?php generate_filter_options($getResults_email,"person","email"); ?>
+                                        </select>
+                                    </div>
 
 
                                     </select>

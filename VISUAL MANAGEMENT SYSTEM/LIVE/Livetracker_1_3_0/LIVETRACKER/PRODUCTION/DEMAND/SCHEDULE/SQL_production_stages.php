@@ -1,6 +1,7 @@
 <?php
 $process_order_step_efficiency_sql = 
 "SELECT 
+FORMAT(t22.U_Promise_Date,'dd-MM-yyyy')[Prom Date],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
 FORMAT(CAST(ISNULL(t22.U_Delivery_Date, t5.DocDueDate) AS DATE), 'dd-MM-yyyy') [Promise Date],

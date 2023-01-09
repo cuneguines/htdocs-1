@@ -20,10 +20,11 @@ group by t0.PrOrder)
 
 
 SELECT 
+case when t17.U_sc_date is null then 'subconnull' end [SubConVal],
 case when t24.[Name] is null then t22.U_PP_Status else t24.[Name] end [Status],
 ---Changed 1-12-22--
 t22.U_In_Sub_Con,
-FORMAT(CAST(ISNULL(DATEADD(DAY, -14, t17.U_sc_date), t22.U_Promise_date) AS DATE), 'dd-MM-yyyy') [SubConDate],
+FORMAT(CAST(ISNULL (t17.U_sc_date , (DATEADD(DAY, -14,t22.U_Promise_date) ))AS DATE), 'dd-MM-yyyy') [SubConDate],
 ---Changed 4/01/23 subtract 14 dats from the date
 ---FORMAT(DATEADD(DAY, -14, t17.U_sc_date), 'dd-MM-yyyy')[NeW_Sub_Date],
 t0.Originnum [Sales Order],

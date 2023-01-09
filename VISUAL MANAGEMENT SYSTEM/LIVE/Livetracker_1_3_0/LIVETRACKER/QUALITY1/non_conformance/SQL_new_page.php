@@ -22,7 +22,7 @@ left join(select t8.Status,t8.ID,t8.Owner,t8.Action,t8.date_updated from dbo.Tab
                      group by t1.sap_id )t66 on t66.Mmaxdate = t55.created_date and t66.sap_id=t55.sap_id)t44 on t44.sap_id = t0.ID and t44.attachments is not NULL
 
 where t0.form_type = 'Non Conformance'
-and t2.ID is null
+and t2.ID is null order by t0.ID
 
 ";?>
 

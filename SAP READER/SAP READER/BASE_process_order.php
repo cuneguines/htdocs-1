@@ -175,19 +175,21 @@
                                     <?php $production_order = $production_step_code = ""; ?>
 
                                     <?php foreach($process_order_data as $row): ?>
+                                        
                                         <!-- IF THE PRODUCTION ORDER ON THE NEXT LINE IS DIFFERENT PRINT A FULLSPAN ROW WITH THE NAME OF THE MAKE ITEM FOR THE PRODUCTION ORDER -->
                                         <!-- ALSO CHECK IF THE MAKE ITEM FOR THE PRODUCTION ORDER IS THE END PRODUCT FOR THE PROCESS ORDER AND COLOURS ROWS ACCORDINGLY -->
                                         <?php if($production_order != $row["Production Order"]) : ?>
+                                           
                                             <tr style = "border-top:3px solid #454545;"><td colspan = 7 class = "<?=$row["End Product Code"] == $row["Item Code"] ? "light_green" : "baige"?>">Production Order <?=$row["Production Order"]?><br>(<?=$row["Item Description"]?>)</td></tr>
                                             <?php $production_order = $row["Production Order"]; $production_step_code = "";?>
                                         <?php endif;?>
 
                                         <!-- IF STEP TYPE OF ROW IS NOT LABOUR THEN SKIP TO NEXT -->
                                         <?php if($row["Step Type"] != 'B'){continue;} ?>
-                                        <tr>
+                                        <tr >
                                             <!-- IF THERE IS A NEW LABOUR STEP CODE ECHO THE DETAILS OF THAT STEP WITH A ROWSPAN EUQAL TO THE NUMBER OF ENTREIS FOR THAT STEP (IN QUERY) -->
                                             <!-- THEN PRINT DETAILS OF ENRTY (QTY OF HRS AND NAME OF FAB) -->
-                                            <?php if($row["Labour Code"] != $production_step_code): ?>
+                                            <?php if($row["Labour Code"] != $production_step_code || $row["Labour Code"]=='3000617'): ?>
                                                 <?php $production_step_code = $row["Labour Code"]; ?>
                                                 <?php $brtop = "border-top:3px solid #454545;"; ?>
                                                 <td rowspan = "<?=$row["No Of Step Entries"] == 0 ? 1 : $row["No Of Step Entries"]?>" style = "border-right:1px solid #454545; border-top:3px solid #454545;"                     ><?=$row["Labour Step Number"]?></td>

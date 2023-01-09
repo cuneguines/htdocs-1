@@ -42,14 +42,30 @@ $mail = new PHPMailer(true);
   $date=(!empty($_POST['date']) ? $_POST['date'] : '');
   $action=(!empty($_POST['action']) ? $_POST['action'] : '');
 	$atta="ddd";
-  
+   //to find the email 
+
+   $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
+
+   from KENTSTAINLESS.dbo.ohem t0
+   
+   where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + t0.lastName='$owner'";
+   $getResults_email = $conn->prepare($query_email);
+   $getResults_email->execute();
+   $getResults_email = $getResults_email->fetchAll(PDO::FETCH_BOTH);
+  // $query_email["email"];
+  foreach ($getResults_email as $row) :
+         $email=$row["email"];
+                             endforeach;
+
   /* DATETIME for date_created in MySQL */
   date_default_timezone_set('Europe/Dublin');
   $dateCreated = date("Y-m-d H:i:s", time());
   try {
-    // Array for our insert
-		$query=array(':id' => $Id,':stat' => $stat,':atta'=>$atta,':comments' => $comm,':owner' => $owner,':action' => $action,':date' => $date,':date_updated' => $dateCreated);
+    //to find the email 
 
+    
+    // Array for our insert
+		$query=array(':id' => $Id,':stat' => $stat,':atta'=>$atta,':comments' => $comm,':owner' => $email,':action' => $action,':date' => $date,':date_updated' => $dateCreated);
     // Prepare Statement
     $stmt="INSERT INTO dbo.Table_2(ID,Status,Attachments,Comments,Owner,Action,Date,date_updated)
 	VALUES (:id, :stat,:atta, :comments,:owner,:action,:date,:date_updated)";
@@ -82,7 +98,7 @@ $mail = new PHPMailer(true);
   $mail->Port = 465;                                    // TCP port to connect to
   $mail->SMTPAuth   = true;
   $mail->setFrom('qualitykentstainless@gmail.com', 'Mailer');
-  $mail->addAddress($owner, 'ns');     // Add a recipient
+  $mail->addAddress($email, 'ns');     // Add a recipient
                // Name is optional
   $mail->addReplyTo('info@example.com', 'Information');
  // $mail->addCC('cc@example.com');

@@ -137,7 +137,7 @@
                             <tr class = "head">
                                 <th width = "70px"  class = "sticky darker_grey lefttext" style = "left:0px;">Sales<br>Order</th>
                                 <th width = "70px"  class = "sticky darker_grey lefttext" style = "left:80px;">Process Order</th>
-                                <th width = "90px" class = "sticky darker_grey lefttext" style = "left:160px;">Due Date</th>
+                                <th width = "90px" class = "sticky darker_grey lefttext" style = "left:160px;">Promise Date</th>
                                 <th width = "190px" class = "sticky darker_grey lefttext" style = "left:260px;">Item Name</th>
                                 <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:460px;">PLanned</th>
                                 <th width = "60px"  class = "sticky darker_grey lefttext" style = "left:460px;">EXecuted</th>
@@ -173,11 +173,12 @@
                                         $has_comment = 0;
                                     }
                                 ?>
-
+<?php $so = "location.href='http://vms/SAP%20READER/BASE_sales_order.php?sales_order=".$row["Sales Order"]."'" ?>
+                <?php $po = "location.href='http://vms/SAP%20READER/BASE_process_order.php?process_order=".$row["Process Order"]."'" ?>
                                 <tr sales_person = <?= $sales_person ?> engineer = <?= $engineer ?> project = <?= $project ?> customer = <?= $customer ?>>
-                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box; left:0px;"><button onclick = "alert('<?=$saleso_alert?>');" class = "btext smedium rounded brblack" style = "height:80%; width:95%;"><?= $row["Sales Order"]?></button></td>
-                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box; left:80px;"><button onclick = "alert('<?=$remarks_line_details?>');" class = "btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : "";?>" style = "height:80%; width:90%;"><?= $row["Process Order"]?></button></td>
-                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box;left:160px;"><?= $row["Promise Date"]?></td>
+                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box; left:0px;"><button onclick="<?=$so?>"class = "btext smedium rounded brblack" style = "height:80%; width:95%;"><?= $row["Sales Order"]?></button></td>
+                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box; left:80px;"><button onclick="<?=$po?>" class = "btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : "";?>" style = "height:80%; width:90%;"><?= $row["Process Order"]?></button></td>
+                                    <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box;left:160px;"><?= $row["Prom Date"]?></td>
                                     <td class = "sticky lefttext step_detail <?=$complete_marker?>"  style = "background-clip: padding-box;left:260px;"><?= $row["ItemName"]?></td>
                                     <td class = "sticky righttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:460px;"><?= $row["Total Planned Time"]?></td>
                                     <td class = "sticky righttext step_detail <?=$complete_marker?>" style = "background-clip: padding-box;left:460px;"><?= $row["Total Act Time"]?></td>

@@ -42,6 +42,14 @@
     $getResults = $conn->prepare($Quality_results);
     $getResults->execute();
     $quality_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+    /* Filters for the product group */
+    $group_array=array();
+    foreach ($quality_results as $row) :
+    $group_array = array('product_group_one' => $row['U_Product_Group_One'], 'product_group_two' => $row['U_Product_Group_Two'], 'product_group_three' => $row['U_Product_Group_Three'] );
+endforeach;
+foreach($group_array as $row):
+//print_r($group_array);
+endforeach;
     ?>
     <!-- TABLESORT SETUP -->
     <script>
@@ -151,6 +159,7 @@
                             <th width="150px">SO</th>
                             <th width="200px">Project</th>
                             <th width="200px">Description</th>
+                            <th width="200px">ItemCode</th>
                             <th width="150px">Product group1</th>
                             <th width="150px">Pg2</th>
                             <th width="150px">pg3</th>
@@ -180,9 +189,9 @@
                             ?>
                             <?php //   $supplier = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Supplier"]));  
                             ?>
-                            <?php   //$stock_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["stock_group"]));  
+                            <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
                             ?>
-                            <tr stage='<?= $stage ?>' supplier='<?= $supplier ?>' stock_group='<?= $stock_group ?>' class="white btext smedium">
+                            <tr stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
                                 <td><?= $row["Owner"] ?></td>
@@ -207,13 +216,21 @@
                                     ?>
 
                                         <div style="height:50px; margin:0; border:0;float:left;width:3px" class=<?= $color ?>></div>
-                                    <?php endfor; ?>
+                                    <?php endfor; ?><div style=width:50px;margin-left:80px;><?=-($row["Days_open"])?></div></td>
                                 <td class='lefttext'><?= $row["nc_itemcode"] ?></td>
 
 
                                 <td class='lefttext'><?= $row["Customer"] ?></td>
                                 <td><?= $row["nc_sales_order"] ?></td>
                                 <td class='lefttext'><?= $row["U_Client"] ?></td>
+                                <td class='lefttext'><?= $row["Dscription"] ?></td>
+                                <td ><?= $row["ItemCode"] ?></td>
+                                <td class='lefttext'><?= $row["U_Product_Group_One"] ?></td>
+                                <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
+                                <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
+                                <td class='lefttext'><?= $row["Status"] ?></td>
+                                <td class='lefttext'><?= $row["form_type"] ?></td>
+                                <td class='lefttext'><?= $row["Action"] ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -240,12 +257,12 @@
                         </div>
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill red medium wtext">Stock Group</button>
+                                <button class="fill red medium wtext">Product Group</button>
                             </div>
                             <div class="content">
-                                <select id="select_stock_group" class="selector fill medium">
+                                <select id="select_product_group" class="selector fill medium">
                                     <option value="All" selected>All</option>
-                                    <?php //generate_filter_options($production_exceptions_results, "stock_group"); 
+                                    <?php generate_filter_options($quality_results, "U_Product_Group_One"); 
                                     ?>
                                 </select>
                             </div>

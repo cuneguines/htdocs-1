@@ -1,5 +1,6 @@
 $(document).ready(function () 
 {
+    $('.selector').prop('selectedIndex', 0);
     /* $('#page-inner_two').hide();
     $('#product_button').click(function () {
         $('.breadcrumb').show();

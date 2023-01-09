@@ -161,9 +161,9 @@ FROM(
                                                                 CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
                                                                 FORMAT(CONVERT(DATE,t1.U_Promise_Date),'dd-MM-yyyy') [Promise Date],
                                                                 /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/
-                                                                /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/	
-                                                                (case when t1.U_delivery_date is null then t1.U_Promise_Date 	
-                                                          when DATEDIFF(DAY,getdate(),t1.U_delivery_date )< =-4 then t1.U_Promise_Date	
+                                                                /*If delivery date is null take docduedate ,if delivery date is less than -4 then take promise date*/ 
+                                                                (case when t1.U_delivery_date is null then t1.U_Promise_Date  
+                                                          when DATEDIFF(DAY,getdate(),t1.U_delivery_date )< =-4 then t1.U_Promise_Date 
                                                         else t1.U_delivery_date end ) [Del Date Due UNP],
                                                                 (case 
                                                                     WHEN t1.U_delivery_date IS NOT NULL THEN 'DD'
@@ -213,7 +213,7 @@ FROM(
                                                                 INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
                                                                 INNER join oslp t2 on t2.SlpCode = ISNULL(t1.SlpCode,t0.SlpCode)
                                                                 INNER join ohem t3 on t3.empID = t0.OwnerCode
-                                                                LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode
+                                                                LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode and t4.Status not in ('L','C')
                                                                 INNER JOIN oitm t5 on t5.ItemCode = t1.ItemCode
                                                                 INNER JOIN oitb t6 on t6.ItmsGrpCod = t5.ItmsGrpCod
                                                                 LEFT JOIN IIS_EPC_PRO_ORDERH t99 ON t99.PrOrder = t4.U_IIS_proPrOrder
@@ -247,8 +247,8 @@ FROM(
                                                                                                                                                    group by t1.U_IIS_proPrOrder
                                                                                                                                                    Having sum(t0.issuedqty) = 0 and sum(t1.CmpltQty) = 0
                                                                                                                                                    ) t15 on t15.U_IIS_proPrOrder = t4.U_IIS_proPrOrder
-                                                                                                                                                                                                                                                left join  ocrd t20 on t20.CardCode = t0.CardCode
-																																																												LEFT JOIN 
+                        left join  ocrd t20 on t20.CardCode = t0.CardCode
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    LEFT JOIN 
         (
             SELECT DocEntry, SUM(LineTotal) [Order Value]
             FROM rdr1
@@ -266,7 +266,7 @@ FROM(
 
                                                 ----STOCK ORDERS ONLY-----
                                                 SELECT
-												NULL,
+                                                                                                                                                                                    NULL,
                                                 NULL,
                                                 NULL,
                                                                 DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
@@ -349,6 +349,8 @@ FROM(
                                                                                                 and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
    
    ORDER BY t0.[Project]
+
+
 
 
 ";

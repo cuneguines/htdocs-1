@@ -39,11 +39,16 @@ left join(select t8.Status,t8.ID,t8.date_updated from dbo.Table_2 t8
                     from  dbo.Table_2 t1
                     where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
 where t0.form_type = 'Non Conformance'
-and t2.ID is null
+and t2.ID is null order by t0.ID
 
 
 
 ";
+$emails="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
+
+from KENTSTAINLESS.dbo.ohem t0
+
+where t0.Active = 'Y' and t0.email is not NULL";
 $Quality_results_customer_complaints="select *,
 (case 
 WHEN  t0.attachments ='' then 'N'  else t0.attachments

@@ -1,5 +1,5 @@
 <?php
-$Quality_results="select *,t0.Id as ID,t20.Status,t20.Owner,t20.Date[TargetDate],t50.CardName[Customer],t50.U_Client,
+$Quality_results = "select *,FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,t20.Status,t20.Action,t20.Owner,FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
 (case
 WHEN t20.Date!='01/01/1900  00:00:00' and
  t20.Date is not null then DateDiff(day,t20.Date,GETDATE())
@@ -11,11 +11,18 @@ end)[Days_open],
     left join (select t1.ID,max(t1.date_updated) as Maxdate
         from  dbo.Table_2 t1
            where t1.Status='Cancelled' group by t1.ID )t2 on t2.ID = t0.ID
-    left join(select t8.Status,t8.Date,t8.ID,t8.Owner,t8.date_updated from dbo.Table_2 t8
+    left join(select t8.Status,t8.Date,t8.ID,t8.Owner,t8.Action,t8.date_updated from dbo.Table_2 t8
                         inner join(select t1.ID,max(t1.date_updated) as Mmaxdate
                         from  dbo.Table_2 t1
                         where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
     left join (select t0.* from  KENTSTAINLESS.dbo.ordr t0 )t50 on  t50.DocNum= nc_sales_order
+left JOIN KENTSTAINLESS.dbo.rdr1 t11 on t11.DocEntry = t50.DocEntry and t11.U_IIS_proPrOrder=nc_process_order
+left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode = t11.ItemCode
+left join KENTSTAINLESS.dbo.oitb t13 on t13.ItmsGrpCod = t12.ItmsGrpCod
     where t0.form_type = 'Non Conformance'
-    and t2.ID is null ORDER BY t0.ID"
-;
+    and t2.ID is null ORDER BY t0.ID";
+$emails="select t0.firstName, t0.lastName, t0.email
+
+from ohem t0
+
+where t0.Active = 'Y' and t0.email is not NULL";
