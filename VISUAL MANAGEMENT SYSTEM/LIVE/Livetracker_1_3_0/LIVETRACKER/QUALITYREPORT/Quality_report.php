@@ -87,6 +87,21 @@ endforeach;
         background-color: green;
 
     }
+
+
+    .comment_button.has_attachment {
+        background-color: rgb(198, 155, 64);
+    }
+
+    .comment_button {
+        height: 30px;
+        width: 40px;
+        border: 2px solid #454545;
+        background-color: white;
+        border-radius: 7px;
+        vertical-align: middle;
+
+    }
 </style>
 
 <body>
@@ -158,7 +173,7 @@ endforeach;
                             <th width="300px">Customer</th>
                             <th width="150px">SO</th>
                             <th width="200px">Project</th>
-                            <th width="200px">Description</th>
+                            <th width="400px">Description</th>
                             <th width="200px">ItemCode</th>
                             <th width="150px">Product group1</th>
                             <th width="150px">Pg2</th>
@@ -166,7 +181,8 @@ endforeach;
                             <th width="150px">Status</th>
                             <th width="150px">Type</th>
                             <th width="150px">Response type</th>
-                            <th width="150px">Admin cost</th>
+                            <th width="150px"> Link to improvement</th>
+                            <!-- <th width="150px">Admin cost</th>
                             <th width="150px">RW Cost</th>
                             <th width="150px">Materail Cost</th>
                             <th width="150px">Logistics Cost</th>
@@ -174,11 +190,10 @@ endforeach;
                             <th width="150px">Total cost</th>
                             <th width="150px">Rework Type</th>
                             <th width="150px"> Time to Close</th>
-                            <th width="150px"> Link to improvement</th>
+                           
                             <th width="150px"> RW Process Order</th>
-                            <th width="105px"> RW SO number
-                            <th>
-
+                            <th width="105px"> RW SO number</th>
+ -->
 
 
                         </tr>
@@ -194,7 +209,7 @@ endforeach;
                             <tr stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
-                                <td><?= $row["Owner"] ?></td>
+                                <td><?= $row["person"] ?></td>
                                 <td><?= $row["TargetDate"] ?></td>
 
 
@@ -231,6 +246,7 @@ endforeach;
                                 <td class='lefttext'><?= $row["Status"] ?></td>
                                 <td class='lefttext'><?= $row["form_type"] ?></td>
                                 <td class='lefttext'><?= $row["Action"] ?></td>
+                                <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

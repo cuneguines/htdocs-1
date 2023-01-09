@@ -354,7 +354,7 @@ border:1px solid red;
                                             //$promise_week_due = $results[$i]["Promise Week Due"];
                                            $project_unp = $results[$i]["Project"];
                                             //$customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
-                                            $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : 'Nil';
+                                           $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : '';
                                             $first = 0;
                                         }
                                         
@@ -427,7 +427,7 @@ border:1px solid red;
                                             else
                                             $border_color="";
                                            $str = generate_schedule_buttons_forpc(
-                                           'green',
+                                           'orange',
                                             $overwrite,
                                             NULL,
                                             $border_color,
@@ -523,18 +523,18 @@ border:1px solid red;
                         <div class = "fill">
                            <div class = "subdividor light_grey rounded-left">
                                 <div class = "half">
-                                    <div class = "textholder"><p>Pre Production</p></div><div class = "button_holder"><button class = "light_blue"></button></div>
+                                    <!-- <div class = "textholder"><p>Pre Production</p></div><div class = "button_holder"><button class = "light_blue"></button></div> -->
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>Non Del</p></div><div class = "button_holder"><button class = "pink"></button></div>
+                                    <!-- <div class = "textholder"><p>Non Del</p></div><div class = "button_holder"><button class = "pink"></button></div> -->
                                 </div>
                             </div><!--
                          --><div class = "subdividor light_grey">
                                 <div class = "half">
-                                    <div class = "textholder"><p>Live Make</p></div><div class = "button_holder"><button class = "green"></div>
+                                    <!-- <div class = "textholder"><p>Live Make</p></div><div class = "button_holder"><button class = "green"></div> -->
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>Live Bought In</p></div><div class = "button_holder"><button class = "orange"></div>
+                                    <!-- <div class = "textholder"><p>Live Bought In</p></div><div class = "button_holder"><button class = "orange"></div> -->
                                 </div>
                             </div><!--
                          --><div id = "centergroup_left" class = "subdividor light_grey">
@@ -561,7 +561,7 @@ border:1px solid red;
                                     <div class = "textholder"><p>Notification</p></div><div class = "button_holder"><button class = "greenshadow"></button></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>High Risk</p></div><div class = "button_holder"><button class = "light_grey brlightgrey redshadow"></button></div>
+                                    <!-- <div class = "textholder"><p>High Risk</p></div><div class = "button_holder"><button class = "light_grey brlightgrey redshadow"></button></div> -->
                                 </div>
                             </div><!--
                          --><div class = "subdividor light_grey rounded-right">

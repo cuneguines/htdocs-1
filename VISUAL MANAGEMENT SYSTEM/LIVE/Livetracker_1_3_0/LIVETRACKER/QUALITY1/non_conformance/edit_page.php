@@ -52,7 +52,7 @@
 
 <body>
     <?php //include './conn.php'; ?>
-    <?php// include './SQL_Quality_ItemCode.php'; ?>
+    <?php //include './SQL_Quality_ItemCode.php'; ?>
     <?php
     //$getResults = $conn->prepare($Quality_results);
     //$getResults->execute();
