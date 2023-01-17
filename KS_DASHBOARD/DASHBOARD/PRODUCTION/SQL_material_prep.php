@@ -1,40 +1,43 @@
 <?php
     // LISTS THE REMAINING DEMAND FOR EACH PROCESS ON ALL OPEN PROCESS ORDERS BY SEQUENCE CODE
+    //Changed 10-01-23 not updating
     $production_group_step_demand_all_sql = 
     "SELECT
     t2.U_OldCode [Sequence Code],
     SUM(CAST(CASE WHEN (t1.ProcessTime - ISNULL(t6.[Booked Hours],0)) < 0 THEN 0 ELSE (t1.ProcessTime - ISNULL(t6.[Booked Hours],0)) END  AS DECIMAL(12,2)))[QTY]
 
     FROM IIS_EPC_PRO_ORDERH t0
-		INNER JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrOrder = t0.PrOrder
-		INNER JOIN OITM t2 ON t2.ItemCode = t1.StepItem
-		LEFT JOIN OWOR t3 ON t3.U_IIS_proPrOrder = t0.PrOrder AND t3.itemCode = t0.EndProduct
+        INNER JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrOrder = t0.PrOrder
+        INNER JOIN OITM t2 ON t2.ItemCode = t1.StepItem
+        left JOIN OWOR t3 ON t3.U_IIS_proPrOrder = t0.PrOrder AND t3.itemCode = t0.EndProduct
     
-		LEFT JOIN(
-			SELECT t0.PrOrder, t0.LineID, ISNULL(SUM(t0.Quantity),0)[Booked Hours]
-				FROM IIS_EPC_PRO_ORDERT t0
-				GROUP BY t0.PrORder, t0.LineID
-		)t6 ON t6.PrOrder = t0.PrOrder AND t6.LineID = t1.StepCode
+        LEFT JOIN(
+            SELECT t0.PrOrder, t0.LineID, ISNULL(SUM(t0.Quantity),0)[Booked Hours]
+                FROM IIS_EPC_PRO_ORDERT t0
+                GROUP BY t0.PrORder, t0.LineID
+        )t6 ON t6.PrOrder = t0.PrOrder AND t6.LineID = t1.StepCode
 
-		LEFT JOIN(SELECT t0.PrOrder, t0.LineID, t0.StepItem, t0.ParentLine, t1.StepItem [To_Make],
-					CASE WHEN t2.PrOrder is null THEN 'Sub Component' else 'End Product' END [Class],
-					CASE WHEN t3.DocNum is null THEN 'No Prod Ord' else 'Prod Ord' END [In Prod?],
-					t1.UseStock
-					from IIS_EPC_PRO_ORDERL t0
-					inner join (
-						SELECT t0.PrOrder, t0.LineID, t0.StepItem, t0.UseStock
-						from IIS_EPC_PRO_ORDERL t0
-							WHERE t0.StepType = 'B'
-					)t1 ON t1.PrOrder = t0.PrOrder and t1.LineID = t0.ParentLine
-					left join iis_epc_pro_orderh t2 ON t2.PrOrder = t0.PrOrder and t2.EndProduct = t1.StepItem
-					left join owor t3 ON t3.U_IIS_proPrOrder = t0.prorder and t3.ItemCode = t1.StepItem
-						WHERE t0.StepType <> 'B'
-		)t10 ON t10.PrOrder = t1.PrOrder and t10.lineid= t1.LineID
-		
-		inner join oitm t11 ON t11.ItemCode = t10.To_Make
-		
-		WHERE t1.StepType <> 'B' AND t0.Status IN ('P','I','S','R') AND t1.Status IN ('O','P') AND t3.Status IN ('R','L') AND t10.UseStock <> 'Y' AND t2.U_OldCode LIKE 'SEQ%'
-		GROUP BY t2.U_OldCode";
+
+        LEFT JOIN(SELECT t0.PrOrder, t0.LineID, t0.StepItem, t0.ParentLine, t1.StepItem [To_Make],
+                    CASE WHEN t2.PrOrder is null THEN 'Sub Component' else 'End Product' END [Class],
+                    t1.UseStock
+                    from IIS_EPC_PRO_ORDERL t0
+                    inner join (
+                        SELECT t0.PrOrder, t0.LineID, t0.StepItem, t0.UseStock
+                        from IIS_EPC_PRO_ORDERL t0
+                            WHERE t0.StepType = 'B'
+                    )t1 ON t1.PrOrder = t0.PrOrder and t1.LineID = t0.ParentLine
+                    left join iis_epc_pro_orderh t2 ON t2.PrOrder = t0.PrOrder and t2.EndProduct = t1.StepItem
+
+                        WHERE t0.StepType <> 'B'
+
+        )t10 ON t10.PrOrder = t1.PrOrder and t10.lineid= t1.LineID
+        
+        inner join oitm t11 ON t11.ItemCode = t10.To_Make
+        
+        WHERE t1.StepType <> 'B' AND t0.Status IN ('P','I','S','R') AND t1.Status IN ('O','P') AND t3.Status IN ('R','L') AND t10.UseStock <> 'Y' AND t2.U_OldCode LIKE 'SEQ%'
+        GROUP BY t2.U_OldCode
+";
 
     // TAKES THE BOOKED TIME FOR EACH LABOUR CODE WITH A SEQUENCE CODE FOR THE PAST 10 WEEKS, TAKES THE TOP 5 AND FINDS THE AVERAGE OF THAT TO GIVE A GENERAL OPERATING EXECUTION TIME FOR EACH LABOUR STEP
     $sql_production_group_step_avg_execution = "WITH rws as(

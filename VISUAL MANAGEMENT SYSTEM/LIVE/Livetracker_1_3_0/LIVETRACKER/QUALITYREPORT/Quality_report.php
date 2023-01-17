@@ -165,24 +165,24 @@ endforeach;
                         <tr class="dark_grey wtext smedium head">
                             <th width="150px">Item no</th>
                             <th width="120px">Date raised</th>
-
+                            <th width="140px">Date Updated</th>
                             <th width="170px">Owner</th>
                             <th width="200px">Target date</th>
                             <th width="120px">Days left</th>
                             <th width="120px">Sap code</th>
                             <th width="300px">Customer</th>
                             <th width="150px">SO</th>
-                            <th width="200px">Project</th>
+                            <th width="300px">Project</th>
                             <th width="400px">Description</th>
                             <th width="200px">ItemCode</th>
-                            <th width="150px">Product group1</th>
+                            <th width="200px">Product group1</th>
                             <th width="150px">Pg2</th>
                             <th width="150px">pg3</th>
                             <th width="150px">Status</th>
-                            <th width="150px">Type</th>
-                            <th width="150px">Response type</th>
+                            <th width="200px">Type</th>
+                            <th width="300px">Response type</th>
                             <th width="150px"> Link to improvement</th>
-                            <!-- <th width="150px">Admin cost</th>
+                           <th width="150px">Admin cost</th>
                             <th width="150px">RW Cost</th>
                             <th width="150px">Materail Cost</th>
                             <th width="150px">Logistics Cost</th>
@@ -193,7 +193,7 @@ endforeach;
                            
                             <th width="150px"> RW Process Order</th>
                             <th width="105px"> RW SO number</th>
- -->
+
 
 
                         </tr>
@@ -209,8 +209,11 @@ endforeach;
                             <tr stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
+                                <td><?= $row["date_updated"] ?></td>
                                 <td><?= $row["person"] ?></td>
                                 <td><?= $row["TargetDate"] ?></td>
+                                <!-- Date Assigned -->
+                                
 
 
 

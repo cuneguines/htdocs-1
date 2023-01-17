@@ -15,7 +15,7 @@ $sql_operator_hours_pivot =
             WHEN DATEPART(WEEKDAY,t0.CREATED) = 7 THEN 'Saturday'
             WHEN DATEPART(WEEKDAY,t0.CREATED) = 1 THEN 'Sunday'
         END[WeekDay],
-        CAST(ISNULL(t0.Quantity,0) AS DECIMAL(12,1)) [Hours]
+        CAST(ISNULL(t0.Quantity,0) AS DECIMAL(12,2)) [Hours]
         FROM IIS_EPC_PRO_ORDERT t0
         LEFT JOIN OHEM t1 ON t0.UserId = t1.empID
             WHERE t0.Created > DATEADD(WEEK,-$week_hist,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE())) and t0.LabourCode <> '3000004' and t0.LabourCode <> '2999999' AND CONVERT(INT,t0.UserId) NOT IN (201,21)
@@ -42,9 +42,10 @@ $sql_operator_hours_pivot =
 
 $sql_operator_entries =
 "SELECT
+
 ISNULL(t3.SOnum,'STOCK ORDER') [Sales Order],
 t0.prorder [Process Order],
-CAST(t0.Quantity AS DECIMAL (12,1))[Hours],
+CAST(t0.Quantity AS DECIMAL (12,2))[Hours],
 t0.Created [Date of Entry],
 DATEPART (ISO_WEEK, t0.Created) [Week no.],
 datepart (ISO_WEEK, getdate()) [This week No.], 
@@ -63,6 +64,7 @@ t3.EndProduct,
 (case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end) as 'Operator', t0.UserId [Employee Number],
 t0.RecId,
 t4.ItemName,
+t44.CardName,
 (case when t3.endproduct = '1000000' then t0.Quantity else '0' end) [NP Time],
 t5.Name,
 DATEPART (YEAR, t0.Created) [Year]
@@ -78,13 +80,16 @@ JOIN IIS_EPC_PRO_ORDERH t3 on t0.prorder = t3.PrOrder
 LEFT JOIN(
     SELECT t1.itemcode, t1.ItemName FROM OITM t1
 ) t4 ON t3.endproduct = t4.itemcode
+LEFT JOIN(
+    SELECT t11.CardName,t11.DocNum FROM ordr t11
+) t44 ON t44.DocNum =t3.SONum
 
 LEFT JOIN oubr t5 on t5.Code = t1.branch
 
 
 WHERE t0.userid is not null and t1.U_IIS_disEmpPin <> '505' and t1.U_IIS_disEmpPin <> '514' and t0.LabourCode <> '3000004' and t0.LabourCode <> '2999999' AND t0.Created > DATEADD(WEEK,-$week_hist,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE()))
 
-GROUP BY  t0.prorder , t3.SONum , t0.Quantity, t0.Created, t0.labourcode, t2.ItemName , t3.EndProduct, (case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end), t0.UserId, t4.ItemName, t0.recid, t5.Name
+GROUP BY  t0.prorder , t3.SONum , t0.Quantity, t0.Created, t0.labourcode, t44.CardName,t2.ItemName , t3.EndProduct, (case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end), t0.UserId, t4.ItemName, t0.recid, t5.Name
 
 ORDER BY [Date of Entry] DESC
 

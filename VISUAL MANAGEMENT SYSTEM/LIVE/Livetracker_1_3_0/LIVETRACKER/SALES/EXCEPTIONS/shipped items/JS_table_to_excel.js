@@ -1,19 +1,27 @@
+
 function export_to_excel(tableID, filename = '')
 {
+ 
+
+
         // CREATE DOWNLOADLINK AND SELECT TABLE
         var downloadLink;
         var dataType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);
         var tableHTML = tableSelect.outerHTML;
+        
+        
         tableHTML = tableHTML.replace( / /g, '%20');
+        tableHTML = tableHTML.replace( /display:none;/g, '%20');
         tableHTML = tableHTML.replace(/color:%20white/gi , '');
         tableHTML = tableHTML.replace(/background-color:#ff7a7a;/gi , '');
         tableHTML = tableHTML.replace(/background-color:#FF8C00;/gi , '');
         tableHTML = tableHTML.replace(/background-color:#99FF99;/gi , '');
+ 
         tableHTML = tableHTML.replace(/<button%20class="comment_button%20"%20comments="/g,'');
         tableHTML = tableHTML.replace(/<button%20class="comment_button%20has_comment"%20comments="/g,'');
         tableHTML = tableHTML.replace(/"><[/]button>/g, '');
-        tableHTML = tableHTML.replace(/#/g, '')
+        tableHTML = tableHTML.replace(/#/g, '') 
 
   
     
@@ -39,6 +47,7 @@ function export_to_excel(tableID, filename = '')
             downloadLink.download = filename;
             //TRIGGERS DOWNLOAD
             downloadLink.click();
+        
         }
 }
 function removeHtml2(str) {

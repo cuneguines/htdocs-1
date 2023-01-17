@@ -87,7 +87,8 @@
                                 <tr class = "dark_grey wtext smedium head">
                                     <th width = "10%">Sales Order</th>
                                     <th width = "10%">Process Order</th>
-                                    <th width = "35%">Labour Name</th>
+                                    <th width = "17.5%">Labour Name</th>
+                                    <th width = "17.5%">Customer</th>
                                     <th width = "10%">Hours</th>
                                     <th width = "35%">Item Name</th>
                                     <th width = "5%">Year</th>
@@ -101,6 +102,7 @@
                                         <td><?= $entry["Sales Order"]?></td>
                                         <td><?= $entry["Process Order"]?></td>
                                         <td class = 'lefttext'><?= $entry["Labour Name"]?></td>
+                                        <td class = 'lefttext'><?= $entry["CardName"]?></td>
                                         <td><?= $entry["Hours"]?></td>
                                         <td class = 'lefttext'><?= $entry["ItemName"]?></td>
                                         <td><?= $entry["Year"]?></td>

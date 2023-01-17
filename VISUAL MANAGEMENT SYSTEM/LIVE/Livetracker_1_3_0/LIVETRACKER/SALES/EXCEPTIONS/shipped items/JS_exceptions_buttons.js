@@ -226,6 +226,7 @@ $(document).ready(function () {
         $('#select_project').prop('selectedIndex', 0);
         $('.grouping_category button').removeClass('pressed');
         rows.show();
+        window.location.reload();
     });
     function view_filtered_rows_today() {
         //alert('yes');

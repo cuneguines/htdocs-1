@@ -29,6 +29,7 @@
             $getResults = $conn->prepare($shippeditems);
             $getResults->execute();
             $shipped_exceptions_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+            
         ?>
 
         <!-- TABLESORTER INITALISATION -->
@@ -45,7 +46,14 @@
                     }
                 });
             });
+            
         </script>
+        <style>
+             .fill {
+            height: 100%;
+            width: 100%;
+        }
+            </style>
     </head>
     <body>
         <div id = 'background'>
@@ -75,19 +83,42 @@
                                 <button class = "fill medium red wtext rounded" stage = "thirty_days">Past 31 Days<br><br><?php echo date("d/m/y",strtotime("-31 days"))?></button>
                             </div><!--
                             --><div class = "grouping_category">
-                                <button class = "fill medium red wtext rounded" stage = "All">All</button>
+                                <button class = "fill medium white wtext rounded" stage = "All" disabled>All</button>
                             </div><!--
                             --><div class = "grouping_category">
-                                <button class = "fill medium red wtext rounded" stage = "All">All</button>
+                                <button class = "fill medium white wtext rounded" stage = "All" disabled>All</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class = "table_title green" id = "grouping_table_title">
+                    <button class='ledgend_btn' style='float:left; height:100%; width:100px; background-color:black;'><img class="fill" src="../../../../RESOURCES/info-icon.webp"></button>
                     <h1>SHIPPED<h1>
+                        <script>
+                    let active = 0;
+                    $('.ledgend_btn').click(function() {
+                        console.log('CLCIK');
+
+                        if (active === 0) {
+                            $('.ledgend').show();
+                            active = 1;
+                        } else if (active === 1) {
+                            $('.ledgend').hide();
+                            active = 0;
+                        }
+                    });
+                </script>
                 </div>
                 <div id = 'grouping_table_container' class = 'table_container' style = "overflow-y:scroll;">
                     <table id = "shipping" class = "filterable">
+                        <div class='ledgend' style="display:none;background:black;opacity:0.7;width:22%;height:10%;position:absolute;z-index:2; left:0%; top:0%;">
+                        <div style="position:relative;height:15%; margin-bottom:7%; margin-top:7%;">
+                            <ul>
+                            <li><button style="float:left; margin-left:5%; background-color:black; font-size:1.6vh;">Click on the RESET button before exporting</button></li>
+                </ul>
+                        
+                    </div>
+                </div>
                         <thead>
                             <tr class = "dark_grey wtext smedium head">
                                 <th width = "5%" >Date Shipped</th>
@@ -103,8 +134,8 @@
                                 <th width = "4%" >Docket No.</th>
                                 <th width = "16%">Delivery Address</th>
                                 <th width = "8%" >Site Contact</th>
-                                <th width = "4%" >SO<br>Comms</th>
-                                <th width = "4%" >DL<br>Comms</th>
+                                <th width = "4%" >SO Comms</th>
+                                <th width = "4%" >DL Comms</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -160,6 +191,7 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    
                 </div>
                 <div id = "grouping_pages_footer" class = "footer">
                     <div id = "button_container">
@@ -204,7 +236,7 @@
                     </div>
                     <div id = "button_container">
                     <button style=width:40% onclick = "" class = "reset_buttons fill medium grey rtext rounded">RESET</button>
-                        <button style=width:40% onclick = "export_to_excel('shipping')" class = "grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
+                        <button id="to_excel" style=width:40% onclick = "export_to_excel('shipping')" class = "grouping_page_corner_buttons fill medium green wtext rounded" >EXPORT</button>
                         
                     </div>
                 </div>

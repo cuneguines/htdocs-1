@@ -189,8 +189,8 @@
                                         <tr >
                                             <!-- IF THERE IS A NEW LABOUR STEP CODE ECHO THE DETAILS OF THAT STEP WITH A ROWSPAN EUQAL TO THE NUMBER OF ENTREIS FOR THAT STEP (IN QUERY) -->
                                             <!-- THEN PRINT DETAILS OF ENRTY (QTY OF HRS AND NAME OF FAB) -->
-                                            <?php if($row["Labour Code"] != $production_step_code || $row["Labour Code"]=='3000617'): ?>
-                                                <?php $production_step_code = $row["Labour Code"]; ?>
+                                            <?php if($row["Labour Step Number"] != $production_step_code): ?>
+                                                <?php $production_step_code = $row["Labour Step Number"]; ?>
                                                 <?php $brtop = "border-top:3px solid #454545;"; ?>
                                                 <td rowspan = "<?=$row["No Of Step Entries"] == 0 ? 1 : $row["No Of Step Entries"]?>" style = "border-right:1px solid #454545; border-top:3px solid #454545;"                     ><?=$row["Labour Step Number"]?></td>
                                                 <td rowspan = "<?=$row["No Of Step Entries"] == 0 ? 1 : $row["No Of Step Entries"]?>" style = "border-right:1px solid #454545; border-top:3px solid #454545;" class = "lefttext"  ><?=$row["Labour Description"]?></td>

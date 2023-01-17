@@ -105,6 +105,8 @@
 							<button class = "green production" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../KS_DASHBOARD/DASHBOARD/MAIN%20MENU/PRODUCTION%20SUBMENU/BASE_production_menu.php';">Production DB</button>
                             <button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../SAP READER/SAP READER/BASE_document_search.php';">SAP Reader</button>
                             <button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../HR/SERVICE PLANNER/Base_service_planner.php';">Service Planner</button>
+							<button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../OPERATOR HOURS REPORT/FABRICATOR HOURS/Base_production_table.php';">BOOKED HOURS</button>
+
 						</div>
 					</div>
                     <div style = "width:100%; height:10%; position:relative; vertical-align:top; top:2%">

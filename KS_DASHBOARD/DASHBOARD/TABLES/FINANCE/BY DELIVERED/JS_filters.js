@@ -1,5 +1,6 @@
 $(document).ready(function()
 {
+    
     var rows = $("table#finance_drilldown tr:not(':first')");
 
     $("#select_customer").on("change", function t2(){
