@@ -1,6 +1,8 @@
 <?php
+
 $process_order_step_efficiency_sql = 
 "SELECT 
+
 FORMAT(t22.U_Promise_Date,'dd-MM-yyyy')[Prom Date],
 t0.Originnum [Sales Order],
 t0.U_IIS_proPrOrder [Process Order],
@@ -124,7 +126,8 @@ left join rdr1 t22 on t22.DocEntry = t5.DocEntry and t22.ItemCode = t0.ItemCode
 
 where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')
-order by t0.U_IIS_proPrOrder, t16.LineID
+$clause
+order by $clause1,t0.U_IIS_proPrOrder, t16.LineID
 ";
 
 $sql_step_lookup = 

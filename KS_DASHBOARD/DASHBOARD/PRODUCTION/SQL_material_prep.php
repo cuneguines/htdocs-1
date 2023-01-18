@@ -122,8 +122,9 @@
             
 
             t0.PrOrder [Process Order],
+            ---Changed 18-01-23--
             
-
+            case when t24.[Name] is null then t8.U_PP_Status else t24.[Name] end [Status],
             t1.StepCode[Step Number],
             t17.RowNum,
             t2.U_OldCode [Sequence Code],
@@ -170,6 +171,10 @@
             LEFT JOIN RDR1 t8 ON t8.DocEntry = t7.DocEntry AND t8.ItemCode = t0.EndProduct AND T8.LineStatus = 'O'
             LEFT JOIN OSLP t99 ON t99.SlpCode = t8.SlpCode
             LEFT JOIN OHEM t22 ON t22.EmpID = t7.OwnerCode
+            ---Changed 18-01-23--
+            left join [dbo].[@PRE_PROD_STATUS] as t24 on t24.code    = t8.U_PP_Status
+    
+
     
             LEFT JOIN(
             SELECT t0.PrOrder, t0.StepItem, t0.StepCode, ROW_NUMBER() OVER (PARTITION BY t0.PrOrder ORDER BY t0.StepCode ASC)[RowNum] 

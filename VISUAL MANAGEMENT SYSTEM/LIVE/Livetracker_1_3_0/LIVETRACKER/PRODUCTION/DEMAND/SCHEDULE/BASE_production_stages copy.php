@@ -1,3 +1,22 @@
+<?php
+if (isset($_GET['saleo'])) {
+    $clause = "and t0.Originnum = '" . explode(',', $_GET['saleo'])[0]."'";//Sales Order to the Query
+}
+else
+{
+$clause = "";
+
+}
+if  (isset($_GET['saleo'])) {
+$clause1="abs(t0.U_IIS_proPrOrder-". explode(',', $_GET['saleo'])[1]. ")";
+}
+else
+{
+$clause1 = "";
+
+}
+    
+?>
 <!DOCTYPE html>
 <html>
     <head>

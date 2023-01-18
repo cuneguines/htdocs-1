@@ -382,10 +382,10 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                                                         
         
        WHERE
-        t0.[Promise Date UNP] between ([Monday LW Date]-24) and ([Monday TW Date]+28) AND t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')
+         t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')
         ORDER BY  t0.[Project]
 
-
+        ----t0.[Promise Date UNP] between ([Monday LW Date]-24) and ([Monday TW Date]+28) AND
 
 
 ";

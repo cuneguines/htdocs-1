@@ -15,7 +15,7 @@
 
     <!-- LOCAL JAVASCRIPT -->
     <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>
-    <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_exceptions_buttons.js"></script>
+    <script type="text/javascript" src="./JS_exceptions_buttons.js"></script>
     <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_filters.js"></script>
     <script type="text/javascript" src="../../JS LIBS//LOCAL/JS_comments.js"></script>
     <script type="text/javascript" src="./JS_table_to_excel.js"></script>
@@ -111,17 +111,17 @@ endforeach;
                 <div id='grouping_buttons' class='fw light_grey'>
                     <div id='margin'>
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="All">All</button>
+                            <button class="fill medium red wtext rounded" stat="Open">Open</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Gratings">All</button>
+                            <button class="fill medium red wtext rounded" stat="Closed">Closed</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Fixings">ALL</button>
+                            <button class="fill medium red wtext rounded" stat="ALL">ALL</button>
                         </div>
                         <!--
                             -->
@@ -146,7 +146,7 @@ endforeach;
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Other">Other</button>
+                            <button class="fill medium red wtext rounded" stat="Other">Other</button>
                         </div>
                         <!--
                             -->
@@ -202,11 +202,11 @@ endforeach;
                         <?php foreach ($quality_results as $row) : ?>
                             <?php
                             ?>
-                            <?php //   $supplier = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Supplier"]));  
+                            <?php $stat = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Status"]));  
                             ?>
                             <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
                             ?>
-                            <tr stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
+                            <tr stat='<?= $stat ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
                                 <td><?= $row["date_updated"] ?></td>

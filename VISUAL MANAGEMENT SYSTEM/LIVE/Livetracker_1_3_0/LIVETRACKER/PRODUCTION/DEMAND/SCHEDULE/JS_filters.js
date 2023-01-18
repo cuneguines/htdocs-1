@@ -8,7 +8,7 @@ $(document).ready(function () {
     var rows = $("table.filterable tbody tr:not('.head')");
     var template = $('table.filterable tfoot tr td');
     //Find the index of Intel IReland to set as default
-    var opts = document.getElementById("select_customer").options;
+    /* var opts = document.getElementById("select_customer").options;
     for (var i = 0; i < opts.length; i++) {
         if (opts[i].innerText == "Intel Ireland Ltd") {
             //alert("found it at index " + i + " or number " + (i + 1));
@@ -28,7 +28,7 @@ $(document).ready(function () {
 
     if (typeof __update_rows__ !== 'undefined') {
         update_total_row(rows, template);
-    }
+    } */
 
     // IF A ROW SELECTOR FILTER IS CHANGED
     // PROP ALL OTHER FILTERS TO ALL
