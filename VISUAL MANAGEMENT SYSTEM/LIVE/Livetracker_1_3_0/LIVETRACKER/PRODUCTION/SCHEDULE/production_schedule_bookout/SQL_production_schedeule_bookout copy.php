@@ -213,7 +213,7 @@ FROM(
                                                                 INNER JOIN rdr1 t1 on t1.DocEntry = t0.DocEntry
                                                                 INNER join oslp t2 on t2.SlpCode = ISNULL(t1.SlpCode,t0.SlpCode)
                                                                 INNER join ohem t3 on t3.empID = t0.OwnerCode
-                                                                LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode and t4.Status not in ('L','C')
+                                                                LEFT join owor t4 on t4.OriginNum = t0.DocNum AND t4.ItemCode = t1.ItemCode and t4.Status <>('C')---changed 20-01-23
                                                                 INNER JOIN oitm t5 on t5.ItemCode = t1.ItemCode
                                                                 INNER JOIN oitb t6 on t6.ItmsGrpCod = t5.ItmsGrpCod
                                                                 LEFT JOIN IIS_EPC_PRO_ORDERH t99 ON t99.PrOrder = t4.U_IIS_proPrOrder
@@ -354,5 +354,3 @@ FROM(
 
 
 ";
-   ?>
-

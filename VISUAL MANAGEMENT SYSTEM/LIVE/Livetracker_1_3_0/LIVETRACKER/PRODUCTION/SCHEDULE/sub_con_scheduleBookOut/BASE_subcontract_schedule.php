@@ -352,7 +352,7 @@
                                     $border_color = 'brired';
                                     
                                  if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
-                                   $overwrite = 'brdottedyellow';
+                                   $overwrite = 'bryellow';
                                 else if($results[$i]["Sub_Con_Status"] == "At Manufacturing Sub Con")
                                   $overwrite = "brdottedpink";
                                 else
@@ -516,7 +516,7 @@
                          --><div id="centergroup_left" class="subdividor light_grey">
                             <!-- <p style="margin-bottom:0%;margin-top:0.5vh;">In Stock/ Complete</p><button style="background-color:#DBDBDB; border:5px solid #9964ED; height:20px;"></button> -->
                              <p style="margin-bottom:0%;margin-top:0.5vh;">Advice note</p>
-                             <button style="background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button> 
+                             <button style="background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button> 
                         </div><!--
                          --><div class="subdividor light_grey">
                             <div class="half">

@@ -407,7 +407,10 @@ border:1px solid red;
                                         $comments = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];
                                          */
-
+                                       
+                                        if($results[$i]["AvgPrice"] == NULL){
+                                            $overwrite = "redshadow";
+                                        }
                                         if($results[$i]["Comments"] != NULL){
                                             $overwrite = "greenshadow";
                                         }
@@ -425,7 +428,12 @@ border:1px solid red;
                                                 $border_color="brpurple";
                                             }
                                             else
-                                            $border_color="";
+                                            
+                                            if($results[$i]["Partial_del"] =='Partial_del'){
+                                                $border_color = "purple";
+                                            }
+                                            else
+                                            $border_color = "purple";
                                            $str = generate_schedule_buttons_forpc(
                                            'orange',
                                             $overwrite,
