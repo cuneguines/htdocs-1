@@ -48,7 +48,7 @@ $mail = new PHPMailer(true);
 
    from KENTSTAINLESS.dbo.ohem t0
    
-   where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + t0.lastName='$owner'";
+   where t0.Active = 'Y' and t0.email is not NULL and REPLACE(t0.firstName + t0.lastName, '''', '')='$owner'";
    $getResults_email = $conn->prepare($query_email);
    $getResults_email->execute();
    $getResults_email = $getResults_email->fetchAll(PDO::FETCH_BOTH);
@@ -109,7 +109,29 @@ $mail = new PHPMailer(true);
   $mail->isHTML(true);                                  // Set email format to HTML
   
   $mail->Subject = 'TESTING FROM QUALITY';
-  $mail->Body    = $action .' TAKE ACTION NOW!';
+  $mail_Body  = "Hi, \r\n";
+  'Item no '.$Id .'requires your attention. \r\n' ;
+  //$mail->Body='Please log onto,'.http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php.' download'.  $action. \r\n';
+ '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+  
+  <div>
+          
+          <p>Please click the following link to proceed to the Quality report page "<a href ="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php">Open</a>"</p>
+  
+  
+  </div>
+  </body>
+  </html>\r\n';
+
+'Once competed please return to Ivan';
+"Warm regards, \r\n";
+"Quality Team. \r\n";
+  
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
   
   if(!$mail->send()) {

@@ -130,7 +130,9 @@ $(".project_item").removeClass("eng_active");
 $(this).addClass("eng_active");
 
 x = ""; */
-x='red';
+var x = $(this).attr('color_for_date');
+console.log(x);
+
 $("h2.eleventh").replaceWith("<h2 class = 'inner eleventh medium rtext'>" + $(this).attr('comments') + "</h2>");
 $("h2.third").replaceWith(" <h2 style = 'color:red;' class = 'inner third medium'>" + $(this).attr('desc') +"        ("+$(this).attr('qty')+")</h2>");
 $("h2.fifteenth").replaceWith("<h2 style='background-color:" + x + ";'class = 'inner fifteenth medium'>" + $(this).attr('date') + "</h2>");

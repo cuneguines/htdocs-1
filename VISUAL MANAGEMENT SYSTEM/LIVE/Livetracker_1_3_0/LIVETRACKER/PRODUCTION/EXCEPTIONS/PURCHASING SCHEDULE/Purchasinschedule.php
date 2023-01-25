@@ -54,6 +54,7 @@ $days = array(
         
     </head>
     <style>
+        .brdottedpurple{ border:4px dashed purple}
         .box {
 
             width: 15%;
@@ -232,10 +233,10 @@ border:1px solid red;
                         <br>
                         <p class = "smedium">Oustanding Quantity(OpnQty)</p>
                         <h2 class = "inner fifth medium">Nothing Selected</h2>
-                        <br>
+                        <!-- <br>
                         <p class = "smedium">Promise Date and Week Number</p>
                         <h2 class = "inner fourteenth medium">Nothing Selected</h2>
-                        <br>
+                        <br> -->
                         <p class = "smedium">Due Date </p>
                         <h2 class = "inner fifteenth medium">Nothing Selected</h2>
                     </div>
@@ -418,26 +419,34 @@ border:1px solid red;
                                             $overwrite = "redshadow";
                                         }
                                         
-
+                                        
                                         
                                         // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                         if($results[$i]["Sub Contract Status"] == 'Gone To Sub Con' || $results[$i]["Sub Contract Status"] == 'Yes' || $results[$i]["Sub Contract Status"] == '1002'){
                                             $border_color = "bryellow";}
-                                            if ($results[$i]["LineStatus"]=='C' )
+                                           if ($results[$i]["LineStatus"]=='C' )
                                             {
                                                 $border_color="brpurple";
                                             }
-                                            else
+                                           
                                             
                                             if($results[$i]["Partial_del"] =='Partial_del'){
-                                                $border_color = "purple";
+                                                $border_color="brdottedpurple";
                                             }
                                             else
-                                            $border_color = "purple";
+                                            $border_color = "";
+
+                                            if ($results[$i]["Date_delay"]=='Late' )
+                                            {
+                                           $color_for_date='red';
+                                            }
+                                            else
+                                            $color_for_date='green';
                                            $str = generate_schedule_buttons_forpc(
                                            'orange',
                                             $overwrite,
                                             NULL,
+                                            $color_for_date,
                                             $border_color,
                                             $results[$i]["Due Date"],
                                             $results[$i]["Purchase Order Number"] == NULL ? "NO SO" : $results[$i]["Purchase Order Number"],
@@ -550,18 +559,18 @@ border:1px solid red;
                             </div><!--
                          --><div class = "subdividor light_grey">
                                 <div class = "half">
-                                    <div class = "textholder"><p>In Subcontract</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button></div>
+                                    <!-- <div class = "textholder"><p>In Subcontract</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid yellow; height:20px;"></button></div> -->
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>In Man Subcon</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid #E601BA; height:20px;"></button></div>
+                                    <!-- <div class = "textholder"><p>In Man Subcon</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px solid #E601BA; height:20px;"></button></div> -->
                                 </div>
                             </div><!--
                          --><div id = "centergroup_right" class = "subdividor light_grey">
                                 <div class = "half">
-                                    <div class = "textholder"><p>Back From SC</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button></div>
+                                    <!-- <div class = "textholder"><p>Back From SC</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px dotted yellow; height:20px;"></button></div> -->
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><p>Req Man Sc</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px dotted #E601BA; height:20px;"></button></div>
+                                    <div class = "textholder"><p>Partial delivery</p></div><div class = "button_holder"><button style = "background-color:#DBDBDB; border:5px dotted purple; height:20px;"></button></div>
                                 </div>
                             </div><!--
                          --><div class = "subdividor light_grey">

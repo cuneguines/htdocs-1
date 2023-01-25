@@ -86,9 +86,14 @@
     $production_group_step_table_sql = 
     "SELECT 
     CASE 
+
+        WHEN DATEPART(dw,DATEADD(DAY,-(t0.[WORKDAYS] + FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])) IN (1,7) THEN convert(varchar,DATEADD(DAY,-2,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])),10)
+        ELSE convert(varchar,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date]),10)
+    END[Est LS Start Date],
+    CASE 
         WHEN DATEPART(dw,DATEADD(DAY,-(t0.[WORKDAYS] + FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])) IN (1,7) THEN DATEADD(DAY,-2,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date]))
         ELSE DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])
-    END[Est LS Start Date],
+    END[Est LS Start Date1],
     DATEDIFF(WEEK,GETDATE(),CASE 
         WHEN DATEPART(dw,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])) IN (1,7) THEN DATEADD(DAY,-2,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date]))
         ELSE DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])
@@ -117,6 +122,7 @@
             t22.firstName + ' ' + t22.LastName [Sales Person],
             t99.SlpName[Engineer],
             CAST(ISNULL(t8.U_Promise_Date, t3.DueDate) AS DATE)[Promise Date],
+            
             CASE WHEN (t18.StepItem <> t0.EndProduct) THEN 'Y' ELSE 'N' END [Sub Component],
             t18.StepDesc[Item Name],
             
@@ -125,6 +131,8 @@
             ---Changed 18-01-23--
             
             case when t24.[Name] is null then t8.U_PP_Status else t24.[Name] end [Status],
+            ---changed 23-01-23---
+            t8.U_PDM_Project[PDM],
             t1.StepCode[Step Number],
             t17.RowNum,
             t2.U_OldCode [Sequence Code],
@@ -272,5 +280,5 @@
         
         )t0
     )t0
-    ORDER BY [Sub Component],[Est LS Start Date]
+    ORDER BY [Sub Component],[Est LS Start Date1]
     ";

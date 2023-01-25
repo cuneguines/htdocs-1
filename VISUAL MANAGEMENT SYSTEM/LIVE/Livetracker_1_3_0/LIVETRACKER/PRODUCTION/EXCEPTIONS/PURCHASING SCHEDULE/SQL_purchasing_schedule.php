@@ -9,6 +9,7 @@ T0.Comments,
 T1.LineStatus,
 T2.AvgPrice,
 T1.U_BOY_38_EXT_REM[comment2],
+case when cast(T1.[Quantity] as decimal) > cast(T1.openqty as decimal) then 'Partial_del' end [Partial_del],
 CASE 
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -14 THEN -6
 WHEN DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) >= -14 AND DATEDIFF(DAY,GETDATE(),T0.[DocDueDate]) < -7 THEN -5
@@ -43,8 +44,8 @@ WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDue
 WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) =14 THEN 'TNNW'
 WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) =15 THEN 'WNNW'
 WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) =16 THEN 'TNNW'
-WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) <-4 THEN 'Other'
-when  DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) =-3 THEN 'LastworkingDay'
+WHEN DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) <=-3 THEN 'Other'
+--when  DATEDIFF(DAY,DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE()),T0.[DocDueDate]) =-3 THEN 'LastworkingDay'
 
 
 ELSE 'Ot'
@@ -64,9 +65,16 @@ when  DATEDIFF(DAY,getdate(),T0.[DocDueDate]) =-3 THEN 'LastfiveDays'
 when  DATEDIFF(DAY,getdate(),T0.[DocDueDate]) =-2 THEN 'LastfiveDays'
 when  DATEDIFF(DAY,getdate(),T0.[DocDueDate]) =-1 THEN 'LastfiveDays'
 END [Last five days], /* DAYS HERE */
+case 
+when DATEDIFF(DAY,getdate(),T0.[DocDueDate]) < 0 THEN 'Late'
+ when DATEDIFF(DAY,getdate(),T0.[DocDueDate]) =0 THEN 'On time'
+ 
+end [Date_delay],
+
 case when cast(T1.[Quantity] as decimal) > cast(T1.openqty as decimal) then 'Partial_del' end [Partial_del],
 FORMAT(t0.docdate,'dd-MM-yyyy') [Order Date],
-FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
+FORMAT(cast(COALESCE(T1.U_del_date_rev2,T1.U_del_date_rev1,T1.ShipDate,T0.[DocDueDate] )as date),'dd-MM-yyyy')[Due Date],
+---FORMAT(cast(T0.[DocDueDate] as date),'dd-MM-yyyy')[Due Date], 
 T0.[CardName][Project],
 cast(T1.[Quantity] as decimal)[Quantity], 
 cast(T1.openqty as decimal)[OutQty],

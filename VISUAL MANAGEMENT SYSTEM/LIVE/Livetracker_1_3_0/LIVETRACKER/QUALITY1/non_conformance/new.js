@@ -38,12 +38,14 @@ $(document).ready(function ()
 
 	
     function myFunction(event) {
+        var today = new Date().toISOString().split('T')[0];
+        $('#owner option[value="All"]').prop('selected', true);
+       $('#ddate').val(today);
         var CurrentRow = $(event.target).closest("tr");
         // alert(CurrentRow);
         var ItemId = $("td:eq(0)", $(CurrentRow)).html();
         var ItemIssue = $("td:eq(2)", $(CurrentRow)).html();
-
-
+        
         console.log(ItemId);
         console.log(ItemIssue);
 
@@ -51,6 +53,52 @@ $(document).ready(function ()
    
     $('#id').val(ItemId );
     $('#id').val(ItemId );
+
+    $.ajax({
+        type: "POST",
+        url: "ReadQA.php",
+        cache:false,
+        data: {
+         'id': ItemId,
+
+         
+        
+
+     },
+     dataType: 'json',
+        success: function(response){
+            //$("#contact").html(response)
+            //$("#contact-modal").modal('hide');
+            console.log(response[0]);
+            //console.log(response[0][0][9]);
+           // $("#owner option:selected").prop("selected", false)
+            //$('#owner option[value="Lorcan Kent"]').prop('selected', true);/
+            //$('#owner').removeAttr("selected");
+            //$('#owner').val(['Lorcan Kent']);
+            //$('#owner').val(response[0][0][9]).attr('selected','selected');
+            //$('#owner').prop('selected', false);
+            //$('#owner option[value="LorcanKent"]').prop('selected', true);
+            if (response[0][0][10]=='null')
+            {
+                response[0][0][10]='All'
+            }
+            if (response[0][0][9]=='1900-01-01')
+            {
+                response[0][0][9]=new Date().toISOString().split('T')[0];
+            }
+            $('#owner option[value="'+response[0][0][10]+'"]').prop('selected', true);
+            $('#action option[value="'+response[0][0][7]+'"]').prop('selected', true);
+            $('#status option[value="'+response[0][0][2]+'"]').prop('selected', true);
+            //$('#ddate option[value="'+response[0][0][9]+'"]').prop('selected', true);
+            $('#ddate').val(response[0][0][9]);
+            //alert('input recieved');
+            //location.reload();
+          
+        },
+        error: function(){
+            alert("Error");
+        }
+    }); 
     }
 	function submit(){
        
@@ -66,7 +114,7 @@ $(document).ready(function ()
         var z = $("#action").val();
         var a = $("#status").val();
         var b = $("#ddate").val();
-       
+       console.log(y);
         $.ajax({
            type: "POST",
            url: "saveQA.php",

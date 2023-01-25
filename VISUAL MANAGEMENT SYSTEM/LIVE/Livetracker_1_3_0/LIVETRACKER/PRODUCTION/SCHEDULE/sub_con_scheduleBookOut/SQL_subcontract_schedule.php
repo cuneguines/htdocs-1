@@ -17,14 +17,14 @@ $tsql =
         CAST (t0.ONHand as decimal)[ONHand],  
         t0.[On Order],
         FORMAT(CAST(t0.[Promise Date UNP] AS DATE),'dd-MM-yyyy') [Promise Date UNP],
-      CASE 
-      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
-WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
-        
-        ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
-        END [Promise Diff Week],
+---      CASE 
+---      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
+---    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
+---WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
+---WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
+---        
+---        ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
+---        END [Promise Diff Week],
         CASE 
         when t0.[Promise Date UNP] is null  then 14
         WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) < -14 THEN -4
@@ -83,7 +83,7 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         t0.Customer,
         t1.Docnum [Sales Order],
         FORMAT(t0.[Dispatch Date],'dd-MM-yyyy')[Dispatch Date],
-        t0.[Latest Purchase Ord], 
+        t0.[Purchase Ord], 
         t0.Supplier,
         FORMAT(t0.[Purchase Due],'dd-MM-yyyy')[Purchase Due],
         t0.[Shortage Warning],
@@ -102,7 +102,7 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         FORMAT(CAST(t0.Sub_Con_Date AS DATE),'dd-MM-yyyy')[Sub_Con_Date], 
         t0.Sub_Con_Remarks,
         isnull(t0.Sub_Con_Status,'No stat')[Sub_Con_Status],
-        t0.[Project], t5.latest_po_date[Latest Puchase Ord], t4.supplier[supplier], 
+        t0.[Project], t5.latest_po_date[Puchase Ord], t4.[CardName] [Supplier], 
         FORMAT(CAST(t5.earliest_po_due_date AS DATE),'dd-MM-yyyy') [PO Due Date]
         ----t22.Comments
         
@@ -130,7 +130,7 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                     isnull(t6.cardname,'Stock') [Customer], 
                     t4.docnum [Sales Order],
                     isnull(ISNULL(t7.U_Delivery_Date,t4.DocDueDate), t1.DueDate) [Dispatch Date], 
-                    t45.docnum [Latest Purchase Ord],
+                    t8.docnum [Purchase Ord],
                     ISNULL(t9.cardname, 'NO SUPPLIER') [Supplier],
                     isnull(t10.SlpName,t12.U_NAME) [Engineer], 
                     CAST(t8.DocDueDate AS DATE) [Purchase Due],
@@ -164,22 +164,15 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
                     LEFT JOIN 
                     (select t0.ItemCode, 
-                            MAX(t1.DocDueDate) [DocDueDate], 
-                            MAX(t1.DocNum) [DocNum]
+                            (t1.DocDueDate) [DocDueDate], 
+                            (t1.DocNum) [DocNum], t0.U_IIS_proPrOrder
                             from por1 t0
         
                             INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry        
                             where t1.DocStatus = 'O'         
-                            group by t0.ItemCode
-                    ) t8 ON t8.ItemCode = t0.ItemCode
+                    ) t8 ON t8.ItemCode = t0.ItemCode and t8.U_IIS_proPrOrder = t0.U_IIS_proPrOrder
                 
                     INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry
-                    left join(select t0.U_IIS_proPrOrder,t1.DocNum,t0.ItemCode
-                           
-                            from por1 t0
-        
-                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry        
-                            where t1.DocStatus = 'O')t45 ON  t45.U_IIS_proPrOrder=   t1.U_IIS_proPrOrder and t45.ItemCode = t0.ItemCode
                     INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
                     LEFT JOIN ordr t4 ON t4.docnum = t1.OriginNum
                     INNER join ohem t3 on t3.empID = t4.OwnerCode
@@ -255,14 +248,13 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
                     LEFT JOIN 
                     (select t0.ItemCode, 
-                            MAX(t1.DocDueDate) [DocDueDate], 
-                            MAX(t1.DocNum) [DocNum]
+                            (t1.DocDueDate) [DocDueDate], 
+                            (t1.DocNum) [DocNum], t0.U_IIS_proPrOrder
                             from por1 t0
-                
-                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry
-                            where t1.DocStatus = 'O'
-                            group by t0.ItemCode
-                    ) t8 ON t8.ItemCode = t0.ItemCode
+        
+                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry        
+                            where t1.DocStatus = 'O'         
+                    ) t8 ON t8.ItemCode = t0.ItemCode and t8.U_IIS_proPrOrder = t0.U_IIS_proPrOrder
                     
                     INNER JOIN ordr t1 ON t1.DocEntry = t0.DocEntry
                     INNER join ohem t13 on t13.empID = t1.OwnerCode
@@ -337,14 +329,13 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
                     LEFT JOIN 
                     (select t0.ItemCode, 
-                            MAX(t1.DocDueDate) [DocDueDate], 
-                            MAX(t1.DocNum) [DocNum]
+                            (t1.DocDueDate) [DocDueDate], 
+                            (t1.DocNum) [DocNum], t0.U_IIS_proPrOrder
                             from por1 t0
-                
-                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry
-                            where t1.DocStatus = 'O'
-                            group by t0.ItemCode
-                    ) t8 ON t8.ItemCode = t0.ItemCode
+        
+                            INNER JOIN opor t1 ON t1.DocEntry = t0.DocEntry        
+                            where t1.DocStatus = 'O'         
+                    ) t8 ON t8.ItemCode = t0.ItemCode and t8.U_IIS_proPrOrder = t0.U_IIS_proPrOrder
                     
                     INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry
                     INNER join ousr t13 on t13.USERID = t1.UserSign
@@ -363,12 +354,12 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         LEFT JOIN ordr t1 ON t1.DocNum = t0.[Sales Order]
         LEFT JOIN owor t2 ON t2.DocNum = t0.[Prod Ord]
         INNER JOIN oitm t3 ON t3.ItemCode = t0.ItemCode
-        LEFT JOIN opor t4 ON t4.DocNum = t0.[Latest Purchase Ord]
+        LEFT JOIN opor t4 ON t4.DocNum = t0.[Purchase Ord]
         ----added (29/09/22) get jobs with BOM issued --
         ----where t0.[Issued Qty]<t0.[Planned Qty]--
         left join (
                                                         select t0.ItemCode, 
-                                                        MAX(t1.DocDate) [latest_po_date], MIN(t1.DocDueDate) [earliest_po_due_date]
+                                                        t1.DocDate [latest_po_date], t1.DocDueDate [earliest_po_due_date], t1.docnum, t0.U_IIS_proPrOrder
                                                         
                                                         from por1 t0
                                                         inner join opor t1 on t1.DocEntry = t0.DocEntry
@@ -377,16 +368,13 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                                                         and t0.LineStatus = 'o'
                                                         and t1.DocType = 'I'
                                                         
-                                                        group by t0.ItemCode)t5 on t5.ItemCode = t0.ItemCode
+                                                        )t5 on t5.ItemCode = t0.ItemCode and t5.DocNum = t0.[Purchase Ord] and t0.[Process Order] = t5.U_IIS_proPrOrder
         
                                                         
         
        WHERE
          t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')
         ORDER BY  t0.[Project]
-
-        ----t0.[Promise Date UNP] between ([Monday LW Date]-24) and ([Monday TW Date]+28) AND
-
 
 ";
 ?>

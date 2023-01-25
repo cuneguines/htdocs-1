@@ -167,18 +167,20 @@ function generate_filter_options($table, $field)
     <table id = "p_table_<?=$exclude_step?>" class = "tfill alt_rcolor rh_med nopad active_p_row searchable sortable">
         <thead>
             <tr class = "white wtext smedium sticky head dark_grey">
-                <th width="5%"  class = 'lefttext'>S Order</th>
+                <th width="6%"  class = 'lefttext'>S Order</th>
                 <th class="hide">Customer</th>
                 <th class="hide">Project</th>
                 <th class="hide">Engineer</th>
-                <th width="5%"  class = 'lefttext'>P Order</th>
-                <th width="20%" class = 'lefttext'>Description</th>
+                <th width="6%"  class = 'lefttext'>P Order</th>
+                <th width="18%" class = 'lefttext'>Description</th>
                 <th width="10%"  class = 'lefttext'>Start Due</th>
+                <th >Start Due</th>
                 <th width="5%"  class = 'lefttext'>Step</th>
                 <th width="5%"  class = 'lefttext'>Planned</th>
                 <th width="5%"  class = 'lefttext'>Booked</th>
                 <th width="5%"  class = 'lefttext'>Remaining</th>
-                <th width="12.5%" class = 'lefttext'>Previous Step</th>
+                <th width="6.75%" class = 'lefttext'>Previous Step</th>
+                <th width="6.75%" class = 'lefttext'>PDM </th>
                 <th width="5%"  class = 'lefttext'>PrSteps</th>
                 <th width="5%"  class = 'lefttext'>Planned</th>
                 <th width="5%"  class = 'lefttext'>Status</th>
@@ -199,6 +201,7 @@ function generate_filter_options($table, $field)
                         $last_name=$entry["name"];
                         $booked_hrs_line_details = $booked_hrs_line_details.'\n'.str_replace("'","",$entry["date"])."\t ".str_replace("'","",$entry["name"])."\t".str_replace("'","",floatval($entry["booked_qty"]));
                     }
+                    
                 }
                 else
                 //Changed 18-01-23
@@ -237,29 +240,37 @@ function generate_filter_options($table, $field)
                         $pre_prod='light_blue';
                     } 
                    else
-                   $pre_prod='';
+                   $pre_prod=''; 
                 ?>
                 <!-- changed 13-12-22 -->
                 <?php if($row["Sequence Code"] != $step_list[$exclude_step]){continue;}?>
                 <?php $so = "location.href='http://vms/SAP%20READER/BASE_sales_order.php?sales_order=".$row["Sales Order"]."'" ?>
                 <?php $po = "location.href='http://vms/SAP%20READER/BASE_process_order.php?process_order=".$row["Process Order"]."'" ?>
-                <?php $saleo = "location.href='http://192.168.39.10/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/PRODUCTION/DEMAND/SCHEDULE/BASE_production_stages%20copy.php?saleo=".$row["Sales Order"]. "," . $row["Process Order"]."'" ?>
+                <?php $saleo = "location.href='http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/PRODUCTION/DEMAND/SCHEDULE/BASE_production_stages%20copy.php?saleo=".$row["Sales Order"]. "," . $row["Process Order"]."'" ?>
 
                 <?php //if($row["Prev Step Status"] != 'RD' && $row["Prev Step Status"] != 'FS'){$hide = "display:none;";}else{$hide = "";}?>
                 <tr customer = '<?=$customer?>' project = '<?=$project?>' est_step_start_due = "<?=(int)($row["Est LS Start Date DIFFWEEK"] <= -5 ? $week_five_weeks_ago : ($row["Est LS Start Date DIFFWEEK"] >= 25 ? $week_twenty_five_weeks_ahead : $row["Est LS Start Date WEEKNO"]))?>" prev_step_status = "<?=$row["Prev Step Status"] == 'FS' ? 'RD' :  $row["Prev Step Status"]?>" class = "active_p_row" style = "<?=$hide." ";?> <?=$row["Complete_Prd"] == 'Y' ? 'background-color:#7cbfa0' : ($row["Sub Component"] == 'Y' ? 'background-color:#FCF9A1' : '')?>" active_in_multiselect = 'Y'>
+
+                
                     <td class=<?=$pre_prod?>><button class = 'smedium so' onclick="<?=$so?>" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Sales Order"]?></button></td>
                     <td class = "hide"><?=$row["Customer"]?></td>
                     <td class="hide"><?=$row["Project"]?></td>
                     <td class="hide"><?=$row["Engineer"]?></td>
                     <td class=<?=$pre_prod?>><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="<?=$po?>"><?=$row["Process Order"]?></button></td>
                     <td class = "lefttext"><?=$row["Item Name"]?></td>
-                    <td><?=$row["Est LS Start Date"] ? $row["Est LS Start Date"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
-                    <td class = "light_green righttext"><?=$row["Step Number"]?></td>
-                    <td class = "p_hours light_green righttext"><?=floatval($row["Planned Hours"])?></td>
+                    <td ><?=$row["Est LS Start Date1"] ? $row["Est LS Start Date1"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
+                    <td><?=$row["Est LS Start Date"] ? $row["Est LS Start Date"]." <b>(".$row["Est LS Start Date WEEKNO"].")</b>" : "N/A"?></td>
+                    <!-- <td class = "light_green righttext"><?//$row["Step Number"]?></td> -->
+                    <td class="light_green"><button class = 'smedium so' onclick="alert('Customer:\n<?=$row['Customer']?> \n\n Project:\n<?=$row['Project']?> \n\nEngineer:\n<?=$row['Engineer']?> \n\nSales Person:\n<?=$row['Sales Person']?> \n\nEst Start Date + Workdays + Days + Remaining + Promise Date + SC Detail:\n<?=$row['Est LS Start Date']?> \t <?=$row['WORKDAYS']?> \t <?=$row['DAYS']?> \t <?=$row['REMAINING']?> \t <?=$row['Promise Date']?> \t <?=$row['SUBCON']?>');" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Step Number"]?></button></td>
+                    <td class="p_hours light_green"><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="alert('<?=$remarks_line_details;?>')"><?=floatval($row["Planned Hours"])?></button></td>
+                    <!-- <td class = "p_hours light_green righttext"><?//floatval($row["Planned Hours"])?></td> -->
                     <td class = "b_hours light_green righttext" style = "padding:0;"><button class = 'smedium be righttext <?=$booked_cell_color?>' style = "float:right; padding:0; padding-right:5px;" onclick="alert('<?=(string)$booked_hrs_line_details?>')"><?=floatval($row["Booked Hours"])?></button></td>
                     <td class = "r_hours light_green righttext"><?=floatval($row["Remaining Hours Stage"])?></td>
                     <td class = "light_red lefttext"><?=$row["Previous Step"]?></td>
+                    <td class = "light_red "><?=$row["PDM"]?></td>
+
                     <td class="light_red"><button class = 'light_red smedium rm'  onclick="<?=$saleo?>"><? $row["Sales Order"]?>View</button></td>
+
                     <td class = "light_red righttext"><?=floatval($row["Prev Step Planned Hours"])?></td>
                     
                     <td class = "light_red"><?=$row["Prev Step Status"]?></td>
@@ -278,9 +289,11 @@ function generate_filter_options($table, $field)
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
-                <td style="text-align:right"aggregateable = 'Y' operation = 'SUM_P'> </td>
-                <td style="text-align:right"aggregateable = 'Y' operation = 'SUM_B'>             </td>
+                <td aggregateable = 'N' operation = ''>             </td>
+                <td aggregateable = 'Y' operation = 'SUM_P'> </td>
+                <td aggregateable = 'Y' operation = 'SUM_B'>             </td>
                 <td style="text-align:right"aggregateable = 'Y' operation = 'SUM_R'>             </td>
+                <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>

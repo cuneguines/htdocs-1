@@ -19,11 +19,14 @@
         <script type = "text/javascript" src = "../../JS/LIBS/jquery.tablesorter.js"></script>
         <script type = "text/javascript" src = "./JS_update_rows.js"></script>
         <script type = "text/javascript" src = "./JS_func.js"></script>
+        <script type = "text/javascript" src = "./hidechart.js"></script>
+        
         <script type = "text/javascript">$(document).ready(function() {$.ajaxSetup({ cache: false });});</script>
 
         <!-- STYLING -->
 		<link rel = "stylesheet" href = "../../css/KS_DASH_STYLE.css">
         <link rel = "stylesheet" href = "../../css/theme.blackice.min.css">
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
         <!-- PHP DEPENDANCIES -->
@@ -54,7 +57,11 @@
 
         <?php $step_demand = json_decode(file_get_contents(__DIR__."./CACHED/step_demand.json"),true);?>
         <?php $step_capacity = json_decode(file_get_contents(__DIR__."./CACHED/step_capacity.json"),true);?>
-
+<style>
+    #min {
+     text-shadow: 0 0 3px #000;
+}
+</style>
 
 
         <!-- CHART SETUP FOR GROUP DEMAND VS CAPACITY-->
@@ -222,10 +229,21 @@
             <div id = "docs_and_deliverables_menu" class = "submenu">
 
                 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <div>
+                        <a style="z-index:1;position:absolute;margin-left:.8%;margin-top:-.0001%;border:groove;"id="min"><i class="fa fa-compress"></i> <span class="fa arrow"></span></a>
+                        </div>
 
+                        
+
+
+                        
+
+                
+              
                 <div class = "white sector top full" style = "width:98%;">
-                    <div class = "fill inactive">
-                        <div class = "content" style = "height:82%;">
+                
+                    <div class = "fill inactive top_div">
+                        <div class = "content" style = "height:81%;">
                             <div class = "radio_btn_page production_rbtns fill" id = "production_groups_bar_chart"></div>
                             <div class = "radio_btn_page production_rbtns fill inactive" id = "step_1" style = "display:none;"></div>
                             <div class = "radio_btn_page production_rbtns fill inactive" id = "step_2" style = "display:none;"></div>
@@ -247,7 +265,7 @@
                             <button class = "white btext br_green chart_button" id = "step_7" style = "width:7.9%; margin-left:4%;"><?= $prod_group_steps[7] ? constant($prod_group_steps[7])[DEFAULT_STAGE_NAME] : "Step Available";?></button>
                             <button class = "white btext br_green chart_button" id = "step_8" style = "width:7.9%; margin-left:4%;"><?= $prod_group_steps[8] ? constant($prod_group_steps[8])[DEFAULT_STAGE_NAME] : "Step Available";?></button>
                         </div>
-                        <div class = "head" style = "position:absolute; height:15%; width:96.5%; margin-left:3.5%; top:74%;">
+                        <div class = "head weeks" style = "position:absolute; height:15%; width:96.5%; margin-left:3.5%; top:74%;">
                             <button class = "white btext smedium" id = "step_1" style = "width:7.9%; margin-left:4%; background:none;"><?= $lead_time_arr[$prod_group_steps[1]]." Wks"?></button>
                             <button class = "white btext smedium" id = "step_2" style = "width:7.9%; margin-left:4%; background:none;"><?= $lead_time_arr[$prod_group_steps[2]]." Wks"?></button>
                             <button class = "white btext smedium" id = "step_3" style = "width:7.9%; margin-left:4%; background:none;"><?= $lead_time_arr[$prod_group_steps[3]]." Wks"?></button>
@@ -263,7 +281,7 @@
                 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
                 <div id = "bottomright" class = "white sector bottom full" style = "width:98%">
-                    <div style = "height:95%; position:relative; top:2.5%;">
+                    <div class="bott"style = "height:95%; position:relative; top:2.5%;">
                         <!--
                             PRINT PRODUCTION TABLE FOR EACH STEP IN THE PRODUCTION GROUP. print_production_step_table TAKES IN THREE ARGS; 
                             THE FULL PRODUCTION TABLE ITSELF, THE LIST OF STEPS IN THE PRODUCTION GROUP, THE INDEX OF THE STEP THE TABLE 

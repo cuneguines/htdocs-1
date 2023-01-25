@@ -419,11 +419,11 @@
 
 
                                     <th style="width: 200px">Area Non Conformance Raised</th>
-                                    <th style="width: 100px">Raised By</th>
-                                    <th style="width: 200px">Status</th>
+                                    <th style="width: 120px">Raised By</th>
+                                    <th style="width: 100px">Status</th>
 
                                     <th style="width: 200px">Date/time</th>
-                                    <th style="width: 78px">Edit</th>
+                                    <th style="width: 85px">Edit</th>
                                     <!-- <th style="width: 200px">cc_name</th>
                                     <th style="width: 200px">cc_sales_order</th>
                                     <th style="width: 200px">cc_process_order</th>

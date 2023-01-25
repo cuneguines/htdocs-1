@@ -146,7 +146,7 @@ endforeach;
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stat="Other">Other</button>
+                            <button class="fill medium red wtext rounded" stat="Other">New</button>
                         </div>
                         <!--
                             -->
@@ -163,7 +163,8 @@ endforeach;
                 <table id="purchasing_table" class="filterable sortable">
                     <thead>
                         <tr class="dark_grey wtext smedium head">
-                            <th width="150px">Item no</th>
+                            <th width="100px">Item no</th>
+                            <th width="400px">Description</th>
                             <th width="120px">Date raised</th>
                             <th width="140px">Date Updated</th>
                             <th width="170px">Owner</th>
@@ -205,9 +206,11 @@ endforeach;
                             <?php $stat = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Status"]));  
                             ?>
                             <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
+                                  $product_group_two = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Two"]));
                             ?>
-                            <tr stat='<?= $stat ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' class="white btext smedium">
+                            <tr stat='<?= $stat ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
+                                <td class='lefttext'><?= $row["nc_description"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
                                 <td><?= $row["date_updated"] ?></td>
                                 <td><?= $row["person"] ?></td>
@@ -236,6 +239,7 @@ endforeach;
                                         <div style="height:50px; margin:0; border:0;float:left;width:3px" class=<?= $color ?>></div>
                                     <?php endfor; ?><div style=width:50px;margin-left:80px;><?=-($row["Days_open"])?></div></td>
                                 <td class='lefttext'><?= $row["nc_itemcode"] ?></td>
+                                
 
 
                                 <td class='lefttext'><?= $row["Customer"] ?></td>
@@ -288,10 +292,10 @@ endforeach;
                         </div>
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill red medium wtext">UNUSED</button>
+                                <button class="fill red medium wtext">Product Group two</button>
                             </div>
                             <div class="content">
-                                <select class="selector fill medium">
+                                <select id="select_product_group_two"class="selector fill medium">
                                     <option value="All" selected>All</option>
                                 </select>
                             </div>
