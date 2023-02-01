@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="description" content="meta description">
     <meta name="viewpport" content="width=device-width, initial-scale = 1">
-    <title>Purchasing</title>
+    <title>Quality</title>
 
     <!-- EXTERNAL JAVASCRIPT -->
     <script type="text/javascript" src="../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
@@ -16,7 +16,7 @@
     <!-- LOCAL JAVASCRIPT -->
     <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_update_total_rows.js"></script>
     <script type="text/javascript" src="./JS_exceptions_buttons.js"></script>
-    <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_filters.js"></script>
+    <!-- <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_filters.js"></script> -->
     <script type="text/javascript" src="../../JS LIBS//LOCAL/JS_comments.js"></script>
     <script type="text/javascript" src="./JS_table_to_excel.js"></script>
 
@@ -74,7 +74,7 @@ endforeach;
 </head>
 <style>
     .blue {
-        background-color: blue;
+        background-color: #4d79ef;
 
     }
 
@@ -92,6 +92,10 @@ endforeach;
     .comment_button.has_attachment {
         background-color: rgb(198, 155, 64);
     }
+    .blue_pur
+{
+    background-color: #4d4dff
+}
 
     .comment_button {
         height: 30px;
@@ -111,58 +115,58 @@ endforeach;
                 <div id='grouping_buttons' class='fw light_grey'>
                     <div id='margin'>
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stat="Open">Open</button>
+                            <button class="fill medium blue wtext rounded" stat="Open">Open</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stat="Closed">Closed</button>
+                            <button class="fill medium blue wtext rounded" stat="Closed">Closed</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stat="ALL">ALL</button>
+                            <button class="fill medium blue wtext rounded" stat="ALL">ALL</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Fittings">All</button>
+                            <button class="fill medium blue wtext rounded" stage="Fittings">All</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Subcontract">ALL</button>
+                            <button class="fill medium blue wtext rounded" stage="Subcontract">ALL</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Sheets">ALL</button>
+                            <button class="fill medium blue wtext rounded" stage="Sheets">ALL</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Consum">Consumables</button>
+                            <button class="fill medium blue wtext rounded" stage="Consum">Consumables</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stat="Other">New</button>
+                            <button class="fill medium blue wtext rounded" stat="Other">New</button>
                         </div>
                         <!--
                             -->
                         <div class="grouping_category">
-                            <button class="fill medium red wtext rounded" stage="Intel">Intel</button>
+                            <button class="fill medium blue wtext rounded" stage="Intel">Intel</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="table_title green" id="grouping_table_title">
+            <div style="color:#495c77"class="table_title white" id="grouping_table_title">
                 <h1>QUALITY REPORT<h1>
             </div>
             <div id='grouping_table_container' class='table_container' style="overflow-y:scroll;overflow-x:scroll;">
                 <table id="purchasing_table" class="filterable sortable">
                     <thead>
-                        <tr class="dark_grey wtext smedium head">
+                        <tr class="blue_pur wtext smedium head">
                             <th width="100px">Item no</th>
                             <th width="400px">Description</th>
                             <th width="120px">Date raised</th>
@@ -265,10 +269,10 @@ endforeach;
                     <button onclick="location.href='../../../MAIN MENU/dashboard_menu.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button>
                 </div>
                 <div id="filter_container">
-                    <div id="filters" class="fill red rounded">
+                    <div id="filters" class="fill blue rounded">
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill red medium wtext">Supplier</button>
+                                <button class="fill blue medium wtext">Supplier</button>
                             </div>
                             <div class="content">
                                 <select id="select_supplier" class="selector fill medium">
@@ -280,7 +284,7 @@ endforeach;
                         </div>
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill red medium wtext">Product Group</button>
+                                <button class="fill blue medium wtext">Product Group</button>
                             </div>
                             <div class="content">
                                 <select id="select_product_group" class="selector fill medium">
@@ -292,7 +296,7 @@ endforeach;
                         </div>
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill red medium wtext">Product Group two</button>
+                                <button class="fill blue medium wtext">Product Group two</button>
                             </div>
                             <div class="content">
                                 <select id="select_product_group_two"class="selector fill medium">
@@ -303,7 +307,7 @@ endforeach;
                     </div>
                 </div>
                 <div id="button_container">
-                    <button onclick="export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
+                    <button onclick="export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
                 </div>
             </div>
         </div>

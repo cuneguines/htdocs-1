@@ -1,4 +1,24 @@
-﻿<!DOCTYPE html>
+﻿<?php
+    session_start();
+    $hash = "$2y$10$6mWAoF6Or1vpomN8WfaXnOH6a.NcK8X7e53gJ8h/raS0ucnRZ3Akm";
+    // IF PAGE IS ACCESSED BY LOGIN SCREEN AND PASSWORD IS CORRECT ALLOW TO CONTINUE
+    if(isset($_POST['password']) && password_verify(isset($_POST['password'])? $_POST['password'] : '', $hash)){
+        $_SESSION['logged_in'] = 1;
+    }
+    // IF PAGE IS ACCESSED BY LOGIN SCREEN AND PASSWORD IS INCORRECT REDIRECT TO LOGIN WITH ERROR MESSAGE
+    elseif(isset($_POST['password']) && !password_verify(isset($_POST['password'])? $_POST['password'] : '', $hash)){
+        $_SESSION['logged_in'] = 0;
+        header("Location:enter_password.php?message=Access Denied");
+    }
+    // IF PAGES IS ACCESSED DIRECTLY (SKIPPING LOGIN OR OTHERWISE) REDIRECT WITH ERROR MESSAGE
+    else{
+        $_SESSION['logged_in'] = 0;
+        header("Location:enter_password.php?message=Access Denied");
+    }
+?>
+
+
+<!DOCTYPE html>
 <html style="overflow:hidden"xmlns="http://www.w3.org/1999/xhtml">
 
 <head>

@@ -122,6 +122,7 @@
 
     function generate_filter_options($table, $field ){
         foreach(array_sort(array_unique(array_column($table, $field))) as $element){
+            if ($element=='Sean O Brien (Q)')continue;
             echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
         }
     }
@@ -448,7 +449,7 @@
 
                             <?php foreach ($quality_results_nc as $row) : ?>
                                 <tr>
-                                    <td style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
+                                    <td id=<?=$row["ID"]?>style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
                                     <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"] ?></td>
                                     <td class="bold" style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
 
@@ -547,7 +548,20 @@
                                     <a href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email">Owner</label>
+                                    <label for="key">Enter key</label>
+
+                                    <input id="passwrd" name="message" type="password" class="form-control"></textarea>
+
+                                    <div class="content">
+                                    
+                                    </div>
+
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="owner">Owner</label>
 
                                    
 
@@ -563,7 +577,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email">Required Action</label>
+                                    <label for="action">Required Action</label>
 
                                     <select id="action" style=width:100%;height:34px>
                                         <option value="Toolbox Talk" selected>Toolbox Talk</option>
@@ -584,7 +598,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="message">Date</label>
+                                    <label for="date">Date</label>
                                     <input id="ddate" name="message" type="date" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">

@@ -108,29 +108,14 @@ $mail = new PHPMailer(true);
  // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
   $mail->isHTML(true);                                  // Set email format to HTML
   
-  $mail->Subject = 'TESTING FROM QUALITY';
-  $mail_Body  = "Hi, \r\n";
-  'Item no '.$Id .'requires your attention. \r\n' ;
-  //$mail->Body='Please log onto,'.http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php.' download'.  $action. \r\n';
- '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  <html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  </head>
-  <body>
-  
-  <div>
-          
-          <p>Please click the following link to proceed to the Quality report page "<a href ="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php">Open</a>"</p>
-  
-  
-  </div>
-  </body>
-  </html>\r\n';
+  $mail->Subject = 'MESSAGE FROM QUALITY';
+  $mail->Body    = 'Hi <br>Item no '.$Id .'requires your attention. Please log onto (<a href=http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php>CLICK </a> ) and download the '.$action 
 
-'Once competed please return to Ivan';
-"Warm regards, \r\n";
-"Quality Team. \r\n";
+  .' Once competed please return to Ivan<br>
+
+  Kind regards,<br>
+  The Quality Team';
+ 
   
   $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
   
