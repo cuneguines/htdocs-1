@@ -1,6 +1,7 @@
 <?php
     // LISTS THE REMAINING DEMAND FOR EACH PROCESS ON ALL OPEN PROCESS ORDERS BY SEQUENCE CODE
     //Changed 10-01-23 not updating
+    //changed 12-02-23
     $production_group_step_demand_all_sql = 
     "SELECT
     t2.U_OldCode [Sequence Code],
@@ -108,14 +109,14 @@
     END[DAYS],
     *
     FROM(
-        SELECT	(t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5)[PRECALCULATED WORKDAYS],
+        SELECT  (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5+2)[PRECALCULATED WORKDAYS],
                 FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+7) [SUBCON ADJUSTMENT],
-                (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5) + CASE WHEN t0.[SUBCON] = 'Y' THEN FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+7) ELSE 0 END[WORKDAYS],
+                (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5) +2+ CASE WHEN t0.[SUBCON] = 'Y' THEN FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+7) ELSE 0 END[WORKDAYS],
                 * 
         FROM(
 
             SELECT
-			ISNULL(t16.[SUBCON],'N')[SUBCON],
+            ISNULL(t16.[SUBCON],'N')[SUBCON],
             ISNULL(t7.DocNum, 000000) [Sales Order],
             ISNULL(t7.CardName,'STOCK')[Customer],
             ISNULL(t7.U_Client,'NO PROJECT')[Project],
@@ -172,11 +173,11 @@
         
     
             FROM IIS_EPC_PRO_ORDERH t0
-            INNER JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrOrder = t0.PrOrder
+            INNER JOIN IIS_EPC_PRO_ORDERL t1 ON t1.PrOrder = t0.PrOrder and t1.Released = 'Y'
             INNER JOIN OITM t2 ON t2.ItemCode = t1.StepItem
             LEFT JOIN OWOR t3 ON t3.U_IIS_proPrOrder = t0.PrOrder AND t3.itemCode = t0.EndProduct
-            LEFT JOIN ORDR t7 ON t7.DocNum = t3.OriginNum
-            LEFT JOIN RDR1 t8 ON t8.DocEntry = t7.DocEntry AND t8.ItemCode = t0.EndProduct AND T8.LineStatus = 'O'
+            LEFT JOIN ORDR t7 ON t7.DocNum = t3.OriginNum 
+            LEFT JOIN RDR1 t8 ON t8.DocEntry = t7.DocEntry AND t8.ItemCode = t0.EndProduct AND T8.LineStatus = 'O' and t8.Quantity = t0.BatchSize and t8.u_IIS_proPrOrder=t0.PrOrder
             LEFT JOIN OSLP t99 ON t99.SlpCode = t8.SlpCode
             LEFT JOIN OHEM t22 ON t22.EmpID = t7.OwnerCode
             ---Changed 18-01-23--
@@ -212,7 +213,7 @@
                             WHERE t0.StepType = 'P' AND t0.StepDesc NOT LIKE '%LABOUR%'
             )t_NS_1 ON t_NS_1.PrOrder = t1.PrOrder AND t_NS_1.[RowNum] = t17.[RowNum] + 1
     
-			/* PROCESS->PRODUCTION ORDER JOINS */
+            /* PROCESS->PRODUCTION ORDER JOINS */
             LEFT JOIN(SELECT t0.PrOrder, t0.LineID, t0.StepItem, t0.ParentLine, t1.StepItem [To_Make], 
                         CASE WHEN t2.PrOrder is null THEN 'Sub Component' else 'End Product' END [Class],
                         CASE WHEN t3.DocNum is null THEN 'No Prod Ord' else 'Prod Ord' END [In Prod?],
@@ -229,7 +230,7 @@
             )t10 ON t10.PrOrder = t1.PrOrder and t10.lineid= t1.LineID
             inner join oitm t11 ON t11.ItemCode = t10.To_Make
     
-			/* NEXT AND PREVIOUS STEP DETAILS P2 */
+            /* NEXT AND PREVIOUS STEP DETAILS P2 */
             LEFT JOIN (
                 SELECT t0.U_IIS_proPrOrder, t1.ItemCode, t1.U_IIS_proPrLineID, t1.PlannedQty, t0.ItemCode [To Make], t1.LineNum
                     FROM owor t0
@@ -245,7 +246,7 @@
                             WHERE t2.ItemType = 'L'
             ) t_NS_2 ON t_NS_2.U_IIS_proPrOrder = t0.PrOrder and t_NS_2.U_IIS_proPrLineID = t_NS_1.StepCode and t_NS_2.[To Make] = t10.To_Make
         
-			/* OTHER DETAILS */
+            /* OTHER DETAILS */
             LEFT JOIN(
                SELECT t0.PrOrder, MAX(t0.Created)[LAST FAB DATE]
                       FROM IIS_EPC_PRO_ORDERT t0
@@ -266,19 +267,21 @@
                 SELECT t0.PrOrder, MAX(t0.LineID)[LineID] ,'Y'[SUBCON]
                     FROM IIS_EPC_PRO_ORDERL t0
                     LEFT JOIN OITM t1 ON t1.ItemCode = t0.StepItem
-						WHERE t1.U_OldCode LIKE 'SEQ026'
-							GROUP BY t0.PrOrder
+                        WHERE t1.U_OldCode LIKE 'SEQ026'
+                            GROUP BY t0.PrOrder
             )t16 ON t16.PrOrder = t0.PrORder
 
-			LEFT JOIN(
-				SELECT t0.PrOrder, t0.LineID, t0.ParentLine, t0.StepItem, t0.StepDesc FROM IIS_EPC_Pro_ORDERL t0
-			)t18 ON t18.PrOrder = t0.PrOrder AND t18.LineID = t1.ParentLine
+            LEFT JOIN(
+                SELECT t0.PrOrder, t0.LineID, t0.ParentLine, t0.StepItem, t0.StepDesc FROM IIS_EPC_Pro_ORDERL t0
+            )t18 ON t18.PrOrder = t0.PrOrder AND t18.LineID = t1.ParentLine
     
         
             WHERE t1.StepType <> 'B' AND t0.Status IN ('P','I','S','R') AND t1.Status IN ('O','P') AND t3.Status IN ('R','L') AND t10.UseStock <> 'Y'
-            AND t2.U_OldCode LIKE 'SEQ%'
+            AND t2.U_OldCode LIKE 'SEQ%' 
         
         )t0
     )t0
+
+
     ORDER BY [Sub Component],[Est LS Start Date1]
     ";

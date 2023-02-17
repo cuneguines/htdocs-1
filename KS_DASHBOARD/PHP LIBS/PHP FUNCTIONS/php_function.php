@@ -174,7 +174,7 @@ function generate_filter_options($table, $field)
                 <th width="6%"  class = 'lefttext'>P Order</th>
                 <th width="18%" class = 'lefttext'>Description</th>
                 <th width="10%"  class = 'lefttext'>Start Due</th>
-                <th >Start Due</th>
+               
                 <th width="5%"  class = 'lefttext'>Step</th>
                 <th width="5%"  class = 'lefttext'>Planned</th>
                 <th width="5%"  class = 'lefttext'>Booked</th>
@@ -259,7 +259,7 @@ function generate_filter_options($table, $field)
                     <td class=<?=$pre_prod?>><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="<?=$po?>"><?=$row["Process Order"]?></button></td>
                     <td class = "lefttext"><?=$row["Item Name"]?></td>
                     <td ><?=$row["Est LS Start Date1"] ? $row["Est LS Start Date1"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
-                    <td><?=$row["Est LS Start Date"] ? $row["Est LS Start Date"]." <b>(".$row["Est LS Start Date WEEKNO"].")</b>" : "N/A"?></td>
+                    <!-- <td><?//$row["Est LS Start Date"] ? $row["Est LS Start Date"]." <b>(".$row["Est LS Start Date WEEKNO"].")</b>" : "N/A"?></td> -->
                     <!-- <td class = "light_green righttext"><?//$row["Step Number"]?></td> -->
                     <td class="light_green"><button class = 'smedium so' onclick="alert('Customer:\n<?=$row['Customer']?> \n\n Project:\n<?=$row['Project']?> \n\nEngineer:\n<?=$row['Engineer']?> \n\nSales Person:\n<?=$row['Sales Person']?> \n\nEst Start Date + Workdays + Days + Remaining + Promise Date + SC Detail:\n<?=$row['Est LS Start Date']?> \t <?=$row['WORKDAYS']?> \t <?=$row['DAYS']?> \t <?=$row['REMAINING']?> \t <?=$row['Promise Date']?> \t <?=$row['SUBCON']?>');" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Step Number"]?></button></td>
                     <td class="p_hours light_green"><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="alert('<?=$remarks_line_details;?>')"><?=floatval($row["Planned Hours"])?></button></td>
@@ -285,7 +285,6 @@ function generate_filter_options($table, $field)
         <tfoot style = "position:sticky; bottom: 0; z-index:+1;">
             <tr class = "light_red btext">
                 <td aggregateable = 'Y' operation = 'COUNT'>                            </td>
-                <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>

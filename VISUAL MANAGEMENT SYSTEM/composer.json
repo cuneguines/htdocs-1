@@ -1,0 +1,5 @@
+{
+    "require": {
+        "groupdocscloud/groupdocs-viewer-cloud": "^21.12"
+    }
+}

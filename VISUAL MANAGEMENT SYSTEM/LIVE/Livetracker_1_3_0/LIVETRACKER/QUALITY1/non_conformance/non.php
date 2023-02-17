@@ -122,7 +122,7 @@
 
     function generate_filter_options($table, $field ){
         foreach(array_sort(array_unique(array_column($table, $field))) as $element){
-            if ($element=='Sean O Brien (Q)')continue;
+           if ($element=='Sean O Brien (Q)'){echo "<option value = '".'Sean O Brien (Q)'."'>".($element)."</option>";continue;}
             echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
         }
     }
@@ -602,10 +602,22 @@
                                     <input id="ddate" name="message" type="date" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
+                                <label for="message">Attachments</label>
+                                    <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
+                                    <!-- <input id="fileid" type="button" name="sortpic" /> -->
+                                    <form id="formid" method="get" >
+                                    <label for="download">No attachments</label>
+   <button  id="fileid" type="submit" name="sortpic">Download!</button>
+</form>
+                                    
+                                </div>
+                                <div class="form-group">
                                     <label for="message">Attachments</label>
                                     <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
                                     <input id="sortpicture" type="file" name="sortpic" />
+                                    
                                 </div>
+                                
                             </div>
                             <div class="modal-footer">
 

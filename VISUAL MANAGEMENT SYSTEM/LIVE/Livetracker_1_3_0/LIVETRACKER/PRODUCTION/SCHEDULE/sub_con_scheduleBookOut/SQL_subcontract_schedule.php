@@ -17,14 +17,14 @@ $tsql =
         CAST (t0.ONHand as decimal)[ONHand],  
         t0.[On Order],
         FORMAT(CAST(t0.[Promise Date UNP] AS DATE),'dd-MM-yyyy') [Promise Date UNP],
----      CASE 
----      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
----    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
----WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
----WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
----        
----        ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
----        END [Promise Diff Week],
+      CASE 
+      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
+        
+        ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
+        END [Promise Diff Week],
         CASE 
         when t0.[Promise Date UNP] is null  then 14
         WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) < -14 THEN -4
@@ -153,7 +153,7 @@ $tsql =
                     CAST(ISNULL(t7.U_Promise_date,t1.DueDate) AS DATE) [Due Date],
                     CAST(ISNULL(t4.U_FloorDate,t1.U_Floordate) AS DATE) [Floor Date],
                     CAST(isnull(t0.U_sc_date,DATEADD(d,+0,t7.U_Promise_date)) AS DATE) [Promise Date UNP],
-                    (CASE WHEN CAST(t8.DocDueDate AS DATE) < CAST (GETDATE() AS DATE) THEN 'yes' ELSE 'no' END)[Purchase Overdue],
+                   (CASE WHEN CAST(t8.DocDueDate AS DATE) < CAST (GETDATE() AS DATE) THEN 'yes' ELSE 'no' END)[Purchase Overdue],
                     t7.U_BOY_38_EXT_REM [Comments_SO],
                     t9.Comments [Comments_PO], 
                             t0.U_sc_date [Sub_Con_Date], 

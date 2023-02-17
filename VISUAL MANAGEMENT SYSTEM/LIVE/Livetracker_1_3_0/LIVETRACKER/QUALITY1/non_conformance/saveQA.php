@@ -43,12 +43,21 @@ $mail = new PHPMailer(true);
   $action=(!empty($_POST['action']) ? $_POST['action'] : '');
 	$atta="ddd";
    //to find the email 
+if ($owner=='Sean O Brien (Q)')
+{
+  $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 
+   from KENTSTAINLESS.dbo.ohem t0
+   
+   where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + + ' ' + t0.lastName='$owner'";
+}
+else{
    $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 
    from KENTSTAINLESS.dbo.ohem t0
    
    where t0.Active = 'Y' and t0.email is not NULL and REPLACE(t0.firstName + t0.lastName, '''', '')='$owner'";
+}
    $getResults_email = $conn->prepare($query_email);
    $getResults_email->execute();
    $getResults_email = $getResults_email->fetchAll(PDO::FETCH_BOTH);

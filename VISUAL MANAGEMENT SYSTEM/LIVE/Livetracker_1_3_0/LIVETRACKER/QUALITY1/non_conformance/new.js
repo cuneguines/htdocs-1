@@ -78,6 +78,9 @@ function myFunction(event) {
     var ItemIssue = $("td:eq(2)", $(CurrentRow)).html();
     console.log(ItemId);
     $('#id').val(ItemId);
+    $('#fileid').val('');
+    $('#fileid').text('Download');
+    $("label[for='download']").text('No Attachments');
     if ($('#passwrd').text().length == 0) {
         $('#owner').hide();
         $("label[for='owner']").hide();
@@ -138,6 +141,7 @@ function myFunction(event) {
                         //$('#owner').prop('selected', false);
                         //$('#owner option[value="LorcanKent"]').prop('selected', true);
                         console.log(response[0][0]['person']);
+                        console.log(response[0][0]['attachments']);
                         if (response[0][0][10] == null) {
                             response[0][0][10] = 'All'
                         }
@@ -151,6 +155,18 @@ function myFunction(event) {
                         else
                             if (response[0][0]['person'] == null) {
                                 $('#owner option[value="All"]').prop('selected', true);
+                            }
+                            
+                            if (response[0][0]['person'] == 'SeanO Brien (Q)') {
+                                $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
+                            }
+                            if (response[0][0]['attachments'] == null) {
+                                $('#fileid').text('Download');
+                            }
+                            else{
+                            $('#fileid').text('Download');
+                            $("label[for='download']").text(response[0][0]['attachments']);
+                            $('#formid').attr('action', 'uploads/'+ response[0][0]['attachments']);
                             }
                         console.log(response[0][0]['person']);
 

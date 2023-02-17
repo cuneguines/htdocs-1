@@ -71,21 +71,26 @@ function update_total_row(rows, template) {
 
                 $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
             }
-            if ($(this).attr('operation') === 'SUM_R') {
+           console.log($("table:visible").attr('id'));
+           $table_id=$("table:visible").attr('id');
+            if ($(this).attr('operation') === 'SUM_R' ) {
                 var sum = 0;
-                $("table tr:visible td.r_hours").each(function () {
+                var count=0;
+                $("table:visible td.r_hours").each(function () {
                     if ($(this).attr('type') !== 'breakdown') {
                         //sum+=get_num_value($(this),column);
 
-                        // console.log(customerId);
+                       console.log(parseFloat($(this).text()));
                         sum += parseFloat($(this).text());
 
-
-                        //console.log(sum);
+count=count+1;
+                       console.log(sum);
                     }
                 });
+                console.log(count);
+                count=0;
 
-                $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
+                $('table:visible.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
             }
             if ($(this).attr('operation') === 'AVG') {
                 var sum = 0;
