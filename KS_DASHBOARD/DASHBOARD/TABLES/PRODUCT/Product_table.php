@@ -20,6 +20,8 @@
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../CSS/KS_DASH_STYLE.css">
     <link rel="stylesheet" href="../../../css/theme.blackice.min.css">
+
+    <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_function.php'; ?>
     <style>
         .new_css {
             float: left;
@@ -201,7 +203,7 @@
                 <div class="new_css" style="margin-left: -1%;height:80%">
                     <select id="select_customer" class="selector fill medium">
                         <option value="All" selected>All</option>
-                        <?php // generate_filter_options($results, "Customer"); 
+                        <?php generate_filter_options($results, "Customer"); 
                         ?>
                     </select>
                 </div>
@@ -213,7 +215,7 @@
                 <div class="new_css" style="margin-left: -1%;height:80%">
                     <select id="select_salesperson" class="selector fill medium">
                         <option value="All" selected>All</option>
-                        <?php //generate_filter_options($pre_production_exceptions_results, "Sales Person"); 
+                        <?php generate_filter_options($results, "U_Product_Group_One"); 
                         ?>
                     </select>
 
@@ -224,7 +226,7 @@
                 <div class="new_css" style="margin-left: -1%;height:80%">
                     <select id="select_salesperson" class="selector fill medium">
                         <option value="All" selected>All</option>
-                        <?php //generate_filter_options($pre_production_exceptions_results, "Sales Person"); 
+                        <?php generate_filter_options($results, "U_Product_Group_Two"); 
                         ?>
                     </select>
 

@@ -225,23 +225,23 @@ endforeach;
 
 
                                 <td style="border-left:1px solid pink;border-right:1px solid pink;width:10px; box-shadow: 0px -2px 10px 0px rgb(0 0 0 / 50%);">
-                                    <?php for ($i = 0; $i < - ($row["Days_open"]); $i++) :
+                                    <?php // for ($i = 0; $i < - ($row["Days_open"]); $i++) :
 
-                                        switch ($row["Days_open"]) {
-                                            case ($row["Days_open"] < 17):
-                                                $color = 'green';
-                                                break;
-                                            case ($row["Days_open"] > 30):
-                                                $color = 'green';
-                                                break;
-                                            default:
-                                                $color = 'white';
-                                                break;
-                                        }
+                                        //switch ($row["Days_open"]) {
+                                            //case ($row["Days_open"] < 17):
+                                               // $color = 'green';
+                                                //break;
+                                            //case ($row["Days_open"] > 30):
+                                                //$color = 'green';
+                                                //break;
+                                            //default:
+                                                //$color = 'white';
+                                                //break;
+                                        //}
                                     ?>
 
-                                        <div style="height:50px; margin:0; border:0;float:left;width:3px" class=<?= $color ?>></div>
-                                    <?php endfor; ?><div style=width:50px;margin-left:80px;><?=-($row["Days_open"])?></div></td>
+                                        <!-- <div style="height:50px; margin:0; border:0;float:left;width:3px" class=<?// $color ?>></div> -->
+                                    <?php //endfor; ?><div style=width:50px;margin-left:80px;><?=-($row["Days_open"])?></div></td>
                                 <td class='lefttext'><?= $row["nc_itemcode"] ?></td>
                                 
 

@@ -31,6 +31,8 @@ $(document).ready(function(){
         
         });
     $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href=' + "'" + '/../SAP READER/BASE_sales_order.php?sales_order=' + $(this).attr('sales_order') + "'" + '">' + $(this).attr('sales_order') + "</button></h2>");
+    //for Project number
+    $("h2.first_sub").replaceWith( "<h2 class = 'inner first_sub small'>"+$(this).attr('project_num')+"</h2>");
    // $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+$(this).attr('process_order')+ ",NORMAL'" +'">'+$(this).attr('process_order')+"</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");
@@ -44,6 +46,7 @@ $(document).ready(function(){
     $("h2.eighth").replaceWith( "<h2 class = 'inner eighth medium'>"+$(this).attr('est_fab_hrs')+" ("+$(this).attr('planned_hrs')+")</h2>");
     $("h2.eleventh").replaceWith( "<h2 class = 'inner eleventh medium'>"+$(this).attr('comments')+"</h2>");
     $("h2.twent").replaceWith( "<h2 class = 'inner twent medium'>"+$(this).attr('comments_2')+"</h2>");
+    
     $(".project_item").removeClass("eng_active");
     $(this).addClass("eng_active");
     });

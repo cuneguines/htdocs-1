@@ -112,11 +112,12 @@
     }
     // FOR SCEDHULE PAGES //
     // GIVEN ALL BUTON DETAILS CREATES THE BUTTON AS A STRING FOR PRINTING //
-    function generate_schedule_button($base_color, $border_color, $overwrite, $sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs){
+    function generate_schedule_button($base_color, $border_color, $overwrite, $project_num,$sales_order, $process_order, $floor_date, $weeks_on_floor, $customer, $engineer, $engineer_nsp, $sales_person, $description, $promise_date, $promise_week_due, $est_fab_hrs, $status, $stage, $comments, $comments_2, $qty, $days_open, $week_opened, $weeks_open, $planned_hrs,$est_prod_hrs){
         $str = 
         "<button id = 'eng_btn'
             style = 'margin-bottom:3px;' 
             class = 'rounded project_item $base_color $border_color $overwrite' 
+            project_num='$project_num'
             sales_order = '$sales_order'
             process_order = '$process_order'
             floor_date = '$floor_date'

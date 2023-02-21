@@ -203,6 +203,7 @@
                     <div style = "width:94%;position:relative; left:0; top:2%; margin-bottom:4%;" class = "btext rounded brgreen white">
                         <p class = "smedium">Sales Order</p>
                         <h2 class = "inner first medium">Nothing Selected</h2>
+                        <h2 class = "inner first_sub small">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Process Order</p>
                         <h2 class = "inner thirteenth medium">Nothing Selected</h2>
@@ -376,6 +377,7 @@
                                         $str = generate_schedule_button($base_color,
                                             $border_color,
                                             $overwrite,
+                                            $results[$i]["Project Number"],
                                             $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                             $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
                                             $results[$i]["Floor Date"] == NULL ? "NO FLOOR DATE" : $results[$i]["Floor Date"],

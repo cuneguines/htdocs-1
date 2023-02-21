@@ -127,6 +127,8 @@ $("h2.eighth").replaceWith("<h2 class = 'inner eighth medium'>" + $(this).attr('
 $("h2.eleventh").replaceWith("<h2 class = 'inner eleventh medium'>" + $(this).attr('comments') + "</h2>");
 //Comments_2 is replaced with comments_1
 $("h2.twenty").replaceWith("<h2 class = 'inner twenty medium'>" + $(this).attr('comments_2') + "</h2>");
+//Account details goes here
+$("h2.second_sub").replaceWith("<h2 class = 'inner second_sub medium ' style ='color:#ffc107;'>" + $(this).attr('account') + "</h2>");
 $(".project_item").removeClass("eng_active");
 $(this).addClass("eng_active");
 x = "";

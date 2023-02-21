@@ -62,8 +62,8 @@ function generate_filter_options($table, $field)
                 <th class="hide">Customer</th>
                 <th class="hide">Project</th>
                 <th class="hide">Engineer</th>
-                <th width="5%"  class = 'lefttext'>P Order</th>
-                <th width="20%" class = 'lefttext'>Description</th>
+                <th width="20%"  class = 'lefttext'>P Order</th>
+                <th width="5%" class = 'lefttext'>Description</th>
                 <th width="10%"  class = 'lefttext'>Start Due</th>
                 <th width="5%"  class = 'lefttext'>Step</th>
                 <th width="5%"  class = 'lefttext'>Planned</th>
@@ -164,7 +164,7 @@ function generate_filter_options($table, $field)
     <?php $week_five_weeks_ago = date('W', strtotime(date('Y-m-d'))-(5*7*24*60*60));?>
     <?php $week_twenty_five_weeks_ahead = date('W', strtotime(date('Y-m-d'))+(25*7*24*60*60)) ?>
     <script>function show_alert(message){alert(message);}</script>
-    <table id = "p_table_<?=$exclude_step?>" class = "tfill alt_rcolor rh_med nopad active_p_row searchable sortable">
+    <table id = "p_table_<?=$exclude_step?>" class = "tfill alt_rcolor rh_med nopad active_p_row searchable sortable" style="overflow:auto">
         <thead>
             <tr class = "white wtext smedium sticky head dark_grey">
                 <th width="6%"  class = 'lefttext'>S Order</th>
@@ -172,21 +172,22 @@ function generate_filter_options($table, $field)
                 <th class="hide">Project</th>
                 <th class="hide">Engineer</th>
                 <th width="6%"  class = 'lefttext'>P Order</th>
-                <th width="18%" class = 'lefttext'>Description</th>
-                <th width="10%"  class = 'lefttext'>Start Due</th>
+                <th width="12%" class = 'lefttext'>Description</th>
+                <th width="6%" class = 'lefttext'>PDM </th>
+                <th width="8%"  class = 'lefttext'>Start Due</th>
                
-                <th width="5%"  class = 'lefttext'>Step</th>
+                <th width="7%"  class = 'lefttext'>Step</th>
                 <th width="5%"  class = 'lefttext'>Planned</th>
                 <th width="5%"  class = 'lefttext'>Booked</th>
                 <th width="5%"  class = 'lefttext'>Remaining</th>
-                <th width="6.75%" class = 'lefttext'>Previous Step</th>
-                <th width="6.75%" class = 'lefttext'>PDM </th>
+                <th width="7%" class = 'lefttext'>Previous Step</th>
+                
                 <th width="5%"  class = 'lefttext'>PrSteps</th>
-                <th width="5%"  class = 'lefttext'>Planned</th>
+                <!-- <th width="5%"  class = 'lefttext'>Planned</th>-->
                 <th width="5%"  class = 'lefttext'>Status</th>
-                <th width="7.5%" class = 'lefttext'>Next Step</th>
+                <th width="7%" class = 'lefttext'>Next Step</th>
                 <th width="5%" class = 'lefttext'>Name</th>
-                <th width="5%">Notes</th>
+                <th width="6%">Notes</th>
             </tr>
         <tbody>
         <?php //print_r($data);?>
@@ -258,6 +259,7 @@ function generate_filter_options($table, $field)
                     <td class="hide"><?=$row["Engineer"]?></td>
                     <td class=<?=$pre_prod?>><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="<?=$po?>"><?=$row["Process Order"]?></button></td>
                     <td class = "lefttext"><?=$row["Item Name"]?></td>
+                    <td><?=$row["PDM"]?></td>
                     <td ><?=$row["Est LS Start Date1"] ? $row["Est LS Start Date1"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
                     <!-- <td><?//$row["Est LS Start Date"] ? $row["Est LS Start Date"]." <b>(".$row["Est LS Start Date WEEKNO"].")</b>" : "N/A"?></td> -->
                     <!-- <td class = "light_green righttext"><?//$row["Step Number"]?></td> -->
@@ -267,11 +269,11 @@ function generate_filter_options($table, $field)
                     <td class = "b_hours light_green righttext" style = "padding:0;"><button class = 'smedium be righttext <?=$booked_cell_color?>' style = "float:right; padding:0; padding-right:5px;" onclick="alert('<?=(string)$booked_hrs_line_details?>')"><?=floatval($row["Booked Hours"])?></button></td>
                     <td class = "r_hours light_green righttext"><?=floatval($row["Remaining Hours Stage"])?></td>
                     <td class = "light_red lefttext"><?=$row["Previous Step"]?></td>
-                    <td class = "light_red "><?=$row["PDM"]?></td>
+                    
 
                     <td class="light_red"><button class = 'light_red smedium rm'  onclick="<?=$saleo?>"><? $row["Sales Order"]?>View</button></td>
 
-                    <td class = "light_red righttext"><?=floatval($row["Prev Step Planned Hours"])?></td>
+                    <!-- <td class = "light_red righttext"><?//floatval($row["Prev Step Planned Hours"])?></td> -->
                     
                     <td class = "light_red"><?=$row["Prev Step Status"]?></td>
                     <td class = "Light_yellow lefttext"><?=$row["Next Step"]?></td>

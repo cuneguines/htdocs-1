@@ -294,42 +294,42 @@
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_1" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 1, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_2" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 2, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_3" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 3, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_4" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 4, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_5" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 5, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_6" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 6, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_7" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 7, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_8" style = "display:none;">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
                                 <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 8, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>

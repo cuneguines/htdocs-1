@@ -65,10 +65,11 @@
     .bold {
         font-weight: bold;
     }
+
     .fill {
-    width: 100%;
-    height: 100%;
-}
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
 
@@ -83,7 +84,7 @@
         ////console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
         ////console.log(extension);
     </script>
-    <?php
+     <?php
     try {
         // CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
         $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
@@ -118,12 +119,22 @@
         return ('data:' . $mime . ';base64,' . $base64);
     }
 
-    function array_sort($array){sort($array); return $array;}
+    
+   
+    function array_sort($array)
+    {
+        sort($array);
+        return $array;
+    }
 
-    function generate_filter_options($table, $field ){
-        foreach(array_sort(array_unique(array_column($table, $field))) as $element){
-           if ($element=='Sean O Brien (Q)'){echo "<option value = '".'Sean O Brien (Q)'."'>".($element)."</option>";continue;}
-            echo "<option value = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $element))."'>".($element)."</option>";
+    function generate_filter_options($table, $field)
+    {
+        foreach (array_sort(array_unique(array_column($table, $field))) as $element) {
+            if ($element == 'Sean O Brien (Q)') {
+                echo "<option value = '" . 'Sean O Brien (Q)' . "'>" . ($element) . "</option>";
+                continue;
+            }
+            echo "<option value = '" . str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $element)) . "'>" . ($element) . "</option>";
         }
     }
     ?>
@@ -442,6 +453,8 @@
                                     <th style="width:200px">Preventive action reports</th> -->
 
                                     <th style="width:200px;"> Attachements</th>
+                                    <th style="width:200px;display:none"> Attachements</th>
+
                                 </tr>
                             </thead>
 
@@ -449,7 +462,7 @@
 
                             <?php foreach ($quality_results_nc as $row) : ?>
                                 <tr>
-                                    <td id=<?=$row["ID"]?>style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
+                                    <td id=<?= $row["ID"] ?>style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
                                     <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"] ?></td>
                                     <td class="bold" style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
 
@@ -496,13 +509,13 @@
 
                                     <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<? // $row['code'] 
                                                                                                                     ?>" name='<? // $row["code"] 
-                                                                                                                                                ?>' id='<? // $row["attachments_cause_analysis"] 
-                                                                                                                                                                        ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' 
-                                                                                                                                                                                                                                                                                                        ?>'></td>
+                                                                                                                                ?>' id='<? // $row["attachments_cause_analysis"] 
+                                                                                                                                        ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' 
+                                                                                                                                                                                                                                                ?>'></td>
                                         
                                        <td><input type="button" onclick=location.href="files_view_prev.php?q=<? // $row['code'] 
                                                                                                                 ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' 
-                                                                                                                                                                                                                        ?>'></td> -->
+                                                                                                                                                                                                        ?>'></td> -->
                                     <?php
                                     $x = $row["ID"];
                                     //print_r('NON CONFIRMANCE');
@@ -512,6 +525,8 @@
 
 
 
+                                
+                                <td style="display:none"><?=$row["attachments"]?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -553,7 +568,7 @@
                                     <input id="passwrd" name="message" type="password" class="form-control"></textarea>
 
                                     <div class="content">
-                                    
+
                                     </div>
 
 
@@ -563,12 +578,12 @@
                                 <div class="form-group">
                                     <label for="owner">Owner</label>
 
-                                   
+
 
                                     <div class="content">
-                                    <select id="owner" style=width:100%;height:34px>
+                                        <select id="owner" style=width:100%;height:34px>
                                             <option value="All" selected>All</option>
-                                            <?php generate_filter_options($getResults_email,"person","email"); ?>
+                                            <?php generate_filter_options($getResults_email, "person", "email"); ?>
                                         </select>
                                     </div>
 
@@ -602,22 +617,22 @@
                                     <input id="ddate" name="message" type="date" class="form-control"></textarea>
                                 </div>
                                 <div class="form-group">
-                                <label for="message">Attachments</label>
+                                    <label for="message">Attachments</label>
                                     <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
                                     <!-- <input id="fileid" type="button" name="sortpic" /> -->
-                                    <form id="formid" method="get" >
-                                    <label for="download">No attachments</label>
-   <button  id="fileid" type="submit" name="sortpic">Download!</button>
-</form>
-                                    
+                                    <form id="formid" method="get">
+                                        <label for="download">No attachments</label>
+                                        <button id="fileid" type="submit" name="sortpic">Download!</button>
+                                    </form>
+
                                 </div>
                                 <div class="form-group">
                                     <label for="message">Attachments</label>
                                     <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
                                     <input id="sortpicture" type="file" name="sortpic" />
-                                    
+
                                 </div>
-                                
+
                             </div>
                             <div class="modal-footer">
 

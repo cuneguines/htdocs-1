@@ -175,7 +175,8 @@
                                     $days_lthree = implode(" ", $project_days_lthree_buffer);
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
                                     $promise_week_due = '10';
-                                    if(($account_stat=="ON HOLD"))
+                                   
+                                    if(($account_stat=="ON HOLD-INV DUE"|| $account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat==" ON HOLD - BRID BP" ||$account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat=="ON HOLD - NO TERMS"))
                                     $bgcolor='pink';
                                     else
                                     $bgcolor=''; 

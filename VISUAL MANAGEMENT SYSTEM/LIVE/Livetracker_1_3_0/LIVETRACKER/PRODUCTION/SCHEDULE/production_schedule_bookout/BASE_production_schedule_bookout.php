@@ -63,6 +63,12 @@
     ?>
 <style>
     .bred{   border: 1px solid #eb3434;}
+     .box_shape{border-radius: 2em 0em 2em 0em;
+  
+  
+  
+   /* support: IE9+ */
+  }
     </style>
 </head>
 
@@ -79,6 +85,7 @@
                     <br>
                     <p class="smedium">Customer</p>
                     <h2 class="inner second medium">Nothing Selected</h2>
+                   <h2 class="inner second_sub medium">Nothing Selected</h2>
                     <br>
                     <p class="smedium">Description & Qty.</p>
                     <h2 class="inner third medium">Nothing Selected</h2>
@@ -175,10 +182,6 @@
                                     $days_lthree = implode(" ", $project_days_lthree_buffer);
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
                                     $promise_week_due = '10';
-                                    if(($account_stat=="ON HOLD"))
-                                    $bgcolor='pink';
-                                    else
-                                    $bgcolor=''; 
                                     
                                    // $bgcolor = '';
 
@@ -313,8 +316,21 @@
                                     }
                                     else 
                                     $color_for_dates='';
+                                    //shape for the account on hold
+                                    if(($account_stat=="ON HOLD-INV DUE"|| $account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat==" ON HOLD - BRID BP" ||$account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat=="ON HOLD - NO TERMS" ||$account_stat=="ON HOLD - THIS WILL PUSH OVER TERMS"))
+                                    {
+                                    $account_color='box_shape';
+                                    $bgcolor='pink';
+                                    }
+                                    else
+                                    {
+                                    $bgcolor=''; 
+                                    $account_color='';
+                                    }
                                 // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                 $str = generate_schedule_buttonsss(
+                                    $account_color,
+                                    $results[$i]["Account Status"],
                                     $color_for_dates,
                                     $border_color_for_date,
                                     $color,
@@ -473,7 +489,8 @@
                             </div><!--
                          --><div class = "subdividor light_grey rounded-right">
                                 <div class = "half">
-                                    <div class = "textholder"><p>Booked Out</p></div><div class = "button_holder"><button class = "blueshadow"></button></div>
+                                    <div class = "textholder"><p>On Hold</p></div><div ><button style="border-radius: 1em 0em 1em 0em;
+    border-style: solid;height:20px;width:40px;"></button></div>
                                 </div>
                                 <div class = "half">
                                     <!--<div class = "textholder"><p>Obsolete</p></div><div class = "button_holder"><button class = "black"></button></div>-->

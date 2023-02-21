@@ -76,11 +76,13 @@ function myFunction(event) {
     // alert(CurrentRow);
     var ItemId = $("td:eq(0)", $(CurrentRow)).html();
     var ItemIssue = $("td:eq(2)", $(CurrentRow)).html();
+    var attachments=$("td:eq(11)", $(CurrentRow)).html();
     console.log(ItemId);
     $('#id').val(ItemId);
     $('#fileid').val('');
+    $('#formid').attr('action', '../../../../../../QLTYFILES/'+ attachments);
     $('#fileid').text('Download');
-    $("label[for='download']").text('No Attachments');
+    $("label[for='download']").text(attachments);
     if ($('#passwrd').text().length == 0) {
         $('#owner').hide();
         $("label[for='owner']").hide();
@@ -160,14 +162,14 @@ function myFunction(event) {
                             if (response[0][0]['person'] == 'SeanO Brien (Q)') {
                                 $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
                             }
-                            if (response[0][0]['attachments'] == null) {
+                            /* if (response[0][0]['attachments'] == null) {
                                 $('#fileid').text('Download');
                             }
                             else{
                             $('#fileid').text('Download');
                             $("label[for='download']").text(response[0][0]['attachments']);
                             $('#formid').attr('action', 'uploads/'+ response[0][0]['attachments']);
-                            }
+                            } */
                         console.log(response[0][0]['person']);
 
                         //$('#owner option[value="' + response[0][0]['person'].replace(/[^A-Z0-9]/ig, "") + '"]').prop('selected', true);

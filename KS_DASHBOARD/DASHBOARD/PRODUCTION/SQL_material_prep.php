@@ -283,5 +283,5 @@
     )t0
 
 
-    ORDER BY [Sub Component],[Est LS Start Date1]
+    ORDER BY [Est LS Start Date1]
     ";

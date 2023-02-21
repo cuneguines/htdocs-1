@@ -132,7 +132,7 @@
         $pivot_graph_data[$row["Sequence Code"]][$row["Prev Step Status"] == 'FS' ? 'RD' : $row["Prev Step Status"]][$row["Est LS Start Date DIFFWEEK"] < -5 ? $start_week : ($row["Est LS Start Date DIFFWEEK"] > 25 ? $end_week : $row["Est LS Start Date WEEKNO"])] += ($row["Remaining Hours Stage"]);
         if($row["Est LS Start Date DIFFWEEK"] < 0){
             if($year_overlap_region = 'TY'){
-                $pivot_graph_data[$row["Sequence Code"]]['BKLG'][date('W')] += ($row["Remaining Hours Stage"])*0.5;
+                $pivot_graph_data[$row["Sequence Code"]]['BKLG'][(int)date('W')] += ($row["Remaining Hours Stage"])*0.5;
                 $pivot_graph_data[$row["Sequence Code"]]['BKLG'][date('W') + 1 >= $weeks_in_this_year ? 1 : date('W') + 1] += ($row["Remaining Hours Stage"])*0.3;
                 $pivot_graph_data[$row["Sequence Code"]]['BKLG'][date('W') + 2 >= $weeks_in_this_year ? 2 : date('W') + 2] += ($row["Remaining Hours Stage"])*0.2;
             }
@@ -237,6 +237,17 @@
     $step_remarks_json_data[$current_pr_order] = $pr_order_buff;
 
     file_put_contents("CACHED/remarks.json", json_encode($step_remarks_json_data));
+
+
+
+    //
+    // PRODUCT TABLE
+    //
+
+    include '../TABLES/PRODUCT/SQL_product.php'; 
+
+    $product_table = get_sap_data($conn,$tsql,0);
+    file_put_contents("../TABLES/PRODUCT/CACHED/production_step_table.json", json_encode($product_table));
 
 
     // GET PAGE THE RELOAD WAS CALLED FROM AND REDIRECT TO THAT PAGE

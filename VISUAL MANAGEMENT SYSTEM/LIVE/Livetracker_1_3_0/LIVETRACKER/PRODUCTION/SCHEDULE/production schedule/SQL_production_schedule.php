@@ -11,6 +11,8 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
+t0.[Project Manager],
+T0.[Project Number],
 CASE 
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
@@ -46,7 +48,8 @@ isnull(t0.[Product Group],'No Group') [Product Group]
 
 FROM(
 SELECT
-    
+    t0.U_PDM_Project[Project Number],
+    t0.U_proj_manager[Project Manager],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -143,7 +146,8 @@ SELECT
 UNION ALL
 
 SELECT
-   
+   NULL,
+   NULL,
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
