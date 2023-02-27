@@ -1,4 +1,5 @@
-<?php //require_once('Connections/databasestudents.php'); ?>
+<?php //require_once('Connections/databasestudents.php'); 
+//require_once 'vendor\phpoffice\phpword\bootstrap.php';?>
 <?php 
 $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
 // CREATE QUERY EXECUTION FUNCTION
@@ -24,7 +25,7 @@ foreach ($file_results as $fname) {
     print_r($filename);
    $filename=str_replace('"', '', $filename);
    //$filename=str_replace('.', '', $filename);
-    $s="../../LIVETRACKER/QUALITY1/non_conformance/uploads/$filename";
+    $s="../../../../../QLTYFILES/$filename";
     print_r($s);
 
     ?>
@@ -33,5 +34,7 @@ foreach ($file_results as $fname) {
    <button type="submit">Download!</button>
 </form>
         <?php
+
+
 }
 ?>

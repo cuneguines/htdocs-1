@@ -108,5 +108,9 @@ $(document).ready(function () {
             }
         }
     });
+    $("#select_person").on("change", function filter() {
+        $('#select_product_group').not(this).prop('selectedIndex', 0);
+        $('#select_product_group_two').not(this).prop('selectedIndex', 0);
+    });
 
 });

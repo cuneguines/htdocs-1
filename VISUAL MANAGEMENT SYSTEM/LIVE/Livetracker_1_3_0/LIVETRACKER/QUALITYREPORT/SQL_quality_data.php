@@ -1,8 +1,8 @@
 <?php
-$Quality_results = "select *,FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],t77.person,FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,case when t20.Status is NULL then 'Other'else t20.Status end[Status],t20.Action,t20.Owner,FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
+$Quality_results = "select *,FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],ISNULL(t77.person,'No Owner')[person],FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,case when t20.Status is NULL then 'Other'else t20.Status end[Status],t20.Action,ISNULL(t20.Owner,'No Owner')[Owner],FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
 (case
 WHEN t20.Date!='01/01/1900  00:00:00' and
- t20.Date is not null then DateDiff(day,t20.Date,GETDATE())
+ t20.Date is not null then DateDiff(day,GETDATE(),t20.Date)
 end)[Days_open],
     (case 
 WHEN  t44.attachments is null then 'N'  else t44.attachments

@@ -171,9 +171,14 @@ endforeach;
                             <th width="400px">Description</th>
                             <th width="120px">Date raised</th>
                             <th width="140px">Date Updated</th>
+                            
                             <th width="170px">Owner</th>
                             <th width="200px">Target date</th>
                             <th width="120px">Days left</th>
+
+                            <th width="120px">Area raised</th>
+                            <th width="120px">Area Caused</th>
+                            <th width="300px">Response type</th>
                             <th width="120px">Sap code</th>
                             <th width="300px">Customer</th>
                             <th width="150px">SO</th>
@@ -185,7 +190,7 @@ endforeach;
                             <th width="150px">pg3</th>
                             <th width="150px">Status</th>
                             <th width="200px">Type</th>
-                            <th width="300px">Response type</th>
+                         
                             <th width="150px"> Link to improvement</th>
                            <th width="150px">Admin cost</th>
                             <th width="150px">RW Cost</th>
@@ -211,8 +216,9 @@ endforeach;
                             ?>
                             <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
                                   $product_group_two = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Two"]));
+                                  $person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["person"]));
                             ?>
-                            <tr stat='<?= $stat ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'class="white btext smedium">
+                            <tr stat='<?= $stat ?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td class='lefttext'><?= $row["nc_description"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
@@ -223,25 +229,37 @@ endforeach;
                                 
 
 
-
                                 <td style="border-left:1px solid pink;border-right:1px solid pink;width:10px; box-shadow: 0px -2px 10px 0px rgb(0 0 0 / 50%);">
-                                    <?php // for ($i = 0; $i < - ($row["Days_open"]); $i++) :
-
-                                        //switch ($row["Days_open"]) {
-                                            //case ($row["Days_open"] < 17):
-                                               // $color = 'green';
-                                                //break;
-                                            //case ($row["Days_open"] > 30):
-                                                //$color = 'green';
-                                                //break;
-                                            //default:
-                                                //$color = 'white';
-                                                //break;
-                                        //}
-                                    ?>
-
-                                        <!-- <div style="height:50px; margin:0; border:0;float:left;width:3px" class=<?// $color ?>></div> -->
-                                    <?php //endfor; ?><div style=width:50px;margin-left:80px;><?=-($row["Days_open"])?></div></td>
+                                <?php 
+                                switch ($row["Days_open"]) {
+                                            case ($row["Days_open"] < -13):
+                                                $color='red';
+                                                
+                                                     for ($i = 0; $i <  -($row["Days_open"]); $i++) :?>
+                                                   <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
+                                                   <?php endfor;
+                                                   break;
+                                            case ($row["Days_open"] >= -13 && $row["Days_open"] <=-1):
+                                                $color='orange';
+                                               
+                                                     for ($i = 0; $i <  -($row["Days_open"]); $i++) :?>
+                                                   <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
+                                                   <?php endfor;
+                                                   break;
+                                            case ($row["Days_open"] >=0):
+                                                $color='green';
+                                                for ($i = 0; $i <  ($row["Days_open"]); $i++) :?>
+                                                <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
+                                                   <?php endfor;
+                                                   default:
+                                                   //$color = 'white';
+                                                   break;
+                                                     }
+                                      ?>
+                                    <?= $row["Days_open"]==NULL?'NULL':$row["Days_open"]?></td> 
+                                    <td class='lefttext'><?= $row["area_raised_by"] ?></td>
+                                    <td class='lefttext'><?= $row["nc_area_caused"] ?></td>
+                                    <td class='lefttext'><?= $row["Action"] ?></td>
                                 <td class='lefttext'><?= $row["nc_itemcode"] ?></td>
                                 
 
@@ -256,7 +274,7 @@ endforeach;
                                 <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
                                 <td class='lefttext'><?= $row["Status"] ?></td>
                                 <td class='lefttext'><?= $row["form_type"] ?></td>
-                                <td class='lefttext'><?= $row["Action"] ?></td>
+                                
                                 <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
                             </tr>
                         <?php endforeach; ?>
@@ -266,18 +284,18 @@ endforeach;
             </div>
             <div id="grouping_pages_footer" class="footer">
                 <div id="button_container">
-                    <button onclick="location.href='../../../MAIN MENU/dashboard_menu.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button>
+                    <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button>
                 </div>
                 <div id="filter_container">
                     <div id="filters" class="fill blue rounded">
                         <div class="filter wider">
                             <div class="text">
-                                <button class="fill blue medium wtext">Supplier</button>
+                                <button class="fill blue medium wtext">Owner</button>
                             </div>
                             <div class="content">
-                                <select id="select_supplier" class="selector fill medium">
+                                <select id="select_person" class="selector fill medium">
                                     <option value="All" selected>All</option>
-                                    <?php //generate_filter_options($production_exceptions_results, "Supplier"); 
+                                    <?php generate_filter_options($quality_results, "person"); 
                                     ?>
                                 </select>
                             </div>

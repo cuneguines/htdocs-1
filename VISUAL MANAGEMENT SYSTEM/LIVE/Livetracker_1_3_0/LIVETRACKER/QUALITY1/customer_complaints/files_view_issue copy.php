@@ -34,7 +34,7 @@ foreach ($file_results as $fname) {
 
     $filename = json_encode($fname[0]);
 
-    echo ($filename);
+    //echo ($filename);
     //echo ("<br>");
     $string = $filename;
     $str_arr = preg_split("/\}/", $string);
@@ -55,7 +55,7 @@ foreach ($file_results as $fname) {
             error_reporting(E_ERROR | E_PARSE);
 
             echo ("<br>");
-            print_r($stringspliagain[0]);
+         print_r($stringspliagain[0]);
             $str = str_replace('\\', '/', $stringspliagain[0]);
             ////echo ($str);
             $str = str_replace('//', '/', $str);
@@ -70,7 +70,7 @@ foreach ($file_results as $fname) {
 }
 
 
-
+/* 
 
     header("Content-type: application/vnd.msword");
     header("Cache-Control: must-revalidate,post-check=0, pre-check=0");
@@ -84,7 +84,7 @@ foreach ($file_results as $fname) {
 
     //@TODO generate valid(!) doc File output 
     //- just echo'ing something will not result in an valid document for Word
-    echo $coumentContent;       
+    echo $coumentContent;       */ 
 
 
 ?>

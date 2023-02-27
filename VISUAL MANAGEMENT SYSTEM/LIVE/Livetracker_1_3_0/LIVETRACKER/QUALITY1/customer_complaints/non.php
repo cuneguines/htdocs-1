@@ -364,7 +364,7 @@
                 <ol class="breadcrumb">
                     
                     <li><a href="edit_page.php">Forms</a></li>
-                    <li><a href="updated_page.php">Newpage</a></li>
+                    <li><a href="../index copy.php">Home</a></li>
                     <li class="active">Table</li>
                 </ol>
 
