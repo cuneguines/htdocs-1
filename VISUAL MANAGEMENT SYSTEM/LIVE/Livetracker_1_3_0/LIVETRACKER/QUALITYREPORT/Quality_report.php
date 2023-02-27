@@ -19,6 +19,7 @@
     <!-- <script type="text/javascript" src="../../JS LIBS/LOCAL/JS_filters.js"></script> -->
     <script type="text/javascript" src="../../JS LIBS//LOCAL/JS_comments.js"></script>
     <script type="text/javascript" src="./JS_table_to_excel.js"></script>
+    <script type="text/javascript" src="./test.js"></script>
 
     <!-- STYLING -->
     <link rel="stylesheet" href="../../css/LT_style.css">
@@ -325,7 +326,7 @@ endforeach;
                     </div>
                 </div>
                 <div id="button_container">
-                    <button onclick="export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
+                    <button id='file_test'onclick=//"export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
                 </div>
             </div>
         </div>

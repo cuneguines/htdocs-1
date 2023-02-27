@@ -1,5 +1,11 @@
 <?php //require_once('Connections/databasestudents.php'); 
-//require_once 'vendor\phpoffice\phpword\bootstrap.php';?>
+//require_once 'vendor\phpoffice\phpword\bootstrap.php';
+require_once 'vendor/autoload.php';
+
+use Office365\SharePoint\ClientContext;
+use Office365\Runtime\Auth\ClientCredential;
+use Office365\SharePoint\ListItem;
+?>
 <?php 
 $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
 // CREATE QUERY EXECUTION FUNCTION
@@ -36,5 +42,19 @@ foreach ($file_results as $fname) {
         <?php
 
 
+}
+$credentials = new ClientCredential("{cnixon@kentstainless.com}", "{CNks2022??}");
+$client = (new ClientContext("https://kentstainlesswex.sharepoint.comsites/Non_Conformance_Data/Shared%20Documents"))->withCredentials($credentials);
+//<a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/<?= $stringspliagain[0] 
+
+$items = $client->getWeb()
+                ->getLists()
+                ->getByTitle("{list-title}")
+                ->getItems()
+                ->get()
+                ->executeQuery();
+/** @var ListItem $item */
+foreach($items as $item) {
+    print "Task: {$item->getProperty('Title')}\r\n";
 }
 ?>
