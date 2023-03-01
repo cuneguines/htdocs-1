@@ -1,7 +1,0 @@
-{
-    "require": {
-        "groupdocscloud/groupdocs-viewer-cloud": "^21.12",
-        "phpoffice/phpword": "^1.0",
-        "vgrem/php-spo": "^3.0"
-    }
-}

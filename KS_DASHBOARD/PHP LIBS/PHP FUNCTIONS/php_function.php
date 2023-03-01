@@ -291,6 +291,7 @@ function generate_filter_options($table, $field)
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
+                <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'Y' operation = 'SUM_P'> </td>
                 <td aggregateable = 'Y' operation = 'SUM_B'>             </td>
                 <td style="text-align:right"aggregateable = 'Y' operation = 'SUM_R'>             </td>

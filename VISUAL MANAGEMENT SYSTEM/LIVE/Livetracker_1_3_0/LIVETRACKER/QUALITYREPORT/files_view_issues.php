@@ -1,10 +1,7 @@
 <?php //require_once('Connections/databasestudents.php'); 
 //require_once 'vendor\phpoffice\phpword\bootstrap.php';
-require_once 'vendor/autoload.php';
 
-use Office365\SharePoint\ClientContext;
-use Office365\Runtime\Auth\ClientCredential;
-use Office365\SharePoint\ListItem;
+
 ?>
 <?php 
 $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG","sa","SAPB1Admin");
@@ -42,19 +39,15 @@ foreach ($file_results as $fname) {
         <?php
 
 
+$pdf=substr($filename, 0, -5);
+$pdf=$pdf.".pdf";
+#echo $pdf;
+#"C:/xampp/htdocs/QLTYFILES/$pdf";
+#echo $pdf;
+#echo '<a href=".php?filename=workInstruction.pdf&filepath=//fileserver/path/to/workInstruction.pdf"' . 'target="_blank">'.$wi_num.'</a>';
+$file = "../../../../../QLTYFILES/".$pdf;
+echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp               <embed src='$file' type='application/pdf' margin='20px' width='60%' height='1010px' />";
+#echo"str_repeat('&nbsp;', 10000000) <embed src='$file' type='application/pdf' margin='20px' width='60%' height='1000px' />";
 }
-$credentials = new ClientCredential("{cnixon@kentstainless.com}", "{CNks2022??}");
-$client = (new ClientContext("https://kentstainlesswex.sharepoint.comsites/Non_Conformance_Data/Shared%20Documents"))->withCredentials($credentials);
-//<a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/<?= $stringspliagain[0] 
 
-$items = $client->getWeb()
-                ->getLists()
-                ->getByTitle("{list-title}")
-                ->getItems()
-                ->get()
-                ->executeQuery();
-/** @var ListItem $item */
-foreach($items as $item) {
-    print "Task: {$item->getProperty('Title')}\r\n";
-}
 ?>

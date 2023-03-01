@@ -6,7 +6,15 @@
     else {
         if(move_uploaded_file($_FILES['file']['tmp_name'], '../../../../../../QLTYFILES/' . $_FILES['file']['name']))
 		{
+      $a="C:\\xampp\\htdocs\\ ";
+      $x=$_FILES['file']['name'];
+
+      
+      echo $x;
+      echo"<br>";
+      
 			echo "File Uploaded Successfully";
+      $output = passthru("python hello.py $x");
 		}
     }
 

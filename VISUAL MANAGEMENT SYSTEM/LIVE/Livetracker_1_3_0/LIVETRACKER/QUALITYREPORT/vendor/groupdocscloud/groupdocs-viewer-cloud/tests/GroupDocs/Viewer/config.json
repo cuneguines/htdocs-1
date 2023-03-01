@@ -1,6 +1,0 @@
-{
-    "//": "Get your AppSID and AppKey at https://dashboard.groupdocs.cloud (free registration is required).",
-    "AppSID": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
-    "AppKey": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    "ApiBaseUrl": "https://api.groupdocs.cloud"
-}

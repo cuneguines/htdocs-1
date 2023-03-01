@@ -5,8 +5,9 @@ $(document).ready(function () {
     $('.col_selector').prop('selectedIndex', 0);
 
     // READ IN ROWS FROM FILTERABLE TABLE
-    var rows = $("table.filterable tbody tr:not('.head')");
-    var template = $('table.filterable tfoot tr td');
+  var rows = $("table.filterable tbody tr:not('.head')");
+
+   /* var template = $('table.filterable tfoot tr td');
     //Find the index of Intel IReland to set as default
     var opts = document.getElementById("select_customer").options;
     for (var i = 0; i < opts.length; i++) {
@@ -15,15 +16,15 @@ $(document).ready(function () {
             break;
         }
 
-    }
-    console.log(i);
+    } */
+    /* console.log(i);
     //SET the Default as Intel
     $('#select_customer').prop('selectedIndex', i);
     //Updating the Rows
     var Cust_name="IntelIrelandLtd"
     rows.hide();
     var matches = rows.filter('[customer="'+Cust_name+'"]');
-    matches.show();
+    matches.show(); */
 
 
     if (typeof __update_rows__ !== 'undefined') {

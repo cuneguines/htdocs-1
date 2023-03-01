@@ -14,14 +14,16 @@
 
     <!-- JS FILES -->
     <!-- <script type = "text/javascript" src = "./JS_filters.js"></script>
-		<script type = "text/javascript" src = "./JS_table_to_excel.js"></script> -->
+		script type = "text/javascript" src = "./JS_table_to_excel.js"></script> -->
 
     <!-- CSS FILES -->
+   <script type = "text/javascript" src = "./filter.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../../CSS/KS_DASH_STYLE.css">
     <link rel="stylesheet" href="../../../css/theme.blackice.min.css">
 
     <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_function.php'; ?>
+  
     <style>
         .new_css {
             float: left;
@@ -118,10 +120,10 @@
     <div id='background'>
         <div id="content">
             <div class="table_title green">
-                <h1>PRODUCT TABLE</h1>
+                <h1 style="color:white">PRODUCT TABLE</h1>
             </div>
             <div id="pages_table_container" class="table_container">
-                <table id="p_table_<?= $exclude_step ?>" class="tfill alt_rcolor rh_med nopad active_p_row searchable sortable">
+                <table id="p_table_<?= $exclude_step ?>" class="tfill alt_rcolor rh_med nopad active_p_row searchable sortable filterable">
                     <thead>
                         <tr class="white wtext smedium sticky head dark_grey">
                             <th width="5%" class='lefttext'>S Order</th>
@@ -148,12 +150,15 @@
                         <?php foreach ($results as $row) : ?>
 
 
+                            <?php $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"])); ?>
+                            <?php $productone = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"])); ?>
+                            <?php $producttwo = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Two"])); ?>
 
                             <?php $so = "location.href='http://vms/SAP%20READER/BASE_sales_order.php?sales_order=" . $row["Sales Order"] . "'" ?>
                             <?php $po = "location.href='http://vms/SAP%20READER/BASE_process_order.php?process_order=" . $row["Process Order"] . "'" ?>
                             <?php //if($row["Prev Step Status"] != 'RD' && $row["Prev Step Status"] != 'FS'){$hide = "display:none;";}else{$hide = "";}
                             ?>
-                            <tr customer='<?= $customer ?>' project='<?= $project ?>'>
+                            <tr customer='<?= $customer ?>' project='<?= $project ?>'productone='<?= $productone ?>'producttwo='<?= $producttwo ?>'>
                                 <td><button class='smedium so' onclick="<?= $so ?>" style="<?= $row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : '' ?>"><?= $row["Sales Order"] ?></button></td>
                                
                                 <td><button class='smedium rm' style="<?= $has_comment ? "background-color:#7cbfa0" : "" ?>" onclick="<?= $po ?>"><?= $row["Process Order"] ?></button></td>
@@ -213,7 +218,7 @@
                     <button class="fill red medium wtext">Product Group</button>
                 </div>
                 <div class="new_css" style="margin-left: -1%;height:80%">
-                    <select id="select_salesperson" class="selector fill medium">
+                    <select id="select_productone" class="selector fill medium">
                         <option value="All" selected>All</option>
                         <?php generate_filter_options($results, "U_Product_Group_One"); 
                         ?>
@@ -224,7 +229,7 @@
                     <button class="fill red medium wtext">Product Group</button>
                 </div>
                 <div class="new_css" style="margin-left: -1%;height:80%">
-                    <select id="select_salesperson" class="selector fill medium">
+                    <select id="select_producttwo" class="selector fill medium">
                         <option value="All" selected>All</option>
                         <?php generate_filter_options($results, "U_Product_Group_Two"); 
                         ?>

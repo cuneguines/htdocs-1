@@ -461,6 +461,9 @@
 
 
                             <?php foreach ($quality_results_nc as $row) : ?>
+                                <?php
+                                /* if ($row["previous attachments"]!=NULL)
+                                $color='green';    */                             ?>
                                 <tr>
                                     <td id=<?= $row["ID"] ?>style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
                                     <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"] ?></td>

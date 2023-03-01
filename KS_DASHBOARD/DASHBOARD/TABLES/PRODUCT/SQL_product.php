@@ -20,7 +20,7 @@
             ---changed 23-01-23---
             t8.U_PDM_Project[PDM],
 			ISNULL(t12.U_Product_Group_One,'NO GROUP')[U_Product_Group_One],
-            ISNULL(t12.U_Product_Group_Two,'NO GROUP')[U_Product_Group_Two]
+            ISNULL(t12.U_Product_Group_Two,'NO GROUP')[U_Product_Group_Two],
             t1.StepCode[Step Number],
             t17.RowNum,
             t2.U_OldCode [Sequence Code],
