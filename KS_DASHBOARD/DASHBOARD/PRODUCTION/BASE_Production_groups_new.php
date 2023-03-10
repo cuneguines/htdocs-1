@@ -348,7 +348,7 @@
                     <div id = "go_to_google_sheets" class = "search_option_field white" style = "opacity:1; height:100%; width:38%; position:absolute; bottom:110%; left:1%; z-index:+4; border-radius:20px; border:4px solid #FACB57; display:none;">
 
                         <div style = "height:80%; position:relative; top:10%; text-align:center;">
-                        <button class = "rounded green medium wtext" style = "height:100%; display:inline-block; width:30%;" onclick = "location.href='http://192.168.0.59/KS_DASHBOARD/DASHBOARD/TABLES/PRODUCT/Product_table.php'">Product group</button>
+                        <button class = "rounded green medium wtext" style = "height:100%; display:inline-block; width:30%;" onclick = "location.href='http://localhost/KS_DASHBOARD/DASHBOARD/TABLES/PRODUCT/Product_table.php'">Product group</button>
                             <!-- <button class = "rounded green medium wtext" style = "height:100%; display:inline-block; width:30%;" onclick = "location.href='https://docs.google.com/spreadsheets/d/1oVAMMIc7q6JP9d1svp8Jo_FYQMbcO2QRXv3IJQaTud4/edit#gid=314860047'">Laser Schedule</button> -->
                             <button class = "rounded green medium wtext" style = "height:100%; display:inline-block; width:30%;margin-left:20px;" onclick = "location.href='https://docs.google.com/spreadsheets/d/1oVAMMIc7q6JP9d1svp8Jo_FYQMbcO2QRXv3IJQaTud4/edit#gid=868141021'">Intel Material Stock</button>
                         </div>

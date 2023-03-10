@@ -139,7 +139,21 @@ count=count+1;
                 });
                 $('table.searchable tfoot tr:visible').children().eq(column).html((min));
             }
+            if ($(this).attr('operation') === 'SUM_RD') {
+                var sum = 0;
+                $("table:visible td.r_hours").each(function () {
+                    if ($(this).attr('type') !== 'breakdown') {
+                        //sum+=get_num_value($(this),column);
+                        $(this).find("td").each(function(){
+                            alert($(this).html());
+                        });
+       
+                        console.log(sum);
+                    }
+                });
 
+                $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
+            }
             if ($(this).attr('operation') === 'MAX_STRING') {
                 var max = '000000000';
                 rows.each(function () {

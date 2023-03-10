@@ -107,6 +107,18 @@ endforeach;
         vertical-align: middle;
 
     }
+    .red_grad
+    {
+        background:linear-gradient(100deg,red, transparent );
+    }
+    .green_grad
+    {
+        background:linear-gradient(100deg,green, transparent );
+    }
+    .orange_grad
+    {
+        background:linear-gradient(100deg,orange, transparent );
+    }
 </style>
 
 <body>
@@ -176,23 +188,24 @@ endforeach;
                             <th width="170px">Owner</th>
                             <th width="200px">Target date</th>
                             <th width="120px">Days left</th>
-
+                            <th width="150px"> Link to improvement</th>
                             <th width="120px">Area raised</th>
                             <th width="120px">Area Caused</th>
                             <th width="300px">Response type</th>
+                            <th width="200px">Type</th>
                             <th width="120px">Sap code</th>
                             <th width="300px">Customer</th>
                             <th width="150px">SO</th>
                             <th width="300px">Project</th>
                             <th width="400px">Description</th>
-                            <th width="200px">ItemCode</th>
+                            <!-- <th width="200px">ItemCode</th> -->
                             <th width="200px">Product group1</th>
                             <th width="150px">Pg2</th>
                             <th width="150px">pg3</th>
                             <th width="150px">Status</th>
-                            <th width="200px">Type</th>
+                            
                          
-                            <th width="150px"> Link to improvement</th>
+                            
                            <th width="150px">Admin cost</th>
                             <th width="150px">RW Cost</th>
                             <th width="150px">Materail Cost</th>
@@ -221,7 +234,7 @@ endforeach;
                             ?>
                             <tr stat='<?= $stat ?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
-                                <td class='lefttext'><?= $row["nc_description"] ?></td>
+                                <td class='lefttext'><?= $row["nc_description"]!=NULL?$row["nc_description"]:$row["cc_desc"]?></td> 
                                 <td><?= $row["time_stamp"] ?></td>
                                 <td><?= $row["date_updated"] ?></td>
                                 <td><?= $row["person"] ?></td>
@@ -234,21 +247,21 @@ endforeach;
                                 <?php 
                                 switch ($row["Days_open"]) {
                                             case ($row["Days_open"] < -13):
-                                                $color='red';
+                                                $color='red_grad';
                                                 
                                                      for ($i = 0; $i <  -($row["Days_open"]); $i++) :?>
                                                    <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
                                                    <?php endfor;
                                                    break;
                                             case ($row["Days_open"] >= -13 && $row["Days_open"] <=-1):
-                                                $color='orange';
+                                                $color='orange_grad';
                                                
                                                      for ($i = 0; $i <  -($row["Days_open"]); $i++) :?>
                                                    <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
                                                    <?php endfor;
                                                    break;
                                             case ($row["Days_open"] >=0):
-                                                $color='green';
+                                                $color='green_grad';
                                                 for ($i = 0; $i <  ($row["Days_open"]); $i++) :?>
                                                 <div style="height:50px; margin:0; border:7px;float:left;width:3px" class=<?=$color ?>></div> 
                                                    <?php endfor;
@@ -258,10 +271,12 @@ endforeach;
                                                      }
                                       ?>
                                     <?= $row["Days_open"]==NULL?'NULL':$row["Days_open"]?></td> 
+                                    <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
                                     <td class='lefttext'><?= $row["area_raised_by"] ?></td>
                                     <td class='lefttext'><?= $row["nc_area_caused"] ?></td>
                                     <td class='lefttext'><?= $row["Action"] ?></td>
-                                <td class='lefttext'><?= $row["nc_itemcode"] ?></td>
+                                    <td class='lefttext'><?= $row["form_type"] ?></td>
+                            <td class='lefttext'><?=$row["nc_itemcode"] ?></td>
                                 
 
 
@@ -274,9 +289,9 @@ endforeach;
                                 <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                                 <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
                                 <td class='lefttext'><?= $row["Status"] ?></td>
-                                <td class='lefttext'><?= $row["form_type"] ?></td>
                                 
-                                <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                
+                                
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

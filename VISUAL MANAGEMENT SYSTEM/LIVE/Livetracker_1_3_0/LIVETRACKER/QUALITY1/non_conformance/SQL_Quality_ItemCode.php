@@ -26,7 +26,8 @@ inner join (select t0.code, SUM(case when t0.U_Attachments is null then 0 else 1
 ";
 //Query to filters the rows that are cancelled from the second table and join with the first table which is not a match 
 $Quality_results_non_conformance="
-select *,t0.Id as ID,t20.Status,t44.attachments,
+
+select *,t0.Id as ID,t20.Status,FORMAT(CAST(t20.Date AS DATE), 'yyyy-MM-dd')[Date],t20.Status,t20.Owner,t20.Action,t44.attachments,t88.attachments[previous attachments],t99.person,
 (case 
 WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
@@ -34,7 +35,7 @@ from ms_qual_log t0
 left join (select t1.ID,max(t1.date_updated) as Maxdate
     from  dbo.Table_2 t1
        where t1.Status='Cancelled' group by t1.ID )t2 on t2.ID = t0.ID
-left join(select t8.Status,t8.ID,t8.date_updated from dbo.Table_2 t8
+left join(select t8.Status,t8.ID,t8.date_updated ,t8.Date,t8.Action,t8.Owner from  dbo.Table_2 t8
                     inner join(select t1.ID,max(t1.date_updated) as Mmaxdate
                     from  dbo.Table_2 t1
                     where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
@@ -44,8 +45,23 @@ left join(select t55.sap_id,t55.created_date,t55.attachments from dbo.attachment
 					
 
                      group by t1.sap_id )t66 on t66.Mmaxdate = t55.created_date and t66.sap_id=t55.sap_id)t44 on t44.sap_id = t0.ID 
+
+
+
+					 left join (select * from 
+                   (select sap_id,created_date,attachments,
+                   ROW_NUMBER()over(partition by sap_id order by created_date desc) as rn 
+                  from dbo.attachment_table
+                  )t where rn=2)t88 on t88.sap_id = t0.ID
+
+                  left join (select (t0.firstName + t0.lastName)[person], t0.email
+        
+           from KENTSTAINLESS.dbo.ohem t0
+           
+           where t0.Active = 'Y')t99 on  t99.email COLLATE SQL_Latin1_General_CP1_CI_AS =t20.Owner COLLATE SQL_Latin1_General_CP1_CI_AS
 where t0.form_type = 'Non Conformance'
 and t2.ID is null order by t0.ID
+
 
 
 

@@ -14,7 +14,25 @@
       echo"<br>";
       
 			echo "File Uploaded Successfully";
-      $output = passthru("python hello.py $x");
+      
+      try{
+      
+    $command = escapeshellcmd('C:/Users/cnixon/Python/Python311/python.exe "c:/xampp/htdocs/VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITY1/non_conformance/hello.py"');
+    $output = shell_exec($command);
+    echo $output;
+
+       
+     // echo shell_exec('C:/Users/cnixon/Python/Python311/python.exe "c:/xampp/htdocs/VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITY1/non_conformance/hello.py"');
+      
+
+  
+
+      }
+      catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+  
+        
+      }
 		}
     }
 

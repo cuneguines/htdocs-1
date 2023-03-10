@@ -1,4 +1,4 @@
-
+<!-- Changed 06/03/23 TOOK THE CLAUSE DOWN -->
 <?php
 
 $production_exceptions ="SELECT 
@@ -114,7 +114,7 @@ FROM (
             AND t1.Status = 'R'
             AND t0.IssuedQty < t0.PlannedQty
             AND t2.ItemType <> 'L'
-           $clause2_a
+           --$clause2_a
            
 
     UNION ALL
@@ -179,7 +179,7 @@ FROM (
             where
             t0.LineStatus = 'o'
             AND t2.ItemCode <> 'TRANSPORT'
-            $clause2_b
+            --$clause2_b
             AND t5.ItmsGrpNam not like '%Sheet%'
             AND t5.ItmsGrpNam not like '%SITE%'
                 ) t0

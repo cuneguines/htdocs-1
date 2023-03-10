@@ -337,7 +337,7 @@
 
 
                     <li>
-                        <a id="product_button" onclick = "location.href='non_conformance/non.php'"><i class="fa fa-sitemap"></i> Non Conformance<span class="fa arrow"></span></a>
+                        <a id="product_button" onclick = "location.href='non_conformance/non.php'"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
 

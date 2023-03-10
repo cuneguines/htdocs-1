@@ -1,6 +1,7 @@
 from docx2pdf import convert
 import sys
 import os,re
+import comtypes.client
 print ('Number of arguments:', len(sys.argv), 'arguments.')
 print ('Argument List:', str(sys.argv))
 #var3 = sys.argv[0]
@@ -9,12 +10,26 @@ var1="CuneguinesN(1)"
 #var2 = sys.argv[2]
 #var4=var1+var2
 #print(var4)
+import sys
+import os
+wdFormatPDF = 17
+#in_file = os.path.abspath(sys.argv[1])
+#out_file = os.path.abspath(sys.argv[2])
+file = r'C:\\xampp\\htdocs\\QLTYFILES\\57 (5).docx'
+out_file=r'C:\\xampp\\htdocs\\QLTYFILES\\57 (5)'
+in_file='.\57 (5).docx'
+#out_file='57 (5)'
+""" word = comtypes.client.CreateObject('Word.Application')
+doc = word.Documents.Open(file)
+doc.SaveAs(out_file, FileFormat=wdFormatPDF)
+doc.Close()
+word.Quit()
 x='"'r"C:\\xampp\\htdocs\\QLTYFILES\\"+ var1 +".pdf "'"'
 y='"'r"C:\\xampp\\htdocs\\QLTYFILES\\"+ var1 +".docx "'"'
 x=r"C:\\xampp\\htdocs\\QLTYFILES\\"+ var1 +".pdf "
 y=r"C:\\xampp\\htdocs\\QLTYFILES\\"+ var1 +".docx "
 print(x)
-print(y)
+print(y) """
 #convert("C:\xampp\htdocs\VISUAL MANAGEMENT SYSTEM\LIVE\Livetracker_1_3_0\LIVETRACKER\QUALITYREPORT\8D Report Template (7).docx")
 #convert(y,x)
 #convert("my_docx_folder/")

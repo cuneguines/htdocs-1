@@ -3,10 +3,11 @@ $(document).ready(function(){
         
             test=$(this).attr('process_order')
             console.log(test);
+          
             $.ajax({
     
                 type: "POST",
-                url: "SQL_production_schedule_ajax.php",
+                url: "SQL_production_schedule_ajax_on_hand.php",
                 data: {
                     'item': test
     
@@ -16,6 +17,8 @@ $(document).ready(function(){
                 success: function(data) {
     
     console.log(data[0]);
+   
+    console.log(data[0][0]['ON_HAND']);
                    
                     if (data[0].length==0)
                     {
@@ -33,6 +36,7 @@ $(document).ready(function(){
     $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href=' + "'" + '/../SAP READER/BASE_sales_order.php?sales_order=' + $(this).attr('sales_order') + "'" + '">' + $(this).attr('sales_order') + "</button></h2>");
     //for Project number
     $("h2.first_sub").replaceWith( "<h2 class = 'inner first_sub small'>"+$(this).attr('project_num')+"</h2>");
+    $("h2.thirteenth_sub").replaceWith( "<h2 class = 'inner thirteenth_sub small'>"+$(this).attr('project_man')+"</h2>");
    // $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+$(this).attr('process_order')+ ",NORMAL'" +'">'+$(this).attr('process_order')+"</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");

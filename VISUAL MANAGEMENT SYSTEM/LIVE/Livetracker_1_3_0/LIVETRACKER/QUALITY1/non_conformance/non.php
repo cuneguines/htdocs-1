@@ -371,7 +371,7 @@
 
 
                     <li>
-                        <a id="product_button"><i class="fa fa-sitemap"></i> Non Conformance<span class="fa arrow"></span></a>
+                        <a id="product_button"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
 
                         <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
 
@@ -429,9 +429,9 @@
                                     <th style="width:100px">Process order</th>
 
 
-
-                                    <th style="width: 200px">Area Non Conformance Raised</th>
-                                    <th style="width: 120px">Raised By</th>
+                                    <th style="width: 200px">OFI Raised by</th>
+                                    <th style="width: 120px">Area OFI Caused </th>
+                                    <th style="width: 120px">Area OFI Raised</th>
                                     <th style="width: 100px">Status</th>
 
                                     <th style="width: 200px">Date/time</th>
@@ -454,6 +454,9 @@
 
                                     <th style="width:200px;"> Attachements</th>
                                     <th style="width:200px;display:none"> Attachements</th>
+                                    <th style="width:200px;display:none">Status </th>
+                                    <th style="width:200px;display:none"> Date</th>
+                                    <th style="width:200px;display:none"> Owner</th>
 
                                 </tr>
                             </thead>
@@ -462,20 +465,22 @@
 
                             <?php foreach ($quality_results_nc as $row) : ?>
                                 <?php
-                                /* if ($row["previous attachments"]!=NULL)
-                                $color='green';    */                             ?>
+                                if ($row["previous attachments"]!=NULL)
+                                $color='#f0ad4e';    
+                                else
+                                $color='#2196f3';                         ?>
                                 <tr>
-                                    <td id=<?= $row["ID"] ?>style="position: sticky;left:0px;background:#a6cbf7;text-align:center"><?= $row["ID"] ?></td>
-                                    <td style="position: sticky;left:100px;px;background:#a6cbf7;text-align:center"><?= $row["nc_itemcode"] ?></td>
-                                    <td class="bold" style="position: sticky;left:200px;background:#a6cbf7"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+                                    <td id=<?= $row["ID"] ?>style='background:linear-gradient(100deg,<?=$color?>, white );position: sticky;left:0px;text-align:center'><?= $row["ID"] ?></td>
+                                    <td style="position: sticky;left:100px;px;background:linear-gradient(100deg,#2196f3, white );text-align:center"><?= $row["nc_itemcode"] ?></td>
+                                    <td class="bold" style="position: sticky;left:200px;background:linear-gradient(100deg,#2196f3, white )"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
 
 
                                     <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
                                     <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
 
-
-                                    <td><?= $row["nc_area_caused"] ?></td>
                                     <td><?= $row["nc_raised_by"] ?></td>
+                                    <td><?= $row["nc_area_caused"] ?></td>
+                                    <td><?= $row["area_raised_by"] ?></td>
                                     <td><?= $row["Status"] ?></td>
                                     <td><?= $row["time_stamp"] ?></td>
 
@@ -522,6 +527,7 @@
                                     <?php
                                     $x = $row["ID"];
                                     //print_r('NON CONFIRMANCE');
+                                    $color='';
                                     ?>
                                     <td><input type="button" onclick=location.href="files_view_issue%20copy.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
 
@@ -530,6 +536,11 @@
 
                                 
                                 <td style="display:none"><?=$row["attachments"]?></td>
+
+                                <td style="display:none"><?=$row["Status"]?></td>
+                                <td style="display:none"><?=$row["Date"]?></td>
+                                <td style="display:none"><?=$row["person"]?></td>
+                                <td style="display:none"><?=$row["action"]?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>

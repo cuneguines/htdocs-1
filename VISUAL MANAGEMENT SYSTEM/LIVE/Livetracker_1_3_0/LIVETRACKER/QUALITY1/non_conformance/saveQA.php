@@ -117,10 +117,10 @@ else{
  // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
   $mail->isHTML(true);                                  // Set email format to HTML
   
-  $mail->Subject = 'MESSAGE FROM QUALITY';
-  $mail->Body    = 'Hi <br>Item no '.$Id .'requires your attention. Please log onto (<a href=http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITYREPORT/Quality_report.php>CLICK </a> ) and download the '.$action 
+  $mail->Subject = 'MESSAGE FROM QUALITY TEAM';
+  $mail->Body    = 'You are assigned owner no '.$Id .'and it requires your attention. Please  (<a href=http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITY1/non_conformance/non.php>CLICK </a> ) here to view and action the item '.$action 
 
-  .' Once competed please return to Ivan<br>
+  .' Details on how to action the item can be found in SAP-0679 in PDM<br>
 
   Kind regards,<br>
   The Quality Team';

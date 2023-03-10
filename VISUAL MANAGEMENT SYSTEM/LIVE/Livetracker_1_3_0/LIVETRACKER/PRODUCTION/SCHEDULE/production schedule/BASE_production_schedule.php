@@ -207,6 +207,8 @@
                         <br>
                         <p class = "smedium">Process Order</p>
                         <h2 class = "inner thirteenth medium">Nothing Selected</h2>
+                        <h2 class = "inner thirteenth_sub small">Nothing Selected</h2>
+                        <br>
                         <br>
                         <p class = "smedium">Customer</p>
                         <h2 class = "inner second medium">Nothing Selected</h2>
@@ -378,6 +380,7 @@
                                             $border_color,
                                             $overwrite,
                                             $results[$i]["Project Number"],
+                                            $results[$i]["Project Manager"],
                                             $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                             $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
                                             $results[$i]["Floor Date"] == NULL ? "NO FLOOR DATE" : $results[$i]["Floor Date"],

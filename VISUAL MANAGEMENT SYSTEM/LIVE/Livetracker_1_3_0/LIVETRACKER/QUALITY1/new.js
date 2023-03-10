@@ -67,6 +67,10 @@ $(document).ready(function ()
         var b = $("#ddate").val();
         
         console.log(x);
+        console.log(y);
+        console.log(z);
+        console.log(a);
+        console.log(b);
         $.ajax({
            type: "POST",
            url: "saveQA.php",
