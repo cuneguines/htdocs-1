@@ -1,6 +1,9 @@
 <?php
+//Changed 13/03/23 id delivery date is null subtract 2 weeks from promise date 
 $bookout =
-"SELECT  
+"
+
+SELECT  
 t3.docnum [Producrion Order], 
 t2.DocNum [Sales Order],
 t0.[Source],
@@ -18,6 +21,8 @@ CAST(t0.[Date Booked In] AS DATE) [Date Booked In],
 t0.[Time Booked In],
 CAST(t0.[Promise Date] AS DATE)[Promise Date],
 FORMAT(CAST(t0.[Due Date] AS DATE),'dd-MM-yyyy')[Due Date],
+CAST(t0.[Due Date] AS DATE)[Due Del Date],
+case when t0.[Due Del Date] is null then 'del_empty'end [DelDateNul],
 t0.[User], 
 t0.[Sales Person],
 t0.[Engineer],
@@ -61,8 +66,9 @@ ISNULL(t1.U_Client,'000_NO PROJECT_000') [Project],
 	CAST(t2.onhand AS DECIMAL (12,0)) [In Stock],
     t3.DelivrdQty,
 	t4.[Booked In], t4.[Date Booked In], t4.[Time Booked In],
-	--Changed del due date 28/11/22--
-	CAST(ISNULL(t3.U_Delivery_Date, t1.DocDueDate) AS DATE)[Due Date],
+	--Changed del due date 28/11/22--chaged 13/03/23
+	CAST(ISNULL (t3.U_Delivery_Date , (DATEADD(DAY, -14,t3.U_Promise_date) ))AS DATE) [Due Date],
+	CAST(t3.U_Delivery_Date AS DATE)[Due Del Date],
 	t3.U_Promise_Date [Promise Date],
 	t4.[User],
 	t1.CardName [Customer],
@@ -106,7 +112,8 @@ t1.Quantity [Qty on SO], CAST(t2.onhand AS DECIMAL (12,0)) [In Stock],
 t1.DelivrdQty,
 NULL [Booked In],
 NULL [Date Booked In], NULL [Time Booked In],
-ISNULL(t1.U_Delivery_Date,t0.DocDueDate) [SO Due Date], 
+	CAST(ISNULL (t1.U_Delivery_Date , (DATEADD(DAY, -14,t1.U_Promise_date) ))AS DATE) [Due Date],
+	CAST(t1.U_Delivery_Date AS DATE)[Due Del Date],
 t1.U_Promise_Date [Promise Date],
 NULL [User], t0.CardName [Customer],
 t9.firstname + ' ' + t9.lastName [Sales Person], t10.SlpName [Engineer], 
@@ -132,6 +139,19 @@ t0.[Due Date] >= dateadd(d,-5000,CONVERT(date, GETDATE()))
 and t0.[Due Date] < dateadd(d,60,CONVERT(date, GETDATE()))
 
 order by t0.[Promise Date], t0.[Sales Order]
+
+
+
+
+
+
+
+
+
+
+
+
+
 ";
 ?>
 

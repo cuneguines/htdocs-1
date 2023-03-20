@@ -137,8 +137,8 @@ LEFT JOIN(
         FROM IIS_EPC_PRO_ORDERT 
             GROUP BY PrORder, LineID
 )t4 ON t4.PrORder = t0.PrORder AND t4.LineID = t1.LineID
-
-    WHERE t0.Steptype = 'B' AND t0.UseStock IN ('N') AND t1.UseStock IN ('N') AND t3.Status IN ('P','R','S','I')
+---removed usesctock in -----
+    WHERE t0.Steptype = 'B' AND t0.UseStock IN ('N')  AND t3.Status IN ('P','R','S','I')
     ORDER BY t0.PrOrder, t0.LineID, t1.LineID";
 
 $sql_logged_entries = 

@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     $('#owner').hide();
     $("label[for='owner']").hide();
     $('#action').hide();
@@ -68,50 +69,52 @@ $(document).ready(function () {
 
 });
 
-
+var owner;
 
 function myFunction(event) {
-
+   
     $('#status option[value="Closed"]').prop('selected', true);
     $('#action option[value="Toolbox Talk"]').prop('selected', true);
     $('#owner option[value="All"]').prop('selected', true);
 
     var CurrentRow = $(event.target).closest("tr");
-    
+
     // alert(CurrentRow);
     var ItemId = $("td:eq(0)", $(CurrentRow)).html();
     var ItemIssue = $("td:eq(2)", $(CurrentRow)).html();
-    var attachments=$("td:eq(12)", $(CurrentRow)).html();
-    var status=$("td:eq(13)", $(CurrentRow)).html();
+    var attachments = $("td:eq(12)", $(CurrentRow)).html();
+    var status = $("td:eq(13)", $(CurrentRow)).html();
     var date = $("td:eq(14)", $(CurrentRow)).html();
-    
+
     //$('#ddate').val(date);
     console.log(date);
+    console.log(attachments);
     $('#ddate option[value="' + date + '"]').prop('selected', true);
-    var owner=$("td:eq(15)", $(CurrentRow)).html();
-    var action=$("td:eq(16)", $(CurrentRow)).html();
+    var owner = $("td:eq(15)", $(CurrentRow)).html();
+    var action = $("td:eq(16)", $(CurrentRow)).html();
     console.log(ItemId);
     console.log(date);
     console.log(owner);
-if (owner == 'SeanO Brien (Q)') {
-                                $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
-                            }
+    $('#owner_hidden').val($("td:eq(15)", $(CurrentRow)).html());
+    if (owner == 'SeanO Brien (Q)') {
+        $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
+    }
     $('#id').val(ItemId);
     $('#fileid').val('');
-     $('#owner option[value="' +  owner+ '"]').prop('selected', true);
-     $('#action option[value="' +  action + '"]').prop('selected', true);
-     $('#status option[value="' +  status + '"]').prop('selected', true);
+    $('#owner option[value="' + owner + '"]').prop('selected', true);
+    $('#action option[value="' + action + '"]').prop('selected', true);
+    $('#status option[value="' + status + '"]').prop('selected', true);
 
-     $('#ddate').val(date);
-    $('#formid').attr('action', '../../../../../../QLTYFILES/'+ attachments);
+    $('#ddate').val(date);
+    $('#formid').attr('action', '../../../../../../QLTYFILES/' + attachments);
     $('#fileid').text('Download');
     $("label[for='download']").text(attachments);
-    
+
     console.log($('#ddate').val());
     console.log($('#owner').val());
     console.log($('#action').val());
     console.log($('#status').val());
-   
+
     if ($('#passwrd').text().length == 0) {
         $('#owner').hide();
         $("label[for='owner']").hide();
@@ -188,18 +191,18 @@ if (owner == 'SeanO Brien (Q)') {
                             if (response[0][0]['person'] == null) {
                                 $('#owner option[value="All"]').prop('selected', true);
                             }
-                            
-                            if (response[0][0]['person'] == 'SeanO Brien (Q)') {
-                                $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
-                            }
-                            /* if (response[0][0]['attachments'] == null) {
-                                $('#fileid').text('Download');
-                            }
-                            else{
+
+                        if (response[0][0]['person'] == 'SeanO Brien (Q)') {
+                            $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
+                        }
+                        /* if (response[0][0]['attachments'] == null) {
                             $('#fileid').text('Download');
-                            $("label[for='download']").text(response[0][0]['attachments']);
-                            $('#formid').attr('action', 'uploads/'+ response[0][0]['attachments']);
-                            } */
+                        }
+                        else{
+                        $('#fileid').text('Download');
+                        $("label[for='download']").text(response[0][0]['attachments']);
+                        $('#formid').attr('action', 'uploads/'+ response[0][0]['attachments']);
+                        } */
                         console.log(response[0][0]['person']);
 
                         //$('#owner option[value="' + response[0][0]['person'].replace(/[^A-Z0-9]/ig, "") + '"]').prop('selected', true);
@@ -254,17 +257,30 @@ function submit() {
 
     return false;
 };
-function submitForm() {
+function submitForm(prev_owner) {
+    var prev_owner='no';
     var x = $("#id").val();
     var y = $("#owner").val();
     var z = $("#action").val();
     var a = $("#status").val();
     var b = $("#ddate").val();
+ prev_owner=$("#owner_hidden").val();
+
+    console.log(y);
+    console.log(prev_owner);
+    if (y == prev_owner) {
+        prev_owner = 'yes';
+    }
+    else
+    {
+        prev_owner = 'no';
+    }
     console.log(y);
     console.log(y);
-        console.log(z);
-        console.log(a);
-        console.log(b);
+    console.log(prev_owner);
+    console.log(z);
+    console.log(a);
+    console.log(b);
     $.ajax({
         type: "POST",
         url: "saveQA.php",
@@ -275,7 +291,7 @@ function submitForm() {
             'action': z,
             'status': a,
             'date': b,
-
+            'prev_owner': prev_owner,
 
         },
 
@@ -283,6 +299,7 @@ function submitForm() {
             //$("#contact").html(response)
             //$("#contact-modal").modal('hide');
             alert('input recieved');
+            alert(response);//vishu use this for testing
             location.reload();
         },
         error: function () {
@@ -306,7 +323,8 @@ function submitForm() {
             data: form_data,
             type: 'post',
             success: function (output) {
-                alert(output); 				// display response from the PHP script, if any
+                alert(output); 		
+                location.reload();		// display response from the PHP script, if any
             },
             error: function (response) {
                 $('#sortpicture').html(response); // display error response from the server

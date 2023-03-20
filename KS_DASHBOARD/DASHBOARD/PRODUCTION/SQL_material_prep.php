@@ -85,7 +85,7 @@
 
     // RETURNS A TABLE OF ALL OPEN LABOUR ENTRIES ON OPEN PROCESS ORDERS AND ASSOCIATED DETAILS
     $production_group_step_table_sql = 
-    "SELECT 
+    "select
     CASE 
 
         WHEN DATEPART(dw,DATEADD(DAY,-(t0.[WORKDAYS] + FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])) IN (1,7) THEN convert(varchar,DATEADD(DAY,-2,DATEADD(DAY,-(t0.[WORKDAYS]+FLOOR(t0.[WORKDAYS]/7)*2),t0.[Promise Date])),10)
@@ -111,11 +111,12 @@
     FROM(
         SELECT  (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5+2)[PRECALCULATED WORKDAYS],
                 FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+7) [SUBCON ADJUSTMENT],
-                (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5) +2+ CASE WHEN t0.[SUBCON] = 'Y' THEN FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+7) ELSE 0 END[WORKDAYS],
+                (t0.[REMAINING]/(8*0.63))/((0.2/90)*t0.[REMAINING]+ 0.5) +2+ CASE WHEN t0.[Sub Con Items] is not null THEN FLOOR(0.22*(t0.[Planned Hours (Process Order)]/(8*0.63)/((0.2/90)*t0.[Planned Hours (Process Order)]+0.5))+14*t0.[Sub Con Items] ) ELSE 0 END[WORKDAYS],
                 * 
         FROM(
 
             SELECT
+			t44.[Sub Con Items],
             ISNULL(t16.[SUBCON],'N')[SUBCON],
             ISNULL(t7.DocNum, 000000) [Sales Order],
             ISNULL(t7.CardName,'STOCK')[Customer],
@@ -190,6 +191,25 @@
                 FROM IIS_EPC_PRO_ORDERL t0
                     WHERE t0.StepType = 'P' AND t0.StepDesc NOT LIKE '%LABOUR%'
             )t17 ON t17.PrOrder = t0.PrOrder AND t17.StepItem = t1.StepItem AND t17.StepCode = t1.StepCode
+
+			/*changed 14/03/23 addedd sub con items to find nuber of suncon items*/
+
+			left join (select t0.U_IIS_proPrOrder, count(t1.itemcode) [Sub Con Items]
+
+from owor t0
+inner join wor1 t1 on t1.DocEntry = t0.DocEntry
+inner join oitm t2 on t2.ItemCode = t1.ItemCode
+inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
+
+where t2.ItemName like 'SUBCONTRACT'
+and t0.Status not in ('L','C')
+
+
+group by t0.U_IIS_proPrOrder)t44 on t44.U_IIS_proPrOrder =t0.PrOrder
+
+
+
+
     
         /* NEXT STEP AND LAST STEP JOINS */
             LEFT JOIN(
@@ -281,7 +301,8 @@
         
         )t0
     )t0
-
+---t0.[Process Order]=47773
 
     ORDER BY [Est LS Start Date1]
+
     ";

@@ -41,7 +41,13 @@ $mail = new PHPMailer(true);
   $owner=(!empty($_POST['owner']) ? $_POST['owner'] : '');
   $date=(!empty($_POST['date']) ? $_POST['date'] : '');
   $action=(!empty($_POST['action']) ? $_POST['action'] : '');
+  $prev_owner=(!empty($_POST['prev_owner']) ? $_POST['prev_owner'] : '');
 	$atta="ddd";
+
+  //echo($owner);
+  //echo($action);
+  //echo($stat);
+  //echo($prev_owner);
    //to find the email 
 if ($owner=='Sean O Brien (Q)')
 {
@@ -95,6 +101,8 @@ else{
 			echo $e->getMessage();
         $e->getMessage();
   }
+  if ($prev_owner=="no")
+  {
   try{
   $mail->SMTPDebug = 3;                               // Enable verbose debug output
 	  
@@ -139,5 +147,5 @@ catch(Exception $e){
   // REPORT ERROR
   die(print_r($e->getMessage()));
 }
-  
+}
 ?>

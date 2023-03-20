@@ -168,7 +168,16 @@
                             <?php $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Sales Person"])); ?>
                             <?php $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Engineer"])); ?>
                             <?php $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"])); ?>
-
+                            <?php
+if($row["DelDateNul"]=='del_empty') 
+{
+$date_color='green';
+}
+else
+{
+    $date_color='white';
+}
+?>
                             <tr class = 'active_in_selection' project = '<?=$project?>'sales_order = '<?=$sales_order?>' sales_person = '<?=$sales_person?>' engineer = '<?=$engineer?>' customer = '<?=$customer?>' nbi = '<?=$row["Not Booked In"]?>' exp = '<?=$row["Due Date Passed"]?>' booked_in_today = '<?=$row["BI TD"]?>' booked_in_yesterday = '<?=$row["BI YD"]?>' booked_in_this_week = '<?=$row["BI TW"]?>' booked_in_last_week = '<?=$row["BI LW"]?>' booked_in_this_month = '<?=$row["BI TM"]?>' booked_in_last_month = '<?=$row["BI LM"]?>' booked_in_this_year = '<?=$row["BI TY"]?>' booked_in_all = '<?=$row["BI ALL"]?>' due_today = '<?=$row["DEL TD"]?>' due_tomorrow = '<?=$row["DEL ND"]?>' due_this_week = '<?=$row["DEL TW"]?>' due_next_week = '<?=$row["DEL NW"]?>' due_this_month = '<?=$row["DEL TM"]?>' due_next_month = '<?=$row["DEL NM"]?>' due_this_year = '<?=$row["DEL TY"]?>' due_all = '<?=$row["DEL ALL"]?>'>
                                 <td><?=$row["Producrion Order"]?></td>
                                 <td><?=$row["Sales Order"]?></td>
@@ -182,7 +191,7 @@
                                 <td style = 'background-color:#E8E8E8'><?=($row["Booked In"] == null ? "N/A" : $row["Booked In"])?></td>
                                 <td><?=($row["Date Booked In"] == null ? "NOT BKD IN" : $row["Date Booked In"])?></td>
                                 <td><?=$row["Promise Date"]?></td>
-                                <td><?=$row["Due Date"]?></td>
+                                <td class=<?=$date_color?>><?=$row["Due Date"]?></td>
                                 <td><?=$row["Location"]?></td>
                                 <td><?=($row["User"] == null ? "N/A" : $row["User"])?></td>
                                 <td><?=$row["Sales Person"]?></td>

@@ -535,7 +535,7 @@
 
 
                                 
-                                <td style="display:none"><?=$row["attachments"]?></td>
+                                <td ><?=$row["attach"]?></td>
 
                                 <td style="display:none"><?=$row["Status"]?></td>
                                 <td style="display:none"><?=$row["Date"]?></td>
@@ -644,7 +644,7 @@
                                     <label for="message">Attachments</label>
                                     <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
                                     <input id="sortpicture" type="file" name="sortpic" />
-
+                                    <input id="owner_hidden"style="display:none"type=text  value="">
                                 </div>
 
                             </div>
@@ -656,6 +656,7 @@
 
                         </div>
                     </div>
+                   
                 </div>
                 <!-- Modal ENDS HERE -->
                 <!-- Filter Starts here -->

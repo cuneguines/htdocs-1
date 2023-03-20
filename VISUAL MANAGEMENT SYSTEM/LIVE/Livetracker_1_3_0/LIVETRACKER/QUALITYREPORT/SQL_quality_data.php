@@ -31,6 +31,6 @@ left join(select (t0.firstName + ' ' + t0.lastName)[person], t0.email
    
    where t0.Active = 'Y' and t0.email is not NULL)t77 on t77.email COLLATE SQL_Latin1_General_CP1_CI_AS =t20.Owner COLLATE SQL_Latin1_General_CP1_CI_AS
    
-   where t0.form_type in ('Non Conformance','Customer complaints')
-    and t2.ID is null ORDER BY t0.ID";
+   where t0.form_type in ('Non Conformance','Customer complaints','Opportunity For Improvement')
+    and t2.ID is null ORDER BY  CAST(t0.ID AS int)";
 

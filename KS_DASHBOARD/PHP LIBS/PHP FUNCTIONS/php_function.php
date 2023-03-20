@@ -191,7 +191,8 @@ function generate_filter_options($table, $field)
                 <th width="6%">Notes</th>
             </tr>
         <tbody>
-        <?php //print_r($data);?>
+        <?php $sum=0;//print_r($data);?>
+        
             <?php foreach($data as $row): ?>
                
                 <?php $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"])); ?>
@@ -252,10 +253,12 @@ function generate_filter_options($table, $field)
                 <?php $saleo = "location.href='http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/PRODUCTION/DEMAND/SCHEDULE/BASE_production_stages%20copy.php?saleo=".$row["Sales Order"]. "," . $row["Process Order"]."'" ?>
 
                 <?php 
+               
                 if($row["Prev Step Status"] == 'RD' || $row["Prev Step Status"] == 'FS')
-                $curr_stat='fs_ds';
-                else
-                $curr_stat='null';
+                $sum=$sum+floatval($row["Remaining Hours Stage"]);
+                
+                
+                
                 ?>
                 <tr customer = '<?=$customer?>' project = '<?=$project?>' est_step_start_due = "<?=(int)($row["Est LS Start Date DIFFWEEK"] <= -5 ? $week_five_weeks_ago : ($row["Est LS Start Date DIFFWEEK"] >= 25 ? $week_twenty_five_weeks_ahead : $row["Est LS Start Date WEEKNO"]))?>" prev_step_status = "<?=$row["Prev Step Status"] == 'FS' ? 'RD' :  $row["Prev Step Status"]?>" class = "active_p_row" style = "<?=$hide." ";?> <?=$row["Complete_Prd"] == 'Y' ? 'background-color:#7cbfa0' : ($row["Sub Component"] == 'Y' ? 'background-color:#FCF9A1' : '')?>" active_in_multiselect = 'Y'>
 
@@ -282,7 +285,7 @@ function generate_filter_options($table, $field)
 
                     <!-- <td class = "light_red righttext"><?//floatval($row["Prev Step Planned Hours"])?></td> -->
                     
-                    <td value=<?=$curr_stat?> class = "rd_hours light_red"><?=$row["Prev Step Status"]?></td>
+                    <td  class = "rd_hours light_red"><?=$row["Prev Step Status"]?></td>
                     <td class = "Light_yellow lefttext"><?=$row["Next Step"]?></td>
                     <td class = "lefttext"><?=$last_name?></td>
                     <td class = "light_grey"><?= $row["Instructions"] ? "<button class = 'instructions active' onclick='show_alert(".'"'.$row["Instructions"].'"'.")'></button>" : "<button style = 'background-color:white; color:white' class = 'instructions'></button>"?></td>
@@ -302,13 +305,13 @@ function generate_filter_options($table, $field)
                 <td aggregateable = 'Y' operation = 'SUM_P'> </td>
                 <td aggregateable = 'Y' operation = 'SUM_B'>             </td>
                 <td style="text-align:right"aggregateable = 'Y' operation = 'SUM_R'>             </td>
-                <td aggregateable = 'Y' operation = ''operation = 'SUM_RD'>             </td>
+                <td aggregateable = 'Y' operation = 'SUM_RD'>             </td>
+                <td aggregateable = 'N' operation = ''>             </td>
+                <td aggregateable = 'Y' operation = ''>      <?=$sum?>       </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
                 <td aggregateable = 'N' operation = ''>             </td>
-                <td aggregateable = 'N' operation = ''>             </td>
-                <td aggregateable = 'N' operation = ''>             </td>
-                <td aggregateable = 'N' operation = ''>             </td>
+              
             </tr>
         </tfoot>
     </table>

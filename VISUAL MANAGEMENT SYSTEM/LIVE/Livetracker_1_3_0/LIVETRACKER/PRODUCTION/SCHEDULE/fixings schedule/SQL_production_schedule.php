@@ -1,7 +1,8 @@
-<?php
+<?php // changed 10-03-23
 $tsql =
+
+
 "SELECT
-/* SALES ORDER RELATED CONTENT */
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -10,6 +11,7 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
+t0.ItmsGrpNam,
 
 /* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE)*/
 t0.[Dscription],
@@ -18,6 +20,7 @@ t0.[Quantity],
 t0.[On Hand],
 t0.[Promise Date],
 t0.[Promise Week Due],
+
 CASE 
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
@@ -25,6 +28,7 @@ CASE
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
     ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 END [Promise Diff Week],
+
 t0.[Engineer],
 t0.[risk],
 t0.[Status],
@@ -44,6 +48,7 @@ t0.[Est Prod Hrs]
 FROM(
 SELECT
     /* SALES ORDER RELATED CONTENT */
+	t6.ItmsGrpNam,
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -128,6 +133,7 @@ UNION ALL
 
 SELECT
     /* SALES ORDER RELATED CONTENT  (SELF DEFINED OR TAKEN FROM PRODUCTION ORDER IN THIS CASE) */
+	t6.ItmsGrpNam,
     000000 [Sales Order],
     'Kent Stainless'[Customer], 
     ISNULL(t5.U_Product_Group_One, 'NOT PART OF PROJECT') [Project],
@@ -200,7 +206,6 @@ SELECT
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
             ) t0
-    WHERE t0.[Dscription] LIKE '%Site FIX%' OR t0.[Dscription] LIKE '%Site FIT%'
-   ORDER BY t0.[Project]
-"
-?>
+    WHERE t0.[ItmsGrpNam] LIKE '%Site FIX%' 
+   ORDER BY t0.[Project]"
+   ?>
