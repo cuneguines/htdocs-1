@@ -21,7 +21,7 @@ $result = "select t0.attachments,
 WHEN  t0.attachments ='' then 'N'  else t0.attachments
 END) [attachements_issues]
 from ms_qual_log t0
-where t0.form_type = 'Non Conformance'
+where t0.form_type in( 'Non Conformance','Opportunity For Improvement')
 and t0.ID=$item";
 
 

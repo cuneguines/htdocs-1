@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Company</title>
+    <title>Quality</title>
     <!-- Bootstrap Styles-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <!-- FontAwesome Styles-->
@@ -70,6 +70,10 @@
         width: 100%;
         height: 100%;
     }
+    tr.alternate {
+    background-color:#CEECF5;
+}
+
 </style>
 
 
@@ -535,7 +539,7 @@
 
 
                                 
-                                <td ><?=$row["attach"]?></td>
+                                <td style="display:none"><?=$row["attach"]?></td>
 
                                 <td style="display:none"><?=$row["Status"]?></td>
                                 <td style="display:none"><?=$row["Date"]?></td>

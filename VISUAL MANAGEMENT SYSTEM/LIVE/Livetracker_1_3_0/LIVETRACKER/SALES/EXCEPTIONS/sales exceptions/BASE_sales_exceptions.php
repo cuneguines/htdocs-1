@@ -129,9 +129,9 @@
                                     if($row["Account Status"] == "ON HOLD"){
                                         array_push($stage, "Accounts-On-Hold");
                                     }
-                                    if($row["Cleared to Invoice"] == "No"){
-                                        array_push($stage, "Cleared-To-Invoice");
-                                    }
+                                    /* if($row["Cleared to Invoice"] == "No"){
+                                        //array_push($stage, "Cleared-To-Invoice");
+                                    }*/
                                     
 
                                     if($row["Weeks Overdue_2"] > 0){
@@ -141,7 +141,7 @@
                                         $four_w = 'Y';
                                     }
 
-                                    if($row["Score"] == 4){
+                                  /*   if($row["Score"] == 4){
                                         $str = "style = 'background-color:#FF4D4D'";
                                     }
                                     else if($row["Score"] == 3){
@@ -152,7 +152,8 @@
                                     }
                                     else{
                                         $str = "";
-                                    }
+                                    }  */
+                                    $str = "";
                                 ?>
                                 <tr <?=$str?> stage = '<?=implode(", ",$stage)?>' class = "row white btext smedium" two_w = '<?=$two_w?>' four_w = '<?=$four_w?>' name = 'Y'>
                                     <td><?=$row["Sales Order"]?></td>
@@ -163,7 +164,7 @@
                                     <td><?=$row["Engineer"]?></td>
                                     <td class = 'lefttext'><?=(($row["Transport Charge"] == null) ? "NO CHARGE" : "€".$row["Transport Charge"])?></td>
                                     <td><?=$row["Account Status"]?></td>
-                                    <td><?=$row["Cleared to Invoice"]?></td>
+                                    <td><?//$row["Cleared to Invoice"]?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

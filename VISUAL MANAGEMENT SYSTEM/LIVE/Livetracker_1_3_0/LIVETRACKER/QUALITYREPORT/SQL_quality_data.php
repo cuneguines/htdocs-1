@@ -1,5 +1,18 @@
 <?php
-$Quality_results = "select *,FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],ISNULL(t77.person,'No Owner')[person],FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,case when t20.Status is NULL then 'Other'else t20.Status end[Status],t20.Action,ISNULL(t20.Owner,'No Owner')[Owner],FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
+$Quality_results = "select *,case when t0.area_raised_by ='' then 'NO Area' when t0.area_raised_by  is NULL then 'NO Area' else  t0.area_raised_by end [area_raised_],FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],ISNULL(t77.person,'No Owner')[person],FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,
+(case when t20.Status is NULL then 'Other'
+
+
+when t20.Status='Open' then 'Open'
+when t20.Status='Closed' then 'Closed'
+end)
+[Status],
+t20.Action,ISNULL(t20.Owner,'No Owner')[Owner],FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
+(case 
+when DateDiff(day,GETDATE(),t20.Date) >= 14 and t20.Status='Open' and t20.Date!='01/01/1900  00:00:00' then 'Due_next_two_weeks'
+
+when DateDiff(day,GETDATE(),t20.Date) <= 14 and t20.Status='Closed' and t20.Date!='01/01/1900  00:00:00' then 'Closed_last_two_weeks'
+end )[new_stat],
 (case
 WHEN t20.Date!='01/01/1900  00:00:00' and
  t20.Date is not null then DateDiff(day,GETDATE(),t20.Date)

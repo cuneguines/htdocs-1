@@ -11,13 +11,13 @@ $sales_exceptions =
             ELSE 
                 (CASE WHEN t4.Balance + t7.[Order Value] <= 0 THEN 'OK' ELSE 'ON HOLD' END) 
             END)[Account Status],
-        (CASE WHEN t0.U_Cleared_to_invoice = 'Yes' THEN 'Yes' ELSE 'No' END)[Cleared to Invoice], 
+       -- (CASE WHEN t0.U_Cleared_to_invoice = 'Yes' THEN 'Yes' ELSE 'No' END)[Cleared to Invoice], 
         CAST(t5.U_Promise_Date AS DATE)[Promise Date], 
         t1.firstname + ' ' + t1.lastName [Sales Person],   
         t2.SlpName [Engineer],
         DATEDIFF(week,t5.U_Promise_Date,GETDATE())+2 [Weeks Overdue_2],
-        DATEDIFF(week,t5.U_Promise_Date,GETDATE())+4 [Weeks Overdue_4],
-        (CASE WHEN t0.U_Del_add_complete <> 'Y' THEN 1 ELSE 0 END) + (CASE WHEN t0.U_Transport_Charge is null or t0.U_Transport_Charge = 'No' THEN 1 ELSE 0 END) + (CASE WHEN t4.qrygroup26 = 'Y' THEN 1 ELSE 0 END) + (CASE WHEN t0.U_Cleared_to_invoice is null or t0.U_Cleared_to_invoice = 'No' THEN 1 ELSE 0 END)[Score]
+        DATEDIFF(week,t5.U_Promise_Date,GETDATE())+4 [Weeks Overdue_4]
+        ---(CASE WHEN t0.U_Del_add_complete <> 'Y' THEN 1 ELSE 0 END) + (CASE WHEN t0.U_Transport_Charge is null or t0.U_Transport_Charge = 'No' THEN 1 ELSE 0 END) + (CASE WHEN t4.qrygroup26 = 'Y' THEN 1 ELSE 0 END) + (CASE WHEN t0.U_Cleared_to_invoice is null or t0.U_Cleared_to_invoice = 'No' THEN 1 ELSE 0 END)[Score]
         FROM ordr t0
 
         INNER JOIN ohem t1 ON t1.empID = t0.OwnerCode  
@@ -60,5 +60,5 @@ $sales_exceptions =
 
         WHERE t0.DocStatus = 'O' AND (ISNULL(t6.U_PP_Status,t0.U_PP_Status) is null OR ISNULL(t6.U_PP_Status,t0.U_PP_Status) = 'Live')
         
-        ORDER BY Score DESC";           
+        ";           
 ?>

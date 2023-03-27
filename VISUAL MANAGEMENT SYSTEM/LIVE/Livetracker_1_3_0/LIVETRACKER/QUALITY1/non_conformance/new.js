@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
     $('#owner').hide();
     $("label[for='owner']").hide();
     $('#action').hide();
@@ -300,7 +300,7 @@ function submitForm(prev_owner) {
             //$("#contact-modal").modal('hide');
             alert('input recieved');
             alert(response);//vishu use this for testing
-            location.reload();
+            object.reload(forcedReload);
         },
         error: function () {
             alert("Error");

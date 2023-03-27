@@ -109,7 +109,7 @@ endforeach;
     }
     .red_grad
     {
-        background:linear-gradient(100deg,red, transparent );
+        background:linear-gradient(100deg,#f44336, transparent );
     }
     .green_grad
     {
@@ -119,6 +119,40 @@ endforeach;
     {
         background:linear-gradient(100deg,orange, transparent );
     }
+    .filter.wider {
+    width: 24%;
+ 
+}
+.filter {
+    height: 80%;
+    position: relative;
+    top: 10%;
+    width: 22%;
+    margin: 0% 0% 0% 0%;
+    display: inline-block;
+    vertical-align: top;
+}
+.table_container#grouping_table_container {
+   
+    height: 57%;
+}
+
+
+
+
+tr.alternate {
+    background-color:#CEECF5;
+}
+#grouping_buttons .grouping_category_new
+{
+    position:relative;
+    vertical-align:top;
+    width:8%; 
+    margin:0% 1.5% 0% 1.5%;
+    height:100%; 
+    float:left;
+}
+
 </style>
 
 <body>
@@ -137,13 +171,13 @@ endforeach;
                         </div>
                         <!--
                             -->
-                        <div class="grouping_category">
-                            <button class="fill medium blue wtext rounded" stat="ALL">ALL</button>
+                        <div class="grouping_category_new">
+                            <button class="fill medium blue wtext rounded" new_stat="Duenexttwoweeks">Due next 2 weeks</button>
                         </div>
                         <!--
                             -->
-                        <div class="grouping_category">
-                            <button class="fill medium blue wtext rounded" stage="Fittings">All</button>
+                        <div class="grouping_category_new">
+                            <button class="fill medium blue wtext rounded" new_stat="Closedlasttwoweeks">Closed last two weeks</button>
                         </div>
                         <!--
                             -->
@@ -177,7 +211,7 @@ endforeach;
                 <h1>QUALITY REPORT<h1>
             </div>
             <div id='grouping_table_container' class='table_container' style="overflow-y:scroll;overflow-x:scroll;">
-                <table id="purchasing_table" class="filterable sortable">
+                <table id="purchasing_table"  class="filterable sortable">
                     <thead>
                         <tr class="blue_pur wtext smedium head">
                             <th width="100px">Item no</th>
@@ -189,7 +223,7 @@ endforeach;
                             <th width="200px">Target date</th>
                             <th width="120px">Days left</th>
                             <th width="150px"> Link to improvement</th>
-                            <th width="120px">Area raised</th>
+                            <th width="200px">Area raised</th>
                             <th width="120px">Area Caused</th>
                             <th width="300px">Response type</th>
                             <th width="200px">Type</th>
@@ -230,9 +264,13 @@ endforeach;
                             ?>
                             <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
                                   $product_group_two = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Two"]));
+                                  $product_group_three = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Three"]));
                                   $person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["person"]));
+                                  $area_raised = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["area_raised_"]));
+                                  $new_stat= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["new_stat"]));  
                             ?>
-                            <tr stat='<?= $stat ?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'class="white btext smedium">
+                            
+                            <tr stat='<?= $stat ?>'new_stat='<?= $new_stat?>'area_raised='<?= $area_raised ?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'product_group_three='<?= $product_group_three ?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td class='lefttext'><?= $row["nc_description"]!=NULL?$row["nc_description"]:$row["cc_desc"]?></td> 
                                 <td><?= $row["time_stamp"] ?></td>
@@ -245,6 +283,8 @@ endforeach;
 
                                 <td style="border-left:1px solid pink;border-right:1px solid pink;width:10px; box-shadow: 0px -2px 10px 0px rgb(0 0 0 / 50%);">
                                 <?php 
+                                if ($row["Status"]=="Open")
+                                {
                                 switch ($row["Days_open"]) {
                                             case ($row["Days_open"] < -13):
                                                 $color='red_grad';
@@ -269,14 +309,17 @@ endforeach;
                                                    //$color = 'white';
                                                    break;
                                                      }
+                                                    }
                                       ?>
+                                      
                                     <?= $row["Days_open"]==NULL?'NULL':$row["Days_open"]?></td> 
+                                                    
                                     <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
-                                    <td class='lefttext'><?= $row["area_raised_by"] ?></td>
+                                    <td class='lefttext'><?= $row["area_raised_"] ?></td>
                                     <td class='lefttext'><?= $row["nc_area_caused"] ?></td>
                                     <td class='lefttext'><?= $row["Action"] ?></td>
                                     <td class='lefttext'><?= $row["form_type"] ?></td>
-                            <td class='lefttext'><?=$row["nc_itemcode"] ?></td>
+                                    <td class='lefttext'><?=$row["nc_itemcode"] ?></td>
                                 
 
 
@@ -284,11 +327,11 @@ endforeach;
                                 <td><?= $row["nc_sales_order"] ?></td>
                                 <td class='lefttext'><?= $row["U_Client"] ?></td>
                                 <td class='lefttext'><?= $row["Dscription"] ?></td>
-                                <td ><?= $row["ItemCode"] ?></td>
+                                <!-- <td ><?// $row["ItemCode"] ?></td> -->
                                 <td class='lefttext'><?= $row["U_Product_Group_One"] ?></td>
                                 <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                                 <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
-                                <td class='lefttext'><?= $row["Status"] ?></td>
+                                <td class='lefttext Status'><?= $row["Status"] ?></td>
                                 
                                 
                                 
@@ -298,12 +341,12 @@ endforeach;
 
                 </table>
             </div>
-            <div id="grouping_pages_footer" class="footer">
-                <div id="button_container">
+            <div id="grouping_pages_footer" style="bottom:7%"class="footer">
+                <div id="button_container"style="width:10%">
                     <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button>
                 </div>
                 <div id="filter_container">
-                    <div id="filters" class="fill blue rounded">
+                    <div id="filters" class="fill blue rounded"style="margin-left:-6%;    width: 152%;">
                         <div class="filter wider">
                             <div class="text">
                                 <button class="fill blue medium wtext">Owner</button>
@@ -338,12 +381,83 @@ endforeach;
                                 </select>
                             </div>
                         </div>
+                        <div class="filter wider">
+                            <div class="text">
+                                <button class="fill blue medium wtext">Product Group three</button>
+                            </div>
+                            <div class="content">
+                                <select id="select_product_group_three"class="selector_p3 fill medium">
+                                    <option value="All" selected>All</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div id="button_container">
+                <div id="button_container"style="width:10%;margin-left: 20%;">
                     <button id='file_test'onclick=//"export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
                 </div>
             </div>
+            <div id="grouping_pages_footer" style="bottom:1%"class="footer">
+                <div id="button_container"style="width:10%">
+                    <!-- <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button> -->
+                </div>
+                <div id="filter_container">
+                    <div id="filters" class="fill blue rounded"style="margin-left:-6%;    width: 152%;">
+                        <div class="filter wider"style="display:none">
+                            <div class="text">
+                                <button class="fill blue medium wtext">Unused</button>
+                            </div>
+                            <div class="content">
+                                <select id="select_person" class="selector fill medium">
+                                    <option value="All" selected>All</option>
+                                    <?php //generate_filter_options($quality_results, "person"); 
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filter wider">
+                            <div class="text">
+                                <button class="fill blue medium wtext">Area Raised</button>
+                            </div>
+                            <div class="content">
+                                <select id="select_area_raised" class="selector fill medium">
+                                    <option value="All" selected>All</option>
+                                    <?php generate_filter_options($quality_results, "area_raised_"); 
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filter wider" style="display:none">
+                            <div class="text">
+                                <button class="fill blue medium wtext">Unused</button>
+                            </div>
+                            <div class="content">
+                                <select id="select_product_group_two"class="selector fill medium">
+                                    <option value="All" selected>All</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="filter wider"style="display:none">
+                            <div class="text">
+                                <button class="fill blue medium wtext">Product Group three</button>
+                            </div>
+                            <div class="content">
+                                <select id="select_product_group_three"class="selector_p3 fill medium">
+                                    <option value="All" selected>All</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="button_container"style="width:10%;margin-left: 20%;">
+                    <!-- <button id='file_test'onclick=//"export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button> -->
+                </div>
+            </div>
+
+
+
+
+
         </div>
     </div>
 </body>

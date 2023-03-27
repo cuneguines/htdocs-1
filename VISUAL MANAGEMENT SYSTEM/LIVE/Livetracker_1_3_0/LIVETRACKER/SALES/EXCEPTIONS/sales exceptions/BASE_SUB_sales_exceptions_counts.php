@@ -53,7 +53,7 @@
                 $sales_exceptions_counters[ACCOUNT_ON_HOLD][OK]++;
             }
         }
-        if($row["Cleared to Invoice"] == "No"){
+        /* if($row["Cleared to Invoice"] == "No"){
             if($row["Weeks Overdue_2"] > 0){
                 $sales_exceptions_counters[NOT_CLEARED_FOR_INVOICE][LATE_TWO_WEEKS]++;
             }
@@ -63,6 +63,6 @@
             else{
                 $sales_exceptions_counters[NOT_CLEARED_FOR_INVOICE][OK]++;
             }
-        }
+        } */
     }
 ?>

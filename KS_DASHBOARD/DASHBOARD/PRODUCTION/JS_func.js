@@ -164,7 +164,7 @@ $(document).ready(function () {
     $('.search_docno').keyup(function () {
         console.log("TEST");
         input = $(this).val();
-        $.each($(".radio_btn_page table.searchable tr:not('.head')"), function () {
+        $.each($(".radio_btn_page table.searchable tbody tr:not('.head')"), function () {
             $(this).hide();
             if (JSON.stringify(($(this).children().first().children().first().text())).toLowerCase().includes(input.toLowerCase()) || JSON.stringify(($(this).children().eq(4).children().first().text())).toLowerCase().includes(input.toLowerCase())) {
                 $(this).show();
