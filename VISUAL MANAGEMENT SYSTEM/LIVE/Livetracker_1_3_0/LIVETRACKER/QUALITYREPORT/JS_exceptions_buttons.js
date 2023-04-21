@@ -1,4 +1,6 @@
 $(document).ready(function () {
+
+
     $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
     var rows = $("table.filterable tbody tr");
     var template = $('table.filterable tfoot tr td');
@@ -32,7 +34,7 @@ $(document).ready(function () {
             console.log(new_rows);
             new_rows.filter("[person =" + person + "]").show();
             new_rows.not("[stat = " + $(this).attr('stat') + "]").hide();
-           
+
         }
         else {
             $('.selector').not(this).prop('selectedIndex', 0)
@@ -56,6 +58,13 @@ $(document).ready(function () {
         // DISABLE OTHER FILTERS AND BUTTONS + ACTIVATE CURRENT BUTTOn
 
         //$('.selector').prop('selectedIndex', 0);
+        //all filters empty
+        $('#select_person option[value="All"]').prop('selected', true);
+        $('#select__product_group option[value="All"]').prop('selected', true);
+
+        $('#select_product_group_two').val('');
+        $('#select_product_group_three ').val('');
+
         $('table tr').removeClass('alternate');
         $('.grouping_category_new button').not(this).removeClass("pressed");
         $('.grouping_category button').not(this).removeClass("pressed");
@@ -76,7 +85,7 @@ $(document).ready(function () {
             console.log(new_rows);
             new_rows.filter("[person =" + person + "]").show();
             new_rows.not("[new_stat = " + $(this).attr('new_stat') + "]").hide();
-           
+
         }
         else {
             $('.selector').not(this).prop('selectedIndex', 0)
@@ -95,7 +104,7 @@ $(document).ready(function () {
 
     });
 
-   
+
 
 
     $("#select_product_group").on("change", function () {
@@ -104,7 +113,7 @@ $(document).ready(function () {
         $('#select_product_group_two').empty();
         $('#select_product_group_three').empty();
         var productgp2 = [];
-        var x = $(this).val();
+        var x = $('#select_product_group :selected').text();
         console.log(x);
         $.ajax({
             type: "POST",
@@ -120,13 +129,16 @@ $(document).ready(function () {
                 //$("#contact").html(response)
                 //$("#contact-modal").modal('hide');
                 console.log(response[0]);
-                $.each(response[0][0], function (i) {
-                    $.each(response[0][i], function (key, val) {
+                //length=response[0].length;
+
+                $.each(response[0], function () {
+                    $.each(this, function (key, val) {
                         if (key == 'U_Product_Group_Two') {
                             Product_item = val;
                             console.log(val);
                             productgp2.push(val);
                             console.log(productgp2[0]);
+                            console.log(i);
                             // $(".nav-second-level")
 
                             //.append('<li value="' + Product_item + '"><a href="#"><span class="tab">' + Product_item + '</span></a> <ul class="nav-third-level" style="overflow-y:scroll"></ul></li>');
@@ -149,12 +161,13 @@ $(document).ready(function () {
 
                 console.log(unique);
                 for (var i = 0; i < unique.length; i++) {
-                    var option = new Option(unique[i], unique[i].replace(/[^A-Z0-9]/ig, ""));
-                    $(option).html(unique[i]);
-                    //Append the option to our Select element.
-                    $("#select_product_group_two").append(option);
+                    if (unique[i] != null) {
+                        var option = new Option(unique[i], unique[i].replace(/[^A-Z0-9]/ig, ""));
+                        $(option).html(unique[i]);
+                        //Append the option to our Select element.
+                        $("#select_product_group_two").append(option);
 
-
+                    }
                 }
 
                 //alert('input recieved');
@@ -172,7 +185,7 @@ $(document).ready(function () {
         $('table tr').removeClass('alternate');
         $('#select_product_group_three').empty();
         var productgp2 = [];
-        var x = $(this).val();
+        var x = $('#select_product_group_two :selected').text();
         console.log(x);
         $.ajax({
             type: "POST",
@@ -188,8 +201,8 @@ $(document).ready(function () {
                 //$("#contact").html(response)
                 //$("#contact-modal").modal('hide');
                 console.log(response[0]);
-                $.each(response[0][0], function (i) {
-                    $.each(response[0][i], function (key, val) {
+                $.each(response[0], function () {
+                    $.each(this, function (key, val) {
                         if (key == 'U_Product_Group_Three') {
                             Product_item = val;
                             console.log(val);
@@ -215,23 +228,17 @@ $(document).ready(function () {
                 }
                 var unique = productgp2.filter((v, i, a) => a.indexOf(v) === i);
 
-                console.log(unique);
-                if (unique.length <= 1) {
-                    $(option).html('');
-                    $("#select_product_group_three").append(option);
-
-                }
-                else {
-                    for (var i = 0; i < unique.length; i++) {
-                        if (unique[i] != null) {
-                            var option = new Option(unique[i], unique[i].replace(/[^A-Z0-9]/ig, ""));
-                            $(option).html(unique[i]);
-                            //Append the option to our Select element.
-                            $("#select_product_group_three").append(option);
-                        }
+                console.log(unique.length);
+                for (var i = 0; i < unique.length; i++) {
+                    if (unique[i] != null) {
+                        var option = new Option(unique[i], unique[i].replace(/[^A-Z0-9]/ig, ""));
+                        $(option).html(unique[i]);
+                        //Append the option to our Select element.
+                        $("#select_product_group_three").append(option);
 
                     }
                 }
+
                 //alert('input recieved');
                 //location.reload();
             },
@@ -310,6 +317,8 @@ $(document).ready(function () {
         $('#select_product_group').not(this).prop('selectedIndex', 0);
         $('#select_product_group_two').not(this).prop('selectedIndex', 0);
         $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+        $('#select_product_group_two').val('');
+        $('#select_product_group_three').val('');
     });
 
     $("#select_area_raised").on("change", function filter() {
@@ -320,5 +329,33 @@ $(document).ready(function () {
         $('#select_product_group_three').val('');
         $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
     });
+    $("#select_area_caused").on("change", function filter() {
 
+        $('table tr').removeClass('alternate');
+        $('#select_product_group').not(this).prop('selectedIndex', 0);
+        $('#select_product_group_two').val('');
+        $('#select_product_group_three').val('');
+        $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+    });
+    $("#resett_but").on("click", function () {
+
+
+        $('table tr').removeClass('alternate');
+        rows.show();
+        $('#select_product_group_three').empty();
+        $('#select_product_group_two').empty();
+        $('#select_product_group_three')[0].options.length = 0;
+        $('#select_product_group_two')[0].options.length = 0;
+        $('#select_person option[value="All"]').prop('selected', true);
+        
+        $('#select_area_caused').not(this).prop('selectedIndex', 0);
+        $('#select_area_raised').not(this).prop('selectedIndex', 0);
+        $('#select_product_group').not(this).prop('selectedIndex', 0);
+
+      
+        $('.grouping_category_new button').not(this).removeClass("pressed");
+        $('.grouping_category button').not(this).removeClass("pressed");
+        $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+
+    });
 });

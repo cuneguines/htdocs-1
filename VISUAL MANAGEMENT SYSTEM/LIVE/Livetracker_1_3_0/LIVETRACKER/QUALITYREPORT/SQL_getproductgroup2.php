@@ -30,7 +30,7 @@ END) [attachements_issues]
                         where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
     left join (select t0.* from  KENTSTAINLESS.dbo.ordr t0 )t50 on  t50.DocNum= nc_sales_order
 left JOIN KENTSTAINLESS.dbo.rdr1 t11 on t11.DocEntry = t50.DocEntry and t11.U_IIS_proPrOrder=nc_process_order
-left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode = t11.ItemCode
+left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode COLLATE SQL_Latin1_General_CP1_CI_AS= nc_itemcode COLLATE SQL_Latin1_General_CP1_CI_AS
 left join KENTSTAINLESS.dbo.oitb t13 on t13.ItmsGrpCod = t12.ItmsGrpCod
 left join(select t55.sap_id,t55.created_date,t55.attachments from dbo.attachment_table t55
 inner join(select t1.sap_id,max(t1.created_date) as Mmaxdate
@@ -44,7 +44,7 @@ left join(select (t0.firstName + ' ' + t0.lastName)[person], t0.email
    
    where t0.Active = 'Y' and t0.email is not NULL)t77 on t77.email COLLATE SQL_Latin1_General_CP1_CI_AS =t20.Owner COLLATE SQL_Latin1_General_CP1_CI_AS
    
-    where t0.form_type = 'Non Conformance' and [U_Product_Group_Two]='$Id'
+   where t0.form_type in ('Non Conformance','Customer complaints','Opportunity For Improvement') and [U_Product_Group_Two]='$Id'
     and t2.ID is null ORDER BY t0.ID";
 
     $getResults = $conn->prepare($results);

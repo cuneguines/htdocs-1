@@ -30,7 +30,7 @@ $(document).ready(function(){
                 }
             });
     $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
-    $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+$(this).attr('process_order')+ "," + $('.page_type').attr('type') + "'" +'">'+$(this).attr('process_order')+"</button></h2>");
+    $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+ $(this).attr('process_order') + ",NORMAL'" + '">' + $(this).attr('process_order') + "</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");
     $("h2.third").replaceWith( " <h2 style = 'color:red;' class = 'inner third medium'>"+$(this).attr('Description')+"        "+$(this).attr('qty')+"</h2>");
     $("h2.fourth").replaceWith( "<h2 class = 'inner fourth medium'>"+$(this).attr('sales_person')+"</h2>");

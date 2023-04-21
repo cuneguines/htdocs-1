@@ -36,6 +36,18 @@
             echo "<h1 class = 'black'>Cannot Find Process Order</h1>"; die();
         }
         ?>
+        <style>
+            #sap_viewer .tables_container table td.border_red{
+            
+                border:3px solid red;
+            }
+            #sap_viewer .tables_container table td.border_plain{
+
+                
+            
+                border:3px solid #454545;
+            }
+        </style>
     </head>
     <body id = "sap_viewer">
         <div id = "background">
@@ -86,10 +98,20 @@
                                 <div class = "element short"><div class = "lefttext title_text">Booked Labour</div></div>
                             </div>
                             <div class = "subdiv right" style = "width:48%;">
+                            <?php
+                            function division($a, $b) {         
+                                            if($b === '0'||$b === '0.00')
+                                            
+                                            return null;
+                                            else
+                                            return $a/$b;
+                                                    
+                                                }
+                                            ?>
                                 <div class = "element short"><button class = "textbox short">€ <?=number_format($process_order_data[0]["Planned Material"],2)?></button></div>
                                 <div class = "element short"><button class = "textbox short">€ <?= !$process_order_data[0]["Planned Material"] ? "0.00" : number_format($process_order_data[0]["Issued Material"],2)." ".number_format($process_order_data[0]["Issued Material"]/$process_order_data[0]["Planned Material"]*100,2)."%"?></button></div>
                                 <div class = "element short"><button class = "textbox short"><?=floatval($process_order_data[0]["Planned Labour"])?> Hrs</button></div>
-                                <div class = "element short"><button class = "textbox short"><?= !$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ".number_format($process_order_data[0]["Actual Labour"]/$process_order_data[0]["Planned Labour"]*100,2)."%"?></button></div>
+                                <div class = "element short"><button class = "textbox short"><?= !$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ".division(number_format($process_order_data[0]["Actual Labour"]),number_format($process_order_data[0]["Planned Labour"]*100,2))."%"?></button></div>
                             </div>
                         </div>
                     </div>
@@ -121,7 +143,7 @@
                                         <th width = "16%">Item Code</th>
                                         <th class = "lefttext" width = "50%">Part Name</th>
                                         <th class = "lefttext" width = "7%">Planned<br>Qty</th>
-                                        <th width = "10%">Price</th>
+                                        <th width = "10%">On Hand</th>
                                         <th class = "lefttext" width = "7%">Issued<br>Qy</th>
                                         <th width = "10%">Cost</th>
                                     </tr>
@@ -140,12 +162,25 @@
 
                                         <!-- IF STEP TYPE IS NOT MATERIAL SKIP TO NEXT LINE ELSE PRINT DETAILS AS NORMAL TABLE ROW -->
                                         <?php if($row["Step Type"] != 'M'){continue;} ?>
+                                        
                                         <tr>
+                                        <?php  if( floatval($row["Planned Material Qty"])>floatval($row["Issued Material Qty"]) || ( floatval($row["Issued Material Qty"]==0)))
+                                        {
+                                            
+                                            $color='red';
+                                            $size='3px';
+                                        }
+                                            else 
+                                            {
+                                            $color='#454545';
+                                            $size='1px';
+                                        }  
+                                        ?>
                                                 <td style = "border-right:1px solid #454545;"                     ><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Material Code']?>'"><?=$row["Material Code"]?></button></td>
                                                 <td style = "border-right:1px solid #454545;" class = "lefttext"  ><?=$row["Material Name"]?></td>
                                                 <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Planned Material Qty"])?></td>
-                                                <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Planned Material Cost"])?></td>
-                                                <td style = "border-right:3px solid #454545;"                     ><?=floatval($row["Issued Material Qty"])?></td>
+                                                <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Balance"])?></td>
+                                                <td style="border:<?=$size?> solid <?=$color?>;"><?=floatval($row["Issued Material Qty"])?></td>
                                                 <td style = "border-right:3px solid #454545;"                     ><?=floatval($row["Issued Material Cost"])?></td>
                                         </tr>
                                     <?php endforeach;?>

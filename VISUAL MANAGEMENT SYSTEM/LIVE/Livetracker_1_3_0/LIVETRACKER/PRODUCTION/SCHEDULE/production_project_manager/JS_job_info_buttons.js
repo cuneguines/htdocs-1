@@ -33,15 +33,15 @@ $(document).ready(function(){
                 }
         
         });
-    $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href=' + "'" + '/../SAP READER/BASE_sales_order.php?sales_order=' + $(this).attr('sales_order') + "'" + '">' + $(this).attr('sales_order') + "</button></h2>");
+    $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href=' + "'" + '/../SAP READER/SAP READER/BASE_sales_order.php?sales_order=' + $(this).attr('sales_order') + "'" + '">' + $(this).attr('sales_order') + "</button></h2>");
     //for Project number
     $("h2.first_sub").replaceWith( "<h2 class = 'inner first_sub small'>"+$(this).attr('project_num')+"</h2>");
-    $("h2.thirteenth_sub").replaceWith( "<h2 class = 'inner thirteenth_sub small'>"+$(this).attr('project_man')+"</h2>");
+    $("h2.thirteenth_sub").replaceWith( "<h2 class = 'inner thirteenth_sub small'>"+$(this).attr('sales_person')+"</h2>");
    // $("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'../../EXCEPTIONS/production exceptions/BASE_production_exceptions.php?po='+$(this).attr('process_order')+ ",NORMAL'" +'">'+$(this).attr('process_order')+"</button></h2>");
     $("h2.second").replaceWith( "<h2 class = 'inner second medium'>"+$(this).attr('customer')+"</h2>");
     $("h2.third").replaceWith( " <h2 style = 'color:red;' class = 'inner third medium'>"+$(this).attr('Description')+"        "+$(this).attr('qty')+"</h2>");
-    $("h2.fourth").replaceWith( "<h2 class = 'inner fourth medium'>"+$(this).attr('sales_person')+"</h2>");
+    $("h2.fourth").replaceWith( "<h2 class = 'inner fourth medium'>"+$(this).attr('project_man')+"</h2>");
     $("h2.fourteenth").replaceWith( "<h2 class = 'inner fourteenth medium'>"+$(this).attr('promise_date')+" "+$(this).attr('promise_week_due')+" ("+$(this).attr('week_opened')+"-"+$(this).attr('weeks_open')+")</h2>");
     $("h2.fifteenth").replaceWith( "<h2 class = 'inner fifteenth medium'>"+$(this).attr('floor_date')+" "+$(this).attr('weeks_on_floor')+"</h2>");
     $("h2.fifth").replaceWith( "<h2 class = 'inner fifth medium'>"+$(this).attr('engineer')+"</h2>");

@@ -1,6 +1,7 @@
 <?php
 
 
+
 $tsql="select
 t0.[Sales Order],
 t0.[Customer],
@@ -10,7 +11,7 @@ t0.[Days Open],
 t0.[Week Opened],
 t0.[Weeks Open],
 t0.[Month Difference PD],
-t0.[Project Manager],
+---t0.[Project Manager],
 T0.[Project Number],
 CASE 
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
@@ -43,12 +44,13 @@ t0.[Weeks On Floor],
 t0.[Sub Contract Status],
 t0.[Complete],
 CASE WHEN t0.[Est Prod Hrs] < 0 THEN 0 ELSE t0.[Est Prod Hrs] END [Est Prod Hrs], 
-isnull(t0.[Product Group],'No Group') [Product Group]
-
+isnull(t0.[Product Group],'No Group') [Product Group],
+t0.[Project Manager]
 FROM(
 SELECT
     t0.U_PDM_Project[Project Number],
-    t0.U_proj_manager[Project Manager],
+    t0.U_Proj_Mgr[Project Managr],
+	t88.U_NAME[Project Manager],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -123,7 +125,7 @@ SELECT
     ) t11 ON t11.U_IIS_proPrOrder = t4.U_IIS_proPrOrder and t11.ItemCode = t1.ItemCode
     left join [dbo].[@PRE_PRODUCTION] as t13 on t13.code     = t1.U_PP_Stage
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
-
+	left join [dbo].ousr as t88 on t88.USERID=t0.U_Proj_Mgr 
        
        left join (select t1.U_IIS_proPrOrder, sum(t0.issuedqty) [Issued], sum(t1.CmpltQty) [Completed]
                            from wor1 t0
@@ -145,6 +147,7 @@ SELECT
 UNION ALL
 
 SELECT
+   NULL,
    NULL,
    NULL,
     000000 [Sales Order],
@@ -218,5 +221,5 @@ SELECT
    
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
-            ) t0 where t0.[Project Manager] <> NULL
+            ) t0 where t0.[Project Manager] is not NULL
    ORDER BY t0.[Project]";

@@ -6,4 +6,6 @@ $(document).ready(function(){
 			($(this).attr('class').split(' ')).slice(1).forEach(element => element === $('button.button_group.active').attr('id') ?  $(this).show() : null)
 		});
 	});
+
+	
 });

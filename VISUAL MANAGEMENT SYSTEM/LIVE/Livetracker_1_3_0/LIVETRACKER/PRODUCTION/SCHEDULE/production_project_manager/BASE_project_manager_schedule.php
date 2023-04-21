@@ -216,7 +216,7 @@
                         <p class = "smedium">Description & Qty.</p>
                         <h2 class = "inner third medium">Nothing Selected</h2>
                         <br>
-                        <p class = "smedium">Sales Person</p>
+                        <p class = "smedium">Project/Engineer</p>
                         <h2 class = "inner fourth medium">Nothing Selected</h2>
                         <br>
                         <p class = "smedium">Engineer</p>

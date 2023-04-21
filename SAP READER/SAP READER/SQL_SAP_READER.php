@@ -3,6 +3,7 @@ if(isset($process_order)){
     $sql_process_order = 
     "SELECT
     /* PROCESS ORDER LEVEL (MOSTLY OVERALL HEADER STUFF)*/
+    t20.Balance[Balance],
     t1_A.SONum [Sales Order],
     t1_A.PrOrder [Process Order],
     t1_A.EndProduct [End Product Code],
@@ -100,7 +101,12 @@ if(isset($process_order)){
             FROM iis_epc_pro_ordert t0  				
                 GROUP BY t0.PrOrder) 
     t1_H ON t1_H.PrOrder = t1_A.Prorder
-    
+    left join (
+        select distinct t0.itemcode, 
+        sum(t0.inqty - t0.outqty) [Balance]
+        from oinm t0
+        group by t0.itemcode
+        ) t20 on t20.ItemCode = t3_a.ItemCode
     WHERE t1_A.PrOrder = /*41521*/ /*38139*/ /*38611*/ $process_order
     
     ORDER BY t2_A.ParentLine DESC, t2_B.DocNum DESC, t3_A.IssueType DESC, t4_A.LineID ASC

@@ -172,7 +172,7 @@ tr.alternate {
                         <!--
                             -->
                         <div class="grouping_category_new">
-                            <button class="fill medium blue wtext rounded" new_stat="Duenexttwoweeks">Due next 2 weeks</button>
+                            <button class="fill medium blue wtext rounded" new_stat="Duenexttwoweeks">Due next two weeks</button>
                         </div>
                         <!--
                             -->
@@ -268,9 +268,10 @@ tr.alternate {
                                   $person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["person"]));
                                   $area_raised = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["area_raised_"]));
                                   $new_stat= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["new_stat"]));  
+                                  $area_caused= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["nc_area_caused"])); 
                             ?>
                             
-                            <tr stat='<?= $stat ?>'new_stat='<?= $new_stat?>'area_raised='<?= $area_raised ?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'product_group_three='<?= $product_group_three ?>'class="white btext smedium">
+                            <tr stat='<?= $stat ?>'new_stat='<?= $new_stat?>'area_raised='<?= $area_raised ?>'area_caused='<?= $area_caused?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'product_group_three='<?= $product_group_three ?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td class='lefttext'><?= $row["nc_description"]!=NULL?$row["nc_description"]:$row["cc_desc"]?></td> 
                                 <td><?= $row["time_stamp"] ?></td>
@@ -393,10 +394,14 @@ tr.alternate {
                         </div>
                     </div>
                 </div>
-                <div id="button_container"style="width:10%;margin-left: 20%;">
-                    <button id='file_test'onclick=//"export_to_excel('purchasing_table')" class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
-                </div>
-            </div>
+                
+                    <button style="width:10%;margin-left: 20%;"id='resett_butt' class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
+                                                
+                   
+                    
+                                             
+                                                </div>
+                                               
             <div id="grouping_pages_footer" style="bottom:1%"class="footer">
                 <div id="button_container"style="width:10%">
                     <!-- <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button> -->
@@ -427,13 +432,16 @@ tr.alternate {
                                 </select>
                             </div>
                         </div>
-                        <div class="filter wider" style="display:none">
+                        <button style="width:10%;margin-left:1%;border:2px solid white"id='resett_but' class="grouping_page_corner_buttons fill medium blue_pur rtext rounded">RESET</button>
+                        <div class="filter wider" >
                             <div class="text">
-                                <button class="fill blue medium wtext">Unused</button>
+                                <button class="fill blue medium wtext">Area caused</button>
                             </div>
                             <div class="content">
-                                <select id="select_product_group_two"class="selector fill medium">
+                                <select id="select_area_caused"class="selector fill medium">
                                     <option value="All" selected>All</option>
+                                    <?php generate_filter_options($quality_results, "nc_area_caused"); 
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -447,6 +455,8 @@ tr.alternate {
                                 </select>
                             </div>
                         </div>
+
+                        
                     </div>
                 </div>
                 <div id="button_container"style="width:10%;margin-left: 20%;">

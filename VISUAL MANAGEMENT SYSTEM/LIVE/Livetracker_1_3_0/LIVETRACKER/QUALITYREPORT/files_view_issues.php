@@ -45,7 +45,8 @@ $pdf=$pdf.".pdf";
 #"C:/xampp/htdocs/QLTYFILES/$pdf";
 #echo $pdf;
 #echo '<a href=".php?filename=workInstruction.pdf&filepath=//fileserver/path/to/workInstruction.pdf"' . 'target="_blank">'.$wi_num.'</a>';
-$file = "../../../../../QLTYFILES/".$pdf;
+//$file = "../../../../../QLTYFILES/".$pdf;
+$file = "../../../../../QLTYFILES/".$filename;
 echo "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp               <embed src='$file' type='application/pdf' margin='20px' width='60%' height='1010px' />";
 #echo"str_repeat('&nbsp;', 10000000) <embed src='$file' type='application/pdf' margin='20px' width='60%' height='1000px' />";
 }

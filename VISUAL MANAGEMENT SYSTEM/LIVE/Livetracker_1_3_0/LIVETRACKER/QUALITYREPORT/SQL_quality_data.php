@@ -1,5 +1,5 @@
 <?php
-$Quality_results = "select *,case when t0.area_raised_by ='' then 'NO Area' when t0.area_raised_by  is NULL then 'NO Area' else  t0.area_raised_by end [area_raised_],FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],ISNULL(t77.person,'No Owner')[person],FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,
+$Quality_results = "select *,case when t0.nc_area_caused=''then 'No Area' when t0.nc_area_caused is NULL then 'No Area' else t0.nc_area_caused end [nc_area_caused],case when t0.area_raised_by ='' then 'NO Area' when t0.area_raised_by  is NULL then 'NO Area' else  t0.area_raised_by end [area_raised_],FORMAT(t20.date_updated,'dd-MM-yyyy')[date_updated],ISNULL(t77.person,'No Owner')[person],FORMAT(t0.time_stamp,'dd-MM-yyyy')[time_stamp],t0.Id as ID,
 (case when t20.Status is NULL then 'Other'
 
 
@@ -9,9 +9,10 @@ end)
 [Status],
 t20.Action,ISNULL(t20.Owner,'No Owner')[Owner],FORMAT(t20.Date,'dd-MM-yyyy')[TargetDate],t50.CardName[Customer],t50.U_Client,t11.Dscription,t11.ItemCode,ISNULL(t12.U_Product_Group_One,'NO PRODUCT GROUP')[U_Product_Group_One],t12.U_Product_Group_Two,t12.U_Product_Group_Three,
 (case 
-when DateDiff(day,GETDATE(),t20.Date) >= 14 and t20.Status='Open' and t20.Date!='01/01/1900  00:00:00' then 'Due_next_two_weeks'
+when DateDiff(day,GETDATE(),t20.Date) >0 and DateDiff(day,GETDATE(),t20.Date) <=14 and t20.Status='Open' and t20.Date!='01/01/1900  00:00:00' then 'Due_next_two_weeks'
 
-when DateDiff(day,GETDATE(),t20.Date) <= 14 and t20.Status='Closed' and t20.Date!='01/01/1900  00:00:00' then 'Closed_last_two_weeks'
+
+WHEN DATEDIFF(DAY,GETDATE(),t20.Date) >=-14  AND DATEDIFF(DAY,GETDATE(),t20.Date) <0 and t20.Status='Closed' and t20.Date!='01/01/1900  00:00:00' then 'Closed_last_two_weeks'
 end )[new_stat],
 (case
 WHEN t20.Date!='01/01/1900  00:00:00' and
@@ -30,7 +31,7 @@ END) [attachements_issues]
                         where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
     left join (select t0.* from  KENTSTAINLESS.dbo.ordr t0 )t50 on  t50.DocNum= nc_sales_order
 left JOIN KENTSTAINLESS.dbo.rdr1 t11 on t11.DocEntry = t50.DocEntry and t11.U_IIS_proPrOrder=nc_process_order
-left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode = t11.ItemCode
+left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode COLLATE SQL_Latin1_General_CP1_CI_AS= nc_itemcode COLLATE SQL_Latin1_General_CP1_CI_AS
 left join KENTSTAINLESS.dbo.oitb t13 on t13.ItmsGrpCod = t12.ItmsGrpCod
 left join(select t55.sap_id,t55.created_date,t55.attachments from dbo.attachment_table t55
 inner join(select t1.sap_id,max(t1.created_date) as Mmaxdate

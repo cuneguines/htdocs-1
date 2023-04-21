@@ -29,6 +29,10 @@
         <?php $item_code_header_data = get_sap_data($conn,$sql_item_code_header,DEFAULT_DATA); ?>
         <?php $item_code_content_data = get_sap_data($conn,$sql_item_code_content,DEFAULT_DATA); ?>
         <?php $item_code_content_data_2 = get_sap_data($conn,$sql_item_code_content_2,DEFAULT_DATA); ?>
+        
+        
+        
+        
         <?php if(!$item_code_content_data){
             echo "<h1 class = 'black'>Cannot Find Item Code</h1>"; die();
         }?>
@@ -88,10 +92,12 @@
                             <div class = "subdiv left" style = "width:54%;">
                                 <div class = "element short"><div class = "lefttext title_text">Qty On Order</div></div>
                                 <div class = "element short"><div class = "lefttext title_text">Next Delivery Due</div></div>
+                                <div class = "element short"><div class = "lefttext title_text">Item Group Name</div></div>
                             </div>
                             <div class = "subdiv right" style = "width:44%;">
                                 <div class = "element short"><button class = "textbox short"><?=floatval($item_code_header_data[0]["On Order"])?></button></div>
                                 <div class = "element short"><button class = "textbox short"><?=(($item_code_header_data[0]["Next Del Date"])?($item_code_header_data[0]["Next Del Date"]):"NOT ON ORDER")?></button></div>
+                                <div class = "element short"><button class = "textbox short"><?=$item_code_content_data[0]["Item Group Name"]?></button></div>
                             </div>
                         </div>
                     </div>
