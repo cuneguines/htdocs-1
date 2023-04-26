@@ -69,6 +69,7 @@
   
    /* support: IE9+ */
   }
+  
     </style>
 </head>
 
@@ -244,7 +245,6 @@
 
 
 
-
                                 if ($results[$i]["Stage"] == "8. Design Concept") {
                                     $base_color = "lime_blue";
                                 } else if ($results[$i]["Non Deliverable"] == 'yes') {
@@ -317,13 +317,16 @@
                                     else 
                                     $color_for_dates='';
                                     //shape for the account on hold
-                                    if(($account_stat=="ON HOLD-INV DUE"|| $account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat==" ON HOLD - BRID BP" ||$account_stat=="ON HOLD - CURRENT BALANCE OVER TERMS"||$account_stat=="ON HOLD - NO TERMS" ||$account_stat=="ON HOLD - THIS WILL PUSH OVER TERMS"))
+                                    if(($results[$i]['Account Status']=="ON HOLD - CURRENT DELIVERIES PUSH OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - INV DUE"|| $results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']==" ON HOLD - BRID BP" ||$results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - NO TERMS" ||$results[$i]['Account Status']=="ON HOLD - THIS WILL PUSH OVER TERMS"))
                                     {
+                                        
+                                      
                                     $account_color='box_shape';
                                     $bgcolor='pink';
                                     }
                                     else
-                                    {
+                                    
+{
                                     $bgcolor=''; 
                                     $account_color='';
                                     }
@@ -391,6 +394,7 @@
                                 $overwrite = "";
                                 $color_for_date="";
                                 $border_color_for_date="";
+                                $account_color="";
                                 ?>
                             <?php endfor; ?>
                         </tbody>

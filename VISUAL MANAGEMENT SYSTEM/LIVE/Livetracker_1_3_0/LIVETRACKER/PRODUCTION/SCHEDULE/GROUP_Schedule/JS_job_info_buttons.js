@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $(".project_item").click(function(){
         
-            test=$(this).attr('process_order')
+            /* test=$(this).attr('process_order')
             console.log(test);
             $.ajax({
     
@@ -28,7 +28,7 @@ $(document).ready(function(){
                    
                    
                 }
-            });
+            }); */
     //$("h2.first").replaceWith( "<h2 class = 'inner first medium'>"+$(this).attr('sales_order')+"</h2>");
     $("h2.first").replaceWith('<h2 class = "inner first medium"><button class = "bred rounded btext white medium" style = "height:30px; width:150px;"onclick = "location.href=' + "'" + '/../SAP READER/SAP READER/BASE_sales_order.php?sales_order=' + $(this).attr('sales_order') + "'" + '">' + $(this).attr('sales_order') + "</button></h2>");
     $("h2.thirteenth").replaceWith( '<h2 class = "inner thirteenth medium"><button class = "brred rounded btext white medium" style = "height:30px; width:150px;" onclick = "location.href='+ "'" +'/../SAP READER/SAP READER/BASE_process_order.php?process_order='+ $(this).attr('process_order') + "'" + '">'+ $(this).attr('process_order') +"</button></h2>");

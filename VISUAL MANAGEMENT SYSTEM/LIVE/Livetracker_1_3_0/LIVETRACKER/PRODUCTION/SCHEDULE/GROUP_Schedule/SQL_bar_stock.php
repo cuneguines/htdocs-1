@@ -29,12 +29,34 @@ t0.[Paused],
 t0.[Comments],
 t0.[Comments_2],
 CASE 
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-3).") < ".$start_range." THEN ".($start_range -3)."
+WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-2).") < ".$start_range." THEN ".($start_range -2)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
     WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
     ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 END [Promise Diff Week],
+case
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) = 0 THEN 'This Week'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) =1 THEN 'Next week'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) = 2 THEN 'Week2'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) =3 THEN 'Week3'
+       
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) = 4 THEN 'Week4'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) =5 THEN 'Week5'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) = 6 THEN 'Week6'
+        WHEN DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]) =7 THEN 'Week7'
+       
+       
+       
+        
+        ELSE 'Ot'
+        
+        END [Days of the Week], /* WEEKS HERE */
+
+       
+
 /* PROCESS ORDER AND PRODUCTION RELATED CONTENT */
 t0.[Process Order],
 t0.[Planned Hrs],

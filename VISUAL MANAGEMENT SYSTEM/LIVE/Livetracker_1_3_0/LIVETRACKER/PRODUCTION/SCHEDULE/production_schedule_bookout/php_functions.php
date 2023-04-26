@@ -155,7 +155,7 @@
         $str = 
         "<button id = 'eng_btn'
             style = 'margin-bottom:3px ;'
-            class = 'rounded project_item $base_color $border_color $account_color $overwrite ' 
+            class = 'project_item $base_color $border_color $account_color $overwrite ' 
             account='$account'
             phone='$phone'
             contact='$contact'

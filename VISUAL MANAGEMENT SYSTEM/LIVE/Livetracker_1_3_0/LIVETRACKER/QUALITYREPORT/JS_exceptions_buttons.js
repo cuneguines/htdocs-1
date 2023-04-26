@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         //$('.selector').prop('selectedIndex', 0);
         //all filters empty
-        $('#select_person option[value="All"]').prop('selected', true);
+        //$('#select_person option[value="All"]').prop('selected', true);
         $('#select__product_group option[value="All"]').prop('selected', true);
 
         $('#select_product_group_two').val('');

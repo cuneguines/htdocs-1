@@ -467,8 +467,9 @@ left join (
    
    where t0.[Del Date Due UNP] <= [Monday TW Date]+18
     and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
-   
+    
  ORDER BY t0.[Project]
+
 
 
 
