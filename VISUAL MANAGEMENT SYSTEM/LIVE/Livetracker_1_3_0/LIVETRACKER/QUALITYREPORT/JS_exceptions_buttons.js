@@ -108,10 +108,13 @@ $(document).ready(function () {
 
 
     $("#select_product_group").on("change", function () {
+        $('#select_area_caused').not(this).prop('selectedIndex', 0);
+        $('#select_area_raised').not(this).prop('selectedIndex', 0);
         $('#select_person').prop('selectedIndex', 0)
         $('table:visible tr').removeClass('alternate');
         $('#select_product_group_two').empty();
         $('#select_product_group_three').empty();
+
         var productgp2 = [];
         var x = $('#select_product_group :selected').text();
         console.log(x);
@@ -256,6 +259,7 @@ $(document).ready(function () {
 
 
     $(".selector").on("change", function filter() {
+       
         //$('.selector').not(this).prop('selectedIndex', 0);
         $('table tr').removeClass('alternate');
         if ($(this).find('option').length == 1) {
@@ -317,25 +321,31 @@ $(document).ready(function () {
         $('#select_product_group').not(this).prop('selectedIndex', 0);
         $('#select_product_group_two').not(this).prop('selectedIndex', 0);
         $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
-        $('#select_product_group_two').val('');
-        $('#select_product_group_three').val('');
+        $('#select_product_group_two').empty();
+        $('#select_product_group_three').empty();
+        $('.selector').not(this).prop('selectedIndex', 0);
+        $('#select_area_raised').not(this).prop('selectedIndex', 0);
     });
 
     $("#select_area_raised").on("change", function filter() {
 
         $('table tr').removeClass('alternate');
         $('#select_product_group').not(this).prop('selectedIndex', 0);
-        $('#select_product_group_two').val('');
-        $('#select_product_group_three').val('');
+        $('#select_product_group_two').empty();
+        $('#select_product_group_three').empty();
         $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+        $('.selector').not(this).prop('selectedIndex', 0);
+        $('.select_area_caused').not(this).prop('selectedIndex', 0);
     });
     $("#select_area_caused").on("change", function filter() {
 
         $('table tr').removeClass('alternate');
         $('#select_product_group').not(this).prop('selectedIndex', 0);
-        $('#select_product_group_two').val('');
-        $('#select_product_group_three').val('');
+        $('#select_product_group_two').empty();
+        $('#select_product_group_three').empty();
         $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+        $('.selector').not(this).prop('selectedIndex', 0);
+        $('.select_area_raised').not(this).prop('selectedIndex', 0);
     });
     $("#resett_but").on("click", function () {
 

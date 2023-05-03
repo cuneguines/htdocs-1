@@ -18,10 +18,12 @@ include '../../PHP LIBS/PHP FUNCTIONS/php_functions.php';
 include '../../SQL CONNECTIONS/conn.php';
 $query = "select t2.USERID ,t0.U_PDM_Project,t2.U_NAME,t0.SlpCode,t0.U_Est_Eng_Hours,t3.docnum,t3.U_Client from ousr t2 inner join rdr1 t0 on t0.SlpCode=t2.USERID INNER JOIN ordr t3 on t0.DocEntry = t3.DocEntry where t2.USERID= $user";
 $results = get_sap_data($conn, $query, DEFAULT_DATA);
-//$name = ($results[0]["U_NAME"]);
+foreach ($results as $row) : 
+$name = ($row["U_NAME"]);
+ endforeach;
 $hash = '$2y$10$Bt0CByx9MR2j383l4HaboufmiVUb5cHsG14TXZYKu4U2PhJ2zzfIG';
 
-
+var_dump($name);
 // USING USER ID GO TO SQL AND RETURN USER NAME AND PASSWORD OF THAT USER 
 
 //$passwords = array ("123" => array("name" => "john", "pw" => '$2y$10$zOA09P6Va0krAG2TpzbvaeykDCe/PRKjWLEDQ8P3hyR/1GnTzq4r6'),
@@ -179,61 +181,70 @@ if (password_verify($pw, $hash)) {
     <div class="table_title green">
       <h1>ENGINEER HOURS UPDATE</h1>
     </div>
-    <div style="background-color:grey;position:relative;height:700px;width:100%;overflow-y:scroll">
-      <table>
-        <thead>
-          <tr>
-            <th class='prop__name' data-prop-name='firstName'>First Name</th>
-            <th class='prop__name' data-prop-name='lastName'>Project Name</th>
-            <th class='prop__name' data-prop-name='sales'>Sales Order</th>
-            <th class='prop__name' data-prop-name='birth'>Engineer Hours</th>
-            <th class='prop__name' data-prop-name='birth'>Changes</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-            <tr>
-              <td class='prop__name' data-prop-name='firstName'><?= $row["U_NAME"] ?></td>
-              <td class='prop__name' data-prop-name='lastName'><?= $row["U_PDM_Project"] == NULL ? 'null' : $row["U_PDM_Project"] ?></td>
-              <td class='prop__name' data-prop-name='lastName'><?= $row["docnum"] ?></th>
-              <td class='prop__name' data-prop-name='birth'><?= $row["U_Est_Eng_Hours"] == NULL ? 'null' : $row["U_Est_Eng_Hours"] ?></td>
-              <td style="padding-left: 40px;padding-right:40px;">
-                <div id="contact"><button type="button" style="text-align: center" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div>
-              </td>
-            <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-    <div>
-      <div id="contact-modal" class="modal fade" role="dialog" style="color:black">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-              <h3>EDIT FORM</h3>
-            </div>
-            <form id="contactForm" name="contact" role="form">
-              <div class="modal-body">
-                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input id="name" type="text" name="name" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="email">Enginner Hours</label>
-                  <input type="email" name="email" class="form-control">
-                </div>
+    <div class="container mt-5">
+        <div class="card">
+       
+            <div class="card-body">
+                <form role="form" data-toggle="validator">
 
-              </div>
-              <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success" onclick="submitt()">Submit</button>
-              </div>
-            </form>
-          </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        
+                        <label id="name"type="text" class="form-control" data-error="You must have a name."  placeholder="Name" value=<?=$name?>><?=$name?></label>
+                        <!-- Error -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Project</label>
+                        <input type="text" class="form-control" name="username" maxlength="10" minlength="3"
+                            pattern="^[a-zA-Z0-9_.-]*$" id="inputUsername" placeholder="Username" required>
+                        <!-- Error -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
+                        <!-- Error -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="form-group">
+                            <input type="password" data-minlength="4" class="form-control" id="inputPassword"
+                                data-error="Have atleast 4 characters" placeholder="Password" required />
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password</label>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="inputConfirmPassword"
+                                data-match="#inputPassword" data-match-error="Password don't match"
+                                placeholder="Confirm" required />
+                            <!-- Error -->
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea class="form-control" data-error="Please enter message." id="inputMessage"
+                            placeholder="Message" required=""></textarea>
+                        <!-- Error -->
+                        <div class="help-block with-errors"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 </body>
 
 </html>
