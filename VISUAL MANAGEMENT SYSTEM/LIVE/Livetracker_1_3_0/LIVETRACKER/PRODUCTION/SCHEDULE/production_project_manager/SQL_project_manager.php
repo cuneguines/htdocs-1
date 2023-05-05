@@ -221,5 +221,6 @@ SELECT
    
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
-            ) t0 where t0.[Project Manager] is not NULL
+            ) t0 where t0.[Project Manager] is not NULL and t0.[Project Manager] <>'VMS'
+            
    ORDER BY t0.[Project]";

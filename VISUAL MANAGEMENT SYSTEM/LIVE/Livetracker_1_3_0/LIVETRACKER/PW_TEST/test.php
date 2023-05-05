@@ -17,13 +17,15 @@ $pw = isset($_POST['password']) ? $_POST['password'] : "NO_PASSWORD";
 include '../../PHP LIBS/PHP FUNCTIONS/php_functions.php';
 include '../../SQL CONNECTIONS/conn.php';
 $query = "select t2.USERID ,t0.U_PDM_Project,t2.U_NAME,t0.SlpCode,t0.U_Est_Eng_Hours,t3.docnum,t3.U_Client from ousr t2 inner join rdr1 t0 on t0.SlpCode=t2.USERID INNER JOIN ordr t3 on t0.DocEntry = t3.DocEntry where t2.USERID= $user";
+$query_2="select *,t0.docnum from ordr t0 where t0.DocStatus <> 'C' and t0.CANCELED <> 'Y'";
 $results = get_sap_data($conn, $query, DEFAULT_DATA);
+$sales_results=get_sap_data($conn, $query_2, DEFAULT_DATA);
 foreach ($results as $row) : 
 $name = ($row["U_NAME"]);
  endforeach;
 $hash = '$2y$10$Bt0CByx9MR2j383l4HaboufmiVUb5cHsG14TXZYKu4U2PhJ2zzfIG';
 
-var_dump($name);
+
 // USING USER ID GO TO SQL AND RETURN USER NAME AND PASSWORD OF THAT USER 
 
 //$passwords = array ("123" => array("name" => "john", "pw" => '$2y$10$zOA09P6Va0krAG2TpzbvaeykDCe/PRKjWLEDQ8P3hyR/1GnTzq4r6'),
@@ -174,14 +176,18 @@ if (password_verify($pw, $hash)) {
 
   }
 </style>
+<?php
 
+
+    
+    ?>
 <body style="height:100%">
 
   <div id="sched_right" style="position:relative;height:90%;">
     <div class="table_title green">
       <h1>ENGINEER HOURS UPDATE</h1>
     </div>
-    <div class="container mt-5">
+    <div style="margin-top:4%"class="container mt-5">
         <div class="card">
        
             <div class="card-body">
@@ -190,60 +196,68 @@ if (password_verify($pw, $hash)) {
                     <div class="form-group">
                         <label>Name</label>
                         
-                        <label id="name"type="text" class="form-control" data-error="You must have a name."  placeholder="Name" value=<?=$name?>><?=$name?></label>
+                        <label id="name"type="text" class="form-control" data-error="You must have a name."  placeholder="Name" value='<?=$name?>'><?=$name?></label>
+                        <input  style="display:none"id="nam"type="text" value='<?=$name?>'>
                         <!-- Error -->
                         <div class="help-block with-errors"></div>
                     </div>
                     
                     <div class="form-group">
-                        <label>Project</label>
-                        <input type="text" class="form-control" name="username" maxlength="10" minlength="3"
-                            pattern="^[a-zA-Z0-9_.-]*$" id="inputUsername" placeholder="Username" required>
+                        <label>Project Name</label>
+                        <input name="username" type="text" class="form-control"  maxlength="10" minlength="3"
+                             id="pr_name"  required>
+                            <!-- <input type="pr_name" class="form-control" name="username" maxlength="10" minlength="3"
+                            pattern="^[a-zA-Z0-9_.-]*$" id="inputUsername"  required>
+                        <!-- Error --> 
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Sales Order</label>
+                        <select id="sales_order" style=width:100%;height:34px;color:black;>
+                                            <option value="All" selected>All</option>
+                                            <?php generate_filter_options($sales_results, "docnum"); ?>
+                                        </select>
                         <!-- Error -->
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" id="inputEmail" placeholder="Email" required>
-                        <!-- Error -->
-                        <div class="help-block with-errors"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Password</label>
+                        <label>PDM Name</label>
                         <div class="form-group">
-                            <input type="password" data-minlength="4" class="form-control" id="inputPassword"
-                                data-error="Have atleast 4 characters" placeholder="Password" required />
+                            <input type="text" data-minlength="4" class="form-control" id="pdm_name"
+                                data-error="Have atleast 4 characters"  required />
                             <!-- Error -->
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
+                    
+
                     <div class="form-group">
-                        <label>Confirm Password</label>
+                        <label>Engineer hours</label>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="inputConfirmPassword"
-                                data-match="#inputPassword" data-match-error="Password don't match"
-                                placeholder="Confirm" required />
+                            <input type="number" value="0" class="form-control" id="engr_hrs"
+                              required />
                             <!-- Error -->
-                            <div class="help-block with-errors"></div>
+                            
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                                    <label for="date">Date</label>
+                                    <input id="ddate" name="message" type="date" class="form-control"></textarea>
+                                </div>
+                    
 
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea class="form-control" data-error="Please enter message." id="inputMessage"
-                            placeholder="Message" required=""></textarea>
-                        <!-- Error -->
-                        <div class="help-block with-errors"></div>
+                        <button type="button"id="send"class="btn btn-primary btn-block"onclick="submitt(e)">Send</button>
                     </div>
-
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        <button class="btn btn-primary btn-block"onclick="viewss()">View</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
 </div>
 </body>
 

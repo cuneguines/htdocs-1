@@ -55,3 +55,119 @@ $(document).ready(function(){
     $(this).addClass("eng_active");
     });
 });
+
+//Multiselect Project managers
+$(document).ready(function() {
+    //console.log(rows);
+    var rows = $("table.searchable tbody tr:not('.head')");
+    var jobs = $(".project_item");
+    var template = $('table.searchable tfoot tr td');
+    allenabled = 0;
+    $('#multiselect_project_man .multiselector_checkbox').click(function() {
+
+        if ($(this).val() == 'All') {
+            if (allenabled) {
+                console.log("PASS_OFF");
+                $('.multiselector_checkbox').addClass('checked');
+                $("table.searchable tr:not('.head')").show();
+                jobs.show();
+                $("table.searchable tr:not('.head')").attr('active_in_multiselect', 'Y');
+                jobs.attr('active_in_multiselect', 'Y');
+
+                jobs.show();
+                rows.show();
+                $('#bd').prop('disabled', false);
+                allenabled = 0;
+            } else {
+                console.log("PASS_ON");
+                $('.multiselector_checkbox').removeClass('checked', '');
+                $("table.searchable tbody tr").hide();
+                $("table.searchable tr:not('.head')").attr('active_in_multiselect', 'N');
+                jobs.attr('active_in_multiselect', 'N');
+
+                jobs.hide();
+                rows.hide();
+                $('#bd').prop('disabled', false);
+                $('#bd').prop('disabled', true);
+                allenabled = 1;
+            }
+        } 
+        else 
+        {
+            // IF CHECKBOX IS ACTIVE WE DEACTIVATE AND HIDE ENGINEER
+            if ($(this).attr('class').includes('checked'))
+                {
+                    console.log("REMOVING ATTR");
+                    selected_eng = $(this).val();
+console.log(selected_eng);
+console.log(jobs);
+                    jobs.filter("[project_man = " + $(this).val() + "]").hide();
+                    jobs.filter("[project_man = " + $(this).val() + "]");
+
+                    $.each($('.row').not('#select_project_man'),function(){
+                        //console.log($(this).attr("engineers"));
+                        console.log(selected_eng);
+                        console.log($(this).find('.project_item:visible').length);
+
+                        if($(this).find('.project_item:visible').length == 0){
+                            console.log($(this).attr("project_man_tr"));
+                            $(this).hide();
+                            $(this).attr('active_in_multiselect', 'N');
+                        }
+
+                        /*if(JSON.stringify($(this).attr("engineers")).includes(selected_eng))
+                        {
+                            console.log($(this).attr("engineers"));
+                            $(this).hide();
+                            $(this).attr('active_in_multiselect', 'N');
+                        }
+                        rows.filter('[type = data]').hide();
+                        */
+                    });
+                    
+                
+                    $(this).removeClass('checked');
+            } 
+            else {
+                console.log("ADDING ATTR");
+                selected_eng = $(this).val();
+                console.log(selected_eng);
+                console.log(rows);
+                jobs.filter("[project_man = " + $(this).val() + "]").show();
+                jobs.filter("[project_man = " + $(this).val() + "]");
+
+                $.each($('.row').not('#select_engineer'),function(){
+                    if(JSON.stringify($(this).attr("project_man_tr")).includes(selected_eng))
+                    {
+                        console.log("TEST");
+                        $(this).show();
+                        $(this).attr('active_in_multiselect', 'Y');
+                    }
+                });
+                
+
+
+                $(this).addClass('checked', '');
+            }
+        }
+    });
+});
+
+$(document).ready(function() {
+    var rows = $("table.searchable tbody tr");
+    var template = $('table.searchable tfoot tr td');
+    active = 0;
+    $('.search_option_button_local').click(function() {
+        $('.selector').prop('selectedIndex', 0);
+        if (!$(this).hasClass('active')) {
+            $('#' + $(this).attr('id') + '.search_option_field').show();
+            $(this).addClass('active');
+        } else {
+            console.log($('#' + $(this).attr('id') + '.search_option_field'));
+            $('#' + $(this).attr('id') + '.search_option_field').hide();
+            $(this).removeClass('active');
+        }
+        //if (typeof __update_rows__ !== 'undefined') {
+        //update_total_row(rows, template);}
+    });
+})

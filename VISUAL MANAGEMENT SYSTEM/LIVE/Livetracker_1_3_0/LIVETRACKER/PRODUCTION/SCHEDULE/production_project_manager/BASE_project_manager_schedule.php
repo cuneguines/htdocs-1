@@ -161,7 +161,7 @@
             animation: spin 2s linear infinite;
         }
 
-        .search_option_button:hover {
+        .search_option_button_local:hover {
             background-color: rgb(240, 135, 135);
             ;
             color: #000000;
@@ -265,9 +265,10 @@
                             </thead>
                             <tbody class = "medium btext">
                                 <?php
-                                    $active_project = $str = $engineers_str = $base_color = $border_color = $overwrite =  "";                                        
+                                    $active_project = $str = $engineers_str = $project_man_str=$base_color = $border_color = $overwrite =  "";                                        
                                     $project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
-                                    $project_engineers_buffer = array(null);                         
+                                    $project_engineers_buffer = array(null);
+                                    $project_man_buffer=array(null);                        
                                     $first = 1;
                                 ?>
                                 <?php for($i = 0 ; $i <= sizeof($results) ; $i++):?>
@@ -286,14 +287,15 @@
                                         if(($results[$i]["Project"] != $active_project && $first == 0) || $i == sizeof($results)){
                                             printrow:
                                             $engineers_str = implode(" ",$project_engineers_buffer);
+                                            $project_man_str = implode(" ",$project_man_buffer);
         
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
-                                            echo "<tr class = 'row white smedium' productgp = '".$productgp."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
+                                            echo "<tr class = 'row white smedium' productgp = '".$productgp."'customer = '".$customer."' project = '".$project."' project_man_tr = '".$project_man_str."'engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
                                                 print_values_2($project_button_buffer,$start_range,$end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
-                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
+                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' customer = '".$customer."' project_man_tr = '".$project_man_str."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
                                                 print_values_2($sum,$start_range,$end_range);
                                             echo "</tr>";
         
@@ -311,12 +313,15 @@
                                         if($results[$i]["Project"] != $active_project || $first == 1){
                                             $active_project = $results[$i]["Project"];
                                             $project_engineers_buffer = array();
+                                            $project_man_buffer=array();
                                             $project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
                                             $engineers_str = "";
+                                            $project_man_str="";
         
                                             $customer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"] == '000_NO PROJECT_000' ? '000_NO_PROJECT_000' : $results[$i]["Customer"]));
                                             $project = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"]));
                                             $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]));
+                                            $project_man = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project Manager"]));
                                             $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sales Person"]));
                                             $productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
                                             
@@ -380,7 +385,7 @@
                                             $border_color,
                                             $overwrite,
                                             $results[$i]["Project Number"],
-                                            $results[$i]["Project Manager"],
+                                            str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project Manager"])),
                                             $results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"],
                                             $results[$i]["Process Order"] == NULL ? "NO PO" : $results[$i]["Process Order"],
                                             $results[$i]["Floor Date"] == NULL ? "NO FLOOR DATE" : $results[$i]["Floor Date"],
@@ -409,6 +414,10 @@
                                         if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer))
                                         {
                                             array_push($project_engineers_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])));
+                                        }
+                                        if(!in_array(str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project Manager"])), $project_man_buffer))
+                                        {
+                                            array_push($project_man_buffer, str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project Manager"])));
                                         }
         
                                         $project_button_buffer[$results[$i]["Promise Diff Week"]] = $project_button_buffer[$results[$i]["Promise Diff Week"]].$str;
@@ -572,7 +581,7 @@
                                     </div> -->
                                     <div class="filter widers">
                                        <div class="text" style="width:70%">
-                                          <button class="search_option_button fill white medium rtext" id="multiselect_engineer" style="width:100%;border-radius: 12px;">SELECT ENGINEERS</button>
+                                          <button class="search_option_button_local fill white medium rtext" id="multiselect_project_man" style="width:100%;border-radius: 12px;">SELECT ENGINEERS</button>
                                        </div>
 
 
@@ -601,9 +610,9 @@
                             </div>
                         </div>
                     </div>
-                    <div id="multiselect_engineer" class="search_option_field white" style="opacity:1; height:50%; width:20%; position:relative; bottom:38%; left:72%; z-index:+4; border-radius:25px; border:5px solid #f08787; overflow-y:scroll; display:none;">
+                    <div id="multiselect_project_man" class="search_option_field white" style="opacity:1; height:50%; width:20%; position:relative; bottom:38%; left:72%; z-index:+4; border-radius:25px; border:5px solid #f08787; overflow-y:scroll; display:none;">
                         <table style="width:100%;" class="rh_small">
-                    <?php generate_multiselect_filter_options($results, "Engineer"); ?>
+                    <?php generate_multiselect_filter_options($results, "Project Manager"); ?>
                 </div>
             </div>
         </div>
