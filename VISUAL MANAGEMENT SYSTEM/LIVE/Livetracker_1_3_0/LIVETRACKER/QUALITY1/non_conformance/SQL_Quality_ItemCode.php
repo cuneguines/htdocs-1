@@ -60,7 +60,7 @@ left join(select t55.sap_id,t55.created_date,t55.attachments[attach] from dbo.at
            
            where t0.Active = 'Y')t99 on  t99.email COLLATE SQL_Latin1_General_CP1_CI_AS =t20.Owner COLLATE SQL_Latin1_General_CP1_CI_AS
 where t0.form_type in( 'Non Conformance','Opportunity For Improvement')
-and t2.ID is null order by  CAST(t0.ID AS int)
+and t2.ID is null order by  CAST(t0.ID AS int) desc
 
 
 

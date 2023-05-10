@@ -48,8 +48,8 @@ $Time_Booked=5;
     // Array for our insert
 		$query=array(':Date_time' => $dateCreated,':Sales_order' => $Sales_order,':Pdm_project'=>$Pdm_project,':Business_name' => $Business_name,':Project_name' => $project_name,':Engineer_name' => $Engr_name,':Engineer_hours' => $Engineer_hours,':Time_Booked' => $Time_Booked,':date' => $date);
     // Prepare Statement
-    $stmt="INSERT INTO dbo.Engrhrs_table01(Date_time,Sales_order,pdm_project,Business_name,Project_name,Engineer_hours,Time_Booked,Date,Engineer_name)
-	VALUES (:Date_time, :Sales_order,:Pdm_project,:Business_name, :Project_name,(CAST(:Engineer_hours AS INT)),:Time_Booked,:date,:Engineer_name)";
+    $stmt="INSERT INTO dbo.Engrhrs_table01(Date_time,Sales_order,pdm_project,Business_name,Project_name,Engineer_hrs,Time_Booked,Date,Engineer_name)
+	VALUES (:Date_time, :Sales_order,:Pdm_project,:Business_name, :Project_name,(CAST(:Engineer_hours AS FLOAT)),:Time_Booked,:date,:Engineer_name)";
 
     // Execute Query
     //$stmt->execute($query);

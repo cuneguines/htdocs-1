@@ -16,13 +16,25 @@ $pw = isset($_POST['password']) ? $_POST['password'] : "NO_PASSWORD";
 
 include '../../PHP LIBS/PHP FUNCTIONS/php_functions.php';
 include '../../SQL CONNECTIONS/conn.php';
-$query = "select t2.USERID ,t0.U_PDM_Project,t2.U_NAME,t0.SlpCode,t0.U_Est_Eng_Hours,t3.docnum,t3.U_Client from ousr t2 inner join rdr1 t0 on t0.SlpCode=t2.USERID INNER JOIN ordr t3 on t0.DocEntry = t3.DocEntry where t2.USERID= $user";
+$query = "select t0.firstName + ' ' + t0.lastName [Eng_Name]
+
+from ohem t0
+inner join ohps t1 on t1.posID = t0.position
+
+where t1.name = 'Engineer'
+and t0.Active = 'Y'
+
+order by t0.lastName, t0.firstName ";
 $query_2="select *,t0.docnum from ordr t0 where t0.DocStatus <> 'C' and t0.CANCELED <> 'Y'";
 $results = get_sap_data($conn, $query, DEFAULT_DATA);
 $sales_results=get_sap_data($conn, $query_2, DEFAULT_DATA);
 foreach ($results as $row) : 
-$name = ($row["U_NAME"]);
+//$name = ($row["U_NAME"]);
  endforeach;
+ //echo($name);
+ $query_3="select * from ENGINEER_HRS.dbo.Engrhrs_table01 where Engineer_name='$user'";
+ $results_3 = get_sap_data($conn, $query_3, DEFAULT_DATA);
+ //var_dump($results_3);
 $hash = '$2y$10$Bt0CByx9MR2j383l4HaboufmiVUb5cHsG14TXZYKu4U2PhJ2zzfIG';
 
 
@@ -148,7 +160,7 @@ if (password_verify($pw, $hash)) {
   }
 
   td {
-    border: 1px solid greenyellow;
+    border: 1px solid #337ab7;
   }
 
   tr {
@@ -175,6 +187,25 @@ if (password_verify($pw, $hash)) {
 
 
   }
+  .dropdown {
+  position: relative;
+  width: 1140px;
+}
+
+.dropdown select {
+  width: 100%;
+}
+
+.dropdown > * {
+  box-sizing: border-box;
+  height: 1.5em;
+}
+
+.dropdown input {
+  position: absolute;
+  width: calc(100% - 20px);
+}
+
 </style>
 <?php
 
@@ -187,8 +218,8 @@ if (password_verify($pw, $hash)) {
     <div class="table_title green">
       <h1>ENGINEER HOURS UPDATE</h1>
     </div>
-    <div style="margin-top:4%"class="container mt-5">
-        <div class="card">
+    <div style="margin-top:4%;"class="container mt-5" >
+        <div class="card" >
        
             <div class="card-body">
                 <form role="form" data-toggle="validator">
@@ -196,8 +227,8 @@ if (password_verify($pw, $hash)) {
                     <div class="form-group">
                         <label>Name</label>
                         
-                        <label id="name"type="text" class="form-control" data-error="You must have a name."  placeholder="Name" value='<?=$name?>'><?=$name?></label>
-                        <input  style="display:none"id="nam"type="text" value='<?=$name?>'>
+                        <label id="name"type="text" class="form-control" data-error="You must have a name."  placeholder="Name" value='<?=$user?>'><?=$user?></label>
+                        <input  style="display:none"id="nam"type="text" value='<?=$user?>'>
                         <!-- Error -->
                         <div class="help-block with-errors"></div>
                     </div>
@@ -205,30 +236,38 @@ if (password_verify($pw, $hash)) {
                     <div class="form-group">
                         <label>Project Name</label>
                         <input name="username" type="text" class="form-control"  maxlength="10" minlength="3"
-                             id="pr_name"  required>
+                             id="pr_name"  placeholder="none"required>
                             <!-- <input type="pr_name" class="form-control" name="username" maxlength="10" minlength="3"
                             pattern="^[a-zA-Z0-9_.-]*$" id="inputUsername"  required>
                         <!-- Error --> 
+                       
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
                         <label>Sales Order</label>
-                        <select id="sales_order" style=width:100%;height:34px;color:black;>
-                                            <option value="All" selected>All</option>
+                        
+  
+                        <select id="sales_order" style="width:100%;height:34px;color:black;">
+                                            <option value="None" selected >none</option>
                                             <?php generate_filter_options($sales_results, "docnum"); ?>
                                         </select>
                         <!-- Error -->
+                        <input list=languages>
+<datalist id=languages>
+ <option value="English"></option>
+ <option value="Dutch"></option>
+</datalist>
                         <div class="help-block with-errors"></div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>PDM Name</label>
                         <div class="form-group">
                             <input type="text" data-minlength="4" class="form-control" id="pdm_name"
                                 data-error="Have atleast 4 characters"  required />
-                            <!-- Error -->
+                            
                             <div class="help-block with-errors"></div>
                         </div>
-                    </div>
+                    </div> -->
                     
 
                     <div class="form-group">
@@ -247,17 +286,35 @@ if (password_verify($pw, $hash)) {
                                 </div>
                     
 
-                    <div class="form-group">
-                        <button type="button"id="send"class="btn btn-primary btn-block"onclick="submitt(e)">Send</button>
+                    <div class="form-group"style="width:50%;float:left">
+                        <button type="button"id="send"class="btn btn-primary btn-block"onclick="submitt()"onsubmit="return false;">Send</button>
                     </div>
-                    <div class="form-group">
-                        <button class="btn btn-primary btn-block"onclick="viewss()">View</button>
+                    <div class="form-group" style="width:50%;float:left">
+                        <button type="button"class="btn btn-primary btn-block"onclick="viewss()"onsubmit="return false;">View</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    
+    <div style="background-color:grey;position:relative;height:200px;width:100%;overflow-y:scroll">
+      <table>
+        <thead id="eng_table">
+        
+          <tr>
+            <th class='prop__name' data-prop-name='firstName'>Engineer Name</th>
+            <th class='prop__name' data-prop-name='lastName'>Sales Order</th>
+            <th class='prop__name' data-prop-name='sales'>Project Name</th>
+            <th class='prop__name' data-prop-name='birth'>Engineer Hours</th>
+            <th class='prop__name' data-prop-name='birth'>Date</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+</tbody>
+      </table>
+    </div>
+    <div>
+
+</div>
 </div>
 </body>
 

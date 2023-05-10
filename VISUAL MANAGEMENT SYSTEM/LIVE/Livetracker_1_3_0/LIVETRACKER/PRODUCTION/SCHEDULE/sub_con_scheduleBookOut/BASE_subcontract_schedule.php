@@ -199,7 +199,13 @@
                             $project_days_lthree_buffer = array(null);
                             $first = 1;
                             ?>
+                           
                             <?php for ($i = 0; $i <= sizeof($results); $i++) : ?>
+                              
+                             
+                                
+                                
+                                
                                 <?php
 
 
@@ -207,11 +213,11 @@
 
                                 // IF PAST LAST ROW OF DATA SKIP INTO AND PRINT LAST ROW, OTHERWISE PROCEED NORMALLY AND CHECK IF PROJECT ON CURRENT ROW DOES NOT MATCH THE CURRENT ACTIVE PROJECT
                                 if ($i == sizeof($results)) {
-
+                                    
                                     goto printrow;
                                 }
-                                if (($results[$i]["Project"] != $active_project && $first == 0) || $i == sizeof($results)) {
-
+                                if (($results[$i]["Project"] != $active_project && $first == 0) || $i == sizeof($results) ) {
+                                    
                                     printrow:
 
                                     $engineers_str = implode(" ", $project_engineers_buffer);
@@ -254,7 +260,8 @@
                                 // IF PROJECT ON CURRENT ROW DOES NOT MATCH THE CURRENT ACTIVE PROJECT OR WE ARE ON FIRST ROW OF QUERY
                                 // RESET BUFFERS AND ASSIGN ROW DETAILS TO TRACKER VARIABLES
                                 // NOTE: IF A SALES ORDER DOES NOT HAVE A PROJECT THE CUSTOMER DEFAULTS TO "000_NO_PROJECT_000"
-                                if ($results[$i]["Project"] != $active_project || $first == 1) {
+                                if ($results[$i]["Project"] != $active_project || $first == 1 ) {
+                                    
                                     $active_project = $results[$i]["Project"];
                                     $project_engineers_buffer = array();
                                     $project_days_buffer = array();
@@ -348,7 +355,7 @@
                                 $border_color = '';
                                 else
                                 $border_color =  ''; */
-                                if ($results[$i]["Latest Purchase Ord"] != NULL)
+                                if ($results[$i]["Purchase Ord"] != NULL)
                                     $border_color = 'brired';
                                     
                                  if ($results[$i]["Sub_Con_Status"]== 'Gone to Sub Con')
@@ -389,9 +396,9 @@
                                     //$results[$i]["Est Prod Hrs"],
                                     NULL,
                                     //$results[$i]["Stage"],
-                                    $results[$i]["Latest Purchase Ord"] == NULL ? "NO PurO" :$results[$i]["Latest Purchase Ord"],
+                                    $results[$i]["Purchase Ord"] == NULL ? "NO PurO" :$results[$i]["Purchase Ord"],
                                     //$comments,
-                                    $results[$i]["supplier"] == NULL ? "NO Sup":$results[$i]["supplier"],
+                                    $results[$i]["Supplier"] == NULL ? "NO Sup":$results[$i]["Supplier"],
                                     //$comments_2,
                                     $results[$i]["Purchase Due"] == NULL ? " ":$results[$i]["Purchase Due"],
                                     //str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sub_Con_Remarks"])),

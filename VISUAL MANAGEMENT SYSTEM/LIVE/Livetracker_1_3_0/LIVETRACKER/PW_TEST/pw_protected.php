@@ -191,7 +191,7 @@ if (password_verify($pw, $hash)) {
           </tr>
         </thead>
         <tbody>
-        
+        <?php foreach $results as $row:?>
             <tr>
               <td class='prop__name' data-prop-name='firstName'><?= $row["U_NAME"] ?></td>
               <td class='prop__name' data-prop-name='lastName'><?= $row["U_PDM_Project"] == NULL ? 'null' : $row["U_PDM_Project"] ?></td>

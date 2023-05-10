@@ -49,7 +49,7 @@ isnull(t0.[Product Group],'No Group') [Product Group]
 FROM(
 SELECT
     t0.U_PDM_Project[Project Number],
-    t0.U_proj_manager[Project Manager],
+    t88.U_NAME[Project Manager],
     t0.docnum [Sales Order],
     t0.cardname [Customer],
     ISNULL(t0.U_Client,'000_NO PROJECT_000') [Project],
@@ -125,7 +125,7 @@ SELECT
     left join [dbo].[@PRE_PRODUCTION] as t13 on t13.code     = t1.U_PP_Stage
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
 
-       
+    left join [dbo].ousr as t88 on t88.USERID=t0.U_Proj_Mgr 
        left join (select t1.U_IIS_proPrOrder, sum(t0.issuedqty) [Issued], sum(t1.CmpltQty) [Completed]
                            from wor1 t0
                            inner join owor t1 on t1.DocEntry = t0.DocEntry

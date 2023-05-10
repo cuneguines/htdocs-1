@@ -1,8 +1,54 @@
-Changed 30-01-23
 <?php
 $tsql =
-        "
-        SELECT 
+        "with prod_ord_lines as (
+
+                select t0.ItemCode,t0.U_sc_date, t2.name [SC Status], t0.U_sc_remarks, t0.UpdateDate, t0.U_IIS_proPrOrder, t0.LogInstanc, t0.[TABLE_SRC], t0.LineNum, t0.DocEntry, t1.DocNum [Prod Order]
+                
+                from (
+                              select 'AWO1' [TABLE_SRC], t0.ItemCode,t0.U_sc_date, t0.U_sc_status, t0.U_sc_remarks, t3.UpdateDate, t3.U_IIS_proPrOrder, t0.DocEntry, t0.LogInstanc, t0.LineNum
+                              
+                              from awo1 t0
+                              inner join oitm t1 on t1.ItemCode = t0.ItemCode
+                              inner join oitb t2 on t2.ItmsGrpCod = t1.ItmsGrpCod
+                              inner join awor t3 on t3.DocEntry = t0.DocEntry and t3.LogInstanc = t0.LogInstanc
+                              where t2.ItmsGrpNam = 'Sub Con - Purchases'
+                              
+                              union all
+                              
+                              select 'WOR1' [TABLE_SRC], t0.ItemCode,t0.U_sc_date, t0.U_sc_status, t0.U_sc_remarks, t3.UpdateDate, t3.U_IIS_proPrOrder, t0.DocEntry, (isnull(t4.[Max_Log],0)+1) [LogInstanc], t0.LineNum
+                              
+                              from wor1 t0
+                              inner join oitm t1 on t1.ItemCode = t0.ItemCode
+                              inner join oitb t2 on t2.ItmsGrpCod = t1.ItmsGrpCod
+                              inner join OWOR t3 on t3.DocEntry = t0.DocEntry
+                              
+                              left join (
+                                           select t0.ItemCode, t0.DocEntry, t0.LineNum, max(t0.loginstanc) [Max_Log]
+                              
+                                           from awo1 t0
+                              
+                                           group by t0.ItemCode, t0.DocEntry, t0.LineNum) t4 on t4.DocEntry = t0.DocEntry and t4.ItemCode = t0.ItemCode and t4.LineNum = t0.LineNum
+                              
+                              
+                              
+                              where t2.ItmsGrpNam = 'Sub Con - Purchases') t0
+                
+                inner join owor t1 on t1.DocEntry = t0.DocEntry
+                left join [dbo].[@SUB_CON_STATUS] t2 on t2.Code = t0.U_sc_status
+                
+                where t1.Status <> 'C'
+                
+                
+                )
+                select * from(    SELECT 
+       t0.U_IIS_proPrOrder,
+       t0.[Date_Gone],
+	   ---Case when job goes to sub con for more than 4 days and purchase order raised---
+	   case
+       when DATEDIFF(DAY,GETDATE(),t0.[Date_Gone] ) < -4 and t0.[Purchase Ord] is not null THEN 'gone_4sc_po'
+       end[SUB_CON],
+	   t0.[New Status],
+	   t0.[Previous Status],
         ISNULL(t0.[Process Order],'N/A')[Process Order],
         t2.docnum [Prod Ord],
         t0.[Sales Person],
@@ -17,14 +63,16 @@ $tsql =
         CAST (t0.ONHand as decimal)[ONHand],  
         t0.[On Order],
         FORMAT(CAST(t0.[Promise Date UNP] AS DATE),'dd-MM-yyyy') [Promise Date UNP],
-      CASE 
-      WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
+    CASE 
+  WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . $start_range . " THEN " . ($start_range - 1) . "
+   WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") > " . $end_range . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 13) . " THEN " . ($end_range + 1) . "
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 13) . " AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") < " . ($end_range + 26) . " THEN " . ($end_range + 2) . "
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ") >= " . ($end_range + 26) . " THEN " . ($end_range + 3) . "
         
-        ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
-        END [Promise Diff Week],
+      ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1) . ")
+     END [Promise Diff Week],
+
+
         CASE 
         when t0.[Promise Date UNP] is null  then 14
         WHEN DATEDIFF(DAY,GETDATE(),t0.[Promise Date UNP]) < -14 THEN -4
@@ -84,7 +132,7 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         t1.Docnum [Sales Order],
         FORMAT(t0.[Dispatch Date],'dd-MM-yyyy')[Dispatch Date],
         t0.[Purchase Ord], 
-        t0.Supplier,
+        ---t0.Supplier,
         FORMAT(t0.[Purchase Due],'dd-MM-yyyy')[Purchase Due],
         t0.[Shortage Warning],
         t0.[PO Warning],
@@ -110,6 +158,11 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
               -------Material needed for process orders for customers
             SELECT  
+			t55.U_IIS_proPrOrder,
+			---t55.ItemCode, 
+			cast(t55.Date_Gone  as Date) [Date_Gone], 
+			t55. [New Status],  
+			t55.[Previous Status],
             t7.Dscription[Dscription],
             t0.IssuedQty[IssuedQty],
             t0.PlannedQty[PlannedQty],
@@ -161,6 +214,17 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                             ---Changed today 21/10/22---
                             t13.Name[Sub_Con_Status]
                     FROM  wor1 t0
+					----Left joining prod_ord_lines for 'Gone to Sub con date---
+
+
+					left
+					join (select t0.U_IIS_proPrOrder, t0.ItemCode, cast(t0.UpdateDate as Date) [Date_Gone], t0.[SC Status] [New Status],  t1.[SC Status] [Previous Status]
+
+from prod_ord_lines t0
+inner join prod_ord_lines t1 on t1.ItemCode = t0.ItemCode and t1.LineNum = t0.LineNum and t0.DocEntry = t1.DocEntry and t0.LogInstanc = t1.LogInstanc+1
+
+where ((t1.[SC Status] <> t0.[SC Status]) or (t0.[SC Status] is not null and t1.[SC Status] is null))
+and t0.[SC Status] = 'Gone To Sub Con' and t1.[SC Status]is null) t55 on t55.U_IIS_proPrOrder=t0.U_IIS_proPrOrder and t55.ItemCode=t0.ItemCode
         
                     LEFT JOIN 
                     (select t0.ItemCode, 
@@ -196,6 +260,11 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
                     -----sales order buy items -----
             SELECT  
+			t55.U_IIS_proPrOrder,
+			--t55.ItemCode, 
+			cast(t55.Date_Gone  as Date) [Date_Gone], 
+			t55. [New Status],  
+			t55.[Previous Status],
             t0.Dscription,
             t0.ActBaseNum[NUM],
             t0.ActBaseNum[NUM],
@@ -245,6 +314,16 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                             NULL [Sub_Con_Remarks], 
                             NULL [Sub_Con_Status]
                     from rdr1 t0
+
+					----left join prod_ord_lines for 'Gone to Sub Con date-----
+					left
+					join (select t0.U_IIS_proPrOrder, t0.ItemCode, cast(t0.UpdateDate as Date) [Date_Gone], t0.[SC Status] [New Status],  t1.[SC Status] [Previous Status]
+
+from prod_ord_lines t0
+inner join prod_ord_lines t1 on t1.ItemCode = t0.ItemCode and t1.LineNum = t0.LineNum and t0.DocEntry = t1.DocEntry and t0.LogInstanc = t1.LogInstanc+1
+
+where ((t1.[SC Status] <> t0.[SC Status]) or (t0.[SC Status] is not null and t1.[SC Status] is null))
+and t0.[SC Status] = 'Gone To Sub Con' and t1.[SC Status] is null) t55 on t55.U_IIS_proPrOrder=t0.U_IIS_proPrOrder and t55.ItemCode=t0.ItemCode
         
                     LEFT JOIN 
                     (select t0.ItemCode, 
@@ -276,6 +355,11 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
         
                     -----stock order items -----
   SELECT  
+            t55.U_IIS_proPrOrder,
+			---t55.ItemCode, 
+			cast(t55.Date_Gone  as Date) [Date_Gone], 
+			t55. [New Status],  
+			t55.[Previous Status],
             t2.ItemName,
             NULL[NUM],
             NULL[NUM],
@@ -326,7 +410,17 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                     t0.U_sc_remarks[Sub_Con_Remarks] , 
                     t6.name[Sub_Con_Status]
                     from wor1 t0
-        
+        ----Left joining prod_ord_lines for 'Gone to Sub con date---
+
+
+					left
+					join (select t0.U_IIS_proPrOrder, t0.ItemCode, cast(t0.UpdateDate as Date) [Date_Gone], t0.[SC Status] [New Status],  t1.[SC Status] [Previous Status]
+
+from prod_ord_lines t0
+inner join prod_ord_lines t1 on t1.ItemCode = t0.ItemCode and t1.LineNum = t0.LineNum and t0.DocEntry = t1.DocEntry and t0.LogInstanc = t1.LogInstanc+1
+
+where ((t1.[SC Status] <> t0.[SC Status]) or (t0.[SC Status] is not null and t1.[SC Status] is null))
+and t0.[SC Status] = 'Gone To Sub Con' and t1.[SC Status] is null) t55 on t55.U_IIS_proPrOrder=t0.U_IIS_proPrOrder and t55.ItemCode=t0.ItemCode
                     LEFT JOIN 
                     (select t0.ItemCode, 
                             (t1.DocDueDate) [DocDueDate], 
@@ -373,9 +467,9 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP])," . ($start_range - 1
                                                         
         
        WHERE
-         t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100')
-        ORDER BY  t0.[Project]
-
+         t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100') 
+       
+        ) as o where SUB_CON is null order by [Project]
 ";
 ?>
 

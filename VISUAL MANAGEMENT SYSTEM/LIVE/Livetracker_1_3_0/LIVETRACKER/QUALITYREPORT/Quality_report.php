@@ -225,10 +225,12 @@ tr.alternate {
                             <th width="150px"> Link to improvement</th>
                             <th width="200px">Area raised</th>
                             <th width="120px">Area Caused</th>
-                            <th width="300px">Response type</th>
+                            <th width="200px">Response type</th>
+                            <th width="70px">Status</th>
+                            <th width="300px">Customer</th>
                             <th width="200px">Type</th>
                             <th width="120px">Sap code</th>
-                            <th width="300px">Customer</th>
+                            
                             <th width="150px">SO</th>
                             <th width="300px">Project</th>
                             <th width="400px">Description</th>
@@ -236,7 +238,7 @@ tr.alternate {
                             <th width="200px">Product group1</th>
                             <th width="150px">Pg2</th>
                             <th width="150px">pg3</th>
-                            <th width="150px">Status</th>
+                            
                             
                          
                             
@@ -319,12 +321,14 @@ tr.alternate {
                                     <td class='lefttext'><?= $row["area_raised_"] ?></td>
                                     <td class='lefttext'><?= $row["nc_area_caused"] ?></td>
                                     <td class='lefttext'><?= $row["Action"] ?></td>
+                                    <td class='lefttext Status'><?= $row["Status"] ?></td>
+                                    <td class='lefttext'><?= $row["Customer"] ?></td>
                                     <td class='lefttext'><?= $row["form_type"] ?></td>
                                     <td class='lefttext'><?=$row["nc_itemcode"] ?></td>
                                 
 
 
-                                <td class='lefttext'><?= $row["Customer"] ?></td>
+                               
                                 <td><?= $row["nc_sales_order"] ?></td>
                                 <td class='lefttext'><?= $row["U_Client"] ?></td>
                                 <td class='lefttext'><?= $row["Dscription"] ?></td>
@@ -332,7 +336,7 @@ tr.alternate {
                                 <td class='lefttext'><?= $row["U_Product_Group_One"] ?></td>
                                 <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                                 <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
-                                <td class='lefttext Status'><?= $row["Status"] ?></td>
+                                
                                 
                                 
                                 
