@@ -205,6 +205,11 @@ if (password_verify($pw, $hash)) {
   position: absolute;
   width: calc(100% - 20px);
 }
+.select-editable {position:relative; width:120px;}
+.select-editable > * {position:absolute; top:0; left:0; box-sizing:border-box; outline:none;}
+.select-editable select {width:100%;}
+.select-editable input {width:calc(100% - 20px); margin:1px; border:none; text-overflow:ellipsis;}
+ 
 
 </style>
 <?php
@@ -247,16 +252,17 @@ if (password_verify($pw, $hash)) {
                         <label>Sales Order</label>
                         
   
-                        <select id="sales_order" style="width:100%;height:34px;color:black;">
+                        <!-- <select id="sales_order" style="width:100%;height:34px;color:black;">
                                             <option value="None" selected >none</option>
+                                            <?php// generate_filter_options($sales_results, "docnum"); ?>
+                                        </select> -->
+                                        <div style="width:100%;height:34px;color:black;"class="select-editable">
+  <select style="width:100%;height:34px;color:black;" onchange="this.nextElementSibling.value=this.value">
+  <option value="None" selected >none</option>
                                             <?php generate_filter_options($sales_results, "docnum"); ?>
-                                        </select>
-                        <!-- Error -->
-                        <input list=languages>
-<datalist id=languages>
- <option value="English"></option>
- <option value="Dutch"></option>
-</datalist>
+  </select>
+  <input id="sales_order"type="text" oninput="this.previousElementSibling.options[0].value=this.value; this.previousElementSibling.options[0].innerHTML=this.value" onchange="this.previousElementSibling.selectedIndex=0" value="" />
+</div>
                         <div class="help-block with-errors"></div>
                     </div>
                     <!-- <div class="form-group">

@@ -1,5 +1,18 @@
 $(document).ready(function () {
-
+    $(function () {
+        var selectedEleValue = null;
+        $('#editable-select').editableSelect({
+          onSelect: function (element) {
+            selectedEleValue = element.val();
+            console.log('The val is: ' + element.val() + ' The text is: ' + element.text());
+          }
+        });
+        $('form[action="http://stackoverflow.com/questions/38437449/edit-jquery-editable-select/"]').on('submit', function(e) {
+          if (selectedEleValue != null) {
+            $('#basic').val(selectedEleValue);
+          }
+        })
+      });
 });
 function myFunction(event) {
     var CurrentRow = $(event.target).closest("tr");
