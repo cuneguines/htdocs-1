@@ -1,4 +1,8 @@
 $(document).ready(function () {
+
+    var today = new Date().toISOString().split('T')[0];
+            $('#owner option[value="All"]').prop('selected', true);
+            $('#ddate').val(today);
     $(function () {
         var selectedEleValue = null;
         $('#editable-select').editableSelect({
