@@ -154,7 +154,7 @@
                         </thead>
                         <tbody class="medium btext">
                             <?php
-                            $active_project = $str = $engineers_str = $days_lfive=$days_lthree = $days_str = $base_color = $border_color = $overwrite =  "";
+                            $active_project = $str = $engineers_str = $days_lfive=$days_lthree = $days_str = $base_color = $border_color = $account_str=$overwrite =  "";
                             $project_button_buffer = $sum = array_fill(($start_range - 3), ($end_range + (-$start_range) + 2 + 3), NULL);
                             /* foreach ($project_button_buffer as $p)
                                     {
@@ -164,6 +164,7 @@
                             $project_days_buffer = array(null);
                             $project_days_lthree_buffer = array(null);
                             $project_days_lfive_buffer = array(null);
+                            $account_buffer = array(null);
                             $first = 1;
                             ?>
                             <?php for ($i = 0; $i <= sizeof($results); $i++) : ?>
@@ -182,12 +183,13 @@
                                     $days_str = implode(" ", $project_days_buffer);
                                     $days_lthree = implode(" ", $project_days_lthree_buffer);
                                     $days_lfive = implode(" ", $project_days_lfive_buffer);
+                                    $account_str = implode(" ", $account_buffer);
                                     $promise_week_due = '10';
                                     
                                    // $bgcolor = '';
 
                                     // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
-                                    echo "<tr class = 'row white smedium' lastthreedays = '" . $days_lthree ."'lastfivedays = '". $days_lfive . "'productgp = '" . $productgp . "'days_week = '" . $days_str . "'customer = '" . $customer . "' project = '" . $project . "' engineers = '" . $engineers_str . "' sales_person = '" . $sales_person . "' promise_week_due = '" . $promise_week_due . "' type =  breakdown>";
+                                    echo "<tr class = 'row white smedium' lastthreedays = '" . $days_lthree ."'lastfivedays = '". $days_lfive . "'account = '". $account_str ."'productgp = '" . $productgp . "'days_week = '" . $days_str . "'customer = '" . $customer . "' project = '" . $project . "' engineers = '" . $engineers_str . "' sales_person = '" . $sales_person . "' promise_week_due = '" . $promise_week_due . "' type =  breakdown>";
                                     echo "<td style = 'background-color:$bgcolor;border-right:1px solid #454545;'>" . $customer_unp . "<br><br>" . $project_unp . "</td>";
 
                                     print_values_22($project_button_buffer, $start_range, $end_range - 1);
@@ -198,7 +200,7 @@
                                     //echo ($end_range);
                                     echo "</tr>";
                                     // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
-                                    echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' lastthreedays = '" . $days_lthree . "'lastfivedays = '" . $days_lfive . "'days_week = '" . $days_str . "'customer = '" . $customer . "' engineers = '" . $engineers_str . "' project = '" . $project . "' sales_person = '" . $sales_person . "'><td style = 'background-color:#454545;color:white;'>" . $project_unp . "</td>";
+                                    echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' lastthreedays = '" . $days_lthree . "'account = '". $account_str."'lastfivedays = '" . $days_lfive . "'days_week = '" . $days_str . "'customer = '" . $customer . "' engineers = '" . $engineers_str . "' project = '" . $project . "' sales_person = '" . $sales_person . "'><td style = 'background-color:#454545;color:white;'>" . $project_unp . "</td>";
                                     print_values_22($sum, $start_range, $end_range - 1);
                                     echo "<td style = 'background-color:#DCDCDC;color:white;'></td>";
                                     echo "</tr>";
@@ -220,6 +222,7 @@
                                     $project_days_buffer = array();
                                     $project_days_lthree_buffer = array();
                                     $project_days_lfive_buffer = array();
+                                    $account_buffer=array();
                                     $project_button_buffer = $sum = array_fill(($start_range - 3), ($end_range + (-$start_range) + 2 + 3), NULL);
                                     //$project_button_buffer = $sum = array_fill(($start_range - 1), ($end_range + (-$start_range) + 2 + 3),NULL);
                                     //print_r($project_button_buffer);
@@ -227,6 +230,7 @@
                                     $days_str = "";
                                     $days_lthree = "";
                                     $days_lfive = "";
+                                    $account_str="";
 
                                     $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"] == '000_NO PROJECT_000' ? '000_NO_PROJECT_000' : $results[$i]["Customer"]));
                                     $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Project"]));
@@ -238,6 +242,7 @@
                                     $promise_week_due = $results[$i]["Promise Week Due"];
                                     $project_unp = $results[$i]["Project"];
                                     $account_stat=$results[$i]["Account Status"];
+
                                     $date_check=str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Promise_date_now"]));
                                     $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
                                     $first = 0;
@@ -333,7 +338,7 @@
                                 // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
                                 $str = generate_schedule_buttonsss(
                                     $account_color,
-                                    $results[$i]["Account Status"],
+                                    str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Account Status"])),
                                     $color_for_dates,
                                     $border_color_for_date,
                                     $color,
@@ -370,6 +375,7 @@
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Days of the Week"])),
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last three days"])),
                                     str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last five days"]))
+                                    
                                 );
 
                                 if (!in_array(str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"])), $project_engineers_buffer)) {
@@ -383,6 +389,9 @@
                                 }
                                 if (!in_array(str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last five days"])), $project_days_lfive_buffer)) {
                                     array_push($project_days_lfive_buffer, str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Last five days"])));
+                                }
+                                if (!in_array(str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Account Status"])), $account_buffer)) {
+                                    array_push($account_buffer, str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Account Status"])));
                                 }
                                 //echo($results[$i]["Promise Diff Days"]);
                                 //echo("<br>");
@@ -519,12 +528,12 @@
                                 </div>
                                 <div class="filter">
                                     <div class="text">
-                                        <button class="fill red medium wtext">Project</button>
+                                        <button class="fill red medium wtext">Account Status</button>
                                     </div>
                                     <div class="content">
-                                        <select id="select_project" class="selector fill medium">
+                                        <select id="select_account" class="selector fill medium">
                                             <option value="All" selected>All</option>
-                                            <?php generate_filter_options($results, "Project"); ?>
+                                            <?php generate_filter_options($results, "Account Status"); ?>
                                         </select>
                                     </div>
                                 </div>

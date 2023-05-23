@@ -18,6 +18,7 @@ $(document).ready(function(){
         $('.selector').not(this).prop('selectedIndex',0);
         $('#bd').prop('disabled', false);
 console.log('yes');
+console.log($(this).children("option:selected").val());
         if($(this).children("option:selected").val() === 'All')
         {
             rows.show();
@@ -207,6 +208,45 @@ console.log(selected_value);
         }
     });
 });
+
+//Select Account
+
+
+($('#select_account')).on("change",function filter()
+{
+    alert("changed");
+    $('.multiselector_checkbox').addClass('checked');
+    $('.selector').not(this).prop('selectedIndex',0);
+    if($(this).children("option:selected").val() === 'All')
+    {
+        $('#bd').prop('disabled', false);
+        $('table.filterable tfoot tr').show();
+        rows.show();
+        jobs.show();
+    }
+    else
+    {
+        $('#bd').prop('disabled', true);
+
+        jobs.show();
+        rows.show();
+        $('table.filterable tfoot tr').hide();
+        selected_value = $(this).children("option:selected").val();
+console.log(selected_value);
+        jobs.not("[account = " + $(this).children("option:selected").val() + "]").hide();
+
+        $.each($('.row').not('#select_account'),function(){
+            if(!JSON.stringify($(this).attr("account")).includes(selected_value))
+            {
+                $(this).hide();
+            }
+            rows.filter('[type = data]').hide();
+        });
+    }
+});
+
+
+
 
 //For muliselect Engineers
 

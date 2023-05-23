@@ -403,8 +403,8 @@ console.log(values4);
          values5.push(data5[0]["3"]);
          values5.push(data5[0]["4"]);
 
-//document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + " Mat Efficiency: " + 
-//data4["Mat Efficiency"] + " Lab Efficiency: " + data4["Lab Efficiency"] + "<BR/>";
+      //document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + " Mat Efficiency: " + 
+         //data4["Mat Efficiency"] + " Lab Efficiency: " + data4["Lab Efficiency"] + "<BR/>";
 
 	console.log("Lab Efficiency: " + data5[0]["3"] + " Mat Efficiency: " + data5[0]["4"]);
 	console.log(labels5[0] + values5[0]);
@@ -458,7 +458,7 @@ console.log(values4);
 
 
 
-    const response6 = await fetch("\CACHED\\complete_process_orders_week_data.json");
+    const response6 = await fetch("\CACHED\\process.json");
     const data6 = await response6.json();
     console.log(data6);
 
@@ -467,20 +467,30 @@ console.log(values4);
       console.log(length6);
       labels6 = [];
       values6 = [];
-
+      labels6.push("Month");
+      ///labels6.push("2023");
+      //labels6.push("2022");
+      //labels6.push("2023");
+      //labels6.push("2022");
+      labels6.push("Process Order");
       for (i6 = 0; i6 < length6; i6++) 
       {
 
 
-         labels6.push("Difference Mat");
-         labels6.push("Difference Lab");
-         values6.push(data6[0]["3"]);
-         values6.push(data6[0]["4"]);
+         
+        // labels6.push("Difference Lab");
+      
+        // values6.push(data6[0]["1"]);
+         //values6.push(data6[0]["2"])
+         values6.push(data6[0]["3"])
+         //values6.push(data6[0]["4"])
+         //values6.push(data6[0]["5"])
+         values6.push(data6[0]["6"])
 
 //document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + " Mat Efficiency: " + 
 //data4["Mat Efficiency"] + " Lab Efficiency: " + data4["Lab Efficiency"] + "<BR/>";
 
-	console.log("Lab Efficiency: " + data6[0]["3"] + " Mat Efficiency: " + data6[0]["4"]);
+	console.log("Lab Efficiency: " + data6[0]["Year"] + " Mat Efficiency: " + data6[0]["Process Orders Opened"]);
 	console.log(labels6[0] + values6[0]);
 	console.log(labels6[1] + values6[1]);
 	console.log(values6);
@@ -516,7 +526,7 @@ console.log(values4);
             legend: { display: false },
             title: {
                display: true,
-               text: 'Complete Process Orders Week'
+               text: 'Complete Process Orders YEar'
             }
          }
 

@@ -66,7 +66,7 @@
     <?php //include './SQL_production_schedule_new.php'; 
     ?>
     <?php include './SQL_subcontract_schedule.php'; ?>
-    <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA); ?>
+    <?php $results = get_sap_data($conn, $tsql_test, DEFAULT_DATA); ?>
 
     <?php
 

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,19 +31,9 @@
         <?php include "../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/PHP LIBS/PHP FUNCTIONS/php_functions.php"?>
         <?php include '../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/SQL CONNECTIONS/conn.php'; ?>
 		<?php include './SQL_process_count.php'; ?>
-        <?php $results_process = get_sap_data($conn, $results, DEFAULT_DATA);?>
+        <?php $results_ = get_sap_data($conn, $results, DEFAULT_DATA);?>
         <?php $results_1 = get_sap_data($conn, $results_1, DEFAULT_DATA);?>
-        <?php $process_table=array();
-
-//$product = get_sap_data($conn,$results,DEFAULT_DATA);
-//$rows = $results->fetchAll(PDO::FETCH_ASSOC);
-//echo json_encode($rows);
-foreach ( $results_process as $step)
-{
-   var_dump($step);
-    $process_data[]=$step;
-}
-file_put_contents("./CACHED/process.json", json_encode($results_process));?> */?>
+        <?php file_put_contents("./CACHED/process.json", json_encode($results_));?>
         <!-- TABLESORTER INITALISATION -->
         <script>
             $(function(){
@@ -80,7 +71,7 @@ file_put_contents("./CACHED/process.json", json_encode($results_process));?> */?
                         </thead>
                         <tbody>
                         
-                        <?php foreach($results_process as $row) : ?>
+                        <?php foreach($results_ as $row) : ?>
                             
                             
                            
@@ -111,7 +102,7 @@ file_put_contents("./CACHED/process.json", json_encode($results_process));?> */?
                                     <div class = "content">
                                         <select disabled id = "select_status" class = "selector fill medium">
                                             <option value = "All" selected>All</option>
-                                            <?php generate_filter_options($results, "Month"); ?>
+                                            <?php generate_filter_options($results_, "Month"); ?>
                                         </select>
                                     </div>
                                 </div>
@@ -191,7 +182,7 @@ file_put_contents("./CACHED/process.json", json_encode($results_process));?> */?
                                     <div class = "content">
                                         <select disabled id = "select_status" class = "selector fill medium">
                                             <option value = "All" selected>All</option>
-                                            <?php generate_filter_options($results, "Month"); ?>
+                                            <?php generate_filter_options($results_, "Month"); ?>
                                         </select>
                                     </div>
                                 </div>

@@ -126,6 +126,7 @@ SELECT
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
 
     left join [dbo].ousr as t88 on t88.USERID=t0.U_Proj_Mgr 
+    
        left join (select t1.U_IIS_proPrOrder, sum(t0.issuedqty) [Issued], sum(t1.CmpltQty) [Completed]
                            from wor1 t0
                            inner join owor t1 on t1.DocEntry = t0.DocEntry
