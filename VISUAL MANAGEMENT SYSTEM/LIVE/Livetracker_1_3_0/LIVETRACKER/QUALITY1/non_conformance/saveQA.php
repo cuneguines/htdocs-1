@@ -126,9 +126,9 @@ else{
   $mail->isHTML(true);                                  // Set email format to HTML
   
   $mail->Subject = 'MESSAGE FROM QUALITY TEAM';
-  $mail->Body    = 'You are assigned owner no '.$Id .'and it requires your attention. Please  (<a href=http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITY1/non_conformance/non.php>CLICK </a> ) here to view and action the item '.$action 
+  $mail->Body    = 'You are the assigned owner of item no '.$Id .'on the Learning Log and it requires your attention. Please click (<a href=http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QUALITY1/non_conformance/non.php>HERE </a> ) here to view and action the item
 
-  .' Details on how to action the item can be found in SOP-0679 in PDM<br>
+  .Details on how to action the item can be found in SOP-0679 in PDM<br>
 
   Kind regards,<br>
   The Quality Team';
