@@ -515,7 +515,7 @@
                     <div id="top">
                         <div id="filter_container">
                             <div id="filters" class="red fill rounded">
-                                <div class="filter">
+                                <div class="filter" style = "width:17%">
                                     <div class="text">
                                         <button class="fill red medium wtext">Customer</button>
                                     </div>
@@ -526,7 +526,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter">
+                                <div class="filter" style = "width:17%">
                                     <div class="text">
                                         <button class="fill red medium wtext">Account Status</button>
                                     </div>
@@ -537,18 +537,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter" style="display:none">
+                                <div class="filter" style = "width:17%">
                                     <div class="text">
-                                        <button class="fill red medium wtext">Engineer</button>
+                                        <button class="fill red medium wtext">Project</button>
                                     </div>
                                     <div class="content">
-                                        <select id="select_engineer" class="selector fill medium">
+                                        <select id="select_project" class="selector fill medium">
                                             <option value="All" selected>All</option>
-                                            <?php generate_filter_options($results, "Engineer"); ?>
+                                            <?php generate_filter_options($results, "Project"); ?>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter">
+                                <div class="filter" style = "width:17%">
                                     <div class="text">
                                         <button class="fill red medium wtext">Sales Person</button>
                                     </div>
@@ -559,7 +559,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="filter">
+                                <div class="filter" style = "width:17%">
                                     <div class="text">
                                         <button class="fill red medium wtext">WeekDays</button>
                                     </div>

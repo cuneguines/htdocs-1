@@ -16,14 +16,14 @@ $mail = new PHPMailer(true);
 	  $mail->isSMTP();                                      // Set mailer to use SMTP
 	  $mail->Host = 'smtp.office365.com';  // Specify main and backup SMTP servers
 	  $mail->SMTPAuth = true;                               // Enable SMTP authentication
-	  $mail->Username = 'cnixon@kentstainless.com';                 // SMTP username
-	  $mail->Password = 'CNks2022??';                           // SMTP password
+	  $mail->Username = 'qualityteam@kentstainless.com';                 // SMTP username
+	  $mail->Password = 'jvcjwjhbbtykhmtv';                           // SMTP password
 	  $mail->SMTPSecure = 'tls';                           // Enable TLS encryption, `ssl` also accepted
-	  $mail->Port = 587;                                    // TCP port to connect to
+	  $mail->Port = 25;                                    // TCP port to connect to
 	  
-	  $mail->setFrom('cnixon@kentstainless.com', 'Mailer');
+	  $mail->setFrom('qualityteam@kentstainless.com', 'Mailer');
 	  $mail->addAddress('cnixon@kentstainless.com', 'ns');     // Add a recipient
-	  $mail->addAddress('ellen@example.com');               // Name is optional
+	  //$mail->addAddress('ellen@example.com');               // Name is optional
 	  $mail->addReplyTo('info@example.com', 'Information');
 	 // $mail->addCC('cc@example.com');
 	  //$mail->addBCC('bcc@example.com');

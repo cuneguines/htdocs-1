@@ -20,6 +20,7 @@ group by t0.PrOrder)
 
 
 SELECT 
+ISNULL(t17.SC_RN,1)[SC_RN],
 case when t17.U_sc_date is null then 'subconnull' end [SubConVal],
 case when t24.[Name] is null then t22.U_PP_Status else t24.[Name] end [Status],
 ---Changed 1-12-22--
@@ -63,7 +64,7 @@ t14.[SEQ031]
 
 from owor t0
 left join (
-              select t0.ItemName,t1.docnum, t0.U_sc_date, t0.U_sc_remarks, t0.U_sc_status
+              select t0.ItemName,t1.docnum, t0.U_sc_date, t0.U_sc_remarks, t0.U_sc_status, ROW_NUMBER() OVER(PARTITION BY t1.docnum ORDER BY t0.U_sc_date DESC) [SC_RN]
 
               from wor1 t0
               inner join owor t1 on t1.docentry = t0.docentry 
@@ -71,7 +72,8 @@ left join (
               inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
 
               where t3.ItmsGrpNam = 'Sub Con - Purchases'
-              and t2.ItemName not like 'Assembly of%') t17 on t17.DocNum = t0.DocNum
+              and t2.ItemName not like 'Assembly of%' and t0.ItemCode LIKE '130332260'
+			  ) t17 on t17.DocNum = t0.DocNum
 
 inner join ordr t5 on t5.docnum = t0.OriginNum
 inner join ohem t7 on t7.empID = t5.OwnerCode
@@ -175,9 +177,7 @@ where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')
 
 and t0.CardCode = 'INT002'
-order by t0.U_IIS_proPrOrder, t16.LineID"
-
-;
+order by t0.DocNum";
 
 $sql_step_lookup = 
 "SELECT t0.PrORder[Process Order], t0.LineID[Sub Item Line ID], 

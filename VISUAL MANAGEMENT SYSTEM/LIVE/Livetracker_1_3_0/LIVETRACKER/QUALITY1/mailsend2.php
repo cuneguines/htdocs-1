@@ -23,13 +23,13 @@ require 'C:\xampp\php\lib\PHPMailer\src\SMTP.php';
 
 $mail = new PHPMailer(true);
 $mail->isSMTP();
-$mail->Host = 'smtp.office365.com';
+$mail->Host = 'eu.outbound1.mailanyone.net';
 $mail->Port       = 25;
 $mail->SMTPSecure = 'tls';
 $mail->SMTPAuth   = true;
-$mail->Username = 'cnixon@kentstainless.com';
-$mail->Password = 'CNks2022??';
-$mail->SetFrom('cnixon@kentstainless.com', 'FromEmail');
+$mail->Username = 'qualityinspector@kentstainless.com';
+$mail->Password = 'jvcjwjhbbtykhmtv';
+$mail->SetFrom('qualityinspector@kentstainless.com', 'FromEmail');
 $mail->addAddress('cnixon@kentstainless.com', 'ToEmail');
 //$mail->SMTPDebug  = 3;
 //$mail->Debugoutput = function($str, $level) {echo "debug level $level; message: $str";}; //$mail->Debugoutput = 'echo';

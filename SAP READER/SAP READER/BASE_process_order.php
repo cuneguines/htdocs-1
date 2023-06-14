@@ -111,7 +111,12 @@
                                 <div class = "element short"><button class = "textbox short">€ <?=number_format($process_order_data[0]["Planned Material"],2)?></button></div>
                                 <div class = "element short"><button class = "textbox short">€ <?= !$process_order_data[0]["Planned Material"] ? "0.00" : number_format($process_order_data[0]["Issued Material"],2)." ".number_format($process_order_data[0]["Issued Material"]/$process_order_data[0]["Planned Material"]*100,2)."%"?></button></div>
                                 <div class = "element short"><button class = "textbox short"><?=floatval($process_order_data[0]["Planned Labour"])?> Hrs</button></div>
-                                <div class = "element short"><button class = "textbox short"><?= !$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ".division(number_format($process_order_data[0]["Actual Labour"]),number_format($process_order_data[0]["Planned Labour"]*100,2))."%"?></button></div>
+                                <!-- <div class = "element short"><button class = "textbox short"><?// !$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ".division(number_format($process_order_data[0]["Actual Labour"]),number_format($process_order_data[0]["Planned Labour"]*100,2))."%"?></button></div> -->
+                                <?php $plannedLabour = floatval($process_order_data[0]["Planned Labour"]);?>
+                                <?php $actualLabour = floatval($process_order_data[0]["Actual Labour"]);?>
+
+                                <div class = "element short"><button class = "textbox short"><?php !$plannedLabour ? "0 Hrs" : $percentage = division(($actualLabour), ($plannedLabour * 100));
+                                 echo $actualLabour . " Hrs " . number_format($percentage,4). "%"?></button></div>
                             </div>
                         </div>
                     </div>

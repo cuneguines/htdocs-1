@@ -17,8 +17,8 @@ $(document).ready(function(){
         $('.multiselector_checkbox').addClass('checked');
         $('.selector').not(this).prop('selectedIndex',0);
         $('#bd').prop('disabled', false);
-console.log('yes');
-console.log($(this).children("option:selected").val());
+        console.log('yes');
+        console.log($(this).children("option:selected").val());
         if($(this).children("option:selected").val() === 'All')
         {
             rows.show();
@@ -214,6 +214,7 @@ console.log(selected_value);
 
 ($('#select_account')).on("change",function filter()
 {
+    console.log("TEST");
     alert("changed");
     $('.multiselector_checkbox').addClass('checked');
     $('.selector').not(this).prop('selectedIndex',0);
@@ -232,7 +233,7 @@ console.log(selected_value);
         rows.show();
         $('table.filterable tfoot tr').hide();
         selected_value = $(this).children("option:selected").val();
-console.log(selected_value);
+        console.log(selected_value);
         jobs.not("[account = " + $(this).children("option:selected").val() + "]").hide();
 
         $.each($('.row').not('#select_account'),function(){

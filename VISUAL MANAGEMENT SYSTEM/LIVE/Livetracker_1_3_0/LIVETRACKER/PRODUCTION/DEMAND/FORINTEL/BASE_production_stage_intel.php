@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="../../../../css/LT_STYLE.css">
     <link rel="stylesheet" href="../../../../css/theme.blackice.min.css">
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
     <!-- PHP INITALISATION -->
     <?php include '../../../../SQL CONNECTIONS/conn.php' ?>
@@ -336,7 +337,7 @@ else  $base_color = 'light_grey';
 
 
                             <tr sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
-                                <td class="sticky lefttext step_detail  <?= $base_color ?>" style="background-color:<?= $backcolor ?>"background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"><?= $row["Sales Order"] ?></button></td>
+                                <td class="sticky lefttext step_detail  <?= $base_color ?>" style="background-color:<?= $backcolor ?>"background-clip: padding-box; left:0px;"><button onclick="alert('<?= $saleso_alert ?>');" class="btext smedium rounded brblack" style="height:80%; width:95%;"></button></td>
                                 <td class="sticky lefttext step_detail <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="alert('<?= $remarks_line_details ?>');" class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
                                 

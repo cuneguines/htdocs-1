@@ -190,3 +190,37 @@ $("#pckh_id").click(function () {
 
 
 });
+
+/* $(document).ready(function() {
+    var uniqueValues = [];
+    
+    // Find unique values in the first column
+    $('.data-row').each(function() {
+      var value = $(this).find('td:first-child').text();
+      console.log(value);
+      if (uniqueValues.indexOf(value) === -1) {
+        uniqueValues.push(value);
+      }
+    });
+    
+    // Create toggle buttons for each unique value with more than one occurrence
+    uniqueValues.forEach(function(value) {
+      var rows_toggle = $('.data-row').filter(function() {
+       
+        return $(this).find('td:first-child').text() === value;
+      });
+      
+      var rowCount = rows_toggle.length;
+      console.log(rowCount);
+      if (rowCount > 1) {
+        var toggleButton = $('<span class="toggle-button"><i class="fas fa-eye"></i></span>');
+        toggleButton.click(function() {
+          rows_toggle.not(':first').toggleClass('hidden');
+        });
+        
+        rows_toggle.eq(0).find('td:first-child').prepend(toggleButton);
+        rows_toggle.not(':first').addClass('hidden'); // Initially hide the rows
+      }
+    });
+  });
+   */
