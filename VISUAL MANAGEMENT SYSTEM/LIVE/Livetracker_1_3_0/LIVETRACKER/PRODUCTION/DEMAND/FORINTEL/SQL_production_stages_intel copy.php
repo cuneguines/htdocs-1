@@ -72,7 +72,7 @@ left join (
               inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
 
               where t3.ItmsGrpNam = 'Sub Con - Purchases'
-              and t2.ItemName not like 'Assembly of%' and t0.ItemCode LIKE '130332260'
+             
 			  ) t17 on t17.DocNum = t0.DocNum
 
 inner join ordr t5 on t5.docnum = t0.OriginNum
@@ -177,7 +177,7 @@ where 1 = 1 and t5.CANCELED <> 'Y' and t0.Status <> 'C'
 AND t1.Status IN ('P','R','S','I')
 
 and t0.CardCode = 'INT002'
-order by t0.DocNum";
+order by t0.U_IIS_proPrOrder, t16.LineID";
 
 $sql_step_lookup = 
 "SELECT t0.PrORder[Process Order], t0.LineID[Sub Item Line ID], 

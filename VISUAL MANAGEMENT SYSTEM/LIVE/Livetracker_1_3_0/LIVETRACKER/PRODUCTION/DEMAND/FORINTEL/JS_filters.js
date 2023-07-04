@@ -191,12 +191,12 @@ $("#pckh_id").click(function () {
 
 });
 
-/* $(document).ready(function() {
+ $(document).ready(function() {
     var uniqueValues = [];
     
     // Find unique values in the first column
     $('.data-row').each(function() {
-      var value = $(this).find('td:first-child').text();
+      var value = $(this).find('td:nth-child(2)').text();
       console.log(value);
       if (uniqueValues.indexOf(value) === -1) {
         uniqueValues.push(value);
@@ -207,7 +207,7 @@ $("#pckh_id").click(function () {
     uniqueValues.forEach(function(value) {
       var rows_toggle = $('.data-row').filter(function() {
        
-        return $(this).find('td:first-child').text() === value;
+        return $(this).find('td:nth-child(2)').text() === value;
       });
       
       var rowCount = rows_toggle.length;
@@ -218,9 +218,9 @@ $("#pckh_id").click(function () {
           rows_toggle.not(':first').toggleClass('hidden');
         });
         
-        rows_toggle.eq(0).find('td:first-child').prepend(toggleButton);
+        rows_toggle.eq(0).find('td:nth-child(2)').prepend(toggleButton);
         rows_toggle.not(':first').addClass('hidden'); // Initially hide the rows
       }
     });
   });
-   */
+   

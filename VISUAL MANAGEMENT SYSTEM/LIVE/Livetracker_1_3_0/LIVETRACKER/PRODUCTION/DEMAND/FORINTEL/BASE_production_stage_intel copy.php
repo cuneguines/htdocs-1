@@ -54,6 +54,10 @@
       text-decoration: underline;
       color: blue;
     }
+    button
+    {
+        width:70%;
+    }
     </style>
     <?php
     $process_order_step_efficiency_data = get_sap_data($conn, $process_order_step_efficiency_sql, DEFAULT_DATA);
@@ -409,29 +413,30 @@ else
 {
     $date_color='light_grey';
 }
-if($row["U_sc_status"]=='1002')
+if($row["U_In_Sub_Con"]=='1002')
 {
     $sc_status='bryellow';
 }
-else if ($row["U_sc_status"]=='1003')
+else if ($row["U_In_Sub_Con"]=='1003')
 {
     $sc_status='brdottedyellow';
 
 }
-else if ($row["U_sc_status"]=='1005')
+else if ($row["U_In_Sub_Con"]=='1005')
 {
     $sc_status='brsolidpink';
 }
 else 
 $sc_status='NULL';
+
 ?>
 <?php $so = "location.href='http://vms/SAP%20READER/BASE_sales_order.php?sales_order=".$row["Sales Order"]."'" ?>
                 <?php $po = "location.href='http://vms/SAP%20READER/BASE_process_order.php?process_order=".$row["Process Order"]."'" ?>
 
                             <tr class="data-row" sales_person=<?= $sales_person ?> engineer=<?= $engineer ?> project=<?= $project ?> status=<?= $status ?> customer=<?= $customer ?>>
                                 <?php ?>
-                                <td class="sticky lefttext step_detail  <?= $back_color ?> <?= $base_color ?>" style="background-color:<?php // $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="<?=$so?>" class="btext smedium rounded brblack" style="height:80%; width:95%; <?= $row["SC_RN"] != 1 ? "background-color:black" : ""?>"><?= $row["Sales Order"] ?></button></td>
-                                <td class="sticky lefttext step_detail <?= $back_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="<?=$po?>"class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:90%;"><?= $row["Process Order"] ?></button></td>
+                                <td class="sticky lefttext step_detail  <?= $back_color ?> <?= $base_color ?>" style="background-color:<?php // $backcolor ?>" background-clip: padding-box; left:0px;"><button onclick="<?=$so?>" class="btext smedium rounded brblack" style="height:80%; width:80%; <?= $row["SC_RN"] != 1 ? "background-color:black" : ""?>"><?= $row["Sales Order"] ?></button></td>
+                                <td class="sticky lefttext step_detail <?= $back_color ?> <?= $base_color ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box; left:80px;"><button onclick="<?=$po?>"class="btext smedium rounded brblack <?= $has_comment == 1 ? "lighter_green" : ""; ?>" style="height:80%; width:80%;"><?= $row["Process Order"] ?></button></td>
                                 <td class="sticky lefttext step_detail  <?= $backg_color ?> <?= $base_color ?>" style="background-color:<?php //$backcolor ?>" background-clip: padding-box;left:160px;"><?= $row["Promise Date"] ?></td>
 
                                 <td class="sticky lefttext step_detail  <?= $complete_marker ?>" style="background-color:<?= $backcolor ?>" background-clip: padding-box;left:160px;"><button class="btext lefttext <?=$sc_status?>" style="font-size: 1.5vh;height:80%; width:95%;background-color:#DCDCDC;"><?= $row["ItemName"] ?></button></td>
