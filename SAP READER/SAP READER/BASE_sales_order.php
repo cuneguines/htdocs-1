@@ -122,7 +122,7 @@
                     </div>
                 </div>
                 <div class = "tables_container">
-                    <div id = "pages_table_container" class = "table_container no_scrollbar" style = "top:0%;">
+                    <div id = "pages_table_container" class = "table_container" style = "top:0%;">
                         <table id = "sap_reader" class = "filterable sortable searchable" style = "border-collapse: collapse;">
                             <thead>
                                 <tr class = "dark_grey wtext smedium head" style = "z-index:+3;">

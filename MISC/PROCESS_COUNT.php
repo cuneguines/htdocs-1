@@ -2,7 +2,7 @@
 <html>
 <head>
   <!-- INITIALIZATION AND META STUFF -->
-  <title>TABLE LAYOUT</title>
+  <title>Quality KPI</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 

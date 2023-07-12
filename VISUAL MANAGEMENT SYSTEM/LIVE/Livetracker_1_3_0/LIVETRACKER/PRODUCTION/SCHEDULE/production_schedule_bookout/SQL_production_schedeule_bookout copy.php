@@ -168,7 +168,7 @@ t0.[Promise Date],
 t0.[Promise Week Due],
 FORMAT(CONVERT(DATE,t0.[Del Date Due UNP]),'dd-MM-yyyy' )[Del Date Due UNP],
 [Del Date Due PD_DD],
-  
+  t0.U_delivery_date[DDATE],
 t0.[Promise_date_now],
 t0.[Engineer],
 t0.[risk],
@@ -204,6 +204,7 @@ FROM(
                                                 ELSE 
                                                     (CASE WHEN t20.Balance + t7.[Order Value] <= 0 THEN 'OK' ELSE 'ON HOLD' END) 
                                                 END)[Account Status],
+												t1.U_delivery_date,
                                                 --Changed 30-11-22--
                                                 t0.U_site_contact[Contact],
                                                 t0.U_site_phone[Phone],
@@ -337,6 +338,7 @@ FROM(
                   SELECT
                                                                                                                                                       NULL,
                   NULL,
+				  NULL,
                   NULL,
                                   DATEADD(d, 1 - DATEPART(w, GETDATE())+1, GETDATE())[Monday TW Date],
                                   DATEADD(d, 1 - DATEPART(w, GETDATE())+8, GETDATE())[Monday LW Date],
@@ -469,6 +471,11 @@ left join (
     and t0.[Project] not like 'Training'and t0.[Project] not like 'Stock'
     
  ORDER BY t0.[Project]
+
+
+
+
+
 
 
 

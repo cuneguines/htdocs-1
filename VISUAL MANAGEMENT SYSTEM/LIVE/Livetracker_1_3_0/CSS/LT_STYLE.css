@@ -593,7 +593,9 @@ th,td{padding:0;}
 .brdottedyellow{  border:4px dashed yellow}
 .brsolidpink{  border:4px solid #E601BA}
 .brdottedpink{  border:4px dashed #E601BA}
-.brblack{  border:2px solid black}
+.brblack{  border:4px solid black}
+.brblue{  border:4px solid blue}
+.brwhite{  border:4px solid white}
 .no_border{ border:none;}
 .top_border{border-top:1px solid black; border-bottom:none}
 

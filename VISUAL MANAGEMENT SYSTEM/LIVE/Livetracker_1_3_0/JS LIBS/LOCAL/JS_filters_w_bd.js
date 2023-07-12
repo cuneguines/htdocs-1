@@ -1,12 +1,13 @@
 // KEEPS TRACK ON WHETHER COMMENT TOGGLE IS ON OR OFF (DEFAULT OFF)
 $(document).ready(function(){
-
+   
     $('.selector').prop('selectedIndex',0);
-
     let status = 1;
     var rows = $("table.filterable tbody tr");
     var jobs = $(".project_item");
     var template = $('table.filterable tfoot tr td');
+
+    
 
     if(typeof __update_rows__ !== 'undefined'){
         update_total_row(rows,template);
@@ -44,7 +45,40 @@ $(document).ready(function(){
         }
     });
 
-
+    $('#select_account').on("change", function filter() {
+        console.log("TEST");
+        //alert("changed");
+        $('.multiselector_checkbox').addClass('checked');
+        $('.selector').not(this).prop('selectedIndex', 0);
+        if ($(this).children("option:selected").val() === 'All') {
+            $('#bd').prop('disabled', false);
+            $('table.filterable tfoot tr').show();
+            rows.show();
+            jobs.show();
+        } else {
+            $('#bd').prop('disabled', true);
+    
+           jobs.show();
+            rows.show();
+            $('table.filterable tfoot tr').hide();
+            selected_value = $(this).children("option:selected").val();
+            console.log(selected_value);
+            
+            // Filter jobs based on the account status
+            
+            jobs.filter(function() {
+                return $(this).attr("account").indexOf(selected_value) === -1;
+            }).hide();
+    
+            $.each($('.row').not('#select_account'), function () {
+                var accountStatus = $(this).attr("account");
+                if (accountStatus.indexOf(selected_value) === -1) {
+                    $(this).hide();
+                }
+                rows.filter('[type=data]').hide();
+            });
+        }
+    });
 
     ($('#select_engineer')).on("change",function filter()
     {
@@ -207,46 +241,8 @@ console.log(selected_value);
             status = 1;
         }
     });
-});
 
-//Select Account
-
-
-($('#select_account')).on("change",function filter()
-{
-    console.log("TEST");
-    alert("changed");
-    $('.multiselector_checkbox').addClass('checked');
-    $('.selector').not(this).prop('selectedIndex',0);
-    if($(this).children("option:selected").val() === 'All')
-    {
-        $('#bd').prop('disabled', false);
-        $('table.filterable tfoot tr').show();
-        rows.show();
-        jobs.show();
-    }
-    else
-    {
-        $('#bd').prop('disabled', true);
-
-        jobs.show();
-        rows.show();
-        $('table.filterable tfoot tr').hide();
-        selected_value = $(this).children("option:selected").val();
-        console.log(selected_value);
-        jobs.not("[account = " + $(this).children("option:selected").val() + "]").hide();
-
-        $.each($('.row').not('#select_account'),function(){
-            if(!JSON.stringify($(this).attr("account")).includes(selected_value))
-            {
-                $(this).hide();
-            }
-            rows.filter('[type = data]').hide();
-        });
-    }
-});
-
-
+    });
 
 
 //For muliselect Engineers

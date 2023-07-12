@@ -30,11 +30,11 @@
         $most_recent_week = substr($directory_contents[$j], 1, 2);
         
         // USING WEEK NUMBER PULL THE 8 FILES FROM H: AND SAVE TO OWN CACHE
-        for($i = 1; $i <= 8; $i++){
-            $inputFileName = "W".$most_recent_week."_".$i.".xlsx";
-            $spreadsheet = $reader->load('C://VMS_MASTER_DATA/HR_EMP_DATA/EMP_HOL_SCHEDULE/'.$inputFileName);
+        for($i = 1; $i <= 2; $i++){
+            $inputFileName = "W28_".$i.".xlsx";
+            $spreadsheet = $reader->load('C:/'.$inputFileName);
             $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
-            $writer->save("./CACHE/"."W".$most_recent_week."_".$i.".xlsx");
+            $writer->save("./CACHE/"."W28_".$i.".xlsx");
         }
     }
 ?>

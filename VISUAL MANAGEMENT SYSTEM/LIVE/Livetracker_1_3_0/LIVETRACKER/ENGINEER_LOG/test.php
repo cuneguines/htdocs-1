@@ -302,9 +302,9 @@ if (password_verify($pw, $hash)) {
             </div>
         </div>
     </div>
-    <div style="background-color:grey;position:relative;height:200px;width:100%;overflow-y:scroll">
-      <table>
-        <thead id="eng_table">
+    <div style="background-color:grey;position:relative;height:350px;width:100%;overflow-y:scroll">
+      <table style="z-index:+2;margin-top:0;">
+        <thead id="eng_table"style="position:sticky;top:0;z-index:+2;">
         
           <tr>
             <th class='prop__name' data-prop-name='firstName'>Engineer Name</th>
@@ -322,6 +322,10 @@ if (password_verify($pw, $hash)) {
 
 </div>
 </div>
+
+Copyright © kentstainless.com™. All rights reserved.
+ 
+  
 </body>
 
 </html>

@@ -113,15 +113,15 @@ SELECT
         GROUP BY t0.PrOrder, t1.EndProduct
     ) t10 ON t10.PrOrder = t4.U_IIS_proProrder AND t10.EndProduct = t1.ItemCode
     LEFT JOIN 
-    (SELECT t1.U_IIS_proPrOrder, t1.ItemCode,
+    (SELECT t1.U_IIS_proPrOrder, t3.EndProduct,
         SUM(t0.plannedqty) [Planned_Lab]
         FROM wor1 t0
             INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                                                      
             INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
                     inner join iis_epc_pro_orderh t3 on t3.PrOrder = t0.U_IIS_proPrOrder                                         
             WHERE t2.ItemType = 'L'                                                         
-            GROUP BY t1.U_IIS_proPrOrder, t1.ItemCode
-    ) t11 ON t11.U_IIS_proPrOrder = t4.U_IIS_proPrOrder and t11.ItemCode = t1.ItemCode
+            GROUP BY t1.U_IIS_proPrOrder, t3.EndProduct
+    ) t11 ON t11.U_IIS_proPrOrder = t4.U_IIS_proPrOrder and t11.EndProduct = t1.ItemCode
     left join [dbo].[@PRE_PRODUCTION] as t13 on t13.code     = t1.U_PP_Stage
     left join [dbo].[@PRE_PROD_STATUS] as t14 on t14.code    = t1.U_PP_Status
 

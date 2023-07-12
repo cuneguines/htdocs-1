@@ -263,8 +263,11 @@
                                 } else {
                                     $base_color = 'Light_grey';
                                 }
+                                //Blue color if book out date present or not 
+                                
 
                                 // BORDER COLOR
+                                
                                 if ($results[$i]["Sub Contract Status"] == 'Gone To Sub Con' || $results[$i]["Sub Contract Status"] == 'Yes' || $results[$i]["Sub Contract Status"] == '1002') {
                                     $border_color = "bryellow";
                                 } else if ($results[$i]["Sub Contract Status"] == "1003") {
@@ -274,11 +277,15 @@
                                 } else if ($results[$i]["Sub Contract Status"] == "1004") {
                                     $border_color = "brdottedpink";
                                 }
+                                if($results[$i]["DDATE"]==NULL)
+                                {
+                                    $border_color="brwhite";
 
+                                }
                                 if (($results[$i]["On Hand"] >= $results[$i]["Quantity"] && $results[$i]["Status"] != 'Live' && $results[$i]["Status"] != '') || (($results[$i]["Complete"] <= 0 && $results[$i]["Process Order"] != NULL) && ($results[$i]["Status"] == 'Live' || $results[$i]["Status"] == '')) || ($results[$i]["Status"] == 'Live' || $results[$i]["Status"] == '') &&  $results[$i]["Process Order"] == NULL && $results[$i]["On Hand"] >= $results[$i]["Quantity"]) {
                                     $border_color = "brpurple";
                                 }
-
+                               
                                 // CONDITIONAL APPLICATIONS
                                 if ($results[$i]["Paused"] == 'Yes') {
                                     $overwrite = "greenshadow";
@@ -531,10 +538,17 @@
                                         <button class="fill red medium wtext">Account Status</button>
                                     </div>
                                     <div class="content">
-                                        <select id="select_account" class="selector fill medium">
+                                        <!-- <select id="select_account" class="selector fill medium">
                                             <option value="All" selected>All</option>
-                                            <?php generate_filter_options($results, "Account Status"); ?>
-                                        </select>
+                                            <?php//generate_filter_options($results, "Account Status"); ?>
+                                        </select> -->
+                                        <select id="select_account" class="selector fill medium">
+    <option value="All" selected>All</option>
+    <?php //generate_filter_options($results, "Account Status"); ?>
+    <option value="OKTOGO">Ok To Go</option>
+    <option value="ONHOLD">On Hold</option>
+</select>
+
                                     </div>
                                 </div>
                                 <div class="filter" style = "width:17%">

@@ -229,7 +229,39 @@ if(isset($item_code)){
         where t0.ItemCode = '$item_code'
         order by t0.ItemCode
     ";
-          
+          /* SELECT 
+          COALESCE(T0.ItemCode, T1.ItemCode) AS [Item Code],
+           T1.ItemName AS [Item Name],
+           T5.ItmsGrpNam AS [Item Group],
+           T0.Balance AS [On Hand],
+           T1.IsCommited AS [Committed],
+           T1.AvgPrice AS [Standard Price],
+           CAST((T0.Balance * T1.AvgPrice) AS DECIMAL (12, 2)) AS [Value], 
+           T1.PrcrmntMtd,
+           T6.[On Order],
+           FORMAT(T6.[Next Del Date], 'dd-MM-yyyy') AS [Next Del Date]
+       FROM oitm T1
+       LEFT JOIN (
+           SELECT 
+               DISTINCT t0.itemcode, 
+               SUM(t0.inqty - t0.outqty) AS [Balance]
+           FROM oinm t0
+           GROUP BY t0.itemcode
+       ) T0 ON T1.ItemCode = T0.ItemCode
+       LEFT JOIN oitb T5 ON T5.ItmsGrpCod = T1.ItmsGrpCod
+       LEFT JOIN (
+           SELECT 
+               T1.ItemCode, 
+               SUM(T1.OpenQty) AS [On Order], 
+               MAX(T0.DocDueDate) AS [Next Del Date]
+           FROM POR1 T1 
+           LEFT JOIN OPOR T0 ON T0.DocEntry = T1.DocEntry
+           WHERE T0.DocStatus <> 'C' AND T0.CANCELED <> 'Y'
+           GROUP BY T1.ItemCode
+       ) T6 ON T6.ItemCode = T1.ItemCode
+       WHERE T1.ItemCode = '130466420'
+       ORDER BY T0.ItemCode; */
+       
     $sql_item_code_content = 
     "SELECT 
 	DISTINCT T0.ItemCode [Item Code],
@@ -253,7 +285,30 @@ if(isset($item_code)){
 	LEFt join oitb t5 ON t5.ItmsGrpCod = t1.ItmsGrpCod
 		WHERE t0.ItemCode = '$item_code'
 				ORDER BY t0.Warehouse,T0.ItemCode";
-
+                /* SELECT 
+                DISTINCT T0.ItemCode AS [Item Code],
+                T1.ItemName AS [Item Name],
+                CONVERT(NVARCHAR(10), T1.CreateDate, 103) AS [Create Date],
+                T0.Balance AS [On Hand],
+                T1.IsCommited AS [Committed],
+                T5.ItmsGrpNam AS [Item Group Name],
+                T0.Warehouse AS [Warehouse],
+                T1.AvgPrice AS [Standard Price],
+                (T0.Balance * T1.AvgPrice) AS [Value], 
+                T1.PrcrmntMtd AS [Prc]
+            FROM oitm T1
+            LEFT JOIN (
+                SELECT 
+                    DISTINCT t0.itemcode, 
+                    t0.Warehouse, 
+                    SUM(t0.inqty - t0.outqty) AS [Balance]
+                FROM oinm t0
+                GROUP BY t0.itemcode, t0.Warehouse
+            ) T0 ON T1.ItemCode = T0.ItemCode
+            LEFT JOIN oitb T5 ON T5.ItmsGrpCod = T1.ItmsGrpCod
+            WHERE T1.ItemCode = '130466420'
+            ORDER BY t0.Warehouse,T0.ItemCode
+ */
     // ORIGINAL QUERY YOU SENT ME WHERE THERE IS A LINE FOR EACH WAREHOSUE            
     $sql_item_code_content_2 = 
     "SELECT 

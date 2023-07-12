@@ -114,12 +114,12 @@
                     </div>
                 </div>
                 <div class = "tables_container">
-                    <div id = "pages_table_container" class = "table_container no_scrollbar" style = "top:0%; overflow-y:hidden;">
+                    <div id = "pages_table_container" class = "table_container " style = "top:0%; overflow-y:hidden;">
                         <div class = "tables"  style = "width:50%; height:100%;">
                             <div class = "table_title green">
                                 <h1 class = 'title_banner'>STOCK LEVELS</h1>
                             </div>
-                            <div id = "pages_table_container" class = "table_container no_scrollbar" style = "top:0%;">
+                            <div id = "pages_table_container" class = "table_container" style = "top:0%;">
                                 <table id = "sap_reader" class = "filterable sortable searchable" style = "border-collapse: collapse;">
                                     <thead>
                                         <tr class = "dark_grey wtext">
@@ -132,9 +132,9 @@
                                     <tbody class = "white">
                                         <?php foreach($item_code_content_data as $row):?>
                                             <tr class = "btext">
-                                                <td class = "lefttext"><?=$row["Warehouse"]?></td>
-                                                <td class = "righttext"><?=floatval($row["On Hand"])?></td>
-                                                <td class = "righttext"><?=floatval($row["Value"])?></td>
+                                            <td class="lefttext"><?= $row["Warehouse"] ?? "N/A" ?></td>
+                                                <td class = "righttext"><?//floatval($row["On Hand"])?></td>
+                                                <td class = "righttext"><?//floatval($row["Value"])?></td>
                                                 <td><?=$row["Prc"]?></td>
                                             </tr>
                                         <?php endforeach; ?>

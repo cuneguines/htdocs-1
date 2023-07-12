@@ -141,7 +141,7 @@
                         <div class = "table_title green">
                             <h1 class = 'title_banner'>MATERIAL</h1>
                         </div>
-                        <div id = "pages_table_container" class = "table_container no_scrollbar" style = "height:93.5%; top:0%;">
+                        <div id = "pages_table_container" class = "table_container " style = "height:93.5%; top:0%;">
                             <table id = "sap_reader" class = "filterable sortable searchable">
                                 <thead>
                                     <tr class = "dark_grey wtext smedium head" style = "z-index:+3;">
@@ -197,7 +197,7 @@
                         <div class = "table_title green">
                             <h1 class = 'title_banner'>LABOUR</h1>
                         </div>
-                        <div id = "pages_table_container" class = "table_container no_scrollbar" style = "top:0%; height:93.5%;">
+                        <div id = "pages_table_container" class = "table_container" style = "top:0%; height:93.5%;">
                             <table id = "sap_reader" class = "filterable sortable searchable" style = "border-collapse: collapse;">
                                 <thead>
                                     <tr class = "dark_grey wtext smedium head" style = "z-index:+3;">
