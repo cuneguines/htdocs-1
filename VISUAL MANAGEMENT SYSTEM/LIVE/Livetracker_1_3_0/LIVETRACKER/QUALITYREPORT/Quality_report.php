@@ -20,6 +20,7 @@
     <script type="text/javascript" src="../../JS LIBS//LOCAL/JS_comments.js"></script>
     <script type="text/javascript" src="./JS_table_to_excel.js"></script>
     <script type="text/javascript" src="./test.js"></script>
+    <script type="text/javascript" src="./JS_to_excel.js"></script>
 
     <!-- STYLING -->
     <link rel="stylesheet" href="../../css/LT_style.css">
@@ -399,7 +400,8 @@ tr.alternate {
                     </div>
                 </div>
                 
-                    <button style="width:10%;margin-left: 20%;"id='resett_butt' class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
+                   
+                    <button onclick="export_to_excel('purchasing_table')" style="width:10%;margin-left: 20%;"id='resett_butt' class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
                                                 
                    
                     
