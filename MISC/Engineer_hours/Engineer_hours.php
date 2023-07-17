@@ -83,17 +83,21 @@
 <body>
   <div id="background" style="float: left; width: 100%;">
     <div id="content">
-      <div class="table_title green"style="box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
-        <h1>ENGINEER HOUR ANALYSIS</h1>
+      <div class="table_title green"style="background-color:#03a9f4;box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
+        <h1 >ENGINEER HOUR ANALYSIS</h1>
       </div>
       <div id="pages_table_container" class="table_container" style="overflow-y: scroll;box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
-        <table style="background-color: white; padding: 3%" id="intel_pedestal_production" class="filterable sortable searchable">
+        <table id="Engineers_table"style="background-color: white; padding: 3%" id="intel_pedestal_production" class="filterable sortable searchable">
           <thead>
-            <tr style="font-size: larger" class="dark_grey blue btext small head">
-              <th width="25%">Sales_Order</th>
-              <th width="25%">Card Name</th>
-              <th width="25%">Engineer_name</th>
-              <th width="25%">Engineer_hrs</th>
+            <tr style="font-size: larger;style=background-color:#f2f2f2" class="dark_grey blue btext small head">
+              <th width="12.5%">Sales_Order</th>
+              <th width="12.5%">Customer</th>
+              <th width="12.5%">Project Name</th>
+              <th width="12.5%">Engineer_name</th>
+              <th width="12.5%">Engineer_hrs</th>
+              <th width="12.5%">Date</th>
+              <th width="12.5%">Year</th>
+              <th width="12.5%">WeekNumber</th>
             </tr>
           </thead>
           <tbody>
@@ -103,9 +107,12 @@
               <tr style="padding: 3%" class="btext <?=$rowcolor?>" status="<?=$status?>" fabricator="<?=$fabricator?>" ntk="<?=$ntk?>" style="height: 30px;">
                 <td><?=$row["Sales_Order"]?></td>
                 <td><?= $row["CardName"] ? $row["CardName"] : "null" ?></td>
-
+                <td><?= $row["Project Name"] ? $row["Project Name"] : "null" ?></td>
                 <td ><?=$row["Engineer_name"]?></td>
                 <td><?=$row["Engineer_hrs"]?></td>
+                <td><?=$row["Date"]?></td>
+                <td><?=$row["Year"]?></td>
+                <td><?=$row["WeekNumber"]?></td>
 
               </tr>
             <?php endforeach; ?>
@@ -143,10 +150,10 @@
             <button class="grouping_page_corner_buttons fill medium light_blue wtext rounded">UNUSED <?php //round(($total_executed/$total_planned)*100,2);?></button>
           </div>
           <div id="button_container_wide">
-            <button onclick="location.href='../../../MAIN MENU/dashboard_menu.php'" class="grouping_page_corner_buttons fill medium purple wtext rounded">MAIN MENU</button>
+            <button onclick="location.href='../../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/'" class="grouping_page_corner_buttons fill medium purple wtext rounded">MAIN MENU</button>
           </div>
           <div id="button_container">
-            <button onclick="export_to_excel('intel_pedestal_production')" class="grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
+            <button onclick="export_to_excel('Engineers_table')" class="grouping_page_corner_buttons fill medium green wtext rounded">EXPORT</button>
           </div>
         </div>
       </div>
