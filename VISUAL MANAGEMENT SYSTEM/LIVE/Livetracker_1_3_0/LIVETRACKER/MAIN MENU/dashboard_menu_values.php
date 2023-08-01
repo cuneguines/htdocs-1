@@ -372,65 +372,54 @@ t1.Status <> 'C'";
 
 
 $comp_po_y_q =
-    "SELECT   
-    COUNT(t1.DocNum)[Process Orders],   
-    (CASE 
-        WHEN SUM(t2.Planned_mat) = 0 THEN FORMAT(0,'P0')
-        ELSE FORMAT((SUM(t2.Issued_Mat))/SUM(t2.Planned_Mat),'P0')
-    END) [Mat Efficiency],
-    (CASE 
-        WHEN SUM(t9.Planned_Lab) = 0 THEN FORMAT(0,'P0')
-        ELSE FORMAT(SUM(t10.Actual_Lab)/SUM(t9.Planned_Lab),'P0') 
-    END) [Lab Efficiency],
-    CAST(SUM(t2.Planned_Mat) - SUM(isnull(t2.Issued_Mat,0)) AS DECIMAL(12,0)) [Difference_Mat],
-    CAST(SUM(t9.Planned_Lab) - SUM(isnull(t10.Actual_Lab,0)) AS DECIMAL(12,0)) [Difference_Lab]
-FROM IIS_EPC_PRO_ORDERH t0  
-INNER JOIN owor t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct    
-LEFT JOIN (SELECT t1.U_IIS_proPrOrder, 
-                    SUM(t0.plannedqty * t2.avgprice) [Planned_Mat],             
-                    SUM(isnull(t0.IssuedQty,0)* t2.avgprice) + sum(isnull(t21.[Manual Mat],0)) [Issued_Mat], 
-                                        SUM(t0.plannedqty * t2.avgprice)  - SUM(isnull(t0.IssuedQty,0)* t2.avgprice) - sum(isnull(t21.[Manual Mat],0)) [Mat_Diff]          
-                 FROM wor1 t0
-INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry             
-INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
-   left join (select t2.PrOrder, t0.itemcode, sum(t0.linetotal) [Manual Mat]
-                                     from ige1 t0
-                                     inner join oige t1 on t1.DocEntry = t0.DocEntry
-                                     inner join IIS_EPC_PRO_ORDERH t2 on t2.PrOrder = t0.U_IIS_proPrOrder
-                                     where t0.U_IIS_proPrOrder is not null
-                                     and t0.BaseEntry is null
-                                     group by t2.PrOrder, t0.itemcode
-                                            ) t21 on t21.PrOrder = t1.U_IIS_proPrOrder and t21.ItemCode = t0.ItemCode
-         WHERE  t2.itemtype <> 'L'   
-                  --and t1.U_IIS_proPrOrder = '34463'        
-         GROUP BY t1.U_IIS_proPrOrder )
-                              t2 on t2.U_IIS_proPrOrder = t0.PrOrder    
-LEFT JOIN (select t1.U_IIS_proPrOrder, 
-                    SUM(t0.plannedqty) [Planned_Lab]
-                    FROM wor1 t0
-                        INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                 
-                        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode                 
-                            WHERE t2.ItemType = 'L'                 
-                            GROUP BY t1.U_IIS_proPrOrder) 
-                              t9 ON t9.U_IIS_proPrOrder = t0.PrOrder    
-LEFT JOIN (SELECT t0.PrOrder, 
-                    SUM(t0.Quantity) [Actual_Lab]
-                        FROM iis_epc_pro_ordert t0                  
-                            GROUP BY t0.PrOrder) 
-                              t10 ON t10.PrOrder = t0.Prorder
-LEFT JOIN(SELECT MAX(t0.Docdate) [STOCKDATE], t1.BaseRef, t1.ItemCode FROM oign t0 
-                INNER JOIN ign1 t1 ON t1.DocEntry = t0.DocEntry
-                GROUP BY t1.BaseRef, t1.ItemCode)
-                              t14 ON t14.BaseRef = t1.DocNum and t14.ItemCode = t1.ItemCode 
-LEFT JOIN ordr t5 ON t5.docnum = t1.OriginNum
-LEFT JOIN oitm t6 ON t6.ItemCode = t0.EndProduct
-LEFT JOIN oitb t17 ON t17.ItmsGrpCod = t6.ItmsGrpCod
-LEFT JOIN rdr1 t15 ON t15.DocEntry = t5.DocEntry AND t15.ItemCode = t1.ItemCode  
-
-WHERE t1.CmpltQty >= t1.PlannedQty AND 
-DATEPART(year,GETDATE()) = DATEPART(year,t1.CloseDate) AND 
-t17.ItmsGrpNam <> 'TRAINING' AND 
-t1.Status <> 'C'";
+    "SELECT         COUNT(t1.DocNum)[Process Orders],         
+    (CASE           WHEN SUM(t2.Planned_mat) = 0 THEN FORMAT(0,'P0')          ELSE FORMAT((SUM(t2.Issued_Mat))/SUM(t2.Planned_Mat),'P0')      END) [Mat Efficiency],      
+    (CASE           WHEN SUM(t9.Planned_Lab) = 0 THEN FORMAT(0,'P0')          ELSE FORMAT(SUM(t10.Actual_Lab)/SUM(t9.Planned_Lab),'P0')       END) [Lab Efficiency],      
+    CAST(SUM(t2.Planned_Mat) - SUM(isnull(t2.Issued_Mat,0)) AS DECIMAL(12,0)) [Difference_Mat],      
+    CAST(SUM(t9.Planned_Lab) - SUM(isnull(t10.Actual_Lab,0)) AS DECIMAL(12,0)) [Difference_Lab]  
+    
+    
+    FROM 
+    IIS_EPC_PRO_ORDERH t0    
+    INNER JOIN owor t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct      
+    
+                  LEFT JOIN (SELECT t1.U_IIS_proPrOrder,                       
+                               SUM(t0.plannedqty * t2.avgprice) [Planned_Mat],                                   
+                               SUM(isnull(t0.IssuedQty,0)* t2.avgprice) [Issued_Mat],                                           
+                               SUM(t0.plannedqty * t2.avgprice)  - SUM(isnull(t0.IssuedQty,0)* t2.avgprice) [Mat_Diff]                             
+                               FROM wor1 t0  
+                               INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry               
+                               INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode   
+                                 AND   t1.Status <> 'C'    
+                         WHERE  t2.itemtype <> 'L'                      
+                               GROUP BY t1.U_IIS_proPrOrder )       t2 on t2.U_IIS_proPrOrder = t0.PrOrder   and t2.U_IIS_proPrOrder = t1.U_IIS_proPrOrder   
+                               
+                  LEFT JOIN (select t1.U_IIS_proPrOrder,                       
+                               SUM(t0.plannedqty) [Planned_Lab]                      
+                               FROM wor1 t0                          
+                               INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                                           
+                               INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode            
+                               
+                               WHERE t2.ItemType = 'L'    AND   t1.Status <> 'C'                                            
+                               GROUP BY t1.U_IIS_proPrOrder)                                 
+                               t9 ON t9.U_IIS_proPrOrder = t0.PrOrder  and t9.U_IIS_proPrOrder = t1.U_IIS_proPrOrder
+                               
+                  LEFT JOIN (SELECT t0.PrOrder,                       
+                               SUM(t0.Quantity) [Actual_Lab]                          
+                               FROM iis_epc_pro_ordert t0                                                
+                               GROUP BY t0.PrOrder)                                 
+                               t10 ON t10.PrOrder = t0.Prorder  
+                  
+                  inner JOIN oitm t6 ON t6.ItemCode = t0.EndProduct  
+                  inner JOIN oitb t17 ON t17.ItmsGrpCod = t6.ItmsGrpCod  
+    
+    
+    WHERE t1.CmpltQty >= t1.PlannedQty 
+    AND   DATEPART(year,GETDATE()) = DATEPART(year,t1.CloseDate) 
+    AND   t17.ItmsGrpNam <> 'TRAINING' 
+    AND   t1.Status <> 'C'
+    
+    ";
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

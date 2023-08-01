@@ -461,7 +461,7 @@
                                     <th style="width:200px;display:none">Status </th>
                                     <th style="width:200px;display:none"> Date</th>
                                     <th style="width:200px;display:none"> Owner</th>
-
+                                    <th style="width:200px;"> Type</th>
                                 </tr>
                             </thead>
 
@@ -545,6 +545,7 @@
                                 <td style="display:none"><?=$row["Date"]?></td>
                                 <td style="display:none"><?=$row["person"]?></td>
                                 <td style="display:none"><?=$row["action"]?></td>
+                                <td ><?=$row["form_type"]?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>

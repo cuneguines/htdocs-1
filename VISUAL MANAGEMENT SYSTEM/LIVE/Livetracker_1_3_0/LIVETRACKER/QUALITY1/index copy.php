@@ -346,7 +346,7 @@
 
                     </li>
                     <li>
-                        <a id="services_button_cc" onclick = "location.href='customer_complaints/non.php'"><i class="fa fa-users"></i> Customer complaints<span class="fa arrow"></span></a>
+                        <a id="services_button_cc" onclick = "location.href='customer_complaints_v2/non.php'"><i class="fa fa-users"></i> Customer complaints<span class="fa arrow"></span></a>
                      <ul class="nav nav-second-level_services" style="overflow-y:scroll"> 
 
 

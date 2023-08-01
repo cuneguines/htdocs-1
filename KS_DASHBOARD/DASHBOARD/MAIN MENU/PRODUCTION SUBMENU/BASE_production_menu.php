@@ -436,7 +436,7 @@
                     </div>
                     <div class = "head">
                         <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=material_prep'">Mat Prep</button>
-                        <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=fabrication_1'">Fabrication 1</button>
+                        <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=fabrication_1'"> 1</button>
                         <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=fabrication_2'">Fabrication 2</button>
                         <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=finishing'">Finishing</button>
                         <button class = "green br_green wtext" onclick = "location.href='../../PRODUCTION/BASE_production_groups.php?production_group=docs_and_deliverables'">Docs & Deliv</button>

@@ -103,8 +103,10 @@
 	                        <button class = "green hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick = "location.href = '../HR/HOLIDAY_SCHEDULE/enter_password.php'">Absences Schedule</button>
 	                        <button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../KS_DASHBOARD/DASHBOARD/MAIN%20MENU/MAIN/MAIN_MENU.php'">FINANCE</button>
 							<button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../ENGINEER_LOG/enter_password.php'">Engr-Tme-Cptr</button>
+						
 							<button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../QUALITY/quality_launch_page.php'">QUALITY</button>
 							<button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../MISC/PROCESS_COUNT.php';">QUALITY KPIs</button>
+							<button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../MISC/Engineer_hours/Engineer_hours.php'">Engr-Hrs-Log</button>
 							<button class = "green sales" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../SALES/EXCEPTIONS/sales exceptions/BASE_sales_exceptions.php';">Sales Exceptions</button>
 							<button class = "green sales" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../SALES/EXCEPTIONS/sales_exceptions_bird/sales_exceptions.php';">Sales Credit Check</button>
                             <button class = "green sales" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../SALES/TABLE/new sales orders margin/BASE_new_sales_orders_margin.php';">New Sales Margins</button>
@@ -115,7 +117,7 @@
                             <button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../HR/SERVICE PLANNER/Base_service_planner.php';">Service Planner</button>
 							<button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../OPERATOR HOURS REPORT/FABRICATOR HOURS/Base_production_table.php';">BOOKED HOURS</button>
 							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://192.168.0.89:3000 ';">Book a Space</button>
-							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://192.168.0.89:3001/';">User Database</button>
+							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://localhost:3000/NEW';">User Database</button>
 							
 						</div>
 					</div>

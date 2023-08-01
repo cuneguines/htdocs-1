@@ -42,7 +42,8 @@
           1: {sorter: true},
           2: {sorter:true},
           3: {sorter: true},
-          4: {sorter: true}
+          4: {sorter: true},
+          7:{sorter:"shortDate"}
           
         }
       });
@@ -84,20 +85,21 @@
   <div id="background" style="float: left; width: 100%;">
     <div id="content">
       <div class="table_title green"style="background-color:#03a9f4;box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
-        <h1 >ENGINEER HOUR ANALYSIS</h1>
+        <h1 >ENGINEER HOURS LOG</h1>
       </div>
       <div id="pages_table_container" class="table_container" style="overflow-y: scroll;box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
         <table id="Engineers_table"style="background-color: white; padding: 3%" id="intel_pedestal_production" class="filterable sortable searchable">
           <thead>
             <tr style="font-size: larger;style=background-color:#f2f2f2" class="dark_grey blue btext small head">
-              <th width="12.5%">Sales_Order</th>
-              <th width="12.5%">Customer</th>
-              <th width="12.5%">Project Name</th>
-              <th width="12.5%">Engineer_name</th>
-              <th width="12.5%">Engineer_hrs</th>
-              <th width="12.5%">Date</th>
-              <th width="12.5%">Year</th>
-              <th width="12.5%">WeekNumber</th>
+              <th width="11.1%">Sales_Order</th>
+              <th width="11.1%">Customer</th>
+              <th width="11.1%">Project Name</th>
+              <th width="11.1%">Business Unit</th>
+              <th width="11.1%">Engineer_name</th>
+              <th width="11.1%">Engineer_hrs</th>
+              <th width="11.1%">Date</th>
+              <th width="11.1%">Year</th>
+              <th width="11.1%">WeekNumber</th>
             </tr>
           </thead>
           <tbody>
@@ -108,6 +110,7 @@
                 <td><?=$row["Sales_Order"]?></td>
                 <td><?= $row["CardName"] ? $row["CardName"] : "null" ?></td>
                 <td><?= $row["Project Name"] ? $row["Project Name"] : "null" ?></td>
+                <td><?= $row["U_Dimension1"] ? $row["U_Dimension1"] : "null" ?></td>
                 <td ><?=$row["Engineer_name"]?></td>
                 <td><?=$row["Engineer_hrs"]?></td>
                 <td><?=$row["Date"]?></td>

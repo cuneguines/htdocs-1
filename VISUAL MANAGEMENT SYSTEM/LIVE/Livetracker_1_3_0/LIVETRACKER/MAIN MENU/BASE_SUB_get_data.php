@@ -82,14 +82,14 @@
     $closed_percentage_week_d = $getResults->fetchAll(PDO::FETCH_BOTH);
 
     $getResults = $conn->prepare($comp_po_w_q);
-    $getResults->execute();
-    $comp_po_week_d = $getResults->fetchAll(PDO::FETCH_BOTH);
-    $getResults = $conn->prepare($comp_po_m_q);
-    $getResults->execute();
-    $comp_po_month_d = $getResults->fetchAll(PDO::FETCH_BOTH);
+   $getResults->execute();
+$comp_po_week_d = $getResults->fetchAll(PDO::FETCH_BOTH);
+   $getResults = $conn->prepare($comp_po_m_q);
+   $getResults->execute();
+   $comp_po_month_d = $getResults->fetchAll(PDO::FETCH_BOTH);
     $getResults = $conn->prepare($comp_po_y_q);
     $getResults->execute();
-    $comp_po_year_d = $getResults->fetchAll(PDO::FETCH_BOTH);
+   $comp_po_year_d = $getResults->fetchAll(PDO::FETCH_BOTH);
 
     $getResults = $conn->prepare($p_hours_w_q);
     $getResults->execute();
