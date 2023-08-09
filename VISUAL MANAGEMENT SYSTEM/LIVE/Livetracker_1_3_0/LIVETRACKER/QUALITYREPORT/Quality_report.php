@@ -264,6 +264,7 @@ tr.alternate {
                             <?php
                             ?>
                             <?php $stat = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Status"]));  
+                            if ($row["person"]=='Cuneguines Nixon'){continue;}
                             ?>
                             <?php   $product_group = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_One"]));  
                                   $product_group_two = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["U_Product_Group_Two"]));

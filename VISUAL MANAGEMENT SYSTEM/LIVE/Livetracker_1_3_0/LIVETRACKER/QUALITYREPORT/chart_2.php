@@ -171,7 +171,8 @@ $sql_2023_op= "SELECT  *,CASE WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc
                 title: 'Opportunity For improvement - Opened Issues per Month in 2023',
                 hAxis: {title: 'Month'},
                 vAxis: {title: 'Number of Opened Issues'},
-                legend: {position: 'none'}
+                legend: {position: 'none'},
+                colors: ['#33FF57']
             };
 
             // Create and draw the opened issues chart
@@ -193,7 +194,8 @@ $sql_2023_op= "SELECT  *,CASE WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc
                 title: 'Opportunity For improvement - Closed Issues per Month in 2023',
                 hAxis: {title: 'Month'},
                 vAxis: {title: 'Number of Closed Issues'},
-                legend: {position: 'none'}
+                legend: {position: 'none'},
+                colors: ['#33FF57']
             };
 
             // Create and draw the closed issues chart
@@ -225,7 +227,9 @@ $sql_2023_op= "SELECT  *,CASE WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc
                 title: 'Customer Complaints- Opened Issues per Month in 2023',
                 hAxis: {title: 'Month'},
                 vAxis: {title: 'Number of Opened Issues'},
-                legend: {position: 'none'}
+                legend: {position: 'none'},
+                colors: ['#FFD700']
+               
             };
 
             // Create and draw the opened issues chart
@@ -247,7 +251,8 @@ $sql_2023_op= "SELECT  *,CASE WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc
                 title: 'Customer Complaints - Closed Issues per Month in 2023',
                 hAxis: {title: 'Month'},
                 vAxis: {title: 'Number of Closed Issues'},
-                legend: {position: 'none'}
+                legend: {position: 'none'},
+                colors: ['#FFD700']
             };
 
             // Create and draw the closed issues chart
@@ -267,18 +272,18 @@ $sql_2023_op= "SELECT  *,CASE WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc
 </head>
 
 <body>
-    <div style="height:90% ;width:100%;position:relative">
+    <div style="height:90% ;width:100%;position:relative ;box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)">
   
     <!-- Display the charts -->
-    <div style="padding:1%;background-color:beige">
+    <div style="padding:1%;background-color:beige; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)">
     <h2 style="text-align:center">Opportunities For Improvement 2023</h2>
-    <div id="opened_chart_div" style="position:relative;width:49% ;height: 40%; display: inline-block;"></div>
-    <div id="closed_chart_div" style="position:relative;width: 50%; height: 40%; display: inline-block;"></div>
+    <div id="opened_chart_div" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);position:relative;width:49% ;height: 40%; display: inline-block;"></div>
+    <div id="closed_chart_div" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);position:relative;width: 50%; height: 40%; display: inline-block;"></div>
     </div>
-    <div style="padding:1%;background-color:lightgreen" >
+    <div style="padding:1%;background-color:lightgreen; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3)" >
     <h2 style="text-align:center">Customer Complaints 2023</h2>
-    <div id="opened_chart_op_div" style="position:relative;width: 49%; height: 40%; display: inline-block;"></div>
-    <div id="closed_chart_op_div" style="position:relative;width: 50%; height: 40%; display: inline-block;"></div>
+    <div id="opened_chart_op_div" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);position:relative;width: 49%; height: 40%; display: inline-block;"></div>
+    <div id="closed_chart_op_div" style=" box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);position:relative;width: 50%; height: 40%; display: inline-block;"></div>
     </div>
     </div>
     
