@@ -207,17 +207,17 @@ function drawCharts_new() {
       
         overflow-y: hidden;
         overflow-x: hidden;
-        background-color:#0866c6;
+        background-color:#0866c7;
     }
     </style>
 </head>
 
 <body>
     <div style="position:relative;width:100%;">
-    <h1 style="background-color:white;text-align:center;box-shadow: 0px -2px 8px 6px #9E9E9E;">Closed/Open Opportunity for Improvement every month for the year 2023</h1>
-<div id="chart_div_one" style="background-color:white;    box-shadow: 0px -2px 8px 6px #9E9E9E;
+    <h2 style="background-color:white;text-align:center;">Closed/Open Opportunity for Improvement every month for the year 2023</h2>
+<div id="chart_div_one" style="background-color:white;    box-shadow: 0px -1px 8px 6px #9E9E9E;
             border-radius: 8px;grey;position:relative;width: 98%; height: 35%;padding:1%"></div>
-<div id="chart_div_two" style="background-color:white;    box-shadow: 0px -2px 8px 6px #9E9E9E;
+<div id="chart_div_two" style="background-color:white;    box-shadow: 0px -1px 8px 6px #9E9E9E;
             border-radius: 8px;grey;position:relative;width: 98%; height: 35%;padding:1%;margin-top:2%"></div>
 </div>
 </body>
