@@ -31,10 +31,13 @@
     define("SEQ010C", array('Fabrication Drainage',     'Fab Drain'));
     define("SEQ010D", array('Fabrication Str Furnature','Fab St F'));
     define("SEQ010E", array('Fabrication Machine Build','Fab MB'));
-    define("SEQ010F", array('Robotic Wleding Trumf',    'Robot Machine'));
-    define("SEQ010G", array('Robotic Welding Labour',   'Robot Labour'));
     define("SEQ011",  array('Stamping & Min Assembily', 'Min Ass'));
     define("SEQ013",  array('Deburr and Polishing',     'Dbr & Pol'));
+	
+	define("SEQ010G",  array('Rootic Welding Valk', 'Robot Weld Valk'));
+    define("SEQ010H",  array('Robotic Welding Labour', 'Robot Weld Lab'));
+    define("SEQ010F",  array('Robotic Welding Trumpf',  'Robot Weld Trumpf'));
+	
 
     define("SEQ012",  array('Quality Check',            'Qual Check'));
     define("SEQ014",  array('Dye Pen Testing',          'DP Test'));
@@ -81,14 +84,17 @@
         "name" => "fabrication_1",
         "stringname" => "Fabrication 1",
         "steps" => array(
-            1 => "SEQ010G",
-            2 => "SEQ010A",
-            3 => "SEQ010B",
-            4 => "SEQ010C",
-            5 => "SEQ010D",
-            6 => "SEQ010E",
-            7 => "SEQ011",
-            8 => "SEQ013" 
+            1 => "SEQ010A",
+            2 => "SEQ010B",
+            3 => "SEQ010C",
+            4 => "SEQ010D",
+            5 => "SEQ010E",
+            6 => "SEQ010F",
+            7 => "SEQ010G",
+            8 => "SEQ010H"
+            
+           
+           
         )),
         3 => array(
         "name" => "fabrication_2",
@@ -100,8 +106,8 @@
             4 => "SEQ016",
             5 => "SEQ017",
             6 => "SEQ018",
-            7 => "",
-            8 => "" 
+            7 => "SEQ011",
+            8 => "SEQ013" 
         )),
         4 => array(
         "name" => "finishing",
@@ -141,32 +147,6 @@
             6 => "",
             7 => "",
             8 => "" 
-        )),
-        7 => array(
-            "name" => "miscellaneous",
-            "stringname" => "Miscellaneous",
-            "steps" => array(
-                1 => "SEQ010G",
-                2 => "SEQ010F",
-                3 => "",
-                4 => "",
-                5 => "",
-                6 => "",
-                7 => "",
-                8 => "" 
-        )),
-        8 => array(
-            "name" => "Other",
-            "stringname" => "Other",
-            "steps" => array(
-                1 => "",
-                2 => "",
-                3 => "",
-                4 => "",
-                5 => "",
-                6 => "",
-                7 => "",
-                8 => "" 
         ))
     );
 ?>

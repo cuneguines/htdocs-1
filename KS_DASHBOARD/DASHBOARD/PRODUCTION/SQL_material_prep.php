@@ -2,6 +2,7 @@
     // LISTS THE REMAINING DEMAND FOR EACH PROCESS ON ALL OPEN PROCESS ORDERS BY SEQUENCE CODE
     //Changed 10-01-23 not updating
     //changed 12-02-23
+    //Changed 21/03/2023 estimated date with new equation(SC 14 days for eacch sc)
     $production_group_step_demand_all_sql = 
     "SELECT
     t2.U_OldCode [Sequence Code],
@@ -63,7 +64,7 @@
 
     // RETURNS A LOG OF ALL BOOKED ENTRIES TO PROCESS STEPS ON OPEN PROCESS ORDERS
     $sql_logged_entries = "SELECT 
-    t0.PrOrder, t1.U_OldCode, t0.UserId, t0.LineID, t5.ProcessTime, t2.firstName + ' ' + t2.lastName[Name], t0.Quantity[Qty], (t0.Created, 'dd-MM-yyyy')[Date], t0.Remarks
+    t0.PrOrder, t1.U_OldCode, t0.UserId, t0.LineID, t5.ProcessTime, t2.firstName + ' ' + t2.lastName[Name], t0.Quantity[Qty], FORMAT(t0.Created, 'dd-MM-yyyy')[Date], t0.Remarks
         FROM IIS_EPC_PRO_ORDERT t0
         LEFT JOIN OITM t1 ON t1.ItemCode = t0.LabourCode
         LEFT JOIN OHEM t2 ON t2.EmpID = t0.UserId

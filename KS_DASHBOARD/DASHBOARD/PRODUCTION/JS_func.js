@@ -156,7 +156,7 @@ $(document).ready(function () {
     });
 });
 
-// SEARCH TABLE
+// SEARCH TABLE changed to get the foot
 $(document).ready(function () {
     var rows = $("#table.searchable tbody tr");
     console.log(rows);

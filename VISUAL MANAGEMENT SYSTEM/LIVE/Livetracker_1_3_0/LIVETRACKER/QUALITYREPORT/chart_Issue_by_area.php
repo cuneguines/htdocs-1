@@ -102,7 +102,7 @@ try {
     exit();
 }
 ?>
-<?php var_dump(json_encode($dataAreaRaised)); ?>
+
 
 
 <body>
@@ -159,7 +159,9 @@ try {
         },
             minValue: 0,
         },
-        bar: { groupWidth: '15%' },
+        colors: ['#C5A5CF'], 
+       
+        bar: { groupWidth: '90%' },
     };
 
     // Instantiate and draw the charts.

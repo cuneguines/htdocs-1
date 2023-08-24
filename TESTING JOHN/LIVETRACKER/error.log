@@ -1,0 +1,8 @@
+[22-Aug-2023 16:58:42 Europe/Berlin] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in C:\xampp\htdocs\TESTING JOHN\LIVETRACKER\dashboard.php:23
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\TESTING JOHN\LIVETRACKER\dashboard.php on line 23
+[22-Aug-2023 16:58:47 Europe/Berlin] PHP Fatal error:  Uncaught DivisionByZeroError: Division by zero in C:\xampp\htdocs\TESTING JOHN\LIVETRACKER\dashboard.php:23
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\TESTING JOHN\LIVETRACKER\dashboard.php on line 23

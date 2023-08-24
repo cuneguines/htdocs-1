@@ -71,26 +71,21 @@ function update_total_row(rows, template) {
 
                 $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
             }
-           console.log($("table:visible").attr('id'));
-           $table_id=$("table:visible").attr('id');
-            if ($(this).attr('operation') === 'SUM_R' ) {
+            if ($(this).attr('operation') === 'SUM_R') {
                 var sum = 0;
-                var count=0;
-                $("table:visible td.r_hours").each(function () {
+                $("table tr:visible td.r_hours").each(function () {
                     if ($(this).attr('type') !== 'breakdown') {
                         //sum+=get_num_value($(this),column);
 
-                       console.log(parseFloat($(this).text()));
+                        // console.log(customerId);
                         sum += parseFloat($(this).text());
 
-count=count+1;
-                       console.log(sum);
+
+                        //console.log(sum);
                     }
                 });
-                console.log(count);
-                count=0;
 
-                $('table:visible.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
+                $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
             }
             if ($(this).attr('operation') === 'AVG') {
                 var sum = 0;
@@ -120,7 +115,9 @@ count=count+1;
                 var max = 0;
                 rows.each(function () {
                     if ($(this).attr('type') !== 'breakdown') {
-                       
+                        if (get_num_value($(this), column) > max) {
+                            max = get_num_value($(this), column);
+                        }
                     }
                 });
                 $('table.searchable tfoot tr:visible').children().eq(column).html((max));
@@ -137,51 +134,7 @@ count=count+1;
                 });
                 $('table.searchable tfoot tr:visible').children().eq(column).html((min));
             }
-           /*  if ($(this).attr('operation') === 'SUM_RD') {
-                var sum = 0;
-                var count=0;
-                alert('hello');
-                
-                rows=rows.filter("[value = fs_ds]");
-                
-                console.log(rows);
-                $("table:visible td:visible").each(function () {
-                    count=count+1;
-                    console.log($(this).find(".rd_hours").html());
-                    console.log(parseInt($(this).find("td:eq(11)").text()));
-                    console.log(($(this).find("td:eq(14)").text()));
-                    var eVal = (isNaN(parseFloat($(this).text())));
-                    console.log(eVal);
-                    if (eVal===true)
-                    {
-                        console.log('helloo');
-                        return true;
 
-                    }
-                    else
-                    sum += parseFloat($(this).text());
-                    console.log(sum);
-                });
-                console.log(sum);
-               /*  $("table:visible td.r_hours").each(function () {
-                    if ($(this).attr('type') !== 'breakdown') {
-                        //sum+=get_num_value($(this),column);
-                        $(this).find("td").each(function(){
-                            if (td)=='FS'
-                            {
-                                
-                            }
-                        });
-       
-                        console.log(sum);
-                    }
-                });
- 
-                console.log(count);
-                console.log(sum);
-                count=0;
-                $('table.searchable tfoot tr:visible').children().eq(column).html(sum.toFixed(1));
-            } */
             if ($(this).attr('operation') === 'MAX_STRING') {
                 var max = '000000000';
                 rows.each(function () {

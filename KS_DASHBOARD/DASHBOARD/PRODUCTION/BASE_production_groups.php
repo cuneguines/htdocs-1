@@ -19,9 +19,11 @@
         <script type = "text/javascript" src = "../../JS/LIBS/jquery.tablesorter.js"></script>
         <script type = "text/javascript" src = "./JS_update_rows.js"></script>
         <script type = "text/javascript" src = "./JS_func.js"></script>
+        <script type = "text/javascript" src = "./hidechart.js"></script>
         <script type = "text/javascript">$(document).ready(function() {$.ajaxSetup({ cache: false });});</script>
 
         <!-- STYLING -->
+        <link href="assets/css/font-awesome.css" rel="stylesheet" />
 		<link rel = "stylesheet" href = "../../css/KS_DASH_STYLE.css">
         <link rel = "stylesheet" href = "../../css/theme.blackice.min.css">
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -222,7 +224,9 @@
             <div id = "docs_and_deliverables_menu" class = "submenu">
 
                 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
-
+                <div>
+                        <a style="z-index:1;position:absolute;margin-left:.8%;margin-top:-.0001%;border:groove;"id="min"><i class="fa fa-compress"></i> <span class="fa arrow"></span></a>
+                        </div>
                 <div class = "white sector top full" style = "width:98%;">
                     <div class = "fill inactive">
                         <div class = "content" style = "height:82%;">
@@ -263,7 +267,7 @@
                 <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
                 <div id = "bottomright" class = "white sector bottom full" style = "width:98%">
-                    <div style = "height:95%; position:relative; top:2.5%;">
+                    <div class="bott"style = "height:95%; position:relative; top:2.5%;">
                         <!--
                             PRINT PRODUCTION TABLE FOR EACH STEP IN THE PRODUCTION GROUP. print_production_step_table TAKES IN THREE ARGS; 
                             THE FULL PRODUCTION TABLE ITSELF, THE LIST OF STEPS IN THE PRODUCTION GROUP, THE INDEX OF THE STEP THE TABLE 
@@ -271,48 +275,48 @@
                             DEFINED BY SECOND TWO INPUT ARGUMENTS.
                         -->
                         <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_N">
-                            <div class = "content_table_margin_wide">
+                            <div class = "content_table_margin_wide" style="overflow-y:scroll">
                                 <h1 style = "position:relative; top:45%; margin-left:40%;">NO STEP SELECTED</h1>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_1" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 1, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_1" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 1, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar"style="overflow-y:scroll" id = "step_2" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 2, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_2" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 2, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_3" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 3, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_3" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 3, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_4" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 4, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_4" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 4, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar"style="overflow-y:scroll" id = "step_5" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 5, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_5" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 5, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_6" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 6, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_6" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 6, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_7" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 7, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_7" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 7, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
-                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" style="overflow-y:scroll"id = "step_8" style = "display:none;">
-                            <div class = "content_table_margin_wide">
-                                <?php print_production_step_table($prod_group_steps_table, $prod_group_steps, 8, $bkd_hrs_details, $remarks_details); ?>
+                        <div class = "radio_btn_page production_rbtns table_cont fill inactive no_scrollbar" id = "step_8" style = "display:none;">
+                            <div class = "content_table_margin_wide"style="overflow-y:scroll">
+                                <?php print_production_step_table_new($prod_group_steps_table, $prod_group_steps, 8, $bkd_hrs_details, $remarks_details); ?>
                             </div>
                         </div>
                     </div>

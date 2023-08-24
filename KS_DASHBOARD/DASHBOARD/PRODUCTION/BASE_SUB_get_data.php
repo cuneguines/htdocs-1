@@ -239,17 +239,6 @@
     file_put_contents("CACHED/remarks.json", json_encode($step_remarks_json_data));
 
 
-
-    //
-    // PRODUCT TABLE
-    //
-
-    include '../TABLES/PRODUCT/SQL_product.php'; 
-
-    $product_table = get_sap_data($conn,$tsql,0);
-    file_put_contents("../TABLES/PRODUCT/CACHED/production_step_table.json", json_encode($product_table));
-
-
     // GET PAGE THE RELOAD WAS CALLED FROM AND REDIRECT TO THAT PAGE
     $group_callback = $_GET['production_group'];
     header("Location:BASE_production_groups.php?production_group=$group_callback");
