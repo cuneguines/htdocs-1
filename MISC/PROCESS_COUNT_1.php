@@ -20,26 +20,18 @@
   <script type="text/javascript" src="./JS_table_to_excel.js"></script>
 
   <!-- STYLING -->
-  <link rel="stylesheet" href="./LT_STYLE.css">
+  <link rel="stylesheet" href="../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/CSS/LT_STYLE.css">
   <link rel="stylesheet" href="../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/css/theme.blackice.min.css">
   <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
   <!-- PHP INITIALIZATION -->
   <?php //include '../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
-  <?php include "./php_functions.php"?>
-  <?php //include '../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/SQL CONNECTIONS/conn.php'; ?>
+  <?php include "../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/PHP LIBS/PHP FUNCTIONS/php_functions.php"?>
+  <?php include '../VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/SQL CONNECTIONS/conn.php'; ?>
   <?php include './SQL_process_count.php'; ?>
-
-
-
-  <?php $jsonData = file_get_contents("./CACHED/process.json");?>
-
-  <?php  $results_open = json_decode($jsonData, true); ?>
-
-
- 
-   <?php $jsonData_1 = file_get_contents("./CACHED/process_1.json");?>
-  <?php  $results_del = json_decode($jsonData_1, true); ?>
+  <?php $results_ = get_sap_data($conn, $results, DEFAULT_DATA);?>
+  <?php $results_1 = get_sap_data($conn, $results_1, DEFAULT_DATA);?>
+  <?php file_put_contents("./CACHED/process.json", json_encode($results_));?>
 
   <!-- TABLESORTER INITIALIZATION -->
   <script>
@@ -105,7 +97,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($results_open as $row) : ?>
+            <?php foreach($results_ as $row) : ?>
               <?php //$status = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Month"])); ?>
               <?php //$fabricator = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Fabricator"])); ?>
               <tr style="padding: 3%" class="btext smallplus <?=$rowcolor?>" status="<?=$status?>" fabricator="<?=$fabricator?>" ntk="<?=$ntk?>" style="height: 30px;">
@@ -128,7 +120,7 @@
                 <div class="content">
                   <select disabled id="select_status" class="selector fill medium">
                     <option value="All" selected>All</option>
-                    <?php generate_filter_options($results_open, "Month"); ?>
+                    <?php generate_filter_options($results_, "Month"); ?>
                   </select>
                 </div>
               </div>
@@ -173,7 +165,7 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach($results_del as $row) : ?>
+            <?php foreach($results_1 as $row) : ?>
               <?php //$status = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Status"])); ?>
               <?php //$fabricator = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["Fabricator"])); ?>
               <tr style="padding: 3%" class="btext smallplus <?=$rowcolor?>" status="<?=$status?>" fabricator="<?=$fabricator?>" ntk="<?=$ntk?>" style="height: 30px;">
@@ -199,7 +191,7 @@
                 <div class="content">
                   <select disabled id="select_status" class="selector fill medium">
                     <option value="All" selected>All</option>
-                    <?php generate_filter_options($results_del, "Month"); ?>
+                    <?php generate_filter_options($results_, "Month"); ?>
                   </select>
                 </div>
               </div>
@@ -233,23 +225,20 @@
 
   <script>
   // Get data for chart
-  var processOrderOpened = <?php echo json_encode($results_open); ?>;
-  var processOrderDelivered = <?php echo json_encode($results_del); ?>;
-  console.log('processOrderOpened:', processOrderOpened);
-console.log('processOrderDelivered:', processOrderDelivered);
+  var processOrderOpened = <?php echo json_encode($results_); ?>;
+  var processOrderDelivered = <?php echo json_encode($results_1); ?>;
 
   // Filter data for the current year
   var currentYear = new Date().getFullYear();
-  console.log(currentYear);
   var currentYear = new Date().getFullYear().toString();
   var filteredOpened = processOrderOpened.filter(function(item) {
-    return item["Year"] === '2023';
+    return item["Year"] === currentYear;
   });
-console.log(filteredOpened);
+
   var filteredDelivered = processOrderDelivered.filter(function(item) {
-    return item["Year"] === '2023';
+    return item["Year"] === currentYear;
   });
-console.log(filteredDelivered);
+
   // Process the filtered data to create labels and datasets for the chart
   var labels = filteredOpened.map(function(item) {
     return item["Month"];
@@ -258,7 +247,7 @@ console.log(filteredDelivered);
   var dataOpened = filteredOpened.map(function(item) {
     return item["Process Orders Opened"];
   });
-console.log(dataOpened);
+
   var dataDelivered = filteredDelivered.map(function(item) {
     return item["Process Orders Delivered"];
   });
