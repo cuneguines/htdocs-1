@@ -27,68 +27,68 @@
 
 </head>
 <style>
-    .active1,
-    .btn:hover {
-        background-color: rgb(198, 155, 64);
-        color: white;
-    }
-
-    .nav-second-level {
-        overflow-y: scroll;
-        max-height: 310px;
-    }
-
-    .comment_button.has_attachment {
-        background-color: rgb(198, 155, 64);
-    }
-
-    .comment_button {
-        height: 30px;
-        width: 40px;
-        border: 2px solid #454545;
-        background-color: white;
-        border-radius: 7px;
-        vertical-align: middle;
-
-    }
-
-    .lefttext {
-        text-align: left;
-        padding-left: 10px;
-    }
-
-    .righttext {
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    .bold {
-        font-weight: bold;
-    }
-
-    .fill {
-        width: 100%;
-        height: 100%;
-    }
-    tr.alternate {
-    background-color:#CEECF5;
+.active1,
+.btn:hover {
+    background-color: rgb(198, 155, 64);
+    color: white;
 }
 
+.nav-second-level {
+    overflow-y: scroll;
+    max-height: 310px;
+}
+
+.comment_button.has_attachment {
+    background-color: rgb(198, 155, 64);
+}
+
+.comment_button {
+    height: 30px;
+    width: 40px;
+    border: 2px solid #454545;
+    background-color: white;
+    border-radius: 7px;
+    vertical-align: middle;
+
+}
+
+.lefttext {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.righttext {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+}
+
+tr.alternate {
+    background-color: #CEECF5;
+}
 </style>
 
 
 <body>
     <script>
-        function isImage(url) {
-            return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
-        }
-        //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
-        ////https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
+    function isImage(url) {
+        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    }
+    //url = "https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx";
+    ////https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/Documents/Apps/Microsoft%20Forms/Untitled%20form%201/Question/dUBr2Is_Cuneguines%20Nixon.png
 
-        ////console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
-        ////console.log(extension);
+    ////console.log(isImage('https://kentstainlesswex-my.sharepoint.com/personal/cnixon_kentstainless_com/_layouts/15/Doc.aspx?sourcedoc=%7BEA2E3B33-633B-46AA-A9DB-BB5D3698B61B%7D&file=Root%20cause%20and%20Corrective%20Document_Cuneguines%20Nixon.docx'));
+    ////console.log(extension);
     </script>
-     <?php
+    <?php
     try {
         // CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
         $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
@@ -221,7 +221,8 @@
                                         <span class="pull-right text-muted">60% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             <span class="sr-only">60% Complete (success)</span>
                                         </div>
                                     </div>
@@ -237,7 +238,8 @@
                                         <span class="pull-right text-muted">28% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%">
+                                        <div class="progress-bar progress-bar-info" role="progressbar"
+                                            aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" style="width: 28%">
                                             <span class="sr-only">28% Complete</span>
                                         </div>
                                     </div>
@@ -253,7 +255,8 @@
                                         <span class="pull-right text-muted">60% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar"
+                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
                                             <span class="sr-only">60% Complete (warning)</span>
                                         </div>
                                     </div>
@@ -269,7 +272,8 @@
                                         <span class="pull-right text-muted">85% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar"
+                                            aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width: 85%">
                                             <span class="sr-only">85% Complete (danger)</span>
                                         </div>
                                     </div>
@@ -374,15 +378,20 @@
 
 
 
-                    <li>
-                        <a id="product_button"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
+                <li>
+    <a id="product_button"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
 
-                        <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
+    <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y: scroll">
+        <li>
+            <a href="#">Submenu Item 1</a>
+        </li>
+        <li>
+            <a href="#">Submenu Item 2</a>
+        </li>
+        <!-- Add more submenu items as needed -->
+    </ul>
+</li>
 
-
-                        </ul>
-
-                    </li>
 
                 </ul>
                 </li>
@@ -418,13 +427,15 @@
                     <div class="card-header">
 
                     </div>
-                    <div class="card-body" id="card_body1" style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
+                    <div class="card-body" id="card_body1"
+                        style="box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.5);overflow-x:scroll;overflow-y:scroll;height:65vh; width:100%;">
 
 
                         <table id="products" style="position: sticky;overflow-x:scroll;">
                             <thead style="position:sticky;top:0;z-index:+2">
                                 <tr class="head">
-                                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code</th>
+                                    <th style="position: sticky;width:100px;left:0px;color:white;padding-left:3px">Code
+                                    </th>
                                     <th style="position: sticky;width:100px;left:100px;color:white">ItemCode</th>
                                     <th style="position: sticky;width:300px;left:200px;color:white">Issue</th>
 
@@ -468,30 +479,38 @@
 
 
                             <?php foreach ($quality_results_nc as $row) : ?>
-                                <?php
+                            <?php
                                 if ($row["previous attachments"]!=NULL)
                                 $color='#f0ad4e';    
                                 else
                                 $color='#2196f3';                         ?>
-                                <tr>
-                                    <td id=<?= $row["ID"] ?>style='background:linear-gradient(100deg,<?=$color?>, white );position: sticky;left:0px;text-align:center'><?= $row["ID"] ?></td>
-                                    <td style="position: sticky;left:100px;px;background:linear-gradient(100deg,#2196f3, white );text-align:center"><?= $row["nc_itemcode"] ?></td>
-                                    <td class="bold" style="position: sticky;left:200px;background:linear-gradient(100deg,#2196f3, white )"><?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
+                            <tr>
+                                <td
+                                    id=<?= $row["ID"] ?>style='background:linear-gradient(100deg,<?=$color?>, white );position: sticky;left:0px;text-align:center'>
+                                    <?= $row["ID"] ?></td>
+                                <td
+                                    style="position: sticky;left:100px;px;background:linear-gradient(100deg,#2196f3, white );text-align:center">
+                                    <?= $row["nc_itemcode"] ?></td>
+                                <td class="bold"
+                                    style="position: sticky;left:200px;background:linear-gradient(100deg,#2196f3, white )">
+                                    <?= $row["nc_description"] ? $row["nc_description"]  : '--------' ?></td>
 
 
-                                    <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
-                                    <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
+                                <td style="text-align:center"><?= $row["nc_sales_order"] ?></td>
+                                <td style="text-align:center"><?= $row["nc_process_order"] ?></td>
 
-                                    <td><?= $row["nc_raised_by"] ?></td>
-                                    <td><?= $row["nc_area_caused"] ?></td>
-                                    <td><?= $row["area_raised_by"] ?></td>
-                                    <td><?= $row["Status"] ?></td>
-                                    <td><?= $row["time_stamp"] ?></td>
+                                <td><?= $row["nc_raised_by"] ?></td>
+                                <td><?= $row["nc_area_caused"] ?></td>
+                                <td><?= $row["area_raised_by"] ?></td>
+                                <td><?= $row["Status"] ?></td>
+                                <td><?= $row["time_stamp"] ?></td>
 
-                                    <td>
-                                        <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal" onclick="myFunction(event)">Update</button></div>
-                                    </td>
-                                    <!--  <td><? // $row["cc_sales_order"] 
+                                <td>
+                                    <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal"
+                                            data-target="#contact-modal" onclick="myFunction(event)">Update</button>
+                                    </div>
+                                </td>
+                                <!--  <td><? // $row["cc_sales_order"] 
                                                 ?></td>
                                         <td><? //$row["cc_process_order"] 
                                             ?></td>
@@ -502,7 +521,7 @@
 
 
 
-                                    <!-- <td class="Group1"><? // $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' 
+                                <!-- <td class="Group1"><? // $row["U_Product_Group_One"] ? $row["U_Product_Group_One"]  : '--------' 
                                                             ?></td>
                                         <td class="Group2"><? // $row["U_Product_Group_Two"] 
                                                             ?></td>
@@ -519,7 +538,7 @@
                                         //echo $uploadfile; 
                                         ?> -->
 
-                                    <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<? // $row['code'] 
+                                <!--  <td><input type="button" onclick=location.href="files_view_cause.php?q=<? // $row['code'] 
                                                                                                                     ?>" name='<? // $row["code"] 
                                                                                                                                 ?>' id='<? // $row["attachments_cause_analysis"] 
                                                                                                                                         ?>' value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_cause_analysis"] != 'N' ? 'has_attachment' : '' 
@@ -528,25 +547,29 @@
                                        <td><input type="button" onclick=location.href="files_view_prev.php?q=<? // $row['code'] 
                                                                                                                 ?>" value='<?= '' ?>' style="position:relative;margin-left:37%" class='comment_button <? // $row["attachments_preve_action"] != 'N' ? 'has_attachment' : '' 
                                                                                                                                                                                                         ?>'></td> -->
-                                    <?php
+                                <?php
                                     $x = $row["ID"];
                                     //print_r('NON CONFIRMANCE');
                                     $color='';
                                     ?>
-                                    <td><input type="button" onclick=location.href="files_view_issue%20copy.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
+                                <td><input type="button"
+                                        onclick=location.href="files_view_issue%20copy.php?q=<?= trim($row['ID']) ?>"
+                                        style="position:relative;margin-left:37%"
+                                        class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'>
+                                </td>
 
 
 
 
-                                
+
                                 <td style="display:none"><?=$row["attach"]?></td>
 
                                 <td style="display:none"><?=$row["Status"]?></td>
                                 <td style="display:none"><?=$row["Date"]?></td>
                                 <td style="display:none"><?=$row["person"]?></td>
                                 <td style="display:none"><?=$row["action"]?></td>
-                                <td ><?=$row["form_type"]?></td>
-                                </tr>
+                                <td><?=$row["form_type"]?></td>
+                            </tr>
                             <?php endforeach; ?>
                             </tbody>
 
@@ -579,7 +602,8 @@
                                 <div class="form-group">
                                     <label for="name">ID</label>
                                     <input id="id" type="text" name="name" class="form-control" readonly>
-                                    <a href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
+                                    <a
+                                        href="mailto:cnixon@kentstainless.com?subject=Subscribe&body=Lastame%20%3A%0D%0AFirstname%20%3A">click</a>
                                 </div>
                                 <div class="form-group">
                                     <label for="key">Enter key</label>
@@ -615,7 +639,8 @@
 
                                     <select id="action" style=width:100%;height:34px>
                                         <option value="Toolbox Talk" selected>Toolbox Talk</option>
-                                        <option value="Eight Disciplines Process" selected>Eight Disciplines Process</option>
+                                        <option value="Eight Disciplines Process" selected>Eight Disciplines Process
+                                        </option>
 
                                     </select>
                                 </div>
@@ -649,19 +674,20 @@
                                     <label for="message">Attachments</label>
                                     <!-- <a href="https://kentstainlesswex.sharepoint.com/sites/Non_Conformance_Data/Shared%20Documents/"><br>Attachments</a> -->
                                     <input id="sortpicture" type="file" name="sortpic" />
-                                    <input id="owner_hidden"style="display:none"type=text  value="">
+                                    <input id="owner_hidden" style="display:none" type=text value="">
                                 </div>
 
                             </div>
                             <div class="modal-footer">
 
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="submit()">Submit</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"
+                                    onclick="submit()">Submit</button>
                             </div>
 
                         </div>
                     </div>
-                   
+
                 </div>
                 <!-- Modal ENDS HERE -->
                 <!-- Filter Starts here -->
@@ -671,7 +697,9 @@
                              height: 50px;">
                     <div class="filter">
                         <div class="text">
-                            <button style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;" class="medium wtext">By Group1</button>
+                            <button
+                                style="float:left;width:100px;margin-left:30%;height:40px;margin-top:5px;background-color:#0866c6;border:none;color:white;font-size:medium;"
+                                class="medium wtext">By Group1</button>
                         </div>
                         <div class="content" style="float:left;margin-right:40px;">
                             <select class="selector" id="select_group2" style="width:250px;height:40px;margin-top:5px">
@@ -683,7 +711,9 @@
                     </div>
                     <div class="filter">
                         <div class="text">
-                            <button style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;" class="medium wtext">By Group2</button>
+                            <button
+                                style="float:left;width:100px;height:40px;margin-top:5px;border:none;background-color:#0866c6;color:white;font-size:medium;"
+                                class="medium wtext">By Group2</button>
                         </div>
                         <div class="content" style="float:left">
                             <select id="select_group3" style="width:250px;height:40px;margin-top:5px">

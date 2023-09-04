@@ -336,15 +336,20 @@
                     
 
 
-                    <li>
-                        <a id="product_button" onclick = "location.href='non_conformance/non.php'"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
+                <li>
+    <a id="product_button"><i class="fa fa-sitemap"></i> Opportunities for improvement<span class="fa arrow"></span></a>
 
-                        <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y:scroll">
+    <ul class="nav nav-second-level" data-toggle="collapse" aria-expanded="true" data-target=".nav-third-level" style="overflow-y: scroll">
+        <li>
+            <a href="#">Submenu Item 1</a>
+        </li>
+        <li>
+            <a href="#">Submenu Item 2</a>
+        </li>
+        <!-- Add more submenu items as needed -->
+    </ul>
+</li>
 
-
-                        </ul>
-
-                    </li>
                     <li>
                         <a id="services_button_cc" onclick = "location.href='customer_complaints_v2/non.php'"><i class="fa fa-users"></i> Customer complaints<span class="fa arrow"></span></a>
                      <ul class="nav nav-second-level_services" style="overflow-y:scroll"> 

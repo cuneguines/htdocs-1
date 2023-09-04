@@ -176,8 +176,9 @@
 
                                 <tr class = 'btext smallplus <?=$rowcolor?>' status = '<?=$status?>' fabricator = '<?=$fabricator?>' ntk = '<?=$ntk?>' style = 'height:30px;'>
                                     <td style = 'font-weight:bold;'><?=$row["Sales Order"]?></td>
-                                    <td><?=$row["Prod Order"]?></td>
+                                  
                                     <td><?=$row["Process Order"]?></td>
+                                    <td><?=$row["Prod Order"]?></td>
                                     <td><?=$row["Item Code"]?></td>
                                     <td id = 'td_stringdata' style = 'font-weight:bold; padding-left:10px;'><?=$row["Item Name"]?></td>
                                     <td><?=$row["Quantity"]?></td>
