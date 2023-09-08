@@ -16,3 +16,4 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 
 Route::get('orders', [OrderController::class, 'showTopTenOrders']);
+Route::view('/greeting', 'welcome');

@@ -153,6 +153,15 @@ tr.alternate {
     height:100%; 
     float:left;
 }
+#grouping_buttons .grouping_category_newest
+{
+    position:relative;
+    vertical-align:top;
+    width:8%; 
+    margin:0% 1.5% 0% 1.5%;
+    height:100%; 
+    float:left;
+}
 
 </style>
 
@@ -182,13 +191,13 @@ tr.alternate {
                         </div>
                         <!--
                             -->
-                        <div class="grouping_category">
-                            <button class="fill medium blue wtext rounded" stage="Subcontract">ALL</button>
+                        <div class="grouping_category_newest">
+                            <button class="fill medium blue wtext rounded" type="OpportunityForImprovement">OFI</button>
                         </div>
                         <!--
                             -->
-                        <div class="grouping_category">
-                            <button class="fill medium blue wtext rounded" stage="Sheets">ALL</button>
+                        <div class="grouping_category_newest">
+                            <button class="fill medium blue wtext rounded" type="CustomerComplaints">CC</button>
                         </div>
                         <!--
                             -->
@@ -273,9 +282,11 @@ tr.alternate {
                                   $area_raised = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["area_raised_"]));
                                   $new_stat= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["new_stat"]));  
                                   $area_caused= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["nc_area_caused"])); 
+                                  $type=str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["form_type"])); 
+                                  $types=str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["form_type"])); 
                             ?>
                             
-                            <tr stat='<?= $stat ?>'new_stat='<?= $new_stat?>'area_raised='<?= $area_raised ?>'area_caused='<?= $area_caused?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'product_group_three='<?= $product_group_three ?>'class="white btext smedium">
+                            <tr stat='<?= $stat ?>'new_stat='<?= $new_stat?>'area_raised='<?= $area_raised ?>'area_caused='<?= $area_caused?>'person='<?= $person ?>'stage='<?= $stage ?>' supplier='<?= $supplier ?>' product_group='<?= $product_group ?>' product_group_two='<?= $product_group_two ?>'product_group_three='<?= $product_group_three ?>'type='<?= $type?>'class="white btext smedium">
                                 <td><?= $row["ID"] ?></td>
                                 <td class='lefttext'><?= $row["nc_description"]!=NULL?$row["nc_description"]:$row["cc_desc"]?></td> 
                                 <td><?= $row["time_stamp"] ?></td>

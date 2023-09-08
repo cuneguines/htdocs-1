@@ -104,6 +104,68 @@ $(document).ready(function () {
 
     });
 
+    $(".grouping_category_newest button").click(function () {
+
+        // DISABLE OTHER FILTERS AND BUTTONS + ACTIVATE CURRENT BUTTOn
+
+        //$('.selector').prop('selectedIndex', 0);
+        //all filters empty
+        //$('#select_person option[value="All"]').prop('selected', true);
+        $('#select__product_group option[value="All"]').prop('selected', true);
+
+        $('#select_product_group_two').val('');
+        $('#select_product_group_three ').val('');
+
+        $('table tr').removeClass('alternate');
+        $('.grouping_category_newest button').not(this).removeClass("pressed");
+        $('.grouping_category button').not(this).removeClass("pressed");
+        $(this).addClass("pressed");
+
+        // RESTRICT TABLE TO ALL ROWS MACHING THE STAGE OF THE BUTTON HIDE ALL OTHERS 
+        person = $('#select_person').val();
+
+
+        //rows.show();
+        console.log($(this).attr('type'));
+        //$(this).attr('stat') !== "ALL" ? rows.not("[stat = " + $(this).attr('stat') + "]").hide() : console.log("");
+
+        if (person != 'All') {
+            alert('yes');
+            var new_rows = $("table.filterable tbody tr");
+            new_rows = new_rows.filter("[person =" + person + "]");
+            console.log(new_rows);
+            new_rows.filter("[person =" + person + "]").show();
+            new_rows.not("[type = " + $(this).attr('type') + "]").hide();
+
+        }
+        else {
+            attrib=$(this).attr('type');
+            if (attrib=='OpportunityForImprovement')
+            {
+            $('.selector').not(this).prop('selectedIndex', 0)
+            rows.show();
+            console.log($(this).attr('new_stat'));
+            $(this).attr('type') !== "ALL" ? rows.filter("[type = CustomerComplaints]").hide() : console.log("");
+            }
+            else
+            
+                if (attrib=='CustomerComplaints')
+                {
+            $('.selector').not(this).prop('selectedIndex', 0)
+            rows.show();
+            console.log('dggf');
+            $(this).attr('type') !== "ALL" ? rows.not("[type = " + $(this).attr('type') + "]").hide(): console.log("");
+            }
+        }
+
+        // PASS ALL MATCHING ROWS AS JQUERY LIST AND FOOTER TEMPLATE TO UPDATE TOTAL ROWS FUNCTION
+        if (typeof __update_rows__ !== 'undefined') {
+            update_total_row(rows.filter("[type = " + $(this).attr('type') + "]"), template);
+        }
+        $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
+        console.log($('table:visible'));
+
+    });
 
 
 

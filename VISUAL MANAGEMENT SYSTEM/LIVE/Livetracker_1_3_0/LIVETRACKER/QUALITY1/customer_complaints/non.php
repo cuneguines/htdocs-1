@@ -363,8 +363,17 @@
                 </h1>
                 <ol class="breadcrumb">
                     
-                    <li><a href="edit_page.php">Forms</a></li>
+                    <!-- <li><a href="edit_page.php">Forms</a></li>
                     <li><a href="../index copy.php">Home</a></li>
+                    <li class="active">Table</li>
+
+                    <ol class="breadcrumb"> -->
+
+                    <li><a href="edit_page.php">Forms</a></li>
+                    <!-- <li><a href="new_page.php">Issue Log</a></li> -->
+                    <!-- <li><a href="new_page.php">NC Page</a></li> -->
+                    <li><a href="../../QUALITYREPORT/Quality_report.php">Report</a></li>
+                    <li><a href="../../QUALITY1/index copy.php">Home</a></li>
                     <li class="active">Table</li>
                 </ol>
 

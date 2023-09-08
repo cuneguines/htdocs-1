@@ -139,7 +139,7 @@ try {
 
     // Set chart options for both charts.
     var options = {
-        chartArea: { height: '80%' },
+        chartArea: { height: '70%' },
         hAxis: {
             title: 'Number of Issues',
             titleTextStyle: {
@@ -155,7 +155,7 @@ try {
             fontSize: 12 // Change font size for hAxis title
         },
         textStyle: {
-            fontSize: 10 // Change font size for hAxis labels
+            fontSize: 17 // Change font size for hAxis labels
         },
             minValue: 0,
         },
