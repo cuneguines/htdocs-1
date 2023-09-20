@@ -1,5 +1,5 @@
 <?php
-use App\Models\Order;
+# use App\Models\Order;
 use Illuminate\Support\Facades\Storage;
 
 // Read data from the 'cached_data/process.json' file
@@ -16,7 +16,7 @@ $results_open = json_decode($jsonData, true);
  $jsonData_1 = Storage::get("./CACHED/process_1.json");
 $results_del = json_decode($jsonData_1, true); 
 
-$topTenOrders = Order::getTopTenOrders();
+//$topTenOrders = Order::getTopTenOrders();
 
 // foreach ($topTenOrders as $order) {
 //     echo $order->CardName;

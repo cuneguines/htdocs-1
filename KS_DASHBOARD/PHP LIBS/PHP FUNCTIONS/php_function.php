@@ -270,7 +270,13 @@ function generate_filter_options($table, $field)
                     <td class=<?=$pre_prod?>><button class = 'smedium rm' style = "<?= $has_comment ? "background-color:#7cbfa0" : ""?>" onclick="<?=$po?>"><?=$row["Process Order"]?></button></td>
                     <td class = "lefttext"><?=$row["Item Name"]?></td>
                     <td><?=$row["PDM"]?></td>
-                    <td ><?=$row["Est LS Start Date1"] ? $row["Est LS Start Date1"]." (".$row["Est LS Start Date WEEKNO"].")" : "N/A"?></td>
+                    <td><?php if ($row["Est LS Start Date1"]) {
+    $shortYear = date('d-m-y', strtotime($row["Est LS Start Date1"]));
+    echo $shortYear . " <b>(" . $row["Est LS Start Date WEEKNO"] . ")<b>";
+  } else {
+    echo "N/A";
+  }?></td>
+
                     <!-- <td><?//$row["Est LS Start Date"] ? $row["Est LS Start Date"]." <b>(".$row["Est LS Start Date WEEKNO"].")</b>" : "N/A"?></td> -->
                     <!-- <td class = "light_green righttext"><?//$row["Step Number"]?></td> -->
                     <td class="light_green"><button class = 'smedium so' onclick="alert('Customer:\n<?=$row['Customer']?> \n\n Project:\n<?=$row['Project']?> \n\nEngineer:\n<?=$row['Engineer']?> \n\nSales Person:\n<?=$row['Sales Person']?> \n\nEst Start Date + Workdays + Days + Remaining + Promise Date + SC Detail:\n<?=$row['Est LS Start Date']?> \t <?=$row['WORKDAYS']?> \t <?=$row['DAYS']?> \t <?=$row['REMAINING']?> \t <?=$row['Promise Date']?> \t <?=$row['SUBCON']?>');" style = "<?=$row["SUBCON"] == 'Y' ? 'background-color:#FACB57' : ''?>"><?=$row["Step Number"]?></button></td>

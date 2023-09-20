@@ -414,6 +414,7 @@ tr.alternate {
                     <!-- <li><a href="new_page.php">NC Page</a></li> -->
                     <li><a href="../../QUALITYREPORT/Quality_report.php">Report</a></li>
                     <li><a href="../../QUALITY1/index copy.php">Home</a></li>
+                    <li><a href="../../QUALITYREPORT/charts.php">Visual report</a></li>
                     <li class="active">Table</li>
                 </ol>
 

@@ -219,30 +219,41 @@ $live_po_count_comp_sql =
         WHERE t0.Status IN ('I','S') AND t1.CmpltQty >= t1.PlannedQty";
 
 /* OPEN HOURS ON FLOOR */
-$open_hours_on_floor_sql = 
-"SELECT
-SUM(CASE 
-    WHEN (t2.[Planned_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
-    ELSE CAST(t2.[Planned_Lab] AS DECIMAL (12,0)) - CAST(ISNULL(t3.[Actual_Lab],0) AS DECIMAL (12,0))
+/*Changed 18 September 2023 query slowed*/
+$open_hours_on_floor_sql = "SELECT SUM(CASE 
+WHEN (t2.[Planned_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
+ELSE CAST(t2.[Planned_Lab] AS DECIMAL (12,0)) - CAST(ISNULL(t3.[Actual_Lab],0) AS DECIMAL (12,0))
 END)[Remaining_Lab]
+
+
+
 FROM IIS_EPC_PRO_ORDERH t0
-    INNER JOIN owor t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct    
-    LEFT JOIN (select t1.U_IIS_proPrOrder, 
-        SUM(t0.plannedqty) [Planned_Lab]
-        FROM wor1 t0
-            INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry  				
-            INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode
-            INNER join iis_epc_pro_orderh t3 on t3.PrOrder = t0.U_IIS_proPrOrder 				
-                WHERE t2.ItemType = 'L' 				
-                GROUP BY t1.U_IIS_proPrOrder) 
-    t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
-    LEFT JOIN (SELECT t0.PrOrder, 
-        SUM(t0.Quantity) [Actual_Lab]
-            FROM iis_epc_pro_ordert t0  				
-                GROUP BY t0.PrOrder) 
-    t3 ON t3.PrOrder = t0.Prorder
-    LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
-    LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
-    WHERE t1.CmpltQty < t1.PlannedQty AND t0.Status NOT IN ('D','C') AND t1.Status NOT IN ('C','L') AND t5.U_PP_status IN ('Live','1001')"; 
+INNER JOIN owor t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct    
+INNER JOIN (select t1.U_IIS_proPrOrder, 
+    SUM(t0.plannedqty) [Planned_Lab]
+    FROM wor1 t0
+        INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                        
+        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode               
+            WHERE t2.ItemType = 'L'                      
+            GROUP BY t1.U_IIS_proPrOrder) 
+t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
+
+LEFT JOIN (SELECT t0.PrOrder, 
+    SUM(t0.Quantity) [Actual_Lab]
+        FROM iis_epc_pro_ordert t0                       
+            GROUP BY t0.PrOrder) 
+t3 ON t3.PrOrder = t0.Prorder
+
+LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
+
+LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
+
+WHERE t1.CmpltQty < t1.PlannedQty AND 
+   t0.Status NOT IN ('D','C') AND 
+   t1.Status NOT IN ('C','L') AND 
+   t5.U_PP_status IN ('Live','1001')
+";
+
+
 
 ?>

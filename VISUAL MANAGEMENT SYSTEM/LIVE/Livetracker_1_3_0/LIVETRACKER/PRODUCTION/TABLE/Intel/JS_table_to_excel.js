@@ -1,46 +1,51 @@
-function export_to_excel(tableID, filename = ''){
-        var downloadLink;
-        var dataType = 'application/vnd.ms-excel';
-        var tableSelect = document.getElementById(tableID);
-        var tableHTML = tableSelect.outerHTML.replace( / /g, '%20');
-        tableHTML = tableHTML.replace(/%20id="intel_production_table"%20class="sticky"%20style="font-size:12px;"/g, '');
-        tableHTML = tableHTML.replace(/%20class="table_header"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="2%"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="4%"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="5%"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="6%"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="7%"/g, '');
-        tableHTML = tableHTML.replace(/%20style="font-size:10px;"%20width="10%"/g, '');
-        tableHTML = tableHTML.replace(/style="font-weight:bold;"/g, '');
-        tableHTML = tableHTML.replace(/%20id="td_stringdata"%20style="font-weight:bold;%20padding-left:10px;"/g, '');
-        tableHTML = tableHTML.replace(/%20class="labremaining"/g, '');
-        tableHTML = tableHTML.replace(/%20date="{0-9}"/g, '');
-        tableHTML = tableHTML.replace(/style="display:none;"/g, '');
+function export_to_excel(tableID) {
+    // CREATE DOWNLOAD LINK AND SELECT TABLE
+    var downloadLink;
+    var dataType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
 
-        // Specify file name
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        filename = filename?filename+'.xls':'Pre_Production_Schedule_'+date+'.xls';
+    // CREATE EMPTY TABLE ELEMENT
+    var visibleTable = document.createElement('table');
 
-        // Create download link element
-        downloadLink = document.createElement("a");
+    // CLONE THE TABLE HEADER
+    visibleTable.appendChild(tableSelect.getElementsByTagName('thead')[0].cloneNode(true));
 
-        document.body.appendChild(downloadLink);
+    // CREATE TABLE BODY AND APPEND VISIBLE ROWS
+    var tableBody = document.createElement('tbody');
+    Array.from(tableSelect.getElementsByTagName('tbody')[0].getElementsByTagName('tr')).forEach(function(row) {
+      if (row.style.display !== 'none') {
+        tableBody.appendChild(row.cloneNode(true));
+      }
+    });
+    visibleTable.appendChild(tableBody);
 
-        if(navigator.msSaveOrOpenBlob){
-            var blob = new Blob(['\ufeff', tableHTML], {type: dataType});
-            navigator.msSaveOrOpenBlob( blob, filename);
-        }
-        else{
-            // Create a link to the file
-            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+    // GET VISIBLE TABLE HTML
+    var tableHTML = visibleTable.outerHTML;
 
-            // Setting the file name
-            downloadLink.download = filename;
-                
-            //triggering the function
-            downloadLink.click();
-        }
-}
+    // REMOVE UNNECESSARY ATTRIBUTES AND STYLES
+    tableHTML = tableHTML.replace(/<input[^>]*>/gi, '');
+    tableHTML = tableHTML.replace(/<\/?button[^>]*>/gi, '');
+    tableHTML = tableHTML.replace(/style="[^"]*?"/gi, '');
 
-  
+    // GET TODAY'S DATE AND NAME THE FILE WITH IT
+    var today = new Date();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var filename = 'Pre_production_schedule' + date + '.xls';
+
+    // CREATE DOWNLOAD OBJECT
+    downloadLink = document.createElement("a");
+    document.body.appendChild(downloadLink);
+
+    if (navigator.msSaveOrOpenBlob) {
+      // IE-specific code
+      var blob = new Blob(['\ufeff', tableHTML], { type: dataType });
+      navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      // CREATE LINK TO FILE
+      downloadLink.href = 'data:' + dataType + ', ' + encodeURIComponent(tableHTML);
+      // SET NAME TO DOWNLOAD
+      downloadLink.download = filename;
+      // TRIGGER DOWNLOAD
+      downloadLink.click();
+    }
+  }

@@ -97,6 +97,8 @@ try {
 <html>
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script type="text/javascript">
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawCharts);
@@ -200,6 +202,46 @@ function drawCharts() {
 
 
 </script>
+
+<script>
+    // Get the canvas element
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    // Your data (you can replace this with your data)
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var data = [10, 15, 8, 12, 6, 18, 14, 9, 11, 7, 13, 16];
+
+    // Create the chart
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Customer Complaints Count',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false // Hide the legend
+                }
+            }
+        }
+    });
+</script>
+
     <style>
     body {
         top: 0;
@@ -217,6 +259,9 @@ function drawCharts() {
     <h2 style="background-color:white;text-align:center;box-shadow: 0px -2px 8px 6px #9E9E9E;">Count of Customer Complaints every month for the year 2023</h2>
 <div id="chart_div_one" style="background-color:white;    box-shadow: 0px -2px 8px 6px #9E9E9E;
             border-radius: 8px;grey;position:relative;width: 98%; height: 35%;padding:1%"></div>
+<canvas id="myChart" width="800" height="400"></canvas>
+
+
 <!-- <div id="chart_div_two" style="background-color:black;    box-shadow: 0px -2px 8px 6px #9E9E9E;
             border-radius: 8px;grey;position:relative;width: 100%; height: 35%;padding:1%"></div> -->
 </div>

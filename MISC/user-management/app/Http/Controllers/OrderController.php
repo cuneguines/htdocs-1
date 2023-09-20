@@ -10,7 +10,7 @@ class OrderController extends Controller
 {
     public function showTopTenOrders()
     {
-        $topTenOrders = Order::getTopTenOrders();
-        return view('orders.index', compact('topTenOrders'));
+        #$topTenOrders = Order::getTopTenOrders();
+        return view('orders.index');
     }
 }
