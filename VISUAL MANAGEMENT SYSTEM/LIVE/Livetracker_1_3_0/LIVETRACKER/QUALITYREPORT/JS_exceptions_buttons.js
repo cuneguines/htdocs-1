@@ -17,6 +17,7 @@ $(document).ready(function () {
         $('table tr').removeClass('alternate');
         $('.grouping_category_new button').not(this).removeClass("pressed");
         $('.grouping_category button').not(this).removeClass("pressed");
+        $('.grouping_category_newest button').not(this).removeClass("pressed");
         $(this).addClass("pressed");
 
         // RESTRICT TABLE TO ALL ROWS MACHING THE STAGE OF THE BUTTON HIDE ALL OTHERS 
@@ -28,7 +29,7 @@ $(document).ready(function () {
         //$(this).attr('stat') !== "ALL" ? rows.not("[stat = " + $(this).attr('stat') + "]").hide() : console.log("");
 
         if (person != 'All') {
-            alert('yes');
+            //alert('yes');
             var new_rows = $("table.filterable tbody tr");
             new_rows = new_rows.filter("[person =" + person + "]");
             console.log(new_rows);
@@ -66,6 +67,7 @@ $(document).ready(function () {
         $('#select_product_group_three ').val('');
 
         $('table tr').removeClass('alternate');
+        $('.grouping_category_newest button').not(this).removeClass("pressed");
         $('.grouping_category_new button').not(this).removeClass("pressed");
         $('.grouping_category button').not(this).removeClass("pressed");
         $(this).addClass("pressed");
@@ -79,7 +81,7 @@ $(document).ready(function () {
         //$(this).attr('stat') !== "ALL" ? rows.not("[stat = " + $(this).attr('stat') + "]").hide() : console.log("");
 
         if (person != 'All') {
-            alert('yes');
+            //alert('yes');
             var new_rows = $("table.filterable tbody tr");
             new_rows = new_rows.filter("[person =" + person + "]");
             console.log(new_rows);
@@ -118,6 +120,7 @@ $(document).ready(function () {
 
         $('table tr').removeClass('alternate');
         $('.grouping_category_newest button').not(this).removeClass("pressed");
+        $('.grouping_category_new button').not(this).removeClass("pressed");
         $('.grouping_category button').not(this).removeClass("pressed");
         $(this).addClass("pressed");
 
@@ -130,7 +133,7 @@ $(document).ready(function () {
         //$(this).attr('stat') !== "ALL" ? rows.not("[stat = " + $(this).attr('stat') + "]").hide() : console.log("");
 
         if (person != 'All') {
-            alert('yes');
+            //alert('yes');
             var new_rows = $("table.filterable tbody tr");
             new_rows = new_rows.filter("[person =" + person + "]");
             console.log(new_rows);
