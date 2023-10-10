@@ -47,6 +47,16 @@
             
                 border:3px solid #454545;
             }
+
+            .border_style_in
+            {
+                box-shadow:0px 0px 0px 3px red inset;
+            }
+
+            .border_style_out
+            {
+                box-shadow:0px 0px 0px 3px orange inset;
+            }
         </style>
     </head>
     <body id = "sap_viewer">
@@ -180,11 +190,32 @@
                                             $color='#454545';
                                             $size='1px';
                                         }  
+
+
+                                    $bstyle='';
+                                    if (floatval($row["Issued Material Qty"]) == 0 || floatval($row["Issued Material Qty"]) < floatval($row["Planned Material Qty"])) 
+                                    {
+                                       if( floatval($row["Balance"])<floatval($row["Planned Material Qty"]))
+                                        {
+                                            
+                                            $bstyle='border_style_in';
+                                        }
+                                            elseif( floatval($row["Balance"])>=floatval($row["Planned Material Qty"]) )
+                                        {
+                                            $bstyle='border_style_out';
+                                            
+                                        }
+                                            else 
+                                            {
+                                            $color='#454545';
+                                            $size='1px';
+                                        }  
+                                    }
                                         ?>
                                                 <td style = "border-right:1px solid #454545;"                     ><button onclick = "location.href='./BASE_item_code.php?itm_code=<?=$row['Material Code']?>'"><?=$row["Material Code"]?></button></td>
                                                 <td style = "border-right:1px solid #454545;" class = "lefttext"  ><?=$row["Material Name"]?></td>
                                                 <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Planned Material Qty"])?></td>
-                                                <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Balance"])?></td>
+                                                <td class="<?=$bstyle?>"style = "border-right:1px solid #454545;"                     ><?=floatval($row["Balance"])?></td>
                                                 <td style="border:<?=$size?> solid <?=$color?>;"><?=floatval($row["Issued Material Qty"])?></td>
                                                 <td style = "border-right:3px solid #454545;"                     ><?=floatval($row["Issued Material Cost"])?></td>
                                         </tr>

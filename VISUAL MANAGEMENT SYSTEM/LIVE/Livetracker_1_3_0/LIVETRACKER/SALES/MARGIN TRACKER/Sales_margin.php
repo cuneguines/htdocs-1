@@ -133,7 +133,7 @@ h1 {
                     <tbody class="white">
                         <?php foreach ($sales_order_items as $sales_order) : ?>
                         <?php $row_color = ""; ?>
-                        <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["CardName"]));         ?>
+                        <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["cardname"]));         ?>
                         <?php $status = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["PP Status"]));         ?>
                         <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["U_client"]));           ?>
                         <?php $release_date = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["DateCategory"]));           ?>
@@ -153,16 +153,16 @@ h1 {
                                     onclick="location.href='../../../../../../SAP%20READER/SAP READER/BASE_sales_order.php?sales_order=<?=$sales_order['Sales Order']?>'"><?= $sales_order["Sales Order"]?><button>
                             </td>
                             <td style="position:sticky;left:100px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )"
-                                class='lefttext'><?= $sales_order["Dscription"] ?></td>
+                                class='lefttext'><?= $sales_order["Project"] ?></td>
                             <td
                                 style="position:sticky;left:400px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["CardName"] ?></td>
+                                <?= $sales_order["cardname"] ?></td>
                             <td
                                 style="position:sticky;left:600px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["U_client"] ?></td>
+                                <?= $sales_order["Project"] ?></td>
                             <td><?= $sales_order["PP Status"]==NULL?'NULL':$sales_order["PP Status"]?></td>
                             <td><?= $sales_order["DocDate"]?></td>
-                            <td><?=$sales_order["Due_Date"]?></td>
+                            <td><?=$sales_order["Promise Date"]?></td>
                             <td><?=$sales_order["RlsDate"]?></td>
                             <td><?=$sales_order["ItemCode"]?></td>
 

@@ -258,14 +258,12 @@ function submit() {
     return false;
 };
 function submitForm(prev_owner) {
-    var prev_owner='no';
-    var x = $("#id").val();
-    var y = $("#owner").val();
-    var z = $("#action").val();
-    var a = $("#status").val();
-    var b = $("#ddate").val();
- prev_owner=$("#owner_hidden").val();
-
+    var x = $("#id").val().trim();
+    var y = $("#owner").val().trim();
+    var z = $("#action").val().trim();
+    var a = $("#status").val().trim();
+    var b = $("#ddate").val().trim();
+    var prev_owner = $("#owner_hidden").val().trim();
     console.log(y);
     console.log(prev_owner);
     if (y == prev_owner) {

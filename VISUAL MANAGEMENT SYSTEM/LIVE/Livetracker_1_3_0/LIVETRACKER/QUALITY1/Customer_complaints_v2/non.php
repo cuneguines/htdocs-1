@@ -443,9 +443,9 @@
                                     <th style="width:100px">Process order</th>
 
 
-                                    <th style="width: 200px">OFI Raised by</th>
-                                    <th style="width: 120px">Area OFI Caused </th>
-                                    <th style="width: 120px">Area OFI Raised</th>
+                                    <th style="width: 200px">CC Raised by</th>
+                                    <th style="width: 120px">Area CC Caused </th>
+                                    <th style="width: 120px">Area CC Raised</th>
                                     <th style="width: 100px">Status</th>
 
                                     <th style="width: 200px">Date/time</th>

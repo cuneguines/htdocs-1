@@ -332,7 +332,7 @@ tr.alternate {
                                                     
                                     <td><input type="button" onclick=location.href="files_view_issues.php?q=<?= trim($row['ID']) ?>" style="position:relative;margin-left:37%" class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'></td>
                                     <td class='lefttext'><?= $row["area_raised_"] ?></td>
-                                    <td class='lefttext'><?= $row["nc_area_caused"] ?></td>
+                                    <td class='lefttext'><?= $row["nc_area_caused"]?></td>
                                     <td class='lefttext'><?= $row["Action"] ?></td>
                                     <td class='lefttext Status'><?= $row["Status"] ?></td>
                                     <td class='lefttext'><?= $row["Customer"] ?></td>

@@ -6,83 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chart Page</title>
     <!-- Include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
 
 
-
-    <style>
-    /* Add a light blue background to the entire page */
-    body {
+    <link rel="stylesheet" href="./charts.css">
 
 
-        top: 0;
-        height: 100vh;
-
-        display: flex;
-        background: linear-gradient(black, white)
-            /* You can adjust the color code as needed */
-    }
-
-    /* Style the container for the links on the left */
-    .sidebar {
-        background-color: #f0f8ff;
-        float: left;
-        width: 30%;
-        padding-bottom: 3%;
-
-        margin-left: 7%;
-        height: 70%;
-        margin-top: 5%;
-        padding-left: 5%;
-        border-right: 5px solid white;
-        box-shadow: 5px 5px 5px 5px;
-        background: linear-gradient(beige, #0866c6);
-    }
-
-    /* Style the links in the sidebar */
-    .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .sidebar ul li {
-        margin-bottom: 10px;
-    }
-
-    .sidebar a {
-        text-decoration: none;
-        color: #333;
-    }
-
-    .sidebar a:hover {
-        color: #007bff;
-        /* Change link color on hover */
-    }
-
-    /* Style the container for the chart on the right */
-    .chart-container {
-        float: left;
-        width: 50%;
-        height: 70%;
-        margin-top: 5%;
-        background-color: #f0f8ff;
-        padding-bottom: 3%;
-        box-shadow: 5px 5px 5px 5px;
-        background-color: beige;
-
-    }
-
-    li {
-        font-size: 20px;
-    }
-
-    .sidebar ul li {
-        margin-bottom: 10px;
-        list-style-type: disc;
-        /* Add bullet points */
-    }
-    </style>
 </head>
 
 <body>
@@ -92,9 +22,11 @@ try {
     $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $stmt_avg = $conn->query($sql_closed_avg);
+    $results_closed_avg= $stmt_avg->fetchAll(PDO::FETCH_ASSOC);
     $stmt = $conn->query($sql);
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $stmt_closed = $conn->query($sql_not_closed_status);
+    $stmt_closed = $conn->query($sql_closed_status);
     $results_closed = $stmt_closed->fetchAll(PDO::FETCH_ASSOC);
     $stmt_cc = $conn->query($sql_2023_cc);
     $results_cc = $stmt_cc->fetchAll(PDO::FETCH_ASSOC);
@@ -119,8 +51,18 @@ try {
 
     //CC 
 
-    $stmt_closed_cc = $conn->query($sql_not_closed_status_cc);
+    $stmt_cc_avg = $conn->query($sql_closed_cc_avg);
+    $results_closed_cc_avg= $stmt_cc_avg->fetchAll(PDO::FETCH_ASSOC);
+    $stmt_for_cc= $conn->query($sql_cc);
+    $results_for_cc = $stmt_for_cc->fetchAll(PDO::FETCH_ASSOC);
+    $stmt_closed_cc = $conn->query($sql_closed_status_cc);
     $results_closed_cc = $stmt_closed_cc->fetchAll(PDO::FETCH_ASSOC);
+    $stmt_pie_cc = $conn->query($sql_pie_cc);
+    $results_pie_cc = $stmt_pie_cc->fetchAll(PDO::FETCH_ASSOC);
+//OTHER
+   
+$stmt_NEW = $conn->query($SQL_NEW);
+$results_NEW= $stmt_NEW->fetchAll(PDO::FETCH_ASSOC);
   
     foreach ($results_closed_cc as $row) {
         $itemLabels[] = $row['ID'];
@@ -139,7 +81,7 @@ try {
         $itemLabels[] = $row['ID'];
         $daysLeftData[] = $row['Days_open'];
        
-        $area_rd_cc=$row['area_raised_'];
+        $area_rd_cc=$row['cc_raised_by'];
        
         if (!isset($data_rd_cc[$area_rd_cc])) {
             $data_rd_cc[$area_rd_cc] = 0;
@@ -197,12 +139,13 @@ try {
         }
         $data_rd[$area_rd]++;
       }
-    
+   
+
   
 //AVERAGE RESPONSE TIME FOrEACH PERSON in DAYS DIFFERNEC BETWEEN TIMESTAMP AND UPDATED DATE
 $averageResponseTime = []; // Initialize an array to store the average response times for each person
 
-foreach ($results_closed as $row) {
+foreach ($results_closed_avg as $row) {
     $person = $row['person'];
     $dateRaised = new DateTime($row['time_stamp']);
     $dateUpdated = new DateTime($row['date_updated']);
@@ -222,7 +165,7 @@ foreach ($results_closed as $row) {
 // Calculate the average response time for each person
 foreach ($averageResponseTime as $person => $responseTimes) {
     
-    $averageResponseTime[$person] = count($responseTimes) > 0 ? array_sum($responseTimes) / count($responseTimes) : 0;
+    $averageResponseTime[$person] = count($responseTimes) > 0 ?floor( array_sum($responseTimes) / count($responseTimes)) : 0;
 }
 
 // Sort the average response times array in descending order
@@ -232,10 +175,54 @@ arsort($averageResponseTime);
 $labels3 = array_keys($averageResponseTime);
 $values3 = array_values($averageResponseTime);
 
+
 $data3 = [
     'labels' => $labels3,
     'values' => $values3
+   
 ];
+
+
+// AVG RESPONSE TIME FOR CC
+//AVERAGE RESPONSE TIME FOrEACH PERSON in DAYS DIFFERNEC BETWEEN TIMESTAMP AND UPDATED DATE
+$averageResponseTime_cc = []; // Initialize an array to store the average response times for each person
+
+foreach ($results_closed_cc_avg as $row) {
+    $person_cc = $row['person'];
+    $dateRaised_cc = new DateTime($row['time_stamp']);
+    $dateUpdated_cc = new DateTime($row['date_updated']);
+
+    $responseTime_cc = $dateUpdated->diff($dateRaised_cc)->days;
+   
+    // Check if the person already has recorded response times
+    if (isset($averageResponseTime_cc[$person_cc])) {
+        // If yes, add the new response time to the existing array
+        $averageResponseTime_cc[$person_cc][]= $responseTime_cc;
+    } else {
+        // If no, create a new array with the current response time
+        $averageResponseTime_cc[$person_cc]= [$responseTime_cc];
+    }
+}
+
+// Calculate the average response time for each person
+foreach ($averageResponseTime_cc as $person_cc => $responseTimes_cc) {
+    
+    $averageResponseTime_cc[$person_cc] = count($responseTimes_cc) > 0 ? floor(array_sum($responseTimes_cc) / count($responseTimes_cc) ): 0;
+}
+
+// Sort the average response times array in descending order
+arsort($averageResponseTime_cc);
+
+// Prepare the data for the chart
+$labels_12 = array_keys($averageResponseTime_cc);
+$values_12 = array_values($averageResponseTime_cc);
+
+$data_12 = [
+    'labels' => $labels_12,
+    'values' => $values_12
+];
+
+
 //PIE CHART FOR OFI
 
 foreach ($results_pie as $row) {
@@ -253,6 +240,32 @@ $statusLabelsJSON = json_encode($statusLabels);
 $statusDataJSON = json_encode($statusData);
 //print_r($statusLabelsJSON);
 //print_r($statusDataJSON);
+
+//PIE FOR THE CC
+
+$statusCounts_cc = array(
+    'Open' => 0,
+    'Closed' => 0,
+    'Other' => 0,
+    
+);
+foreach ($results_pie_cc as $row) {
+    $status_cc = $row['Status'];
+            if (isset($statusCounts_cc[$status_cc])) {
+                $statusCounts_cc[$status_cc]++;
+            }
+        }
+    // Generate the data for the chart
+    $statusLabels_cc = array_keys($statusCounts_cc);
+    $statusData_cc= array_values($statusCounts_cc);
+    
+    // Encode the data as JSON for passing to JavaScript
+    $statusLabelsJSON_cc = json_encode($statusLabels_cc);
+    $statusDataJSON_cc= json_encode($statusData_cc);
+    //print_r($statusLabelsJSON);
+    //print_r($statusDataJSON);
+    
+
 
     // Prepare the data for the chart
     $labels_ac = array_keys($data_ac);
@@ -292,8 +305,10 @@ $Values_rd = array_values($combinedData_rd);
     ];
     //Chart 4
     $pg2Data = array();
-    foreach ($results as $result) {
+    foreach ($results_NEW as $result) {
         $pg2 = $result['U_Product_Group_Two'];
+        //print_r($pg2);
+        
         if (!empty($pg2)) {
             if (isset($pg2Data[$pg2])) {
                 $pg2Data[$pg2]++;
@@ -302,10 +317,12 @@ $Values_rd = array_values($combinedData_rd);
             }
         }
     }
+    //print_r($pg2Data);
    
     arsort($pg2Data);
     // Initialize an array to store the counts for each month
-    $complaintCounts = array_fill(0, 12, 0); // Initialize with zeros for each month
+    $complaintCounts = array_fill(0, 12, 0);
+    $complaintCounts_closed= array_fill(0, 12, 0);  // Initialize with zeros for each month
 
     // Loop through the query results and count complaints for each month
     foreach ($results as $entry) {
@@ -320,8 +337,62 @@ $Values_rd = array_values($combinedData_rd);
         }
     }
 
-    // Convert the array of counts to a JSON format for use in JavaScript
+    // Convert the array of counts to a JSON format for use in JavaScript for AREA CHART
     $complaintCountsJSON = json_encode($complaintCounts);
+    foreach ($results as $entry) {
+        $formType = $entry['form_type'];
+        $dateUpdated = strtotime($entry['time_stamp']);
+        $status = $entry['Status'];
+
+        // Check if the entry is a Customer Complaint in the year 2023
+        if ($status==='Closed'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === '2023') {
+            $month = date('n', $dateUpdated); // Get the month as a number (1-12)
+            $complaintCounts_closed[$month - 1]++; // Subtract 1 to account for zero-based array
+        }
+    }
+
+    // Convert the array of counts to a JSON format for use in JavaScript
+    $complaintCountsJSON_closed = json_encode($complaintCounts_closed);
+
+    //CC PER Month for the year 2023
+
+
+    $complaintCounts_cc = array_fill(0, 12, 0); // Initialize with zeros for each month
+    $complaintCounts_cc_closed  = array_fill(0, 12, 0); 
+    // Loop through the query results and count complaints for each month
+    foreach ($results_for_cc as $entry) {
+        $formType_cc = $entry['form_type'];
+        $datecreated_cc= strtotime($entry['time_stamp']);
+        $status_cc = $entry['Status'];
+
+        // Check if the entry is a Customer Complaint in the year 2023
+        if ($formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === '2023') {
+            $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
+            $complaintCounts_cc[$month_cc - 1]++; // Subtract 1 to account for zero-based array
+        }
+    }
+
+    // Convert the array of counts to a JSON format for use in JavaScript
+    $complaintCountsJSON_cc = json_encode($complaintCounts_cc);
+ 
+//FOR CC CLOSED LINE CHART
+    foreach ($results_for_cc as $entry) {
+        $formType_cc = $entry['form_type'];
+        $datecreated_cc= strtotime($entry['time_stamp']);
+        $status_cc = $entry['Status'];
+
+        // Check if the entry is a Customer Complaint in the year 2023
+        if ($status_cc==='Closed'&& $formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === '2023') {
+            $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
+            $complaintCounts_cc_closed[$month_cc - 1]++; // Subtract 1 to account for zero-based array
+        }
+    }
+
+    // Convert the array of counts to a JSON format for use in JavaScript
+    $complaintCountsJSON_cc_closed = json_encode($complaintCounts_cc_closed);
+
+
+    //print_r($complaintCountsJSON_cc_closed);
 } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
     exit();
@@ -332,15 +403,21 @@ $Values_rd = array_values($combinedData_rd);
         <!-- Create links on the left -->
         <h2>Opportunity For Improvement</h2>
         <ul>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_1()">Open OFI Area Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_8()">Open OFI Area Raised </a>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_1()">Open OFI
+                    Area Caused</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_8()">Open OFI
+                    Area Raised </a>
             </li>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_2()">Open/Closed</a></li>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_3()">Average Response Time</a>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link"
+                    onclick="displayChart_2()">Open/Closed</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_3()">Average
+                    Response Time</a>
             </li>
 
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_5()">Cost</a></li>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_6()">OFI PER Month for the year
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost</a>
+            </li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI PER
+                    Month for the year
                     2023</a></li>
 
         </ul>
@@ -349,14 +426,25 @@ $Values_rd = array_values($combinedData_rd);
         <h2>Customer Complaints</h2>
         <ul>
 
-        <li><a href="#" style="text-decoration: underline;" onclick="displayChart_9()">Open OFI Area Caused</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open CC Area
+                    Caused</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open CC
+                    Area Raised</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link"
+                    onclick="displayChart_11()">Open/Closed</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_12()">Average
+                    Response Time</a>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC PER
+                    Month for the year
+                    2023</a></li>
             <!--<li><a href="#" onclick="displayChart_2()">Open/Closed</a></li>
             <li><a href="#" onclick="displayChart_3()">Average Response Time</a></li>
             <li><a href="#" onclick="displayChart_4()">Pie Charts</a></li> -->
         </ul>
         <h2>Other</h2>
         <ul>
-            <li><a href="#" style="text-decoration: underline;" onclick="displayChart_4()">Issues per Product</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues per
+                    Product</a></li>
         </ul>
     </div>
     <div class="chart-container">
@@ -365,10 +453,26 @@ $Values_rd = array_values($combinedData_rd);
 
     </div>
     <script>
+    var links = document.querySelectorAll(".nav-link");
+
+    links.forEach(function(link) {
+        link.addEventListener("click", function() {
+            // Remove the 'active' class from all links
+            links.forEach(function(link) {
+                link.classList.remove("active");
+            });
+
+            // Add the 'active' class to the clicked link
+            this.classList.add("active");
+        });
+    });
+
     // Use passive: false to ensure preventDefault works
 
     let currentChart;
     // Function to display a chart based on the selected chart type
+
+
     function displayChart_1() {
         // Remove the existing chart if it exists
         if (currentChart) {
@@ -377,38 +481,59 @@ $Values_rd = array_values($combinedData_rd);
 
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
-
+        Chart.register(ChartDataLabels);
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode($Labels_ac); ?>,
                 datasets: [{
-                    label: 'Open Occurrences of OFI per Area caused',
+                    label: 'Open OFI per Area caused',
                     data: <?php echo json_encode($Values_ac); ?>,
-                    backgroundColor: 'rgba(75, 192, 192, 0.7)'
+
+                    backgroundColor: gradient
+
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
+
                     y: {
-                        beginAtZero: true,
-                        stepSize: 1
+                        beginAtZero: true
+
                     }
                 },
                 plugins: {
+
                     legend: {
-                        display: false // Hide the legend
+                        display: true // Hide the legend
                     },
                     datalabels: { // Configure the datalabels plugin
-                        anchor: 'end',
+                        anchor: 'end', // Set the anchor to the center
                         align: 'top',
+
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
-                        }
+                        },
+
+                        font: {
+                            weight: 'bold',
+                            size: 26
+                        },
+
                     }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open Occurrences of OFI per Area caused', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold'
+                    // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });
@@ -425,16 +550,18 @@ $Values_rd = array_values($combinedData_rd);
 
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
-
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode($Labels_rd); ?>,
                 datasets: [{
-                    label: 'Open Occurrences of OFI per Area Raised',
+                    label: 'Open OFI per Area Raised',
                     data: <?php echo json_encode($Values_rd); ?>,
-                    backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                    backgroundColor: gradient
                 }]
             },
             options: {
@@ -448,15 +575,26 @@ $Values_rd = array_values($combinedData_rd);
                 },
                 plugins: {
                     legend: {
-                        display: false // Hide the legend
+                        display: true // Hide the legend
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
                         align: 'top',
+                        font: {
+                            weight: 'bold',
+                            size: 26
+                        },
+
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
                         }
                     }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open Occurrences of OFI per Area Raised', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });
@@ -509,11 +647,22 @@ $Values_rd = array_values($combinedData_rd);
                         formatter: (value, context) => {
                             return value; // Display the count as the label
                         },
-                        color: 'red', // Customize label color
-                        anchor: 'end', // Position the label on the end of the slice
-                        align: 'start', // Align the label to the start of the slice
-                        offset: 2 // Adjust the label's position from the slice
+                        font: {
+                            weight: 'bold',
+                            size: 26
+                        },
+                        // Customize label color
+                        anchor: 'center', // Position the label on the end of the slice
+                        align: 'center', // Align the label to the start of the slice
+                        offset: 0
+                        // Adjust the label's position from the slice
                     }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open/Closed OFI (2023)', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });
@@ -532,7 +681,9 @@ $Values_rd = array_values($combinedData_rd);
 
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
-
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -541,8 +692,8 @@ $Values_rd = array_values($combinedData_rd);
                 datasets: [{
                     label: 'Average Response Time (days)',
                     data: <?php echo json_encode($data3['values']); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: gradient,
+
                     borderWidth: 1
                 }]
             },
@@ -563,6 +714,29 @@ $Values_rd = array_values($combinedData_rd);
                             text: 'Area Raised'
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Hide the legend
+                    },
+
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });
@@ -572,43 +746,69 @@ $Values_rd = array_values($combinedData_rd);
     }
 
     function displayChart_4() {
+
         // Remove the existing chart if it exists
         if (currentChart) {
             currentChart.destroy();
         }
-
+        var dummyData = {
+            label: 'Dummy Data',
+            data: [0], // Set the value to 0
+            backgroundColor: 'rgba(0, 0, 0, 0)', // Make it transparent
+            borderColor: gradient, // Make it transparent
+            borderWidth: 0 // No border
+        };
         var ctx = document.getElementById('myChart').getContext('2d');
+
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode(array_keys($pg2Data)); ?>,
                 datasets: [{
+                    dummyData,
                     label: 'Number of Issues',
                     data: <?php echo json_encode(array_values($pg2Data)); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: gradient,
+                    
                     borderWidth: 1
                 }]
             },
             options: {
                 maintainAspectRatio: false,
                 scales: {
+                    x: {
+                        min: 0, // Set the minimum value for the x-axis to 0
+                    },
                     y: {
-                        beginAtZero: true,
-                        stepSize: 1
+                        min: 0,
+                        stepSize: 0
                     }
                 },
                 plugins: {
                     legend: {
-                        display: false // Hide the legend
+                        display: true // Hide the legend
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
                         align: 'top',
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
-                        }
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
                     }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Issues from Each Product Group', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });
@@ -629,6 +829,10 @@ $Values_rd = array_values($combinedData_rd);
 
         // Create a bar chart
         var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -675,15 +879,29 @@ $Values_rd = array_values($combinedData_rd);
                 },
                 plugins: {
                     legend: {
-                        display: false // Hide the legend
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
                         align: 'top',
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
-                        }
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
                     }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Business Unit Expenditure Analysis', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
 
@@ -700,23 +918,107 @@ $Values_rd = array_values($combinedData_rd);
         }
 
         var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        var gradient_1 = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient_1.addColorStop(0, 'red');
+        gradient_1.addColorStop(1, 'green');
+        Chart.register(ChartDataLabels);
         // Your data (you can replace this with your data)
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
             "November", "December"
         ];
         var data = <?php echo $complaintCountsJSON; ?>;
-
+        var data_closed = <?php echo $complaintCountsJSON_closed; ?>;
+        console.log(data);
+        console.log(data_closed);
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: months,
                 datasets: [{
-                    label: 'OFI Count',
-                    data: data,
-                    backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                        label: 'OFI closed',
+                        data: data_closed,
+                        backgroundColor: gradient_1,
+        borderColor:gradient_1,
+        fill: true,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'OFI Raised',
+                        data: data,
+                        backgroundColor: gradient,
+                        borderColor:gradient,
+                        fill: true,
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Monthly OFI Raised/Closed Overview', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                }
+            }
+        });
+        document.getElementById('myChart').style.display = 'block';
+
+    }
+
+
+    function displayChart_9() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($Labels_ac_cc); ?>,
+                datasets: [{
+                    label: 'Open Occurrences of CC per Area caused',
+                    data: <?php echo json_encode($Values_ac_cc); ?>,
+                    backgroundColor: gradient
                 }]
             },
             options: {
@@ -730,15 +1032,322 @@ $Values_rd = array_values($combinedData_rd);
                 },
                 plugins: {
                     legend: {
-                        display: false // Hide the legend
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
                         align: 'top',
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                }
+            }
+        });
+
+        // Show the chart canvas
+        document.getElementById('myChart').style.display = 'block';
+    }
+
+    function displayChart_10() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($Labels_rd_cc); ?>,
+                datasets: [{
+                    label: 'Open Occurrences of CC per Area caused',
+                    data: <?php echo json_encode($Values_rd_cc); ?>,
+                    backgroundColor: gradient
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                }
+            }
+        });
+
+        // Show the chart canvas
+        document.getElementById('myChart').style.display = 'block';
+    }
+
+    function displayChart_11() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Retrieve the data from PHP
+        var statusLabels = <?php echo $statusLabelsJSON_cc; ?>;
+        var statusData = <?php echo $statusDataJSON_cc; ?>;
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        Chart.register(ChartDataLabels);
+        // Create the chart with the datalabels plugin
+        currentChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: statusData,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    datalabels: { // Add the datalabels configuration
+                        formatter: (value, context) => {
+                            return value; // Display the count as the label
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 26
+                        },
+                        anchor: 'center', // Position the label on the end of the slice
+                        align: 'center', // Align the label to the start of the slice
+                        offset: 0
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Open/Closed CC(2023)', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                }
+            }
+        });
+        //ctx.canvas.height = 1300;
+        // Show the chart canvas
+        document.getElementById('myChart').style.display = 'block';
+    }
+
+    function displayChart_12() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($data_12['labels']); ?>,
+                datasets: [{
+                    label: 'Average Response Time (days)',
+                    data: <?php echo json_encode($data_12['values']); ?>,
+                    backgroundColor: gradient,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Days'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Area Raised'
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                }
+
+            }
+        });
+        //ctx.canvas.height = 1300;
+        // Show the chart canvas
+        document.getElementById('myChart').style.display = 'block';
+    }
+
+    function displayChart_13() {
+
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(1, 'pink');
+        Chart.register(ChartDataLabels);
+        // Your data (you can replace this with your data)
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+            "November", "December"
+        ];
+        var data = <?php echo $complaintCountsJSON_cc; ?>;
+        var data_closed = <?php echo $complaintCountsJSON_cc_closed; ?>;
+        console.log(data);
+        console.log(data_closed);
+
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'CC Closed',
+                    data: data_closed,
+                    backgroundColor: 'red',
+                    borderColor:'red',
+                    fill:true,
+                    borderWidth: 1
+                }, {
+                    label: 'CC Raised',
+                    data: data,
+                    backgroundColor: 'orange', // You can customize the color
+                   fill:true,
+                    borderColor:'orange',// You can customize the color
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                
+                maintainAspectRatio: false,
+                scales: {
+
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    }
+                },
+                title: {
+                    display: true, // Display the title
+                    text: 'Monthly CC Raised/Closed Overview', // Replace with your desired title text
+                    fontSize: 18, // Adjust the font size of the title
+                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                 }
             }
         });

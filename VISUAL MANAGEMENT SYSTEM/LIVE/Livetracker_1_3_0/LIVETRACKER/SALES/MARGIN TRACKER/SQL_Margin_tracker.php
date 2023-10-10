@@ -1,5 +1,5 @@
 
-<?php $margin_tracker="with sales_orders as (--- Sales Order Details -----
+<?php $margin_tracker_old="with sales_orders as (--- Sales Order Details -----
 
 select t1.docnum [Sales Order], 
 t1.cardcode, t1.CardName, 
@@ -217,3 +217,246 @@ where t0.so_status <> 'C'
 
 
 order by  t0.Due_Date";
+
+
+$margin_tracker="WITH PROD_ORD AS (
+
+      select t1.U_IIS_proPrOrder, 
+      sum(case when t3.ItmsGrpNam <> 'Sub Con - Purchases' and t2.ItemType <> 'L' then 1 else 0 end)  [Material Lines],
+      sum(case when t3.ItmsGrpNam <> 'Sub Con - Purchases' and t2.ItemType <> 'L' and  t0.issuedqty >= t0.PlannedQty then 1 else 0 end) [Material Fully Issued], 
+      sum(case when t3.ItmsGrpNam <> 'Sub Con - Purchases' and t2.ItemType <> 'L' then t0.plannedqty* t2.avgprice else 0 end) [Material Planned Cost], 
+      sum(case when t3.ItmsGrpNam <> 'Sub Con - Purchases' and t2.ItemType <> 'L' then t0.issuedqty* t2.avgprice else 0 end) [Material Issued Cost], 
+      sum(case when t3.ItmsGrpNam <> 'Sub Con - Purchases' and t2.ItemType <> 'L' and t0.issuedqty = 0 then t0.PlannedQty* t2.avgprice else 0 end) [Material UnIssued Cost], 
+      sum(case when t3.ItmsGrpNam = 'Sub Con - Purchases' and t2.ItemType <> 'L' then 1 else 0 end) [Sub Con Items],
+      sum(case when t3.ItmsGrpNam = 'Sub Con - Purchases' and t2.ItemType <> 'L' and t0.issuedQty > 0 then 1 else 0 end) [Sub Con Items Issued],
+      sum(case when t3.ItmsGrpNam = 'Sub Con - Purchases' and t2.ItemType <> 'L' then (t0.plannedqty* t2.avgprice) else 0 end) [Sub Con Planned Cost],
+      sum(case when t3.ItmsGrpNam = 'Sub Con - Purchases' and t2.ItemType <> 'L' then (t0.Issuedqty* t2.avgprice) else 0 end) [Sub Con Issued Cost],
+      sum(case when t3.ItmsGrpNam = 'Sub Con - Purchases' and t2.ItemType <> 'L' and t0.issuedqty = 0 then t0.PlannedQty* t2.avgprice else 0 end) [Sub Con UnIssued Cost], 
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam = 'LABOUR PRODUCTION' then 1 else 0 end) [Labour Items],
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam = 'LABOUR PRODUCTION' then (t0.plannedqty) else 0 end) [Labour Planned Hours],
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam = 'LABOUR PRODUCTION' then (t0.plannedqty* t2.avgprice) else 0 end) [Labour Planned Cost],
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam <> 'LABOUR PRODUCTION' then 1 else 0 end) [Machine Items],
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam <> 'LABOUR PRODUCTION' then (t0.plannedqty) else 0 end) [Machine Planned Hours],
+      sum(case when t2.ItemType = 'L'  and t3.itmsgrpnam <> 'LABOUR PRODUCTION' then (t0.plannedqty* t2.avgprice) else 0 end) [Machine Planned Cost],
+
+
+
+      count(DISTINCT t1.docnum) [No. Prod Orders]
+
+
+      from wor1 t0
+      inner join owor t1 on t1.DocEntry = t0.DocEntry
+      inner join oitm t2 on t2.ItemCode = t0.ItemCode
+      inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
+      where t0.U_IIS_proPrOrder is not null
+
+      group by t1.U_IIS_proPrOrder),
+      
+ACT_HOURS as (select t1.PrOrder, t1.EndProduct,
+sum(case when t3.ItmsGrpNam = 'LABOUR PRODUCTION' then t0.Quantity else 0 end) [Act Labour Hours], 
+sum(case when t3.ItmsGrpNam = 'LABOUR PRODUCTION' then t0.Quantity*t2.AvgPrice else 0 end) [Act Labour Cost], 
+sum(case when t3.ItmsGrpNam like '%MACHINE%' then t0.Quantity else 0 end) [Act Machine Hours],
+sum(case when t3.ItmsGrpNam like '%MACHINE%' then t0.Quantity*t2.AvgPrice else 0 end) [Act Machine Cost]
+
+from iis_epc_pro_ordert t0
+inner join IIS_EPC_PRO_ORDERH t1 on t1.PrOrder = t0.PrOrder
+inner join oitm t2 on t2.ItemCode = t0.LabourCode
+inner join oitb t3 on t3.ItmsGrpCod = t2.ItmsGrpCod
+
+where t2.ItemType = 'L'
+
+group by t1.PrOrder, t1.EndProduct) ,
+
+OPEN_TIME as (select t0.prorder, t0.[End Product], 
+sum(case when t0.ItmsGrpNam = 'LABOUR PRODUCTION' then t0.[Open Time] else 0 end) [Open Labour Hours], 
+sum(case when t0.ItmsGrpNam = 'LABOUR PRODUCTION' then t0.[Open Time]*t0.AvgPrice else 0 end) [Open Labour Cost], 
+sum(case when t0.ItmsGrpNam like '%MACHINE%' then t0.[Open Time] else 0 end) [Open Machine Hours],
+sum(case when t0.ItmsGrpNam like '%MACHINE%' then t0.[Open Time]*t0.AvgPrice else 0 end) [Open Machine Cost]
+
+from (
+      select t0.PrOrder, t1.StepItem [End Product], t0.StepItem, 
+      case when t4.status in ('C','D') then 'C' else t0.Status end [Process Status], 
+      isnull(t3.PlannedQty, t1.ProcessTime) [planned_time], t6.ItmsGrpNam, t5.AvgPrice, isnull(t7.[Hours Booked],0) [Act Hours], 
+      case when isnull(t3.PlannedQty, t1.ProcessTime) > isnull(t7.[Hours Booked],0) then isnull(t3.PlannedQty, t1.ProcessTime) - isnull(t7.[Hours Booked],0) 
+      else 0 end [Open Time]
+
+      from iis_epc_pro_orderl t0
+      inner join iis_epc_pro_orderl t1 on t1.PrOrder = t0.PrOrder and t1.StepType = 'B' and t0.ParentLine = t1.LineID
+      inner join owor t2 on t2.U_IIS_proPrOrder = t0.PrOrder and t2.ItemCode = t1.StepItem
+      left join wor1 t3 on t3.ItemCode = t0.StepItem and t3.DocEntry = t2.DocEntry
+      inner join iis_epc_pro_orderh t4 on t4.PrOrder = t0.PrOrder
+      inner join oitm t5 on t5.ItemCode = t0.StepItem
+      inner join oitb t6 on t6.ItmsGrpCod = t5.ItmsGrpCod
+      left join (
+                                      select t0.PrOrder, t1.LineID, isnull(sum(t0.quantity),0) [Hours Booked]
+
+                                      from iis_epc_pro_ordert t0
+                                      inner join iis_epc_pro_orderl t1 on t1.PrOrder = t0.PrOrder and t1.LineID = t0.LineID
+
+                                      group by t0.PrOrder, t1.LineID) t7 on t7.PrOrder = t0.PrOrder and t7.LineID = t0.LineID
+                      
+
+      where t0.StepType = 'P'
+      and (case when t4.status in ('C','D') then 'C' else t0.Status end)  in ('O','P')) t0
+
+group by t0.prorder, t0.[End Product])
+
+
+
+select t1.DocNum [Sales Order], t1.U_Client [Project],t1.CardCode, t1.cardname, t1.NumAtCard [Customer PO], 
+t1.docstatus [SO Status] , t0.LineStatus, t0.OcrCode, t5.Name [PP Status],
+t8.Name [PP Stage],
+t1.DocDate [SO Opened],
+isnull(t0.U_promise_date, t1.docduedate) [Promise Date],
+case when t10.[Same Codes?] is null then 'No'
+else 'Yes' end [Duplicate items on SO?],
+t4.InvntItem [Stock Item?],
+t4.PrcrmntMtd [Make or Buy?],t4.U_Product_Group_One [PG1],
+t4.onhand [In Stock], 
+t0.ItemCode, t0.Dscription, 
+t0.Quantity,
+t4.PrcrmntMtd [Buy or Make], 
+isnull(t3.[No. Prod Ord],0) [No. Process Orders],
+isnull(t11.[No. Prod Orders],0)  [No. Prod Orders],
+case when isnull(t3.[No. Prod Ord],0)  < isnull(t11.[No. Prod Orders],0)  then 'Yes' else 'No' end [Sub BOMs?],
+case when t7.Code is not null then 'Yes' else 'No' end [BOM Created?],
+t7.[BOM Created] [BOM Create Date],
+isnull(t7.[BOM Size],0) [BOM Size],
+t7.[BOM Cost] * t0.Quantity as [Total Cost per BOM], 
+t9.PrOrder [Process Order], 
+T11.[Material Lines], T11.[Material Fully Issued], T11.[Material Planned Cost], T11.[Material Issued Cost], 
+T11.[Sub Con Items],  T11.[Sub Con Items Issued], T11.[Sub Con Planned Cost], T11.[Sub Con Issued Cost],
+T11.[Labour Items], T11.[Labour Planned Hours] , t12.[Act Labour Hours], t11.[Labour Planned Cost],t12.[Act Labour Cost],
+T11.[Machine Items], T11.[Machine Planned Hours], t12.[Act Machine Hours], t11.[Machine Planned Cost], t12.[Act Machine Cost],
+isnull(T11.[Material Planned Cost],0) + isnull(T11.[Sub Con Planned Cost],0) + isnull(T11.[Labour Planned Cost],0) + isnull(T11.[Machine Planned Cost],0) as [Total Planned Prod Cost],
+isnull(T11.[Material Issued Cost],0) +  isnull(T11.[Sub Con Issued Cost],0) + isnull(t12.[Act Labour Cost],0) + isnull(t12.[Act Machine Cost],0) As [Total Actual Prod Cost],
+T11.[Material Lines] - T11.[Material Fully Issued] [Materials TBI],
+T11.[Sub Con Items] -  T11.[Sub Con Items Issued] [Sub Con TBI],
+T11.[Labour Planned Hours] -  isnull(t12.[Act Labour Hours],0) [Labour Hours TBI],
+T11.[Machine Planned Hours] - isnull(t12.[Act Machine Hours],0) [Machine Hours TBI],
+isnull(t11.[Material UnIssued Cost],0) + isnull([Sub Con UnIssued Cost],0) [Unissued Mat SC Cost],
+isnull(t13.[Open Labour Cost],0) + isnull(t13.[Open Machine Cost],0) [Open Lab Laser Cost],
+case when isnull(t3.[Cmplt In Prod],0)  > t0.Quantity then 'Excess Made in Prod' 
+when isnull(t3.[Cmplt In Prod],0)  = t0.Quantity then 'Fully Made in Prod' 
+when isnull(t3.[Cmplt In Prod],0) < t0.Quantity and isnull(t3.[Cmplt In Prod],0) > 0 then 'Part Made in Prod' 
+when isnull(t3.[Cmplt In Prod],0) = 0  and isnull(t3.[Planned Prod],0) > 0 then 'In Prod' 
+when t4.Itemcode = 'TRANSPORT' then 'Transport' 
+when t4.PrcrmntMtd = 'B' then 'Buy Item' 
+when isnull(t3.[Planned Prod],0) = 0  and t4.PrcrmntMtd = 'M' and t0.LineStatus = 'O' then 'No Prod Yet' 
+else 'Stock Only' end [Prod Status],
+isnull(t3.[Cmplt In Prod],0) [Qty Made In Prod],
+(case 
+when isnull(t0.DelivrdQty,0)  = t0.Quantity then 'Closed - Fully Delivered'
+when isnull(t0.DelivrdQty,0)  < t0.Quantity and isnull(t0.DelivrdQty,0)  > 0 and t0.LineStatus = 'C' then 'Closed - Part Delivered'
+when isnull(t0.DelivrdQty,0)  < t0.Quantity and isnull(t0.DelivrdQty,0)  > 0 and t0.LineStatus = 'O' then 'Open - Part Delivered'
+when isnull(t0.DelivrdQty,0)  = 0 and t0.LineStatus = 'C' then 'Closed - No Delivery'
+when isnull(t0.DelivrdQty,0)  = 0 and t0.LineStatus = 'O' then 'Open - No Delivery'
+else'Other' end) [Del Status], 
+isnull(t0.DelivrdQty,0) [Del Qty],
+t0.LineTotal [SO Sales Value EUR],
+t0.StockPrice * t0.Quantity [Original SO Cost], 
+t0.linetotal - (t0.StockPrice * t0.Quantity) [Original SO Margin],
+case when t0.linetotal - (t0.StockPrice * t0.Quantity) > 0 then 
+(t0.linetotal - (t0.StockPrice * t0.Quantity))/t0.linetotal else 0 end [Original SO Margin],
+case when t4.PrcrmntMtd = 'B' then t0.StockPrice *t0.Quantity
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is not null then 
+isnull(T11.[Material Planned Cost],0) + isnull(T11.[Sub Con Planned Cost],0) + isnull(T11.[Labour Planned Cost],0) + isnull(T11.[Machine Planned Cost],0)
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
+else 0 end as [Planned Cost],
+case when t4.PrcrmntMtd = 'B' then t0.StockPrice *t0.Quantity
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is not null then 
+isnull(T11.[Material Issued Cost],0) +  isnull(T11.[Sub Con Issued Cost],0) + isnull(t12.[Act Labour Cost],0) + isnull(t12.[Act Machine Cost],0) +
+isnull(t11.[Material UnIssued Cost],0) + isnull(t11.[Sub Con UnIssued Cost],0) + isnull(t13.[Open Labour Cost],0) + isnull(t13.[Open Machine Cost],0) 
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
+else 0 end [Projected Cost], 
+(t0.LineTotal - 
+(case when t4.PrcrmntMtd = 'B' then t0.StockPrice *t0.Quantity
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is not null then 
+isnull(T11.[Material Planned Cost],0) + isnull(T11.[Sub Con Planned Cost],0) + isnull(T11.[Labour Planned Cost],0) + isnull(T11.[Machine Planned Cost],0)
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
+else 0 end)) [Planned Margin],
+(t0.LineTotal - 
+case when t4.PrcrmntMtd = 'B' then t0.StockPrice *t0.Quantity
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is not null then 
+isnull(T11.[Material Issued Cost],0) +  isnull(T11.[Sub Con Issued Cost],0) + isnull(t12.[Act Labour Cost],0) + isnull(t12.[Act Machine Cost],0) +
+isnull(t11.[Material UnIssued Cost],0) + isnull(t11.[Sub Con UnIssued Cost],0) + isnull(t13.[Open Labour Cost],0) + isnull(t13.[Open Machine Cost],0) 
+when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
+else 0 end) [Proj Margin]
+
+
+
+
+
+from rdr1 t0
+inner join ordr t1 on t1.DocEntry = t0.DocEntry
+
+      ----------checking status of completion in production -------
+left join (
+      select t1.DocNum, t2.LineNum, t2.ItemCode, count(t0.docnum) [No. Prod Ord], 
+      sum(t0.CmpltQty) [Cmplt In Prod],  sum(t0.PlannedQty) [Planned Prod]
+
+      from owor t0
+      inner join ordr t1 on t1.docnum = t0.OriginNum
+      inner join rdr1 t2 on t2.docentry = t1.DocEntry and t2.ItemCode = t0.ItemCode
+
+      group by t1.DocNum, t2.LineNum, t2.ItemCode) as t3 on t3.DocNum = t1.docnum and t3.linenum = t0.linenum and t3.itemcode = t0.itemcode
+
+inner join oitm t4 on t4.ItemCode = t0.ItemCode
+
+      ---- PP Status -----
+left join dbo.[@PRE_PROD_STATUS] as t5 on t5.code = t0.U_PP_Status
+
+
+      ---------BOM Cost details ----------
+left join (
+      select t0.CreateDate [BOM Created], t0.code, count(t1.code) [BOM Size], sum(t1.price * t1.quantity) [BOM Cost]
+
+      from oitt t0
+      inner join itt1 t1 on t1.Father = t0.Code
+
+      group by t0.CreateDate, t0.code
+      ) t7 on t7.Code = t0.ItemCode
+
+      ------adding Pre Production Stage ---
+left join dbo.[@PRE_PRODUCTION] as t8 on t8.code = t0.U_PP_Stage
+
+
+      ------- Pulling in Process Order for each line item -----
+left join (
+      select t0.endproduct, t0.prorder, t1.OriginNum
+
+      from iis_epc_pro_orderh t0
+      inner join owor t1 on t1.U_IIS_proPrOrder = t0.PrOrder and t0.EndProduct = t1.itemcode
+
+      where t1.Status <> 'C')t9 on t9.OriginNum = t1.DocNum and t9.EndProduct = t0.ItemCode
+
+      ------- checking to see if duplicate codes are on multiple lines of Sales Order------
+left join (
+      select t1.DocNum, t0.ItemCode, count(t0.linenum) [Same Codes?]
+
+      from rdr1 t0 
+      inner join ordr t1 on t1.DocEntry = t0.DocEntry
+      inner join oitm t2 on t2.ItemCode = t0.ItemCode
+
+      where t1.CANCELED <> 'Y'
+      and t2.InvntItem = 'Y'
+
+      group by t1.DocNum, t0.ItemCode
+
+      Having count(t0.linenum) > 1) t10 on t10.DocNum = t1.DocNum and t10.ItemCode = t0.ItemCode
+
+
+      ----- adding in production Order data-- check for sub BOMS
+left join PROD_ORD T11 ON T11.U_IIS_proPrOrder = T9.PrOrder
+
+left join ACT_HOURS t12 on t12.PrOrder = t9.PrOrder and t12.EndProduct = t0.ItemCode
+left join OPEN_TIME t13 on t13.PrOrder = t9.PrOrder and t13.[End Product] = t0.ItemCode
+
+
+where t1.CANCELED <> 'Y'
+and t1.DocDate >= '01.01.2023'
+and t0.ItemCode <> 'TRANSPORT'
+---order by t1.docnum, t0.linenum, t0.U_Promise_Date
+
+order by t1.docnum";
+

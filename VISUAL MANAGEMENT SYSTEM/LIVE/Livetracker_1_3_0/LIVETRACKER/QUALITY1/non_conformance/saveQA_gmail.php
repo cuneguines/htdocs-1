@@ -35,16 +35,16 @@ $mail = new PHPMailer(true);
 
    
     // Get POST data
-	$Id = (!empty($_POST['id']) ? $_POST['id'] : '');
-	$stat = (!empty($_POST['status']) ? $_POST['status'] : '');
-	$comm = (!empty($_POST['comments']) ? $_POST['comments'] : '');
-  $owner=(!empty($_POST['owner']) ? $_POST['owner'] : '');
-  $date=(!empty($_POST['date']) ? $_POST['date'] : '');
-  $action=(!empty($_POST['action']) ? $_POST['action'] : '');
-  $prev_owner=(!empty($_POST['prev_owner']) ? $_POST['prev_owner'] : '');
+	$Id = (!empty($_POST['id']) ? trim($_POST['id']) : '');
+	$stat = (!empty($_POST['status']) ? trim($_POST['status']) : '');
+	$comm = (!empty($_POST['comments']) ? trim($_POST['comments']) : '');
+  $owner=(!empty($_POST['owner']) ? trim($_POST['owner']) : '');
+  $date=(!empty($_POST['date']) ? trim($_POST['date']) : '');
+  $action=(!empty($_POST['action']) ? trim($_POST['action']) : '');
+  $prev_owner=(!empty($_POST['prev_owner']) ? trim($_POST['prev_owner']) : '');
 	$atta="ddd";
 
-  //echo($owner);
+  echo($Id);
   //echo($action);
   //echo($stat);
   //echo($prev_owner);
