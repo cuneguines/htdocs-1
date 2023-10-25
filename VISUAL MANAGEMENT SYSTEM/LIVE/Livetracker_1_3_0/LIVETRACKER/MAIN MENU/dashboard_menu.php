@@ -118,6 +118,7 @@
 							<button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../OPERATOR HOURS REPORT/FABRICATOR HOURS/Base_production_table.php';">BOOKED HOURS</button>
 							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://192.168.0.89:3000 ';">Book a Space</button>
 							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://localhost:3000/NEW';">User Database</button>
+							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://kptsvsp:2022/login';">QUALITY TRACKER</button>
 							
 						</div>
 					</div>

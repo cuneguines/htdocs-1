@@ -9,7 +9,7 @@ t0.linetotal, t0.LineNum,
 
 t2.CmpltQty, t2.U_IIS_proPrOrder [Process Order],
 CASE
-        WHEN t3.[Name] is null THEN 'NULL'
+        WHEN t3.[Name] is null THEN 'NO STATUS'
         ELSE t3.[Name]
     END AS [PP Status],
 isnull(t0.DelivrdQty,0) [DelivrdQty], 
@@ -304,10 +304,26 @@ group by t0.prorder, t0.[End Product])
 
 
 select t1.DocNum [Sales Order], t1.U_Client [Project],t1.CardCode, t1.cardname, t1.NumAtCard [Customer PO], 
-t1.docstatus [SO Status] , t0.LineStatus, t0.OcrCode, t5.Name [PP Status],
+t1.docstatus [SO Status] , t0.LineStatus, t0.OcrCode, case when t5.Name is NULL then 'NO Stataus'  else t5.Name end as [PP Status],
 t8.Name [PP Stage],
 t1.DocDate [SO Opened],
-isnull(t0.U_promise_date, t1.docduedate) [Promise Date],
+isnull(FORMAT(t0.U_promise_date,'dd-MM-yy'), FORMAT(t1.docduedate,'dd-MM-yy')) [Promise Date],
+
+
+CASE
+    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) = CAST(GETDATE() AS DATE) THEN 'Today'
+    WHEN CAST(ISNULL(t0.U_promise_date ,t1.docduedate) AS DATE) = CAST(DATEADD(DAY, -1, GETDATE()) AS DATE) THEN 'Yesterday'
+    WHEN CAST(ISNULL(t0.U_promise_date,t1.docduedate) AS DATE) = CAST(DATEADD(DAY, -2, GETDATE()) AS DATE) THEN 'Two Days Ago'
+    WHEN CAST(ISNULL(t0.U_promise_date,t1.docduedate) AS DATE) >= CAST(DATEADD(DAY, -3, GETDATE()) AS DATE) THEN 'Last Three Days'
+    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(DAY, -5, GETDATE()) AS DATE) THEN 'Last Five Days'
+    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(WEEK, -1, GETDATE()) AS DATE) THEN 'Last Week'
+    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(MONTH, -1, GETDATE()) AS DATE) THEN 'Last Month'
+    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2022 THEN 'Year 2022'
+    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2021 THEN 'Year 2021'
+    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2023 THEN 'Year 2023'
+    ELSE 'Other'
+END AS DateCategory,
+
 case when t10.[Same Codes?] is null then 'No'
 else 'Yes' end [Duplicate items on SO?],
 t4.InvntItem [Stock Item?],
@@ -459,4 +475,5 @@ and t0.ItemCode <> 'TRANSPORT'
 ---order by t1.docnum, t0.linenum, t0.U_Promise_Date
 
 order by t1.docnum";
+
 

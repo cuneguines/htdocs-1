@@ -331,7 +331,7 @@ $Values_rd = array_values($combinedData_rd);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === '2023') {
+        if ($formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
             $month = date('n', $dateUpdated); // Get the month as a number (1-12)
             $complaintCounts[$month - 1]++; // Subtract 1 to account for zero-based array
         }
@@ -345,7 +345,7 @@ $Values_rd = array_values($combinedData_rd);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($status==='Closed'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === '2023') {
+        if ($status==='Closed'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
             $month = date('n', $dateUpdated); // Get the month as a number (1-12)
             $complaintCounts_closed[$month - 1]++; // Subtract 1 to account for zero-based array
         }
@@ -366,7 +366,7 @@ $Values_rd = array_values($combinedData_rd);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === '2023') {
+        if ($formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
             $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
             $complaintCounts_cc[$month_cc - 1]++; // Subtract 1 to account for zero-based array
         }
@@ -382,7 +382,7 @@ $Values_rd = array_values($combinedData_rd);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($status_cc==='Closed'&& $formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === '2023') {
+        if ($status_cc==='Closed'&& $formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
             $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
             $complaintCounts_cc_closed[$month_cc - 1]++; // Subtract 1 to account for zero-based array
         }
@@ -403,10 +403,10 @@ $Values_rd = array_values($combinedData_rd);
         <!-- Create links on the left -->
         <h2>Opportunity For Improvement</h2>
         <ul>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_1()">Open OFI
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_1()">Open OFIs's-
                     Area Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_8()">Open OFI
-                    Area Raised </a>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_8()">Open OFI's
+                    -Area Raised </a>
             </li>
             <li><a href="#" style="text-decoration: underline;" class="nav-link"
                     onclick="displayChart_2()">Open/Closed</a></li>
@@ -414,11 +414,12 @@ $Values_rd = array_values($combinedData_rd);
                     Response Time</a>
             </li>
 
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost</a>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost Per
+                    Business Unit</a>
             </li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI PER
-                    Month for the year
-                    2023</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI Monthly
+                    Overview
+                    <?php echo date("Y");?></a></li>
 
         </ul>
 
@@ -426,17 +427,18 @@ $Values_rd = array_values($combinedData_rd);
         <h2>Customer Complaints</h2>
         <ul>
 
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open CC Area
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open
+                    CC's-Area
                     Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open CC
-                    Area Raised</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open
+                    CC's-Area Raised</a></li>
             <li><a href="#" style="text-decoration: underline;" class="nav-link"
                     onclick="displayChart_11()">Open/Closed</a></li>
             <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_12()">Average
                     Response Time</a>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC PER
-                    Month for the year
-                    2023</a></li>
+            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC Monthly
+                    Overview
+                    <?php echo date("Y");?></a></li>
             <!--<li><a href="#" onclick="displayChart_2()">Open/Closed</a></li>
             <li><a href="#" onclick="displayChart_3()">Average Response Time</a></li>
             <li><a href="#" onclick="displayChart_4()">Pie Charts</a></li> -->
@@ -444,17 +446,22 @@ $Values_rd = array_values($combinedData_rd);
         <h2>Other</h2>
         <ul>
             <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues per
-                    Product</a></li>
+                    Product Type Analysis</a></li>
         </ul>
     </div>
     <div class="chart-container">
         <!-- Create a canvas for the chart -->
+        <div id="ChartTitle"></div>
         <canvas id="myChart" width="500" height="400"></canvas>
 
     </div>
     <script>
     var links = document.querySelectorAll(".nav-link");
-
+    const layoutOptions =  {
+    padding: {
+        top: 25  // Add 30 pixels of padding to top of chart.
+    }
+};
     links.forEach(function(link) {
         link.addEventListener("click", function() {
             // Remove the 'active' class from all links
@@ -483,15 +490,15 @@ $Values_rd = array_values($combinedData_rd);
         var ctx = document.getElementById('myChart').getContext('2d');
         Chart.register(ChartDataLabels);
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(0, 'rgba(10, 199, 199, 0.6)');
+        gradient.addColorStop(1, 'rgba(10, 199, 199 ,0.6)');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode($Labels_ac); ?>,
                 datasets: [{
-                    label: 'Open OFI per Area caused',
+                    //label: 'Open OFI per Area caused',
                     data: <?php echo json_encode($Values_ac); ?>,
 
                     backgroundColor: gradient
@@ -499,6 +506,7 @@ $Values_rd = array_values($combinedData_rd);
                 }]
             },
             options: {
+                 layout: layoutOptions,
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
@@ -507,12 +515,13 @@ $Values_rd = array_values($combinedData_rd);
                         beginAtZero: true
 
                     }
+                    
                 },
                 plugins: {
-
                     legend: {
-                        display: true // Hide the legend
+                        display: false
                     },
+
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end', // Set the anchor to the center
                         align: 'top',
@@ -526,20 +535,24 @@ $Values_rd = array_values($combinedData_rd);
                             size: 26
                         },
 
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Open OFI s-Area caused', // Replace with your desired title text
+                        weight: 136, // Adjust the font size of the title
+                        fontStyle: 'bold'
+                        // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open Occurrences of OFI per Area caused', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold'
-                    // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
 
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open OFI's - Area Caused";
+
     }
 
     function displayChart_8() {
@@ -551,7 +564,7 @@ $Values_rd = array_values($combinedData_rd);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
+        gradient.addColorStop(0, 'pink');
         gradient.addColorStop(1, 'pink');
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -559,7 +572,7 @@ $Values_rd = array_values($combinedData_rd);
             data: {
                 labels: <?php echo json_encode($Labels_rd); ?>,
                 datasets: [{
-                    label: 'Open OFI per Area Raised',
+                    //label: 'Open OFIs-Area Raised',
                     data: <?php echo json_encode($Values_rd); ?>,
                     backgroundColor: gradient
                 }]
@@ -575,7 +588,7 @@ $Values_rd = array_values($combinedData_rd);
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false // Hide the legend
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
@@ -588,19 +601,22 @@ $Values_rd = array_values($combinedData_rd);
                         formatter: function(value) {
                             return value; // Display the data value on top of the bar
                         }
+                    },
+                    title: {
+                        display: true, // Display the title
+                        // text: 'Open OFIs-Area Raised', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open Occurrences of OFI per Area Raised', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
-
-        // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        // Show the chart canvas
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open OFI's - Area Raised";
+
     }
 
     function displayChart_2() {
@@ -624,9 +640,9 @@ $Values_rd = array_values($combinedData_rd);
                 datasets: [{
                     data: statusData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)'
+                        'lightred',
+                        'lightgreen',
+                        'lightblue'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -640,9 +656,7 @@ $Values_rd = array_values($combinedData_rd);
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        position: 'right',
-                    },
+
                     datalabels: { // Add the datalabels configuration
                         formatter: (value, context) => {
                             return value; // Display the count as the label
@@ -656,21 +670,24 @@ $Values_rd = array_values($combinedData_rd);
                         align: 'center', // Align the label to the start of the slice
                         offset: 0
                         // Adjust the label's position from the slice
+                    },
+                    title: {
+                        display: true, // Display the title
+                        // text: 'Open/Closed OFI (2023)', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open/Closed OFI (2023)', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
         //ctx.canvas.height = 1300;
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
-    }
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open/Closed OFI's";
 
+    }
 
 
     function displayChart_3() {
@@ -682,15 +699,15 @@ $Values_rd = array_values($combinedData_rd);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(0, 'grey');
+        gradient.addColorStop(1, 'lightblue');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: <?php echo json_encode($data3['labels']); ?>,
                 datasets: [{
-                    label: 'Average Response Time (days)',
+                    //label: 'Average Response Time (days)',
                     data: <?php echo json_encode($data3['values']); ?>,
                     backgroundColor: gradient,
 
@@ -712,12 +729,16 @@ $Values_rd = array_values($combinedData_rd);
                         title: {
                             display: true,
                             text: 'Area Raised'
-                        }
+                        },
+                    
+                    
+                       // offset: true
+                    
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false // Hide the legend
                     },
 
                     datalabels: { // Configure the datalabels plugin
@@ -730,19 +751,23 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //  text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
         //ctx.canvas.height = 1300;
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Average Response Times Per Owner";
+
     }
 
     function displayChart_4() {
@@ -762,7 +787,7 @@ $Values_rd = array_values($combinedData_rd);
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(1, 'orange');
         Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -770,10 +795,10 @@ $Values_rd = array_values($combinedData_rd);
                 labels: <?php echo json_encode(array_keys($pg2Data)); ?>,
                 datasets: [{
                     dummyData,
-                    label: 'Number of Issues',
+                    //label: 'Number of Issues',
                     data: <?php echo json_encode(array_values($pg2Data)); ?>,
                     backgroundColor: gradient,
-                    
+
                     borderWidth: 1
                 }]
             },
@@ -781,16 +806,29 @@ $Values_rd = array_values($combinedData_rd);
                 maintainAspectRatio: false,
                 scales: {
                     x: {
-                        min: 0, // Set the minimum value for the x-axis to 0
+                        title: {
+                            display: true,
+                            text:'Product Type',
+                            font: {
+          weight: 'bold',
+          size:18,
+          
+        }
+
+                        },
+                        
+                        min: 0, 
+                        //offset:true// Set the minimum value for the x-axis to 0
                     },
                     y: {
                         min: 0,
                         stepSize: 0
                     }
+                    
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false // Hide the legend
                     },
                     datalabels: { // Configure the datalabels plugin
                         anchor: 'end',
@@ -802,18 +840,21 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        // text: 'Issues from Each Product Group', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Issues from Each Product Group', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
-
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Issues Per Product Type";
+
     }
 
 
@@ -831,7 +872,7 @@ $Values_rd = array_values($combinedData_rd);
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(1, 'orange');
         Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -868,6 +909,7 @@ $Values_rd = array_values($combinedData_rd);
                             display: true,
                             text: 'Business Unit'
                         }
+                        //offset:true
                     },
                     y: {
                         title: {
@@ -878,9 +920,7 @@ $Values_rd = array_values($combinedData_rd);
                     }
                 },
                 plugins: {
-                    legend: {
-                        display: true // Hide the legend
-                    },
+
                     font: {
                         weight: 'bold',
                         size: 16
@@ -895,19 +935,23 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //  text: 'Business Unit Expenditure Analysis', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Business Unit Expenditure Analysis', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
 
 
         });
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Costs Per Business Unit";
+
     }
 
 
@@ -919,11 +963,11 @@ $Values_rd = array_values($combinedData_rd);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(0, '#f790a7');
+        gradient.addColorStop(1, '#f790a7');
         var gradient_1 = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient_1.addColorStop(0, 'red');
-        gradient_1.addColorStop(1, 'green');
+        gradient_1.addColorStop(0, 'rgb(3,244,235,0.5)');
+        gradient_1.addColorStop(1, 'rgb(3,244,235,0.5)');
         Chart.register(ChartDataLabels);
         // Your data (you can replace this with your data)
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
@@ -941,16 +985,16 @@ $Values_rd = array_values($combinedData_rd);
                 datasets: [{
                         label: 'OFI closed',
                         data: data_closed,
-                        backgroundColor: gradient_1,
-        borderColor:gradient_1,
-        fill: true,
+                        backgroundColor: 'rgb(3,244,235,0.4)',
+                        borderColor: gradient_1,
+                        fill: true,
                         borderWidth: 1
                     },
                     {
                         label: 'OFI Raised',
                         data: data,
                         backgroundColor: gradient,
-                        borderColor:gradient,
+                        borderColor: gradient,
                         fill: true,
                         borderWidth: 1
                     }
@@ -963,6 +1007,11 @@ $Values_rd = array_values($combinedData_rd);
                     y: {
                         beginAtZero: true,
                         stepSize: 1
+                    }
+                    ,
+                    x:
+                    {
+                       // offset: true
                     }
                 },
                 plugins: {
@@ -983,17 +1032,21 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Monthly OFI Raised/Closed Overview', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Monthly OFI Raised/Closed Overview', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "OFI Monthly Overview";
+
 
     }
 
@@ -1008,7 +1061,7 @@ $Values_rd = array_values($combinedData_rd);
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(1, 'orange');
         Chart.register(ChartDataLabels);
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -1028,11 +1081,15 @@ $Values_rd = array_values($combinedData_rd);
                     y: {
                         beginAtZero: true,
                         stepSize: 1
+                    },
+                    x:
+                    {
+                        offset: true
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false
                     },
                     font: {
                         weight: 'bold',
@@ -1048,19 +1105,22 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
-
-        // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open CC's-Area Caused";
+        // Show the chart canvas
+
     }
 
     function displayChart_10() {
@@ -1073,7 +1133,7 @@ $Values_rd = array_values($combinedData_rd);
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(1, 'orange');
         Chart.register(ChartDataLabels);
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -1081,23 +1141,29 @@ $Values_rd = array_values($combinedData_rd);
             data: {
                 labels: <?php echo json_encode($Labels_rd_cc); ?>,
                 datasets: [{
-                    label: 'Open Occurrences of CC per Area caused',
+                    // label: 'Open Occurrences of CC per Area Raised',
                     data: <?php echo json_encode($Values_rd_cc); ?>,
                     backgroundColor: gradient
                 }]
             },
             options: {
+                layout: layoutOptions,
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true,
+                       
                         stepSize: 1
+                    },
+                    x:
+                    {
+                        offset: true
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false // Hide the legend
                     },
                     font: {
                         weight: 'bold',
@@ -1113,19 +1179,22 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: false, // Display the title
+                        //text: 'Open Occurrences of CC per Area Raised', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
-
-        // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open CC's- Area Raised";
+        // Show the chart canvas
+
     }
 
     function displayChart_11() {
@@ -1150,9 +1219,9 @@ $Values_rd = array_values($combinedData_rd);
                 datasets: [{
                     data: statusData,
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)'
+                        'lightred',
+                        'lightgreen',
+                        'lightblue'
                     ],
                     borderColor: [
                         'rgba(255, 99, 132, 1)',
@@ -1163,12 +1232,11 @@ $Values_rd = array_values($combinedData_rd);
                 }]
             },
             options: {
+                layout: layoutOptions,
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        position: 'right',
-                    },
+
                     datalabels: { // Add the datalabels configuration
                         formatter: (value, context) => {
                             return value; // Display the count as the label
@@ -1180,19 +1248,23 @@ $Values_rd = array_values($combinedData_rd);
                         anchor: 'center', // Position the label on the end of the slice
                         align: 'center', // Align the label to the start of the slice
                         offset: 0
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Open/Closed CC(2023)', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Open/Closed CC(2023)', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
         //ctx.canvas.height = 1300;
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open/Closed CC's";
+
     }
 
     function displayChart_12() {
@@ -1204,8 +1276,8 @@ $Values_rd = array_values($combinedData_rd);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(0, 'lightgreen');
+        gradient.addColorStop(1, 'lightgreen');
         Chart.register(ChartDataLabels);
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -1233,13 +1305,13 @@ $Values_rd = array_values($combinedData_rd);
                     x: {
                         title: {
                             display: true,
-                            text: 'Area Raised'
+                            text: 'Owner'
                         }
                     }
                 },
                 plugins: {
                     legend: {
-                        display: true // Hide the legend
+                        display: false // Hide the legend
                     },
                     font: {
                         weight: 'bold',
@@ -1255,20 +1327,24 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        // text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Evaluating Response Times for Each Owner', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
 
             }
         });
         //ctx.canvas.height = 1300;
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Average Response Times Per Owner";
+
     }
 
     function displayChart_13() {
@@ -1280,7 +1356,10 @@ $Values_rd = array_values($combinedData_rd);
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
         gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'pink');
+        gradient.addColorStop(1, 'orange');
+        var gradient_1 = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient_1.addColorStop(0, 'grey');
+        gradient_1.addColorStop(1, 'grey');
         Chart.register(ChartDataLabels);
         // Your data (you can replace this with your data)
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
@@ -1299,22 +1378,22 @@ $Values_rd = array_values($combinedData_rd);
                 datasets: [{
                     label: 'CC Closed',
                     data: data_closed,
-                    backgroundColor: 'red',
-                    borderColor:'red',
-                    fill:true,
+                    backgroundColor: gradient,
+                    borderColor: gradient,
+                    fill: true,
                     borderWidth: 1
                 }, {
                     label: 'CC Raised',
                     data: data,
-                    backgroundColor: 'orange', // You can customize the color
-                   fill:true,
-                    borderColor:'orange',// You can customize the color
+                    backgroundColor: gradient_1, // You can customize the color
+                    fill: true,
+                    borderColor: gradient_1, // You can customize the color
                     borderWidth: 1
                 }]
             },
             options: {
                 responsive: true,
-                
+
                 maintainAspectRatio: false,
                 scales: {
 
@@ -1322,11 +1401,14 @@ $Values_rd = array_values($combinedData_rd);
                         beginAtZero: true,
                         stepSize: 1
                     }
+                    ,
+                    x:
+                    {
+                        //offset: true
+                    }
                 },
                 plugins: {
-                    legend: {
-                        display: true // Hide the legend
-                    },
+
                     font: {
                         weight: 'bold',
                         size: 16
@@ -1341,17 +1423,20 @@ $Values_rd = array_values($combinedData_rd);
                             weight: 'bold',
                             size: 16
                         },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Monthly CC Raised/Closed Overview', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
                     }
                 },
-                title: {
-                    display: true, // Display the title
-                    text: 'Monthly CC Raised/Closed Overview', // Replace with your desired title text
-                    fontSize: 18, // Adjust the font size of the title
-                    fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
-                }
+
             }
         });
         document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "CC Monthly Overview";
 
     }
     </script>

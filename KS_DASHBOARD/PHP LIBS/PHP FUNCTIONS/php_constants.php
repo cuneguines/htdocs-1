@@ -62,6 +62,7 @@
     define("SEQ019",  array('Packaging',                'Packaging'));
     define("SEQ030",  array('Wrapping',                 'Wrapping'));
     define("SEQ031",  array('Site Work',                'Site Work'));
+    define("SEQ032",  array('New',                'New'));
 ?>
 
 <?php
@@ -143,7 +144,7 @@
             2 => "SEQ019",
             3 => "SEQ030",
             4 => "SEQ031",
-            5 => "",
+            5 => "SEQ032",
             6 => "",
             7 => "",
             8 => "" 

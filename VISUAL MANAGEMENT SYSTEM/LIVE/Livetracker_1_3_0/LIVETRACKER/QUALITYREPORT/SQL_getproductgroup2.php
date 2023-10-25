@@ -29,7 +29,7 @@ END) [attachements_issues]
                         from  dbo.Table_2 t1
                         where t1.Status<>'Cancelled' group by t1.ID )t6 on t6.Mmaxdate = t8.date_updated and t6.ID=t8.ID)t20 on t20.ID=t0.ID and t20.Status<>'Cancelled'
     left join (select t0.* from  KENTSTAINLESS.dbo.ordr t0 )t50 on  t50.DocNum= nc_sales_order
-left JOIN KENTSTAINLESS.dbo.rdr1 t11 on t11.DocEntry = t50.DocEntry and t11.U_IIS_proPrOrder=nc_process_order
+left JOIN KENTSTAINLESS.dbo.rdr1 t11 on t11.DocEntry = t50.DocEntry and t11.U_IIS_proPrOrder=nc_process_order or t11.U_IIS_proPrOrder=cc_process_order
 left join KENTSTAINLESS.dbo.oitm t12 on t12.ItemCode COLLATE SQL_Latin1_General_CP1_CI_AS= nc_itemcode COLLATE SQL_Latin1_General_CP1_CI_AS
 left join KENTSTAINLESS.dbo.oitb t13 on t13.ItmsGrpCod = t12.ItmsGrpCod
 left join(select t55.sap_id,t55.created_date,t55.attachments from dbo.attachment_table t55

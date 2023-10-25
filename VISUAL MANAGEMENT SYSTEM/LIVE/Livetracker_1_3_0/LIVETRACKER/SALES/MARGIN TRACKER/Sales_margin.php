@@ -28,16 +28,37 @@
 
     <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
     <?php include '../../../SQL CONNECTIONS/conn.php'; ?>
-    <?php include './SQL_Margin_tracker.php'; ?>
+
 
     <?php
-        $getResults = $conn->prepare($margin_tracker);
-        $getResults->execute();
-        $sales_order_items = $getResults->fetchAll(PDO::FETCH_BOTH);
-    ?>
 
+        //$getResults = $conn->prepare($margin_tracker);
+        //$getResults->execute();
+        //$sales_o = $getResults->fetchAll(PDO::FETCH_BOTH);
+       // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); ?>
 
-    <!-- TABLESORTER INITALISATION -->
+<?php
+require 'vendor/autoload.php';
+Predis\Autoloader::register();
+
+// Redis configuration
+$redis = new Predis\Client();
+$redis->connect('127.0.0.1', 6379); // Replace with your Redis server details
+
+// Read the cached JSON data from the file
+$cached_data = file_get_contents("CACHE/salesmargin.json");
+
+// Store the JSON data in Redis
+$redis->set('sales_margin_data', $cached_data);
+$redis->expire('sales_margin_data', 3600); // 3600 seconds = 1 hour
+
+// Retrieve the JSON data from Redis
+$retrieved_data = $redis->get('sales_margin_data');
+
+// Convert the JSON data to an associative array
+$sales_margin = json_decode($retrieved_data, true);
+
+  ?>
     <script>
     $(function() {
         $("table.sortable").tablesorter({
@@ -50,9 +71,46 @@
             }
         });
     });
-    </script>
-</head>
+    
+    
+
+
+
+
+
+function spinAndReload(button) {
+    // Add a highlighted style to the button
+    button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
+    button.disabled = true;
+    button.innerHTML += '<span class="dot-dot-dot"></span>';
+    // Refresh cache.php in the background
+    fetch('./cache.php', { cache: 'reload' })
+        .then(response => {
+            // Success message can be logged here
+            console.log('Cache refreshed successfully');
+            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+            button.disabled = false;
+            location.reload();
+        })
+        .catch(error => {
+            // Error message can be logged here
+            console.error('Error refreshing cache: ', error);
+            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+            button.disabled = false;
+        });
+}
+</script>
 <style>
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.dot-dot-dot::after {
+  content: ' ...';
+  animation: blink 1s infinite;
+}
 @keyframes slideInLeft {
     0% {
         transform: translateX(-100%);
@@ -71,14 +129,23 @@ h1 {
     animation-name: slideInLeft;
 
 }
+
+th {
+    width: 200px;
+}
+
+
+
+
+
 </style>
 
 <body>
     <div id="background">
         <div id="content">
-           
-            <div class="table_title "style="top:0">
-                <h1 style="background:linear-gradient(100deg,black, orange)">SALES ORDER MARGIN</h1>
+
+            <div class="table_title " style="top:0">
+                <h1 style="background:linear-gradient(100deg,black, orange)">SALES MARGIN</h1>
             </div>
 
             <!--  <table id="products" style="position: sticky;overflow-x:scroll;">
@@ -93,59 +160,109 @@ h1 {
             <div id="pages_table_container" style="overflow-x:scroll;height:80%;top:0" class="table_container">
                 <table id="new_sales_orders_margin" class="filterable sortable colborders">
                     <thead style="position:sticky;top:0;z-index:+2;background-color:black">
-                        <!-- 		LineNum	so_status	PrcrmntMtd	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
+                        <!-- 		LineNum	so_status	PrcrmntMth	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
 
                         <tr class="dark_grey wtext smedium head">
-                            <th style="position:sticky;width:100px;left:0px;padding-left:3px;background-color:black">Sales Order</th>
-                            <th style="position:sticky;width:300px;left:100px;color:white;background-color:black">Item Name</th>
-                            <th style="position:sticky;width:200px;left:400px;color:white;background-color:black">Customer</th>
-                            <th style="position:sticky;width:200px;left:600px;background-color:black">Project</th>
-                            <th width="100px">PP Status</th>
-                            <th width="100px">Doc Date</th>
-                            <th width="100px">Due Date</th>
-                            <th width="100px">Rel Date</th>
-                            <th width="100px">Item Code</th>
+                            <th style="position:sticky;width:100px;left:0px;padding-left:3px;background-color:black">
+                                Sales Order</th>
+                            <th style="position:sticky;width:300px;left:100px;color:white;background-color:black">
+                                Project</th>
+                            <th style="position:sticky;width:200px;left:400px;color:white;background-color:black">
+                                Process Order
+                            </th>
+                            <th style="position:sticky;width:200px;left:600px;background-color:black">Customer</th>
+                            <th style="position:sticky;width:200px;left:800px;background-color:black">Proj Margin</th>
 
-                            <th width="100px">Quantity</th>
-                            <th width="100px">Delivered Qty</th>
-                            <th width="100px">Open qty</th>
-                            <th width="100px">Process Order</th>
-                            <th width="100px">CompletedQty</th>
-                            <th width="100px">Line Status</th>
-                            <th width="100px">Line Number</th>
-                            <th width="100px">Sales Order Status</th>
-                            <th width="100px">Prcrmnt Mtd</th>
-                            <th width="100px">Qty Delivered</th>
-                            <th width="200px">Cost at delivery</th>
-                            <th width="200px">Delivery return</th>
-                            <th width="200px">Cost at return</th>
-                            <th width="200px">Sales Value</th>
-                            <th width="200px">SO Original Cost</th>
-                            <th width="200px">Planned BOM Cost</th>
-                            <th width="200px">Planned Production Order Cost</th>
-                            <th width="200px">Likely Production Order Cost</th>
-                            <th width="100px">Origin Margin</th>
-                            <th width="200px">Planned BOM Margin</th>
-                            <th width="200px">Planned Pro Ord Margin</th>
-                            <th width="200px">Likely Production Order Margin</th>
+                            <th>Customer PO</th>
+
+
+
+                            <th>PP Status</th>
+
+
+                        
+                            <th>Promise Date</th>
+
+
+
+                            <th>PG1</th>
+                            <th>In Stock</th>
+
+                            <th>ItemCode</th>
+                            <th>Dscription</th>
+                            <th>Quantity</th>
+                            <th>Buy or Make</th>
+
+
+                            <th>Sub BOMS?</th>
+                            <th>BOM Created?</th>
+
+                            <th>BOM Size</th>
+                            <th>Total Cost per BOM</th>
+
+                            <th>Material Lines</th>
+                            <th>Materail Fully Issued</th>
+                            <th>Material Planned Cost</th>
+                            <th>Material Issued Cost</th>
+                            <th>Sub Con Items</th>
+                            <th>Sub Con Items Issued</th>
+
+                            <th>Sub Con Planned Cost</th>
+                            <th>Sub Con Issued Cost</th>
+                            <th>Labour Items</th>
+                            <th>Labour Planned Hours</th>
+                            <th>Act Labour Hours</th>
+                            <th>Labour Planned cost</th>
+                            <th>Act Labout Cost</th>
+                            <th>Machine Items</th>
+
+                            <th>Machine Planned Hours</th>
+                            <th>Act Machine Hours</th>
+                            <th>Machine Planned Cost</th>
+                            <th>Act Machine Cost</th>
+                            <th>Total Planned Prod Cost</th>
+                            <th>Materials TBI</th>
+
+                            <th>Sub Con TBI</th>
+                            <th>Labour Hours TBI</th>
+                            <th>Machine Hours TBI</th>
+                            <th>Unissued Mat SC Cost</th>
+                            <th>Open Lab Laser Cost</th>
+                            <th>Prod Status</th>
+
+
+                            <th>Qty Made In Prod</th>
+                            <th>Del Status</th>
+                            <th>Del Qty</th>
+                            <th>SO Sales Value EUR</th>
+                            <th>Original SO Cost</th>
+                            <th>Original SO Margin</th>
+
+
+                            <th>Planned Cost</th>
+                            <th>Projected Cost</th>
+                            <th>Planned Margin</th>
+                           
+
+
                         </tr>
                     </thead>
                     <tbody class="white">
-                        <?php foreach ($sales_order_items as $sales_order) : ?>
+                        <?php foreach ($sales_margin as $sales_order) : ?>
                         <?php $row_color = ""; ?>
                         <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["cardname"]));         ?>
                         <?php $status = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["PP Status"]));         ?>
-                        <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["U_client"]));           ?>
-                        <?php $release_date = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["DateCategory"]));           ?>
+                        <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Project"]));           ?>
+                        <?php $datecategory = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["DateCategory"]));           ?>
                         <?php //$engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Engineer"]));         ?>
                         <?php //$sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Sales Person"])); ?>
                         <?php //$cell_color = $sales_order["Margin"] < 0.5 ? 'light_red' : '';?>
-                        <?php $sales_order["Orig Margin"]<.4 ? $cell_color_margin='light_red':$cell_color_margin=''?>
-                        <?php $sales_order["Planned BOM Margin"]<.4 ? $cell_color='light_red':$cell_color=''?>
-                        <?php $sales_order["Planned Prod Ord Margin"]<.4 ? $cell_color_plan='light_red':$cell_color_plan=''?>
-                        <?php $sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
+                        <?php //$sales_order["Orig Margin"]<.4 ? $cell_color_margin='light_red':$cell_color_margin=''?>
+                        <?php //$sales_order["Planned BOM Margin"]<.4 ? $cell_color='light_red':$cell_color=''?>
+                        <?php //$sales_order["Planned Prod Ord Margin"]<.4 ? $cell_color_plan='light_red':$cell_color_plan=''?>
+                        <?php //$sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
 
-                        <tr class='smedium btext' status='<?= $status ?>' release_date='<?= $release_date ?>'
+                        <tr class='smedium btext' status='<?= $status ?>' datecategory='<?= $datecategory ?>'
                             customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>'
                             sales_person='<?= $sales_person ?>'>
                             <td style="position:sticky;left:0px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )"
@@ -156,46 +273,91 @@ h1 {
                                 class='lefttext'><?= $sales_order["Project"] ?></td>
                             <td
                                 style="position:sticky;left:400px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["cardname"] ?></td>
+                                <?= $sales_order["Process Order"] ?></td>
                             <td
                                 style="position:sticky;left:600px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["Project"] ?></td>
-                            <td><?= $sales_order["PP Status"]==NULL?'NULL':$sales_order["PP Status"]?></td>
-                            <td><?= $sales_order["DocDate"]?></td>
-                            <td><?=$sales_order["Promise Date"]?></td>
-                            <td><?=$sales_order["RlsDate"]?></td>
-                            <td><?=$sales_order["ItemCode"]?></td>
+                                <?= $sales_order["cardname"] ?></td>
 
+
+                                <td
+                                style="position:sticky;left:800px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
+                                <?= ($sales_order["SO Sales Value EUR"] != 0) ? number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2) . "%" : "N/A" ?></td>
+                            <td><?= $sales_order["Customer PO"]==NULL?'NULL':$sales_order["Customer PO"]?></td>
+
+
+
+                            <td><?=$sales_order["PP Status"]?></td>
+
+
+
+                            <td><?= $sales_order["Promise Date"] ?></td>
+
+
+
+                            <td><?=  $sales_order["PG1"] ?></td>
+                            <td><?= number_format($sales_order["In Stock"],3) ?></td>
+
+                            <td><?= $sales_order["ItemCode"] ?></td>
+                            <td><?= $sales_order["Dscription"] ?></td>
                             <td><?= $sales_order["Quantity"] ?></td>
-                            <td><?= $sales_order["DelivrdQty"] ?></td>
-                            <td><?= $sales_order["OpenQty"] ?></td>
-                            <td><?= $sales_order["Process Order"] ?></td>
-                            <td><?= $sales_order["CmpltQty"] ?></td>
-                            <td><?= $sales_order["LineStatus"] ?></td>
-                            <td><?= $sales_order["LineNum"] ?></td>
-                            <td><?= $sales_order["so_status"] ?></td>
-                            <td><?= $sales_order["PrcrmntMtd"] ?></td>
-                            <td><?= round($sales_order["Qty Delivered"],0) ?></td>
-                            <td><?= round($sales_order["Cost at Delivery"] ,0)?></td>
-                            <td><?= $sales_order["Delivery Return"] ?></td>
-                            <td><?= round($sales_order["Cost at Return"],0) ?></td>
+                            <td><?= $sales_order["Buy or Make"] ?></td>
 
-                            <td><?= round($sales_order["Sales Value"],0) ?></td>
-                            <td><?= round($sales_order["SO_Original_Cost"],0) ?></td>
-                            <td><?= round($sales_order["Planned_BOM_Cost"] ,0)?></td>
-                            <td><?= round($sales_order["Planned Prod Order Cost"],0) ?></td>
-                            <td><?= round($sales_order["Likely Prod Ord Cost"] ,0)?></td>
-                            <td class="righttext bold <?=$cell_color_margin?>">
-                                <?= number_format($sales_order["Orig Margin"]*100)?>%</td>
-                            <td class="righttext bold <?=$cell_color?>">
-                                <?= number_format($sales_order["Orig Margin"]*100)>number_format($sales_order["Planned BOM Margin"]*100)?'<span style=color:red> &#x2193;&nbsp;</span>'.number_format($sales_order["Planned BOM Margin"]*100):number_format($sales_order["Planned BOM Margin"]*100)?>
-                                %</td>
-                            <td class="righttext bold <?=$cell_color_plan?>">
-                                <?= number_format($sales_order["Planned BOM Margin"]*100)>number_format($sales_order["Planned Prod Ord Margin"]*100)?'<span style=color:red> &#x2193;&nbsp;</span>'.number_format($sales_order["Planned Prod Ord Margin"]*100):number_format($sales_order["Planned Prod Ord Margin"]*100) ?>%
-                            </td>
-                            <td class="righttext bold <?=$cell_color_likely?>">
-                                <?= number_format($sales_order["Planned Prod Ord Margin"]*100)>number_format($sales_order["Likely Prod Ord Margin"] *100)?'<span style=color:red> &#x2193;&nbsp;</span>'.number_format($sales_order["Likely Prod Ord Margin"]*100):number_format($sales_order["Likely Prod Ord Margin"]*100)?>%
-                            </td>
+                            <td><?= $sales_order["Sub BOMs?"] ?></td>
+                            <td><?= $sales_order["BOM Created?"] ?></td>
+                           
+                            <td><?= $sales_order["BOM Size"] ?></td>
+                            <td><?= number_format($sales_order["Total Cost per BOM"], 2) ?></td>
+
+                            <td><?= $sales_order["Material Lines"] ?></td>
+                            <td><?= $sales_order["Material Fully Issued"] ?></td>
+                            <td><?= number_format($sales_order["Material Planned Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Material Issued Cost"],2) ?></td>
+                            <td><?= $sales_order["Sub Con Items"] ?></td>
+                            <td><?= $sales_order["Sub Con Items Issued"] ?></td>
+
+                            <td><?= number_format($sales_order["Sub Con Planned Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Sub Con Issued Cost"],2) ?></td>
+                            <td><?= $sales_order["Labour Items"] ?></td>
+                            <td><?=number_format($sales_order["Labour Planned Hours"],2)?></td>
+                            <td><?= number_format($sales_order["Act Labour Hours"],2) ?></td>
+                            <td><?= number_format($sales_order["Labour Planned Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Act Labour Cost"],2) ?></td>
+                            <td><?= $sales_order["Machine Items"] ?></td>
+
+                            <td><?= $sales_order["Machine Planned Hours"] ?></td>
+                            <td><?= $sales_order["Act Machine Hours"] ?></td>
+                            <td><?= number_format($sales_order["Machine Planned Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Act Machine Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Total Planned Prod Cost"],2) ?></td>
+                            <td><?= $sales_order["Materials TBI"] ?></td>
+
+                            <td><?= $sales_order["Sub Con TBI"] ?></td>
+                            <td><?= $sales_order["Labour Hours TBI"] ?></td>
+                            <td><?= $sales_order["Machine Hours TBI"] ?></td>
+                            <td><?= number_format($sales_order["Unissued Mat SC Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Open Lab Laser Cost"],2) ?></td>
+                            <td><?= $sales_order["Prod Status"] ?></td>
+
+
+                            <td><?= $sales_order["Qty Made In Prod"] ?></td>
+                            <td><?= $sales_order["Del Status"] ?></td>
+                            <td><?= $sales_order["Del Qty"] ?></td>
+                            <td><?= number_format($sales_order["SO Sales Value EUR"],2) ?></td>
+                            <td><?= number_format($sales_order["Original SO Cost"] ,2)?></td>
+                            <td><?= number_format($sales_order["Original SO Margin"],2) ?></td>
+
+
+                            <td><?= number_format($sales_order["Planned Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Projected Cost"],2) ?></td>
+                            <td><?= number_format($sales_order["Planned Margin"],2) ?></td>
+                           
+
+
+
+
+
+
+
 
 
 
@@ -216,26 +378,34 @@ h1 {
                 <div id="top">
                     <div id="filter_container">
                         <div id="filters" class="red fill rounded" style="box-shadow: -2px 0px 8px 0px #607D8B;
-    background: linear-gradient(100deg,#009688, #8BC34A )">
+                                background: linear-gradient(100deg,#009688, #8BC34A )">
                             <div class="filter">
                                 <div class="text">
-                                    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
-    background: linear-gradient(100deg,#009688, #8BC34A )">Customer</button>
+                                <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"onclick="spinAndReload(this)">UPDATE</button>
+                                
+                                </div>
+                                
+                            </div>
+                            <div class="filter">
+                                <div class="text">
+                                    <button class="fill red medium wtext button" style="box-shadow: -2px 0px 8px 0px #607D8B;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );">Customer</button>
                                 </div>
                                 <div class="content">
                                     <select id="select_customer" class="selector fill medium">
                                         <option value="All" selected>All</option>
-                                        <?php generate_filter_options($sales_order_items, "CardName"); ?>
+                                        <?php generate_filter_options($sales_margin, "cardname"); ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="filter">
                                 <div class="text">
                                     <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
-    background: linear-gradient(100deg,#009688, #8BC34A )">DateCategory</button>
+                                        background: linear-gradient(100deg,#009688, #8BC34A )">DateCategory</button>
                                 </div>
                                 <div class="content">
-                                    <select id="select_release_date" class="selector fill medium">
+                                    <select id="select_datecategory" class="selector fill medium">
                                         <option value="All" selected>All</option>
                                         <option value="Today" selected>Today</option>
                                         <option value="Yesterday" selected>Yesterday</option>
@@ -255,12 +425,12 @@ h1 {
                             <div class="filter">
                                 <div class="text">
                                     <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
-    background: linear-gradient(100deg,#009688, #8BC34A )">Status</button>
+                                        background: linear-gradient(100deg,#009688, #8BC34A )">Status</button>
                                 </div>
                                 <div class="content">
                                     <select id="select_status" class="selector fill medium">
                                         <option value="All" selected>All</option>
-                                        <?php generate_filter_options($sales_order_items, "PP Status"); ?>
+                                        <?php generate_filter_options($sales_margin, "PP Status"); ?>
                                     </select>
                                 </div>
                             </div>
@@ -296,6 +466,7 @@ h1 {
         </div>
     </div>
     </div>
+
 </body>
 
 </html>

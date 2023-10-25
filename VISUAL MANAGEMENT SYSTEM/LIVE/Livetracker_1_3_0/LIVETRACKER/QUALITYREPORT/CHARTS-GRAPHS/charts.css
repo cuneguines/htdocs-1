@@ -55,6 +55,7 @@
     box-shadow: 5px 5px 5px 5px;
     background-color: beige;
     background: linear-gradient(beige, #ffffff) /* You can adjust the color code as needed;;; */;
+    z-index:+5;
 }
 
 li {
@@ -80,4 +81,19 @@ li {
 h2
 {
     margin-left:-10%;
+}
+
+#myChart .chartjs-title {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px; /* Adjust the font size as needed */
+}
+#ChartTitle{
+    text-align: center;
+    font-size: 26px;
+    
+    
+font-weight:bold;
+
 }

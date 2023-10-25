@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-
+    
     $('table:visible tr:not(:hidden)').filter(':odd').addClass('alternate');
     var rows = $("table.filterable tbody tr");
     var template = $('table.filterable tfoot tr td');
