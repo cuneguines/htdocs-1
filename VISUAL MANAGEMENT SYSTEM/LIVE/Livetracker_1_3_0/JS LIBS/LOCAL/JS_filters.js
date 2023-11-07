@@ -19,6 +19,7 @@ $(document).ready(function() {
     $(".selector").on("change",function filter(){
         $('.selector').not(this).prop('selectedIndex',0);
         $('button').removeClass('pressed');
+        console.log($(this).children("option:selected").val());
         if($(this).children("option:selected").val() === 'All'){
             rows.show();
             if(typeof __update_rows__ !== 'undefined'){

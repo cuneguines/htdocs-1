@@ -30,30 +30,13 @@
 
     <?php include '../../PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
 
-    <?php include './SQL_quality_data.php'; ?>
-    <?php
-    try {
-        // CONNECT TO SEVER WITH PDO SQL SERVER FUNCTION
-        $conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
-        // CREATE QUERY EXECUTION FUNCTION
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (Exception $e) {
-        // REPORT ERROR
-        die(print_r($e->getMessage()));
-    }
 
-    $getResults = $conn->prepare($Quality_results);
-    $getResults->execute();
-    $quality_results = $getResults->fetchAll(PDO::FETCH_BOTH);
-    /* Filters for the product group */
-    $group_array=array();
-    foreach ($quality_results as $row) :
-    $group_array = array('product_group_one' => $row['U_Product_Group_One'], 'product_group_two' => $row['U_Product_Group_Two'], 'product_group_three' => $row['U_Product_Group_Three'] );
-endforeach;
-foreach($group_array as $row):
-//print_r($group_array);
-endforeach;
-    ?>
+    <?php
+    $quality_results = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty.json'), true); ?>
+
+
+
+
     <!-- TABLESORT SETUP -->
     <script>
     $(function() {
@@ -73,7 +56,14 @@ endforeach;
             }
         });
     });
+
+
+    
+
     </script>
+
+
+
 </head>
 
 
@@ -83,41 +73,41 @@ endforeach;
             <div id='grouping_buttons_container'>
                 <div id='grouping_buttons' class='fw light_grey'>
                     <div id='margin'>
-                        <div class="grouping_category"style="float:left">
+                        <div class="grouping_category" style="float:left">
                             <button class="fill medium blue wtext rounded" stat="Open">Open</button>
                         </div>
-                    
-                        <div class="grouping_category"style="float:left">
+
+                        <div class="grouping_category" style="float:left">
                             <button class="fill medium blue wtext rounded" stat="Closed">Closed</button>
                         </div>
-                        
-                        <div class="grouping_category_new"style="float:left">
+
+                        <div class="grouping_category_new" style="float:left">
                             <button class="fill medium blue wtext rounded" new_stat="Duenexttwoweeks">Due next two
                                 weeks</button>
                         </div>
-                       
-                        <div class="grouping_category_new"style="float:left">
+
+                        <div class="grouping_category_new" style="float:left">
                             <button class="fill medium blue wtext rounded" new_stat="Closedlasttwoweeks">Closed last two
                                 weeks</button>
                         </div>
-                        
-                        <div class="grouping_category_newest"style="float:left">
+
+                        <div class="grouping_category_newest" style="float:left">
                             <button class="fill medium blue wtext rounded" type="OpportunityForImprovement">OFI</button>
                         </div>
-                       
-                        <div class="grouping_category_newest"style="float:left">
+
+                        <div class="grouping_category_newest" style="float:left">
                             <button class="fill medium blue wtext rounded" type="CustomerComplaints">CC</button>
                         </div>
-                        
-                        <div class="grouping_category"style="float:left">
+
+                        <div class="grouping_category" style="float:left">
                             <button class="fill medium blue wtext rounded" stage="Consum">Consumables</button>
                         </div>
-                      
-                        <div class="grouping_category"style="float:left">
+
+                        <div class="grouping_category" style="float:left">
                             <button class="fill medium blue wtext rounded" stat="Other">New</button>
                         </div>
-                        
-                        <div class="grouping_category_kpi"style="float:left">
+
+                        <div class="grouping_category_kpi" style="float:left">
 
                             <!-- <button onclick="location.href='../QUALITYREPORT/CHARTS-GRAPHS/charts.php'"class="fill medium blue wtext rounded" stage="Intel">KPIs</button> -->
                             <button class="fill medium blue wtext rounded"
@@ -275,6 +265,8 @@ endforeach;
                             <td class='lefttext'><?= $row["U_Product_Group_One"] ?></td>
                             <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                             <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
+                            <td class='lefttext'><?= $row["Issued Cost"] ?></td>
+
 
 
 
@@ -345,12 +337,18 @@ endforeach;
                     class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
 
 
+              
+
+
 
 
             </div>
 
             <div id="grouping_pages_footer" style="bottom:1%" class="footer">
                 <div id="button_container" style="width:10%">
+                <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:100%;margin-left: -1%;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"
+                    onclick="spinAndReload(this)">UPDATE</button>
                     <!-- <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button> -->
                 </div>
                 <div id="filter_container">

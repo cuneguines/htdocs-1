@@ -96,6 +96,7 @@ function myFunction(event) {
     console.log(date);
     console.log(owner);
     $('#owner_hidden').val($("td:eq(15)", $(CurrentRow)).html());
+    console.log($('#owner_hidden').val($("td:eq(15)", $(CurrentRow)).html()));
     if (owner == 'SeanO Brien (Q)') {
         $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
     }
@@ -194,6 +195,9 @@ function myFunction(event) {
 
                         if (response[0][0]['person'] == 'SeanO Brien (Q)') {
                             $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
+                        }
+                        if (response[0][0]['person'] === "SeanO'Brien") {
+                            $('#owner option[value="SeanO\'Brien"]').prop('selected', true);
                         }
                         /* if (response[0][0]['attachments'] == null) {
                             $('#fileid').text('Download');

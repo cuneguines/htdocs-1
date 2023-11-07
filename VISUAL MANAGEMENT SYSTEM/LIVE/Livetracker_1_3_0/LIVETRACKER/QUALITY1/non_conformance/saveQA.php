@@ -44,7 +44,7 @@ $mail = new PHPMailer(true);
   $prev_owner=(!empty($_POST['prev_owner']) ? $_POST['prev_owner'] : '');
 	$atta="ddd";
 
-  //echo($owner);
+  echo($owner);
   //echo($action);
   //echo($stat);
   //echo($prev_owner);
@@ -57,6 +57,8 @@ if ($owner=='Sean O Brien (Q)')
    
    where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + + ' ' + t0.lastName='$owner'";
 }
+
+
 else{
    $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 
@@ -115,7 +117,7 @@ else{
     $mail->Port = 25;                                    // TCP port to connect to
     $mail->setFrom('qualityteam@kentstainless.com', 'Mailer');
 	 
-    $mail->addAddress($email, 'ns');     // Add a recipient
+    $mail->addAddress($email, 'ns');     // Add a recipient//REcepients disabled
                // Name is optional
   $mail->addReplyTo('info@example.com', 'Information');
  // $mail->addCC('cc@example.com');

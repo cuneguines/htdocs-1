@@ -44,7 +44,7 @@ $mail = new PHPMailer(true);
   $prev_owner=(!empty($_POST['prev_owner']) ? $_POST['prev_owner'] : '');
 	$atta="ddd";
 
-  //echo($owner);
+  echo($owner);
   //echo($action);
   //echo($stat);
   //echo($prev_owner);
@@ -101,6 +101,7 @@ else{
 			echo $e->getMessage();
         $e->getMessage();
   }
+  /*
   if ($prev_owner=="no")
   {
   try{
@@ -148,4 +149,5 @@ catch(Exception $e){
   die(print_r($e->getMessage()));
 }
 }
+*/
 ?>

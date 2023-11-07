@@ -130,3 +130,13 @@ tr.alternate {
         transform: rotate(360deg);
     }
 }
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.dot-dot-dot::after {
+    content: ' ...';
+    animation: blink 1s infinite;
+}

@@ -231,7 +231,9 @@ th {
                                 <?= $sales_order["cardname"] ?></td>
                             <td><?= $sales_order["Customer PO"]==NULL?'NULL':$sales_order["Customer PO"]?></td>
                            
-                            
+                            <td class="righttext bold <?=$cell_color?>">
+                                <?= number_format($sales_order["Orig Margin"]*100)>number_format($sales_order["Planned BOM Margin"]*100)?'<span style=color:red> &#x2193;&nbsp;</span>'.number_format($sales_order["Planned BOM Margin"]*100):number_format($sales_order["Planned BOM Margin"]*100)?>
+                                %</td>
                            
                             <td><?=$sales_order["PP Status"]?></td>
 

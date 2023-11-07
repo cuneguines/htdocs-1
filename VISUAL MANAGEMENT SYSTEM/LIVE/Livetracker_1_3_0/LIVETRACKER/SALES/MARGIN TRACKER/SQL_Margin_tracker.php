@@ -308,19 +308,22 @@ t1.docstatus [SO Status] , t0.LineStatus, t0.OcrCode, case when t5.Name is NULL 
 t8.Name [PP Stage],
 t1.DocDate [SO Opened],
 isnull(FORMAT(t0.U_promise_date,'dd-MM-yy'), FORMAT(t1.docduedate,'dd-MM-yy')) [Promise Date],
+FORMAT(t0.U_floor_date,'dd-MM-yy')[floor_date],
 
 
 CASE
-    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) = CAST(GETDATE() AS DATE) THEN 'Today'
-    WHEN CAST(ISNULL(t0.U_promise_date ,t1.docduedate) AS DATE) = CAST(DATEADD(DAY, -1, GETDATE()) AS DATE) THEN 'Yesterday'
-    WHEN CAST(ISNULL(t0.U_promise_date,t1.docduedate) AS DATE) = CAST(DATEADD(DAY, -2, GETDATE()) AS DATE) THEN 'Two Days Ago'
-    WHEN CAST(ISNULL(t0.U_promise_date,t1.docduedate) AS DATE) >= CAST(DATEADD(DAY, -3, GETDATE()) AS DATE) THEN 'Last Three Days'
-    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(DAY, -5, GETDATE()) AS DATE) THEN 'Last Five Days'
-    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(WEEK, -1, GETDATE()) AS DATE) THEN 'Last Week'
-    WHEN CAST(ISNULL(t0.U_promise_date, t1.docduedate) AS DATE) >= CAST(DATEADD(MONTH, -1, GETDATE()) AS DATE) THEN 'Last Month'
-    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2022 THEN 'Year 2022'
-    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2021 THEN 'Year 2021'
-    WHEN YEAR(ISNULL(t0.U_promise_date,t1.docduedate)) = 2023 THEN 'Year 2023'
+    WHEN CAST(t0.U_floor_date AS DATE) = CAST(GETDATE() AS DATE) THEN 'Today'
+    WHEN CAST(t0.U_floor_date AS DATE) = CAST(DATEADD(DAY, -1, GETDATE()) AS DATE) THEN 'Yesterday'
+    WHEN CAST(t0.U_floor_date AS DATE)= CAST(DATEADD(DAY, -2, GETDATE()) AS DATE) THEN 'Two Days Ago'
+    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(DAY, -3, GETDATE()) AS DATE) THEN 'Last Three Days'
+    WHEN CAST(t0.U_floor_date AS DATE)>= CAST(DATEADD(DAY, -5, GETDATE()) AS DATE) THEN 'Last Five Days'
+    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(WEEK, -1, GETDATE()) AS DATE) THEN 'Last Week'
+    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(MONTH, -1, GETDATE()) AS DATE) THEN 'Last Month'
+
+
+    WHEN YEAR(CAST(t0.U_floor_date AS DATE)) = 2022 THEN 'Year 2022'
+    WHEN YEAR(CAST(t0.U_floor_date AS DATE)) = 2021 THEN 'Year 2021'
+   
     ELSE 'Other'
 END AS DateCategory,
 
@@ -397,7 +400,8 @@ when t4.PrcrmntMtd = 'M' and t9.PrOrder is not null then
 isnull(T11.[Material Issued Cost],0) +  isnull(T11.[Sub Con Issued Cost],0) + isnull(t12.[Act Labour Cost],0) + isnull(t12.[Act Machine Cost],0) +
 isnull(t11.[Material UnIssued Cost],0) + isnull(t11.[Sub Con UnIssued Cost],0) + isnull(t13.[Open Labour Cost],0) + isnull(t13.[Open Machine Cost],0) 
 when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
-else 0 end) [Proj Margin]
+else 0 end) [Proj Margin],
+t0.U_floor_date
 
 
 
@@ -473,6 +477,7 @@ where t1.CANCELED <> 'Y'
 and t1.DocDate >= '01.01.2023'
 and t0.ItemCode <> 'TRANSPORT'
 ---order by t1.docnum, t0.linenum, t0.U_Promise_Date
+and t1.DocStatus<>'c'
 
 order by t1.docnum";
 

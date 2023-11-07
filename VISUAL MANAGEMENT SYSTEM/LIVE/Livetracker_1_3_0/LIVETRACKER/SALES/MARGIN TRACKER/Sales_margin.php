@@ -27,7 +27,7 @@
     <?php   $sales_order = isset($_GET['so']) ? $_GET['so'] : 000000;   ?>
 
     <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
-    <?php include '../../../SQL CONNECTIONS/conn.php'; ?>
+  
 
 
     <?php
@@ -37,7 +37,7 @@
         //$sales_o = $getResults->fetchAll(PDO::FETCH_BOTH);
        // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); ?>
 
-<?php
+    <?php
 require 'vendor/autoload.php';
 Predis\Autoloader::register();
 
@@ -71,74 +71,77 @@ $sales_margin = json_decode($retrieved_data, true);
             }
         });
     });
-    
-    
 
 
 
 
 
-function spinAndReload(button) {
-    // Add a highlighted style to the button
-    button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
-    button.disabled = true;
-    button.innerHTML += '<span class="dot-dot-dot"></span>';
-    // Refresh cache.php in the background
-    fetch('./cache.php', { cache: 'reload' })
-        .then(response => {
-            // Success message can be logged here
-            console.log('Cache refreshed successfully');
-            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
-            button.disabled = false;
-            location.reload();
-        })
-        .catch(error => {
-            // Error message can be logged here
-            console.error('Error refreshing cache: ', error);
-            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
-            button.disabled = false;
-        });
-}
-</script>
-<style>
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
 
-.dot-dot-dot::after {
-  content: ' ...';
-  animation: blink 1s infinite;
-}
-@keyframes slideInLeft {
-    0% {
-        transform: translateX(-100%);
+
+    function spinAndReload(button) {
+        // Add a highlighted style to the button
+        button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
+        button.disabled = true;
+        button.innerHTML += '<span class="dot-dot-dot"></span>';
+        // Refresh cache.php in the background
+        fetch('./cache.php', {
+                cache: 'reload'
+            })
+            .then(response => {
+                // Success message can be logged here
+                console.log('Cache refreshed successfully');
+                button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+                button.disabled = false;
+                location.reload();
+            })
+            .catch(error => {
+                // Error message can be logged here
+                console.error('Error refreshing cache: ', error);
+                button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+                button.disabled = false;
+            });
+    }
+    </script>
+    <style>
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
     }
 
-    100% {
-        transform: translateX(0);
+    .dot-dot-dot::after {
+        content: ' ...';
+        animation: blink 1s infinite;
     }
-}
 
-h1 {
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-delay: 0s;
-    animation-iteration-count: 1;
-    animation-name: slideInLeft;
+    @keyframes slideInLeft {
+        0% {
+            transform: translateX(-100%);
+        }
 
-}
+        100% {
+            transform: translateX(0);
+        }
+    }
 
-th {
-    width: 200px;
-}
+    h1 {
+        animation-duration: 2s;
+        animation-timing-function: ease-in-out;
+        animation-delay: 0s;
+        animation-iteration-count: 1;
+        animation-name: slideInLeft;
+
+    }
+
+    th {
+        width: 200px;
+    }
 
 
-
-
-
-</style>
+    .light_red {
+        color: red;
+    }
+    </style>
 
 <body>
     <div id="background">
@@ -166,36 +169,35 @@ th {
                             <th style="position:sticky;width:100px;left:0px;padding-left:3px;background-color:black">
                                 Sales Order</th>
                             <th style="position:sticky;width:300px;left:100px;color:white;background-color:black">
-                                Project</th>
+                                Customer</th>
                             <th style="position:sticky;width:200px;left:400px;color:white;background-color:black">
                                 Process Order
                             </th>
-                            <th style="position:sticky;width:200px;left:600px;background-color:black">Customer</th>
+                            <th style="position:sticky;width:200px;left:600px;background-color:black">Project</th>
                             <th style="position:sticky;width:200px;left:800px;background-color:black">Proj Margin</th>
 
-                            <th>Customer PO</th>
+                         
 
 
 
                             <th>PP Status</th>
 
 
-                        
-                            <th>Promise Date</th>
+
+                          
 
 
 
-                            <th>PG1</th>
                             <th>In Stock</th>
 
-                            <th>ItemCode</th>
+                          
                             <th>Dscription</th>
                             <th>Quantity</th>
                             <th>Buy or Make</th>
 
 
                             <th>Sub BOMS?</th>
-                            <th>BOM Created?</th>
+                           
 
                             <th>BOM Size</th>
                             <th>Total Cost per BOM</th>
@@ -209,12 +211,12 @@ th {
 
                             <th>Sub Con Planned Cost</th>
                             <th>Sub Con Issued Cost</th>
-                            <th>Labour Items</th>
+                           
                             <th>Labour Planned Hours</th>
                             <th>Act Labour Hours</th>
                             <th>Labour Planned cost</th>
                             <th>Act Labout Cost</th>
-                            <th>Machine Items</th>
+                            
 
                             <th>Machine Planned Hours</th>
                             <th>Act Machine Hours</th>
@@ -242,7 +244,8 @@ th {
                             <th>Planned Cost</th>
                             <th>Projected Cost</th>
                             <th>Planned Margin</th>
-                           
+                            <th>Floor Date</th>
+
 
 
                         </tr>
@@ -257,7 +260,7 @@ th {
                         <?php //$engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Engineer"]));         ?>
                         <?php //$sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Sales Person"])); ?>
                         <?php //$cell_color = $sales_order["Margin"] < 0.5 ? 'light_red' : '';?>
-                        <?php //$sales_order["Orig Margin"]<.4 ? $cell_color_margin='light_red':$cell_color_margin=''?>
+                        <?php if ($sales_order["SO Sales Value EUR"] !=0)number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2)< 40? $cell_color_margin='red':$cell_color_margin=''?>
                         <?php //$sales_order["Planned BOM Margin"]<.4 ? $cell_color='light_red':$cell_color=''?>
                         <?php //$sales_order["Planned Prod Ord Margin"]<.4 ? $cell_color_plan='light_red':$cell_color_plan=''?>
                         <?php //$sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
@@ -270,19 +273,31 @@ th {
                                     onclick="location.href='../../../../../../SAP%20READER/SAP READER/BASE_sales_order.php?sales_order=<?=$sales_order['Sales Order']?>'"><?= $sales_order["Sales Order"]?><button>
                             </td>
                             <td style="position:sticky;left:100px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )"
-                                class='lefttext'><?= $sales_order["Project"] ?></td>
+                                class='lefttext'><?= $sales_order["cardname"] ?></td>
                             <td
                                 style="position:sticky;left:400px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
                                 <?= $sales_order["Process Order"] ?></td>
                             <td
                                 style="position:sticky;left:600px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["cardname"] ?></td>
+                                <?= $sales_order["Project"]?></td>
 
 
-                                <td
-                                style="position:sticky;left:800px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= ($sales_order["SO Sales Value EUR"] != 0) ? number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2) . "%" : "N/A" ?></td>
-                            <td><?= $sales_order["Customer PO"]==NULL?'NULL':$sales_order["Customer PO"]?></td>
+                            <td
+                                style="color:<?=$cell_color_margin?>;position:sticky;left:800px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
+                                <?php
+                        if ($sales_order["SO Sales Value EUR"] != 0) {
+                                 $value = number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2);
+                                    if ($value < 40) {
+                                echo '<span style="color:red;font-weight:bold"> &#x2193;&nbsp;</span>' . $value . '%';
+                                        } else {
+                                    echo $value . '%';
+                                                 }
+                                    } else {
+                                echo 'N/A';
+                                    }
+                            ?></td>
+                          
+
 
 
 
@@ -290,21 +305,21 @@ th {
 
 
 
-                            <td><?= $sales_order["Promise Date"] ?></td>
+                          
 
 
 
-                            <td><?=  $sales_order["PG1"] ?></td>
+                    
                             <td><?= number_format($sales_order["In Stock"],3) ?></td>
 
-                            <td><?= $sales_order["ItemCode"] ?></td>
+                          
                             <td><?= $sales_order["Dscription"] ?></td>
                             <td><?= $sales_order["Quantity"] ?></td>
                             <td><?= $sales_order["Buy or Make"] ?></td>
 
                             <td><?= $sales_order["Sub BOMs?"] ?></td>
-                            <td><?= $sales_order["BOM Created?"] ?></td>
                            
+
                             <td><?= $sales_order["BOM Size"] ?></td>
                             <td><?= number_format($sales_order["Total Cost per BOM"], 2) ?></td>
 
@@ -317,12 +332,12 @@ th {
 
                             <td><?= number_format($sales_order["Sub Con Planned Cost"],2) ?></td>
                             <td><?= number_format($sales_order["Sub Con Issued Cost"],2) ?></td>
-                            <td><?= $sales_order["Labour Items"] ?></td>
+                           
                             <td><?=number_format($sales_order["Labour Planned Hours"],2)?></td>
                             <td><?= number_format($sales_order["Act Labour Hours"],2) ?></td>
                             <td><?= number_format($sales_order["Labour Planned Cost"],2) ?></td>
                             <td><?= number_format($sales_order["Act Labour Cost"],2) ?></td>
-                            <td><?= $sales_order["Machine Items"] ?></td>
+                         
 
                             <td><?= $sales_order["Machine Planned Hours"] ?></td>
                             <td><?= $sales_order["Act Machine Hours"] ?></td>
@@ -350,9 +365,9 @@ th {
                             <td><?= number_format($sales_order["Planned Cost"],2) ?></td>
                             <td><?= number_format($sales_order["Projected Cost"],2) ?></td>
                             <td><?= number_format($sales_order["Planned Margin"],2) ?></td>
-                           
 
 
+                            <td><?= $sales_order["floor_date"] ?></td>
 
 
 
@@ -381,11 +396,12 @@ th {
                                 background: linear-gradient(100deg,#009688, #8BC34A )">
                             <div class="filter">
                                 <div class="text">
-                                <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
-                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"onclick="spinAndReload(this)">UPDATE</button>
-                                
+                                    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"
+                                        onclick="spinAndReload(this)">UPDATE</button>
+
                                 </div>
-                                
+
                             </div>
                             <div class="filter">
                                 <div class="text">

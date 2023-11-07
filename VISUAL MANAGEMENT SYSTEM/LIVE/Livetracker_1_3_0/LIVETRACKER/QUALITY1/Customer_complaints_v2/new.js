@@ -195,6 +195,9 @@ function myFunction(event) {
                         if (response[0][0]['person'] == 'SeanO Brien (Q)') {
                             $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
                         }
+                        if (response[0][0]['person'] === "SeanO'Brien") {
+                            $('#owner option[value="SeanO\'Brien"]').prop('selected', true);
+                        }
                         /* if (response[0][0]['attachments'] == null) {
                             $('#fileid').text('Download');
                         }
@@ -275,6 +278,8 @@ function submitForm(prev_owner) {
     {
         prev_owner = 'no';
     }
+    alert(y);
+    
     console.log(y);
     console.log(y);
     console.log(prev_owner);
