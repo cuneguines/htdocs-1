@@ -474,7 +474,7 @@ left join OPEN_TIME t13 on t13.PrOrder = t9.PrOrder and t13.[End Product] = t0.I
 
 
 where t1.CANCELED <> 'Y'
-and t1.DocDate >= '01.01.2023'
+and t1.DocDate >= '2023-10-01' --YYYY MM DD
 and t0.ItemCode <> 'TRANSPORT'
 ---order by t1.docnum, t0.linenum, t0.U_Promise_Date
 and t1.DocStatus<>'c'

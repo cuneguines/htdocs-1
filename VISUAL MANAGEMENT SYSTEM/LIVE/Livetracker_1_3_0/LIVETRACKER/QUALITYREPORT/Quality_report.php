@@ -58,7 +58,31 @@
     });
 
 
-    
+    function spinAndReload(button) {
+    // Add a highlighted style to the button
+    button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
+    button.disabled = true;
+    button.innerHTML += '<span class="dot-dot-dot"></span>';
+    // Refresh cache.php in the background
+    fetch('./cache.php', {
+            cache: 'reload'
+        })
+        .then(response => {
+            // Success message can be logged here
+            console.log('Cache refreshed successfully');
+            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+            button.disabled = false;
+            location.reload();
+        })
+        .catch(error => {
+            // Error message can be logged here
+            console.error('Error refreshing cache: ', error);
+            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+            button.disabled = false;
+        });
+}
+    // Use passive: false to ensure preventDefault works
+
 
     </script>
 

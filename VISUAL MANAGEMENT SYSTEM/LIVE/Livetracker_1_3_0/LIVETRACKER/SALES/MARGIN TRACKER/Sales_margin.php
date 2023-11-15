@@ -133,10 +133,6 @@ $sales_margin = json_decode($retrieved_data, true);
 
     }
 
-    th {
-        width: 200px;
-    }
-
 
     .light_red {
         color: red;
@@ -166,32 +162,16 @@ $sales_margin = json_decode($retrieved_data, true);
                         <!-- 		LineNum	so_status	PrcrmntMth	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
 
                         <tr class="dark_grey wtext smedium head">
-                            <th style="position:sticky;width:100px;left:0px;padding-left:3px;background-color:black">
-                                Sales Order</th>
-                            <th style="position:sticky;width:300px;left:100px;color:white;background-color:black">
-                                Customer</th>
-                            <th style="position:sticky;width:200px;left:400px;color:white;background-color:black">
-                                Process Order
-                            </th>
-                            <th style="position:sticky;width:200px;left:600px;background-color:black">Project</th>
-                            <th style="position:sticky;width:200px;left:800px;background-color:black">Proj Margin</th>
-
-                         
-
-
-
-                            <th>PP Status</th>
-
-
+                            <th width="7%">Sales Order</th>
+                            <th width="13%">Customer</th>
+                            <th width="5%">Process Order</th>
+                            <th width="13%">Project</th>
+                            <th width="5%">Proj Margin</th>
+                            <th width="15%">PP Status</th>
+                            <th width="40%">In Stock</th>
 
                           
-
-
-
-                            <th>In Stock</th>
-
-                          
-                            <th>Dscription</th>
+                            <!-- <th>Dscription</th>
                             <th>Quantity</th>
                             <th>Buy or Make</th>
 
@@ -245,6 +225,7 @@ $sales_margin = json_decode($retrieved_data, true);
                             <th>Projected Cost</th>
                             <th>Planned Margin</th>
                             <th>Floor Date</th>
+                            -->
 
 
 
@@ -268,22 +249,14 @@ $sales_margin = json_decode($retrieved_data, true);
                         <tr class='smedium btext' status='<?= $status ?>' datecategory='<?= $datecategory ?>'
                             customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>'
                             sales_person='<?= $sales_person ?>'>
-                            <td style="position:sticky;left:0px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )"
+                            <td
                                 class="bold"><button class="brred rounded btext medium"
                                     onclick="location.href='../../../../../../SAP%20READER/SAP READER/BASE_sales_order.php?sales_order=<?=$sales_order['Sales Order']?>'"><?= $sales_order["Sales Order"]?><button>
                             </td>
-                            <td style="position:sticky;left:100px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )"
-                                class='lefttext'><?= $sales_order["cardname"] ?></td>
-                            <td
-                                style="position:sticky;left:400px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["Process Order"] ?></td>
-                            <td
-                                style="position:sticky;left:600px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
-                                <?= $sales_order["Project"]?></td>
-
-
-                            <td
-                                style="color:<?=$cell_color_margin?>;position:sticky;left:800px;background-color: #009688;box-shadow: -2px 0px 8px 10px #607D8B;background:linear-gradient(100deg,#009688, white )">
+                            <td class='lefttext'><?= $sales_order["cardname"] ?></td>
+                            <td><?= $sales_order["Process Order"] ?></td>
+                            <td class = 'lefttext'><?= $sales_order["Proj Margin"]?></td><td
+                                style="color:<?=$cell_color_margin?>;">
                                 <?php
                         if ($sales_order["SO Sales Value EUR"] != 0) {
                                  $value = number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2);
@@ -311,63 +284,7 @@ $sales_margin = json_decode($retrieved_data, true);
 
                     
                             <td><?= number_format($sales_order["In Stock"],3) ?></td>
-
-                          
-                            <td><?= $sales_order["Dscription"] ?></td>
-                            <td><?= $sales_order["Quantity"] ?></td>
-                            <td><?= $sales_order["Buy or Make"] ?></td>
-
-                            <td><?= $sales_order["Sub BOMs?"] ?></td>
-                           
-
-                            <td><?= $sales_order["BOM Size"] ?></td>
-                            <td><?= number_format($sales_order["Total Cost per BOM"], 2) ?></td>
-
-                            <td><?= $sales_order["Material Lines"] ?></td>
-                            <td><?= $sales_order["Material Fully Issued"] ?></td>
-                            <td><?= number_format($sales_order["Material Planned Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Material Issued Cost"],2) ?></td>
-                            <td><?= $sales_order["Sub Con Items"] ?></td>
-                            <td><?= $sales_order["Sub Con Items Issued"] ?></td>
-
-                            <td><?= number_format($sales_order["Sub Con Planned Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Sub Con Issued Cost"],2) ?></td>
-                           
-                            <td><?=number_format($sales_order["Labour Planned Hours"],2)?></td>
-                            <td><?= number_format($sales_order["Act Labour Hours"],2) ?></td>
-                            <td><?= number_format($sales_order["Labour Planned Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Act Labour Cost"],2) ?></td>
-                         
-
-                            <td><?= $sales_order["Machine Planned Hours"] ?></td>
-                            <td><?= $sales_order["Act Machine Hours"] ?></td>
-                            <td><?= number_format($sales_order["Machine Planned Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Act Machine Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Total Planned Prod Cost"],2) ?></td>
-                            <td><?= $sales_order["Materials TBI"] ?></td>
-
-                            <td><?= $sales_order["Sub Con TBI"] ?></td>
-                            <td><?= $sales_order["Labour Hours TBI"] ?></td>
-                            <td><?= $sales_order["Machine Hours TBI"] ?></td>
-                            <td><?= number_format($sales_order["Unissued Mat SC Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Open Lab Laser Cost"],2) ?></td>
-                            <td><?= $sales_order["Prod Status"] ?></td>
-
-
-                            <td><?= $sales_order["Qty Made In Prod"] ?></td>
-                            <td><?= $sales_order["Del Status"] ?></td>
-                            <td><?= $sales_order["Del Qty"] ?></td>
-                            <td><?= number_format($sales_order["SO Sales Value EUR"],2) ?></td>
-                            <td><?= number_format($sales_order["Original SO Cost"] ,2)?></td>
-                            <td><?= number_format($sales_order["Original SO Margin"],2) ?></td>
-
-
-                            <td><?= number_format($sales_order["Planned Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Projected Cost"],2) ?></td>
-                            <td><?= number_format($sales_order["Planned Margin"],2) ?></td>
-
-
-                            <td><?= $sales_order["floor_date"] ?></td>
+                            
 
 
 
