@@ -311,22 +311,16 @@ isnull(FORMAT(t0.U_promise_date,'dd-MM-yy'), FORMAT(t1.docduedate,'dd-MM-yy')) [
 FORMAT(t0.U_floor_date,'dd-MM-yy')[floor_date],
 
 
-CASE
-    WHEN CAST(t0.U_floor_date AS DATE) = CAST(GETDATE() AS DATE) THEN 'Today'
-    WHEN CAST(t0.U_floor_date AS DATE) = CAST(DATEADD(DAY, -1, GETDATE()) AS DATE) THEN 'Yesterday'
-    WHEN CAST(t0.U_floor_date AS DATE)= CAST(DATEADD(DAY, -2, GETDATE()) AS DATE) THEN 'Two Days Ago'
-    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(DAY, -3, GETDATE()) AS DATE) THEN 'Last Three Days'
-    WHEN CAST(t0.U_floor_date AS DATE)>= CAST(DATEADD(DAY, -5, GETDATE()) AS DATE) THEN 'Last Five Days'
-    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(WEEK, -1, GETDATE()) AS DATE) THEN 'Last Week'
-    WHEN CAST(t0.U_floor_date AS DATE) >= CAST(DATEADD(MONTH, -1, GETDATE()) AS DATE) THEN 'Last Month'
 
-
-    WHEN YEAR(CAST(t0.U_floor_date AS DATE)) = 2022 THEN 'Year 2022'
-    WHEN YEAR(CAST(t0.U_floor_date AS DATE)) = 2021 THEN 'Year 2021'
-   
-    ELSE 'Other'
-END AS DateCategory,
-
+CASE WHEN CAST(t0.[U_floor_date] AS DATE) = CAST(GETDATE() AS DATE) then 'TD' end [TD],
+CASE WHEN CAST(t0.[U_floor_date] AS DATE) = CAST(dateadd(day, -1,GETDATE()) AS DATE) THEN 'YD' end [YD],
+	   
+CASE WHEN DATEPART(ISO_WEEK,t0.[U_floor_date]) = DATEPART(ISO_WEEK,GETDATE()) AND DATEPART(YEAR,t0.[U_floor_date]) = DATEPART(YEAR,GETDATE()) then 'TW' end [TW],
+CASE WHEN DATEPART(ISO_WEEK,t0.[U_floor_date]) = DATEPART(ISO_WEEK,GETDATE()) -1 AND DATEPART(YEAR,t0.[U_floor_date]) = DATEPART(YEAR,GETDATE()) THEN 'LW' END [LW],
+CASE WHEN DATEPART(MONTH,t0.[U_floor_date]) = DATEPART(MONTH,GETDATE()) AND DATEPART(YEAR,t0.[U_floor_date]) = DATEPART(YEAR,GETDATE()) then 'TM' END [TM],
+CASE WHEN DATEPART(MONTH,t0.[U_floor_date]) = DATEPART(MONTH,GETDATE()) -1 AND DATEPART(YEAR,t0.[U_floor_date]) = DATEPART(YEAR,GETDATE()) then 'LM' END [LM],
+CASE WHEN DATEPART(YEAR,t0.[U_floor_date]) = DATEPART(YEAR,GETDATE()) THEN 'TY'end [TY],
+CASE WHEN t0.[U_floor_date] IS NOT NULL THEN t0.[U_floor_date] END [DateCategory],
 case when t10.[Same Codes?] is null then 'No'
 else 'Yes' end [Duplicate items on SO?],
 t4.InvntItem [Stock Item?],

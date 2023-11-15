@@ -580,7 +580,7 @@
                                     <div class="content">
                                         <select id="select_days_week" class="selector fill medium">
                                             <option value="All" selected>All</option>
-                                            <option value="LastthreeDays" selected>Last three Days</option>
+                                            <option value="LastthreeDays" selected></option>
                                             <option value="LastfiveDays" selected>Last five Days</option>
                                             <option value="Monday" selected>Monday</option>
                                             <option value="Tuesday" selected>Tuesday</option>

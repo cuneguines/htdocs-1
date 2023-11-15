@@ -14,6 +14,7 @@
 
     <!-- LOCAL JS -->
     <script type="text/javascript" src="../../../JS LIBS/LOCAL/JS_filters.js"></script>
+    <script type="text/javascript" src="./filter.js"></script>
     <script type="text/javascript" src="../../../JS LIBS/LOCAL/JS_comments.js"></script>
     <script type="text/javascript" src="./JS_table_to_excel.js"></script>
 
@@ -27,18 +28,20 @@
     <?php   $sales_order = isset($_GET['so']) ? $_GET['so'] : 000000;   ?>
 
     <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
+    <?php include './SQL_Margin_tracker.php'; ?>
+   <?php include '../../../SQL CONNECTIONS/conn.php';?>
   
 
 
     <?php
 
-        //$getResults = $conn->prepare($margin_tracker);
-        //$getResults->execute();
-        //$sales_o = $getResults->fetchAll(PDO::FETCH_BOTH);
+        $getResults = $conn->prepare($margin_tracker);
+        $getResults->execute();
+        $sales_margin = $getResults->fetchAll(PDO::FETCH_BOTH);
        // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); ?>
 
     <?php
-require 'vendor/autoload.php';
+/* require 'vendor/autoload.php';
 Predis\Autoloader::register();
 
 // Redis configuration
@@ -57,7 +60,7 @@ $retrieved_data = $redis->get('sales_margin_data');
 
 // Convert the JSON data to an associative array
 $sales_margin = json_decode($retrieved_data, true);
-
+ */
   ?>
     <script>
     $(function() {
@@ -144,7 +147,7 @@ $sales_margin = json_decode($retrieved_data, true);
         <div id="content">
 
             <div class="table_title " style="top:0">
-                <h1 style="background:linear-gradient(100deg,black, orange)">SALES MARGIN</h1>
+                <h1 style="background:linear-gradient(100deg,black, orange)">PLANNED SALES MARGIN</h1>
             </div>
 
             <!--  <table id="products" style="position: sticky;overflow-x:scroll;">
@@ -156,19 +159,23 @@ $sales_margin = json_decode($retrieved_data, true);
                                     <th style="width:100px">ItemCode</th>
                                     <th style="width:200px">ItemGroup</th> -->
 
-            <div id="pages_table_container" style="overflow-x:scroll;height:80%;top:0" class="table_container">
-                <table id="new_sales_orders_margin" class="filterable sortable colborders">
+            <div id="pages_table_container" style="overflow-x:scroll;height:80%;top:0;" class="table_container">
+                <table id="new_sales_orders_margin" class="filterable sortable colborders"  style="background:linear-gradient(100deg,black, green)">
                     <thead style="position:sticky;top:0;z-index:+2;background-color:black">
                         <!-- 		LineNum	so_status	PrcrmntMth	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
 
                         <tr class="dark_grey wtext smedium head">
-                            <th width="7%">Sales Order</th>
-                            <th width="13%">Customer</th>
-                            <th width="5%">Process Order</th>
-                            <th width="13%">Project</th>
-                            <th width="5%">Proj Margin</th>
-                            <th width="15%">PP Status</th>
-                            <th width="40%">In Stock</th>
+                            <th width="9%">Sales Order</th>
+                            <th width="12%">Project</th>
+                            <th width="9%">Process Order</th>
+                            <th width="12%">Customer </th>
+                            <th width="8%">Proj Margin in %</th>
+                            <th width="12%">PP Status</th>
+                            <th width="18%">Description</th>
+                            <th width="10%">Delivery Status</th>
+                            <th width="6%">Floor Date</th>
+                            <th width="12%">Planned Margin</th>
+
 
                           
                             <!-- <th>Dscription</th>
@@ -238,6 +245,13 @@ $sales_margin = json_decode($retrieved_data, true);
                         <?php $status = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["PP Status"]));         ?>
                         <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Project"]));           ?>
                         <?php $datecategory = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["DateCategory"]));           ?>
+                        <?php $today = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["TD"]));           ?>
+                        <?php $yesterday = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["YD"]));           ?>
+                        <?php $thisweek = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["TW"]));           ?>
+                        <?php $lastweek = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["LW"]));           ?>
+                        <?php $thismonth = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["TM"]));           ?>
+                        <?php $lastmonth = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["LM"]));           ?>
+                        <?php $thisyear = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["TY"]));           ?>
                         <?php //$engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Engineer"]));         ?>
                         <?php //$sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Sales Person"])); ?>
                         <?php //$cell_color = $sales_order["Margin"] < 0.5 ? 'light_red' : '';?>
@@ -246,22 +260,29 @@ $sales_margin = json_decode($retrieved_data, true);
                         <?php //$sales_order["Planned Prod Ord Margin"]<.4 ? $cell_color_plan='light_red':$cell_color_plan=''?>
                         <?php //$sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
 
-                        <tr class='smedium btext' status='<?= $status ?>' datecategory='<?= $datecategory ?>'
+                        <tr style="box-shadow: 0px 0px 8px 0px #607D8B;
+    background: linear-gradient(201deg,#9E9E9E, #009688 );"class='smedium btext' status='<?= $status ?>' datecategory='<?= $datecategory ?>'today='<?= $today ?>'yesterday='<?= $yesterday ?>'thisweek='<?= $thisweek ?>'lastweek='<?= $lastweek?>'thismonth='<?= $thismonth ?>'lastmonth='<?= $lastmonth ?>'thisyear='<?= $thisyear ?>'
                             customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>'
                             sales_person='<?= $sales_person ?>'>
-                            <td
-                                class="bold"><button class="brred rounded btext medium"
-                                    onclick="location.href='../../../../../../SAP%20READER/SAP READER/BASE_sales_order.php?sales_order=<?=$sales_order['Sales Order']?>'"><?= $sales_order["Sales Order"]?><button>
-                            </td>
+                            <td class="bold">
+    <button class="brred rounded btext medium" onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_sales_order.php?sales_order=<?= $sales_order['Sales Order'] ?>'">
+        <?= $sales_order["Sales Order"] ?>
+    </button>
+</td>
+                            <td class='lefttext'><?= $sales_order["Project"] ?></td>
+                            <td calss="bold">
+    <button class="brred rounded btext medium" onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_process_order.php?process_order=<?php echo isset($sales_order['Process Order']) ? $sales_order['Process Order'] : 'NULL'; ?>'">
+        <?php echo isset($sales_order['Process Order']) ? $sales_order["Process Order"] : 'NULL'; ?>
+    </button>
+</td>
                             <td class='lefttext'><?= $sales_order["cardname"] ?></td>
-                            <td><?= $sales_order["Process Order"] ?></td>
-                            <td class = 'lefttext'><?= $sales_order["Proj Margin"]?></td><td
+                        <td
                                 style="color:<?=$cell_color_margin?>;">
                                 <?php
-                        if ($sales_order["SO Sales Value EUR"] != 0) {
+                        if ($sales_order["SO Sales Value EUR"] != 0){
                                  $value = number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2);
                                     if ($value < 40) {
-                                echo '<span style="color:red;font-weight:bold"> &#x2193;&nbsp;</span>' . $value . '%';
+                                echo '<span style="color:red;font-weight:bold"> &#x2193;&nbsp;</span>' .  '<span style="font-weight:bold;">' . $value . '%</span>';
                                         } else {
                                     echo $value . '%';
                                                  }
@@ -283,11 +304,16 @@ $sales_margin = json_decode($retrieved_data, true);
 
 
                     
-                            <td><?= number_format($sales_order["In Stock"],3) ?></td>
+                           
+
+
+                            <td class='lefttext'><?= $sales_order["Dscription"] ?></td>
+
+                            <td ><?= $sales_order["Del Status"] ?></td>
+                            <td ><?= $sales_order["floor_date"] ?></td>
+
                             
-
-
-
+                            <td ><?= $sales_order["Planned Margin"] ?></td>
 
 
 
@@ -315,7 +341,7 @@ $sales_margin = json_decode($retrieved_data, true);
                                 <div class="text">
                                     <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
                                     background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"
-                                        onclick="spinAndReload(this)">UPDATE</button>
+                                        >UPDATE</button>
 
                                 </div>
 
@@ -340,14 +366,14 @@ $sales_margin = json_decode($retrieved_data, true);
                                 <div class="content">
                                     <select id="select_datecategory" class="selector fill medium">
                                         <option value="All" selected>All</option>
-                                        <option value="Today" selected>Today</option>
-                                        <option value="Yesterday" selected>Yesterday</option>
-                                        <option value="LastThreeDays" selected>Last Three Days</option>
-                                        <option value="LastFiveDays" selected>Last Five Days</option>
-                                        <option value="LastMonth" selected>Last Month</option>
-                                        <option value="Year2021" selected>Year 2021</option>
-                                        <option value="Year2022" selected>Year 2022</option>
-                                        <option value="Year2023" selected>Year 2023</option>
+                                        <option value="TD" selected>Today</option>
+                                        <option value="YD" selected>Yesterday</option>
+                                        <option value="TW" selected>This Week</option>
+                                        <option value="LW" selected>Last Week</option>
+                                        <option value="TM" selected>This Month</option>
+                                        <option value="LM" selected>Last Month</option>
+                                        
+                                        <option value="TY" selected>Year 2023</option>
                                         <option value="Other" selected>Other</option>
 
 
