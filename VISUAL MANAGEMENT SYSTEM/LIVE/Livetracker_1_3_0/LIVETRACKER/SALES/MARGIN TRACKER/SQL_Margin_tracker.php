@@ -308,7 +308,7 @@ t1.docstatus [SO Status] , t0.LineStatus, t0.OcrCode, case when t5.Name is NULL 
 t8.Name [PP Stage],
 t1.DocDate [SO Opened],
 isnull(FORMAT(t0.U_promise_date,'dd-MM-yy'), FORMAT(t1.docduedate,'dd-MM-yy')) [Promise Date],
-FORMAT(t0.U_floor_date,'dd-MM-yy')[floor_date],
+FORMAT(t0.U_floor_date,'dd-MM-yyyy')[floor_date],
 
 
 
@@ -395,14 +395,23 @@ isnull(T11.[Material Issued Cost],0) +  isnull(T11.[Sub Con Issued Cost],0) + is
 isnull(t11.[Material UnIssued Cost],0) + isnull(t11.[Sub Con UnIssued Cost],0) + isnull(t13.[Open Labour Cost],0) + isnull(t13.[Open Machine Cost],0) 
 when t4.PrcrmntMtd = 'M' and t9.PrOrder is null and t7.Code is not null then t7.[BOM Cost] * t0.Quantity
 else 0 end) [Proj Margin],
-t0.U_floor_date
+t0.U_floor_date,
+t1.U_Dimension1[BU]
+,t_3.firstname + ' ' + t_3.lastName [Sales Person],
 
 
-
-
-
+t_8.SlpName[Engineer]
 from rdr1 t0
+
 inner join ordr t1 on t1.DocEntry = t0.DocEntry
+
+INNER join ohem t_3 on t_3.empID = t1.OwnerCode
+  INNER JOIN oslp t_8 ON t_8.SlpCode = t1.SlpCode
+
+
+
+
+
 
       ----------checking status of completion in production -------
 left join (
@@ -468,7 +477,7 @@ left join OPEN_TIME t13 on t13.PrOrder = t9.PrOrder and t13.[End Product] = t0.I
 
 
 where t1.CANCELED <> 'Y'
-and t1.DocDate >= '2023-10-01' --YYYY MM DD
+and t1.DocDate >= '2023-01-01' 
 and t0.ItemCode <> 'TRANSPORT'
 ---order by t1.docnum, t0.linenum, t0.U_Promise_Date
 and t1.DocStatus<>'c'

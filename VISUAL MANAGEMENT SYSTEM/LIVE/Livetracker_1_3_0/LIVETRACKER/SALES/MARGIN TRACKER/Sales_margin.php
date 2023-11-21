@@ -29,8 +29,8 @@
 
     <?php include '../../../PHP LIBS/PHP FUNCTIONS/php_functions.php'; ?>
     <?php include './SQL_Margin_tracker.php'; ?>
-   <?php include '../../../SQL CONNECTIONS/conn.php';?>
-  
+    <?php include '../../../SQL CONNECTIONS/conn.php';?>
+
 
 
     <?php
@@ -38,8 +38,8 @@
         $getResults = $conn->prepare($margin_tracker);
         $getResults->execute();
         $sales_margin = $getResults->fetchAll(PDO::FETCH_BOTH);
-       // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); ?>
-
+       // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); 
+?>
     <?php
 /* require 'vendor/autoload.php';
 Predis\Autoloader::register();
@@ -62,20 +62,22 @@ $retrieved_data = $redis->get('sales_margin_data');
 $sales_margin = json_decode($retrieved_data, true);
  */
   ?>
+
     <script>
     $(function() {
         $("table.sortable").tablesorter({
-            "theme": "blackice",
-            "dateFormat": "ddmmyyyy",
-            "headers": {
+            theme: "blackice",
+            dateFormat: "ddmmyyyy",
+            headers: {
                 8: {
                     sorter: "shortDate"
+                },
+                15: {
+                    sorter: false
                 }
             }
         });
     });
-
-
 
 
 
@@ -140,6 +142,15 @@ $sales_margin = json_decode($retrieved_data, true);
     .light_red {
         color: red;
     }
+    .styling {
+    color: red;
+    font-weight: bold;
+}
+
+.styling::before {
+    content: '\2193\00a0'; /* Unicode for arrow and non-breaking space */
+}
+
     </style>
 
 <body>
@@ -160,7 +171,8 @@ $sales_margin = json_decode($retrieved_data, true);
                                     <th style="width:200px">ItemGroup</th> -->
 
             <div id="pages_table_container" style="overflow-x:scroll;height:80%;top:0;" class="table_container">
-                <table id="new_sales_orders_margin" class="filterable sortable colborders"  style="background:linear-gradient(100deg,black, green)">
+                <table id="new_sales_orders_margin" class="filterable sortable colborders"
+                    style="background:linear-gradient(100deg,black, green)">
                     <thead style="position:sticky;top:0;z-index:+2;background-color:black">
                         <!-- 		LineNum	so_status	PrcrmntMth	Qty Delivered	Cost at Delivery	Delivery Return	Cost at Return	Qty Returned	Sales Value	SO_Original_Cost	Planned_BOM_Cost	Planned Prod Order Cost	Likely Prod Ord Cost	Orig Margin	Planned BOM Margin	Planned Prod Ord Margin	Likely Prod Ord Margin -->
 
@@ -175,9 +187,17 @@ $sales_margin = json_decode($retrieved_data, true);
                             <th width="10%">Delivery Status</th>
                             <th width="6%">Floor Date</th>
                             <th width="12%">Planned Margin</th>
+                            <th style="display:none">Sales person</th>
+                            <th style="display:none">Engineer</th>
+                            <th style="display:none">Business Unit</th>
+
+                            <th style="display:none">Group Code</th>
+
+                            <th style="display:none">Product Group 1</th>
 
 
-                          
+
+
                             <!-- <th>Dscription</th>
                             <th>Quantity</th>
                             <th>Buy or Make</th>
@@ -239,7 +259,8 @@ $sales_margin = json_decode($retrieved_data, true);
                         </tr>
                     </thead>
                     <tbody class="white">
-                        <?php foreach ($sales_margin as $sales_order) : ?>
+                        <?php foreach ($sales_margin as $sales_order) : 
+                            if ($sales_order["floor_date"]=='06-07-06')continue;?>
                         <?php $row_color = ""; ?>
                         <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["cardname"]));         ?>
                         <?php $status = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["PP Status"]));         ?>
@@ -261,67 +282,50 @@ $sales_margin = json_decode($retrieved_data, true);
                         <?php //$sales_order["Likely Prod Ord Margin"]<.4 ? $cell_color_likely='light_red':$cell_color_likely=''?>
 
                         <tr style="box-shadow: 0px 0px 8px 0px #607D8B;
-    background: linear-gradient(201deg,#9E9E9E, #009688 );"class='smedium btext' status='<?= $status ?>' datecategory='<?= $datecategory ?>'today='<?= $today ?>'yesterday='<?= $yesterday ?>'thisweek='<?= $thisweek ?>'lastweek='<?= $lastweek?>'thismonth='<?= $thismonth ?>'lastmonth='<?= $lastmonth ?>'thisyear='<?= $thisyear ?>'
-                            customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>'
-                            sales_person='<?= $sales_person ?>'>
+    background: linear-gradient(201deg,#9E9E9E, #009688 );" class='smedium btext' status='<?= $status ?>'
+                            datecategory='<?= $datecategory ?>' today='<?= $today ?>' yesterday='<?= $yesterday ?>'
+                            thisweek='<?= $thisweek ?>' lastweek='<?= $lastweek?>' thismonth='<?= $thismonth ?>'
+                            lastmonth='<?= $lastmonth ?>' thisyear='<?= $thisyear ?>' customer='<?= $customer ?>'
+                            project='<?= $project ?>' engineer='<?= $engineer ?>' sales_person='<?= $sales_person ?>'>
                             <td class="bold">
-    <button class="brred rounded btext medium" onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_sales_order.php?sales_order=<?= $sales_order['Sales Order'] ?>'">
-        <?= $sales_order["Sales Order"] ?>
-    </button>
-</td>
+                                <button class="brred rounded btext medium"
+                                    onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_sales_order.php?sales_order=<?= $sales_order['Sales Order'] ?>'">
+                                    <?= $sales_order["Sales Order"] ?>
+                                </button>
+                            </td>
                             <td class='lefttext'><?= $sales_order["Project"] ?></td>
                             <td calss="bold">
-    <button class="brred rounded btext medium" onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_process_order.php?process_order=<?php echo isset($sales_order['Process Order']) ? $sales_order['Process Order'] : 'NULL'; ?>'">
-        <?php echo isset($sales_order['Process Order']) ? $sales_order["Process Order"] : 'NULL'; ?>
-    </button>
-</td>
+                                <button class="brred rounded btext medium"
+                                    onclick="location.href='../../../../../../SAP%20READER/SAP%20READER/BASE_process_order.php?process_order=<?php echo isset($sales_order['Process Order']) ? $sales_order['Process Order'] : 'NULL'; ?>'">
+                                    <?php echo isset($sales_order['Process Order']) ? $sales_order["Process Order"] : 'NULL'; ?>
+                                </button>
+                            </td>
                             <td class='lefttext'><?= $sales_order["cardname"] ?></td>
-                        <td
-                                style="color:<?=$cell_color_margin?>;">
+                            <td style="color:<?=$cell_color_margin?>;">
                                 <?php
                         if ($sales_order["SO Sales Value EUR"] != 0){
                                  $value = number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2);
                                     if ($value < 40) {
-                                echo '<span style="color:red;font-weight:bold"> &#x2193;&nbsp;</span>' .  '<span style="font-weight:bold;">' . $value . '%</span>';
+                                echo '<span class="styling">'. $value . '%</span>';
                                         } else {
                                     echo $value . '%';
                                                  }
                                     } else {
-                                echo 'N/A';
+                                echo '<span></span><span style="color:red;font-weight:bold"> N/A</span>';
                                     }
                             ?></td>
-                          
-
-
-
 
                             <td><?=$sales_order["PP Status"]?></td>
-
-
-
-                          
-
-
-
-                    
-                           
-
-
                             <td class='lefttext'><?= $sales_order["Dscription"] ?></td>
-
-                            <td ><?= $sales_order["Del Status"] ?></td>
-                            <td ><?= $sales_order["floor_date"] ?></td>
-
-                            
-                            <td ><?= $sales_order["Planned Margin"] ?></td>
-
-
-
-
-
-
-
-                        </tr>
+                            <td><?= $sales_order["Del Status"] ?></td>
+                            <td><?= $sales_order["floor_date"] ?></td>
+                            <td><?= $sales_order["Planned Margin"] ?></td>
+                            <td style="display:none"><?= $sales_order["Sales Person"] ?></td>
+                            <td style="display:none"><?= $sales_order["Engineer"] ?></td>
+                            <td style="display:none"><?= $sales_order["BU"] ?></td>
+                            <td style="display:none"><?= $sales_order["ItemCode"] ?></td>
+                            <td style="display:none"><?= $sales_order["PG1"] ?></td>
+                            </tr>
                         <?
                                 $cell_color='';
                                 $cell_color_plan='';
@@ -339,9 +343,9 @@ $sales_margin = json_decode($retrieved_data, true);
                                 background: linear-gradient(100deg,#009688, #8BC34A )">
                             <div class="filter">
                                 <div class="text">
-                                    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
-                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"
-                                        >UPDATE</button>
+                                    <button class="fill red medium wtext"
+                                        style="box-shadow: -2px 0px 8px 0px #607D8B;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px">UPDATE</button>
 
                                 </div>
 
@@ -372,7 +376,7 @@ $sales_margin = json_decode($retrieved_data, true);
                                         <option value="LW" selected>Last Week</option>
                                         <option value="TM" selected>This Month</option>
                                         <option value="LM" selected>Last Month</option>
-                                        
+
                                         <option value="TY" selected>Year 2023</option>
                                         <option value="Other" selected>Other</option>
 

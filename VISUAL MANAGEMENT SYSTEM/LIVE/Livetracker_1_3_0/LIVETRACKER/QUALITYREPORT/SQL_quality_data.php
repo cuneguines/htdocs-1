@@ -141,7 +141,7 @@ SELECT
     t0.* 
 FROM KENTSTAINLESS.dbo.ordr t0
 ) t50 ON t50.DocNum=nc_sales_order 
-LEFT JOIN KENTSTAINLESS.dbo.rdr1 t11 ON t11.DocEntry = t50.DocEntry AND t11.U_IIS_proPrOrder = nc_process_order or t11.U_IIS_proPrOrder = cc_process_order
+LEFT JOIN KENTSTAINLESS.dbo.rdr1 t11 ON t11.DocEntry = t50.DocEntry AND (t11.U_IIS_proPrOrder = nc_process_order or t11.U_IIS_proPrOrder = cc_process_order)
 LEFT JOIN KENTSTAINLESS.dbo.oitm t12 ON t12.ItemCode COLLATE SQL_Latin1_General_CP1_CI_AS = COALESCE(NULLIF(nc_itemcode,''), cc_itemcode) COLLATE SQL_Latin1_General_CP1_CI_AS 
 LEFT JOIN KENTSTAINLESS.dbo.oitb t13 ON t13.ItmsGrpCod = t12.ItmsGrpCod 
 LEFT JOIN (

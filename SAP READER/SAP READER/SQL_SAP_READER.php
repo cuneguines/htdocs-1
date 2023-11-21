@@ -43,7 +43,7 @@ if(isset($process_order)){
     CASE WHEN t3_A.IssueType = 'B' THEN t4_A.LineID ELSE NULL END[Labour Step Number],
     CASE WHEN t3_A.IssueType = 'B' THEN t4_A.StepItem ELSE NULL END[Labour Code],
     CASE WHEN t3_A.IssueType = 'B' THEN t4_A.StepDesc ELSE NULL END[Labour Description],
-    CASE WHEN t3_A.IssueType = 'B' THEN t4_A.ProcessTime ELSE NULL END[Planned Labour Step],
+    CASE WHEN t3_A.IssueType = 'B' THEN t3_A.PlannedQty ELSE NULL END[Planned Labour Step],
     CASE WHEN t3_A.IssueType = 'B' THEN t4_B.Labour ELSE NULL END[Booked Labour Step],
     CASE WHEN t3_A.IssueType = 'B' THEN t4_A.Status ELSE NULL END[Labour Step Status],
     '| | | | | |'[DIV5],

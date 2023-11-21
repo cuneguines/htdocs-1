@@ -1,1 +1,112 @@
-{"51012":{"SEQ002":[{"date":"02-10-2023","name":"Brian Murphy","sequence":"SEQ002","remarks":"Material due in on the 11th"}]},"50992":{"SEQ002":{"1":{"date":"11-10-2023","name":"Craig Kehoe","sequence":"SEQ002","remarks":"Box section still to cut"}}},"50948":{"SEQ002":{"1":{"date":"29-09-2023","name":"Brian Murphy","sequence":"SEQ002","remarks":"On Hold 11am"}}},"50936":{"SEQ002":{"1":{"date":"02-10-2023","name":"Brian Murphy","sequence":"SEQ002","remarks":"Pipe due in on the 5th"}}},"50920":{"SEQ006":{"1":{"date":"26-09-2023","name":"Brian Murphy","sequence":"SEQ006","remarks":"Waiting on Material"}}},"50919":{"SEQ001":{"1":{"date":"28-09-2023","name":"Gary Moorhead","sequence":"SEQ001","remarks":"full prog from start fresh"}}},"50851":{"SEQ002":{"1":{"date":"02-10-2023","name":"Brian Murphy","sequence":"SEQ002","remarks":"Material due in on the 10th"}}},"50148":{"SEQ009":{"1":{"date":"17-08-2023","name":"James Donegan","sequence":"SEQ009","remarks":"waiting parts"}}},"49825":{"SEQ004":{"1":{"date":"27-07-2023","name":"Cian Byrne","sequence":"SEQ004","remarks":"stainless angle and a4 threaded bar\r\n"}}},"49533":{"SEQ010A":{"1":{"date":"11-07-2023","name":"Gary Moorhead","sequence":"SEQ010A","remarks":"doosan and make jig to hold vice to magnets, done for all time now."}}},"49457":{"SEQ008":{"1":{"date":"05-07-2023","name":"Gary Moorhead","sequence":"SEQ008","remarks":"progs wrong had to leave and move on to nxt ped software getting mixed up"}}}}
+{
+    "51012": {
+        "SEQ002": [
+            {
+                "date": "02-10-2023",
+                "name": "Brian Murphy",
+                "sequence": "SEQ002",
+                "remarks": "Material due in on the 11th"
+            }
+        ]
+    },
+    "50992": {
+        "SEQ002": {
+            "1": {
+                "date": "11-10-2023",
+                "name": "Craig Kehoe",
+                "sequence": "SEQ002",
+                "remarks": "Box section still to cut"
+            }
+        }
+    },
+    "50948": {
+        "SEQ002": {
+            "1": {
+                "date": "29-09-2023",
+                "name": "Brian Murphy",
+                "sequence": "SEQ002",
+                "remarks": "On Hold 11am"
+            }
+        }
+    },
+    "50936": {
+        "SEQ002": {
+            "1": {
+                "date": "02-10-2023",
+                "name": "Brian Murphy",
+                "sequence": "SEQ002",
+                "remarks": "Pipe due in on the 5th"
+            }
+        }
+    },
+    "50920": {
+        "SEQ006": {
+            "1": {
+                "date": "26-09-2023",
+                "name": "Brian Murphy",
+                "sequence": "SEQ006",
+                "remarks": "Waiting on Material"
+            }
+        }
+    },
+    "50919": {
+        "SEQ001": {
+            "1": {
+                "date": "28-09-2023",
+                "name": "Gary Moorhead",
+                "sequence": "SEQ001",
+                "remarks": "full prog from start fresh"
+            }
+        }
+    },
+    "50851": {
+        "SEQ002": {
+            "1": {
+                "date": "02-10-2023",
+                "name": "Brian Murphy",
+                "sequence": "SEQ002",
+                "remarks": "Material due in on the 10th"
+            }
+        }
+    },
+    "50148": {
+        "SEQ009": {
+            "1": {
+                "date": "17-08-2023",
+                "name": "James Donegan",
+                "sequence": "SEQ009",
+                "remarks": "waiting parts"
+            }
+        }
+    },
+    "49825": {
+        "SEQ004": {
+            "1": {
+                "date": "27-07-2023",
+                "name": "Cian Byrne",
+                "sequence": "SEQ004",
+                "remarks": "stainless angle and a4 threaded bar\r\n"
+            }
+        }
+    },
+    "49533": {
+        "SEQ010A": {
+            "1": {
+                "date": "11-07-2023",
+                "name": "Gary Moorhead",
+                "sequence": "SEQ010A",
+                "remarks": "doosan and make jig to hold vice to magnets, done for all time now."
+            }
+        }
+    },
+    "49457": {
+        "SEQ008": {
+            "1": {
+                "date": "05-07-2023",
+                "name": "Gary Moorhead",
+                "sequence": "SEQ008",
+                "remarks": "progs wrong had to leave and move on to nxt ped software getting mixed up"
+            }
+        }
+    }
+}

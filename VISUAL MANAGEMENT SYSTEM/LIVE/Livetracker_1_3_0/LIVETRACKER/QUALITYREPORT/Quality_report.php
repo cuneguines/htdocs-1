@@ -178,16 +178,9 @@
 
 
                             <th width="150px">Admin cost</th>
-                            <th width="150px">RW Cost</th>
-                            <th width="150px">Materail Cost</th>
-                            <th width="150px">Logistics Cost</th>
-                            <th width="150px">Outside vendor cost</th>
-                            <th width="150px">Total cost</th>
-                            <th width="150px">Rework Type</th>
-                            <th width="150px"> Time to Close</th>
-
-                            <th width="150px"> RW Process Order</th>
-                            <th width="105px"> RW SO number</th>
+                            
+                            <th width="150px">Process Order</th>
+                         
 
 
 
@@ -289,7 +282,9 @@
                             <td class='lefttext'><?= $row["U_Product_Group_One"] ?></td>
                             <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                             <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
-                            <td class='lefttext'><?= $row["Issued Cost"] ?></td>
+                            <td class='lefttext'><?= number_format($row["Issued Cost"],2) ?></td>
+                            
+<td><?= $row["nc_process_order"]!=NULL?$row["nc_process_order"]:$row["cc_process_order"]?></td>
 
 
 

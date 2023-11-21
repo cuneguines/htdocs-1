@@ -99,7 +99,7 @@
         $itemLabels[] = $row['ID'];
         $daysLeftData[] = $row['Days_open'];
        
-        $area_rd_cc=$row['cc_raised_by'];
+        $area_rd_cc=$row['cc_in_relation_to'];
        
         if (!isset($data_rd_cc[$area_rd_cc])) {
             $data_rd_cc[$area_rd_cc] = 0;
@@ -117,6 +117,7 @@
       $labels_rd_cc= array_keys($data_rd_cc);
       $values_rd_cc = array_values($data_rd_cc);
   
+
   
       $combinedData_ac_cc = array_combine($labels_ac_cc, $values_ac_cc);
       $combinedData_rd_cc= array_combine($labels_rd_cc, $values_rd_cc);
@@ -125,6 +126,8 @@
   // Sort the combined data array in descending order based on values
   arsort($combinedData_ac_cc);
   arsort($combinedData_rd_cc);
+  $count_rd_cc=is_array($combinedData_rd_cc)  && count($combinedData_rd_cc) > 0 ? reset($combinedData_rd_cc) : 0;
+  $count_ac_cc=is_array($combinedData_ac_cc) && count($combinedData_ac_cc) > 0 ? reset($combinedData_ac_cc) : 0;
   
   // Extract sorted labels and values back into separate arrays
   $Labels_ac_cc = array_keys($combinedData_ac_cc);
@@ -296,12 +299,14 @@ foreach ($results_pie_cc as $row) {
 
     $combinedData_ac = array_combine($labels_ac, $values_ac);
     $combinedData_rd= array_combine($labels_rd, $values_rd);
-
-
+   
 // Sort the combined data array in descending order based on values
 arsort($combinedData_ac);
 arsort($combinedData_rd);
-
+$count_rd = is_array($combinedData_rd) && count($combinedData_rd) > 0 ? reset($combinedData_rd) : 0;
+//print_r($count_rd);
+$count_ac=is_array($combinedData_ac) && count($combinedData_ac) > 0 ? reset($combinedData_ac) : 0;
+//print_r($count_ac);
 // Extract sorted labels and values back into separate arrays
 $Labels_ac = array_keys($combinedData_ac);
 $Values_ac = array_values($combinedData_ac);
@@ -561,7 +566,7 @@ $Values_rd = array_values($combinedData_rd);
                                 text: 'Area Caused',
                                 font: {
                                     weight: 'bold',
-                                    size: 18,
+                                    size:18,
 
                                 }
 
@@ -569,7 +574,7 @@ $Values_rd = array_values($combinedData_rd);
                         },
                             y: {
                                 beginAtZero: true,
-                                max: 10
+                                max: <?php echo (int)$count_ac+1; ?>
 
                             }
 
@@ -651,7 +656,7 @@ $Values_rd = array_values($combinedData_rd);
                         },
                         y: {
                             beginAtZero: true,
-                            max: 10,
+                            max: <?php echo (int)$count_rd+1; ?>,
                             stepSize: 1
                         }
                     },
@@ -1171,7 +1176,7 @@ $Values_rd = array_values($combinedData_rd);
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 10,
+                            max:<?php echo (int)$count_ac_cc+1; ?> ,
                             stepSize: 1
                         },
                         x: {
@@ -1253,7 +1258,7 @@ $Values_rd = array_values($combinedData_rd);
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 10,
+                            max: <?php echo (int)$count_rd_cc+1; ?>,
                             stepSize: 1
                         },
                         x: {
