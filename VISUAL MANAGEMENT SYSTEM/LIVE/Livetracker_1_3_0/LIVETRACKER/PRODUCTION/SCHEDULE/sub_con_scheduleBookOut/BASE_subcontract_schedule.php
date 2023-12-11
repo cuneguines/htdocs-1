@@ -200,11 +200,12 @@
                             $first = 1;
                             ?>
                            
-                            <?php for ($i = 0; $i <= sizeof($results); $i++) : ?>
+                            <?php for ($i = 0; $i <= sizeof($results); $i++) : 
                               
-                             
-                                
-                                
+                              
+
+                               
+                                ?>
                                 
                                 <?php
 
@@ -338,7 +339,7 @@
                                         $commentss = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"]; */
 
-                                if ($results[$i]["Issued Qty"]!='0'&&$results[$i]["Planned Qty"]!='0')
+                                if ($results[$i]["Issued Qty"]!='0'&&$results[$i]["Planned Qty"]!='0'&& $results[$i]["Issued Qty"]!=NULL&&$results[$i]["Planned Qty"]!=NULL)
                                 {
                                     
                                 if($results[$i]["Issued Qty"]>= $results[$i]["Planned Qty"])
@@ -438,7 +439,7 @@
                                 $base_color = "";
                                 $border_color = "";
                                 $overwrite = "";
-
+                            
                                 ?>
                             <?php endfor; ?>
                         </tbody>

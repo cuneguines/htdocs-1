@@ -4,6 +4,7 @@ $pre_production_exceptions =
     (case when t5.[Name] is null then t1.U_PP_Status else t5.[Name] end) [Status],
     t0.docnum [Sales Order],
     ISNULL(t0.U_Client,t0.CardName) [Project], 
+    t0.cardname[Customer],
     t1.Dscription [Description],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
     ISNULL(CAST(t1.U_Est_Eng_Hours AS DECIMAL(12,0)) - ISNULL(CAST(t1.U_ACT_ENG_TIME AS DECIMAL(12,0)),0), 0) [Est Eng Hrs],

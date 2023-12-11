@@ -186,9 +186,10 @@ $sales_margin = json_decode($retrieved_data, true);
                             <th width="18%">Description</th>
                             <th width="10%">Delivery Status</th>
                             <th width="6%">Floor Date</th>
-                            <th width="12%">Planned Margin</th>
+                            <th width="6%">Planned Margin</th>
+                            
+                            <th width="6%">Engineer</th>
                             <th style="display:none">Sales person</th>
-                            <th style="display:none">Engineer</th>
                             <th style="display:none">Business Unit</th>
 
                             <th style="display:none">Group Code</th>
@@ -262,7 +263,8 @@ $sales_margin = json_decode($retrieved_data, true);
                         <?php foreach ($sales_margin as $sales_order) : 
                             if ($sales_order["floor_date"]=='06-07-06')continue;?>
                         <?php $row_color = ""; ?>
-                        <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["cardname"]));         ?>
+                        <?php $engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Engineer"])); ?>
+                         <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["cardname"]));        ?>
                         <?php $status = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["PP Status"]));         ?>
                         <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["Project"]));           ?>
                         <?php $datecategory = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $sales_order["DateCategory"]));           ?>
@@ -320,8 +322,9 @@ $sales_margin = json_decode($retrieved_data, true);
                             <td><?= $sales_order["Del Status"] ?></td>
                             <td><?= $sales_order["floor_date"] ?></td>
                             <td><?= $sales_order["Planned Margin"] ?></td>
+                            <td><?= $sales_order["Engineer"] ?></td>
                             <td style="display:none"><?= $sales_order["Sales Person"] ?></td>
-                            <td style="display:none"><?= $sales_order["Engineer"] ?></td>
+                            
                             <td style="display:none"><?= $sales_order["BU"] ?></td>
                             <td style="display:none"><?= $sales_order["ItemCode"] ?></td>
                             <td style="display:none"><?= $sales_order["PG1"] ?></td>
@@ -341,7 +344,7 @@ $sales_margin = json_decode($retrieved_data, true);
                     <div id="filter_container">
                         <div id="filters" class="red fill rounded" style="box-shadow: -2px 0px 8px 0px #607D8B;
                                 background: linear-gradient(100deg,#009688, #8BC34A )">
-                            <div class="filter">
+                            <div class="filter" >
                                 <div class="text">
                                     <button class="fill red medium wtext"
                                         style="box-shadow: -2px 0px 8px 0px #607D8B;
@@ -350,7 +353,7 @@ $sales_margin = json_decode($retrieved_data, true);
                                 </div>
 
                             </div>
-                            <div class="filter">
+                            <div class="filter"style="width:16%;">
                                 <div class="text">
                                     <button class="fill red medium wtext button" style="box-shadow: -2px 0px 8px 0px #607D8B;
                                     background: linear-gradient(100deg,#009688, #8BC34A );">Customer</button>
@@ -362,7 +365,9 @@ $sales_margin = json_decode($retrieved_data, true);
                                     </select>
                                 </div>
                             </div>
-                            <div class="filter">
+
+                           
+                            <div class="filter" style="width:16%;">
                                 <div class="text">
                                     <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
                                         background: linear-gradient(100deg,#009688, #8BC34A )">DateCategory</button>
@@ -385,7 +390,7 @@ $sales_margin = json_decode($retrieved_data, true);
 
                                 </div>
                             </div>
-                            <div class="filter">
+                            <div class="filter" style="width:16%;">
                                 <div class="text">
                                     <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;
                                         background: linear-gradient(100deg,#009688, #8BC34A )">Status</button>
@@ -394,6 +399,18 @@ $sales_margin = json_decode($retrieved_data, true);
                                     <select id="select_status" class="selector fill medium">
                                         <option value="All" selected>All</option>
                                         <?php generate_filter_options($sales_margin, "PP Status"); ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="filter"style="width:16%;">
+                                <div class="text">
+                                    <button class="fill red medium wtext button" style="box-shadow: -2px 0px 8px 0px #607D8B;
+                                    background: linear-gradient(100deg,#009688, #8BC34A );">Engineer</button>
+                                </div>
+                                <div class="content">
+                                    <select id="select_engineer" class="selector fill medium">
+                                        <option value="All" selected>All</option>
+                                        <?php generate_filter_options($sales_margin, "Engineer"); ?>
                                     </select>
                                 </div>
                             </div>

@@ -59,31 +59,29 @@
 
 
     function spinAndReload(button) {
-    // Add a highlighted style to the button
-    button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
-    button.disabled = true;
-    button.innerHTML += '<span class="dot-dot-dot"></span>';
-    // Refresh cache.php in the background
-    fetch('./cache.php', {
-            cache: 'reload'
-        })
-        .then(response => {
-            // Success message can be logged here
-            console.log('Cache refreshed successfully');
-            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
-            button.disabled = false;
-            location.reload();
-        })
-        .catch(error => {
-            // Error message can be logged here
-            console.error('Error refreshing cache: ', error);
-            button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
-            button.disabled = false;
-        });
-}
+        // Add a highlighted style to the button
+        button.style.background = 'linear-gradient(100deg, #E91E63, #F06292)';
+        button.disabled = true;
+        button.innerHTML += '<span class="dot-dot-dot"></span>';
+        // Refresh cache.php in the background
+        fetch('./cache.php', {
+                cache: 'reload'
+            })
+            .then(response => {
+                // Success message can be logged here
+                console.log('Cache refreshed successfully');
+                button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+                button.disabled = false;
+                location.reload();
+            })
+            .catch(error => {
+                // Error message can be logged here
+                console.error('Error refreshing cache: ', error);
+                button.style.background = 'linear-gradient(100deg, #009688, #8BC34A)';
+                button.disabled = false;
+            });
+    }
     // Use passive: false to ensure preventDefault works
-
-
     </script>
 
 
@@ -116,21 +114,14 @@
                         </div>
 
                         <div class="grouping_category_newest" style="float:left">
-                            <button class="fill medium blue wtext rounded" type="OpportunityForImprovement">OFI</button>
+                            <button class="fill medium blue wtext rounded" type="OpportunityForImprovement">Opportuntity
+                                For Improvement</button>
                         </div>
 
                         <div class="grouping_category_newest" style="float:left">
-                            <button class="fill medium blue wtext rounded" type="CustomerComplaints">CC</button>
+                            <button class="fill medium blue wtext rounded" type="CustomerComplaints">Customer
+                                complaints</button>
                         </div>
-
-                        <div class="grouping_category" style="float:left">
-                            <button class="fill medium blue wtext rounded" stage="Consum">Consumables</button>
-                        </div>
-
-                        <div class="grouping_category" style="float:left">
-                            <button class="fill medium blue wtext rounded" stat="Other">New</button>
-                        </div>
-
                         <div class="grouping_category_kpi" style="float:left">
 
                             <!-- <button onclick="location.href='../QUALITYREPORT/CHARTS-GRAPHS/charts.php'"class="fill medium blue wtext rounded" stage="Intel">KPIs</button> -->
@@ -138,6 +129,15 @@
                                 onclick="navigateWithLoader('../QUALITYREPORT/CHARTS-GRAPHS/charts.php')">KPIs</button>
                             <div id="loader" class="loader"></div>
                         </div>
+                        <div class="grouping_category" style="float:left">
+                            <button class="fill medium blue wtext rounded" stage="Consum">UNUSED</button>
+                        </div>
+
+                        <div class="grouping_category" style="float:left">
+                            <button class="fill medium blue wtext rounded" stat="Other">UNUSED</button>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                             <th width="120px">Days left</th>
                             <th width="150px"> Link to improvement</th>
                             <th width="200px">Area raised</th>
-                            <th width="120px">Area Caused</th>
+                            <th width="200px">Area Caused</th>
                             <th width="200px">Response type</th>
                             <th width="70px">Status</th>
                             <th width="300px">Customer</th>
@@ -167,6 +167,7 @@
                             <th width="120px">Sap code</th>
 
                             <th width="150px">SO</th>
+                            <th width="150px">Process Order</th>
                             <th width="300px">Project</th>
                             <th width="400px">Description</th>
                             <!-- <th width="200px">ItemCode</th> -->
@@ -177,10 +178,10 @@
 
 
 
-                            <th width="150px">Admin cost</th>
+                            <th width="150px">Total cost</th>
+
                             
-                            <th width="150px">Process Order</th>
-                         
+                            <th width="150px">Rework Process Order</th>
 
 
 
@@ -199,7 +200,7 @@
                                   $person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["person"]));
                                   $area_raised = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["area_raised_"]));
                                   $new_stat= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["new_stat"]));  
-                                  $area_caused= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["nc_area_caused"])); 
+                                  $area_caused= str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["nc_area_caused_"])); 
                                   $type=str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["form_type"])); 
                                   $types=str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $row["form_type"])); 
                             ?>
@@ -265,7 +266,7 @@
                                     class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'>
                             </td>
                             <td class='lefttext'><?= $row["area_raised_"] ?></td>
-                            <td class='lefttext'><?= $row["nc_area_caused"]?></td>
+                            <td class='lefttext'><?= $row["nc_area_caused_"]?></td>
                             <td class='lefttext'><?= $row["Action"] ?></td>
                             <td class='lefttext Status'><?= $row["Status"] ?></td>
                             <td class='lefttext'><?= $row["Customer"] ?></td>
@@ -274,8 +275,10 @@
 
 
 
+                            <td><?= rtrim(trim($row["nc_sales_order"]))!=NULL ? $row["nc_sales_order"] : $row["cc_sales_order"] ?></td>
 
-                            <td><?= $row["nc_sales_order"] ?></td>
+                            
+                            <td><?= rtrim(trim($row["nc_process_order"]))!=NULL?$row["nc_process_order"]:$row["cc_process_order"]?>
                             <td class='lefttext'><?= $row["U_Client"] ?></td>
                             <td class='lefttext'><?= $row["Dscription"] ?></td>
                             <!-- <td ><?// $row["ItemCode"] ?></td> -->
@@ -283,10 +286,11 @@
                             <td class='lefttext'><?= $row["U_Product_Group_Two"] ?></td>
                             <td class='lefttext'><?= $row["U_Product_Group_Three"] ?></td>
                             <td class='lefttext'><?= number_format($row["Issued Cost"],2) ?></td>
+
                             
-<td><?= $row["nc_process_order"]!=NULL?$row["nc_process_order"]:$row["cc_process_order"]?></td>
+                            </td>
 
-
+                            <td class='lefttext'><?= $row["R-ProcessOrder"] ?></td>
 
 
 
@@ -356,7 +360,7 @@
                     class="grouping_page_corner_buttons fill medium blue_pur wtext rounded">EXPORT</button>
 
 
-              
+
 
 
 
@@ -365,9 +369,9 @@
 
             <div id="grouping_pages_footer" style="bottom:1%" class="footer">
                 <div id="button_container" style="width:10%">
-                <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:100%;margin-left: -1%;
+                    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:100%;margin-left: -1%;
                                     background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px"
-                    onclick="spinAndReload(this)">UPDATE</button>
+                        onclick="spinAndReload(this)">UPDATE</button>
                     <!-- <button onclick="location.href='../QUALITY1/non_conformance/non.php'" class="grouping_page_corner_buttons fill medium light_blue wtext rounded">MAIN MENU</button> -->
                 </div>
                 <div id="filter_container">
@@ -405,7 +409,7 @@
                             <div class="content">
                                 <select id="select_area_caused" class="selector fill medium">
                                     <option value="All" selected>All</option>
-                                    <?php generate_filter_options($quality_results, "nc_area_caused"); 
+                                    <?php generate_filter_options($quality_results, "nc_area_caused_"); 
                                     ?>
                                 </select>
                             </div>

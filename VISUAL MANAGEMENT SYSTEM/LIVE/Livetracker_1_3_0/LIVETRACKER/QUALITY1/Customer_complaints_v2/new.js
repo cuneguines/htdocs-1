@@ -8,6 +8,8 @@ $(document).ready(function () {
     $("label[for='date']").hide();
     $('#status').hide();
     $("label[for='status']").hide();
+    $('#rootcause').hide();
+    $("label[for='rootcause']").hide();
 
     $('.selector').prop('selectedIndex', 0);
     /* $('#page-inner_two').hide();
@@ -76,7 +78,7 @@ function myFunction(event) {
     $('#status option[value="Closed"]').prop('selected', true);
     $('#action option[value="Toolbox Talk"]').prop('selected', true);
     $('#owner option[value="All"]').prop('selected', true);
-
+    $('#rootcause option[value="Traning not adequate"]').prop('selected', true);
     var CurrentRow = $(event.target).closest("tr");
 
     // alert(CurrentRow);
@@ -104,6 +106,7 @@ function myFunction(event) {
     $('#owner option[value="' + owner + '"]').prop('selected', true);
     $('#action option[value="' + action + '"]').prop('selected', true);
     $('#status option[value="' + status + '"]').prop('selected', true);
+    
 
     $('#ddate').val(date);
     $('#formid').attr('action', '../../../../../../QLTYFILES/' + attachments);
@@ -198,6 +201,9 @@ function myFunction(event) {
                         if (response[0][0]['person'] === "SeanO'Brien") {
                             $('#owner option[value="SeanO\'Brien"]').prop('selected', true);
                         }
+                        if (response[0][0]['root_cause'] ==null) {
+                            $('#rootcause option[value="Procedure doesn\'t exist"]').prop('selected', true);
+                        }
                         /* if (response[0][0]['attachments'] == null) {
                             $('#fileid').text('Download');
                         }
@@ -221,6 +227,8 @@ function myFunction(event) {
                         $("label[for='date']").show();
                         $('#status').show();
                         $("label[for='status']").show();
+                        $('#rootcause').show();
+                        $("label[for='rootcause']").show();
                         console.log(ItemId);
                     }
                     else {
@@ -233,6 +241,9 @@ function myFunction(event) {
                         $("label[for='date']").show();
                         $('#status').show();
                         $("label[for='status']").show();
+                        $('#rootcause').show();
+                        $("label[for='rootcause']").show();
+                        $('#rootcause option[value="Procedure doesn\'t exist"]').prop('selected', true).show();
                         $('#action option[value="Toolbox Talk"]').prop('selected', true).show();
                         $('#owner option[value="All"]').prop('selected', true);
                         $('#status option[value="Closed"]').prop('selected', true);

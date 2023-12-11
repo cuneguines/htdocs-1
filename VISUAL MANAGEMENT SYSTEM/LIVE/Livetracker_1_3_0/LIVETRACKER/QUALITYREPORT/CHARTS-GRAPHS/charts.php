@@ -61,7 +61,7 @@
     $statusCounts = array(
         'Open' => 0,
         'Closed' => 0,
-        'Other' => 0,
+        'To be Actioned' => 0,
         
     );
 
@@ -81,7 +81,7 @@
 //$stmt_NEW = $conn->query($SQL_NEW);
 //$results_NEW= $stmt_NEW->fetchAll(PDO::FETCH_ASSOC);
    
-   
+$data_ac_cc=[];
     foreach ($results_closed_cc as $row) {
         $itemLabels[] = $row['ID'];
         $daysLeftData[] = $row['Days_open'];
@@ -94,19 +94,20 @@
         
         $data_ac_cc[$area_ac_cc]++;
      }
-    
+     $data_rd_cc=[];
     foreach ($results_closed_cc as $row) {
         $itemLabels[] = $row['ID'];
         $daysLeftData[] = $row['Days_open'];
        
-        $area_rd_cc=$row['cc_in_relation_to'];
+        $area_rd_cc=$row['cc_area_raised_by'];
+        if ($area_rd_cc != NULL) {
        
-        if (!isset($data_rd_cc[$area_rd_cc])) {
+        if (!isset($data_rd_cc[$area_rd_cc])  ) {
             $data_rd_cc[$area_rd_cc] = 0;
         }
         $data_rd_cc[$area_rd_cc]++;
       }
-
+    }
 
 
 
@@ -267,7 +268,7 @@ $statusDataJSON = json_encode($statusData);
 $statusCounts_cc = array(
     'Open' => 0,
     'Closed' => 0,
-    'Other' => 0,
+    'To be Action' => 0,
     
 );
 foreach ($results_pie_cc as $row) {
@@ -416,8 +417,13 @@ $Values_rd = array_values($combinedData_rd);
 
 
     //print_r($complaintCountsJSON_cc_closed);
-
+//} catch (PDOException $e) {
+ //   echo 'Connection failed: ' . $e->getMessage();
+ //   exit();
+//}
 ?>
+
+
 
     <div class="sidebar">
         <!-- Create links on the left -->
@@ -466,7 +472,7 @@ $Values_rd = array_values($combinedData_rd);
         <h2>Other</h2>
         <ul>
             <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues per
-                    Product Type Analysis</a></li>
+                    Product Type </a></li>
         </ul>
        
 
@@ -703,7 +709,15 @@ $Values_rd = array_values($combinedData_rd);
             // Retrieve the data from PHP
             var statusLabels = <?php echo $statusLabelsJSON; ?>;
             var statusData = <?php echo $statusDataJSON; ?>;
+// Filter out data that is zero
+var filteredStatusData = statusData.filter(function(value) {
+        return value > 0;
+    });
 
+    // Filter out corresponding labels
+    var filteredStatusLabels = statusLabels.filter(function(_, index) {
+        return statusData[index] > 0;
+    });
             // Get the chart canvas element
             var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -711,12 +725,12 @@ $Values_rd = array_values($combinedData_rd);
             currentChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: statusLabels,
+                    labels: filteredStatusLabels,
                     datasets: [{
-                        data: statusData,
+                        data: filteredStatusData,
                         backgroundColor: [
-                            'lightgreen',
                             'red',
+                            'lightgreen',
                             'lightblue'
                         ],
                         borderColor: [
@@ -736,9 +750,11 @@ $Values_rd = array_values($combinedData_rd);
                             formatter: (value, context) => {
                                 return value; // Display the count as the label
                             },
+                            color: 'white',
                             font: {
                                 weight: 'bold',
-                                size: 16
+                                size: 28,
+                                fontColor:'white'
                             },
                             // Customize label color
                             anchor: 'center', // Position the label on the end of the slice
@@ -1319,7 +1335,15 @@ $Values_rd = array_values($combinedData_rd);
             // Retrieve the data from PHP
             var statusLabels = <?php echo $statusLabelsJSON_cc; ?>;
             var statusData = <?php echo $statusDataJSON_cc; ?>;
+// Filter out data that is greater than zero
+var filteredStatusData = statusData.filter(function(value) {
+        return value > 0;
+    });
 
+    // Filter out corresponding labels
+    var filteredStatusLabels = statusLabels.filter(function(_, index) {
+        return statusData[index] > 0;
+    });
             // Get the chart canvas element
             var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -1328,12 +1352,12 @@ $Values_rd = array_values($combinedData_rd);
             currentChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: statusLabels,
+                    labels: filteredStatusLabels,
                     datasets: [{
-                        data: statusData,
+                        data: filteredStatusData,
                         backgroundColor: [
-                            'lightgreen',
                             'red',
+                            'lightgreen',
                             'lightblue'
                         ],
                         borderColor: [
@@ -1354,9 +1378,11 @@ $Values_rd = array_values($combinedData_rd);
                             formatter: (value, context) => {
                                 return value; // Display the count as the label
                             },
+                            color: 'white',
                             font: {
                                 weight: 'bold',
-                                size: 26
+                                size: 28,
+                                fontColor:'white'
                             },
                             anchor: 'center', // Position the label on the end of the slice
                             align: 'center', // Align the label to the start of the slice

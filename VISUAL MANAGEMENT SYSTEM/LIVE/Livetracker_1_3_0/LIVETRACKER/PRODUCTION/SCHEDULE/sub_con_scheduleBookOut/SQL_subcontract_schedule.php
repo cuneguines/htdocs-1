@@ -946,7 +946,7 @@ left join (
                                                 
 
 WHERE
- t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100') and  [Issued Qty] is not null and [Planned Qty] is not null and [Issued Qty]<[Planned Qty]
+ t2.Cmpltqty < t2.PlannedQty  and t0.ItemCode not in('130236280' ,'130330100') and  not([Issued Qty]>=[Planned Qty])
 
 ) as o where SUB_CON is null order by [Project] ";
 

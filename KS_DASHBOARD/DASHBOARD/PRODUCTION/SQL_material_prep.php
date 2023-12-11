@@ -117,6 +117,7 @@
         FROM(
 
             SELECT
+            t_w.U_IIS_proInstr[Instructions],
 			t44.[Sub Con Items],
             ISNULL(t16.[SUBCON],'N')[SUBCON],
             ISNULL(t7.DocNum, 000000) [Sales Order],
@@ -141,7 +142,7 @@
             t2.U_OldCode [Sequence Code],
             t1.StepItem[Step Labour Code],
             t1.StepDesc[Step Description],
-            t1.Instructions[Instructions],
+          ----  t1.Instructions[Instructions],
             CAST(t1.ProcessTime AS DECIMAL (12,2))[Planned Hours],
             CAST(t6.[Booked Hours] AS DECIMAL (12,2))[Booked Hours],
             CAST(CASE WHEN (t1.ProcessTime - ISNULL(t6.[Booked Hours],0)) < 0 THEN 0 ELSE (t1.ProcessTime - ISNULL(t6.[Booked Hours],0)) END  AS DECIMAL(12,2))[Remaining Hours Stage],
@@ -185,7 +186,7 @@
             ---Changed 18-01-23--
             left join [dbo].[@PRE_PROD_STATUS] as t24 on t24.code    = t8.U_PP_Status
     
-
+            left join wor1 t_w on t_w.Docentry=t3.Docentry and t_w.U_IIS_proPrLineID=t1.stepcode
     
             LEFT JOIN(
             SELECT t0.PrOrder, t0.StepItem, t0.StepCode, ROW_NUMBER() OVER (PARTITION BY t0.PrOrder ORDER BY t0.StepCode ASC)[RowNum] 

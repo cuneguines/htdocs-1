@@ -106,8 +106,9 @@ else{
   if ($prev_owner=="no")
   {
   try{
-    $mail->SMTPDebug = 3;                               // Enable verbose debug output
-	  
+    //Changed 05-12-23
+    //$mail->SMTPDebug = 3;                               // Enable verbose debug output
+	  $mail->SMTPDebug = 0;     
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = 'smtp.office365.com';  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication

@@ -53,9 +53,33 @@ $qlty_results_cost="SELECT
 *,
 t_new.U_rework_num,
 t_new.[Issued Cost],
-t_new.[Process Order],
+t_new.[Process Order][R-ProcessOrder],
 nc_process_order,
 cc_process_order,
+
+
+CASE 
+       -- 
+		When rtrim(ltrim(t0.cc_area_caused))='Wrapping/Dispatch' THEN 'Wrapping/Despatch'
+       
+		When rtrim(ltrim(t0.nc_area_caused))='Wrapping/Dispatch' THEN 'Wrapping/Despatch'
+
+        When rtrim(ltrim(t0.cc_area_caused))='Packing/Despatch' THEN 'Wrapping/Despatch'
+       
+		When rtrim(ltrim(t0.nc_area_caused))='Packing/Despatch' THEN 'Wrapping/Despatch'
+		When rtrim(ltrim(t0.cc_area_caused))='Line Feeding/Kitting ' THEN 'Line Feed/Kitting'
+			When rtrim(ltrim(t0.nc_area_caused))='Line Feeding/Kitting ' THEN 'Line Feed/Kitting'
+		When rtrim(ltrim(t0.cc_area_caused))='Sub Contractor' THEN 'Sub Contract Vendor'
+		When rtrim(ltrim(t0.nc_area_caused))='Sub Contractor' THEN 'Sub Contract Vendor'
+		When rtrim(ltrim(t0.nc_area_caused))='Subcontractor' THEN 'Sub Contract Vendor'
+		When rtrim(ltrim(t0.cc_area_caused))='Subcontractor' THEN 'Sub Contract Vendor'
+		When rtrim(ltrim(t0.cc_area_caused))='Incoming Goods/Store' THEN 'Goods Inward/Store'
+		When rtrim(ltrim(t0.nc_area_caused))='Incoming Goods/Store' THEN 'Goods Inward/Store'
+
+
+		WHEN t0.nc_area_caused='' or t0.nc_area_caused is NULL THEN cc_area_caused 
+        ELSE t0.nc_area_caused 
+    END [nc_area_caused_], 
 CASE 
     WHEN ISNULL(t0.nc_description, '') = '' THEN t0.cc_desc 
     ELSE t0.nc_description 
@@ -253,7 +277,7 @@ group by t0.U_rework_num, t0.U_IIS_proPrOrder
 where  t0.form_type IN ('Non Conformance', 'Customer complaints', 'Opportunity For Improvement') 
 AND t2.ID IS NULL 
 AND nc_description IS NOT NULL 
-
+---and t20.Date<>'01-01-1900'
 ORDER BY 
-CAST(t0.ID AS int);
+CAST(t0.ID AS int) desc;
 ";

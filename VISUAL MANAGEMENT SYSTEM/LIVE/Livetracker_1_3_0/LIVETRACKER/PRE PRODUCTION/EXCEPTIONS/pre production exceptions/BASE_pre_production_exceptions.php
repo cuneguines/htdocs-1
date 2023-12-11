@@ -13,6 +13,7 @@
 
         <!-- LOCAL JAVASCRIPT -->
         <script type = "text/javascript" src = "../../../../JS LIBS/LOCAL/JS_comments.js"></script>
+        <script type="text/javascript" src="../../../../JS LIBS/LOCAL/JS_filters.js"></script>
         <script type = "text/javascript" src = "./JS_exceptions_buttons.js"></script>
         <script type = "text/javascript" src = "./JS_table_to_excel.js"></script>
 
@@ -153,9 +154,13 @@
                                         $stage = "";
                                     }
                                 ?>
+                            <?php $customer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Customer"]));         ?>
+                            <?php $project = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Project"]));           ?>
+                            <?php $engineer = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Engineer"]));         ?>
+                            <?php $sales_person = str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $row["Sales Person"])); ?>
                                 <?php $row["Status"] == "Pre Production Potential" ? $row_color = "style = 'background-color:#f7FA64;'" : ($row["Status"] == "Pre Production Forecast" ? $row_color = "style = 'background-color:#FF8C00;'" : ($row["Stage"] == "1. Drawings Approved ( Fabrication Drawings)" || $row["Stage"] == "1. Drawings Approved (Fab Drawings)" ? $row_color = "style = 'background-color:#99FF99;'" : $row_color = "")); ?>
                                 <?php $row["Status"] == "Pre Production Confirmed" ? $status = "C" : ($row["Status"] == "Pre Production Potential" ? $status = "P" : ($row["Status"] == "Pre Production Forecast" ? $status = "F" : $status = "N"));    ?>
-                                <tr class = 'white btext' stage = '<?=$stage?>' comments = '".$row["Comments"]."' <?=$row_color?>>
+                                <tr class = 'white btext' stage = '<?=$stage?>' comments = '".$row["Comments"]."' <?=$row_color?> customer='<?= $customer ?>' project='<?= $project ?>' engineer='<?= $engineer ?>' sales_person='<?= $sales_person ?>'>
                                     <td><?=$status.$row["Sales Order"]?></td>
                                     <td class = "lefttext"><?=$row["Project"]?></td>
                                     <td class = "lefttext"><?=$row["Description"]?></td>
@@ -182,31 +187,34 @@
                         <div id = "filters" class="fill red rounded">
                             <div class = "filter wider">
                                 <div class = "text">
-                                    <button class = "fill red medium wtext">UNUSED</button>
+                                    <button class = "fill red medium wtext">Project</button>
                                 </div>
                                 <div class = "content">
-                                    <select class = "selector fill medium">
+                                    <select id = "select_project"class = "selector fill medium">
                                         <option value = "All" selected>All</option>
+                                        <?php generate_filter_options($pre_production_exceptions_results, "Project"); ?>
                                     </select>
                                 </div>
                             </div>
                             <div class = "filter wider">
                                 <div class = "text">
-                                    <button class = "fill red medium wtext">UNUSED</button>
+                                    <button class = "fill red medium wtext">Sales Person</button>
                                 </div>
                                 <div class = "content">
-                                    <select class = "selector fill medium">
+                                    <select id = "select_sales_person"class = "selector fill medium">
                                         <option value = "All" selected>All</option>
+                                        <?php generate_filter_options($pre_production_exceptions_results, "Sales Person"); ?>
                                     </select>
                                 </div>
                             </div>
                             <div class = "filter wider">
                                 <div class = "text">
-                                    <button class = "fill red medium wtext">UNUSED</button>
+                                    <button class = "fill red medium wtext">Engineer</button>
                                 </div>
                                 <div class = "content">
-                                    <select class = "selector fill medium">
+                                    <select id="select_engineer"class = "selector fill medium">
                                         <option value = "All" selected>All</option>
+                                        <?php generate_filter_options($pre_production_exceptions_results, "Engineer"); ?>
                                     </select>
                                 </div>
                             </div>

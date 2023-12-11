@@ -62,7 +62,7 @@
     define("SEQ019",  array('Packaging',                'Packaging'));
     define("SEQ030",  array('Wrapping',                 'Wrapping'));
     define("SEQ031",  array('Site Work',                'Site Work'));
-    define("SEQ032",  array('New',                'New'));
+    define("SEQ032",  array('NonChargeable Time',                'NonChargeable Time'));
 ?>
 
 <?php

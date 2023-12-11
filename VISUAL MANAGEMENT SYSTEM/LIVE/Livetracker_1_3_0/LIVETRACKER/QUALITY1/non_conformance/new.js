@@ -300,8 +300,8 @@ function submitForm(prev_owner) {
         success: function (response) {
             //$("#contact").html(response)
             //$("#contact-modal").modal('hide');
-            alert('input recieved');
-            alert(response);//vishu use this for testing
+            //alert('input recieved');
+            //alert(response);//vishu use this for testing
             object.reload(forcedReload);
         },
         error: function () {

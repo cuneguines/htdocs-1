@@ -471,6 +471,7 @@
                                     <th style="width:200px;display:none">Status </th>
                                     <th style="width:200px;display:none"> Date</th>
                                     <th style="width:200px;display:none"> Owner</th>
+                                    <th style="width:200px;display:none"> Root Cause</th>
                                     <th style="width:200px;"> Type</th>
                                 </tr>
                             </thead>
@@ -555,6 +556,7 @@
                                 <td style="display:none"><?=$row["Date"]?></td>
                                 <td style="display:none"><?=$row["person"]?></td>
                                 <td style="display:none"><?=$row["action"]?></td>
+                                <td style="display:none"><?=$row["root_cause"]?></td>
                                 <td ><?=$row["form_type"]?></td>
                                 </tr>
                             <?php endforeach; ?>
@@ -626,6 +628,25 @@
                                     <select id="action" style=width:100%;height:34px>
                                         <option value="Toolbox Talk" selected>Toolbox Talk</option>
                                         <option value="Eight Disciplines Process" selected>Eight Disciplines Process</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="rootcause">Root Cause</label>
+
+                                    <select id="rootcause" style=width:100%;height:34px>
+                                        
+                                        <option value="Procedure doesn't exist" selected>Procedure doesn’t exist</option>
+                                        <option value="Procedure isn’t adequate" selected>Procedure isn’t adequate</option>
+                                        <option value="Procedure wasn't followed" selected>Procedure wasn’t followed</option>
+                                        <option value="Good design practice not followed" selected>Good design practice not followed</option>
+                                        <option value="Good manufacturing practice not followed" selected>Good manufacturing practice not followed</option>
+                                        <option value="Communication not adequate" selected>Communication not adequate</option>
+                                        <option value="Training not adequate" selected>Training not adequate</option>
+                                        <option value="BOM issue" selected>BOM issue</option>
+
+                                       
 
                                     </select>
                                 </div>
