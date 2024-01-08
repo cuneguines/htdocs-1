@@ -3,6 +3,7 @@ body{
     height: 100vh;
     margin: 0;
     font-family: Source Sans Pro;
+    background:#2a0fc5;
 }
 #background{
     height:100%;

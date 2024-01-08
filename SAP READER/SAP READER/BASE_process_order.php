@@ -109,24 +109,25 @@
                             </div>
                             <div class = "subdiv right" style = "width:48%;">
                             <?php
-                            function division($a, $b) {         
-                                            if($b === '0'||$b === '0.00')
+                            function divisionAndPercentage($a, $b) {         
+                                            if($b === '0'||$b === '0.00'||$b === '.00'||$b === '.000')
                                             
                                             return null;
                                             else
-                                            return $a/$b;
+                                            $result=$a/$b;
+                                            return number_format($result * 100, 2) . '%';
                                                     
                                                 }
                                             ?>
                                 <div class = "element short"><button class = "textbox short">€ <?=number_format($process_order_data[0]["Planned Material"],2)?></button></div>
-                                <div class = "element short"><button class = "textbox short">€ <?= !$process_order_data[0]["Planned Material"] ? "0.00" : number_format($process_order_data[0]["Issued Material"],2)." ".number_format($process_order_data[0]["Issued Material"]/$process_order_data[0]["Planned Material"]*100,2)."%"?></button></div>
+                                <div class = "element short"><button class = "textbox short">€ <?= !$process_order_data[0]["Planned Material"] ? "0.00" : number_format($process_order_data[0]["Issued Material"],2)." ".round(number_format($process_order_data[0]["Issued Material"]/$process_order_data[0]["Planned Material"]*100,2))."%"?></button></div>
                                 <div class = "element short"><button class = "textbox short"><?=floatval($process_order_data[0]["Planned Labour"])?> Hrs</button></div>
-                                <!-- <div class = "element short"><button class = "textbox short"><?// !$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ".division(number_format($process_order_data[0]["Actual Labour"]),number_format($process_order_data[0]["Planned Labour"]*100,2))."%"?></button></div> -->
+                                <div class = "element short"><button class = "textbox short"><?=!$process_order_data[0]["Planned Labour"] ? "0 Hrs" : floatval($process_order_data[0]["Actual Labour"])." Hrs ". divisionAndPercentage($process_order_data[0]["Actual Labour"], $process_order_data[0]["Planned Labour"]) . '</button></div>';
+?>
                                 <?php $plannedLabour = floatval($process_order_data[0]["Planned Labour"]);?>
                                 <?php $actualLabour = floatval($process_order_data[0]["Actual Labour"]);?>
 
-                                <div class = "element short"><button class = "textbox short"><?php !$plannedLabour ? "0 Hrs" : $percentage = division(($actualLabour), ($plannedLabour * 100));
-                                 echo $actualLabour . " Hrs " . number_format($percentage,4). "%"?></button></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -160,7 +161,7 @@
                                         <th class = "lefttext" width = "7%">Planned<br>Qty</th>
                                         <th width = "10%">On Hand</th>
                                         <th class = "lefttext" width = "7%">Issued<br>Qy</th>
-                                        <th width = "10%">Cost</th>
+                                        <th width = "10%">ATP</th>
                                     </tr>
                                 </thead>
                                 <tbody class = "btext white">
@@ -217,7 +218,7 @@
                                                 <td style = "border-right:1px solid #454545;"                     ><?=floatval($row["Planned Material Qty"])?></td>
                                                 <td class="<?=$bstyle?>"style = "border-right:1px solid #454545;"                     ><?=floatval($row["Balance"])?></td>
                                                 <td style="border:<?=$size?> solid <?=$color?>;"><?=floatval($row["Issued Material Qty"])?></td>
-                                                <td style = "border-right:3px solid #454545;"                     ><?=floatval($row["Issued Material Cost"])?></td>
+                                                <td style = "border-right:3px solid #454545;"                     ><?=floatval($row["ATP"])?></td>
                                         </tr>
                                     <?php endforeach;?>
                                 </tbody>

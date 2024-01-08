@@ -1,0 +1,767 @@
+/*//////////////////// GLOBAL STYLES ////////////////////////////*/
+body{
+    height: 100vh;
+    margin: 0;
+    font-family: Source Sans Pro;
+    background:#2a0fc5;
+}
+#background{
+    height:100%;
+    width:100%;
+    background:#E8E8E8;
+}
+#container{
+    height:100%;
+}
+.submenu #logo{
+    position:relative;
+    top:15%;
+    left:15%;
+    width:70%;
+    height:70%;
+}
+/*//////////////////////// NAV MENU //////////////////////////////*/
+#navmenu{
+    text-align:left;
+    float:left;
+    width:15%;
+    height:100%;
+    background-color:#404040
+}
+#navmenu #title{
+    font-size:3.5vh;
+    color:white; 
+    padding-left:20%;
+}
+#navmenu nav{
+    height:25%;
+}
+#navmenu #dashboard_list{
+    list-style-type: none;
+    width:80%;
+    padding-left: 20%;
+    color:white;
+    font-size:2.5vh;
+}
+#dashboard_list .dashboard_option{
+    padding-top:2%;
+    padding-bottom:2%;
+}
+#dashboard_list .dashboard_option:hover{
+    color:white;
+    transition:0.3s;
+}
+
+#dashboard_list #management_option.activebtn{border-right:3px solid #83e8a2;}
+#dashboard_list #sales_option.activebtn{border-right:3px solid #ffa500;}
+#dashboard_list #engineering_option.activebtn{border-right:3px solid #4d79ff;}
+#dashboard_list #production_option.activebtn{border-right:3px solid #9946ED;}
+#dashboard_list #intel_option.activebtn{border-right:3px solid #4d79ff;}
+#dashboard_list #ncr_option.activebtn{border-right:3px solid #eb3434;}
+#dashboard_list #docs_and_deliverables_option.activebtn{border-right:3px solid #83e8a2;}
+#dashboard_list #fabrication_1_option.activebtn{border-right:3px solid #ffa500;}
+#dashboard_list #fabrication_2_option.activebtn{border-right:3px solid #4d79ff;}
+#dashboard_list #finishing_option.activebtn{border-right:3px solid #9946ED;}
+#dashboard_list #material_prep_option.activebtn{border-right:3px solid #4d79ff;}
+#dashboard_list #site_work_option.activebtn{border-right:3px solid #ffa500;}
+#dashboard_list #stores_option.activebtn{border-right:3px solid #eb3434;}
+
+#dashboard_list .inactivebtn{
+    border:none;
+    color:#8c8ba6;
+    font-size:2.5vh;
+}
+#navmenu #lastupdateholder{
+    padding-top:150%;
+    text-align:center;
+    font-family: Source Sans Pro; color:white;
+    font-size:2vh;
+}
+#navmenu #lastupdateholder p{
+    margin:10px;
+}
+#navmenu #reload_button{
+    border: none;
+    padding: 2px 8px;
+    height:50px;
+    width:60px;
+    border-radius:7px;
+}
+/*/////////////////////////// MAIN LAYOUTS OF MENUS ////////////////////////////*/
+.submenu, .submenu_fulltable{
+    width:85%;
+    height:100%;
+    margin-left:15%;
+}
+.submenu .sector{
+    float:left;
+    position:relative;
+    vertical-align:top;
+    opacity: 1;
+}
+.submenu .sector.top{
+    height:39%;
+    top:1.5%;
+}
+.submenu .sector.bottom{
+    height:48%;
+    top:3%;
+}
+.submenu .sector.banner{
+    height:7%;
+    top:4.5%;
+}
+.submenu .sector.left{
+    margin-left:1%;
+    margin-right:0.5%; 
+}
+.submenu .sector.middle{
+    margin-left:0.5%;
+    margin-right:0.5%;
+}
+.submenu .sector.right{
+    margin-left:0.5%;
+    margin-right:1%;
+}
+.submenu .sector.full{
+    margin-left:1%;
+    margin-right:1%;
+}
+.submenu .sector.fullwidth{
+    width:98%;
+    margin-left:1%;
+    margin-right:1%;
+}
+.submenu #bottom_banner .banner_button{
+    float:left;
+    margin-left:1%;
+    margin-right:1%;
+    color:white;
+    font-size:2vh;
+    position:relative;
+    top:10%;
+    height:80%;
+    width:18%;
+    border-radius:20px;
+}
+.submenu #bottom_banner .banner_button:hover{
+    background-color:white;
+    color:black;
+}
+.submenu #topleft .totalgrid{
+    position:relative;
+    float:left;
+    width:32%;
+    height:48%;
+
+}
+.submenu #topleft .totalgrid.top{top:0%;}
+.submenu #topleft .totalgrid.bottom{top:4%;}
+.submenu #topleft .totalgrid.left{left:0%;}
+.submenu #topleft .totalgrid.middle{margin-left:2%;}
+.submenu #topleft .totalgrid.right{margin-left:2%}
+
+.submenu #topleft .totaltitle{
+    padding-top:5%;
+    padding-left:5%;
+    text-align:left;
+    margin:0;
+}
+.submenu #topleft .totalvalue{
+    padding-left:5%;
+    margin:0;
+    font-weight:50;
+}
+
+.sector .head{
+    width:100%;
+    height:12%;
+}
+.sector .content{
+    width:100%;
+    height:85%;
+}
+.sector .head .title{
+    width:100%;
+    height:100%;
+    text-align:center;
+}
+.sector .head p{
+    text-align:center;
+    margin-top:0;;
+}
+.sector .head .radio_title{
+    float:left;
+    width:50%;
+    height:100%;
+    text-align:center;
+}
+.sector .head .radio_buttons{
+    float:left;
+    width:50%;
+    height:100%;
+    text-align:center;
+}
+.sector .head .radio_buttons_tray, .sector .head .title_tray{
+    height:75%;
+    position:relative;
+    top:12.5%;
+    width:95%;
+    margin-left:2.5%;
+    margin-left:2.5%;
+    border-radius:20px;
+}
+.sector .head .radio_buttons_inner_tray{
+    height:80%;
+    position:relative;
+    top:10%;
+    width:95%;
+    margin-left:2.5%;
+    margin-left:2.5%;
+}
+.sector .radio_button{
+    text-align:center;
+    float:left;
+    height:100%;
+    border-radius:20px;
+    color:white;
+}
+.sector .radio_button{
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+.sector .radio_button.inactive:hover{
+    transition:0.3s;
+    background-color:#CBCBCB;
+    color:#303030;
+}
+.sector .radio_button.active{
+    background-color:#FFFFFF;
+    color:#303030;
+}
+.sector .radio_breaker
+{
+    float:left;
+    height:100%;
+}
+#finance_menu #topright .kpi{
+    float:left;
+    width:33%;
+    height:100%;
+}
+#finance_table tr td:hover
+{
+    font-size:20px;
+}
+.content_table_margin{
+    height:95%;
+    width:90%;
+    margin-left:5%;
+    margin-right:5%;
+}
+.content_table_margin_wide{
+    height:95%;
+    width:96%;
+    margin-left:2%;
+    margin-right:2%;
+}
+#production_menu .head button
+{
+    position:relative;
+    vertical-align:top;
+    top:5%;
+    height:90%;
+    width:9.5%;
+    margin-left:6%;
+    border-radius:10px;
+}
+.chart_button
+{
+    position:relative;
+    vertical-align:top;
+    top:5%;
+    height:90%;
+    width:7.9%;
+    margin-left:4%;
+    border-radius:10px;
+}
+#production_menu .head button:hover
+{
+    background-color:white;
+    color:black;
+    border:3px solid black;
+    transition:0.3s;
+}
+#production_menu .head
+{
+    width:95%;
+    margin-left:5%;
+}
+
+
+
+
+
+
+.daterange_btn{
+    width:100%;
+    height:20%;
+}
+.daterange_btn button{
+    position:relative;
+    width:95%;
+    height:90%;
+    left:2.5%;
+    top:5%;
+}
+.daterange_btn button:hover, .stagename_btn button:hover{
+    background-color:white;
+    color:#000000;
+}
+button.instructions{
+    height:35px;
+    width:50px;
+    color:white;
+    background-color:white;
+    border-radius:5px;
+    border:3px solid black;
+}
+button.instructions.active{
+    background-color:green;
+    color:green;
+}
+button.so{
+    height:30px;
+    width:70px;
+    color:black;
+    background-color:white;
+    border-radius:5px;
+    border:3px solid black;
+}
+button.be{
+    height:30px;
+    width:60px;
+    color:black;
+    border-radius:5px;
+    border:3px solid black;
+    padding:3px;
+}
+button.rm{
+    height:30px;
+    width:70px;
+    color:black;
+    background-color:white;
+    border-radius:5px;
+    border:3px solid black;
+}
+.chart_button{
+    transition:0.2s;
+}
+.chart_button:hover{
+    background-color:#5D62B5;
+}
+.chart_button.active{
+    background-color:#5D62B5;
+}
+#production_step_db table tbody tr {
+    background-color:white;
+    border-bottom:1px solid #ABABAB;
+}
+#production_step_db table tbody td{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*///////////////////////////// INTEL MENU ////////////////////////////////////*/
+
+
+#intel_menu #intel_bottom .intel_table_checkbox
+{
+    float:left;
+    height:100%;
+    background-color:#FFFFFF;
+    color:black;
+}
+
+
+#intel_menu #intel_bottom #table_container #inteltotal
+{
+    width:98%;
+    margin-left:2%;
+    font-size:1.5vh;
+}
+#intel_menu #intel_bottom #checkbox_holder #inner
+{
+    width:90%;
+    height:100%;
+    margin-left:10%;
+    font-size:150%;
+    text-align:left;
+}
+#submit_project
+{
+    width:90%;
+    margin-left:0%;
+    font-size:180%;
+}
+
+
+
+
+
+.container 
+{
+    display: block;
+    position: relative;
+    padding-left: 0px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+/* Hide the browser's default checkbox */
+.container input 
+{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+/* Create a custom checkbox */
+.checkmark
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark
+{
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+#intel_menu .container input:checked ~ .checkmark
+{
+    background-color: #2196F3;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+#intel_menu .checkmark:after
+{
+    content: "";
+    position: absolute;
+    display: none;
+}
+/* Show the checkmark when checked */
+#intel_menu .container input:checked ~ .checkmark:after
+{
+    display: block;
+}
+/* Style the checkmark/indicator */
+#intel_menu .container .checkmark:after
+{
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#inteltotal tr{
+    height:5%;
+}
+#inteltotal td:first-child{
+    text-align:left;
+}
+
+
+/* When the checkbox is checked, add a blue background */
+#production_step_db .container input.checked  ~ .checkmark
+{
+    background-color: #2196F3;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+#production_step_db input.checked ~ .checkmark
+{
+    content: "";
+    position: absolute;
+    display: none;
+}
+/* Show the checkmark when checked */
+#production_step_db .container input.checked ~ .checkmark
+{
+    display: block;
+}
+/* Style the checkmark/indicator */
+#production_step_db .container input.checked ~ .checkmark div
+{
+    position:relative;
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////// TABLES ////////////////////////////////////////*/
+/*///////////////////////////////////////////////////////////////////////////////////////*/  
+
+/*///////////////////////////////// FINANCE TABLES /////////////////////////////////*/
+.submenu_fulltable #tablehead
+{
+    height:5%;
+    width:94%;
+    background-color:#7cbfa0;
+    color:white;
+    position:relative;
+    left:3%;
+    top:3%;
+}
+.submenu_fulltable #tablehead #tablehead_text
+{
+    padding:0;
+    margin:0;
+    margin:auto;
+    font-size:4vh;
+    display:inline-block;
+}
+.submenu_fulltable #tablehead img:hover
+{
+    background-color:white;
+}
+.submenu_fulltable #table_container
+{
+    width:94%;
+    height:74%;
+    left:3%;
+    top:3%;
+    position:relative;
+}
+.submenu_fulltable #table_container #scroll
+{
+    overflow-y: scroll;
+    max-height:100%;
+}
+.submenu_fulltable #table_container #scroll #finance_drilldown
+{
+    width:100%;
+    border-collapse:collapse;
+    padding-left:2%;
+    font-size:2vh;
+}
+.submenu_fulltable #table_container #scroll #finance_drilldown tr th
+{
+    background-color:#404040;
+    color:white;
+    position:sticky;
+    top:0;
+}
+.submenu_fulltable #table_container #scroll #finance_drilldown thead tr
+{
+    text-align:center;
+    font-size:1.5vh;
+    border-bottom:1px solid white;
+    font-family:Source Sans Pro;
+}
+
+.submenu_fulltable #table_container #scroll #finance_drilldown tr:nth-child(odd)
+{
+    background-color:#cccccc;
+    color: black;
+    height:35px;
+  }
+.submenu_fulltable #table_container #scroll #finance_drilldown tr:nth-child(even)
+{
+    background-color: #FFFFFF;
+    color: black;
+    height:35px;
+  }
+.submenu_fulltable #suppliments
+{
+    width:94%;
+    height:12%;
+    position:relative;
+    left:3%;
+    top:6%;
+    background-color:#F08987;
+    text-align:center;
+    opacity:0.8;
+}
+.submenu_fulltable #suppliments #supplimentary_block
+{
+    display:inline-block;
+    height:100%;
+    width:25%;
+    vertical-align:top;
+}
+.submenu_fulltable #suppliments #supplimentary_block .centered
+{
+    position:relative;
+    top:5%;
+    bottom:15%;
+    height:90%;
+    width:100%;
+    color:white;
+}
+.submenu_fulltable #suppliments #supplimentary_block .centered #select_title
+{
+    padding:0;
+    height:40%;
+    margin:0%;
+    font-size:3vh;
+}
+.submenu_fulltable #suppliments #supplimentary_block .centered select
+{
+    position:relative;
+    width:80%;
+    height:40%;
+    top:10%;
+    font-size:22px;
+}
+.submenu_fulltable #suppliments #supplimentary_block .centered #valuetext
+{
+    padding:0;
+    margin:auto;
+    font-size:2.6vh;
+    position:relative;
+    top:5%; 
+}
+
+/*/////////////////////////////////////////////////////////////////////////*/
+.loader 
+{
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    margin-left:0%;
+    margin-top:0%;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+  /* Safari */
+@-webkit-keyframes spin 
+{
+0% { -webkit-transform: rotate(0deg); }
+100% { -webkit-transform: rotate(360deg); }
+}
+  
+@keyframes spin 
+{
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+/*/////////////////////////////////////////////////////////////////////////*/
+
+
+
+
+table{ border-collapse:collapse; text-align:center}
+.table_cont{overflow-y:scroll;}
+.sticky{position:sticky; top:0;}
+button{border:none;}
+.hide{display:none;} 
+
+.rh_small tr{height:30px;}
+.rh_med tr{height:40px;}
+.nopad tr, .nopad td{padding-top:0; padding-bottom:0;}
+.alt_rcolor tr:nth-child(even):not(:first-child) { background-color:#E8E8E8;   color: black;}
+.alt_rcolor tr:nth-child(odd):not(:first-child){ background-color: #FFFFFF;  color: black;}
+
+
+.no_scrollbar::-webkit-scrollbar{display: none;}
+.no_scrollbar{   -ms-overflow-style: none;   scrollbar-width: none;  }
+
+.fill{height:100%; width:100%;}
+.fillw{width:100%;}
+.fillh{height:100%;}
+.tfill{max-height:100%;width:100%;}
+
+.small {font-size:1.2vh;}
+.smallplus {font-size:1.4vh;}
+.smedium{font-size:1.7vh;}
+.medium {font-size:2vh;}
+.mediumplus {font-size:2.7vh;}
+.large  {font-size:3vh;}
+.larger  {font-size:4.5vh;}
+
+.lefttext{text-align:left; padding-left:10px;}
+.righttext{text-align:right; padding-right:10px;}
+
+.btext{color:#000000;}
+.wtext{color:#FFFFFF;}
+.gtext{color:#454545;}
+
+.red{           background-color:#f08787;}
+.green{         background-color:#7cbfa0;}
+.yellow{        background-color:#FACB57;}
+.white{         background-color:#FFFFFF;}
+.light_grey{    background-color:#E8E8E8;}
+.dark_grey{     background-color:#404040;}
+.light_green{   background-color:#AFD8C5;}
+.Light_yellow{  background-color:#FCF9A1;}
+.light_red{     background-color:#f9CBCB;}
+.light_blue{     background-color:#5d62b5;}
+
+
+.br_red{        border:5px solid #f08787;}
+.br_green{      border:5px solid #7cbfa0;}
+.br_yellow{     border:5px solid #FACB57;}
+.br_white{      border:5px solid #FFFFFF;}
+
+.rounded{       border-radius:7px;}
+
+.invisible{display: none;}
+#td_stringdata{ text-align:left;    padding-left:3%;}
+

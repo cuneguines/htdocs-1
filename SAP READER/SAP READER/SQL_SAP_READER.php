@@ -37,6 +37,8 @@ if(isset($process_order)){
     CASE WHEN t3_A.IssueType = 'M' THEN CAST(t3_A.PlannedQty * t3_B.AvgPrice AS DECIMAL (12,3))  ELSE NULL END[Planned Material Cost],
     CASE WHEN t3_A.IssueType = 'M' THEN CAST(t3_A.IssuedQty AS DECIMAL (12,3))  ELSE NULL END[Issued Material Qty],
     CASE WHEN t3_A.IssueType = 'M' THEN CAST(t3_A.IssuedQty * t3_B.AvgPrice AS DECIMAL (12,2))  ELSE NULL END[Issued Material Cost],
+    CASE WHEN t3_A.IssueType = 'M' THEN CAST((t3_B.OnHand + t3_B.OnOrder - t3_B.IsCommited) AS DECIMAL (12,2))  ELSE NULL END[ATP],
+    
     '| | | | | |'[DIV4],
         
     /* LABOUR */

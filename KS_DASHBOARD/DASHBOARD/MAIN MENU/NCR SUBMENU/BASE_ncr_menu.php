@@ -73,7 +73,7 @@
                     <!-- NOTHING -->
                 </div>
                 <div id = "bottom_banner" class = "white sector banner fullwidth">
-                    <button class = "banner_button green br_green">TEST BUTTON ONE</button>
+                    <button class = "banner_button green br_green"   onclick="location.href='http://127.0.0.1:8000/login'">LOGIN</button>
                     <button class = "banner_button yellow br_yellow">TEST BUTTON TWO</button>
                     <button class = "banner_button red br_red">TEST BUTTON THREE</button>
                     <button class = "banner_button green br_green">TEST BUTTON FOUR</button>
