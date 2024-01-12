@@ -29,7 +29,7 @@ FROM
     CAST(t1.PlannedQty AS DECIMAL(12,0)) [Quantity],
     t6.ItemName [Item Name],
     ISNULL(CAST(CAST(ISNULL(t10.UTM/t9.Planned_Lab,0) AS DECIMAL(12,2))*100 AS INT),0)[Fab Status %],
-    ISNULL(FORMAT(CAST(t5.U_FLOORDATE AS DATE), 'dd-MM-yyyy'), 'NO FLOOR DATE') [Floor Date],
+    ISNULL(FORMAT(CAST(t20.U_floor_date AS DATE), 'dd-MM-yyyy'), 'NO FLOOR DATE') [Floor Date],
     FORMAT(CAST(t20.U_Promise_Date AS DATE), 'dd-MM-yyyy') [Intel Delivery Date],
     FORMAT(CAST(DATEADD(week,-2,t20.U_Promise_Date) AS DATE), 'dd-MM-yyyy') [Kilkishen Date],
     CAST(DATEADD(week,-2,t20.U_Promise_Date) AS DATE) [Kilkishen Date UNP],
