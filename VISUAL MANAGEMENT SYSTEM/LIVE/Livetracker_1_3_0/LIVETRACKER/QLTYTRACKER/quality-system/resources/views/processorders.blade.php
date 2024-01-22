@@ -148,6 +148,7 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset"></div>
+                <div id="planningFieldset"></div>
             </div>
         </div>
 
@@ -304,13 +305,112 @@
                     <textarea name="comments_engineering" rows="4" cols="50"></textarea>
                 </label>
                 <br>
+<br>
+<br>
+                <!-- Submit button -->
+            <button type="submit" onclick="submitEngineeringForm()">Submit Engineering Form</button>
+            <br>
             </fieldset>
+           
             `;
                 $('#engineeringFieldset').html(engineeringFieldset);
             } else {
                 // Clear the fieldset content if the quality step is not "Engineering"
                 $('#engineeringFieldset').html('');
             }
+            if (qualityStep === 'Planning / Forward Engineering') {
+                var planningFieldset = `
+                <fieldset>
+    <legend>Main Task 1: Planning / Forward Engineering</legend>
+
+    <!-- Subtask 1.1: Purchase Order -->
+    <label>
+        <input type="checkbox" name="purchase_order_received">
+        Purchase Order received
+    </label>
+    <br>
+    <label>
+        Upload Purchase Order Document:
+        <input type="file" name="purchase_order_document">
+    </label>
+    <br>
+
+    <!-- Subtask 1.2: Project Schedule -->
+    <label>
+        <input type="checkbox" name="project_schedule_agreed">
+        Project schedule agreed
+    </label>
+    <br>
+    <label>
+        Upload Project Schedule Document:
+        <input type="file" name="project_schedule_document">
+    </label>
+    <br>
+
+    <!-- Subtask 1.3: Quotation -->
+    <label>
+        <input type="checkbox" name="quotation">
+        Quotation
+    </label>
+    <br>
+    <label>
+        Upload Quotation Document:
+        <input type="file" name="quotation_document">
+    </label>
+    <br>
+
+    <!-- Subtask 1.4: User Requirement Specifications -->
+    <label>
+        <input type="checkbox" name="verify_customer_expectations">
+        Verify customer expectations
+    </label>
+    <br>
+    <label>
+        Upload User Requirement Specifications Document:
+        <input type="file" name="user_requirement_specifications_document">
+    </label>
+    <br>
+
+    <!-- Subtask 1.5: Pre Engineering Check -->
+    <label>
+        <input type="checkbox" name="project_risk_category_assessment">
+        Project risk category assessment
+    </label>
+    <br>
+    <label>
+        Upload Pre Engineering Check Document:
+        <input type="file" name="pre_engineering_check_document">
+    </label>
+    <br>
+
+    <!-- Sign-off for Main Task 1 -->
+    <label>
+        Sign-off for Planning / Forward Engineering:
+        <input type="text" name="sign_off_planning">
+    </label>
+    <br>
+
+    <!-- Comments for Main Task 1 -->
+    <label>
+        Comments for Planning / Forward Engineering:
+        <textarea name="comments_planning" rows="4" cols="50"></textarea>
+    </label>
+    <br>
+    <br>
+    <br>
+    <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
+    
+    <br>
+</fieldset>
+
+           
+            `;
+                $('#planningFieldset').html(planningFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#planningFieldset').html('');
+            }
+
 
             $('#myModal').show();
         }

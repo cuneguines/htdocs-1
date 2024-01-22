@@ -10,6 +10,8 @@
         /* You can adjust the color code as needed */
 }
 
+
+
 /* Style the container for the links on the left */
 .sidebar {
     background-color: #f0f8ff;
@@ -96,4 +98,16 @@ h2
     
 font-weight:bold;
 
+}
+.year-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 2px;
+    cursor: pointer;
 }

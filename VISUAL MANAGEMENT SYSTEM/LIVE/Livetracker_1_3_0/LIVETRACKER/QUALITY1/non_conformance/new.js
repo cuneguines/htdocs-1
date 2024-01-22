@@ -100,6 +100,10 @@ function myFunction(event) {
     if (owner == 'SeanO Brien (Q)') {
         $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
     }
+    if (owner == "SeanO'Brien") {
+        console.log('yes');
+        $('#owner option[value="Sean O\'Brien"]').prop('selected', true);
+    }
     $('#id').val(ItemId);
     $('#fileid').val('');
     $('#owner option[value="' + owner + '"]').prop('selected', true);
@@ -197,7 +201,7 @@ function myFunction(event) {
                             $('#owner option[value="Sean O Brien (Q)"]').prop('selected', true);
                         }
                         if (response[0][0]['person'] === "SeanO'Brien") {
-                            $('#owner option[value="SeanO\'Brien"]').prop('selected', true);
+                            $('#owner option[value="Sean O\'Brien"]').prop('selected', true);
                         }
                         /* if (response[0][0]['attachments'] == null) {
                             $('#fileid').text('Download');
@@ -301,8 +305,8 @@ function submitForm(prev_owner) {
             //$("#contact").html(response)
             //$("#contact-modal").modal('hide');
             //alert('input recieved');
-            //alert(response);//vishu use this for testing
-            object.reload(forcedReload);
+            alert(response);//vishu use this for testing
+            location.reload();
         },
         error: function () {
             alert("Error");

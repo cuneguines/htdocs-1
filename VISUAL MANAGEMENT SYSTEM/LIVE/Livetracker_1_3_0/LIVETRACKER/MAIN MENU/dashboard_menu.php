@@ -19,7 +19,21 @@
         
             $qlc_this = 0;
             $qlc_this_time_last = 1;
-        ?>
+
+	
+// Execute the batch file
+exec('start C:\\Users\\cnixon\\OneDrive - Kent Stainless\\Desktop\\runreact_new.bat', $output, $returnCode);
+
+// You can add more error handling if needed
+
+// Respond to the client
+if ($returnCode === 0) {
+    echo 'Script executed successfully';
+} else {
+    echo 'Error executing the script';
+}
+?>
+ 
         <?php $pp_exceptions = json_decode(file_get_contents(__DIR__.'\CACHED\pre_production_exceptions.json'),true); ?>
         <?php $p_exceptions = json_decode(file_get_contents(__DIR__.'\CACHED\production_exceptions.json'),true); ?>
         <?php $s_exceptions = json_decode(file_get_contents(__DIR__.'\CACHED\sales_exceptions.json'),true); ?>
@@ -118,7 +132,7 @@
                             <button class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%; display:none;" onclick="location.href='../../../../../SAP READER/SAP READER/BASE_document_search.php';">SAP Reader</button>
                             <button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../HR/SERVICE PLANNER/Base_service_planner.php';">Service Planner</button>
 							<button class = "green production hr" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;" onclick="location.href='../../../../../OPERATOR HOURS REPORT/FABRICATOR HOURS/Base_production_table.php';">BOOKED HOURS</button>
-							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://192.168.0.89:3000 ';">Book a Space</button>
+							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://localhost:3000 ';">Book a Space</button>
 							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://localhost:3000/NEW';">User Database</button>
 							<button id='test'class = "green other" style = "width:30%; height:10%; margin-left:1%; font-size:2.5vh; position:relative; top:0%; margin-top:2%;display:none" onclick="window.location.href='http://kptsvsp:2022/login';">QUALITY TRACKER</button>
 							

@@ -138,6 +138,10 @@ tr.alternate {
                 echo "<option value = '" . 'Sean O Brien (Q)' . "'>" . ($element) . "</option>";
                 continue;
             }
+            if ($element == "Sean O'Brien") {
+                echo "<option value='" . htmlspecialchars($element, ENT_QUOTES) . "'>" . htmlspecialchars($element) . "</option>";
+                continue;
+            }
             echo "<option value = '" . str_replace(' ', '', preg_replace("/[^A-Za-z0-9 ]/", '', $element)) . "'>" . ($element) . "</option>";
         }
     }
@@ -472,7 +476,7 @@ tr.alternate {
                                     <th style="width:200px;display:none"> Attachements</th>
                                     <th style="width:200px;display:none">Status </th>
                                     <th style="width:200px;display:none"> Date</th>
-                                    <th style="width:200px;display:none"> Owner</th>
+                                    <th style="width:200px;"> Owner</th>
                                     <th style="width:200px;"> Type</th>
                                 </tr>
                             </thead>
@@ -505,6 +509,7 @@ tr.alternate {
                                 <td><?= $row["area_raised_by"] ?></td>
                                 <td><?= $row["Status"] ?></td>
                                 <td><?= $row["time_stamp"] ?></td>
+                                
 
                                 <td>
                                     <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal"
@@ -567,7 +572,7 @@ tr.alternate {
 
                                 <td style="display:none"><?=$row["Status"]?></td>
                                 <td style="display:none"><?=$row["Date"]?></td>
-                                <td style="display:none"><?=$row["person"]?></td>
+                                <td ><?=$row["person"]?></td>
                                 <td style="display:none"><?=$row["action"]?></td>
                                 <td><?=$row["form_type"]?></td>
                             </tr>

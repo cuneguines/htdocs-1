@@ -316,7 +316,7 @@ function submitForm(prev_owner) {
             //$("#contact-modal").modal('hide');
             alert('input recieved');
             alert(response);//vishu use this for testing
-            object.reload(forcedReload);
+            location.reload();	
         },
         error: function () {
             alert("Error");
