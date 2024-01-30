@@ -1,31 +1,23 @@
- /* Add a light blue background to the entire page */
- body {
-
-
+/* Add a light blue background to the entire page */
+body {
     top: 0;
     height: 100vh;
-
     display: flex;
-    background: linear-gradient(black, white)
-        /* You can adjust the color code as needed */
+    background: linear-gradient(#90b9cc, #efdcce); /* You can adjust the color code as needed */
 }
-
-
 
 /* Style the container for the links on the left */
 .sidebar {
-    background-color: #f0f8ff;
+    background: linear-gradient(beige, #90b9cc);
     float: left;
     width: 13%;
     padding-bottom: 3%;
-
     margin-left: 6%;
     height: 70%;
     margin-top: 5%;
     padding-left: 5%;
     border-right: 5px solid white;
     box-shadow: 5px 5px 5px 5px;
-    background: linear-gradient(beige, #0866c6);
     overflow-y: scroll;
 }
 
@@ -36,15 +28,16 @@
 }
 
 .sidebar ul li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    list-style-type: disc;
+    margin-left:2%; /* Add bullet points */
 }
 
 .sidebar a {
     text-decoration: none;
-    color: #333;
+    color: #444;
 }
-
-
 
 /* Style the container for the chart on the right */
 .chart-container {
@@ -52,55 +45,48 @@
     width: 70%;
     height: 70%;
     margin-top: 5%;
-    background-color: #f0f8ff;
     padding-bottom: 3%;
     box-shadow: 5px 5px 5px 5px;
-    background-color: beige;
-    background: linear-gradient(beige, #ffffff) /* You can adjust the color code as needed;;; */;
-    z-index:+5;
+    background: linear-gradient(beige, #ffffff); /* You can adjust the color code as needed */
+    z-index: 5;
 }
 
+/* General style for list items */
 li {
-    font-size: 13px;
+    font-size: 14px;
+    margin-bottom: 12px;
 }
 
-.sidebar ul li {
-    margin-bottom: 10px;
-    list-style-type: disc;
-    /* Add bullet points */
-}
-
+/* Style for navigation links */
 .nav-link {
-    text-decoration: underline;
-    color: blue;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
 }
 
+/* Style for active navigation link */
 .nav-link.active {
-    text-decoration: none;
-    font-weight: bold;
+    text-decoration: underline;
     color: rgb(173, 38, 38); /* You can change the color when a link is active */
 }
-h2
-{
-    margin-left:-10%;
-}
 
+/* Styles for chart title */
 #myChart .chartjs-title {
     display: block;
     text-align: center;
     font-weight: bold;
-    font-size: 36px; /* Adjust the font size as needed */
+    font-size: 24px; /* Adjust the font size as needed */
 }
-#ChartTitle{
-    text-align: center;
-    font-size: 26px;
-    
-    
-font-weight:bold;
 
+#ChartTitle {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
 }
+
+/* Style for the year button */
 .year-button {
-    background-color: #4CAF50;
+    background-color: #90b9cc;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -108,6 +94,22 @@ font-weight:bold;
     text-decoration: none;
     display: inline-block;
     font-size: 14px;
-    margin: 2px 2px;
+    margin: 8px 4px;
     cursor: pointer;
+}
+h2 {
+    color: #90b9cc; /* Heading color for Opportunity For Improvement and Customer Complaints */
+}
+/* Style each section box */
+.section-box {
+    background-color: #f0f8ff;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-left: -25%;
+    position: relative;
+    margin-top: 10%;
+    
 }

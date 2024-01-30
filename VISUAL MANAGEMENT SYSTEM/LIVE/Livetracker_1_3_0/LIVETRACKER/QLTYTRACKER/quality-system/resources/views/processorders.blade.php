@@ -2,6 +2,11 @@
 <html>
 
 <head>
+
+    <!-- ... (other head elements) -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     <meta charset="utf-8">
     <meta name="description" content="meta description">
     <meta name="viewpport" content="width=device-width, initial-scale = 1">
@@ -10,10 +15,13 @@
     <script type="text/javascript" src="../../../JS/LIBS/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="../../../JS/LIBS/canvasjs.min.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/JS_menu_select.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/engineering_modal.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/planning_modal.js"></script>
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/KS_DASH_STYLE.css')}}">
@@ -239,172 +247,16 @@
         function openModal(processOrder, qualityStep) {
             $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
             if (qualityStep === 'Engineering') {
-                var engineeringFieldset = `
-            <fieldset>
-                <legend>Main Task 2: Engineering</legend>
-
-                <!-- Subtask 2.1: Reference Job / Master File -->
-                <label>
-                    <input type="checkbox" name="reference_job_master_file">
-                    Reference Job / Master File if applicable
-                </label>
-                <br>
-
-                <!-- Subtask 2.2: Concept Design -->
-                <label>
-                    <input type="checkbox" name="concept_design_engineering_details">
-                    Concept design & engineering details
-                </label>
-                <br>
-
-                <!-- Subtask 2.3: Design Validation -->
-                <label>
-                    <input type="checkbox" name="design_validation_sign_off">
-                    Design sign off [calculations]
-                </label>
-                <br>
-
-                <!-- Subtask 2.4: Customer Approval -->
-                <label>
-                    <input type="checkbox" name="customer_submittal_package">
-                    Customer submittal package
-                </label>
-                <br>
-
-                <!-- Subtask 2.5: Sample Approval -->
-                <label>
-                    <input type="checkbox" name="reference_approved_samples">
-                    Reference approved samples
-                </label>
-                <br>
-
-                <!-- Upload Document for Subtask 2.2 -->
-                <label>
-                    Upload Concept Design Document:
-                    <input type="file" name="concept_design_document">
-                </label>
-                <br>
-
-                <!-- Upload Document for Subtask 2.4 -->
-                <label>
-                    Upload Customer Approval Document:
-                    <input type="file" name="customer_approval_document">
-                </label>
-                <br>
-
-                <!-- Sign-off for Main Task 2 -->
-                <label>
-                    Sign-off for Engineering:
-                    <input type="text" name="sign_off_engineering">
-                </label>
-                <br>
-
-                <!-- Comments for Main Task 2 -->
-                <label>
-                    Comments for Engineering:
-                    <textarea name="comments_engineering" rows="4" cols="50"></textarea>
-                </label>
-                <br>
-<br>
-<br>
-                <!-- Submit button -->
-            <button type="submit" onclick="submitEngineeringForm()">Submit Engineering Form</button>
-            <br>
-            </fieldset>
-           
-            `;
+                var engineeringFieldset = generateEngineeringFieldset(processOrder,qualityStep);
+            
                 $('#engineeringFieldset').html(engineeringFieldset);
             } else {
                 // Clear the fieldset content if the quality step is not "Engineering"
                 $('#engineeringFieldset').html('');
             }
             if (qualityStep === 'Planning / Forward Engineering') {
-                var planningFieldset = `
-                <fieldset>
-    <legend>Main Task 1: Planning / Forward Engineering</legend>
+                var planningFieldset = generatePlanningFieldset();
 
-    <!-- Subtask 1.1: Purchase Order -->
-    <label>
-        <input type="checkbox" name="purchase_order_received">
-        Purchase Order received
-    </label>
-    <br>
-    <label>
-        Upload Purchase Order Document:
-        <input type="file" name="purchase_order_document">
-    </label>
-    <br>
-
-    <!-- Subtask 1.2: Project Schedule -->
-    <label>
-        <input type="checkbox" name="project_schedule_agreed">
-        Project schedule agreed
-    </label>
-    <br>
-    <label>
-        Upload Project Schedule Document:
-        <input type="file" name="project_schedule_document">
-    </label>
-    <br>
-
-    <!-- Subtask 1.3: Quotation -->
-    <label>
-        <input type="checkbox" name="quotation">
-        Quotation
-    </label>
-    <br>
-    <label>
-        Upload Quotation Document:
-        <input type="file" name="quotation_document">
-    </label>
-    <br>
-
-    <!-- Subtask 1.4: User Requirement Specifications -->
-    <label>
-        <input type="checkbox" name="verify_customer_expectations">
-        Verify customer expectations
-    </label>
-    <br>
-    <label>
-        Upload User Requirement Specifications Document:
-        <input type="file" name="user_requirement_specifications_document">
-    </label>
-    <br>
-
-    <!-- Subtask 1.5: Pre Engineering Check -->
-    <label>
-        <input type="checkbox" name="project_risk_category_assessment">
-        Project risk category assessment
-    </label>
-    <br>
-    <label>
-        Upload Pre Engineering Check Document:
-        <input type="file" name="pre_engineering_check_document">
-    </label>
-    <br>
-
-    <!-- Sign-off for Main Task 1 -->
-    <label>
-        Sign-off for Planning / Forward Engineering:
-        <input type="text" name="sign_off_planning">
-    </label>
-    <br>
-
-    <!-- Comments for Main Task 1 -->
-    <label>
-        Comments for Planning / Forward Engineering:
-        <textarea name="comments_planning" rows="4" cols="50"></textarea>
-    </label>
-    <br>
-    <br>
-    <br>
-    <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
-    
-    <br>
-</fieldset>
-
-           
-            `;
                 $('#planningFieldset').html(planningFieldset);
             } else {
                 // Clear the fieldset content if the quality step is not "Engineering"

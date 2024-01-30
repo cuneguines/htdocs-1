@@ -35,6 +35,8 @@
     $results_pie_cc= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_pie_cc.json'), true); 
     $results_NEW= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_SQL_NEW.json'), true); 
 
+    $results_NEW_L= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_SQL_NEW_L.json'), true); 
+
 $rework=json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_rework_cost.json'), true); 
 
     //$conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
@@ -345,6 +347,11 @@ $Values_rd = array_values($combinedData_rd);
     //print_r($pg2Data);
    
     arsort($pg2Data);
+
+
+   
+
+//-----------------------------------------------------------------------------------------------------------
     // Initialize an array to store the counts for each month
     $complaintCounts = array_fill(0, 12, 0);
     $complaintCounts_closed= array_fill(0, 12, 0);  // Initialize with zeros for each month
@@ -462,61 +469,71 @@ $dataCostJSON_cost = array_values($dataCost);
 
 
     <div class="sidebar">
-        <!-- Create links on the left -->
-        <h2>Opportunity For Improvement</h2>
-        <ul>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_1()">Open OFIs's-
-                    Area Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_8()">Open OFI's
-                    -Area Raised </a>
-            </li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link"
-                    onclick="displayChart_2()">Open/Closed</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_3()">Average
-                    Response Time</a>
-            </li>
+        <div class="section-box">
+            <!-- Create links on the left -->
+            <h2>Opportunity For Improvement</h2>
+            <ul>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_1()">Open
+                        OFIs's-
+                        Area Caused</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_8()">Open
+                        OFI's
+                        -Area Raised </a>
+                </li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link"
+                        onclick="displayChart_2()">Open/Closed</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_3()">Average
+                        Response Time</a>
+                </li>
 
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost Per
-                    Business Unit</a>
-            </li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI Monthly
-                    Overview
-                    <?php echo date("Y");?></a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost Per
+                        Business Unit</a>
+                </li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI
+                        Monthly
+                        Overview
+                        <?php echo date("Y");?></a></li>
 
-        </ul>
+            </ul>
+        </div>
+        <div class="section-box">
 
+            <h2>Customer Complaints</h2>
+            <ul>
 
-        <h2>Customer Complaints</h2>
-        <ul>
-
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open
-                    CC's-Area
-                    Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open
-                    CC's-Area Raised</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link"
-                    onclick="displayChart_11()">Open/Closed</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_12()">Average
-                    Response Time</a>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC Monthly
-                    Overview
-                    <?php echo date("Y");?></a></li>
-            <!--<li><a href="#" onclick="displayChart_2()">Open/Closed</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open
+                        CC's-Area
+                        Caused</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open
+                        CC's-Area Raised</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link"
+                        onclick="displayChart_11()">Open/Closed</a></li>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_12()">Average
+                        Response Time</a>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC
+                        Monthly
+                        Overview
+                        <?php echo date("Y");?></a></li>
+                <!--<li><a href="#" onclick="displayChart_2()">Open/Closed</a></li>
             <li><a href="#" onclick="displayChart_3()">Average Response Time</a></li>
             <li><a href="#" onclick="displayChart_4()">Pie Charts</a></li> -->
-        </ul>
-        <h2>Other</h2>
-        <ul>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues per
-                    Product Type </a></li>
-        </ul>
+            </ul>
+        </div>
+        <div class="section-box">
+            <h2>Other</h2>
+            <ul>
+                <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues
+                        per
+                        Product Type </a></li>
+            </ul>
 
 
 
 
-        <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;
+            <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;
                                         background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px;height:7%;    margin-left: -25%;
     margin-top: 30%;" onclick="spinAndReload(this)">UPDATE</button>
+        </div>
     </div>
     <div class="chart-container">
         <!-- Create a canvas for the chart -->
@@ -524,7 +541,7 @@ $dataCostJSON_cost = array_values($dataCost);
         <canvas id="myChart" width="500" height="400"></canvas>
 
     </div>
- <script>
+    <script>
     var links = document.querySelectorAll(".nav-link");
     const layoutOptions = {
         padding: {

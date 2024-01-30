@@ -40,6 +40,7 @@
    // $results_cc = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_2023_cc.json'), true); 
     $results_pie_cc= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_pie_cc.json'), true); 
     $results_NEW= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_SQL_NEW.json'), true); 
+    $results_NEW_L= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_SQL_NEW_L.json'), true); 
 
     $rework=json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_rework_cost.json'), true); 
 
@@ -471,6 +472,33 @@ $Values_rd_L = array_values($combinedData_rd_L);
     //print_r($pg2Data);
    
     arsort($pg2Data);
+
+
+
+    //
+
+
+
+     //----LAST YEAR ---------------------------------------------------------------------
+
+     $pg2Data_L = array();
+     foreach ($results_NEW_L as $result) {
+         $pg2_L = $result['U_Product_Group_Two'];
+         //print_r($pg2);
+         
+         if (!empty($pg2_L)) {
+             if (isset($pg2Data_L[$pg2_L])) {
+                 $pg2Data_L[$pg2_L]++;
+             } else {
+                 $pg2Data_L[$pg2_L] = 1;
+             }
+         }
+     }
+     //print_r($pg2Data);
+    
+     arsort($pg2Data_L);
+
+     //------------------------------------------------------------------------------------
     // Initialize an array to store the counts for each month
     $complaintCounts = array_fill(0, 12, 0);
     $complaintCounts_closed= array_fill(0, 12, 0);  // Initialize with zeros for each month
@@ -494,7 +522,7 @@ $Values_rd_L = array_values($combinedData_rd_L);
     foreach ($results as $entry) {
         $formType = $entry['form_type'];
         $dateUpdated = strtotime($entry['time_stamp']);
-        $status = $entry['Status'];
+        $cost_rework = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
         if ($status==='Closed'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
@@ -579,90 +607,89 @@ ksort($dataCost);
 // Extract sorted keys and values
 $itemLabelsJSON_cost = array_keys($dataCost);
 $dataCostJSON_cost = array_values($dataCost);
+//REwork
+
+// Initialize an associative array to store total costs for each dimension and month
+$costCounts = [];
 
 
+
+foreach ($rework as $entry) {
+    $dateUpdated = strtotime($entry['reworkDate']);
+    $reworkCost = $entry['RoundedCost'];
+
+    // Check if the entry is in the year 2023
+    if (date('Y', $dateUpdated) === date("Y")) {
+        $month = date('n', $dateUpdated); // Get the month as a number (1-12)
+
+        // Initialize total cost for the month if not already set
+        if (!isset($costCounts[$month])) {
+            $costCounts[$month] = 0;
+        }
+
+        // Add the cost to the total for the month
+        $costCounts[$month] += $reworkCost;
+    }
+}
+// Round the total costs to 2 decimal places
+$costCounts = array_map(function ($cost) {
+    return round($cost, 2);
+}, $costCounts);
+// Convert the array of total costs to a JSON format for use in JavaScript
+$costCountsJSON = json_encode($costCounts);
 
 
 ?>
 
 
 
-    <div class="sidebar">
-        <!-- Create links on the left -->
-        <h2>Opportunity For Improvement</h2>
-        <ul>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayThisYearData_1()">Open
-                    OFIs's-
-                    Area Caused</a></li>
-            <button class="year-button" onclick="displayLastYearData_1()">Last Year</button>
-            <button class="year-button" onclick="displayThisYearData_1()">Current Year</button>
-            </li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayThisYearData_8()">Open
-                    OFI's
-                    -Area Raised </a>
-            </li>
-            <button class="year-button" onclick="displayLastYearData_8()">Last Year</button>
-            <button class="year-button" onclick="displayThisYearData_8()">Current Year</button>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link"
-                    onclick="displayChart_2()">Open/Closed</a></li>
+<div class="sidebar">
+    <!-- Opportunity For Improvement Section -->
+    <div class="section-box">
+    <h2>Opportunity For Improvement</h2>
+    <ul>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_1()">Open OFIs - Area Caused</a></li>
+        <button class="year-button" onclick="displayLastYearData_1()">Last Year</button>
+        <button class="year-button" onclick="displayThisYearData_1()">Current Year</button>
+        </li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_8()">Open OFIs - Area Raised</a></li>
+        <button class="year-button" onclick="displayLastYearData_8()">Last Year</button>
+        <button class="year-button" onclick="displayThisYearData_8()">Current Year</button>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_2()">Open/Closed</a></li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_3()">Average Response Time</a></li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_6()">OFI Monthly Overview <?php echo date("Y");?></a></li>
+    </ul>
+</div>
+    <div class="section-box">
+    <!-- Customer Complaints Section -->
+    <h2>Customer Complaints</h2>
+    <ul>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_9()">Open CC's - Area Caused</a></li>
+        <button class="year-button" onclick="displayLastYearData_9()">Last Year</button>
+        <button class="year-button" onclick="displayChart_9()">Current Year</button>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_10()">Open CC's - Area Raised</a></li>
+        <button class="year-button" onclick="displayLastYearData_10()">Last Year</button>
+        <button class="year-button" onclick="displayChart_10()">Current Year</button>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_11()">Open/Closed</a></li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_12()">Average Response Time</a></li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_13()">CC Monthly Overview <?php echo date("Y");?></a></li>
+    </ul>
+</div>
+    <div class="section-box">
+    <!-- Other Section -->
+    <h2>Other</h2>
+    <ul>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_4()">Issues per Product Type</a></li>
+        <button class="year-button" onclick="displayLastYearData_4()">Last Year</button>
+        <button class="year-button" onclick="displayChart_4()">Current Year</button>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_5()">Cost Per Business Unit</a></li>
+        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChartCost()">Cost Per Business Unit Monthly Overview</a></li>
+    </ul>
+</div>
+    <!-- Update Button -->
+    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px;height:7%;margin-left: -25%;margin-top: 30%;" onclick="spinAndReload(this)">UPDATE</button>
+</div>
 
-            <button class="year-button" onclick="displayLastYearData_2()">Last Year</button>
-            <button class="year-button" onclick="displayChart_2()">Current Year</button>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_3()">Average
-                    Response Time</a>
-            </li>
-
-            <button class="year-button" onclick="displayLastYearData_3()">Last Year</button>
-            <button class="year-button" onclick="displayChart_3()">Current Year</button>
-
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_5()">Cost Per
-                    Business Unit</a>
-
-            </li>
-
-            <button class="year-button" onclick="displayLastYearData_5()">Last Year</button>
-            <button class="year-button" onclick="displayChart_5()">Current Year</button>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_6()">OFI Monthly
-                    Overview
-                    <?php echo date("Y");?></a></li>
-            <button class="year-button" onclick="displayLastYearData_5()">Last Year</button>
-            <button class="year-button" onclick="displayChart_6()">Current Year</button>
-
-        </ul>
-
-
-        <h2>Customer Complaints</h2>
-        <ul>
-
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_9()">Open
-                    CC's-Area
-                    Caused</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_10()">Open
-                    CC's-Area Raised</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link"
-                    onclick="displayChart_11()">Open/Closed</a></li>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_12()">Average
-                    Response Time</a>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_13()">CC Monthly
-                    Overview
-                    <?php echo date("Y");?></a></li>
-            <!--<li><a href="#" onclick="displayChart_2()">Open/Closed</a></li>
-            <li><a href="#" onclick="displayChart_3()">Average Response Time</a></li>
-            <li><a href="#" onclick="displayChart_4()">Pie Charts</a></li> -->
-        </ul>
-        <h2>Other</h2>
-        <ul>
-            <li><a href="#" style="text-decoration: underline;" class="nav-link" onclick="displayChart_4()">Issues per
-                    Product Type </a></li>
-        </ul>
-
-
-
-
-        <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;
-                                        background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px;height:7%;    margin-left: -25%;
-    margin-top: 30%;" onclick="spinAndReload(this)">UPDATE</button>
-    </div>
     <div class="chart-container">
 
 
@@ -730,8 +757,8 @@ $dataCostJSON_cost = array_values($dataCost);
         var ctx = document.getElementById('myChart').getContext('2d');
         Chart.register(ChartDataLabels);
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -817,8 +844,8 @@ $dataCostJSON_cost = array_values($dataCost);
         var ctx = document.getElementById('myChart').getContext('2d');
         Chart.register(ChartDataLabels);
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -903,8 +930,8 @@ $dataCostJSON_cost = array_values($dataCost);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -981,8 +1008,8 @@ $dataCostJSON_cost = array_values($dataCost);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         // Create the chart
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -1079,8 +1106,8 @@ $dataCostJSON_cost = array_values($dataCost);
                 datasets: [{
                     data: filteredStatusData,
                     backgroundColor: [
-                        'red',
-                        'lightgreen',
+                        '#f8766d',
+                        '#00bfc4',
                         'lightblue'
                     ],
                     borderColor: [
@@ -1234,8 +1261,8 @@ $dataCostJSON_cost = array_values($dataCost);
         var ctx = document.getElementById('myChart').getContext('2d');
 
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -1305,6 +1332,92 @@ $dataCostJSON_cost = array_values($dataCost);
 
     }
 
+    function displayLastYearData_4() {
+
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+        var dummyData = {
+            label: 'Dummy Data',
+            data: [0], // Set the value to 0
+            backgroundColor: 'rgba(0, 0, 0, 0)', // Make it transparent
+            borderColor: gradient, // Make it transparent
+            borderWidth: 0 // No border
+        };
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
+        Chart.register(ChartDataLabels);
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode(array_keys($pg2Data_L)); ?>,
+                datasets: [{
+                    dummyData,
+                    //label: 'Number of Issues',
+                    data: <?php echo json_encode(array_values($pg2Data_L)); ?>,
+                    backgroundColor: gradient,
+
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Product Type',
+                            font: {
+                                weight: 'bold',
+                                size: 18,
+
+                            }
+
+                        },
+
+                        min: 0,
+                        //offset:true// Set the minimum value for the x-axis to 0
+                    },
+                    y: {
+                        min: 0,
+                        stepSize: 0
+                    }
+
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        // text: 'Issues from Each Product Group', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                    }
+                },
+
+            }
+        });
+        document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Issues Per Product Type";
+
+    }
 
 
     function displayChart_5() {
@@ -1319,8 +1432,8 @@ $dataCostJSON_cost = array_values($dataCost);
         // Create a bar chart
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         Chart.register(ChartDataLabels);
         currentChart = new Chart(ctx, {
             type: 'bar',
@@ -1404,7 +1517,7 @@ $dataCostJSON_cost = array_values($dataCost);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Costs Per Business Unit";
+        titleDiv.innerHTML = "Costs Monthly Overview";
 
     }
 
@@ -1420,8 +1533,8 @@ $dataCostJSON_cost = array_values($dataCost);
         gradient.addColorStop(0, '#f790a7');
         gradient.addColorStop(1, '#f790a7');
         var gradient_1 = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient_1.addColorStop(0, 'rgb(3,244,235,0.5)');
-        gradient_1.addColorStop(1, 'rgb(3,244,235,0.5)');
+        gradient_1.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient_1.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         Chart.register(ChartDataLabels);
         // Your data (you can replace this with your data)
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
@@ -1523,8 +1636,8 @@ $dataCostJSON_cost = array_values($dataCost);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7)');
         Chart.register(ChartDataLabels);
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -1595,6 +1708,88 @@ $dataCostJSON_cost = array_values($dataCost);
 
     }
 
+
+    function displayLastYearData_9() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
+        Chart.register(ChartDataLabels);
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($Labels_ac_cc_L); ?>,
+                datasets: [{
+                    label: 'Open Occurrences of CC per Area caused',
+                    data: <?php echo json_encode($Values_ac_cc_L); ?>,
+                    backgroundColor: gradient
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: <?php echo (int)$count_ac_cc+1; ?>,
+                        stepSize: 1
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Area Caused',
+                            font: {
+                                weight: 'bold',
+                                size: 18,
+
+                            }
+
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    },
+                    title: {
+                        display: true, // Display the title
+                        //text: 'Open Occurrences of CC per Area caused', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                    }
+                },
+
+            }
+        });
+        document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open CC's-Area Caused";
+        // Show the chart canvas
+
+    }
+
     function displayChart_10() {
         // Remove the existing chart if it exists
         if (currentChart) {
@@ -1604,8 +1799,8 @@ $dataCostJSON_cost = array_values($dataCost);
         // Get the chart canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7)');
         Chart.register(ChartDataLabels);
         // Create the chart
         currentChart = new Chart(ctx, {
@@ -1615,6 +1810,88 @@ $dataCostJSON_cost = array_values($dataCost);
                 datasets: [{
                     // label: 'Open Occurrences of CC per Area Raised',
                     data: <?php echo json_encode($Values_rd_cc); ?>,
+                    backgroundColor: gradient
+                }]
+            },
+            options: {
+                layout: layoutOptions,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: <?php echo (int)$count_rd_cc+1; ?>,
+                        stepSize: 1
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Area Raised',
+                            font: {
+                                weight: 'bold',
+                                size: 18,
+
+                            }
+
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: { // Configure the datalabels plugin
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    },
+                    title: {
+                        display: false, // Display the title
+                        //text: 'Open Occurrences of CC per Area Raised', // Replace with your desired title text
+                        fontSize: 18, // Adjust the font size of the title
+                        fontStyle: 'bold' // You can also set the font style (e.g., 'normal', 'italic', 'bold', etc.)
+                    }
+                },
+
+            }
+        });
+        document.getElementById('myChart').style.display = 'block';
+        var titleDiv = document.getElementById('ChartTitle');
+        titleDiv.innerHTML = "Open CC's- Area Raised";
+        // Show the chart canvas
+
+    }
+
+    function displayLastYearData_10() {
+        // Remove the existing chart if it exists
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        // Get the chart canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
+        Chart.register(ChartDataLabels);
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($Labels_rd_cc_L); ?>,
+                datasets: [{
+                    // label: 'Open Occurrences of CC per Area Raised',
+                    data: <?php echo json_encode($Values_rd_cc_L); ?>,
                     backgroundColor: gradient
                 }]
             },
@@ -1707,8 +1984,8 @@ $dataCostJSON_cost = array_values($dataCost);
                 datasets: [{
                     data: filteredStatusData,
                     backgroundColor: [
-                        'red',
-                        'lightgreen',
+                        '#f8766d',
+                        '#00bfc4',
                         'lightblue'
                     ],
                     borderColor: [
@@ -1857,8 +2134,8 @@ $dataCostJSON_cost = array_values($dataCost);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         var gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'orange');
-        gradient.addColorStop(1, 'orange');
+        gradient.addColorStop(0, 'rgba(255, 165, 0, 0.7');
+        gradient.addColorStop(1, 'rgba(255, 165, 0, 0.7');
         var gradient_1 = ctx.createLinearGradient(0, 0, 0, 400);
         gradient_1.addColorStop(0, 'grey');
         gradient_1.addColorStop(1, 'grey');
@@ -1949,5 +2226,95 @@ $dataCostJSON_cost = array_values($dataCost);
         var titleDiv = document.getElementById('ChartTitle');
         titleDiv.innerHTML = "CC Monthly Overview";
 
+    }
+
+
+
+    function displayChartCost() {
+        if (currentChart) {
+            currentChart.destroy();
+        }
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#f790a7');
+        gradient.addColorStop(1, '#f790a7');
+        Chart.register(ChartDataLabels);
+
+        // Your data (replace this with your actual data)
+        var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December"
+        ];
+        var data = <?php echo $costCountsJSON; ?>;
+        console.log(data);
+        // Convert the data object into an array
+        var dataArray = months.map(function(month, index) {
+            return data[index + 1] || 0;
+        });
+
+        // Create the chart
+        currentChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: 'OFI Raised',
+                    data: dataArray,
+                    backgroundColor: gradient,
+                    borderColor: gradient,
+                    fill: true,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        max: 5000,
+                        beginAtZero: true,
+                        stepSize: 1
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month',
+                            font: {
+                                weight: 'bold',
+                                size: 18
+                            }
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false // Hide the legend for a single dataset
+                    },
+                    font: {
+                        weight: 'bold',
+                        size: 16
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value) {
+                            return value; // Display the data value on top of the bar
+                        },
+                        font: {
+                            weight: 'bold',
+                            size: 16
+                        },
+                    },
+                    title: {
+                        display: true,
+                        fontSize: 18,
+                        fontStyle: 'bold',
+                        text: 'COST PER BUSINESS' // Your desired title text
+                    }
+                },
+            }
+        });
+
+        document.getElementById('myChart').style.display = 'block';
     }
     </script>

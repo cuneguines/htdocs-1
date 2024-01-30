@@ -765,3 +765,32 @@ button{border:none;}
 .invisible{display: none;}
 #td_stringdata{ text-align:left;    padding-left:3%;}
 
+/* Add this CSS in your style section or in a separate CSS file */
+
+/* General styling for form groups */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Styling for checkboxes */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Styling for upload labels */
+.upload-label {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Add some padding to text inputs and textareas */
+.form-group input[type="text"],
+.form-group textarea {
+    padding: 5px;
+}
+
+/* Add some margin to the submit button */
+button[type="submit"] {
+    margin-top: 15px;
+}

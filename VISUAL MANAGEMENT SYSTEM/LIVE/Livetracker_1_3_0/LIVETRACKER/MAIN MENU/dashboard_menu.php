@@ -10,6 +10,7 @@
 		<link rel = "stylesheet" href = "../../css/LT_style.css">
 		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>     
         <?php
+		set_time_limit(300); 
             $qla_this = 0;
             $qla_this_time_last = 1;
             $qla_last = 2;
@@ -21,18 +22,27 @@
             $qlc_this_time_last = 1;
 
 	
-// Execute the batch file
-exec('start C:\\Users\\cnixon\\OneDrive - Kent Stainless\\Desktop\\runreact_new.bat', $output, $returnCode);
 
-// You can add more error handling if needed
-
-// Respond to the client
-if ($returnCode === 0) {
-    echo 'Script executed successfully';
-} else {
-    echo 'Error executing the script';
-}
 ?>
+ <script type="text/javascript" src="../../JS LIBS/THIRD PARTY/jquery-3.4.1.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#test').on('click', function() {
+                // Send an AJAX request to execute_batch.php
+                $.ajax({
+                    url: 'execute_batch.php',
+                    method: 'POST',
+                    success: function(response) {
+                        // Display the response (you can modify this based on your requirements)
+                        alert(response);
+                    },
+                    error: function() {
+                        alert('Error executing the script');
+                    }
+                });
+            });
+        });
+    </script>
  
         <?php $pp_exceptions = json_decode(file_get_contents(__DIR__.'\CACHED\pre_production_exceptions.json'),true); ?>
         <?php $p_exceptions = json_decode(file_get_contents(__DIR__.'\CACHED\production_exceptions.json'),true); ?>

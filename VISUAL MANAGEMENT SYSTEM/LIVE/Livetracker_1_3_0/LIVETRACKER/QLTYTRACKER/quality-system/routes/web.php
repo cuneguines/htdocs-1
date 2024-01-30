@@ -17,11 +17,13 @@ use Illuminate\Support\Facades\Route;
 
 
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\EngineeringController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
 use App\Http\Controllers\Kitting;
+
 Route::get('/get-line-items/{processOrderId}', [GetlineController::class, 'getLineItems']);
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -31,3 +33,7 @@ Route::get('/kitting_task', [Kitting::class, 'ShowKittingForm']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// routes/web.php
+Route::post('/submitEngineeringForm', [EngineeringController::class, 'submitEngineeringForm']);
+Route::post('/handleFileUpload', [UploadController::class, 'handleFileUpload']);
+
