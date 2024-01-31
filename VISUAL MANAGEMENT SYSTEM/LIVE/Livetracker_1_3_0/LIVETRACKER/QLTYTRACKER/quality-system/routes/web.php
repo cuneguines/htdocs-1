@@ -20,6 +20,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\EngineerTaableData;
 use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
 use App\Http\Controllers\Kitting;
@@ -36,4 +37,5 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // routes/web.php
 Route::post('/submitEngineeringForm', [EngineeringController::class, 'submitEngineeringForm']);
 Route::post('/handleFileUpload', [UploadController::class, 'handleFileUpload']);
+Route::post('/getDataByProcessOrder', [EngineerTaableData::class, 'getDataByProcessOrder']);
 

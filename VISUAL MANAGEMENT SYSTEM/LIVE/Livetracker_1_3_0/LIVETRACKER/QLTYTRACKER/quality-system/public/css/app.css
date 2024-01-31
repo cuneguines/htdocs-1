@@ -794,3 +794,34 @@ button{border:none;}
 button[type="submit"] {
     margin-top: 15px;
 }
+
+   #engineer_table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    #engineer_table th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    #engineer_table th {
+        background-color: #f2f2f2;
+    }
+
+    #engineer_table  tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    #engineer_table a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    #engineer_table  td {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }

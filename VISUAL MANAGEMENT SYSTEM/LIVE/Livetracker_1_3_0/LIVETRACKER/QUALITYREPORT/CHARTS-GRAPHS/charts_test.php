@@ -502,11 +502,11 @@ $Values_rd_L = array_values($combinedData_rd_L);
     // Initialize an array to store the counts for each month
     $complaintCounts = array_fill(0, 12, 0);
     $complaintCounts_closed= array_fill(0, 12, 0);  // Initialize with zeros for each month
-
+//print_r($results);
     // Loop through the query results and count complaints for each month
     foreach ($results as $entry) {
         $formType = $entry['form_type'];
-        $dateUpdated = strtotime($entry['time_stamp']);
+        $dateUpdated = strtotime($entry['date_updated']);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -519,10 +519,11 @@ $Values_rd_L = array_values($combinedData_rd_L);
     // Convert the array of counts to a JSON format for use in JavaScript for AREA CHART
     $complaintCountsJSON = json_encode($complaintCounts);
     //print_r($complaintCountsJSON);
+    //print_r($results);
     foreach ($results as $entry) {
         $formType = $entry['form_type'];
-        $dateUpdated = strtotime($entry['time_stamp']);
-        $cost_rework = $entry['Status'];
+        $dateUpdated = strtotime($entry['date_updated']);
+        $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
         if ($status==='Closed'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
@@ -533,6 +534,7 @@ $Values_rd_L = array_values($combinedData_rd_L);
 
     // Convert the array of counts to a JSON format for use in JavaScript
     $complaintCountsJSON_closed = json_encode($complaintCounts_closed);
+    print_r($complaintCountsJSON_closed);
 
     //CC PER Month for the year 2023
 
@@ -2271,7 +2273,7 @@ $costCountsJSON = json_encode($costCounts);
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        max: 5000,
+                        max: 20000,
                         beginAtZero: true,
                         stepSize: 1
                     },

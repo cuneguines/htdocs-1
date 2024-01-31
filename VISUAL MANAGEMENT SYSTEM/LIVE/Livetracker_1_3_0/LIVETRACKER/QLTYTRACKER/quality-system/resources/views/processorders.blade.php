@@ -21,7 +21,7 @@
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
+
 
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/KS_DASH_STYLE.css')}}">
@@ -91,6 +91,17 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.modal-global-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .close {
     position: absolute;
     top: 10px;
@@ -133,7 +144,7 @@
             <div id="lastupdateholder">
             </div>
         </div>
-
+        <h2 style="color:#f08787">Welcome to Engineering Page, {{ Session::get('user_id') }}</h2>
         <label for="manualProcessOrder">Enter Process Order:</label>
         <input type="text" id="manualProcessOrder" name="manualProcessOrder" required style="width: 200px;">
 
@@ -159,6 +170,15 @@
                 <div id="planningFieldset"></div>
             </div>
         </div>
+        <!-- Your table HTML -->
+        <div style="display:none" id="globalModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeglobalModal()">&times;</span>
+                <p id="global-modal-content">Modal Content Goes Here</p>
+                <div id="engineeringFieldTable"></div>
+                <div id="planningFieldTable"></div>
+            </div>
+        </div>
 
         <script>
         // Wait for the DOM to be ready
@@ -170,6 +190,11 @@
                 // Get the manually entered process order
                 $('#table').show();
                 var manualProcessOrder = $('#manualProcessOrder').val();
+                var welcomeMessage = $('h2').text();
+                var userName = welcomeMessage.split(',')[1].trim();
+
+                // Now, you have the user name in the variable 'userName'
+                console.log('User Name:', userName);
 
                 // Make an AJAX request to get line items
                 /*   $.ajax({
@@ -213,6 +238,7 @@
             var headerRow = $('<tr>');
             headerRow.append('<th>Process Order</th>');
             headerRow.append('<th>Quality Steps</th>');
+            headerRow.append('<th>View</th>');
             table.append(headerRow);
 
             // Add data rows
@@ -221,6 +247,7 @@
 
                 // Insert cell for processOrder
                 row.append('<td>' + processOrder + '</td>');
+
 
                 // Insert cell for qualitySteps with a button to open the modal
                 var qualityStepButton = $('<button>', {
@@ -233,8 +260,23 @@
                     }
                 });
 
+                var qualityStepButtonWithId = $('<button>', {
+
+                    text: 'View',
+                    id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                    click: function() {
+                        var qualityStepId = $(this).attr('id').split('_')[1];
+                        // Handle button click with the quality step id
+                        console.log('Button clicked for quality step: ' + qualityStepId);
+                        openglobalModal(processOrder, qualityStepId);
+
+                    }
+
+                });
 
                 row.append('<td>').find('td:last').append(qualityStepButton);
+                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+
 
 
 
@@ -244,11 +286,11 @@
         }
 
         // JavaScript functions for modal with jQuery
-        function openModal(processOrder, qualityStep) {
+        function openModal(processOrder, qualityStep, userName) {
             $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
             if (qualityStep === 'Engineering') {
-                var engineeringFieldset = generateEngineeringFieldset(processOrder,qualityStep);
-            
+                var engineeringFieldset = generateEngineeringFieldset(processOrder, qualityStep, userName);
+
                 $('#engineeringFieldset').html(engineeringFieldset);
             } else {
                 // Clear the fieldset content if the quality step is not "Engineering"
@@ -270,6 +312,35 @@
         function closeModal() {
             $('#myModal').hide();
         }
+        //FOR VIEW BUTTON 
+
+        function openglobalModal(processOrder, qualityStep) {
+            $('#global-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
+            if (qualityStep === 'Engineering') {
+                var engineeringFieldTable = generateEngineeringFieldTable(processOrder, qualityStep);
+
+                $('#engineeringFieldTable').html(engineeringFieldTable);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#engineeringFieldTable').html('');
+            }
+            if (qualityStep === 'Planning / Forward Engineering') {
+                var planningFieldset = generatePlanningFieldset();
+
+                $('#planningFieldset').html(planningFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#planningFieldset').html('');
+            }
+
+
+            $('#globalModal').show();
+        }
+
+        function closeglobalModal() {
+            $('#globalModal').hide();
+        }
+
 
         // Close the modal if the user clicks outside of it
         /* $(document).click(function(event) {

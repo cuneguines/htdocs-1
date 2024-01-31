@@ -387,9 +387,11 @@ button.rm{
 
 
 
-
-
-
+#table th, #table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Align text in the middle */
+}
 
 
 

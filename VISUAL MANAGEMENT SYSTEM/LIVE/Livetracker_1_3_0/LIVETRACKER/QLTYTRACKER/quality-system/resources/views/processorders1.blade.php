@@ -49,7 +49,7 @@
         </div>
 
         <!-- FINANCE MENU -->
-        <h2 style="color:red">Welcome to Line Item Page, {{ Session::get('user_id') }}</h2>
+        <h2 style="color:red">Welcome to Engineering Page, {{ Session::get('user_id') }}</h2>
         <div id="background" style="float: left;width:85%;">
             <div id="content">
                 <div class="table_title green" style="box-shadow: -3px 3px 6px #03A9F4, 0 1px 4px #03A9F4;">
