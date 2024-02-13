@@ -17,6 +17,8 @@
     <script type="text/javascript" src="../../../JS/LOCAL/JS_menu_select.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/engineering_modal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/planning_modal.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/manufacturing_modal.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/materialpreparation_modal.js"></script>
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
@@ -89,6 +91,10 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    /* Enable horizontal scrolling */
+    max-width: 100%;
+    /* Ensure the container doesn't overflow its parent */
 }
 
 .modal-global-content {
@@ -100,7 +106,9 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
 }
+
 
 .close {
     position: absolute;
@@ -153,7 +161,7 @@
         <div id="lineItemsContainer">
             <!-- This is where the line items table will be displayed -->
         </div>
-        <h2>Process Order Table</h2>
+        <h3>Process Order Table</h3>
         <div id="table-container"
             style="max-height: 500px;overflow-y: scroll;position: relative;max-width: 84%; margin-top: 20px;">
             <table id="table" style="display:none;">
@@ -168,6 +176,8 @@
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset"></div>
                 <div id="planningFieldset"></div>
+                <div id="manufacturingFieldset"></div>
+                <div id="materialpreparationFieldset"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -175,26 +185,29 @@
             <div class="modal-content">
                 <span class="close" onclick="closeglobalModal()">&times;</span>
                 <p id="global-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable"></div>
-                <div id="planningFieldTable"></div>
+                <div id="engineeringFieldTable" style="width:1100px"></div>
+                <div id="planningFieldTable"style="width:1100px"></div>
+                <div id="manufacturingFieldTable"style="width:1100px"></div>
+                <div id="materialpreparationFieldTable"style="width:1100px"></div>
             </div>
         </div>
 
         <script>
+        var welcomeMessage = $('h2').text();
+        var userName = welcomeMessage.split(',')[1].trim();
+
+        // Now, you have the user name in the variable 'userName'
+        console.log('User Name:', userName);
         // Wait for the DOM to be ready
         $(document).ready(function() {
-
+            console.log('User Name:', userName);
             $('#myModal').hide();
             // Handle click event on the search button
             $('#searchButton').click(function() {
                 // Get the manually entered process order
                 $('#table').show();
                 var manualProcessOrder = $('#manualProcessOrder').val();
-                var welcomeMessage = $('h2').text();
-                var userName = welcomeMessage.split(',')[1].trim();
 
-                // Now, you have the user name in the variable 'userName'
-                console.log('User Name:', userName);
 
                 // Make an AJAX request to get line items
                 /*   $.ajax({
@@ -227,7 +240,8 @@
         });
 
         /* MODAL */
-        function updateTable(processOrder, qualitySteps) {
+        function updateTable(processOrder, qualitySteps, userName) {
+            console.log('User Name:', userName);
             // Get the table element
             var table = $('#table');
 
@@ -256,7 +270,7 @@
                         var clickedRow = $(this).closest('tr');
                         var processOrderValue = clickedRow.find('td:first').text();
                         var qualityStepValue = $(this).text();
-                        openModal(processOrderValue, qualityStepValue);
+                        openModal(processOrderValue, qualityStepValue, userName);
                     }
                 });
 
@@ -287,6 +301,7 @@
 
         // JavaScript functions for modal with jQuery
         function openModal(processOrder, qualityStep, userName) {
+            console.log('i am in openmodal', userName);
             $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
             if (qualityStep === 'Engineering') {
                 var engineeringFieldset = generateEngineeringFieldset(processOrder, qualityStep, userName);
@@ -297,7 +312,8 @@
                 $('#engineeringFieldset').html('');
             }
             if (qualityStep === 'Planning / Forward Engineering') {
-                var planningFieldset = generatePlanningFieldset();
+
+                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep);
 
                 $('#planningFieldset').html(planningFieldset);
             } else {
@@ -305,6 +321,24 @@
                 $('#planningFieldset').html('');
             }
 
+            if (qualityStep === 'Manufacturing Package') {
+
+                var planningFieldset = generateManufacturingFieldset(processOrder, qualityStep);
+
+                $('#manufacturingFieldset').html(planningFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#manufacturingFieldset').html('');
+            }
+            if (qualityStep === 'Material Preparation') {
+
+                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep);
+
+                $('#materialpreparationFieldset').html(materialpreparationFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#materialpreparationFieldset').html('');
+            }
 
             $('#myModal').show();
         }
@@ -313,29 +347,33 @@
             $('#myModal').hide();
         }
         //FOR VIEW BUTTON 
-
         function openglobalModal(processOrder, qualityStep) {
             $('#global-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
+
+            // Hide all content divs initially
+            $('#engineeringFieldTable').hide();
+            $('#planningFieldTable').hide();
+            $('#manufacturingFieldTable').hide();
+            $('#materialpreparationFieldTable').hide();
+
+            // Determine which content div to display based on qualityStep
             if (qualityStep === 'Engineering') {
                 var engineeringFieldTable = generateEngineeringFieldTable(processOrder, qualityStep);
-
-                $('#engineeringFieldTable').html(engineeringFieldTable);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#engineeringFieldTable').html('');
+                $('#engineeringFieldTable').html(engineeringFieldTable).show();
+            } else if (qualityStep === 'Planning / Forward Engineering') {
+                var planningFieldsetTable = generatePlanningFieldTable(processOrder, qualityStep);
+                $('#planningFieldTable').html(planningFieldsetTable).show();
+            } else if (qualityStep === 'Manufacturing Package') {
+                var manufacturingFieldsetTable = generateManufacturingFieldTable(processOrder, qualityStep);
+                $('#manufacturingFieldTable').html(manufacturingFieldsetTable).show();
+            } else if (qualityStep === 'Material Preparation') {
+                var materialpreparationFieldsetTable = generateMaterialPreparationFieldTable(processOrder, qualityStep);
+                $('#materialpreparationFieldTable').html(materialpreparationFieldsetTable).show();
             }
-            if (qualityStep === 'Planning / Forward Engineering') {
-                var planningFieldset = generatePlanningFieldset();
-
-                $('#planningFieldset').html(planningFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#planningFieldset').html('');
-            }
-
 
             $('#globalModal').show();
         }
+
 
         function closeglobalModal() {
             $('#globalModal').hide();
@@ -370,7 +408,7 @@
             var qualitySteps = getQualitySteps(manualProcessOrder);
 
             // Update the table
-            updateTable(manualProcessOrder, qualitySteps);
+            updateTable(manualProcessOrder, qualitySteps, userName);
         });
         </script>
 

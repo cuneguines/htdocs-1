@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Engineer_tableData;
-class EngineerTaableData extends Controller
+use App\Models\Planning_tableData;
+class PlanningTableData extends Controller
 {
-    //// app/Http/Controllers/EngineerController.php
-
-
-
-
-
-    public function getEngineerDataByProcessOrder(Request $request)
+    public function getPlanningDataByProcessOrder(Request $request)
     {
         $processOrderNumber = $request->input('process_order_number');
 
         // Retrieve data based on the process order number to get the latest record
-        $data = Engineer_tableData::where('process_order_number', $processOrderNumber)
+        $data = Planning_tableData::where('process_order_number', $processOrderNumber)
         ->orderBy('updated_at', 'desc')
         ->first();
 
@@ -25,5 +19,3 @@ class EngineerTaableData extends Controller
         return response()->json(['data' => $data]);
     }
 }
-
-

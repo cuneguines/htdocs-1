@@ -221,7 +221,7 @@ $live_po_count_comp_sql =
 /* OPEN HOURS ON FLOOR */
 /*Changed 18 September 2023 query slowed*/
 $open_hours_on_floor_sql = "SELECT SUM(CASE 
-WHEN (t2.[Planned_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
+WHEN (t2.[_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
 ELSE CAST(t2.[Planned_Lab] AS DECIMAL (12,0)) - CAST(ISNULL(t3.[Actual_Lab],0) AS DECIMAL (12,0))
 END)[Remaining_Lab]
 

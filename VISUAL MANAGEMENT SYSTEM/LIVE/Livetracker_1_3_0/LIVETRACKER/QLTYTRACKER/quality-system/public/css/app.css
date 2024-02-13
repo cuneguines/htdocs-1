@@ -795,33 +795,31 @@ button[type="submit"] {
     margin-top: 15px;
 }
 
-   #engineer_table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
+#table-container {
+    overflow-x: auto;
+}
 
-    #engineer_table th, td {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
+#common_table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    #engineer_table th {
-        background-color: #f2f2f2;
-    }
+#common_table th, #common_table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
 
-    #engineer_table  tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
+#common_table th {
+    background-color: #f2f2f2;
+}
 
-    #engineer_table a {
-        text-decoration: none;
-        color: #007bff;
-    }
+#common_table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
 
-    #engineer_table  td {
-        border: 1px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }
+#common_table tbody tr:hover {
+    background-color: #ddd;
+}
+
+

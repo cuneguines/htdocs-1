@@ -213,7 +213,8 @@ LEFT JOIN RDR1 t1 ON t1.DocEntry = t2.BaseEntry and t1.Itemcode = t2.ItemCode an
 LEFT JOIN ORDR t0 ON t0.DocEntry = t1.DocEntry
 LEFT JOIN OHEM t6 on t6.empID = t0.OwnerCode
 WHERE DATEPART(YEAR, t3.DocDate) = (DATEPART(YEAR,GETDATE()) - 1)
-AND t2.ItemCode <> 'TRANSPORT' AND ISNULL(t4.ItemCode,'') <> 'TRANSPORT'";
+AND ISNULL(t2.ItemCode,'') <> 'TRANSPORT' AND ISNULL(t4.ItemCode,'') <> 'TRANSPORT' AND t0.CANCELED <> 'Y' AND t3.DocStatus = 'C'
+";
 
 $delivered_on_time_last_year_sql =
 "SELECT SUM(t2.LineTotal)-SUM(ISNULL(t4.LineTotal,0)) FROM ODLN t3
