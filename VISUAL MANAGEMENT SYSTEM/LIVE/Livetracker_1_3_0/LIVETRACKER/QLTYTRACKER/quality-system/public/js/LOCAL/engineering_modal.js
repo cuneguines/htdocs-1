@@ -62,7 +62,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 
 function generateHTMLFromResponse_for_eng(response) {
     var html = '<table id="common_table">';
-    html += '<thead><tr><th>ID</th><th>Reference Job / Master File</th><th>Reference Job / Master File Document</th><th>Concept Design</th><th>Concept Design Document</th><th>Design Validation</th><th>Design Validation Document</th><th>Customer Approval</th><th>Customer Approval Document</th><th>Sample Approval</th><th>Sample Approval Document</th><th>Sign-off Engineering</th></tr></thead><tbody>';
+    html += '<thead><tr><th>ID</th><th>Reference Job / Master File</th><th>Reference Job / Master File Document</th><th>Concept Design</th><th>Concept Design Document</th><th>Design Validation</th><th>Design Validation Document</th><th>Customer Approval</th><th>Customer Approval Document</th><th>Sample Approval</th><th>Sample Approval Document</th><th>Sign-off Engineering</th><th>Comments Engineering</th></tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += '<tr>';
@@ -112,7 +112,8 @@ function generateHTMLFromResponse_for_eng(response) {
             html += '<td></td>'; // Empty cell if 'sample_approval_document' is empty
         }
 
-        html += '<td>' + (item.sign_off_engineering ? item.sign_off_engineering : '') + '</td>'; // Display sign-off info or empty if not available
+        html += '<td>' + (item.sign_off_engineering ? item.sign_off_engineering : '') + '</td>';
+        html += '<td>' + (item.comments_engineering ? item. comments_engineering: '') + '</td>'; // Display sign-off info or empty if not available
 
         html += '</tr>';
     });
@@ -235,6 +236,7 @@ function submitEngineeringForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     const sign_off_engineering = document.querySelector('[name="sign_off_engineering"]').value;
+    
     var formData = {
         reference_job_master_file: document.querySelector('[name="reference_job_master_file"]')?.checked || null,
         concept_design_engineering: document.querySelector('[name="concept_design_engineering"]')?.checked || null,
@@ -248,7 +250,7 @@ function submitEngineeringForm(processOrder) {
         sample_approval_document: getFileName('design_validation_document'),
         
         sign_off_engineering: sign_off_engineering,
-        comments_engineering: document.querySelector('[name="comments_engineering"]')?.checked || null,
+        comments_engineering: document.querySelector('[name="comments_engineering"]').value || null,
         submission_date: new Date().toISOString().split('T')[0],  // Get today's date in YYYY-MM-DD format
         process_order_number: processOrder,
         // Add other form fields accordingly

@@ -92,6 +92,7 @@
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow-x: auto;
+    overflow-y: scroll;
     /* Enable horizontal scrolling */
     max-width: 100%;
     /* Ensure the container doesn't overflow its parent */
@@ -313,7 +314,7 @@
             }
             if (qualityStep === 'Planning / Forward Engineering') {
 
-                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep);
+                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep,userName);
 
                 $('#planningFieldset').html(planningFieldset);
             } else {
@@ -323,16 +324,16 @@
 
             if (qualityStep === 'Manufacturing Package') {
 
-                var planningFieldset = generateManufacturingFieldset(processOrder, qualityStep);
+                var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep,userName);
 
-                $('#manufacturingFieldset').html(planningFieldset);
+                $('#manufacturingFieldset').html(manufacturingFieldset);
             } else {
                 // Clear the fieldset content if the quality step is not "Engineering"
                 $('#manufacturingFieldset').html('');
             }
             if (qualityStep === 'Material Preparation') {
 
-                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep);
+                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,userName);
 
                 $('#materialpreparationFieldset').html(materialpreparationFieldset);
             } else {

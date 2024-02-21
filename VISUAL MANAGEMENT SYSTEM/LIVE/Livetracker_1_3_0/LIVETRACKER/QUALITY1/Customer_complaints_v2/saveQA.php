@@ -57,6 +57,13 @@ if ($owner=='Sean O Brien (Q)')
    
    where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + + ' ' + t0.lastName='$owner'";
 }
+elseif ($owner=="Sean O'Brien")
+{
+  $query_email="SELECT (t0.firstName + ' ' + t0.lastName) AS person, t0.email
+FROM KENTSTAINLESS.dbo.ohem t0
+WHERE t0.Active = 'Y' AND t0.email IS NOT NULL AND (t0.firstName + ' ' + t0.lastName) = 'Sean O''Brien'";
+}
+ 
 else{
    $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 

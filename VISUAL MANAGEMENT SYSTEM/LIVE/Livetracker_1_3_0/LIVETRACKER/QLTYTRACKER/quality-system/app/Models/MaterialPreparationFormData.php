@@ -21,6 +21,8 @@ class MaterialPreparationFormData extends Model
         'machining',
         'sign_off_material_preparation',
         'comments_material_preparation',
+        'material_identification_record_file',
+        'material_traceability_file',
         // Add other fields here
     ];
 }

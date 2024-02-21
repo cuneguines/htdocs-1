@@ -495,7 +495,7 @@
 
                                     <td><?= $row["cc_raised_by"] ?></td>
                                     <td><?= $row["cc_area_caused"] ?></td>
-                                    <td><?= $row["cc_raised_by"] ?></td>
+                                    <td><?= $row["cc_area_raised_by"] ?></td>
                                     <td><?= $row["Status"] ?></td>
                                     <td><?= $row["time_stamp"] ?></td>
 

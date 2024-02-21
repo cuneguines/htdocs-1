@@ -114,8 +114,8 @@ function generateHTMLFromResponse_for_planning(response) {
         } else {
             html += '<td></td>'; // Empty cell if 'reference_job_master_file_document' is empty
         } 
-        html += '<td>' + (item.sign_off_planning === 'true' ? '✔' : '') + '</td>';
-        html += '<td>' + (item.comments_planning === 'true' ? '✔' : '') + '</td>';
+        html += '<td>' + (item.sign_off_planning ? item.sign_off_planning : '') + '</td>';
+        html += '<td>' + (item.comments_planning ? item.comments_planning : '') + '</td>';
 
         // Include other columns as needed
         html += '</tr>';
@@ -128,8 +128,8 @@ function generateHTMLFromResponse_for_planning(response) {
 
 
 
-function generatePlanningFieldset(processOrder, qualityStep) {
-   
+function generatePlanningFieldset(processOrder, qualityStep,username) {
+    $('#sign_off_planning').val(username);
     return `
 <fieldset>
     <legend>Main Task 1: Planning / Forward Engineering</legend>
@@ -203,7 +203,7 @@ function generatePlanningFieldset(processOrder, qualityStep) {
     <div class="form-group">
         <label>
             Sign-off for Planning / Forward Engineering:
-            <input type="text" name="sign_off_planning">
+            <input type="text" name="sign_off_planning"value="${username}">
         </label>
     </div>
 
@@ -233,7 +233,7 @@ function submitPlanningForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
 
-   
+    const sign_off_planning = document.querySelector('[name="sign_off_planning"]').value;
     var formData = {
         purchase_order_received: document.querySelector('[name="purchase_order_received"]')?.checked || null,
         project_schedule_agreed: document.querySelector('[name="project_schedule_agreed"]')?.checked || null,
@@ -247,8 +247,8 @@ function submitPlanningForm(processOrder) {
         user_requirement_specifications_document: getFileName('user_requirement_specifications_document'),
         pre_engineering_check_document: getFileName('pre_engineering_check_document'),
         quotation_document: getFileName('quotation_document'),
-        sign_off_engineering: 'eys',
-        comments_engineering: document.querySelector('[name="comments_planning"]')?.checked || null,
+        sign_off_planning:sign_off_planning,
+        comments_planning: document.querySelector('[name="comments_planning"]').value || null,
         // Get today's date in YYYY-MM-DD format
         process_order_number: processOrder,
         // Add other form fields accordingly

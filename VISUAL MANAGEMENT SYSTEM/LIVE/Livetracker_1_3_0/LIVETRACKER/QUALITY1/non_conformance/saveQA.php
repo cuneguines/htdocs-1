@@ -49,27 +49,28 @@ $mail = new PHPMailer(true);
   //echo($stat);
   //echo($prev_owner);
    //to find the email 
-if ($owner=='Sean O Brien (Q)')
+if (trim($owner)=='Sean O Brien (Q)')
 {
+  echo($owner);
   $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 
    from KENTSTAINLESS.dbo.ohem t0
    
-   where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + + ' ' + t0.lastName='$owner'";
+   where t0.Active = 'Y' and t0.email is not NULL and t0.firstName + + ' ' + t0.lastName='Sean O Brien (Q)'";
 }
-if ($owner=="Sean O'Brien")
+elseif ($owner=="Sean O'Brien")
 {
   $query_email="SELECT (t0.firstName + ' ' + t0.lastName) AS person, t0.email
 FROM KENTSTAINLESS.dbo.ohem t0
 WHERE t0.Active = 'Y' AND t0.email IS NOT NULL AND (t0.firstName + ' ' + t0.lastName) = 'Sean O''Brien'";
 }
-else{
+ else{
    $query_email="select (t0.firstName + ' ' + t0.lastName)[person], t0.email
 
    from KENTSTAINLESS.dbo.ohem t0
    
    where t0.Active = 'Y' and t0.email is not NULL and REPLACE(t0.firstName + t0.lastName, '''', '')='$owner'";
-}
+} 
    $getResults_email = $conn->prepare($query_email);
    $getResults_email->execute();
    $getResults_email = $getResults_email->fetchAll(PDO::FETCH_BOTH);

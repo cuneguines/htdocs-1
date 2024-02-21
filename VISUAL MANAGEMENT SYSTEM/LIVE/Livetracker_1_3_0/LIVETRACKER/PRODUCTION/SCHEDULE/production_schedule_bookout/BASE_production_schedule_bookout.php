@@ -329,7 +329,7 @@
                                     else 
                                     $color_for_dates='';
                                     //shape for the account on hold
-                                    if(($results[$i]['Account Status']=="ON HOLD - CURRENT DELIVERIES PUSH OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - INV DUE"|| $results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']==" ON HOLD - BRID BP" ||$results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - NO TERMS" ||$results[$i]['Account Status']=="ON HOLD - THIS WILL PUSH OVER TERMS"))
+                                    if(($results[$i]['Account Status']=="ON HOLD - CURRENT DELIVERIES PUSH OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - INV DUE"|| $results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - BRID SO" ||$results[$i]['Account Status']=="ON HOLD - CURRENT BALANCE OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - NO TERMS" ||$results[$i]['Account Status']=="ON HOLD - THIS WILL PUSH OVER TERMS"||$results[$i]['Account Status']=="ON HOLD - Brid SO"))
                                     {
                                         
                                       

@@ -24,7 +24,8 @@ class MaterialPreparationController extends Controller
         $materialPreparation->machining = $request->input('machining');
         $materialPreparation->sign_off_material_preparation = $request->input('sign_off_material_preparation');
         $materialPreparation->comments_material_preparation = $request->input('comments_material_preparation');
-
+        $materialPreparation->material_identification_record_file=$request->input('material_identification_record_file');
+        $materialPreparation->material_traceability_file=$request->input('material_traceability_file');
         // Add other fields accordingly
 
         $materialPreparation->save();

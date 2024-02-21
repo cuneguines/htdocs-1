@@ -94,7 +94,8 @@ function generateHTMLFromResponse_for_manufacturing(response) {
     return html;
 }
 
-function generateManufacturingFieldset(processOrder, qualityStep) {
+function generateManufacturingFieldset(processOrder, qualityStep,username) {
+    $('#sign_off_manufacturing').val(username);
     return `
         <fieldset>
             <legend>Main Task 3: Manufacturing</legend>
@@ -169,7 +170,7 @@ function generateManufacturingFieldset(processOrder, qualityStep) {
             <div class="form-group">
                 <label>
                     Sign-off for Manufacturing:
-                    <input type="text" name="sign_off_manufacturing" >
+                    <input type="text" name="sign_off_manufacturing"value="${username}" >
                 </label>
             </div>
 
@@ -205,14 +206,14 @@ function submitManufacturingForm(processOrder) {
         var fileInput = document.querySelector('[name="' + inputName + '"]');
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
-   
+    const sign_off_manufacturing = document.querySelector('[name="sign_off_manufacturing"]').value;
     var formData = {
         production_drawings: document.querySelector('[name="production_drawings"]').checked || null,
         bom: document.querySelector('[name="bom"]').checked || null,
         machine_programming_files: document.querySelector('[name="machine_programming_files"]').checked || null,
         ndt_documentation: document.querySelector('[name="ndt_documentation"]').checked || null,
         quality_documents: document.querySelector('[name="quality_documents"]').checked || null,
-        sign_off_manufacturing: document.querySelector('[name="sign_off_manufacturing"]').value || null,
+        sign_off_manufacturing: sign_off_manufacturing,
         comments_manufacturing: document.querySelector('[name="comments_manufacturing"]').value || null,
         process_order_number: processOrder,
         production_drawings_document: getFileName('production_drawings_document'),

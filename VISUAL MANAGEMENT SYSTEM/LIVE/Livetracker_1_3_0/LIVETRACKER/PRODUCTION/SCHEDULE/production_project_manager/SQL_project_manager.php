@@ -1,8 +1,9 @@
 <?php
-
+//Changed query with this and t0.ItmsGrpNam='FG - Engineer To Order'
 
 
 $tsql="select
+t0.ItmsGrpNam,
 t0.[Sales Order],
 t0.[Customer],
 t0.[Project],
@@ -60,7 +61,7 @@ SELECT
     DATEDIFF(WEEK, t0.CreateDate, GETDATE())[Weeks Open],
     DATEDIFF(MONTH, GETDATE(),t1.U_Promise_Date) [Month Difference PD],
     
-
+    t6.ItmsGrpNam,
     t1.Dscription [Dscription],
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t1.quantity AS DECIMAL (12,1)) [Quantity],
@@ -161,6 +162,7 @@ SELECT
 
         
     t5.ItemName [Dscription],
+    t6.ItmsGrpNam,
     (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
     CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
     CAST(t5.OnHand AS DECIMAL (12,1))[On Hand],
@@ -221,6 +223,6 @@ SELECT
    
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
-            ) t0 where t0.[Project Manager] is not NULL and t0.[Project Manager] <>'VMS'
+            ) t0 where t0.[Project Manager] is not NULL and t0.[Project Manager] <>'VMS'and t0.ItmsGrpNam='FG - Engineer To Order'
             
    ORDER BY t0.[Project]";

@@ -428,7 +428,7 @@ left join (
                                                                 when t4.Within_Line like 'ON HOLD%' then t4.Within_Line
                                                                 when t5.country not like 'IE' and (t2.[Open SO Value FC] + t4.[Del ValueFC] + t5.BalanceFC) > t4.creditline then 'ON HOLD - THIS WILL PUSH OVER TERMS'
                                                                 when t5.country  like 'IE' and (t2.[Open SO Value] + t4.[Del Value] + t4.Balance) > t4.creditline + 100 then 'ON HOLD - THIS WILL PUSH OVER TERMS'
-                                                                when t8.U_credit_choice = 'On Hold' then 'On Hold - Brid SO'
+                                                                when t8.U_credit_choice = 'On Hold' then 'ON HOLD - Brid SO'
                                                                 else t4.Within_Line end [Acc Status], t5.CreditLine, t5.Balance, t5.BalanceFC, t0.LineNum
 
                                                                 from rdr1 t0
