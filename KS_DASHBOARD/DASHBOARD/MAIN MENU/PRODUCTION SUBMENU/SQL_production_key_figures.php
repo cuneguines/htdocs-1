@@ -221,7 +221,7 @@ $live_po_count_comp_sql =
 /* OPEN HOURS ON FLOOR */
 /*Changed 18 September 2023 query slowed*/
 $open_hours_on_floor_sql = "SELECT SUM(CASE 
-WHEN (t2.[_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
+WHEN (t2.[Planned_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
 ELSE CAST(t2.[Planned_Lab] AS DECIMAL (12,0)) - CAST(ISNULL(t3.[Actual_Lab],0) AS DECIMAL (12,0))
 END)[Remaining_Lab]
 
@@ -255,5 +255,49 @@ WHERE t1.CmpltQty < t1.PlannedQty AND
 ";
 
 
+$open_hours_on_floor_details_sql="SELECT ---SUM(CASE 
+--WHEN (t2.[_Lab] - ISNULL(t3.[Actual_Lab],0)) < 0 THEN 0
+--ELSE CAST(t2.[Planned_Lab] AS DECIMAL (12,0)) - CAST(ISNULL(t3.[Actual_Lab],0) AS DECIMAL (12,0))
+--END)[Remaining_Lab]
 
+t0.PrOrder,
+t2.Planned_Lab,
+t3.Actual_Lab,
+t4.CardName,t6.U_Product_Group_One,
+t88.U_NAME,
+
+t6.U_Product_Group_Two,
+t6.U_Product_Group_Three,
+---t4.OwnerCode,
+ t10.SlpName [Engineer],
+t13.firstname + ' ' + t13.lastName [Sales Person]
+-- ISNULL(t7.SlpName,'NO NAME') [Engineer]
+FROM IIS_EPC_PRO_ORDERH t0
+
+INNER JOIN owor t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct    
+INNER JOIN (select t1.U_IIS_proPrOrder, 
+    SUM(t0.plannedqty) [Planned_Lab]
+    FROM wor1 t0
+        INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                        
+        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode               
+            WHERE t2.ItemType = 'L'                      
+            GROUP BY t1.U_IIS_proPrOrder) 
+t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
+
+LEFT JOIN (SELECT t0.PrOrder, 
+    SUM(t0.Quantity) [Actual_Lab]
+        FROM iis_epc_pro_ordert t0                       
+            GROUP BY t0.PrOrder) 
+t3 ON t3.PrOrder = t0.Prorder
+left join oitm t6 on t6.ItemCode=t0.EndProduct
+LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
+ INNER JOIN oslp t10 ON t10.SlpCode = t4.SlpCode
+  inner join ohem t13 on t13.empID = t4.OwnerCode
+LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
+left join [dbo].ousr as t88 on t88.USERID=t4.U_Proj_Mgr 
+
+WHERE t1.CmpltQty < t1.PlannedQty AND 
+   t0.Status NOT IN ('D','C') AND 
+   t1.Status NOT IN ('C','L') AND 
+   t5.U_PP_status IN ('Live','1001')";
 ?>

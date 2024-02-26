@@ -223,6 +223,6 @@ SELECT
    
    WHERE t0.Status not in ('D','L','C')
    and t0.OriginNum is null
-            ) t0 where t0.[Project Manager] is not NULL and t0.[Project Manager] <>'VMS'and t0.ItmsGrpNam='FG - Engineer To Order'
+            ) t0 where t0.ItmsGrpNam='FG - Engineer To Order'
             
    ORDER BY t0.[Project]";

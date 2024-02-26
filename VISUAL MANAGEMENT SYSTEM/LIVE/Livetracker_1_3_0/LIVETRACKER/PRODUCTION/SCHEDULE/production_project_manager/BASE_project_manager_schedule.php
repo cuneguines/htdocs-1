@@ -247,7 +247,7 @@
                 </div><!--
              --><div id = "sched_right">
                     <div class = "table_title green">
-                        <h1>PRODUCTION SCHEDULE/PROJECT MANAGER</h1>
+                        <h1>PRODUCTION SCHEDULE/ENGINEER TO ORDER PROJECTS</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
                         <table id = "production_schedule" class = "filterable searchable">

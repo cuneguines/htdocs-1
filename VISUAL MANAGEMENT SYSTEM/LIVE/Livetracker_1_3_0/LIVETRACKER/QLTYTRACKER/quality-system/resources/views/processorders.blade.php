@@ -187,15 +187,25 @@
                 <span class="close" onclick="closeglobalModal()">&times;</span>
                 <p id="global-modal-content">Modal Content Goes Here</p>
                 <div id="engineeringFieldTable" style="width:1100px"></div>
-                <div id="planningFieldTable"style="width:1100px"></div>
-                <div id="manufacturingFieldTable"style="width:1100px"></div>
-                <div id="materialpreparationFieldTable"style="width:1100px"></div>
+                <div id="planningFieldTable" style="width:1100px"></div>
+                <div id="manufacturingFieldTable" style="width:1100px"></div>
+                <div id="materialpreparationFieldTable" style="width:1100px"></div>
             </div>
         </div>
-
+        <div style="display:none" id="globalCompleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeglobalCompleteModal()">&times;</span>
+                <p id="global-complete-modal-content">Modal Content Goes Here</p>
+                <div id="engineeringFieldTable" style="width:1100px"></div>
+                <div id="planningFieldTable" style="width:1100px"></div>
+                <div id="manufacturingFieldTable" style="width:1100px"></div>
+                <div id="materialpreparationCompleteFieldTable" style="width:1100px"></div>
+            </div>
+        </div>
         <script>
         var welcomeMessage = $('h2').text();
         var userName = welcomeMessage.split(',')[1].trim();
+        var loggedInUser = 'admin';
 
         // Now, you have the user name in the variable 'userName'
         console.log('User Name:', userName);
@@ -222,7 +232,7 @@
                           $.each(data, function(index, item) {
                               html += '<tr>';
                               // Adjust the property name based on your actual JSON structure
-                              html += '<td>' + item.StepDesc +
+                              html += '<td>' + item.Quantity +
                                   '</td><td style="text-align: center;">' + item
                                   .PrOrder + '</td>';
                               html += '</tr>';
@@ -241,7 +251,7 @@
         });
 
         /* MODAL */
-        function updateTable(processOrder, qualitySteps, userName) {
+        function updateTable_test(processOrder, qualitySteps, userName) {
             console.log('User Name:', userName);
             // Get the table element
             var table = $('#table');
@@ -254,6 +264,7 @@
             headerRow.append('<th>Process Order</th>');
             headerRow.append('<th>Quality Steps</th>');
             headerRow.append('<th>View</th>');
+            headerRow.append('<th>Complete</th>');
             table.append(headerRow);
 
             // Add data rows
@@ -288,13 +299,117 @@
                     }
 
                 });
+                var qualityStepButtonWithCompleteId = $('<button>', {
+
+                    text: 'Complete',
+                    id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                    click: function() {
+                        var qualityStepId = $(this).attr('id').split('_')[1];
+                        // Handle button click with the quality step id
+                        console.log('Button clicked for quality step: ' + qualityStepId);
+                        openglobalCompleteModal(processOrder, qualityStepId);
+
+                    }
+
+                });
 
                 row.append('<td>').find('td:last').append(qualityStepButton);
                 row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithCompleteId);
 
 
 
 
+
+                table.append(row);
+            }
+        }
+
+        function updateTable(processOrder, qualitySteps, userName, loggedInUser) {
+            console.log('User Name:', userName);
+            console.log('User Role:', loggedInUser);
+            // Get the table element
+            var table = $('#table');
+
+            // Clear existing rows
+            table.html('');
+
+            // Add header row
+            var headerRow = $('<tr>');
+            headerRow.append('<th>Process Order</th>');
+            headerRow.append('<th>Quality Steps</th>');
+
+            // Check if loggedInUser is admin to show all buttons
+            if (loggedInUser === 'admin') {
+                headerRow.append('<th>View</th>');
+                headerRow.append('<th>Complete</th>');
+            }
+
+            table.append(headerRow);
+
+            // Add data rows
+            for (var i = 0; i < qualitySteps.length; i++) {
+                var row = $('<tr>');
+
+                // Insert cell for processOrder
+                row.append('<td>' + processOrder + '</td>');
+
+                // Insert cell for qualitySteps with a button to open the modal
+                var qualityStepButton = $('<button>', {
+                    text: qualitySteps[i],
+                    click: function() {
+                        var clickedRow = $(this).closest('tr');
+                        var processOrderValue = clickedRow.find('td:first').text();
+                        var qualityStepValue = $(this).text();
+                        openModal(processOrderValue, qualityStepValue, userName);
+                    }
+                });
+
+                row.append('<td>').find('td:last').append(qualityStepButton);
+
+                // Check if loggedInUser is admin to show all buttons
+                if (loggedInUser === 'admin') {
+                    var qualityStepButtonWithId = $('<button>', {
+                        text: 'View',
+                        id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                        click: function() {
+                            var qualityStepId = $(this).attr('id').split('_')[1];
+                            // Handle button click with the quality step id
+                            console.log('Button clicked for quality step: ' + qualityStepId);
+                            openglobalModal(processOrder, qualityStepId);
+                        }
+                    });
+
+                    row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+
+                    var qualityStepButtonWithCompleteId = $('<button>', {
+                        text: 'Complete',
+                        id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
+                        click: function() {
+                            var qualityStepId = $(this).attr('id').split('_')[2];
+                            // Handle button click with the quality step id
+                            console.log('Button clicked for quality step: ' + qualityStepId);
+                            openglobalCompleteModal(processOrder, qualityStepId);
+                        }
+                    });
+
+                    row.append('<td style="text-align:center">').find('td:last').append(
+                    qualityStepButtonWithCompleteId);
+                } else {
+                    // For operators, only show the "Complete" button
+                    var completeButton = $('<button>', {
+                        text: 'Complete',
+                        id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
+                        click: function() {
+                            var qualityStepId = $(this).attr('id').split('_')[2];
+                            // Handle button click with the quality step id
+                            console.log('Button clicked for quality step: ' + qualityStepId);
+                            openglobalCompleteModal(processOrder, qualityStepId);
+                        }
+                    });
+
+                    row.append('<td style="text-align:center">').find('td:last').append(completeButton);
+                }
 
                 table.append(row);
             }
@@ -314,7 +429,7 @@
             }
             if (qualityStep === 'Planning / Forward Engineering') {
 
-                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep,userName);
+                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
 
                 $('#planningFieldset').html(planningFieldset);
             } else {
@@ -324,7 +439,7 @@
 
             if (qualityStep === 'Manufacturing Package') {
 
-                var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep,userName);
+                var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep, userName);
 
                 $('#manufacturingFieldset').html(manufacturingFieldset);
             } else {
@@ -333,7 +448,8 @@
             }
             if (qualityStep === 'Material Preparation') {
 
-                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,userName);
+                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,
+                    userName);
 
                 $('#materialpreparationFieldset').html(materialpreparationFieldset);
             } else {
@@ -375,6 +491,39 @@
             $('#globalModal').show();
         }
 
+        function openglobalCompleteModal(processOrder, qualityStep) {
+            $('#global-complete-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' +
+                qualityStep);
+
+            // Hide all content divs initially
+            $('#engineeringCompleteFieldTable').hide();
+            $('#planningCompleteFieldTable').hide();
+            $('#manufacturingCompleteFieldTable').hide();
+            $('#materialpreparationCompleteFieldTable').hide();
+
+            // Determine which content div to display based on qualityStep
+            if (qualityStep === 'Engineering') {
+                var engineeringCompleteFieldTable = generateEngineeringCompleteFieldTable(processOrder, qualityStep);
+                $('#engineeringCompleteFieldTable').html(engineeringFieldTable).show();
+            } else if (qualityStep === 'Planning / Forward Engineering') {
+                var planningCompleteFieldsetTable = generatePlanningCompleteFieldTable(processOrder, qualityStep);
+                $('#planningCompleteFieldTable').html(planningFieldsetTable).show();
+            } else if (qualityStep === 'Manufacturing Package') {
+                var manufacturingCompleteFieldsetTable = generateManufacturingCompleteFieldTable(processOrder,
+                    qualityStep);
+                $('#manufacturingCompleteFieldTable').html(manufacturingFieldsetTable).show();
+            } else if (qualityStep === 'Material Preparation') {
+                var materialpreparationCompleteFieldsetTable = generateMaterialPreparationCompleteFieldset(processOrder,
+                    qualityStep);
+                $('#materialpreparationCompleteFieldTable').html(materialpreparationCompleteFieldsetTable).show();
+            }
+
+            $('#globalCompleteModal').show();
+        }
+
+        function closeglobalCompleteModal() {
+            $('#globalCompleteModal').hide();
+        }
 
         function closeglobalModal() {
             $('#globalModal').hide();
@@ -409,7 +558,7 @@
             var qualitySteps = getQualitySteps(manualProcessOrder);
 
             // Update the table
-            updateTable(manualProcessOrder, qualitySteps, userName);
+            updateTable(manualProcessOrder, qualitySteps, userName, loggedInUser);
         });
         </script>
 

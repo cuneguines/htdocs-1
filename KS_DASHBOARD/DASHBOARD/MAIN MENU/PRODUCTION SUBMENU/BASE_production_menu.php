@@ -16,6 +16,7 @@
         <!-- LOCAL JAVASCRIPT -->
         <script type = "text/javascript" src = "../../../JS/LOCAL/JS_menu_select.js"></script>
         <script type = "text/javascript" src = "../../../JS/LOCAL/JS_radio_buttons.js"></script>
+        <script type = "text/javascript" src = "./show_table.js"></script>
 
         <!-- STYLING -->
 		<link rel = "stylesheet" href = "../../../css/KS_DASH_STYLE.css">
@@ -31,7 +32,111 @@
         <?php   $complete_today_list = json_decode(file_get_contents(__DIR__.'\CACHED\complete_today_list.json'),true);          ?>
         <?php   $complete_yesterday_list = json_decode(file_get_contents(__DIR__.'\CACHED\complete_yesterday_list.json'),true);  ?>
         <?php   $headline_figures = json_decode(file_get_contents(__DIR__.'\CACHED\headline_figures.json'),true);  ?>
-        
+        <?php   $open_hours_on_floor_details_data = json_decode(file_get_contents(__DIR__.'\CACHED\open_hours_on_floor_details_data.json'),true);  ?>
+        <style>
+        /* Modal styles - adjust as needed */
+/* Modal styles - adjust as needed */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center modal on screen */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  max-height: 70%; /* Set maximum height for modal */
+  overflow: auto; /* Enable vertical scrolling if content exceeds height */
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Table Styling */
+#modalTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#modalTable th,
+#modalTable td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Header Styles */
+#modalTable th {
+  background-color: #7cbfa0; /* Green */
+  color: white;
+  font-weight: bold;
+}
+
+/* Fixed Header */
+#modalTable thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Scrollable Body */
+#modalTable tbody {
+  display: block;
+  height: 300px; /* Adjust as needed */
+  overflow-y: scroll;
+  width: 100%;
+}
+
+/* Even and Odd Row Coloring */
+#modalTable tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#modalTable tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+/* Specific Row Coloring */
+#modalTable tbody tr.special-row {
+  background-color: #FFD700; /* Yellow */
+}
+.banner_button_{
+float: left;
+    margin-left: 1%;
+    margin-right: 1%;
+    color: white;
+    font-size: 2vh;
+    position: relative;
+    top: 10%;
+    height: 80%;
+    width: 18%;
+    border-radius: 20px;
+    border: 5px solid #FACB57;
+    background-color: #FACB57;
+}
+</style>
         <!-- CHARTS SETUP -->
         <script type = "text/javascript">
             $(document).ready(function()
@@ -427,7 +532,18 @@
                         <p class = "totalvalue larger"><?= $headline_figures["Hours On Floor"]?></p>
                         <p class = "totaltitle smedium">Current Lead Time</p>
                         <p class = "totalvalue larger"><?= $headline_figures["Lead Time"]?></p>
+                        <button onclick="toggleTable()">Show Table</button>
                     </div>
+                    <div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <table id="modalTable">
+      <!-- Table content will be dynamically added here -->
+    </table>
+    <button id="exportExcel"class="banner_button_">Export to Excel</button>
+  </div>
+</div>
+
                 </div>
                 <div id = "topright" class = "white sector top right" style = "width:62%">
                     <div class = "content">

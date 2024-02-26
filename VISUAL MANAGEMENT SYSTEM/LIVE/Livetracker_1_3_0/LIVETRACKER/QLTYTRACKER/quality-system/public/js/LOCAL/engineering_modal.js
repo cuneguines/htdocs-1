@@ -322,3 +322,100 @@ function submitEngineeringForm(processOrder) {
 
     console.log('Engineering form submitted!');
 }
+function generateEngineeringFieldset(processOrder, qualityStep,username) {
+    console.log('username from modal',username);
+    $('#sign_off_engineering').val(username);
+     return `
+            
+     <fieldset>
+     <legend>Main Task 2: Engineering</legend>
+ 
+     <!-- Subtask 2.1: Reference Job / Master File -->
+     <div class="form-group">
+         <label>
+         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+             <input type="checkbox" name="reference_job_master_file">
+             Reference Job / Master File if applicable
+         </label>
+         <br>
+         <label class="upload-label">
+             Upload Document:
+             <input type="file" name="reference_job_master_file_document">
+         </label>
+     </div>
+     
+     <!-- Subtask 2.2: Concept Design -->
+     <div class="form-group">
+         <label>
+             <input type="checkbox" name="concept_design_engineering">
+             Concept design & engineering details
+         </label>
+         <br>
+         <label class="upload-label">
+             Upload Concept Design Document:
+             <input type="file" name="concept_design_document">
+         </label>
+     </div>
+ 
+     <!-- Subtask 2.3: Design Validation -->
+     <div class="form-group">
+         <label>
+             <input type="checkbox" name="design_validation_sign_off">
+             Design sign off [calculations]
+         </label>
+         <br>
+         <label class="upload-label">
+             Upload Design Validation Document:
+             <input type="file" name="design_validation_document">
+         </label>
+     </div>
+ 
+     <!-- Subtask 2.4: Customer Approval -->
+     <div class="form-group">
+         <label>
+             <input type="checkbox" name="customer_submittal_package">
+             Customer submittal package
+         </label>
+         <br>
+         <label class="upload-label">
+             Upload Customer Approval Document:
+             <input type="file" name="customer_approval_document">
+         </label>
+     </div>
+ 
+     <!-- Subtask 2.5: Sample Approval -->
+     <div class="form-group">
+         <label>
+             <input type="checkbox" name="reference_approved_samples">
+             Reference approved samples
+         </label>
+         <br>
+         <label class="upload-label">
+             Upload Sample Approval Document:
+             <input type="file" name="sample_approval_document">
+         </label>
+     </div>
+ 
+     <!-- Sign-off for Main Task 2 -->
+     <div class="form-group">
+         <label>
+             Sign-off for Engineering:
+             <input type="text" name="sign_off_engineering"value="${username}">
+     </div>
+ 
+     <!-- Comments for Main Task 2 -->
+     <div class="form-group">
+         <label>
+             Comments for Engineering:
+             <textarea name="comments_engineering" rows="4" cols="50"></textarea>
+         </label>
+     </div>
+ 
+     <!-- Submit button -->
+     <button type="submit" onclick="submitEngineeringForm('${processOrder}')">Submit Engineering Form</button>
+ </fieldset>
+ 
+ 
+            
+     `;
+ }

@@ -31,6 +31,7 @@
     $live_po_count_data = get_sap_data($conn,$live_po_count_sql,SINGLE_NUMBER);
     $live_po_count_comp_data = get_sap_data($conn,$live_po_count_comp_sql,SINGLE_NUMBER);
     $open_hours_on_floor_data = get_sap_data($conn,$open_hours_on_floor_sql,SINGLE_NUMBER);    
+    $open_hours_on_floor_details_data = get_sap_data($conn,$open_hours_on_floor_details_sql,DEFAULT_DATA);    
     
     // UNSET BINS EITHER END OF DATA (NOT USED AS OF YET)
     unset($estimated_pp_demand_data[1111]);
@@ -167,6 +168,7 @@
     file_put_contents("CACHED/released_yesterday_list.json",json_encode($released_yesterday_list_data));
     file_put_contents("CACHED/complete_today_list.json", json_encode($complete_today_list_data));
     file_put_contents("CACHED/complete_yesterday_list.json", json_encode($complete_yesterday_list_data));
+    file_put_contents("CACHED/open_hours_on_floor_details_data.json", json_encode($open_hours_on_floor_details_data));
 
     // WRITE DATA TO ARRAYS FORMATTED FOR FUSION CHARTS
     $graph_2_year_pp = array("seriesname" => "Estimated Pre Production", "renderAs" => "spline", "data" => $estimated_pp_demand_graph_data);

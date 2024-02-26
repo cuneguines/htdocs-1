@@ -15,7 +15,7 @@ class LineItem extends Model  // Extend Eloquent Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'StepDesc','PrOrder'
+        'StepDesc','PrOrder','Quantity'
     ];
 
     protected $table = 'iis_epc_pro_orderl';
