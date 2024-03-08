@@ -265,7 +265,8 @@
                                     style="position:relative;margin-left:37%"
                                     class='comment_button <?= $row["attachements_issues"] != 'N' ? 'has_attachment' : '' ?>'>
                             </td>
-                            <td class='lefttext'><?= $row["area_raised_"] ?></td>
+                            <td class='lefttext'><?= $row["area_raised_"] ='NO Area'? $row["cc_area_raised_by"]  : $row["area_raised_"] ?></td>
+
                             <td class='lefttext'><?= $row["nc_area_caused_"]?></td>
                             <td class='lefttext'><?= $row["Action"] ?></td>
                             <td class='lefttext Status'><?= $row["Status"] ?></td>

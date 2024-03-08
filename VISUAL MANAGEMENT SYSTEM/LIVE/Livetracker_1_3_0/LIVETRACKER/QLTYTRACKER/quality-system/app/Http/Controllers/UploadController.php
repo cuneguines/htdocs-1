@@ -140,4 +140,71 @@ class UploadController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function handleFileUploadFabricationFitUp(Request $request)
+    {
+       
+        try {
+            $insert = [];
+    
+            // Extract process_order_number from the request
+            $processOrderNumber = $request->input('process_order_number');
+    
+            foreach ($request->all() as $key => $file) {
+                if ($request->hasFile($key)) {
+                    $uploadedFile = $request->file($key);
+                    $name = $uploadedFile->getClientOriginalName();
+    
+                    // Specify the storage path with process_order_number in it
+                    $path = $uploadedFile->storeAs("public/fabricationfitup_task/{$processOrderNumber}", $name);
+    
+                    $insert[] = [
+                        'name' => $name,
+                        'path' => $path,
+                        'process_order_number' => $processOrderNumber,
+                    ];
+                }
+            }
+    
+            // Assuming you have a FileModel for database interaction
+            FileModel::insert($insert);
+    
+            return response()->json(['success' => 'Files uploaded successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function handleFileUploadKitting(Request $request)
+    {
+       
+        try {
+            $insert = [];
+    
+            // Extract process_order_number from the request
+            $processOrderNumber = $request->input('process_order_number');
+    
+            foreach ($request->all() as $key => $file) {
+                if ($request->hasFile($key)) {
+                    $uploadedFile = $request->file($key);
+                    $name = $uploadedFile->getClientOriginalName();
+    
+                    // Specify the storage path with process_order_number in it
+                    $path = $uploadedFile->storeAs("public/kitting_task/{$processOrderNumber}", $name);
+    
+                    $insert[] = [
+                        'name' => $name,
+                        'path' => $path,
+                        'process_order_number' => $processOrderNumber,
+                    ];
+                }
+            }
+    
+            // Assuming you have a FileModel for database interaction
+            FileModel::insert($insert);
+    
+            return response()->json(['success' => 'Files uploaded successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }

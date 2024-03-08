@@ -204,12 +204,24 @@ FROM WOR1 t4
                       AND t6.ItmsGrpCod not like '%MACHINE%'
                       AND t5.ItemType = 'L'";
 
-/* LIVE PO COUNT */
+/* LIVE PO COUNT OLD QueRY 
+SELECT COUNT(PrOrder)
+    FROM IIS_EPC_PRO_ORDERH t0
+ INNER JOIN OWOR t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct
+        WHERE t0.Status IN ('I','S')*/
+
+   /* LIVE PO COUNT NEW QueRY */
 $live_po_count_sql = 
 "SELECT COUNT(PrOrder)
-    FROM IIS_EPC_PRO_ORDERH t0
-    INNER JOIN OWOR t1 ON t1.U_IIS_proPrOrder = t0.PrOrder
-        WHERE t0.Status IN ('I','S')";
+FROM IIS_EPC_PRO_ORDERH t0
+INNER JOIN OWOR t1 ON t1.U_IIS_proPrOrder = t0.PrOrder AND t1.ItemCode = t0.EndProduct 
+    left JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
+
+LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
+    WHERE t1.CmpltQty < t1.PlannedQty AND 
+t0.Status NOT IN ('D','C','P') AND 
+t1.Status NOT IN ('C','L','P') AND 
+t5.U_PP_status IN ('Live','1001')";
 
 /* LIVE COMP PO COUNT */
 $live_po_count_comp_sql = 
@@ -233,8 +245,9 @@ INNER JOIN (select t1.U_IIS_proPrOrder,
     SUM(t0.plannedqty) [Planned_Lab]
     FROM wor1 t0
         INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                        
-        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode               
-            WHERE t2.ItemType = 'L'                      
+        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode       
+        ---changed 28-02-23        
+            WHERE t2.ItemType = 'L'           and t0.U_IIS_proPrOrder is not null               
             GROUP BY t1.U_IIS_proPrOrder) 
 t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
 
@@ -249,8 +262,8 @@ LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
 LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
 
 WHERE t1.CmpltQty < t1.PlannedQty AND 
-   t0.Status NOT IN ('D','C') AND 
-   t1.Status NOT IN ('C','L') AND 
+   t0.Status NOT IN ('D','C','P') AND 
+   t1.Status NOT IN ('C','L','P') AND 
    t5.U_PP_status IN ('Live','1001')
 ";
 
@@ -280,7 +293,7 @@ INNER JOIN (select t1.U_IIS_proPrOrder,
     FROM wor1 t0
         INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                        
         INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode               
-            WHERE t2.ItemType = 'L'                      
+            WHERE t2.ItemType = 'L'        and t0.U_IIS_proPrOrder is not null              
             GROUP BY t1.U_IIS_proPrOrder) 
 t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
 
@@ -297,7 +310,7 @@ LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
 left join [dbo].ousr as t88 on t88.USERID=t4.U_Proj_Mgr 
 
 WHERE t1.CmpltQty < t1.PlannedQty AND 
-   t0.Status NOT IN ('D','C') AND 
-   t1.Status NOT IN ('C','L') AND 
+   t0.Status NOT IN ('D','C','P') AND 
+   t1.Status NOT IN ('C','L','P') AND 
    t5.U_PP_status IN ('Live','1001')";
 ?>

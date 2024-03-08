@@ -56,7 +56,7 @@ t_new.[Issued Cost],
 t_new.[Process Order][R-ProcessOrder],
 nc_process_order,
 cc_process_order,
-
+cc_area_raised_by,
 
 CASE 
        -- 

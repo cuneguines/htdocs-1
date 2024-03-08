@@ -19,6 +19,8 @@
     <script type="text/javascript" src="../../../JS/LOCAL/planning_modal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/manufacturing_modal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/materialpreparation_modal.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/kittingmodal.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/fabricationfitup.js"></script>
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
@@ -179,6 +181,8 @@
                 <div id="planningFieldset"></div>
                 <div id="manufacturingFieldset"></div>
                 <div id="materialpreparationFieldset"></div>
+                <div id="kittingFieldset"></div>
+                <div id="fabricationfitupFieldset"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -190,6 +194,8 @@
                 <div id="planningFieldTable" style="width:1100px"></div>
                 <div id="manufacturingFieldTable" style="width:1100px"></div>
                 <div id="materialpreparationFieldTable" style="width:1100px"></div>
+                <div id="kittingFieldTable" style="width:1100px"></div>
+                <div id="fabricationfitupFieldTable" style="width:1100px"></div>
             </div>
         </div>
         <div style="display:none" id="globalCompleteModal" class="modal">
@@ -200,6 +206,8 @@
                 <div id="planningFieldTable" style="width:1100px"></div>
                 <div id="manufacturingFieldTable" style="width:1100px"></div>
                 <div id="materialpreparationCompleteFieldTable" style="width:1100px"></div>
+                <div id="kittingCompleteFieldTable" style="width:1100px"></div>
+                <div id="fabricationfitupCompleteFieldTable" style="width:1100px"></div>
             </div>
         </div>
         <script>
@@ -394,7 +402,7 @@
                     });
 
                     row.append('<td style="text-align:center">').find('td:last').append(
-                    qualityStepButtonWithCompleteId);
+                        qualityStepButtonWithCompleteId);
                 } else {
                     // For operators, only show the "Complete" button
                     var completeButton = $('<button>', {
@@ -456,6 +464,26 @@
                 // Clear the fieldset content if the quality step is not "Engineering"
                 $('#materialpreparationFieldset').html('');
             }
+            if (qualityStep === 'Kitting') {
+
+                var kittingFieldset = generateKittingFieldset(processOrder, qualityStep,
+                    userName);
+
+                $('#kittingFieldset').html(kittingFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#kittingFieldset').html('');
+            }
+            if (qualityStep === 'Fabrication Fit-Up') {
+
+                var fabricationfitupFieldset = generateFabricationFitUpFieldset(processOrder, qualityStep,
+                    userName);
+
+                $('#fabricationfitupFieldset').html(fabricationfitupFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#fabricationfitupFieldset').html('');
+            }
 
             $('#myModal').show();
         }
@@ -472,6 +500,8 @@
             $('#planningFieldTable').hide();
             $('#manufacturingFieldTable').hide();
             $('#materialpreparationFieldTable').hide();
+            $('#kittingFieldTable').hide();
+            $('#fabricationfitupFieldTable').hide();
 
             // Determine which content div to display based on qualityStep
             if (qualityStep === 'Engineering') {
@@ -486,6 +516,12 @@
             } else if (qualityStep === 'Material Preparation') {
                 var materialpreparationFieldsetTable = generateMaterialPreparationFieldTable(processOrder, qualityStep);
                 $('#materialpreparationFieldTable').html(materialpreparationFieldsetTable).show();
+            } else if (qualityStep === 'Kitting') {
+                var kittingFieldsetTable = generateKittingFieldTable(processOrder, qualityStep);
+                $('#kittingFieldTable').html(kittingFieldsetTable).show();
+            } else if (qualityStep === 'Fabrication Fit-Up') {
+                var fabricationfitupFieldsetTable = generateFabricationFitUpFieldTable(processOrder, qualityStep);
+                $('#fabricationfitupFieldTable').html(fabricationfitupFieldsetTable).show();
             }
 
             $('#globalModal').show();
@@ -516,6 +552,10 @@
                 var materialpreparationCompleteFieldsetTable = generateMaterialPreparationCompleteFieldset(processOrder,
                     qualityStep);
                 $('#materialpreparationCompleteFieldTable').html(materialpreparationCompleteFieldsetTable).show();
+            } else if (qualityStep === 'Kitting') {
+                var kittingCompleteFieldsetTable = generateKittingCompleteFieldset(processOrder,
+                    qualityStep);
+                $('#kittingCompleteFieldTable').html(kittingCompleteFieldsetTable).show();
             }
 
             $('#globalCompleteModal').show();

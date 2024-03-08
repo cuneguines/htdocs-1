@@ -21,7 +21,7 @@
 
 
     <?php
-
+$results_monthly = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_monthly.json'), true); 
     $results = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql.json'), true); 
     $results_closed_avg = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_closed_avg.json'), true); 
     $results_closed = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_closed_status.json'), true); 
@@ -504,9 +504,9 @@ $Values_rd_L = array_values($combinedData_rd_L);
     $complaintCounts_closed= array_fill(0, 12, 0);  // Initialize with zeros for each month
 //print_r($results);
     // Loop through the query results and count complaints for each month
-    foreach ($results as $entry) {
+    foreach ($results_monthly as $entry) {
         $formType = $entry['form_type'];
-        $dateUpdated = strtotime($entry['date_updated']);
+        $dateUpdated = strtotime($entry['time_stamp']);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -560,7 +560,7 @@ $Values_rd_L = array_values($combinedData_rd_L);
 //FOR CC CLOSED LINE CHART
     foreach ($results_for_cc as $entry) {
         $formType_cc = $entry['form_type'];
-        $datecreated_cc= strtotime($entry['time_stamp']);
+        $datecreated_cc= strtotime($entry['date_updated']);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -651,11 +651,11 @@ $costCountsJSON = json_encode($costCounts);
     <h2>Opportunity For Improvement</h2>
     <ul>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_1()">Open OFIs - Area Caused</a></li>
-        <button class="year-button" onclick="displayLastYearData_1()">Last Year</button>
+        <button class="year-button" onclick="displayLastYearData_1()">Aggregate</button>
         <button class="year-button" onclick="displayThisYearData_1()">Current Year</button>
         </li>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_8()">Open OFIs - Area Raised</a></li>
-        <button class="year-button" onclick="displayLastYearData_8()">Last Year</button>
+        <button class="year-button" onclick="displayLastYearData_8()">Aggregate<</button>
         <button class="year-button" onclick="displayThisYearData_8()">Current Year</button>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_2()">Open/Closed</a></li>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_3()">Average Response Time</a></li>
@@ -667,10 +667,10 @@ $costCountsJSON = json_encode($costCounts);
     <h2>Customer Complaints</h2>
     <ul>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_9()">Open CC's - Area Caused</a></li>
-        <button class="year-button" onclick="displayLastYearData_9()">Last Year</button>
+        <button class="year-button" onclick="displayLastYearData_9()">Aggregate<</button>
         <button class="year-button" onclick="displayChart_9()">Current Year</button>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_10()">Open CC's - Area Raised</a></li>
-        <button class="year-button" onclick="displayLastYearData_10()">Last Year</button>
+        <button class="year-button" onclick="displayLastYearData_10()">Aggregate<</button>
         <button class="year-button" onclick="displayChart_10()">Current Year</button>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_11()">Open/Closed</a></li>
         <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_12()">Average Response Time</a></li>
@@ -832,7 +832,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open OFI's - Area Caused";
+        titleDiv.innerHTML = "Aggregate OFI's - Area Caused";
 
     }
 
@@ -1075,7 +1075,7 @@ $costCountsJSON = json_encode($costCounts);
         document.getElementById('myChart').style.display = 'block';
         // Show the chart canvas
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open OFI's - Area Raised";
+        titleDiv.innerHTML = "Aggregate OFI's - Area Raised";
 
     }
 
@@ -1740,7 +1740,7 @@ $costCountsJSON = json_encode($costCounts);
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: <?php echo (int)$count_ac_cc+1; ?>,
+                        max: <?php echo (int)$count_ac_cc_L+1; ?>,
                         stepSize: 1
                     },
                     x: {
@@ -1787,7 +1787,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open CC's-Area Caused";
+        titleDiv.innerHTML = "Aggregate CC's-Area Caused";
         // Show the chart canvas
 
     }
@@ -1951,7 +1951,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open CC's- Area Raised";
+        titleDiv.innerHTML = "Aggregate CC's- Area Raised";
         // Show the chart canvas
 
     }

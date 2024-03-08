@@ -19,7 +19,7 @@ class MaterialPreparationController extends Controller
         $materialPreparation->material_identification_record = $request->input('material_identification_record');
         $materialPreparation->material_traceability = $request->input('material_traceability');
         $materialPreparation->cutting = $request->input('cutting');
-        $materialPreparation->deburring = $request->input('de_burring');
+        $materialPreparation->deburring = $request->input('deburring');
         $materialPreparation->forming = $request->input('forming');
         $materialPreparation->machining = $request->input('machining');
         $materialPreparation->sign_off_material_preparation = $request->input('sign_off_material_preparation');

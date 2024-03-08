@@ -1,6 +1,6 @@
 
     function toggleTable() {
-        alert('hell');
+        //alert('hell');
         $.ajax({
             type: "POST",
             url: "SQL_planned_hrs_details.php",
@@ -13,20 +13,17 @@
                 console.log(response[0]);
                 var tableBody = '';
                 // Title row
-                tableBody += '<thead>';
-                tableBody += '<tr>';
-                tableBody += '<th colspan="10" style="text-align: center; background-color: #e5e5e5;">Planned Hours Details</th>';
-                tableBody += '</tr>';
-                tableBody += '</thead>';
+               
                 // Generate table headers
                 tableBody += '<thead>';
                 tableBody += '<tr>';
                 tableBody += '<th>PrOrder</th>';
-                tableBody += '<th>Planned Lab</th>';
-                tableBody += '<th>Actual Lab</th>';
+                tableBody += '<th>PlannedLab</th>';
+                tableBody += '<th>ActualLab</th>';
                 tableBody += '<th>Card Name</th>';
+                tableBody += '<th>Project Manager</th>';
                 tableBody += '<th>U Product Group One</th>';
-                tableBody += '<th>U Name</th>';
+               
                 tableBody += '<th>U Product Group Two</th>';
                 tableBody += '<th>U Product Group Three</th>';
                 tableBody += '<th>Engineer</th>';
@@ -42,8 +39,9 @@
                     tableBody += '<td>' + row.Planned_Lab + '</td>';
                     tableBody += '<td>' + row.Actual_Lab + '</td>';
                     tableBody += '<td>' + row.CardName + '</td>';
-                    tableBody += '<td>' + row.U_Product_Group_One + '</td>';
                     tableBody += '<td>' + row.U_NAME + '</td>';
+                    tableBody += '<td>' + row.U_Product_Group_One + '</td>';
+                    
                     tableBody += '<td>' + row.U_Product_Group_Two + '</td>';
                     tableBody += '<td>' + row.U_Product_Group_Three + '</td>';
                     tableBody += '<td>' + row.Engineer + '</td>';

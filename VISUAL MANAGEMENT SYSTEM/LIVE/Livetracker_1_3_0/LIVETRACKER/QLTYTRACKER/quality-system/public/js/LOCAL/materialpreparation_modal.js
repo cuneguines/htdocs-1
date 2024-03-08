@@ -1,72 +1,257 @@
-function generateMaterialPreparationCompleteFieldset(
-    processOrder,
-    qualityStep,
-    username
-) {
+function generateMaterialPreparationCompleteFieldset(processOrder, qualityStep, username) {
+    var formData = {
+        process_order_number: processOrder,
+    };
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
     $("#sign_off_material_preparation").val(username);
-    return `
-    <fieldset>
-    <!-- Subtask 4.4: Cutting -->
-    <div class="form-group">
-        <label>
-            Cutting: Part geometry, cut quality, part qty
-            <input type="checkbox" name="cutting">
-        </label>
-    </div>
 
-    <!-- Subtask 4.5: De-burring -->
-    <div class="form-group">
-        <label>
-            De-burring: No sharp edges
-            <input type="checkbox" name="deburring">
-        </label>
-    </div>
-
-    <!-- Subtask 4.6: Forming -->
-    <div class="form-group">
-        <label>
-            Forming: Part geometry, part qty
-            <input type="checkbox" name="forming">
-        </label>
-    </div>
-
-    <!-- Subtask 4.7: Machining -->
-    <div class="form-group">
-        <label>
-            Machining: Part geometry, part qty
-            <input type="checkbox" name="machining">
-        </label>
-    </div>
-
-    <!-- Sign-off for Main Task 4 -->
-    <div class="form-group">
-        <label>
-            Sign-off for Material Preparation:
-            <input type="text" name="sign_off_material_preparation" value="${username}">
-        </label>
-    </div>
-
-    <!-- Status Dropdown -->
-    <div class="form-group">
-        <label for="status">Status:</label>
-        <select id="status" name="status">
-            <option value="Completed">Completed</option>
-            <option value="Partially Completed">Partially Completed</option>
-        </select>
-    </div>
-
-    <!-- Quantity Input -->
-    <div class="form-group">
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" min="1">
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" onclick="submitMaterialPreparationForm('${processOrder}')">Submit Material Preparation Form</button>
-</fieldset>
-
-    `;
+    $.ajax({
+        url: "/getMaterialPreparationDataByProcessOrder",
+        type: "POST",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            var generatedHTML = generateCompleteHTMLFromResponse_for_material_preparation(response);
+            $("#materialpreparationCompleteFieldTable").html(generatedHTML);
+        },
+        error: function (error) {
+            console.error(error);
+        },
+    });
 }
+
+
+function generateCompleteHTMLFromResponse_for_material_preparation(response) {
+    var html = '<fieldset><legend>Material Complete Preparation</legend>';
+    html += '<form id="material_complete_preparation_form">';
+    
+    $.each(response, function (index, item) {
+        html += '<div class="material_item">';
+        html += '<label>ID: ' + item.id + '</label><br>';
+
+        html += '<div class="material_field">';
+        html +=
+            '<label>Material Identification:</label>' +
+            (item.material_identification === "true" ?
+            '<input type="checkbox" id="material_identification" name="material_identification" checked disabled>' :
+            '<input type="checkbox" id="material_identification" name="material_identification" disabled>') +
+            '</div><br>';
+
+        html += '<div class="material_field">';
+        html +=
+            '<label>Material Identification Record:</label>' +
+            '<input type="text" name="material_identification_record" value="' + (item.material_identification_record || "") + '">' +
+            '</div><br>';
+
+        if (item.material_identification_record_file) {
+            var filePath =
+                "storage/material_preparation_task/" +
+                item.process_order_number +
+                "/" +
+                item.material_identification_record_file;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download Material Identification Record</a>';
+            html += '<div class="material_field">' + downloadLink + '</div><br>';
+        }
+
+        html += '<div class="material_field">';
+        html +=
+            '<label>Material Traceability:</label>' +
+            '<input type="text" name="material_traceability" value="' + (item.material_traceability || "") + '">' +
+            '</div><br>';
+
+        if (item.material_traceability_file) {
+            var filePath =
+                "storage/material_preparation_task/" +
+                item.process_order_number +
+                "/" +
+                item.material_traceability_file;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download Material Traceability Cert</a>';
+            html += '<div class="material_field">' + downloadLink + '</div><br>';
+        }
+
+        
+
+// Check if Machining is "on" to display the completion checkbox
+if (item.cutting === "on") {
+    html += '<div class="material_field">';
+    html +=
+        '<label>Complete Cutting:</label>' +
+        '<input type="checkbox" id="cutting" name="compl_cutting">' +
+        '</div><br>';
+} else {
+    html += '<div class="material_field">';
+    html +=
+    '<label>Complete Cutting:</label>' +
+        '<input type="checkbox" id="cutting" name="cutting"disabled>' +
+        '</div><br>';
+}
+
+if (item.machining === "on") {
+    html += '<div class="material_field">';
+    html +=
+        '<label>Complete Machining:</label>' +
+        '<input type="checkbox" id="machining" name="compl_machining">' +
+        '</div><br>';
+} else {
+    html += '<div class="material_field">';
+    html +=
+    '<label>Complete Machining:</label>' +
+        '<input type="checkbox" id="machining" name="machining"disabled>' +
+        '</div><br>';
+}
+
+if (item.forming === "on") {
+    html += '<div class="material_field">';
+    html +=
+        '<label>Complete Forming:</label>' +
+        '<input type="checkbox" id="forming" name="compl_forming">' +
+        '</div><br>';
+} else {
+    html += '<div class="material_field">';
+    html +=
+    '<label>Complete Forming:</label>' +
+        '<input type="checkbox" id="forming" name="forming"disabled>' +
+        '</div><br>';
+}
+
+if (item.deburring === "on") {
+    html += '<div class="material_field">';
+    html +=
+        '<label>Complete De-burring:</label>' +
+        '<input type="checkbox" id="deburring" name="compl_deburring">' +
+        '</div><br>';
+} else {
+    html += '<div class="material_field">';
+    html +=
+    '<label>Complete De-burring:</label>' +
+        '<input type="checkbox" id="deburring" name="deburring"disabled>' +
+        '</div><br>';
+}
+      
+
+        html += '<div class="material_field">';
+        html +=
+            '<label>Sign Off:</label>' +
+            '<input type="text" name="sign_off_material_preparation" value="' + item.sign_off_material_preparation + '">' +
+            '</div><br>';
+
+        html += '<div class="material_field">';
+        html +=
+            '<label>Comments:</label>' +
+            '<input type="text" name="comments_material_preparation" value="' + item.comments_material_preparation + '">' +
+            '</div><br>';
+
+        html += '</div>'; // Closing div for material_item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+    html += '<input type="button" value="Submit" onclick="submitMaterialCompletePreparationForm()">';
+    html += '</form>';
+
+    html += '<div id="material_complete_preparation_results"></div>';
+    html += '</fieldset>';
+
+    return html;
+}
+
+
+
+
+
+
+
+
+function submitMaterialCompletePreparationForm() {
+   // var formData = new FormData(document.getElementById("material_complete_preparation_form"));
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    function getFileName(inputName) {
+        var fileInput = document.querySelector('[name="' + inputName + '"]');
+        return fileInput.files.length > 0 ? fileInput.files[0].name : null;
+    }
+    var formData = {
+        material_identification: document.querySelector(
+            '[name="material_identification"]'
+        ).value,
+        material_identification_record: document.querySelector(
+            '[name="material_identification_record"]'
+        ).value,
+        material_traceability: document.querySelector(
+            '[name="material_traceability"]'
+        ).value,
+        cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+        deburring: document.querySelector('[name="compl_deburring"]') ? (document.querySelector('[name="compl_deburring"]').checked ? "on" : null) : null,
+        forming: document.querySelector('[name="compl_forming"]') ? (document.querySelector('[name="compl_forming"]').checked ? "on" : null) : null,
+        machining: document.querySelector('[name="compl_machining"]') ? (document.querySelector('[name="compl_machining"]').checked ? "on" : null) : null,
+        
+          //  "material_identification_record_file"
+      //  ),
+        //material_traceability_file: getFileName("material_traceability_file"),
+        sign_off_material_preparation: document.querySelector(
+            '[name="sign_off_material_preparation"]'
+        ).value,
+        comments_material_preparation: document.querySelector(
+            '[name="comments_material_preparation"]'
+        ).value,
+        submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
+        process_order_number: 2,
+        // Add other form fields accordingly
+    };
+    console.log(formData);
+    $.ajax({
+        type: "POST",
+        url: "/submitMaterialCompletePreparationForm",
+        data: formData,
+        headers:headers,
+        dataType: "json",
+        success: function (response) {
+            displayMaterialPreparationResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
+function displayMaterialPreparationResults(values) {
+    var resultsHtml = '<table id="material_preparation_results_table" style="width:100%; border-collapse: collapse; border: 1px solid #ddd; text-align: left;">';
+    resultsHtml += '<thead><tr style="background-color: #f2f2f2;"><th style="padding: 8px; border-bottom: 1px solid #ddd;">Field</th><th style="padding: 8px; border-bottom: 1px solid #ddd;">Value</th></tr></thead>';
+    resultsHtml += '<tbody>';
+
+    function buildTableRows(obj, prefix) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var value = obj[key];
+                var field = prefix ? prefix + '.' + key : key;
+                if (typeof value === 'object') {
+                    buildTableRows(value, field);
+                } else {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                }
+            }
+        }
+    }
+
+    buildTableRows(values);
+
+    resultsHtml += '</tbody></table>';
+
+    document.getElementById('material_complete_preparation_results').innerHTML = resultsHtml;
+}
+
+
+
+    
 function generateMaterialPreparationFieldset(
     processOrder,
     qualityStep,
@@ -183,10 +368,10 @@ function submitMaterialPreparationForm(processOrder) {
         material_traceability: document.querySelector(
             '[name="material_traceability"]'
         ).value,
-        cutting: document.querySelector('[name="cutting"]').value,
-        deburring: document.querySelector('[name="deburring"]').value,
-        forming: document.querySelector('[name="forming"]').value,
-        machining: document.querySelector('[name="machining"]').value,
+        cutting: document.querySelector('[name="cutting"]').checked ? "on" : "",
+        deburring: document.querySelector('[name="deburring"]').checked ? "on" : "",
+        forming: document.querySelector('[name="forming"]').checked ? "on" : "",
+        machining: document.querySelector('[name="machining"]').checked ? "on" : "",
         material_identification_record_file: getFileName(
             "material_identification_record_file"
         ),
@@ -291,7 +476,9 @@ function generateMaterialPreparationFieldTable(processOrder, qualityStep) {
             console.log(response);
             var generatedHTML =
                 generateHTMLFromResponse_for_material_preparation(response);
+
             $("#materialpreparationFieldTable").html(generatedHTML);
+           
         },
         error: function (error) {
             console.error(error);
@@ -343,21 +530,22 @@ function generateHTMLFromResponse_for_material_preparation(response) {
             html += "<td></td>"; // Empty cell if 'customer_approval_document' is empty
         }
         html +=
-            '<td style="text-align:center;">' +
-            (item.cutting === "true" || "on" ? "✔" : "") +
-            "</td>";
-        html +=
-            '<td style="text-align:center;">' +
-            (item.de_burring === "true" || "on" ? "✔" : "") +
-            "</td>";
-        html +=
-            '<td style="text-align:center;">' +
-            (item.forming === "true" || "on" ? "✔" : "") +
-            "</td>";
-        html +=
-            '<td style="text-align:center;">' +
-            (item.machining === "true" || "on" ? "✔" : "") +
-            "</td>";
+    '<td style="text-align:center;">' +
+    ((item.cutting === "true" || item.cutting === "on") && item.cutting !== null ? "✔" : "") +
+    "</td>";
+html +=
+    '<td style="text-align:center;">' +
+    ((item.deburring === "true" || item.deburring === "on") && item.deburring !== null ? "✔" : "") +
+    "</td>";
+html +=
+    '<td style="text-align:center;">' +
+    ((item.forming === "true" || item.forming === "on") && item.forming !== null ? "✔" : "") +
+    "</td>";
+html +=
+    '<td style="text-align:center;">' +
+    ((item.machining === "true" || item.machining === "on") && item.machining !== null ? "✔" : "") +
+    "</td>";
+
         html += "<td>" + item.sign_off_material_preparation + "</td>";
         html += "<td>" + item.comments_material_preparation + "</td>";
         html += "</tr>";

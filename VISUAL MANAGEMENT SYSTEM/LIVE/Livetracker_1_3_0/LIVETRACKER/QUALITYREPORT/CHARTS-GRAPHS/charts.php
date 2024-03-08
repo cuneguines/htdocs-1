@@ -359,7 +359,7 @@ $Values_rd = array_values($combinedData_rd);
     // Loop through the query results and count complaints for each month
     foreach ($results as $entry) {
         $formType = $entry['form_type'];
-        $dateUpdated = strtotime($entry['time_stamp']);
+        $dateUpdated = strtotime($entry['date_updated']);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -371,10 +371,10 @@ $Values_rd = array_values($combinedData_rd);
 
     // Convert the array of counts to a JSON format for use in JavaScript for AREA CHART
     $complaintCountsJSON = json_encode($complaintCounts);
-    //print_r($complaintCountsJSON);
+    print_r($complaintCountsJSON);
     foreach ($results as $entry) {
         $formType = $entry['form_type'];
-        $dateUpdated = strtotime($entry['time_stamp']);
+        $dateUpdated = strtotime($entry['date_updated']);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -386,7 +386,7 @@ $Values_rd = array_values($combinedData_rd);
 
     // Convert the array of counts to a JSON format for use in JavaScript
     $complaintCountsJSON_closed = json_encode($complaintCounts_closed);
-
+    print_r($complaintCountsJSON_closed);
     //CC PER Month for the year 2023
 
 
@@ -395,7 +395,7 @@ $Values_rd = array_values($combinedData_rd);
     // Loop through the query results and count complaints for each month
     foreach ($results_for_cc as $entry) {
         $formType_cc = $entry['form_type'];
-        $datecreated_cc= strtotime($entry['time_stamp']);
+        $datecreated_cc= strtotime($entry['date_updated']);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
@@ -411,7 +411,7 @@ $Values_rd = array_values($combinedData_rd);
 //FOR CC CLOSED LINE CHART
     foreach ($results_for_cc as $entry) {
         $formType_cc = $entry['form_type'];
-        $datecreated_cc= strtotime($entry['time_stamp']);
+        $datecreated_cc= strtotime($entry['date_updated']);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
