@@ -18,6 +18,7 @@ function generateKittingCompleteFieldset(processOrder, qualityStep, username) {
             console.log(response);
             var generatedHTML = generateCompleteHTMLFromResponse_for_kitting(response);
             $("#kittingCompleteFieldTable").html(generatedHTML);
+          
         },
         error: function (error) {
             console.error(error);
@@ -36,14 +37,14 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
         html += '<div class="kitting_item">';
         html += '<label>Process Order: ' + item.ProcessOrderID + '</label><br>';
         html += '<div class="kitting_item">';
-        html += '<input type="hidden" name="processorder" value="' + item.ProcessOrderID + '">';
+        html += '<input type="hidden" name="processorder" value="' + item.ProcessOrderID + '"><br>';
         html += '<div class="kitting_field">';
         html +=
             '<label>Cut Formed Machine Parts:</label>' +
             (item.cut_form_mach_parts === "on" ?
             '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" >' :
             '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" disabled>');
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
@@ -51,7 +52,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
             (item.bought_out_components === "on" ?
             '<input type="checkbox" id="bought_out_components" name="bought_out_components" >' :
             '<input type="checkbox" id="bought_out_components" name="bought_out_components" disabled>');
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
@@ -59,7 +60,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
             (item.fasteners_fixings === "on" ?
             '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" >' :
             '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" disabled>');
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
@@ -67,19 +68,19 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
             (item.site_pack === "on" ?
             '<input type="checkbox" id="site_pack" name="site_pack" >' :
             '<input type="checkbox" id="site_pack" name="site_pack" disabled>');
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Sign Off:</label>' +
             '<input type="text" name="sign_off_kitting" value="' + item.sign_off_kitting + '" disabled>';
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Comments:</label>' +
             '<input type="text" name="comments_kitting" value="' + item.comments_kitting + '" disabled>';
-        html += '</div>';
+        html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
@@ -88,20 +89,21 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
             '<option value="Completed" ' + (item.kitting_process_completion === "Completed" ? 'selected' : '') + '>Completed</option>' +
             '<option value="Partially Completed" ' + (item.kitting_process_completion === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
             '</select>';
-        html += '</div>';
+        html += '</div><br>';
 
         // Quantity Field
         html += '<div class="kitting_field">';
         html +=
             '<label>Quantity:</label>' +
             '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
-        html += '</div>';
+        html += '</div><br>';
 
         html += '</div>'; // Closing div for kitting_item
         html += '<hr>'; // Horizontal line for separation
     });
 
     html += '<input type="button" value="Submit" onclick="submitKittingCompleteForm()">';
+    html += '  <input type="button" value="View" onclick="ViewKittingCompleteForm()">';
     html += '</form>';
 
     html += '<div id="kitting_complete_results"></div>';
@@ -121,10 +123,11 @@ function submitKittingCompleteForm() {
         comments_kitting: document.querySelector('[name="comments_kitting"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="processorder"]').value, // Change this according to your needs
-        cut_form_mach_parts: document.querySelector('[name="cut_form_mach_parts"]').checked ? "on" : "off",
-        bought_out_components: document.querySelector('[name="bought_out_components"]').checked ? "on" : "off",
-        fasteners_fixings: document.querySelector('[name="fasteners_fixings"]').checked ? "on" : "off",
-        site_pack: document.querySelector('[name="site_pack"]').checked ? "on" : "off",
+        //cutting: document.querySelector('[name="cutting"]').checked ? "on" : "",
+        cut_form_mach_parts: document.querySelector('[name="cut_form_mach_parts"]').checked ? "on" : "",
+        bought_out_components: document.querySelector('[name="bought_out_components"]').checked ? "on" : "",
+        fasteners_fixings: document.querySelector('[name="fasteners_fixings"]').checked ? "on" : "",
+        site_pack: document.querySelector('[name="site_pack"]').checked ? "on" : "",
         status: document.querySelector('[name="kitting_process_completion"]').value, // Include selected value of kitting_process_completion
         quantity: document.querySelector('[name="quantity"]').value, // Include selected value of kitting_process_completion
         // Add other form fields accordingly
@@ -139,6 +142,30 @@ function submitKittingCompleteForm() {
         headers: headers,
         dataType: "json",
         success: function (response) {
+            //displayKittingCompleteResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+function ViewKittingCompleteForm() {
+
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+    process_order_number: document.querySelector('[name="processorder"]').value, 
+    }
+    $.ajax({
+        type: "POST",
+        url: "/viewKittingCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
             displayKittingCompleteResults(response);
             console.log(response);
         },
@@ -147,9 +174,8 @@ function submitKittingCompleteForm() {
         }
     });
 }
-
 function displayKittingCompleteResults(values) {
-    var resultsHtml = '<table id="kitting_complete_results_table" style="width:100%; border-collapse: collapse; border: 1px solid #ddd; text-align: left;">';
+    var resultsHtml = '<table id="kitting_complete_results_table" style="width:100%; border: 1px solid #ddd; text-align: left;">';
     resultsHtml += '<thead><tr style="background-color: #f2f2f2;"><th style="padding: 8px; border-bottom: 1px solid #ddd;">Field</th><th style="padding: 8px; border-bottom: 1px solid #ddd;">Value</th></tr></thead>';
     resultsHtml += '<tbody>';
 
@@ -397,6 +423,7 @@ function generateKittingFieldset(processOrder, qualityStep, username) {
 
     <!-- Submit button -->
     <button type="button" onclick="submitKittingForm('${processOrder}')">Submit Kitting Form</button>
+   
 </fieldset>
     `;
 }
@@ -515,7 +542,7 @@ function generateKittingFieldTable(processOrder, qualityStep) {
 function generateHTMLFromResponse_for_kitting(response) {
     var html = '<table id="common_table" style="width:100%;">';
     html +=
-        '<thead><tr><th style="width:5%;">Kitting ID</th><th style="width:20%;">Process Order ID</th><th style="width:10%;">Cut Form Mach Parts</th><th style="width:10%;">Bought Out Components</th><th style="width:10%;">Fasteners Fixings</th><th style="width:10%;">Site Pack</th><th style="width:10%;">Link to Drawing</th><th style="width:10%;">Sign Off Kitting</th><th style="width:15%;">Comments Kitting</th><th style="width:10%;">Submitted Date Time</th><th style="width:10%;">Created At</th><th style="width:10%;">Updated At</th></tr></thead><tbody>';
+        '<thead><tr><th style="width:5%;">Kitting_ID</th><th style="width:5%;">Process_Order</th><th style="width:20%;">Cut_Form_MachParts</th><th style="width:15%;">Bought_Out_Components</th><th style="width:15%;">Fasteners_Fixings</th><th style="width:10%;">Site_Pack</th><th style="width:50%;">Link_to_Drawing</th><th style="width:5%;">Sign_Off_Kitting</th><th style="width:15%;">Comments_Kitting</th><th style="width:15%;">Submitted_Date_Time</th><th style="width:5%;">Created At</th><th style="width:5%;">Updated_At</th></tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += "<tr>";

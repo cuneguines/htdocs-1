@@ -157,7 +157,10 @@ $end=10;
                                     $first = 1;
                                 ?>
                                 <?php for($i = 0 ; $i <= sizeof($results) ; $i++):?>
+                                   
                                     <?php
+                                    print_r($i);
+                                    $results[$i]["Promise Diff Week"];
                                         // IF PAST LAST ROW OF DATA SKIP INTO AND PRINT LAST ROW, OTHERWISE PROCEED NORMALLY AND CHECK IF PROJECT ON CURRENT ROW DOES NOT MATCH THE CURRENT ACTIVE PROJECT
                                         if($i == sizeof($results)){goto printrow;}
                                         if(($results[$i]["Project"] != $active_project && $first == 0) || $i == sizeof($results)){

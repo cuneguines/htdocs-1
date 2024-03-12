@@ -151,9 +151,9 @@ function generateFabricationFitUpFieldTable(processOrder, qualityStep) {
 }
 
 function generateHTMLFromResponse_for_fabrication_fit_up(response) {
-    var html = '<table id="fabrication_fit_up_table" style="width:100%;">';
+    var html = '<table id="common_table" style="width:100%;">';
     html +=
-        '<thead><tr><th style="width:5%;">ID</th><th style="width:15%;">Fit-Up Visual Check</th><th style="width:25%;">Dimensional Check</th><th style="width:20%;">Link to Drawing</th><th style="width:15%;">Weldment Quantity</th><th style="width:15%;">Sign Off</th><th style="width:25%;">Comments</th><th style="width:25%;">Design Validation Document</th></tr></thead><tbody>';
+        '<thead><tr><th style="width:5%;">ID</th><th style="width:15%;">Fit-Up Visual Check</th><th style="width:25%;">Dimensional Check</th><th style="width:20%;">Link to Drawing</th><th style="width:15%;">Weldment Quantity</th><th style="width:15%;">Sign Off</th><th style="width:25%;">Comments</th></tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += "<tr>";
@@ -237,7 +237,7 @@ function generateFabricationFitUpCompleteFieldset(processOrder, qualityStep, use
         success: function (response) {
             console.log(response);
             var generatedHTML = generateCompleteHTMLFromResponse_for_fabrication_fit_up(response);
-            $("#fabricationFitUpCompleteFieldTable").html(generatedHTML);
+            $("#fabricationfitupCompleteFieldTable").html(generatedHTML);
         },
         error: function (error) {
             console.error(error);
@@ -256,43 +256,60 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication_field">';
         html +=
             '<label>Fit-Up:</label>' +
-            (item.fit_up_visual_check === "true" || item.fit_up_visual_check === "on" ?
-            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" checked disabled>' :
+            (item.FitUpVisualCheck === "true" || item.FitUpVisualCheck === "on" ?
+            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" >' :
             '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Dimensional Check:</label>' +
-            (item.dimensional_check === "true" || item.dimensional_check === "on" ?
-            '<input type="checkbox" id="dimensional_check" name="dimensional_check" checked disabled>' :
+            (item.DimensionalCheck === "true" || item.DimensionalCheck === "on" ?
+            '<input type="checkbox" id="dimensional_check" name="dimensional_check" >' :
             '<input type="checkbox" id="dimensional_check" name="dimensional_check" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Link to Drawing:</label>' +
-            '<input type="text" name="link_to_drawing" value="' + item.link_to_drawing + '">' +
+            '<input type="text" name="link_to_drawing" value="' + item.LinkToDrawing + '">' +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Weldment Quantity:</label>' +
-            (item.weldment_quantity === "true" || item.weldment_quantity === "on" ?
-            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" checked disabled>' :
+            (item.WeldmentQuantity === "true" || item.WeldmentQuantity === "on" ?
+            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" >' :
             '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_fabrication_fit_up" value="' + item.sign_off_fabrication_fit_up + '">' +
+            '<input type="text" name="sign_off_fabrication_fit_up" value="' + item.SignOffUser + '">' +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_fabrication_fit_up" value="' + item.comments_fabrication_fit_up + '">' +
+            '<input type="text" name="comments_fabrication_fit_up" value="' + item.Comments + '">' +
+            '</div><br>';
+
+        // Added Status dropdown
+        html += '<div class="fabrication_field">';
+        html +=
+            '<label>Status:</label>' +
+            '<select name="status">' +
+            '<option value="partially_completed">Partially Completed</option>' +
+            '<option value="completed">Completed</option>' +
+            '</select>' +
+            '</div><br>';
+
+        // Added Quantity input box
+        html += '<div class="fabrication_field">';
+        html +=
+            '<label>Quantity:</label>' +
+            '<input type="text" name="quantity" value="' + item.Quantity + '">' +
             '</div><br>';
 
         html += '</div>'; // Closing div for fabrication_item
@@ -307,6 +324,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
 
     return html;
 }
+
 
 function submitFabricationCompleteFitUpForm() {
     var headers = {

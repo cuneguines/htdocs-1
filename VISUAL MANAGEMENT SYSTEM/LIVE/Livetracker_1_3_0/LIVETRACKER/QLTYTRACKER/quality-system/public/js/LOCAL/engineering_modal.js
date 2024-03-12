@@ -62,7 +62,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 
 function generateHTMLFromResponse_for_eng(response) {
     var html = '<table id="common_table">';
-    html += '<thead><tr><th>ID</th><th>Reference Job / Master File</th><th>Reference Job / Master File Document</th><th>Concept Design</th><th>Concept Design Document</th><th>Design Validation</th><th>Design Validation Document</th><th>Customer Approval</th><th>Customer Approval Document</th><th>Sample Approval</th><th>Sample Approval Document</th><th>Sign-off Engineering</th><th>Comments Engineering</th></tr></thead><tbody>';
+    html += '<thead><tr><th>ID</th><th>Reference_Job / Master_File</th><th>Reference_Job / Master_File_Document</th><th>Concept_Design</th><th>Concept_Design_Document</th><th>Design_Validation</th><th>Design_Validation_Document</th><th>Customer_Approval</th><th>Customer_Approval_Document</th><th>Sample_Approval</th><th>Sample_Approval_Document</th><th>Sign_off_Engineering</th><th>Comments_Engineering</th></tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += '<tr>';

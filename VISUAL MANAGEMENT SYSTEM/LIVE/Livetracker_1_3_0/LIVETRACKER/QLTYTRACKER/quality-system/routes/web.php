@@ -25,6 +25,7 @@ use App\Http\Controllers\MaterialTableDataCompleteController;
 use App\Http\Controllers\MaterialTableDataController;
 use App\Http\Controllers\KittingController;
 use App\Http\Controllers\KittingTableDataCompleteController;
+use App\Http\Controllers\FabricationFitUpTableDataCompleteController;
 
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\HomeController;
@@ -34,6 +35,7 @@ use App\Http\Controllers\ManufacturingTableData;
 use App\Http\Controllers\KittingTableData;
 use App\Http\Controllers\FabricationFitUpTableData;
 use App\Http\Controllers\FabricationFitUpController;
+use App\Http\Controllers\WeldingController;
 
 use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
@@ -57,8 +59,10 @@ Route::post('/submitMaterialCompletePreparationForm', [MaterialTableDataComplete
 Route::post('/submitKittingCompleteForm', [KittingTableDataCompleteController::class, 'submitKittingCompleteForm']);
 Route::post('/submitKittingForm', [KittingController::class, 'submitKittingForm'])->name('submit.kitting.form');
 Route::post('/submitFabricationFitUpForm', [FabricationFitUpController::class, 'submitFabricationFitUpForm']);
+Route::post('/submitFabricationCompleteFitUpForm', [FabricationFitUpTableDataCompleteController::class, 'submitFabricationCompleteFitUpForm']);
+Route::post('/submitWeldingForm', [WeldingController::class, 'submitWeldingForm']);
 
-
+Route::post('/viewKittingCompleteForm', [KittingTableDataCompleteController::class, 'viewKittingCompleteForm']);
 Route::post('/handleFileUploadEngineer', [UploadController::class, 'handleFileUploadEngineer']);
 Route::post('/handleFileUploadPlanning', [UploadController::class, 'handleFileUploadPlanning']);
 Route::post('/handleFileUploadManufacturing', [UploadController::class, 'handleFileUploadManufacturing']);

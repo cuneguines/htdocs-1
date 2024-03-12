@@ -542,13 +542,13 @@ $Values_rd_L = array_values($combinedData_rd_L);
     $complaintCounts_cc = array_fill(0, 12, 0); // Initialize with zeros for each month
     $complaintCounts_cc_closed  = array_fill(0, 12, 0); 
     // Loop through the query results and count complaints for each month
-    foreach ($results_for_cc as $entry) {
+    foreach ($results_monthly as $entry) {
         $formType_cc = $entry['form_type'];
         $datecreated_cc= strtotime($entry['time_stamp']);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
+        if ($status==='Open'&&$formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
             $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
             $complaintCounts_cc[$month_cc - 1]++; // Subtract 1 to account for zero-based array
         }

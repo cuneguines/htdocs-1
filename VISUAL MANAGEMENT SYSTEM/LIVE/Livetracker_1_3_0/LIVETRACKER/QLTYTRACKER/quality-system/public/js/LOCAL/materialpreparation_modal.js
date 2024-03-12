@@ -493,7 +493,7 @@ function generateMaterialPreparationFieldTable(processOrder, qualityStep) {
 function generateHTMLFromResponse_for_material_preparation(response) {
     var html = '<table id="common_table" style="width:100%;">';
     html +=
-        '<thead><tr><th style="width:5%;">ID</th><th style="width:10%;">Material Identification</th><th style="width:15%;">Material Identification Record</th><th style="width:15%;">Material Identification Cert </th><th style="width:15%;">Material Traceability</th><th style="width:15%;">Material Traceability Cert</th><th style="width:7%;">Cutting</th><th style="width:7%;">De-burring</th><th style="width:7%;">Forming</th><th style="width:7%;">Machining</th><th style="width:12%;">Sign Off</th><th style="width:15%;">Comments</th></tr></thead><tbody>';
+        '<thead><tr><th style="width:5%;">ID</th><th style="width:10%;">Material_Identification</th><th style="width:15%;">Material_Identification_Record</th><th style="width:15%;">Material_Identification_Cert </th><th style="width:15%;">Material_Traceability</th><th style="width:15%;">Material_Traceability_Cert</th><th style="width:7%;">Cutting</th><th style="width:7%;">De_burring</th><th style="width:7%;">Forming</th><th style="width:7%;">Machining</th><th style="width:12%;">Sign_Off</th><th style="width:15%;">Comments</th></tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += "<tr>";

@@ -21,6 +21,7 @@
     <script type="text/javascript" src="../../../JS/LOCAL/materialpreparation_modal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/kittingmodal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/fabricationfitup.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/welding.js"></script>
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
@@ -155,7 +156,7 @@
             <div id="lastupdateholder">
             </div>
         </div>
-        <h2 style="color:#f08787">Welcome to Engineering Page, {{ Session::get('user_id') }}</h2>
+        <h2 style="color:#f08787">Welcome to Quality Management Page, {{ Session::get('user_id') }}</h2>
         <label for="manualProcessOrder">Enter Process Order:</label>
         <input type="text" id="manualProcessOrder" name="manualProcessOrder" required style="width: 200px;">
 
@@ -177,12 +178,13 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
-                <div id="engineeringFieldset"></div>
-                <div id="planningFieldset"></div>
-                <div id="manufacturingFieldset"></div>
-                <div id="materialpreparationFieldset"></div>
-                <div id="kittingFieldset"></div>
-                <div id="fabricationfitupFieldset"></div>
+                <div id="engineeringFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="planningFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="manufacturingFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="materialpreparationFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="kittingFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="fabricationfitupFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="weldingFieldset"style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -190,24 +192,27 @@
             <div class="modal-content">
                 <span class="close" onclick="closeglobalModal()">&times;</span>
                 <p id="global-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="width:1100px"></div>
-                <div id="planningFieldTable" style="width:1100px"></div>
-                <div id="manufacturingFieldTable" style="width:1100px"></div>
-                <div id="materialpreparationFieldTable" style="width:1100px"></div>
-                <div id="kittingFieldTable" style="width:1100px"></div>
-                <div id="fabricationfitupFieldTable" style="width:1100px"></div>
+                <div id="engineeringFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="planningFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="manufacturingFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="materialpreparationFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="kittingFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="fabricationfitupFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="weldingFieldTable" style="width:1100px;font-size:14px"></div>
             </div>
         </div>
         <div style="display:none" id="globalCompleteModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeglobalCompleteModal()">&times;</span>
                 <p id="global-complete-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="width:1100px"></div>
-                <div id="planningFieldTable" style="width:1100px"></div>
-                <div id="manufacturingFieldTable" style="width:1100px"></div>
-                <div id="materialpreparationCompleteFieldTable" style="width:1100px"></div>
-                <div id="kittingCompleteFieldTable" style="width:1100px"></div>
-                <div id="fabricationfitupCompleteFieldTable" style="width:1100px"></div>
+                <div id="engineeringFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="planningFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="manufacturingFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="materialpreparationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="kittingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+               
+                <div id="fabricationfitupCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="weldingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
         <script>
@@ -484,6 +489,16 @@
                 // Clear the fieldset content if the quality step is not "Engineering"
                 $('#fabricationfitupFieldset').html('');
             }
+            if (qualityStep === 'Welding') {
+
+                var weldingFieldset = generateWeldingFieldset(processOrder, qualityStep,
+                    userName);
+
+                $('#weldingFieldset').html(weldingFieldset);
+            } else {
+                // Clear the fieldset content if the quality step is not "Engineering"
+                $('#weldingFieldset').html('');
+            }
 
             $('#myModal').show();
         }
@@ -536,6 +551,8 @@
             $('#planningCompleteFieldTable').hide();
             $('#manufacturingCompleteFieldTable').hide();
             $('#materialpreparationCompleteFieldTable').hide();
+            $('#kittingCompleteFieldTable').hide();
+            $('#fabricationfitupCompleteFieldTable').hide();
 
             // Determine which content div to display based on qualityStep
             if (qualityStep === 'Engineering') {
@@ -556,6 +573,11 @@
                 var kittingCompleteFieldsetTable = generateKittingCompleteFieldset(processOrder,
                     qualityStep);
                 $('#kittingCompleteFieldTable').html(kittingCompleteFieldsetTable).show();
+            } else if (qualityStep === 'Fabrication Fit-Up') {
+
+                var fabricationfitupCompleteFieldsetTable = generateFabricationFitUpCompleteFieldset(processOrder,
+                    qualityStep);
+                $('#fabricationfitupCompleteFieldTable').html(fabricationfitupCompleteFieldsetTable).show();
             }
 
             $('#globalCompleteModal').show();

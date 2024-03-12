@@ -30,6 +30,19 @@ class KittingTableDataCompleteController extends Controller
 
         // You can return a response or redirect as needed
         return response()->json(['data' => $kittingCompleteData]);
+    }
+
+        public function viewKittingCompleteForm(Request $request)
+        {
+            $processOrderNumber = $request->input('process_order_number');
+    
+            // Retrieve data based on the process order number to get the latest record
+            $data = KittingCompleteData::where('ProcessOrderID', $processOrderNumber)
+                ->orderBy('updated_at', 'desc')
+                ->first();
+    
+            return response()->json(['data' => $data]);
+        }
     
 }
-}
+
