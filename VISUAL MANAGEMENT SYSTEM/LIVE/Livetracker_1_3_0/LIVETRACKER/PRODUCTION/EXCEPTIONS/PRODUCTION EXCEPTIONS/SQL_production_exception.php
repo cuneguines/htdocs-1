@@ -92,7 +92,7 @@ FROM (
 
             LEFT JOIN 
             (select t0.ItemCode, 
-                    MAX(t1.DocDueDate) [DocDueDate], 
+            MAX(COALESCE(T0.U_del_date_rev2,T0.U_del_date_rev1,T0.ShipDate,T1.[DocDueDate] )) [DocDueDate], 
                     MAX(t1.DocNum) [DocNum]
                     from por1 t0
 
@@ -161,7 +161,7 @@ FROM (
 
             LEFT JOIN 
             (select t0.ItemCode, 
-                    MAX(t1.DocDueDate) [DocDueDate], 
+            MAX(COALESCE(T0.U_del_date_rev2,T0.U_del_date_rev1,T0.ShipDate,T1.[DocDueDate] )) [DocDueDate], 
                     MAX(t1.DocNum) [DocNum]
                     from por1 t0
         

@@ -129,6 +129,9 @@ function generateHTMLFromResponse_for_planning(response) {
 
 
 function generatePlanningFieldset(processOrder, qualityStep,username) {
+
+
+    
     $('#sign_off_planning').val(username);
     return `
 <fieldset>
@@ -221,6 +224,16 @@ function generatePlanningFieldset(processOrder, qualityStep,username) {
            
    
 }
+
+
+
+
+
+
+
+
+
+
 
 function submitPlanningForm(processOrder) {
     // Add your logic to handle the form submission for the engineering fieldset
@@ -320,3 +333,173 @@ function submitPlanningForm(processOrder) {
 
     console.log('Planning form submitted!');
 }
+function generatePlanningUpdateFieldTable(processOrder, qualityStep) {
+
+     // Assuming you have some custom headers to include
+     var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var html = '<table id="update_table">';
+    html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+    var formData = {
+        process_order_number: processOrder,
+        // Include other data if needed
+    };
+console.log(processOrder);
+   
+
+    // Fetch Planning Form Data for the given process order
+    $.ajax({
+        url: '/getPlanningDataByProcessOrder',// Adjust URL as needed
+        type: 'POST',
+        headers:headers,
+        data:formData,
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            // Clear the loading indicator
+            //$('#update_table tbody').html('');
+            var generatedHTML = generateEditableFormFromResponse(response);
+            $('#planningUpdateFieldTable').html(generatedHTML);
+            // Populate the update table with fetched data
+            
+        },
+        error: function (error) {
+            console.error(error);
+            
+        }
+    });
+
+  
+}
+function generateEditableFormFromResponse(response) {
+    var html = '<form id="editableForm" enctype="multipart/form-data">';
+    
+    $.each(response, function (index, item) {
+        html += '<div class="form-group" >';
+        html += '<label>ID: </label>';
+        html += '<input type="text" name="id" value="' + item.id + '" readonly>';
+        html += '</div>';
+        
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Purchase Order Received: </label>';
+        html += '<input type="checkbox" name="purchase_order_received" ' + (item.purchase_order_received === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Purchase Order Document: </label>';
+        if (item.purchase_order_document) {
+            html += '<input type="text" name="existing_purchase_order_document" value="' + item.purchase_order_document + '" readonly>';
+            html += '<input type="file" name="purchase_order_document_new">';
+        } else {
+            html += '<input type="file" name="purchase_order_document">';
+        }
+        html += '</div>';
+        
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Project Schedule Agreed: </label>';
+        html += '<input type="checkbox" name="project_schedule_agreed" ' + (item.project_schedule_agreed === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Project Schedule Document: </label>';
+        if (item.project_schedule_document) {
+            html += '<input type="text" name="existing_project_schedule_document" value="' + item.project_schedule_document + '" readonly>';
+            html += '<input type="file" name="project_schedule_document_new">';
+        } else {
+            html += '<input type="file" name="project_schedule_document">';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Quotation: </label>';
+        html += '<input type="checkbox" name="quotation" ' + (item.quotation === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Quotation Document: </label>';
+        if (item.quotation_document) {
+            html += '<input type="text" name="existing_quotation_document" value="' + item.quotation_document + '" readonly>';
+            html += '<input type="file" name="quotation_document_new">';
+        } else {
+            html += '<input type="file" name="quotation_document">';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Verify Customer Expectations: </label>';
+        html += '<input type="checkbox" name="verify_customer_expectations" ' + (item.verify_customer_expectations === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>User Requirement Specifications Document: </label>';
+        if (item.user_requirement_specifications_document) {
+            html += '<input type="text" name="existing_user_requirement_specifications_document" value="' + item.user_requirement_specifications_document + '" readonly>';
+            html += '<input type="file" name="user_requirement_specifications_document_new">';
+        } else {
+            html += '<input type="file" name="user_requirement_specifications_document">';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Project Risk Category Assessment: </label>';
+        html += '<input type="checkbox" name="project_risk_category_assessment" ' + (item.project_risk_category_assessment === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Pre Engineering Check Document: </label>';
+        if (item.pre_engineering_check_document) {
+            html += '<input type="text" name="existing_pre_engineering_check_document" value="' + item.pre_engineering_check_document + '" readonly>';
+            html += '<input type="file" name="pre_engineering_check_document_new">';
+        } else {
+            html += '<input type="file" name="pre_engineering_check_document">';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Sign-off Planning: </label>';
+        html += '<input type="text" name="sign_off_planning" value="' + (item.sign_off_planning ? item.sign_off_planning : '') + '">';
+        html += '</div>';
+
+        html += '<div class="form-group" style="text-align: left; padding: 5px;">';
+        html += '<label>Comments Planning: </label>';
+        html += '<textarea name="comments_planning">' + (item.comments_planning ? item.comments_planning : '') + '</textarea>';
+        html += '</div>';
+    });
+    
+    html += '<div class="form-group" style="text-align: center; padding: 10px;">';
+    html += '<button type="submit" style="background-color: #007bff; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">Submit</button>';
+    html += '</div>';
+    
+    html += '</form>';
+    
+    return html;
+}
+
+
+
+$(document).on('submit', '#updatePlanningForm', function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    var formData = new FormData(this);
+
+    // Make an AJAX call to submit the updated planning form
+    $.ajax({
+        url: '/submitPlanningForm',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            console.log(response);
+            alert('Update successful');
+            // You can perform additional actions after successful update
+        },
+        error: function(error) {
+            console.error(error);
+            alert('Update failed');
+            // Handle error
+        }
+    });
+});

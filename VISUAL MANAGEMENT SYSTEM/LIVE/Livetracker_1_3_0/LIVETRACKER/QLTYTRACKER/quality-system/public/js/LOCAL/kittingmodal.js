@@ -1,4 +1,5 @@
 function generateKittingCompleteFieldset(processOrder, qualityStep, username) {
+    console.log(processOrder);
     var formData = {
         process_order_number: processOrder,
     };
@@ -7,7 +8,7 @@ function generateKittingCompleteFieldset(processOrder, qualityStep, username) {
     };
 
     $("#sign_off_kitting").val(username);
-
+   
     $.ajax({
         url: "/getKittingDataByProcessOrder",
         type: "POST",
@@ -16,9 +17,16 @@ function generateKittingCompleteFieldset(processOrder, qualityStep, username) {
         dataType: "json",
         success: function (response) {
             console.log(response);
+            
+            if (response.data !== null) 
+            {
             var generatedHTML = generateCompleteHTMLFromResponse_for_kitting(response);
             $("#kittingCompleteFieldTable").html(generatedHTML);
-          
+            }
+          else
+          {
+            $("#kittingCompleteFieldTable").html('');
+          }
         },
         error: function (error) {
             console.error(error);
@@ -117,7 +125,7 @@ function submitKittingCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
-
+   
     var formData = {
         sign_off_kitting: document.querySelector('[name="sign_off_kitting"]').value,
         comments_kitting: document.querySelector('[name="comments_kitting"]').value,
@@ -149,6 +157,7 @@ function submitKittingCompleteForm() {
             console.error("Error:", error);
         }
     });
+    formData = {};
 }
 function ViewKittingCompleteForm() {
 

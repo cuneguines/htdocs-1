@@ -22,6 +22,7 @@
     <script type="text/javascript" src="../../../JS/LOCAL/kittingmodal.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/fabricationfitup.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/welding.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/testing.js"></script>
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
@@ -178,13 +179,14 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
-                <div id="engineeringFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="planningFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="manufacturingFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="materialpreparationFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="kittingFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="fabricationfitupFieldset"style="overflow-y:scroll;max-height:500px"></div>
-                <div id="weldingFieldset"style="overflow-y:scroll;max-height:500px"></div>
+                <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="planningFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="manufacturingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="weldingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="testingFieldset" style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -199,6 +201,7 @@
                 <div id="kittingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="fabricationfitupFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="weldingFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="testingFieldTable" style="width:1100px;font-size:14px"></div>
             </div>
         </div>
         <div style="display:none" id="globalCompleteModal" class="modal">
@@ -210,97 +213,198 @@
                 <div id="manufacturingFieldTable" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="materialpreparationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="kittingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-               
+
                 <div id="fabricationfitupCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="weldingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="testingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
-        <script>
-        var welcomeMessage = $('h2').text();
-        var userName = welcomeMessage.split(',')[1].trim();
-        var loggedInUser = 'admin';
+    </div>
+    <div style="display:none" id="globalUpdateModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeglobalUpdateModal()">&times;</span>
+            <p id="global-update-modal-content">Modal Content Goes Here</p>
+            <div id="engineeringUpdateFieldTable" style="overflow-y:scroll;max-height:500px;background-color:white">
+            </div>
+            <div id="planningUpdateFieldTable" style="overflow-y:scroll;max-height:500px;background-color:white"></div>
+            <div id="manufacturingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="materialpreparationUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="kittingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
 
-        // Now, you have the user name in the variable 'userName'
+            <div id="fabricationfitupUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="weldingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="testingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+        </div>
+    </div>
+    <script>
+    var welcomeMessage = $('h2').text();
+    var userName = welcomeMessage.split(',')[1].trim();
+    var loggedInUser = 'admin';
+
+    // Now, you have the user name in the variable 'userName'
+    console.log('User Name:', userName);
+    // Wait for the DOM to be ready
+    $(document).ready(function() {
         console.log('User Name:', userName);
-        // Wait for the DOM to be ready
-        $(document).ready(function() {
-            console.log('User Name:', userName);
-            $('#myModal').hide();
-            // Handle click event on the search button
-            $('#searchButton').click(function() {
-                // Get the manually entered process order
-                $('#table').show();
-                var manualProcessOrder = $('#manualProcessOrder').val();
+        $('#myModal').hide();
+        // Handle click event on the search button
+        $('#searchButton').click(function() {
+            // Get the manually entered process order
+            $('#table').show();
+            var manualProcessOrder = $('#manualProcessOrder').val();
 
 
-                // Make an AJAX request to get line items
-                /*   $.ajax({
-                      url: '/get-line-items/' + manualProcessOrder,
-                      type: 'GET',
-                      success: function(data) {
-                          // Assuming data is an array of items
-                          var html =
-                              '<table><thead><tr><th>Step Description</th><th>PrOrder</th></tr></thead><tbody>';
+            // Make an AJAX request to get line items
+            /*   $.ajax({
+                  url: '/get-line-items/' + manualProcessOrder,
+                  type: 'GET',
+                  success: function(data) {
+                      // Assuming data is an array of items
+                      var html =
+                          '<table><thead><tr><th>Step Description</th><th>PrOrder</th></tr></thead><tbody>';
 
-                          $.each(data, function(index, item) {
-                              html += '<tr>';
-                              // Adjust the property name based on your actual JSON structure
-                              html += '<td>' + item.Quantity +
-                                  '</td><td style="text-align: center;">' + item
-                                  .PrOrder + '</td>';
-                              html += '</tr>';
-                          });
+                      $.each(data, function(index, item) {
+                          html += '<tr>';
+                          // Adjust the property name based on your actual JSON structure
+                          html += '<td>' + item.Quantity +
+                              '</td><td style="text-align: center;">' + item
+                              .PrOrder + '</td>';
+                          html += '</tr>';
+                      });
 
-                          html += '</tbody></table>';
+                      html += '</tbody></table>';
 
-                          // Update the line items container with the generated HTML
-                          $('#lineItemsContainer').html(html);
-                      },
-                      error: function(error) {
-                          console.error('Error fetching line items:', error);
-                      }
-                  }); */
-            });
+                      // Update the line items container with the generated HTML
+                      $('#lineItemsContainer').html(html);
+                  },
+                  error: function(error) {
+                      console.error('Error fetching line items:', error);
+                  }
+              }); */
         });
+    });
 
-        /* MODAL */
-        function updateTable_test(processOrder, qualitySteps, userName) {
-            console.log('User Name:', userName);
-            // Get the table element
-            var table = $('#table');
+    /* MODAL */
+    function updateTable_test(processOrder, qualitySteps, userName) {
+        console.log('User Name:', userName);
+        // Get the table element
+        var table = $('#table');
 
-            // Clear existing rows
-            table.html('');
+        // Clear existing rows
+        table.html('');
 
-            // Add header row
-            var headerRow = $('<tr>');
-            headerRow.append('<th>Process Order</th>');
-            headerRow.append('<th>Quality Steps</th>');
+        // Add header row
+        var headerRow = $('<tr>');
+        headerRow.append('<th>Process Order</th>');
+        headerRow.append('<th>Quality Steps</th>');
+        headerRow.append('<th>View</th>');
+        headerRow.append('<th>Complete</th>');
+        table.append(headerRow);
+
+        // Add data rows
+        for (var i = 0; i < qualitySteps.length; i++) {
+            var row = $('<tr>');
+
+            // Insert cell for processOrder
+            row.append('<td>' + processOrder + '</td>');
+
+
+            // Insert cell for qualitySteps with a button to open the modal
+            var qualityStepButton = $('<button>', {
+                text: qualitySteps[i],
+                click: function() {
+                    var clickedRow = $(this).closest('tr');
+                    var processOrderValue = clickedRow.find('td:first').text();
+                    var qualityStepValue = $(this).text();
+                    openModal(processOrderValue, qualityStepValue, userName);
+                }
+            });
+
+            var qualityStepButtonWithId = $('<button>', {
+
+                text: 'View',
+                id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                click: function() {
+                    var qualityStepId = $(this).attr('id').split('_')[1];
+                    // Handle button click with the quality step id
+                    console.log('Button clicked for quality step: ' + qualityStepId);
+                    openglobalModal(processOrder, qualityStepId);
+
+                }
+
+            });
+            var qualityStepButtonWithCompleteId = $('<button>', {
+
+                text: 'Complete',
+                id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                click: function() {
+                    var qualityStepId = $(this).attr('id').split('_')[1];
+                    // Handle button click with the quality step id
+                    console.log('Button clicked for quality step: ' + qualityStepId);
+                    openglobalCompleteModal(processOrder, qualityStepId);
+
+                }
+
+            });
+
+            row.append('<td>').find('td:last').append(qualityStepButton);
+            row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+            row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithCompleteId);
+
+
+
+
+
+            table.append(row);
+        }
+    }
+
+    function updateTable(processOrder, qualitySteps, userName, loggedInUser) {
+        console.log('User Name:', userName);
+        console.log('User Role:', loggedInUser);
+        // Get the table element
+        var table = $('#table');
+
+        // Clear existing rows
+        table.html('');
+
+        // Add header row
+        var headerRow = $('<tr>');
+        headerRow.append('<th>Process Order</th>');
+        headerRow.append('<th>Quality Steps</th>');
+
+        // Check if loggedInUser is admin to show all buttons
+        if (loggedInUser === 'admin') {
             headerRow.append('<th>View</th>');
+            headerRow.append('<th>Update</th>');
             headerRow.append('<th>Complete</th>');
-            table.append(headerRow);
+        }
 
-            // Add data rows
-            for (var i = 0; i < qualitySteps.length; i++) {
-                var row = $('<tr>');
+        table.append(headerRow);
 
-                // Insert cell for processOrder
-                row.append('<td>' + processOrder + '</td>');
+        // Add data rows
+        for (var i = 0; i < qualitySteps.length; i++) {
+            var row = $('<tr>');
 
+            // Insert cell for processOrder
+            row.append('<td>' + processOrder + '</td>');
 
-                // Insert cell for qualitySteps with a button to open the modal
-                var qualityStepButton = $('<button>', {
-                    text: qualitySteps[i],
-                    click: function() {
-                        var clickedRow = $(this).closest('tr');
-                        var processOrderValue = clickedRow.find('td:first').text();
-                        var qualityStepValue = $(this).text();
-                        openModal(processOrderValue, qualityStepValue, userName);
-                    }
-                });
+            // Insert cell for qualitySteps with a button to open the modal
+            var qualityStepButton = $('<button>', {
+                text: qualitySteps[i],
+                click: function() {
+                    var clickedRow = $(this).closest('tr');
+                    var processOrderValue = clickedRow.find('td:first').text();
+                    var qualityStepValue = $(this).text();
+                    openModal(processOrderValue, qualityStepValue, userName);
+                }
+            });
 
+            row.append('<td>').find('td:last').append(qualityStepButton);
+
+            // Check if loggedInUser is admin to show all buttons
+            if (loggedInUser === 'admin') {
                 var qualityStepButtonWithId = $('<button>', {
-
                     text: 'View',
                     id: 'button_' + qualitySteps[i], // Add the id based on the quality step
                     click: function() {
@@ -308,321 +412,332 @@
                         // Handle button click with the quality step id
                         console.log('Button clicked for quality step: ' + qualityStepId);
                         openglobalModal(processOrder, qualityStepId);
-
                     }
-
                 });
-                var qualityStepButtonWithCompleteId = $('<button>', {
 
-                    text: 'Complete',
+                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+                var qualityStepButtonWithId = $('<button>', {
+                    text: 'Update',
                     id: 'button_' + qualitySteps[i], // Add the id based on the quality step
                     click: function() {
                         var qualityStepId = $(this).attr('id').split('_')[1];
                         // Handle button click with the quality step id
                         console.log('Button clicked for quality step: ' + qualityStepId);
-                        openglobalCompleteModal(processOrder, qualityStepId);
-
+                        openglobalUpdateModal(processOrder, qualityStepId);
                     }
-
                 });
 
-                row.append('<td>').find('td:last').append(qualityStepButton);
                 row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
-                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithCompleteId);
 
-
-
-
-
-                table.append(row);
-            }
-        }
-
-        function updateTable(processOrder, qualitySteps, userName, loggedInUser) {
-            console.log('User Name:', userName);
-            console.log('User Role:', loggedInUser);
-            // Get the table element
-            var table = $('#table');
-
-            // Clear existing rows
-            table.html('');
-
-            // Add header row
-            var headerRow = $('<tr>');
-            headerRow.append('<th>Process Order</th>');
-            headerRow.append('<th>Quality Steps</th>');
-
-            // Check if loggedInUser is admin to show all buttons
-            if (loggedInUser === 'admin') {
-                headerRow.append('<th>View</th>');
-                headerRow.append('<th>Complete</th>');
-            }
-
-            table.append(headerRow);
-
-            // Add data rows
-            for (var i = 0; i < qualitySteps.length; i++) {
-                var row = $('<tr>');
-
-                // Insert cell for processOrder
-                row.append('<td>' + processOrder + '</td>');
-
-                // Insert cell for qualitySteps with a button to open the modal
-                var qualityStepButton = $('<button>', {
-                    text: qualitySteps[i],
+                var qualityStepButtonWithCompleteId = $('<button>', {
+                    text: 'Complete',
+                    id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
                     click: function() {
-                        var clickedRow = $(this).closest('tr');
-                        var processOrderValue = clickedRow.find('td:first').text();
-                        var qualityStepValue = $(this).text();
-                        openModal(processOrderValue, qualityStepValue, userName);
+                        var qualityStepId = $(this).attr('id').split('_')[2];
+                        // Handle button click with the quality step id
+                        console.log('Button clicked for quality step: ' + qualityStepId);
+                        openglobalCompleteModal(processOrder, qualityStepId);
                     }
                 });
 
-                row.append('<td>').find('td:last').append(qualityStepButton);
+                row.append('<td style="text-align:center">').find('td:last').append(
+                    qualityStepButtonWithCompleteId);
+            } else {
+                // For operators, only show the "Complete" button
+                var completeButton = $('<button>', {
+                    text: 'Complete',
+                    id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
+                    click: function() {
+                        var qualityStepId = $(this).attr('id').split('_')[2];
+                        // Handle button click with the quality step id
+                        console.log('Button clicked for quality step: ' + qualityStepId);
+                        openglobalCompleteModal(processOrder, qualityStepId);
+                    }
+                });
 
-                // Check if loggedInUser is admin to show all buttons
-                if (loggedInUser === 'admin') {
-                    var qualityStepButtonWithId = $('<button>', {
-                        text: 'View',
-                        id: 'button_' + qualitySteps[i], // Add the id based on the quality step
-                        click: function() {
-                            var qualityStepId = $(this).attr('id').split('_')[1];
-                            // Handle button click with the quality step id
-                            console.log('Button clicked for quality step: ' + qualityStepId);
-                            openglobalModal(processOrder, qualityStepId);
-                        }
-                    });
-
-                    row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
-
-                    var qualityStepButtonWithCompleteId = $('<button>', {
-                        text: 'Complete',
-                        id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
-                        click: function() {
-                            var qualityStepId = $(this).attr('id').split('_')[2];
-                            // Handle button click with the quality step id
-                            console.log('Button clicked for quality step: ' + qualityStepId);
-                            openglobalCompleteModal(processOrder, qualityStepId);
-                        }
-                    });
-
-                    row.append('<td style="text-align:center">').find('td:last').append(
-                        qualityStepButtonWithCompleteId);
-                } else {
-                    // For operators, only show the "Complete" button
-                    var completeButton = $('<button>', {
-                        text: 'Complete',
-                        id: 'button_complete_' + qualitySteps[i], // Add the id based on the quality step
-                        click: function() {
-                            var qualityStepId = $(this).attr('id').split('_')[2];
-                            // Handle button click with the quality step id
-                            console.log('Button clicked for quality step: ' + qualityStepId);
-                            openglobalCompleteModal(processOrder, qualityStepId);
-                        }
-                    });
-
-                    row.append('<td style="text-align:center">').find('td:last').append(completeButton);
-                }
-
-                table.append(row);
+                row.append('<td style="text-align:center">').find('td:last').append(completeButton);
             }
+
+            table.append(row);
+        }
+    }
+
+    // JavaScript functions for modal with jQuery
+    function openModal(processOrder, qualityStep, userName) {
+        console.log('i am in openmodal', userName);
+        $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
+        if (qualityStep === 'Engineering') {
+            var engineeringFieldset = generateEngineeringFieldset(processOrder, qualityStep, userName);
+
+            $('#engineeringFieldset').html(engineeringFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#engineeringFieldset').html('');
+        }
+        if (qualityStep === 'Planning / Forward Engineering') {
+
+            var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
+
+            $('#planningFieldset').html(planningFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#planningFieldset').html('');
         }
 
-        // JavaScript functions for modal with jQuery
-        function openModal(processOrder, qualityStep, userName) {
-            console.log('i am in openmodal', userName);
-            $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
-            if (qualityStep === 'Engineering') {
-                var engineeringFieldset = generateEngineeringFieldset(processOrder, qualityStep, userName);
+        if (qualityStep === 'Manufacturing Package') {
 
-                $('#engineeringFieldset').html(engineeringFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#engineeringFieldset').html('');
-            }
-            if (qualityStep === 'Planning / Forward Engineering') {
+            var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep, userName);
 
-                var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
+            $('#manufacturingFieldset').html(manufacturingFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#manufacturingFieldset').html('');
+        }
+        if (qualityStep === 'Material Preparation') {
 
-                $('#planningFieldset').html(planningFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#planningFieldset').html('');
-            }
+            var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,
+                userName);
 
-            if (qualityStep === 'Manufacturing Package') {
+            $('#materialpreparationFieldset').html(materialpreparationFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#materialpreparationFieldset').html('');
+        }
+        if (qualityStep === 'Kitting') {
 
-                var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep, userName);
+            var kittingFieldset = generateKittingFieldset(processOrder, qualityStep,
+                userName);
 
-                $('#manufacturingFieldset').html(manufacturingFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#manufacturingFieldset').html('');
-            }
-            if (qualityStep === 'Material Preparation') {
+            $('#kittingFieldset').html(kittingFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#kittingFieldset').html('');
+        }
+        if (qualityStep === 'Fabrication Fit-Up') {
 
-                var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,
-                    userName);
+            var fabricationfitupFieldset = generateFabricationFitUpFieldset(processOrder, qualityStep,
+                userName);
 
-                $('#materialpreparationFieldset').html(materialpreparationFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#materialpreparationFieldset').html('');
-            }
-            if (qualityStep === 'Kitting') {
+            $('#fabricationfitupFieldset').html(fabricationfitupFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#fabricationfitupFieldset').html('');
+        }
+        if (qualityStep === 'Welding') {
 
-                var kittingFieldset = generateKittingFieldset(processOrder, qualityStep,
-                    userName);
+            var weldingFieldset = generateWeldingFieldset(processOrder, qualityStep,
+                userName);
 
-                $('#kittingFieldset').html(kittingFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#kittingFieldset').html('');
-            }
-            if (qualityStep === 'Fabrication Fit-Up') {
+            $('#weldingFieldset').html(weldingFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#weldingFieldset').html('');
+        }
+        if (qualityStep === 'Testing') {
 
-                var fabricationfitupFieldset = generateFabricationFitUpFieldset(processOrder, qualityStep,
-                    userName);
+            var testingFieldset = generateTestingFieldset(processOrder, qualityStep,
+                userName);
 
-                $('#fabricationfitupFieldset').html(fabricationfitupFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#fabricationfitupFieldset').html('');
-            }
-            if (qualityStep === 'Welding') {
-
-                var weldingFieldset = generateWeldingFieldset(processOrder, qualityStep,
-                    userName);
-
-                $('#weldingFieldset').html(weldingFieldset);
-            } else {
-                // Clear the fieldset content if the quality step is not "Engineering"
-                $('#weldingFieldset').html('');
-            }
-
-            $('#myModal').show();
+            $('#testingFieldset').html(testingFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#testingFieldset').html('');
         }
 
-        function closeModal() {
-            $('#myModal').hide();
+        $('#myModal').show();
+    }
+
+    function closeModal() {
+        $('#myModal').hide();
+    }
+    //FOR VIEW BUTTON 
+    function openglobalModal(processOrder, qualityStep) {
+        $('#global-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
+
+        // Hide all content divs initially
+        $('#engineeringFieldTable').hide();
+        $('#planningFieldTable').hide();
+        $('#manufacturingFieldTable').hide();
+        $('#materialpreparationFieldTable').hide();
+        $('#kittingFieldTable').hide();
+        $('#fabricationfitupFieldTable').hide();
+        $('#weldingFieldTable').hide();
+
+        // Determine which content div to display based on qualityStep
+        if (qualityStep === 'Engineering') {
+            var engineeringFieldTable = generateEngineeringFieldTable(processOrder, qualityStep);
+            $('#engineeringFieldTable').html(engineeringFieldTable).show();
+        } else if (qualityStep === 'Planning / Forward Engineering') {
+            var planningFieldsetTable = generatePlanningFieldTable(processOrder, qualityStep);
+            $('#planningFieldTable').html(planningFieldsetTable).show();
+        } else if (qualityStep === 'Manufacturing Package') {
+            var manufacturingFieldsetTable = generateManufacturingFieldTable(processOrder, qualityStep);
+            $('#manufacturingFieldTable').html(manufacturingFieldsetTable).show();
+        } else if (qualityStep === 'Material Preparation') {
+            var materialpreparationFieldsetTable = generateMaterialPreparationFieldTable(processOrder, qualityStep);
+            $('#materialpreparationFieldTable').html(materialpreparationFieldsetTable).show();
+        } else if (qualityStep === 'Kitting') {
+            var kittingFieldsetTable = generateKittingFieldTable(processOrder, qualityStep);
+            $('#kittingFieldTable').html(kittingFieldsetTable).show();
+        } else if (qualityStep === 'Fabrication Fit-Up') {
+            var fabricationfitupFieldsetTable = generateFabricationFitUpFieldTable(processOrder, qualityStep);
+            $('#fabricationfitupFieldTable').html(fabricationfitupFieldsetTable).show();
+        } else if (qualityStep === 'Welding') {
+            var weldingFieldsetTable = generateWeldingFieldTable(processOrder, qualityStep);
+            $('#weldingFieldTable').html(weldingFieldsetTable).show();
+        } else if (qualityStep === 'Testing') {
+            var testingFieldsetTable = generateTestingFieldTable(processOrder, qualityStep);
+            $('#testingFieldTable').html(testingFieldsetTable).show();
         }
-        //FOR VIEW BUTTON 
-        function openglobalModal(processOrder, qualityStep) {
-            $('#global-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
 
-            // Hide all content divs initially
-            $('#engineeringFieldTable').hide();
-            $('#planningFieldTable').hide();
-            $('#manufacturingFieldTable').hide();
-            $('#materialpreparationFieldTable').hide();
-            $('#kittingFieldTable').hide();
-            $('#fabricationfitupFieldTable').hide();
+        $('#globalModal').show();
+    }
 
-            // Determine which content div to display based on qualityStep
-            if (qualityStep === 'Engineering') {
-                var engineeringFieldTable = generateEngineeringFieldTable(processOrder, qualityStep);
-                $('#engineeringFieldTable').html(engineeringFieldTable).show();
-            } else if (qualityStep === 'Planning / Forward Engineering') {
-                var planningFieldsetTable = generatePlanningFieldTable(processOrder, qualityStep);
-                $('#planningFieldTable').html(planningFieldsetTable).show();
-            } else if (qualityStep === 'Manufacturing Package') {
-                var manufacturingFieldsetTable = generateManufacturingFieldTable(processOrder, qualityStep);
-                $('#manufacturingFieldTable').html(manufacturingFieldsetTable).show();
-            } else if (qualityStep === 'Material Preparation') {
-                var materialpreparationFieldsetTable = generateMaterialPreparationFieldTable(processOrder, qualityStep);
-                $('#materialpreparationFieldTable').html(materialpreparationFieldsetTable).show();
-            } else if (qualityStep === 'Kitting') {
-                var kittingFieldsetTable = generateKittingFieldTable(processOrder, qualityStep);
-                $('#kittingFieldTable').html(kittingFieldsetTable).show();
-            } else if (qualityStep === 'Fabrication Fit-Up') {
-                var fabricationfitupFieldsetTable = generateFabricationFitUpFieldTable(processOrder, qualityStep);
-                $('#fabricationfitupFieldTable').html(fabricationfitupFieldsetTable).show();
-            }
+    function openglobalCompleteModal(processOrder, qualityStep) {
+        $('#global-complete-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' +
+            qualityStep);
 
-            $('#globalModal').show();
-        }
+        // Hide all content divs initially
+        $('#engineeringCompleteFieldTable').hide();
+        $('#planningCompleteFieldTable').hide();
+        $('#manufacturingCompleteFieldTable').hide();
+        $('#materialpreparationCompleteFieldTable').hide();
+        $('#kittingCompleteFieldTable').hide();
+        $('#fabricationfitupCompleteFieldTable').hide();
+        $('#weldingCompleteFieldTable').hide();
 
-        function openglobalCompleteModal(processOrder, qualityStep) {
-            $('#global-complete-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' +
+        // Determine which content div to display based on qualityStep
+        if (qualityStep === 'Engineering') {
+            var engineeringCompleteFieldTable = generateEngineeringCompleteFieldTable(processOrder, qualityStep);
+            $('#engineeringCompleteFieldTable').html(engineeringFieldTable).show();
+        } else if (qualityStep === 'Planning / Forward Engineering') {
+            var planningCompleteFieldsetTable = generatePlanningCompleteFieldTable(processOrder, qualityStep);
+            $('#planningCompleteFieldTable').html(planningFieldsetTable).show();
+        } else if (qualityStep === 'Manufacturing Package') {
+            var manufacturingCompleteFieldsetTable = generateManufacturingCompleteFieldTable(processOrder,
                 qualityStep);
+            $('#manufacturingCompleteFieldTable').html(manufacturingFieldsetTable).show();
+        } else if (qualityStep === 'Material Preparation') {
+            var materialpreparationCompleteFieldsetTable = generateMaterialPreparationCompleteFieldset(processOrder,
+                qualityStep);
+            $('#materialpreparationCompleteFieldTable').html(materialpreparationCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Kitting') {
+            var kittingCompleteFieldsetTable = generateKittingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#kittingCompleteFieldTable').html(kittingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Fabrication Fit-Up') {
 
-            // Hide all content divs initially
-            $('#engineeringCompleteFieldTable').hide();
-            $('#planningCompleteFieldTable').hide();
-            $('#manufacturingCompleteFieldTable').hide();
-            $('#materialpreparationCompleteFieldTable').hide();
-            $('#kittingCompleteFieldTable').hide();
-            $('#fabricationfitupCompleteFieldTable').hide();
+            var fabricationfitupCompleteFieldsetTable = generateFabricationFitUpCompleteFieldset(processOrder,
+                qualityStep);
+            $('#fabricationfitupCompleteFieldTable').html(fabricationfitupCompleteFieldsetTable).show();
 
-            // Determine which content div to display based on qualityStep
-            if (qualityStep === 'Engineering') {
-                var engineeringCompleteFieldTable = generateEngineeringCompleteFieldTable(processOrder, qualityStep);
-                $('#engineeringCompleteFieldTable').html(engineeringFieldTable).show();
-            } else if (qualityStep === 'Planning / Forward Engineering') {
-                var planningCompleteFieldsetTable = generatePlanningCompleteFieldTable(processOrder, qualityStep);
-                $('#planningCompleteFieldTable').html(planningFieldsetTable).show();
-            } else if (qualityStep === 'Manufacturing Package') {
-                var manufacturingCompleteFieldsetTable = generateManufacturingCompleteFieldTable(processOrder,
-                    qualityStep);
-                $('#manufacturingCompleteFieldTable').html(manufacturingFieldsetTable).show();
-            } else if (qualityStep === 'Material Preparation') {
-                var materialpreparationCompleteFieldsetTable = generateMaterialPreparationCompleteFieldset(processOrder,
-                    qualityStep);
-                $('#materialpreparationCompleteFieldTable').html(materialpreparationCompleteFieldsetTable).show();
-            } else if (qualityStep === 'Kitting') {
-                var kittingCompleteFieldsetTable = generateKittingCompleteFieldset(processOrder,
-                    qualityStep);
-                $('#kittingCompleteFieldTable').html(kittingCompleteFieldsetTable).show();
-            } else if (qualityStep === 'Fabrication Fit-Up') {
+        } else if (qualityStep === 'Welding') {
 
-                var fabricationfitupCompleteFieldsetTable = generateFabricationFitUpCompleteFieldset(processOrder,
-                    qualityStep);
-                $('#fabricationfitupCompleteFieldTable').html(fabricationfitupCompleteFieldsetTable).show();
-            }
+            var weldingCompleteFieldsetTable = generateWeldingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#weldingCompleteFieldTable').html(weldingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Testing') {
 
-            $('#globalCompleteModal').show();
+            var testingCompleteFieldsetTable = generateTestingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#testingCompleteFieldTable').html(testingCompleteFieldsetTable).show();
         }
 
-        function closeglobalCompleteModal() {
-            $('#globalCompleteModal').hide();
+        $('#globalCompleteModal').show();
+    }
+
+    function openglobalUpdateModal(processOrder, qualityStep) {
+        $('#global-update-modal-content').text('Process Order: ' + processOrder + ', Quality Step: ' +
+            qualityStep);
+
+        // Hide all content divs initially
+        $('#engineeringUpdateFieldTable').hide();
+        $('#planningUpdateFieldTable').hide();
+        $('#manufacturingUpdateFieldTable').hide();
+        $('#materialpreparationUpdateFieldTable').hide();
+        $('#kittingUpdateFieldTable').hide();
+        $('#fabricationfitupUpdateFieldTable').hide();
+        $('#weldingUpdateFieldTable').hide();
+
+        // Determine which content div to display based on qualityStep
+        if (qualityStep === 'Engineering') {
+            var engineeringCompleteFieldTable = generateEngineeringCompleteFieldTable(processOrder, qualityStep);
+            $('#engineeringCompleteFieldTable').html(engineeringFieldTable).show();
+        } else if (qualityStep === 'Planning / Forward Engineering') {
+            var planningUpdateFieldsetTable = generatePlanningUpdateFieldTable(processOrder, qualityStep);
+            $('#planningUpdateFieldTable').html(planningUpdateFieldsetTable).show();
+        } else if (qualityStep === 'Manufacturing Package') {
+            var manufacturingCompleteFieldsetTable = generateManufacturingCompleteFieldTable(processOrder,
+                qualityStep);
+            $('#manufacturingCompleteFieldTable').html(manufacturingFieldsetTable).show();
+        } else if (qualityStep === 'Material Preparation') {
+            var materialpreparationCompleteFieldsetTable = generateMaterialPreparationCompleteFieldset(processOrder,
+                qualityStep);
+            $('#materialpreparationCompleteFieldTable').html(materialpreparationCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Kitting') {
+            var kittingCompleteFieldsetTable = generateKittingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#kittingCompleteFieldTable').html(kittingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Fabrication Fit-Up') {
+
+            var fabricationfitupCompleteFieldsetTable = generateFabricationFitUpCompleteFieldset(processOrder,
+                qualityStep);
+            $('#fabricationfitupCompleteFieldTable').html(fabricationfitupCompleteFieldsetTable).show();
+
+        } else if (qualityStep === 'Welding') {
+
+            var weldingCompleteFieldsetTable = generateWeldingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#weldingCompleteFieldTable').html(weldingCompleteFieldsetTable).show();
         }
 
-        function closeglobalModal() {
-            $('#globalModal').hide();
+        $('#globalUpdateModal').show();
+    }
+
+    function closeglobalCompleteModal() {
+        $('#globalCompleteModal').hide();
+    }
+
+    function closeglobalUpdateModal() {
+        $('#globalUpdateModal').hide();
+    }
+
+    function closeglobalModal() {
+        $('#globalModal').hide();
+    }
+
+
+    // Close the modal if the user clicks outside of it
+    /* $(document).click(function(event) {
+      var modal = $('#myModal');
+      if ($(event.target).is(modal) || $(event.target).closest(modal).length) {
+        modal.hide();
+      }
+    }); */
+    /*MODAL ENDS HERE*/
+    // Handle click event on the search button
+    document.getElementById('searchButton').addEventListener('click', function() {
+        // Get the manually entered process order
+        var manualProcessOrder = document.getElementById('manualProcessOrder').value;
+
+        // Assuming you have a function to get quality steps based on the entered order
+        function getQualitySteps(manualProcessOrder) {
+            // Implement your logic to fetch quality steps
+            // For demonstration purposes, return a sample array
+            return ['Planning / Forward Engineering', 'Engineering', 'Manufacturing Package',
+                'Material Preparation', 'Kitting', 'Fabrication Fit-Up', 'Welding', 'Testing',
+                'Finishing', 'Sub-Contract', 'Final Assembly', 'Documentation', 'Packing and Transport',
+                'OFI'
+            ];
         }
 
+        // Get the quality steps
+        var qualitySteps = getQualitySteps(manualProcessOrder);
 
-        // Close the modal if the user clicks outside of it
-        /* $(document).click(function(event) {
-          var modal = $('#myModal');
-          if ($(event.target).is(modal) || $(event.target).closest(modal).length) {
-            modal.hide();
-          }
-        }); */
-        /*MODAL ENDS HERE*/
-        // Handle click event on the search button
-        document.getElementById('searchButton').addEventListener('click', function() {
-            // Get the manually entered process order
-            var manualProcessOrder = document.getElementById('manualProcessOrder').value;
-
-            // Assuming you have a function to get quality steps based on the entered order
-            function getQualitySteps(manualProcessOrder) {
-                // Implement your logic to fetch quality steps
-                // For demonstration purposes, return a sample array
-                return ['Planning / Forward Engineering', 'Engineering', 'Manufacturing Package',
-                    'Material Preparation', 'Kitting', 'Fabrication Fit-Up', 'Welding', 'Testing',
-                    'Finishing', 'Sub-Contract', 'Final Assembly', 'Documentation', 'Packing and Transport',
-                    'OFI'
-                ];
-            }
-
-            // Get the quality steps
-            var qualitySteps = getQualitySteps(manualProcessOrder);
-
-            // Update the table
-            updateTable(manualProcessOrder, qualitySteps, userName, loggedInUser);
-        });
-        </script>
+        // Update the table
+        updateTable(manualProcessOrder, qualitySteps, userName, loggedInUser);
+    });
+    </script>
 
     </div>
 </body>

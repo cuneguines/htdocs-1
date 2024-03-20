@@ -152,7 +152,7 @@ function submitWeldingForm(processOrder) {
             });
         }
     });
-
+    console.log(fileData);
     // Send an AJAX request for file uploads
     $.ajax({
         url: '/handleFileUploadWelding',
@@ -175,6 +175,7 @@ function submitWeldingForm(processOrder) {
 }
 // Function to generate the welding tasks field table
 function generateWeldingFieldTable(processOrder, qualityStep) {
+    console.log(processOrder);
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
@@ -206,27 +207,117 @@ function generateWeldingFieldTable(processOrder, qualityStep) {
 
 // Function to generate HTML table from welding tasks response
 function generateHTMLFromResponse_for_welding(response) {
-    var html = '<table id="welding_table" style="width:100%;">';
-    html +=
-        '<thead><tr><th style="width:5%;">ID</th><th style="width:25%;">Task</th><th style="width:25%;">Specification</th><th style="width:25%;">Responsible</th><th style="width:20%;">Action</th></tr></thead><tbody>';
+    
+    var html = '<table id="common_table" style="width:100%; border: 1px solid #ddd">';
+    html += '<thead><tr>';
+    html += '<th>ID</th>';
+    html += '<th>Weld_Map_Issued</th>';
+    html += '<th>Link_to_Weld_Map</th>';
+    html += '<th>Weld_Procedure_Qualification</th>';
+    html += '<th>Link_to_PQR</th>';
+    html += '<th>Weld_Procedure_Specifications</th>';
+    html += '<th>Link_to_WPS</th>';
+    html += '<th>Welder_Performance_Qualification</th>';
+    html += '<th>Link_to_WPQ</th>';
+    html += '<th>Welding_Wire</th>';
+    html += '<th>Link_to_Wire_Certificate</th>';
+    html += '<th>Shielding_Gas</th>';
+    html += '<th>Link_to_Gas_Data_Sheet</th>';
+    html += '<th>Pre_Weld_Inspection</th>';
+    html += '<th>Inspection_During_Welding</th>';
+    html += '<th>Post_Weld_Inspection</th>';
+    html += '<th>Sign_Off_Welding_Complete</th>';
+    html += '<th>Comments_Welding_Complete</th>';
+    html += '<th>Status</th>';
+    html += '<th>Submission_Date</th>';
+    html += '<th>Created_At</th>';
+    html += '<th>Updated_At</th>';
+    html += '<th>Link_to_Plant_Cert</th>';
+    html += '<th>Process_Order_ID</th>';
+    html += '<th>Action</th>';
+    html += '</tr></thead><tbody>';
 
     $.each(response, function (index, item) {
         html += "<tr>";
         html += "<td>" + item.Id + "</td>";
-        html += "<td>" + item.Task + "</td>";
-        html += "<td>" + item.Specification + "</td>";
-        html += "<td>" + item.Responsible + "</td>";
-
-        // Action column for file download
-        html += '<td>';
-        if (item.Link) {
-            var filePath = 'storage/welding_task/' + item.ProcessOrder + '/' + item.Link;
+        html += "<td>" + item.weld_map_issued + "</td>";
+        html += "<td>";
+        if (item.link_to_weld_map) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_weld_map;
             var downloadLink = '<a href="' + filePath + '" download>Download</a>';
             html += downloadLink;
         } else {
             html += '-';
         }
-        html += '</td>';
+        html += "</td>";
+        html += "<td>" + item.weld_procedure_qualification + "</td>";
+        html += "<td>";
+        if (item.link_to_pqr) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_pqr;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
+        html += "<td>" + item.weld_procedure_specifications + "</td>";
+        html += "<td>";
+        if (item.link_to_wps) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_wps;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
+        html += "<td>" + item.welder_performance_qualification + "</td>";
+        html += "<td>";
+        if (item.link_to_wpq) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_wpq;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
+        html += "<td>" + item.welding_wire + "</td>";
+        html += "<td>";
+        if (item.link_to_wire_certificate) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_wire_certificate;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
+        html += "<td>" + item.shielding_gas + "</td>";
+        html += "<td>";
+        if (item.link_to_gas_data_sheet) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_gas_data_sheet;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
+        html += "<td>" + item.pre_weld_inspection + "</td>";
+        html += "<td>" + item.inspection_during_welding + "</td>";
+        html += "<td>" + item.post_weld_inspection + "</td>";
+        html += "<td>" + item.sign_off_welding_complete + "</td>";
+        html += "<td>" + item.comments_welding_complete + "</td>";
+        html += "<td>" + item.status + "</td>";
+        html += "<td>" + item.submission_date + "</td>";
+        html += "<td>" + item.created_at + "</td>";
+        html += "<td>" + item.updated_at + "</td>";
+        html += "<td>";
+        if (item.link_to_plant_cert) {
+            var filePath = 'storage/welding_task/' + item.ProcessOrderID + '/' + item.link_to_plant_cert;
+            var downloadLink = '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += "</td>";
 
         html += "</tr>";
     });
@@ -235,6 +326,7 @@ function generateHTMLFromResponse_for_welding(response) {
 
     return html;
 }
+
 
 // Function to generate the welding tasks completion form
 function generateWeldingCompleteFieldset(processOrder, qualityStep, username) {
@@ -255,8 +347,17 @@ function generateWeldingCompleteFieldset(processOrder, qualityStep, username) {
         dataType: "json",
         success: function (response) {
             console.log(response);
+            if (response.data !== null) 
+            {
             var generatedHTML = generateCompleteHTMLFromResponse_for_welding(response);
             $("#weldingCompleteFieldTable").html(generatedHTML);
+            }
+          else
+          {
+            $("#weldingCompleteFieldTable").html('');
+          }
+           
+            
         },
         error: function (error) {
             console.error(error);
@@ -272,7 +373,8 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
     $.each(response, function (index, item) {
         html += '<div class="welding_item">';
         html += '<label>ID: ' + item.id + '</label><br>';
-
+      
+        html += '<input type="hidden" name="processorder" value="' + item.ProcessOrderID + '"><br>';
         // Weld Map
         html += '<div class="welding_field">';
         html +=
@@ -425,6 +527,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
     });
 
     html += '<input type="button" value="Submit" onclick="submitWeldingCompleteForm()">';
+    html += '  <input type="button" value="View" onclick="ViewWeldingCompleteForm()">';
     html += '</form>';
 
     html += '<div id="welding_complete_results"></div>';
@@ -457,13 +560,40 @@ function submitWeldingCompleteForm() {
         post_weld_inspection: document.querySelector('[name="post_weld_inspection"]').checked ? "on" : "",
         sign_off_welding_complete: document.querySelector('[name="sign_off_welding_complete"]').value,
         comments_welding_complete: document.querySelector('[name="comments_welding_complete"]').value,
+        status:document.querySelector('[name="status"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: 2, // Update with actual process order number
+        process_order_number: document.querySelector('[name="processorder"]').value, // Update with actual process order number
     };
 
     $.ajax({
         type: "POST",
         url: "/submitWeldingCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            //displayWeldingCompleteResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+    formData={};
+}
+function ViewWeldingCompleteForm() {
+
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+    process_order_number: document.querySelector('[name="processorder"]').value, 
+    }
+    console.log(formData);
+    $.ajax({
+        type: "POST",
+        url: "/viewWeldingCompleteForm",
         data: formData,
         headers: headers,
         dataType: "json",
@@ -476,7 +606,6 @@ function submitWeldingCompleteForm() {
         }
     });
 }
-
 // Function to display the welding tasks completion results
 function displayWeldingCompleteResults(values) {
     var resultsHtml = '<table id="welding_complete_results_table" style="width:100%; border-collapse: collapse; border: 1px solid #ddd; text-align: left;">';
