@@ -510,7 +510,7 @@ $Values_rd_L = array_values($combinedData_rd_L);
         $status = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($status==='Open'&& $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
+        if ( $formType === 'Opportunity For Improvement' || $formType === 'Non Conformance' && date('Y', $dateUpdated) === date("Y")) {
             $month = date('n', $dateUpdated); // Get the month as a number (1-12)
             $complaintCounts[$month - 1]++; // Subtract 1 to account for zero-based array
         }
@@ -548,7 +548,7 @@ $Values_rd_L = array_values($combinedData_rd_L);
         $status_cc = $entry['Status'];
 
         // Check if the entry is a Customer Complaint in the year 2023
-        if ($status==='Open'&&$formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
+        if ($formType_cc === 'Customer Complaints' && date('Y', $datecreated_cc) === date("Y")) {
             $month_cc = date('n', $datecreated_cc); // Get the month as a number (1-12)
             $complaintCounts_cc[$month_cc - 1]++; // Subtract 1 to account for zero-based array
         }

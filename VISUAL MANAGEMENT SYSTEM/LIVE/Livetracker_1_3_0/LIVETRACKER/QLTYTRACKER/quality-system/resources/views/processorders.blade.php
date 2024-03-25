@@ -23,6 +23,10 @@
     <script type="text/javascript" src="../../../JS/LOCAL/fabricationfitup.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/welding.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/testing.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/finishing.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/subcontract.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/finalassembly.js"></script>
+
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
@@ -180,13 +184,117 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="planningFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="planningFieldset" style="overflow-y:scroll;max-height:500px;display:none">
+                    <fieldset>
+                        <legend>Main Task 1: Planning / Forward Engineering</legend>
+
+                        <!-- Process Order Number -->
+                        <div class="form-group">
+                            <label>
+                                <input type="text" name="process_order_number" id="process_order_number" readonly>
+                                Process Order Number
+                            </label>
+                        </div>
+
+                        <!-- Subtask 1.1: Purchase Order -->
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="purchase_order_received" id="purchase_order_received">
+                                Purchase Order received
+                            </label>
+                            <br>
+                            <label class="upload-label" id="purchase_order_file_label">
+                                Current Purchase Order Document: <span id="purchase_order_filename"></span>
+                                <input type="file" name="purchase_order_document" id="purchase_order_document">
+                            </label>
+                        </div>
+
+                        <!-- Subtask 1.2: Project Schedule -->
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="project_schedule_agreed" id="project_schedule_agreed">
+                                Project schedule agreed
+                            </label>
+                            <br>
+                            <label class="upload-label" id="project_schedule_file_label">
+                                Current Project Schedule Document: <span id="project_schedule_filename"></span>
+                                <input type="file" name="project_schedule_document" id="project_schedule_document">
+                            </label>
+                        </div>
+
+                        <!-- Subtask 1.3: Quotation -->
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="quotation" id="quotation">
+                                Quotation
+                            </label>
+                            <br>
+                            <label class="upload-label" id="quotation_file_label">
+                                Current Quotation Document: <span id="quotation_filename"></span>
+                                <input type="file" name="quotation_document" id="quotation_document">
+                            </label>
+                        </div>
+
+                        <!-- Subtask 1.4: User Requirement Specifications -->
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="verify_customer_expectations"
+                                    id="verify_customer_expectations">
+                                Verify customer expectations
+                            </label>
+                            <br>
+                            <label class="upload-label" id="user_requirements_file_label">
+                                Current User Requirement Specifications Document: <span
+                                    id="user_requirements_filename"></span>
+                                <input type="file" name="user_requirement_specifications_document"
+                                    id="user_requirement_specifications_document">
+                            </label>
+                        </div>
+
+                        <!-- Subtask 1.5: Pre Engineering Check -->
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="project_risk_category_assessment"
+                                    id="project_risk_category_assessment">
+                                Project risk category assessment
+                            </label>
+                            <br>
+                            <label class="upload-label" id="pre_engineering_file_label">
+                                Current Pre Engineering Check Document: <span id="pre_engineering_filename"></span>
+                                <input type="file" name="pre_engineering_check_document"
+                                    id="pre_engineering_check_document">
+                            </label>
+                        </div>
+
+                        <!-- Sign-off for Main Task 1 -->
+                        <div class="form-group">
+                            <label>
+                                Sign-off for Planning / Forward Engineering:
+                                <input type="text" name="sign_off_planning" id="sign_off_planning">
+                            </label>
+                        </div>
+
+                        <!-- Comments for Main Task 1 -->
+                        <div class="form-group">
+                            <label>
+                                Comments for Planning / Forward Engineering:
+                                <textarea name="comments_planning" id="comments_planning" rows="4" cols="50"></textarea>
+                            </label>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
+                    </fieldset>
+                </div>
                 <div id="manufacturingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="weldingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="testingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="finishingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="subcontractFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -202,23 +310,29 @@
                 <div id="fabricationfitupFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="weldingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="testingFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="finishingFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="subcontractFieldTable" style="width:1100px;font-size:14px"></div>
             </div>
         </div>
-        <div style="display:none" id="globalCompleteModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeglobalCompleteModal()">&times;</span>
-                <p id="global-complete-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="planningFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="manufacturingFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="materialpreparationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="kittingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+    </div>
+    <div style="display:none" id="globalCompleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeglobalCompleteModal()">&times;</span>
+            <p id="global-complete-modal-content">Modal Content Goes Here</p>
+            <div id="engineeringFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="planningFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="manufacturingFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="materialpreparationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="kittingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
 
-                <div id="fabricationfitupCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="weldingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="testingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-            </div>
+            <div id="fabricationfitupCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="weldingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="testingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="finishingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="subcontractCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+
         </div>
+    </div>
     </div>
     <div style="display:none" id="globalUpdateModal" class="modal">
         <div class="modal-content">
@@ -233,7 +347,8 @@
 
             <div id="fabricationfitupUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             <div id="weldingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
-            <div id="testingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="finishingUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="subcontractUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
         </div>
     </div>
     <script>
@@ -464,6 +579,19 @@
 
     // JavaScript functions for modal with jQuery
     function openModal(processOrder, qualityStep, userName) {
+
+
+         // Hide all content divs initially
+         $('#engineeringFieldTable').hide();
+        $('#planningFieldTable').hide();
+        $('#manufacturingFieldTable').hide();
+        $('#materialpreparationFieldTable').hide();
+        $('#kittingFieldTable').hide();
+        $('#fabricationfitupFieldTable').hide();
+        $('#weldingFieldTable').hide();
+        $('#testingFieldTable').hide();
+        $('#finishingFieldTable').hide();
+        $('#subcontractFieldTable').hide();
         console.log('i am in openmodal', userName);
         $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
         if (qualityStep === 'Engineering') {
@@ -474,15 +602,106 @@
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#engineeringFieldset').html('');
         }
-        if (qualityStep === 'Planning / Forward Engineering') {
 
-            var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
+        if (qualityStep === 'Planning / Forward Engineering') {
+            $('#planningFieldset').show();
+            $('#sign_off_planning').val(userName);
+            $('#process_order_number').val(processOrder);
+
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // Add other headers if needed
+            };
+
+            var formData = {
+                process_order_number: processOrder
+                // Add other form data if needed
+            };
+
+            // Fetch Planning Form Data for the given process order
+            $.ajax({
+                url: '/getPlanningDataByProcessOrder', // Adjust URL as needed
+                type: 'POST',
+                headers: headers,
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response.process_order_number);
+
+                    $.each(response, function(index, item) {
+                        $('#process_order_number').val(item.process_order_number);
+
+                        // Checkboxes
+                        $('input[name="purchase_order_received"]').prop('checked', item
+                            .purchase_order_received === 'true');
+                        $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
+                            .project_schedule_agreed )=== 1);
+                        $('input[name="quotation"]').prop('checked', item.quotation === 'true');
+                        $('input[name="verify_customer_expectations"]').prop('checked', item
+                            .verify_customer_expectations === 'true');
+                        $('input[name="project_risk_category_assessment"]').prop('checked', item
+                            .project_risk_category_assessment === 'true');
+
+                        // Other fields
+                        $('#sign_off_planning').val(item.sign_off_planning);
+                        $('#comments_planning').val(item.comments_planning);
+
+                        // File input fields
+                        $('#purchase_order_filename').text(item.purchase_order_document);
+                        $('#project_schedule_filename').text(item.project_schedule_document);
+                        $('#quotation_filename').text(item.quotation_document);
+                        $('#user_requirements_filename').text(item
+                            .user_requirement_specifications_document);
+                        $('#pre_engineering_filename').text(item.pre_engineering_check_document);
+
+                        // Set the labels for file inputs
+                        $('#purchase_order_file_label').show();
+                        $('#project_schedule_file_label').show();
+                        $('#quotation_file_label').show();
+                        $('#user_requirements_file_label').show();
+                        $('#pre_engineering_file_label').show();
+
+                        // Attach handlers for file input changes
+                        $('#purchase_order_document').change(function() {
+                            $('#purchase_order_filename').text(this.files[0].name);
+                        });
+
+                        $('#project_schedule_document').change(function() {
+                            $('#project_schedule_filename').text(this.files[0].name);
+                        });
+
+                        $('#quotation_document').change(function() {
+                            $('#quotation_filename').text(this.files[0].name);
+                        });
+
+                        $('#user_requirement_specifications_document').change(function() {
+                            $('#user_requirements_filename').text(this.files[0].name);
+                        });
+
+                        $('#pre_engineering_check_document').change(function() {
+                            $('#pre_engineering_filename').text(this.files[0].name);
+                        });
+                    });
+
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+            
+        }
+        else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#planningFieldset').html('');
+        }
+
+        /*  var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
 
             $('#planningFieldset').html(planningFieldset);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#planningFieldset').html('');
-        }
+            $('#planningFieldset').html(''); */
+
 
         if (qualityStep === 'Manufacturing Package') {
 
@@ -543,6 +762,36 @@
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#testingFieldset').html('');
         }
+        if (qualityStep === 'Finishing') {
+
+            var finishingFieldset = generateFinishingFieldset(processOrder, qualityStep,
+                userName);
+
+            $('#finishingFieldset').html(finishingFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#finishingFieldset').html('');
+        }
+        if (qualityStep === 'Sub-Contract') {
+
+            var subcontractFieldset = generateSubContractFieldset(processOrder, qualityStep,
+                userName);
+
+            $('#subcontractFieldset').html(subcontractFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#subcontractFieldset').html('');
+        }
+        if (qualityStep === 'Final Assembly') {
+
+            var finalassemblyFieldset = generateFinalAssemblyFieldset(processOrder, qualityStep,
+                userName);
+
+            $('#finalassemblyFieldset').html(finalassemblyFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#finalassemblyFieldset').html('');
+        }
 
         $('#myModal').show();
     }
@@ -562,6 +811,9 @@
         $('#kittingFieldTable').hide();
         $('#fabricationfitupFieldTable').hide();
         $('#weldingFieldTable').hide();
+        $('#testingFieldTable').hide();
+        $('#finishingFieldTable').hide();
+        $('#subcontractFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -588,6 +840,12 @@
         } else if (qualityStep === 'Testing') {
             var testingFieldsetTable = generateTestingFieldTable(processOrder, qualityStep);
             $('#testingFieldTable').html(testingFieldsetTable).show();
+        } else if (qualityStep === 'Finishing') {
+            var finishingFieldsetTable = generateFinishingFieldTable(processOrder, qualityStep);
+            $('#finishingFieldTable').html(finishingFieldsetTable).show();
+        } else if (qualityStep === 'Sub-Contract') {
+            var subcontractFieldsetTable = generateSubContractFieldTable(processOrder, qualityStep);
+            $('#subcontractFieldTable').html(subcontractFieldsetTable).show();
         }
 
         $('#globalModal').show();
@@ -641,6 +899,17 @@
             var testingCompleteFieldsetTable = generateTestingCompleteFieldset(processOrder,
                 qualityStep);
             $('#testingCompleteFieldTable').html(testingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Finishing') {
+
+            var finishingCompleteFieldsetTable = generateFinishingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#finishingCompleteFieldTable').html(finishingCompleteFieldsetTable).show();
+
+        } else if (qualityStep === 'Sub-Contract') {
+
+            var subcontractCompleteFieldsetTable = generateSubContractCompleteFieldset(processOrder,
+                qualityStep);
+            $('#subcontractCompleteFieldTable').html(subcontractCompleteFieldsetTable).show();
         }
 
         $('#globalCompleteModal').show();
@@ -658,6 +927,7 @@
         $('#kittingUpdateFieldTable').hide();
         $('#fabricationfitupUpdateFieldTable').hide();
         $('#weldingUpdateFieldTable').hide();
+        $('#finishingUpdateFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -689,6 +959,11 @@
             var weldingCompleteFieldsetTable = generateWeldingCompleteFieldset(processOrder,
                 qualityStep);
             $('#weldingCompleteFieldTable').html(weldingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Finishing') {
+
+            var finishingCompleteFieldsetTable = generateFinishingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#finishingCompleteFieldTable').html(finishingCompleteFieldsetTable).show();
         }
 
         $('#globalUpdateModal').show();

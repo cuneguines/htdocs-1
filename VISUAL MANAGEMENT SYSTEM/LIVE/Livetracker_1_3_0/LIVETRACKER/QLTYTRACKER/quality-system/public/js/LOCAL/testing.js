@@ -11,9 +11,10 @@ function generateTestingFieldset(processOrder, qualityStep, username) {
             <input type="checkbox" name="dye_pen_test" onchange="toggleDropdown(this, 'dye_pen_document_ref')">
             <select name="dye_pen_document_ref" disabled>
             <option value="NULL">NULL</option>
-                <option value="Document_REF_1">Document REF 1</option>
-                <option value="Document_REF_2">Document REF 2</option>
-                <option value="Document_REF_3">Document REF 3</option>
+            
+                <option value="PED Standard">PED Standard</option>
+                <option value="ASME Standard">ASME Standard</option>
+                <option value="Leak Through Test">Leak Through Test</option>
                 <!-- Add more options as needed -->
             </select>
         </label>
@@ -26,9 +27,8 @@ function generateTestingFieldset(processOrder, qualityStep, username) {
             <input type="checkbox" name="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatic_test_document_ref')">
             <select name="hydrostatic_test_document_ref" disabled>
             <option value="NULL">NULL</option>
-                <option value="Document_REF_1">Document REF 1</option>
-                <option value="Document_REF_2">Document REF 2</option>
-                <option value="Document_REF_3">Document REF 3</option>
+                <option value="KS-HD-01">KS-HD-01</option>
+               
                 <!-- Add more options as needed -->
             </select>
         </label>
@@ -41,9 +41,8 @@ function generateTestingFieldset(processOrder, qualityStep, username) {
             <input type="checkbox" name="pneumatic_test" onchange="toggleDropdown(this, 'pneumatic_test_document_ref')">
             <select name="pneumatic_test_document_ref" disabled>
             <option value="NULL">NULL</option>
-                <option value="Document_REF_1">Document REF 1</option>
-                <option value="Document_REF_2">Document REF 2</option>
-                <option value="Document_REF_3">Document REF 3</option>
+                <option value="KS-PN-01">KS-PN-01</option>
+               
                 <!-- Add more options as needed -->
             </select>
         </label>
@@ -56,9 +55,12 @@ function generateTestingFieldset(processOrder, qualityStep, username) {
             <input type="checkbox" name="fat_protocol" onchange="toggleDropdown(this, 'fat_protocol_document_ref')">
             <select name="fat_protocol_document_ref" disabled>
             <option value="NULL">NULL</option>
-                <option value="Document_REF_1">Document REF 1</option>
-                <option value="Document_REF_2">Document REF 2</option>
-                <option value="Document_REF_3">Document REF 3</option>
+ 
+
+
+                <option value="QF-0226">QF-0226</option>
+                <option value="Custom">Custom</option>
+                
                 <!-- Add more options as needed -->
             </select>
         </label>
@@ -106,6 +108,7 @@ function submitTestingForm(processOrder) {
     };
     function getFileName(inputName) {
         var fileInput = document.querySelector('[name="' + inputName + '"]');
+        
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     var formData = new FormData();
@@ -407,13 +410,13 @@ function submitTestingCompleteForm() {
         comments_testing: document.querySelector('[name="comments_testing"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
-        dye_pen_test: document.querySelector('[name="dye_pen_test"]').checked ? "1" : '',
+        dye_pen_test: document.querySelector('[name="dye_pen_test"]').checked ? "on" : '',
         dye_pen_document_ref: document.querySelector('[name="dye_pen_document_ref"]').value,
-        hydrostatic_test: document.querySelector('[name="hydrostatic_test"]').checked ? 1 : 0,
+        hydrostatic_test: document.querySelector('[name="hydrostatic_test"]').checked ? "on" : "",
         hydrostatic_test_document_ref: document.querySelector('[name="hydrostatic_test_document_ref"]').value,
-        pneumatic_test: document.querySelector('[name="pneumatic_test"]').checked ? 1 : 0,
+        pneumatic_test: document.querySelector('[name="pneumatic_test"]').checked ? "on": "",
         pneumatic_test_document_ref: document.querySelector('[name="pneumatic_test_document_ref"]').value,
-        fat_protocol: document.querySelector('[name="fat_protocol"]').checked ? 1 : 0,
+        fat_protocol: document.querySelector('[name="fat_protocol"]').checked ? "on": "",
         status: document.querySelector('#status').value,
         quantity: document.querySelector('[name="quantity"]').value,
         // Add other form fields accordingly

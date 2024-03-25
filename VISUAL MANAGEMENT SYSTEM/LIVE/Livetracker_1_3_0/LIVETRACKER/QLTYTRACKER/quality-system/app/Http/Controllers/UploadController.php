@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\FileModel;
+
+use Illuminate\Support\Facades\Storage;
 class UploadController extends Controller
 {
     public function handleFileUploadEngineer(Request $request)
@@ -273,4 +275,118 @@ class UploadController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function handleFileUploadFinishing(Request $request)
+    {
+       
+        try {
+            $insert = [];
+    
+            // Extract process_order_number from the request
+            $processOrderNumber = $request->input('process_order_number');
+    
+            foreach ($request->all() as $key => $file) {
+                if ($request->hasFile($key)) {
+                    $uploadedFile = $request->file($key);
+                    $name = $uploadedFile->getClientOriginalName();
+    
+                    // Specify the storage path with process_order_number in it
+                    $path = $uploadedFile->storeAs("public/finishing_task/{$processOrderNumber}", $name);
+    
+                    $insert[] = [
+                        'name' => $name,
+                        'path' => $path,
+                        'process_order_number' => $processOrderNumber,
+                    ];
+                }
+            }
+    
+            // Assuming you have a FileModel for database interaction
+            FileModel::insert($insert);
+    
+            return response()->json(['success' => 'Files uploaded successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function handleFileUploadSubContract(Request $request)
+    {
+       
+        try {
+            $insert = [];
+    
+            // Extract process_order_number from the request
+            $processOrderNumber = $request->input('process_order_number');
+    
+            foreach ($request->all() as $key => $file) {
+                if ($request->hasFile($key)) {
+                    $uploadedFile = $request->file($key);
+                    $name = $uploadedFile->getClientOriginalName();
+    
+                    // Specify the storage path with process_order_number in it
+                    $path = $uploadedFile->storeAs("public/subcontract_task/{$processOrderNumber}", $name);
+    
+                    $insert[] = [
+                        'name' => $name,
+                        'path' => $path,
+                        'process_order_number' => $processOrderNumber,
+                    ];
+                }
+            }
+    
+            // Assuming you have a FileModel for database interaction
+            FileModel::insert($insert);
+    
+            return response()->json(['success' => 'Files uploaded successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+   
+
+public function uploadImages(Request $request)
+{
+    // Validate the request
+    $request->validate([
+        'process_order_number' => 'required|numeric', // Adjust validation rules as needed
+        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Max 2MB and allowed file types
+    ]);
+
+    // Get the process order number
+    $processOrder = $request->input('process_order_number');
+
+    // Check if the process order folder exists, if not, create it
+    $folderPath = 'public/images/'.$processOrder;
+    if (!\Storage::exists($folderPath)) {
+        \Storage::makeDirectory($folderPath);
+    }
+
+    if ($request->hasFile('images')) {
+        $uploadedImages = [];
+
+        foreach ($request->file('images') as $image) {
+            // Generate a unique name for the image
+            $imageName = time().'_'.$image->getClientOriginalName();
+            
+            // Store the image to the local storage
+            $image->storeAs($folderPath, $imageName);
+
+           /*  // Save image name to the database
+            $newImage = new Image();
+            $newImage->process_order_number = $processOrder;
+            $newImage->image_name = $imageName;
+            $newImage->save(); */
+
+            // Keep track of uploaded image names
+            $uploadedImages[] = $imageName;
+        }
+
+        return response()->json(['message' => 'Images uploaded successfully', 'images' => $uploadedImages]);
+    }
+
+    return response()->json(['message' => 'No images uploaded'], 400);
+}
+
+
 }

@@ -132,7 +132,7 @@ function generatePlanningFieldset(processOrder, qualityStep,username) {
 
 
     
-    $('#sign_off_planning').val(username);
+  /*   $('#sign_off_planning').val(username);
     return `
 <fieldset>
     <legend>Main Task 1: Planning / Forward Engineering</legend>
@@ -221,7 +221,7 @@ function generatePlanningFieldset(processOrder, qualityStep,username) {
     <!-- Submit button -->
     <button type="submit" onclick="submitPlanningForm('${processOrder}')">Submit Planning Form</button>
 </fieldset> `;
-           
+            */
    
 }
 
@@ -235,7 +235,7 @@ function generatePlanningFieldset(processOrder, qualityStep,username) {
 
 
 
-function submitPlanningForm(processOrder) {
+function submitPlanningForm() {
     // Add your logic to handle the form submission for the engineering fieldset
   
     var headers = {
@@ -260,10 +260,10 @@ function submitPlanningForm(processOrder) {
         user_requirement_specifications_document: getFileName('user_requirement_specifications_document'),
         pre_engineering_check_document: getFileName('pre_engineering_check_document'),
         quotation_document: getFileName('quotation_document'),
-        sign_off_planning:sign_off_planning,
+        sign_off_planning:document.querySelector('[name="sign_off_planning"]').value || null,
         comments_planning: document.querySelector('[name="comments_planning"]').value || null,
         // Get today's date in YYYY-MM-DD format
-        process_order_number: processOrder,
+        process_order_number: document.querySelector('[name="process_order_number"]').value || null,
         // Add other form fields accordingly
     };
     console.log(formData);
