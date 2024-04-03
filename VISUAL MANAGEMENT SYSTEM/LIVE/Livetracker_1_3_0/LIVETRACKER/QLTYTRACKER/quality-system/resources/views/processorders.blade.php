@@ -26,6 +26,9 @@
     <script type="text/javascript" src="../../../JS/LOCAL/finishing.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/subcontract.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/finalassembly.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/documentation.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/transport.js"></script>
+
 
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
@@ -203,8 +206,9 @@
                                 Purchase Order received
                             </label>
                             <br>
-                            <label class="upload-label" id="purchase_order_file_label">
-                                Current Purchase Order Document: <span id="purchase_order_filename"></span>
+                            <label style="background-color: #7cbfa0" class="upload-label"
+                                id="purchase_order_file_label">
+                                Current Purchase Order Document: <br><span id="purchase_order_filename"></span>
                                 <input type="file" name="purchase_order_document" id="purchase_order_document">
                             </label>
                         </div>
@@ -216,8 +220,9 @@
                                 Project schedule agreed
                             </label>
                             <br>
-                            <label class="upload-label" id="project_schedule_file_label">
-                                Current Project Schedule Document: <span id="project_schedule_filename"></span>
+                            <label style="background-color: #7cbfa0" class="upload-label"
+                                id="project_schedule_file_label">
+                                Current Project Schedule Document:<br> <span id="project_schedule_filename"></span>
                                 <input type="file" name="project_schedule_document" id="project_schedule_document">
                             </label>
                         </div>
@@ -229,8 +234,8 @@
                                 Quotation
                             </label>
                             <br>
-                            <label class="upload-label" id="quotation_file_label">
-                                Current Quotation Document: <span id="quotation_filename"></span>
+                            <label style="background-color: #7cbfa0" class="upload-label" id="quotation_file_label">
+                                Current Quotation Document: <br><span id="quotation_filename"></span>
                                 <input type="file" name="quotation_document" id="quotation_document">
                             </label>
                         </div>
@@ -243,8 +248,9 @@
                                 Verify customer expectations
                             </label>
                             <br>
-                            <label class="upload-label" id="user_requirements_file_label">
-                                Current User Requirement Specifications Document: <span
+                            <label style="background-color: #7cbfa0" ;class="upload-label"
+                                id="user_requirements_file_label">
+                                Current User Requirement Specifications Document: <br><span
                                     id="user_requirements_filename"></span>
                                 <input type="file" name="user_requirement_specifications_document"
                                     id="user_requirement_specifications_document">
@@ -259,8 +265,9 @@
                                 Project risk category assessment
                             </label>
                             <br>
-                            <label class="upload-label" id="pre_engineering_file_label">
-                                Current Pre Engineering Check Document: <span id="pre_engineering_filename"></span>
+                            <label style="background-color: #7cbfa0" class="upload-label"
+                                id="pre_engineering_file_label">
+                                Current Pre Engineering Check Document:<br> <span id="pre_engineering_filename"></span>
                                 <input type="file" name="pre_engineering_check_document"
                                     id="pre_engineering_check_document">
                             </label>
@@ -295,6 +302,8 @@
                 <div id="finishingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="subcontractFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="documentationFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="packingtransportFieldset" style="overflow-y:scroll;max-height:500px"></div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -312,6 +321,9 @@
                 <div id="testingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="finishingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="subcontractFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="finalassemblyFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="documentationFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="packingtransportFieldTable" style="width:1100px;font-size:14px"></div>
             </div>
         </div>
     </div>
@@ -330,6 +342,9 @@
             <div id="testingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             <div id="finishingCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             <div id="subcontractCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="finalassemblyCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="documentationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="packingtransportCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
 
         </div>
     </div>
@@ -581,17 +596,7 @@
     function openModal(processOrder, qualityStep, userName) {
 
 
-         // Hide all content divs initially
-         $('#engineeringFieldTable').hide();
-        $('#planningFieldTable').hide();
-        $('#manufacturingFieldTable').hide();
-        $('#materialpreparationFieldTable').hide();
-        $('#kittingFieldTable').hide();
-        $('#fabricationfitupFieldTable').hide();
-        $('#weldingFieldTable').hide();
-        $('#testingFieldTable').hide();
-        $('#finishingFieldTable').hide();
-        $('#subcontractFieldTable').hide();
+
         console.log('i am in openmodal', userName);
         $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
         if (qualityStep === 'Engineering') {
@@ -604,6 +609,8 @@
         }
 
         if (qualityStep === 'Planning / Forward Engineering') {
+            console.log('planning');
+            $('#planningFieldset').hide();
             $('#planningFieldset').show();
             $('#sign_off_planning').val(userName);
             $('#process_order_number').val(processOrder);
@@ -626,73 +633,78 @@
                 data: formData,
                 dataType: 'json',
                 success: function(response) {
-                    console.log(response.process_order_number);
+                    // console.log(response.process_order_number);
+                    if (response.data != null) {
+                        console.log('yes po found');
+                        $.each(response, function(index, item) {
+                            $('#process_order_number').val(item.process_order_number);
 
-                    $.each(response, function(index, item) {
-                        $('#process_order_number').val(item.process_order_number);
+                            $('input[name="purchase_order_received"]').prop('checked', item
+                                .purchase_order_received === 'true');
+                            $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
+                                .project_schedule_agreed) === 1);
+                            $('input[name="quotation"]').prop('checked', item.quotation === 'true');
+                            $('input[name="verify_customer_expectations"]').prop('checked', item
+                                .verify_customer_expectations === 'true');
+                            $('input[name="project_risk_category_assessment"]').prop('checked', item
+                                .project_risk_category_assessment === 'true');
 
-                        // Checkboxes
-                        $('input[name="purchase_order_received"]').prop('checked', item
-                            .purchase_order_received === 'true');
-                        $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
-                            .project_schedule_agreed )=== 1);
-                        $('input[name="quotation"]').prop('checked', item.quotation === 'true');
-                        $('input[name="verify_customer_expectations"]').prop('checked', item
-                            .verify_customer_expectations === 'true');
-                        $('input[name="project_risk_category_assessment"]').prop('checked', item
-                            .project_risk_category_assessment === 'true');
+                            // Other fields
+                            $('#sign_off_planning').val(item.sign_off_planning);
+                            $('#comments_planning').val(item.comments_planning);
 
-                        // Other fields
-                        $('#sign_off_planning').val(item.sign_off_planning);
-                        $('#comments_planning').val(item.comments_planning);
+                            // File input fields
+                            $('#purchase_order_filename').text(item.purchase_order_document);
+                            $('#project_schedule_filename').text(item.project_schedule_document);
+                            $('#quotation_filename').text(item.quotation_document);
+                            $('#user_requirements_filename').text(item
+                                .user_requirement_specifications_document);
+                            $('#pre_engineering_filename').text(item
+                                .pre_engineering_check_document);
 
-                        // File input fields
-                        $('#purchase_order_filename').text(item.purchase_order_document);
-                        $('#project_schedule_filename').text(item.project_schedule_document);
-                        $('#quotation_filename').text(item.quotation_document);
-                        $('#user_requirements_filename').text(item
-                            .user_requirement_specifications_document);
-                        $('#pre_engineering_filename').text(item.pre_engineering_check_document);
+                            // Set the labels for file inputs
+                            $('#purchase_order_file_label').show();
+                            $('#project_schedule_file_label').show();
+                            $('#quotation_file_label').show();
+                            $('#user_requirements_file_label').show();
+                            $('#pre_engineering_file_label').show();
 
-                        // Set the labels for file inputs
-                        $('#purchase_order_file_label').show();
-                        $('#project_schedule_file_label').show();
-                        $('#quotation_file_label').show();
-                        $('#user_requirements_file_label').show();
-                        $('#pre_engineering_file_label').show();
+                            // Attach handlers for file input changes
+                            $('#purchase_order_document').change(function() {
+                                $('#purchase_order_filename').text(this.files[0].name);
+                            });
 
-                        // Attach handlers for file input changes
-                        $('#purchase_order_document').change(function() {
-                            $('#purchase_order_filename').text(this.files[0].name);
+                            $('#project_schedule_document').change(function() {
+                                $('#project_schedule_filename').text(this.files[0].name);
+                            });
+
+                            $('#quotation_document').change(function() {
+                                $('#quotation_filename').text(this.files[0].name);
+                            });
+
+                            $('#user_requirement_specifications_document').change(function() {
+                                $('#user_requirements_filename').text(this.files[0].name);
+                            });
+
+                            $('#pre_engineering_check_document').change(function() {
+                                $('#pre_engineering_filename').text(this.files[0].name);
+                            });
                         });
+                    } else {
 
-                        $('#project_schedule_document').change(function() {
-                            $('#project_schedule_filename').text(this.files[0].name);
-                        });
-
-                        $('#quotation_document').change(function() {
-                            $('#quotation_filename').text(this.files[0].name);
-                        });
-
-                        $('#user_requirement_specifications_document').change(function() {
-                            $('#user_requirements_filename').text(this.files[0].name);
-                        });
-
-                        $('#pre_engineering_check_document').change(function() {
-                            $('#pre_engineering_filename').text(this.files[0].name);
-                        });
-                    });
+                        resetPlanningForm();
+                        $('#planningFieldset').show();
+                    }
 
                 },
                 error: function(error) {
                     console.error(error);
                 }
             });
-            
-        }
-        else {
+
+        } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#planningFieldset').html('');
+            $('#planningFieldset').hide();
         }
 
         /*  var planningFieldset = generatePlanningFieldset(processOrder, qualityStep, userName);
@@ -792,6 +804,28 @@
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#finalassemblyFieldset').html('');
         }
+        if (qualityStep === 'Documentation') {
+
+            var documentationFieldset = generateDocumentationFieldset(processOrder, qualityStep,
+                userName);
+
+            $('#documentationFieldset').html(documentationFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#documentationFieldset').html('');
+        }
+
+        if (qualityStep === 'Packing and Transport') {
+
+            var packingtransportFieldset = generatePackingTransportFieldset(processOrder, qualityStep,
+                userName);
+
+            $('#packingtransportFieldset').html(packingtransportFieldset);
+        } else {
+            // Clear the fieldset content if the quality step is not "Engineering"
+            $('#packingtransportFieldset').html('');
+        }
+
 
         $('#myModal').show();
     }
@@ -814,6 +848,9 @@
         $('#testingFieldTable').hide();
         $('#finishingFieldTable').hide();
         $('#subcontractFieldTable').hide();
+        $('#finalassemblyFieldTable').hide();
+        $('#documentationFieldTable').hide();
+        $('#packingtransportFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -846,7 +883,17 @@
         } else if (qualityStep === 'Sub-Contract') {
             var subcontractFieldsetTable = generateSubContractFieldTable(processOrder, qualityStep);
             $('#subcontractFieldTable').html(subcontractFieldsetTable).show();
+        } else if (qualityStep === 'Final Assembly') {
+            var finalassemblyFieldsetTable = generateFinalAssemblyFieldTable(processOrder, qualityStep);
+            $('#finalassemblyFieldTable').html(finalassemblyFieldsetTable).show();
+        } else if (qualityStep === 'Documentation') {
+            var documentationFieldsetTable = generateDocumentationFieldTable(processOrder, qualityStep);
+            $('#documentationFieldTable').html(documentationFieldsetTable).show();
+        } else if (qualityStep === 'Packing and Transport') {
+            var packingtransportFieldsetTable = generatePackingTransportFieldTable(processOrder, qualityStep);
+            $('#packingtransportFieldTable').html(packingtransportFieldsetTable).show();
         }
+
 
         $('#globalModal').show();
     }
@@ -863,6 +910,9 @@
         $('#kittingCompleteFieldTable').hide();
         $('#fabricationfitupCompleteFieldTable').hide();
         $('#weldingCompleteFieldTable').hide();
+        $('#finalassemblyCompleteFieldTable').hide();
+        $('#documenatationCompleteFieldTable').hide();
+        $('#packingtransportCompleteFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -910,7 +960,23 @@
             var subcontractCompleteFieldsetTable = generateSubContractCompleteFieldset(processOrder,
                 qualityStep);
             $('#subcontractCompleteFieldTable').html(subcontractCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Final Assembly') {
+
+            var finalassemblyCompleteFieldsetTable = generateFinalAssemblyCompleteFieldset(processOrder,
+                qualityStep);
+            $('#finalassemblyCompleteFieldTable').html(finalassemblyCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Documentation') {
+
+            var documentationCompleteFieldsetTable = generateDocumentationCompleteFieldset(processOrder,
+                qualityStep);
+            $('#documentationCompleteFieldTable').html(documentationCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Packing and Transport') {
+
+            var packingtransportCompleteFieldsetTable = generatePackingTransportCompleteFieldset(processOrder,
+                qualityStep);
+            $('#packingtransportCompleteFieldTable').html(packingtransportCompleteFieldsetTable).show();
         }
+
 
         $('#globalCompleteModal').show();
     }
@@ -927,6 +993,8 @@
         $('#kittingUpdateFieldTable').hide();
         $('#fabricationfitupUpdateFieldTable').hide();
         $('#weldingUpdateFieldTable').hide();
+        $('#finishingUpdateFieldTable').hide();
+        $('#finisUpdateFieldTable').hide();
         $('#finishingUpdateFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
@@ -964,7 +1032,23 @@
             var finishingCompleteFieldsetTable = generateFinishingCompleteFieldset(processOrder,
                 qualityStep);
             $('#finishingCompleteFieldTable').html(finishingCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Sub-Contract') {
+
+            var subcontractCompleteFieldsetTable = generateFinishingCompleteFieldset(processOrder,
+                qualityStep);
+            $('#finishingCompleteFieldTable').html(subcontractCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Final Assembly') {
+
+            var finalassemblyCompleteFieldsetTable = generateFinalAssemblyCompleteFieldset(processOrder,
+                qualityStep);
+            $('#finalassemblyCompleteFieldTable').html(finalassemblyCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Documentation') {
+
+            var documenatationCompleteFieldsetTable = generateDocumenatationCompleteFieldset(processOrder,
+                qualityStep);
+            $('#documentationCompleteFieldTable').html(documentationCompleteFieldsetTable).show();
         }
+
 
         $('#globalUpdateModal').show();
     }
@@ -981,6 +1065,34 @@
         $('#globalModal').hide();
     }
 
+
+    function resetPlanningForm() {
+        // Uncheck checkboxes
+        $('#purchase_order_received').prop('checked', false);
+        $('#project_schedule_agreed').prop('checked', false);
+        $('#quotation').prop('checked', false);
+        $('#verify_customer_expectations').prop('checked', false);
+        $('#project_risk_category_assessment').prop('checked', false);
+
+        // Clear text inputs
+        $('#sign_off_planning').val('');
+        $('#comments_planning').val('');
+
+        // Reset file input values
+        $('#purchase_order_filename').text('');
+        $('#project_schedule_filename').text('');
+        $('#quotation_filename').text('');
+        $('#user_requirements_filename').text('');
+        $('#pre_engineering_filename').text('');
+
+        // Reset file input values
+        $('#purchase_order_document').val('');
+        $('#project_schedule_document').val('');
+        $('#quotation_document').val('');
+        $('#user_requirement_specifications_document').val('');
+        $('#pre_engineering_check_document').val('');
+        $('#planningFieldset').show();
+    }
 
     // Close the modal if the user clicks outside of it
     /* $(document).click(function(event) {
@@ -1001,7 +1113,8 @@
             // For demonstration purposes, return a sample array
             return ['Planning / Forward Engineering', 'Engineering', 'Manufacturing Package',
                 'Material Preparation', 'Kitting', 'Fabrication Fit-Up', 'Welding', 'Testing',
-                'Finishing', 'Sub-Contract', 'Final Assembly', 'Documentation', 'Packing and Transport',
+                'Finishing', 'Sub-Contract', 'Final Assembly', 'Quality', 'Documentation',
+                'Packing and Transport',
                 'OFI'
             ];
         }
@@ -1011,6 +1124,8 @@
 
         // Update the table
         updateTable(manualProcessOrder, qualitySteps, userName, loggedInUser);
+
+
     });
     </script>
 

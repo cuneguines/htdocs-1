@@ -8,7 +8,8 @@
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Include Chart.js -->
 
     <link rel="stylesheet" href="./charts.css">
 
@@ -43,7 +44,9 @@ $results_monthly = json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_sql_mont
     $results_NEW_L= json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_SQL_NEW_L.json'), true); 
 
     $rework=json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_rework_cost.json'), true); 
+    $grand_total=json_decode(file_get_contents(__DIR__ . '\CACHE\qlty_grand_total.json'), true); 
 
+//print_r($grand_total);
     //$conn = new PDO("sqlsrv:Server=KPTSVSP;Database=LEARNING_LOG", "sa", "SAPB1Admin");
     //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -645,52 +648,67 @@ $costCountsJSON = json_encode($costCounts);
 
 
 
-<div class="sidebar">
-    <!-- Opportunity For Improvement Section -->
-    <div class="section-box">
-    <h2>Opportunity For Improvement</h2>
-    <ul>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_1()">Open OFIs - Area Caused</a></li>
-        <button class="year-button" onclick="displayLastYearData_1()">Aggregate</button>
-        <button class="year-button" onclick="displayThisYearData_1()">Current Year</button>
-        </li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayThisYearData_8()">Open OFIs - Area Raised</a></li>
-        <button class="year-button" onclick="displayLastYearData_8()">Aggregate<</button>
-        <button class="year-button" onclick="displayThisYearData_8()">Current Year</button>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_2()">Open/Closed</a></li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_3()">Average Response Time</a></li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_6()">OFI Monthly Overview <?php echo date("Y");?></a></li>
-    </ul>
-</div>
-    <div class="section-box">
-    <!-- Customer Complaints Section -->
-    <h2>Customer Complaints</h2>
-    <ul>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_9()">Open CC's - Area Caused</a></li>
-        <button class="year-button" onclick="displayLastYearData_9()">Aggregate<</button>
-        <button class="year-button" onclick="displayChart_9()">Current Year</button>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_10()">Open CC's - Area Raised</a></li>
-        <button class="year-button" onclick="displayLastYearData_10()">Aggregate<</button>
-        <button class="year-button" onclick="displayChart_10()">Current Year</button>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_11()">Open/Closed</a></li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_12()">Average Response Time</a></li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_13()">CC Monthly Overview <?php echo date("Y");?></a></li>
-    </ul>
-</div>
-    <div class="section-box">
-    <!-- Other Section -->
-    <h2>Other</h2>
-    <ul>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_4()">Issues per Product Type</a></li>
-        <button class="year-button" onclick="displayLastYearData_4()">Last Year</button>
-        <button class="year-button" onclick="displayChart_4()">Current Year</button>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_5()">Cost Per Business Unit</a></li>
-        <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChartCost()">Cost Per Business Unit Monthly Overview</a></li>
-    </ul>
-</div>
-    <!-- Update Button -->
-    <button class="fill red medium wtext" style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px;height:7%;margin-left: -25%;margin-top: 30%;" onclick="spinAndReload(this)">UPDATE</button>
-</div>
+    <div class="sidebar">
+        <!-- Opportunity For Improvement Section -->
+        <div class="section-box">
+            <h2>Opportunity For Improvement</h2>
+            <ul>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                        onclick="displayThisYearData_1()">Open OFIs - Area Caused</a></li>
+                <button class="year-button" onclick="displayLastYearData_1()">Aggregate</button>
+                <button class="year-button" onclick="displayThisYearData_1()">Current Year</button>
+                </li>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                        onclick="displayThisYearData_8()">Open OFIs - Area Raised</a></li>
+                <button class="year-button" onclick="displayLastYearData_8()">Aggregate<< /button>
+                        <button class="year-button" onclick="displayThisYearData_8()">Current Year</button>
+                        <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                onclick="displayChart_2()">Open/Closed</a></li>
+                        <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                onclick="displayChart_3()">Average Response Time</a></li>
+                        <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                onclick="displayChart_6()">OFI Monthly Overview <?php echo date("Y");?></a></li>
+            </ul>
+        </div>
+        <div class="section-box">
+            <!-- Customer Complaints Section -->
+            <h2>Customer Complaints</h2>
+            <ul>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_9()">Open
+                        CC's - Area Caused</a></li>
+                <button class="year-button" onclick="displayLastYearData_9()">Aggregate<< /button>
+                        <button class="year-button" onclick="displayChart_9()">Current Year</button>
+                        <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                onclick="displayChart_10()">Open CC's - Area Raised</a></li>
+                        <button class="year-button" onclick="displayLastYearData_10()">Aggregate<< /button>
+                                <button class="year-button" onclick="displayChart_10()">Current Year</button>
+                                <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                        onclick="displayChart_11()">Open/Closed</a></li>
+                                <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                        onclick="displayChart_12()">Average Response Time</a></li>
+                                <li><a href="#" class="nav-link" style="text-decoration: underline;"
+                                        onclick="displayChart_13()">CC Monthly Overview <?php echo date("Y");?></a></li>
+            </ul>
+        </div>
+        <div class="section-box">
+            <!-- Other Section -->
+            <h2>Other</h2>
+            <ul>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_4()">Issues
+                        per Product Type</a></li>
+                <button class="year-button" onclick="displayLastYearData_4()">Last Year</button>
+                <button class="year-button" onclick="displayChart_4()">Current Year</button>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChart_5()">Cost Per
+                        Business Unit</a></li>
+                <li><a href="#" class="nav-link" style="text-decoration: underline;" onclick="displayChartCost()">Cost
+                        Per Business Unit Monthly Overview</a></li>
+            </ul>
+        </div>
+        <!-- Update Button -->
+        <button class="fill red medium wtext"
+            style="box-shadow: -2px 0px 8px 0px #607D8B;width:70%;position:sticky;left:0;background: linear-gradient(100deg,#009688, #8BC34A );border-radius:30px;height:7%;margin-left: -25%;margin-top: 30%;"
+            onclick="spinAndReload(this)">UPDATE</button>
+    </div>
 
     <div class="chart-container">
 
@@ -699,8 +717,12 @@ $costCountsJSON = json_encode($costCounts);
         <!-- Create a canvas for the chart -->
         <div id="ChartTitle"></div>
         <canvas id="myChart" width="500" height="400"></canvas>
-
+        <div id="totalCost" style="display: none; position: absolute; top: 12%; left: 86%; background-color: rgba(255, 255, 255, 0.8); padding: 25px;
+    font-size: 27px;font-weight: bold; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); z-index: 10;">
+    Total Cost: <?php echo number_format($grand_total[0]['Total_Issued_Cost'], 2); ?>
+</div>
     </div>
+    
     <script>
     var links = document.querySelectorAll(".nav-link");
     const layoutOptions = {
@@ -832,7 +854,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Aggregate OFI's - Area Caused";
+        //titleDiv.innerHTML = "Aggregate OFI's - Area Caused";
 
     }
 
@@ -919,7 +941,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open OFI's - Area Caused";
+        //titleDiv.innerHTML = "Open OFI's - Area Caused";
 
     }
 
@@ -997,7 +1019,7 @@ $costCountsJSON = json_encode($costCounts);
         document.getElementById('myChart').style.display = 'block';
         // Show the chart canvas
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open OFI's - Area Raised";
+        //titleDiv.innerHTML = "Open OFI's - Area Raised";
 
     }
 
@@ -1075,7 +1097,7 @@ $costCountsJSON = json_encode($costCounts);
         document.getElementById('myChart').style.display = 'block';
         // Show the chart canvas
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Aggregate OFI's - Area Raised";
+        //titleDiv.innerHTML = "Aggregate OFI's - Area Raised";
 
     }
 
@@ -1155,7 +1177,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open/Closed OFI's";
+        //titleDiv.innerHTML = "Open/Closed OFI's";
 
     }
 
@@ -1243,7 +1265,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Average Response Times Per Owner";
+        //titleDiv.innerHTML = "Average Response Times Per Owner";
 
     }
 
@@ -1330,7 +1352,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Issues Per Product Type";
+        //titleDiv.innerHTML = "Issues Per Product Type";
 
     }
 
@@ -1417,7 +1439,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Issues Per Product Type";
+        // titleDiv.innerHTML = "Issues Per Product Type";
 
     }
 
@@ -1519,7 +1541,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Costs Monthly Overview";
+        //titleDiv.innerHTML = "Costs Monthly Overview";
 
     }
 
@@ -1623,7 +1645,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "OFI Monthly Overview";
+        //titleDiv.innerHTML = "OFI Monthly Overview";
 
 
     }
@@ -1705,7 +1727,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open CC's-Area Caused";
+        //titleDiv.innerHTML = "Open CC's-Area Caused";
         // Show the chart canvas
 
     }
@@ -1787,7 +1809,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Aggregate CC's-Area Caused";
+        //titleDiv.innerHTML = "Aggregate CC's-Area Caused";
         // Show the chart canvas
 
     }
@@ -1869,7 +1891,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open CC's- Area Raised";
+        //titleDiv.innerHTML = "Open CC's- Area Raised";
         // Show the chart canvas
 
     }
@@ -1951,7 +1973,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Aggregate CC's- Area Raised";
+        //titleDiv.innerHTML = "Aggregate CC's- Area Raised";
         // Show the chart canvas
 
     }
@@ -2032,7 +2054,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Open/Closed CC's";
+        //titleDiv.innerHTML = "Open/Closed CC's";
 
     }
 
@@ -2124,7 +2146,7 @@ $costCountsJSON = json_encode($costCounts);
         // Show the chart canvas
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "Average Response Times Per Owner";
+        //titleDiv.innerHTML = "Average Response Times Per Owner";
 
     }
 
@@ -2226,7 +2248,7 @@ $costCountsJSON = json_encode($costCounts);
         });
         document.getElementById('myChart').style.display = 'block';
         var titleDiv = document.getElementById('ChartTitle');
-        titleDiv.innerHTML = "CC Monthly Overview";
+        //titleDiv.innerHTML = "CC Monthly Overview";
 
     }
 
@@ -2243,12 +2265,15 @@ $costCountsJSON = json_encode($costCounts);
         gradient.addColorStop(1, '#f790a7');
         Chart.register(ChartDataLabels);
 
+        // Access the Total Issued Cost from PHP
+        var grandTotal = <?php echo json_encode($grand_total[0]['Total_Issued_Cost']); ?>;
+
         // Your data (replace this with your actual data)
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
             "October", "November", "December"
         ];
         var data = <?php echo $costCountsJSON; ?>;
-        console.log(data);
+       
         // Convert the data object into an array
         var dataArray = months.map(function(month, index) {
             return data[index + 1] || 0;
@@ -2307,16 +2332,40 @@ $costCountsJSON = json_encode($costCounts);
                             size: 16
                         },
                     },
+                    onRender: function(ctx, value, index) {
+                        if (index === dataArray.length - 1) {
+                            var x = ctx.chart.width - 10;
+                            var y = 30;
+                            ctx.fillText('Total Cost: ' + grandTotal, x, y);
+                        }
+                    },
                     title: {
                         display: true,
-                        fontSize: 18,
+                        fontSize: 22,
                         fontStyle: 'bold',
-                        text: 'COST PER BUSINESS' // Your desired title text
-                    }
+                        text: 'MONTHLY OVERVIEW OF COSTS: Total Issued Cost: ' + grandTotal,
+                        // Your desired title text
+                    },
+                    plugins: [{
+                        id: 'custom-plugin',
+                        afterDraw: function(chart) {
+                            var ctx = chart.ctx;
+                            ctx.save();
+                            ctx.fillStyle = '#000';
+                            ctx.textAlign = 'right';
+                            ctx.textBaseline = 'top';
+                            ctx.font = 'bold 14px Arial';
+                            var text = 'Total Cost: ' + grandTotal;
+                            var textWidth = ctx.measureText(text).width;
+                            ctx.fillText(text, chart.width - 10, 10);
+                            ctx.restore();
+                        }
+                    }]
+                    
                 },
             }
         });
-
+        $('#totalCost').show();
         document.getElementById('myChart').style.display = 'block';
     }
     </script>

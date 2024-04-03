@@ -26,6 +26,8 @@ use App\Http\Controllers\MaterialTableDataController;
 use App\Http\Controllers\KittingController;
 use App\Http\Controllers\SubContractController;
 use App\Http\Controllers\FabricationFitUpTableDataCompleteController;
+use App\Http\Controllers\FinalAssemblyController;
+use App\Http\Controllers\DocumentationController;
 
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\HomeController;
@@ -37,6 +39,8 @@ use App\Http\Controllers\FabricationFitUpTableData;
 use App\Http\Controllers\FabricationFitUpController;
 use App\Http\Controllers\WeldingController;
 use App\Http\Controllers\FinishingController;
+use App\Http\Controllers\PackingTransportController;
+
 
 use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
@@ -64,17 +68,31 @@ Route::post('/submitFabricationFitUpForm', [FabricationFitUpController::class, '
 Route::post('/submitFabricationCompleteFitUpForm', [FabricationFitUpTableDataCompleteController::class, 'submitFabricationCompleteFitUpForm']);
 Route::post('/submitWeldingForm', [WeldingController::class, 'submitWeldingForm']);
 Route::post('/submitTestingForm', [TestingController::class, 'submitTestingForm']);
+Route::post('/submitFinalAssemblyForm', [FinalAssemblyController::class, 'submitFinalAssemblyForm']);
+
 
 Route::post('/submitSubContractForm', [SubContractController::class, 'submitSubContractForm']);
 Route::post('/submitFinishingForm', [FinishingController::class, 'submitFinishingForm']);
 Route::post('/submitWeldingCompleteForm', [WeldingController::class, 'submitWeldingCompleteForm']);
 Route::post('/submitTestingCompleteForm', [TestingController::class, 'submitTestingCompleteForm']);
 Route::post('/submitSubContractCompleteForm', [SubContractController::class, 'submitSubContractCompleteForm']);
+Route::post('/submitFinalAssemblyCompleteForm', [FinalAssemblyController::class, 'submitFinalAssemblyCompleteForm']);
 
+Route::post('/submitDocumentationCompleteForm', [DocumentationController::class, 'submitDocumentationCompleteForm']);
+Route::post('/submitDocumentationForm', [DocumentationController::class, 'submitDocumentationForm']);
+Route::post('/viewDocumentationForm', [DocumentationController::class, 'viewDocumentationForm']);
+Route::post('/getDocumentationDataByProcessOrder', [DocumentationController::class, 'getDocumentationDataByProcessOrder']);
+Route::post('/handleFileUploadDocumentation', [UploadController::class, 'handleFileUploadDocumentation']);
+
+Route::post('/submitPackingTransportForm', [PackingTransportController::class, 'submitPackingTransportForm']);
+Route::post('/submitPackingTransportCompleteForm', [PackingTransportController::class, 'submitPackingTransportCompleteForm'])->name('submit.packing.transport.complete.form');
+Route::post('/getPackingTransportDataByProcessOrder', [PackingTransportController::class, 'getPackingTransportDataByProcessOrder']);
+Route::post('/handleFileUploadPackingTransport', [UploadController::class, 'handleFileUploadPackingTransport']);
 
 
 
 Route::post('/viewSubContractCompleteForm', [SubContractController::class, 'viewSubContractCompleteForm']);
+Route::post('/viewFinalAssemblyCompleteForm', [FinalAssemblyController::class, 'viewFinalAssemblyCompleteForm']);
 Route::post('/viewKittingCompleteForm', [KittingController::class, 'viewKittingCompleteForm']);
 Route::post('/viewWeldingCompleteForm', [WeldingController::class, 'viewWeldingCompleteForm']);
 Route::post('/viewTestingCompleteForm', [TestingController::class, 'viewTestingCompleteForm']);
@@ -88,6 +106,7 @@ Route::post('/handleFileUploadWelding', [UploadController::class, 'handleFileUpl
 Route::post('/handleFileUploadTesting', [UploadController::class, 'handleFileUploadTesting']);
 Route::post('/handleFileUploadFinishing', [UploadController::class, 'handleFileUploadFinishing']);
 Route::post('/handleFileUploadSubContract', [UploadController::class, 'handleFileUploadSubContract']);
+Route::post('/handleFileUploadFinalAssembly', [UploadController::class, 'handleFileUploadFinalAssembly']);
 
 Route::post('/getKittingDataByProcessOrder', [KittingController::class, 'getKittingDataByProcessOrder']);
 Route::post('/getWeldingDataByProcessOrder', [WeldingController::class, 'getWeldingDataByProcessOrder']);
@@ -101,6 +120,7 @@ Route::post('/getPlanningDataByProcessOrder', [PlanningTableData::class, 'getPla
 Route::post('/getManufacturingDataByProcessOrder', [ManufacturingTableData::class, 'getManufacturingDataByProcessOrder']);
 Route::post('/getMaterialPreparationDataByProcessOrder', [MaterialTableDataController::class, 'getMaterialPreparationDataByProcessOrder']);
 Route::post('/getFabricationFitUpDataByProcessOrder', [FabricationFitUpTableData::class, 'getFabricationFitUpDataByProcessOrder']);
+Route::post('/getFinalAssemblyDataByProcessOrder', [FinalAssemblyController::class, 'getFinalAssemblyDataByProcessOrder']);
 
 
 

@@ -184,8 +184,8 @@ function myFunction(event) {
                             response[0][0][10] = 'All'
                         }
 
-                        if (response[0][0][9] == '1900-01-01') {
-                            response[0][0][9] = new Date().toISOString().split('T')[0];
+                        if (response[0][0]['n_date'] == '1900-01-01') {
+                            response[0][0]['n_date'] = new Date().toISOString().split('T')[0];
                         }
                         if (response[0][0]['person'] != null) {
                             $('#owner option[value="' + response[0][0]['person'].replace(/[^A-Z0-9]/ig, "") + '"]').prop('selected', true);
@@ -218,7 +218,7 @@ function myFunction(event) {
                         $('#action option[value="' + response[0][0][7] + '"]').prop('selected', true);
                         $('#status option[value="' + response[0][0][2] + '"]').prop('selected', true);
 
-                        $('#ddate').val(response[0][0][9]);
+                        $('#ddate').val(response[0][0]['n_date']);
                         $('#owner').show();
                         $("label[for='owner']").show();
                         $('#action').show();

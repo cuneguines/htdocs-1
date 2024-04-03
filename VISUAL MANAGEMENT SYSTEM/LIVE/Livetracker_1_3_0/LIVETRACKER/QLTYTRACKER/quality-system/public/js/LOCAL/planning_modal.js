@@ -297,9 +297,9 @@ function submitPlanningForm() {
     // File uploads
     var fileData = new FormData();
     var fileInputs = $('[type="file"]');
-
+    console.log(document.getElementById('process_order_number').value );
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number',  document.getElementById('process_order_number').value );
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {

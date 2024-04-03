@@ -51,6 +51,7 @@ $sql_pie_cc = get_sap_data($conn, $sql_pie_cc_cache, 0);
 $SQL_NEW = get_sap_data($conn, $SQL_NEW_cache, 0);
 $SQL_NEW_L = get_sap_data($conn, $SQL_NEW_cache_L, 0);
 $SQL_rework = get_sap_data($conn, $sql_qlty_results_cost, 0);
+$SQL_GRAND_TOTAL = get_sap_data($conn, $GRAND_TOTAL, 0);
 
 
 //$production_group_step_table_data = get_sap_data($conn,$tsql,0);
@@ -75,6 +76,8 @@ $SQL_rework = get_sap_data($conn, $sql_qlty_results_cost, 0);
     file_put_contents("./CACHE/qlty_SQL_NEW.json", json_encode($SQL_NEW));
     file_put_contents("./CACHE/qlty_SQL_NEW_L.json", json_encode($SQL_NEW_L));
     file_put_contents("./CACHE/qlty_rework_cost.json", json_encode($SQL_rework));
+    file_put_contents("./CACHE/qlty_grand_total.json", json_encode($SQL_GRAND_TOTAL));
+    
     
 
     
