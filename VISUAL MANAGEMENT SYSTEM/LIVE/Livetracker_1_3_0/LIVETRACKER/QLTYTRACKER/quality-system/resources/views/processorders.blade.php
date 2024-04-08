@@ -129,6 +129,24 @@
     font-size: 20px;
     cursor: pointer;
 }
+
+.form-group {
+    position: ;
+    float: left;
+    margin-right: 2px;
+    margin-left: 100px;
+    background-color:#f08787;
+    /* Adjust margin between groups as needed */
+}
+
+.form-group label {
+    margin-right: 5px;
+}
+
+.form-group input {
+    width: 150px;
+    /* Adjust input width as needed */
+}
 </style>
 
 
@@ -170,9 +188,7 @@
 
         <button id="searchButton">Search</button>
 
-        <div id="lineItemsContainer">
-            <!-- This is where the line items table will be displayed -->
-        </div>
+
         <h3>Process Order Table</h3>
         <div id="table-container"
             style="max-height: 500px;overflow-y: scroll;position: relative;max-width: 84%; margin-top: 20px;">
@@ -181,6 +197,31 @@
             </table>
         </div>
 
+        <div style="display:none" id="lineItemsContainer">
+            <!-- Sales Order Number -->
+            <div class="form-group">
+                <label for="salesOrderNumber">Sales Order Number:</label>
+                <input type="text" id="salesOrderNumber" class="form-control" readonly>
+            </div>
+
+            <!-- End Product -->
+            <div class="form-group">
+                <label for="endProduct">End Product:</label>
+                <input type="text" id="endProduct" class="form-control" readonly>
+            </div>
+
+            <!-- Owner -->
+            <div class="form-group">
+                <label for="owner">Owner:</label>
+                <input type="text" id="owner" class="form-control" readonly>
+            </div>
+
+            <!-- Quantity -->
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="text" id="quantity" class="form-control" readonly>
+            </div>
+        </div>
         <!-- HTML for the modal -->
         <div style="display:none" id="myModal" class="modal">
             <div class="modal-content">
@@ -366,6 +407,10 @@
             <div id="subcontractUpdateFieldTable" style="overflow-y:scroll;max-height:500px"></div>
         </div>
     </div>
+
+
+
+
     <script>
     var welcomeMessage = $('h2').text();
     var userName = welcomeMessage.split(',')[1].trim();
@@ -385,32 +430,32 @@
 
 
             // Make an AJAX request to get line items
-            /*   $.ajax({
-                  url: '/get-line-items/' + manualProcessOrder,
-                  type: 'GET',
-                  success: function(data) {
-                      // Assuming data is an array of items
-                      var html =
-                          '<table><thead><tr><th>Step Description</th><th>PrOrder</th></tr></thead><tbody>';
-
-                      $.each(data, function(index, item) {
-                          html += '<tr>';
-                          // Adjust the property name based on your actual JSON structure
-                          html += '<td>' + item.Quantity +
-                              '</td><td style="text-align: center;">' + item
-                              .PrOrder + '</td>';
-                          html += '</tr>';
-                      });
-
-                      html += '</tbody></table>';
-
-                      // Update the line items container with the generated HTML
-                      $('#lineItemsContainer').html(html);
-                  },
-                  error: function(error) {
-                      console.error('Error fetching line items:', error);
-                  }
-              }); */
+            $.ajax({
+                url: '/get-line-items/' +
+                    manualProcessOrder, // Adjust the URL according to your API endpoint
+                type: 'GET',
+                success: function(data) {
+                    if (data.length > 0) {
+                        $.each(data, function(index, item) {
+                            document.getElementById("lineItemsContainer").style.display = "block";
+                            // Populate the fields with data from the first item
+                            if (index === 0) {
+                                $('#salesOrderNumber').val(item.SONum);
+                                $('#endProduct').val(item.EndProduct);
+                                $('#owner').val(item.Owner);
+                                $('#quantity').val(item.Quantity);
+                            }
+                        });
+                    } else {
+                        // If no data is returned
+                        $('#lineItemsContainer').html('<p>No data available</p>');
+                    }
+                },
+                error: function(error) {
+                    console.error('Error fetching line items:', error);
+                    $('#lineItemsContainer').html('<p>Error fetching data</p>');
+                }
+            });
         });
     });
 

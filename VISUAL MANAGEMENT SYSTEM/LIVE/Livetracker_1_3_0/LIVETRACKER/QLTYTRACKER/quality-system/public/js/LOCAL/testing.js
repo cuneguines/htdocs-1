@@ -108,7 +108,7 @@ function submitTestingForm(processOrder) {
     };
     function getFileName(inputName) {
         var fileInput = document.querySelector('[name="' + inputName + '"]');
-        
+
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     var formData = new FormData();
@@ -126,9 +126,9 @@ function submitTestingForm(processOrder) {
     formData.set('hydrostatic_test', document.querySelector('[name="hydrostatic_test"]').checked ? 1 : 0);
     formData.set('pneumatic_test', document.querySelector('[name="pneumatic_test"]').checked ? 1 : 0);
     formData.set('fat_protocol', document.querySelector('[name="fat_protocol"]').checked ? 1 : 0);
-  
+
     formData.append('testing_document_file_name', getFileName('testing_documents'));
-console.log(formData);
+    console.log(formData);
     // Send an AJAX request to the server
     $.ajax({
         url: "/submitTestingForm",
@@ -263,7 +263,7 @@ function generateHTMLFromResponse_for_testing(response) {
             html += '-';
         }
         html += '</td>';
-        
+
         html += "<td>" + item.comments_testing + "</td>";
         html += "<td>" + item.submission_date + "</td>";
         html += "<td>" + item.created_at + "</td>";
@@ -313,14 +313,14 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     console.log(item);
     var html = '<fieldset><legend>Testing Complete</legend>';
     html += '<form id="testing_complete_form">';
-    
+
     html += '<div class="testing_item">';
     html += '<label>ID: ' + item.id + '</label><br>';
     html += '<div class="testing_item">';
     html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
     html += '<div class="testing_item">';
     html += '<input type="hidden" name="process_order_number" value="' + item.process_order_number + '"><br>';
-   
+
     html += '<div class="testing_field">';
     html +=
         '<label>Dye Penetrant Test:</label>' +
@@ -370,6 +370,13 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
             '<input type="checkbox" id="fat_protocol" name="fat_protocol" >' :
             '<input type="checkbox" id="fat_protocol" name="fat_protocol" disabled>');
     html += '</div><br>';
+    html += '<div class="signoff_field">';
+    html +=
+        '<label>Sign-off for Testing:</label>' +
+        '<input type="text" name="sign_off_testing" value="' + item.sign_off_testing+ '" >';
+    html += '</div><br>';
+
+
 
     html += '<div class="testing_field">';
     html +=
@@ -385,6 +392,11 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html +=
         '<label>Quantity:</label>' +
         '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
+    html += '</div><br>';
+    html += '<div class="testing_field">';
+    html +=
+        '<label style="display:none">Quantity:</label>' +
+        '<input style="display:none"type="number" id="quantity" name="process" value="' + item.process_order_number + '" >';
     html += '</div><br>';
 
     html += '</div>'; // Closing div for testing_item
@@ -404,24 +416,25 @@ function submitTestingCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
-
+    console.log(document.querySelector('[name="process_order_number"]').value);
     var formData = {
-        sign_off_testing: 0, // Change this according to your needs
+        sign_off: document.querySelector('[name="sign_off_testing"]').value, // Change this according to your needs
         comments_testing: document.querySelector('[name="comments_testing"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
-        dye_pen_test: document.querySelector('[name="dye_pen_test"]').checked ? "on" : '',
+        //process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
+        process_order_number: document.querySelector('[name="process"]').value,
+        dye_pen_testing: document.querySelector('[name="dye_pen_test"]').checked ? "on" : '',
         dye_pen_document_ref: document.querySelector('[name="dye_pen_document_ref"]').value,
-        hydrostatic_test: document.querySelector('[name="hydrostatic_test"]').checked ? "on" : "",
+        hydrostatic_testing: document.querySelector('[name="hydrostatic_test"]').checked ? "on" : "",
         hydrostatic_test_document_ref: document.querySelector('[name="hydrostatic_test_document_ref"]').value,
-        pneumatic_test: document.querySelector('[name="pneumatic_test"]').checked ? "on": "",
+        pneumatic_testing: document.querySelector('[name="pneumatic_test"]').checked ? "on" : "",
         pneumatic_test_document_ref: document.querySelector('[name="pneumatic_test_document_ref"]').value,
-        fat_protocol: document.querySelector('[name="fat_protocol"]').checked ? "on": "",
+        fat_protocoll: document.querySelector('[name="fat_protocol"]').checked ? "on" : "",
         status: document.querySelector('#status').value,
         quantity: document.querySelector('[name="quantity"]').value,
         // Add other form fields accordingly
     };
-
+    console.log(document.querySelector('[name="process_order_number"]').value);
     console.log(formData);
     $.ajax({
         type: "POST",

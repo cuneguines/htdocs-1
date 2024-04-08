@@ -18,7 +18,7 @@ class LineItem extends Model  // Extend Eloquent Model
         'StepDesc','PrOrder','Quantity'
     ];
 
-    protected $table = 'iis_epc_pro_orderl';
+    protected $table = 'iis_epc_pro_orderh';
 
     public function orders()
     {
