@@ -95,7 +95,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
 }
 
 function generateManufacturingFieldset(processOrder, qualityStep,username) {
-    $('#sign_off_manufacturing').val(username);
+  /*   $('#sign_off_manufacturing').val(username);
     return `
         <fieldset>
             <legend>Main Task 3: Manufacturing</legend>
@@ -184,7 +184,7 @@ function generateManufacturingFieldset(processOrder, qualityStep,username) {
 
             <!-- Submit button -->
             <button type="submit" onclick="submitManufacturingForm('${processOrder}')">Submit Manufacturing Form</button>
-        </fieldset>`;
+        </fieldset>`; */
 }
 // Assuming this function is called when the form is submitted
 function validateForm() {
@@ -215,12 +215,30 @@ function submitManufacturingForm(processOrder) {
         quality_documents: document.querySelector('[name="quality_documents"]').checked || null,
         sign_off_manufacturing: sign_off_manufacturing,
         comments_manufacturing: document.querySelector('[name="comments_manufacturing"]').value || null,
-        process_order_number: processOrder,
-        production_drawings_document: getFileName('production_drawings_document'),
-        bom_document: getFileName('bom_document'),
-        machine_programming_files_document: getFileName('machine_programming_files_document'),
-        ndt_documentation_document: getFileName('ndt_documentation_document'),
-        quality_documents_document: getFileName('quality_documents_document'),
+        process_order_number: document.querySelector('[name="process_order_number_manufacturing"]').value || null,
+        
+        production_drawings_document: (document.querySelector('[name="production_drawings_document"]').files.length > 0)
+        ? document.querySelector('[name="production_drawings_document"]').files[0].name
+        : document.getElementById('production_drawings_filename').textContent.trim(),
+    
+    bom_document: (document.querySelector('[name="bom_document"]').files.length > 0)
+        ? document.querySelector('[name="bom_document"]').files[0].name
+        : document.getElementById('bom_filename').textContent.trim(),
+    
+    machine_programming_files_document: (document.querySelector('[name="machine_programming_files_document"]').files.length > 0)
+        ? document.querySelector('[name="machine_programming_files_document"]').files[0].name
+        : document.getElementById('machine_programming_files_filename').textContent.trim(),
+    
+    ndt_documentation_document: (document.querySelector('[name="ndt_documentation_document"]').files.length > 0)
+        ? document.querySelector('[name="ndt_documentation_document"]').files[0].name
+        : document.getElementById('ndt_documentation_filename').textContent.trim(),
+    
+    quality_documents_document: (document.querySelector('[name="quality_documents_document"]').files.length > 0)
+        ? document.querySelector('[name="quality_documents_document"]').files[0].name
+        : document.getElementById('quality_documents_filename').textContent.trim()
+
+
+
         // Add other file inputs accordingly
     };
     
@@ -274,3 +292,40 @@ function submitManufacturingForm(processOrder) {
 
     console.log('Manufacturing form submitted!');
 }
+function resetManufacturingForm() {
+    // Uncheck checkboxes
+    $('#production_drawings').prop('checked', false);
+    $('#bom').prop('checked', false);
+    $('#machine_programming_files').prop('checked', false);
+    $('#ndt_documentation').prop('checked', false);
+    $('#quality_documents').prop('checked', false);
+
+    // Clear text inputs
+    $('#sign_off_manufacturing').val('');
+    $('#comments_manufacturing').val('');
+    $('#process_order_number_manufacturing').val('');
+
+    // Reset file input values and filenames
+    $('#production_drawings_filename').text('');
+    $('#bom_filename').text('');
+    $('#machine_programming_files_filename').text('');
+    $('#ndt_documentation_filename').text('');
+    $('#quality_documents_filename').text('');
+
+    $('#production_drawings_document').val('');
+    $('#bom_document').val('');
+    $('#machine_programming_files_document').val('');
+    $('#ndt_documentation_document').val('');
+    $('#quality_documents_document').val('');
+
+    // Reset old file links
+    $('#previous_production_drawings_link').attr('href', '');
+    $('#previous_bom_link').attr('href', '');
+    $('#previous_machine_programming_files_link').attr('href', '');
+    $('#previous_ndt_documentation_link').attr('href', '');
+    $('#previous_quality_documents_link').attr('href', '');
+
+    // Show the manufacturing form section if it was hidden
+    $('#manufacturingFieldset').show();
+}
+

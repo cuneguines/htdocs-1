@@ -28,6 +28,7 @@ use App\Http\Controllers\SubContractController;
 use App\Http\Controllers\FabricationFitUpTableDataCompleteController;
 use App\Http\Controllers\FinalAssemblyController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\QualityController;
 
 use App\Http\Controllers\UploadController;
 use App\Http\Controllers\HomeController;
@@ -69,6 +70,7 @@ Route::post('/submitFabricationCompleteFitUpForm', [FabricationFitUpTableDataCom
 Route::post('/submitWeldingForm', [WeldingController::class, 'submitWeldingForm']);
 Route::post('/submitTestingForm', [TestingController::class, 'submitTestingForm']);
 Route::post('/submitFinalAssemblyForm', [FinalAssemblyController::class, 'submitFinalAssemblyForm']);
+Route::post('/submitQualityForm', [QualityController::class, 'submitQualityForm']);
 
 
 Route::post('/submitSubContractForm', [SubContractController::class, 'submitSubContractForm']);
@@ -77,6 +79,7 @@ Route::post('/submitWeldingCompleteForm', [WeldingController::class, 'submitWeld
 Route::post('/submitTestingCompleteForm', [TestingController::class, 'submitTestingCompleteForm']);
 Route::post('/submitSubContractCompleteForm', [SubContractController::class, 'submitSubContractCompleteForm']);
 Route::post('/submitFinalAssemblyCompleteForm', [FinalAssemblyController::class, 'submitFinalAssemblyCompleteForm']);
+Route::post('/submitQualityCompleteForm', [QualityController::class, 'submitQualityCompleteForm']);
 
 Route::post('/submitDocumentationCompleteForm', [DocumentationController::class, 'submitDocumentationCompleteForm']);
 Route::post('/submitDocumentationForm', [DocumentationController::class, 'submitDocumentationForm']);
@@ -87,6 +90,7 @@ Route::post('/handleFileUploadDocumentation', [UploadController::class, 'handleF
 Route::post('/submitPackingTransportForm', [PackingTransportController::class, 'submitPackingTransportForm']);
 Route::post('/submitPackingTransportCompleteForm', [PackingTransportController::class, 'submitPackingTransportCompleteForm'])->name('submit.packing.transport.complete.form');
 Route::post('/getPackingTransportDataByProcessOrder', [PackingTransportController::class, 'getPackingTransportDataByProcessOrder']);
+
 Route::post('/handleFileUploadPackingTransport', [UploadController::class, 'handleFileUploadPackingTransport']);
 
 
@@ -113,9 +117,11 @@ Route::post('/getWeldingDataByProcessOrder', [WeldingController::class, 'getWeld
 Route::post('/getTestingDataByProcessOrder', [TestingController::class, 'getTestingDataByProcessOrder']);
 Route::post('/getFinishingDataByProcessOrder', [FinishingController::class, 'getFinishingDataByProcessOrder']);
 Route::post('/getSubContractDataByProcessOrder', [SubContractController::class, 'getSubContractDataByProcessOrder']);
+Route::post('/getQualityDataByProcessOrder', [QualityController::class, 'getQualityDataByProcessOrder']);
 
 
 Route::post('/getEngineerDataByProcessOrder', [EngineerTaableData::class, 'getEngineerDataByProcessOrder']);
+
 Route::post('/getPlanningDataByProcessOrder', [PlanningTableData::class, 'getPlanningDataByProcessOrder']);
 Route::post('/getManufacturingDataByProcessOrder', [ManufacturingTableData::class, 'getManufacturingDataByProcessOrder']);
 Route::post('/getMaterialPreparationDataByProcessOrder', [MaterialTableDataController::class, 'getMaterialPreparationDataByProcessOrder']);
@@ -128,3 +134,6 @@ Route::post('/getFinalAssemblyDataByProcessOrder', [FinalAssemblyController::cla
 
 
 Route::post('/upload', [UploadController::class, 'uploadImages']);
+Route::post('/upload_qltyimages', [UploadController::class, 'uploadImages_Quality']);
+Route::post('/getImages_qlty', [UploadController::class, 'getImages_Quality']);
+

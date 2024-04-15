@@ -57,7 +57,7 @@ function generatePlanningFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_planning(response) {
+function generateHTMLFromResponse_for_planning_old(response) {
     // You can customize this function to generate HTML based on the response data
     // For example, you can iterate through the data and create table rows
     var html = '<table id=common_table>';
@@ -123,6 +123,113 @@ function generateHTMLFromResponse_for_planning(response) {
 
     html += '</tbody></table>';
     
+    return html;
+}
+function generateHTMLFromResponse_for_planning(response) {
+    // You can customize this function to generate HTML based on the response data
+    // For example, you can iterate through the data and create form fields
+    var html = '<form id="planningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 1: Planning / Forward Engineering</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="purchase_order_received_' + index + '" style="font-weight: bold;">Purchase Order Received:</label>';
+        html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received" value="' + (item.purchase_order_received === 'true' ? 'on' : '') + '" ' + (item.purchase_order_received === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="purchase_order_document_' + index + '" style="font-weight: bold;">Purchase Order Document:</label>';
+        if (item.purchase_order_document) {
+            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.purchase_order_document + '</a>';
+            html += downloadLink;
+        } else {
+            html += 'No file uploaded';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="project_schedule_agreed_' + index + '" style="font-weight: bold;">Project Schedule Agreed:</label>';
+        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed" value="' + (item.project_schedule_agreed === 'true' ? 'on' : '') + '" ' + (item.project_schedule_agreed === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="project_schedule_document_' + index + '" style="font-weight: bold;">Project Schedule Document:</label>';
+        if (item.project_schedule_document) {
+            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.project_schedule_document + '</a>';
+            html += downloadLink;
+        } else {
+            html += 'No file uploaded';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="quotation_' + index + '" style="font-weight: bold;">Quotation:</label>';
+        html += '<input type="checkbox" id="quotation_' + index + '" name="quotation" value="' + (item.quotation === 'true' ? 'on' : '') + '" ' + (item.quotation === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="quotation_document_' + index + '" style="font-weight: bold;">Quotation Document:</label>';
+        if (item.quotation_document) {
+            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.quotation_document;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.quotation_document + '</a>';
+            html += downloadLink;
+        } else {
+            html += 'No file uploaded';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="verify_customer_expectations_' + index + '" style="font-weight: bold;">Verify Customer Expectations:</label>';
+        html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations" value="' + (item.verify_customer_expectations === 'true' ? 'on' : '') + '" ' + (item.verify_customer_expectations === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="user_requirement_specifications_document_' + index + '" style="font-weight: bold;">User Requirement Specifications Document:</label>';
+        if (item.user_requirement_specifications_document) {
+            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.user_requirement_specifications_document + '</a>';
+            html += downloadLink;
+        } else {
+            html += 'No file uploaded';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="project_risk_category_assessment_' + index + '" style="font-weight: bold;">Project Risk Category Assessment:</label>';
+        html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment" value="' + (item.project_risk_category_assessment === 'true' ? 'on' : '') + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="pre_engineering_check_document_' + index + '" style="font-weight: bold;">Pre Engineering Check Document:</label>';
+        if (item.pre_engineering_check_document) {
+            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.pre_engineering_check_document + '</a>';
+            html += downloadLink;
+        } else {
+            html += 'No file uploaded';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="sign_off_planning_' + index + '" style="font-weight: bold;">Sign-off for Planning / Forward Engineering:</label>';
+        html += '<input type="text" id="sign_off_planning_' + index + '" name="sign_off_planning" value="' + (item.sign_off_planning ? item.sign_off_planning : '') + '">';
+        html += '</div>';
+
+        html += '<div class="form-group" style="margin-bottom: 15px;">';
+        html += '<label for="comments_planning_' + index + '" style="font-weight: bold;">Comments for Planning / Forward Engineering:</label>';
+        html += '<textarea id="comments_planning_' + index + '" name="comments_planning" rows="4" cols="50">' + (item.comments_planning ? item.comments_planning : '') + '</textarea>';
+        html += '</div>';
+    });
+
+    html += '<div class="form-group" style="margin-top: 20px;">';
+  
+    html += '</div>';
+
+    html += '</fieldset></form>';
+
     return html;
 }
 
@@ -255,11 +362,21 @@ function submitPlanningForm() {
         verify_customer_expectations: document.querySelector('[name="verify_customer_expectations"]')?.checked || null,
         project_risk_category_assessment: document.querySelector('[name="project_risk_category_assessment"]')?.checked || null,
         
-        purchase_order_document: getFileName('purchase_order_document'),
-        project_schedule_document: getFileName('project_schedule_document'),
-        user_requirement_specifications_document: getFileName('user_requirement_specifications_document'),
-        pre_engineering_check_document: getFileName('pre_engineering_check_document'),
-        quotation_document: getFileName('quotation_document'),
+        purchase_order_document: (document.querySelector('[name="purchase_order_document"]').files.length > 0)
+        ? document.querySelector('[name="purchase_order_document"]').files[0].name
+        : document.getElementById('purchase_order_filename').textContent.trim(),
+    project_schedule_document: (document.querySelector('[name="project_schedule_document"]').files.length > 0)
+        ? document.querySelector('[name="project_schedule_document"]').files[0].name
+        : document.getElementById('project_schedule_filename').textContent.trim(),
+    user_requirement_specifications_document: (document.querySelector('[name="user_requirement_specifications_document"]').files.length > 0)
+        ? document.querySelector('[name="user_requirement_specifications_document"]').files[0].name
+        : document.getElementById('user_requirements_filename').textContent.trim(),
+    pre_engineering_check_document: (document.querySelector('[name="pre_engineering_check_document"]').files.length > 0)
+        ? document.querySelector('[name="pre_engineering_check_document"]').files[0].name
+        : document.getElementById('pre_engineering_filename').textContent.trim(),
+    quotation_document: (document.querySelector('[name="quotation_document"]').files.length > 0)
+        ? document.querySelector('[name="quotation_document"]').files[0].name
+        : document.getElementById('quotation_filename').textContent.trim(),
         sign_off_planning:document.querySelector('[name="sign_off_planning"]').value || null,
         comments_planning: document.querySelector('[name="comments_planning"]').value || null,
         // Get today's date in YYYY-MM-DD format
@@ -503,3 +620,31 @@ $(document).on('submit', '#updatePlanningForm', function(e) {
         }
     });
 });
+
+function resetPlanningForm() {
+    // Uncheck checkboxes
+    $('#purchase_order_received').prop('checked', false);
+    $('#project_schedule_agreed').prop('checked', false);
+    $('#quotation').prop('checked', false);
+    $('#verify_customer_expectations').prop('checked', false);
+    $('#project_risk_category_assessment').prop('checked', false);
+
+    // Clear text inputs
+    $('#sign_off_planning').val('');
+    $('#comments_planning').val('');
+
+    // Reset file input values
+    $('#purchase_order_filename').text('');
+    $('#project_schedule_filename').text('');
+    $('#quotation_filename').text('');
+    $('#user_requirements_filename').text('');
+    $('#pre_engineering_filename').text('');
+
+    // Reset file input values
+    $('#purchase_order_document').val('');
+    $('#project_schedule_document').val('');
+    $('#quotation_document').val('');
+    $('#user_requirement_specifications_document').val('');
+    $('#pre_engineering_check_document').val('');
+    $('#planningFieldset').show();
+}

@@ -221,7 +221,8 @@ if(isset($item_code)){
         
         inner join oitm t1 on t1.ItemCode = t0.ItemCode
         LEFT join oitb t5 on t5.ItmsGrpCod = t1.ItmsGrpCod
-        LEFT JOIN(SELECT t1.ItemCode, SUM(t1.OpenQty)[On Order], MAX(t0.DocDueDate)[Next Del Date]
+        ---Changed 08/04/2024 Monday
+        LEFT JOIN(SELECT t1.ItemCode, SUM(t1.OpenQty)[On Order],max((cast(COALESCE(t1.U_del_date_rev2,t1.U_del_date_rev1,t1.ShipDate,t0.[DocDueDate] )as date)))[Next Del Date]
             FROM POR1 t1 
             LEFT JOIN OPOR t0 ON t0.DocEntry = t1.DocEntry
                 WHERE t0.DocStatus <> 'C' AND t0.CANCELED <> 'Y'

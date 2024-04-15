@@ -28,6 +28,8 @@
     <script type="text/javascript" src="../../../JS/LOCAL/finalassembly.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/documentation.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/transport.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/quality.js"></script>
+
 
 
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
@@ -130,20 +132,20 @@
     cursor: pointer;
 }
 
-.form-group {
+.custom-css {
     position: ;
     float: left;
     margin-right: 2px;
     margin-left: 100px;
-    background-color:#f08787;
+    background-color: #f08787;
     /* Adjust margin between groups as needed */
 }
 
-.form-group label {
+.custom-css label {
     margin-right: 5px;
 }
 
-.form-group input {
+.custom-css input {
     width: 150px;
     /* Adjust input width as needed */
 }
@@ -199,25 +201,25 @@
 
         <div style="display:none" id="lineItemsContainer">
             <!-- Sales Order Number -->
-            <div class="form-group">
+            <div class="form-group custom-css">
                 <label for="salesOrderNumber">Sales Order Number:</label>
                 <input type="text" id="salesOrderNumber" class="form-control" readonly>
             </div>
 
             <!-- End Product -->
-            <div class="form-group">
+            <div class="form-group custom-css">
                 <label for="endProduct">End Product:</label>
                 <input type="text" id="endProduct" class="form-control" readonly>
             </div>
 
             <!-- Owner -->
-            <div class="form-group">
+            <div class="form-group custom-css">
                 <label for="owner">Owner:</label>
                 <input type="text" id="owner" class="form-control" readonly>
             </div>
 
             <!-- Quantity -->
-            <div class="form-group">
+            <div class="form-group custom-css">
                 <label for="quantity">Quantity:</label>
                 <input type="text" id="quantity" class="form-control" readonly>
             </div>
@@ -229,112 +231,11 @@
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="planningFieldset" style="overflow-y:scroll;max-height:500px;display:none">
-                    <fieldset>
-                        <legend>Main Task 1: Planning / Forward Engineering</legend>
-
-                        <!-- Process Order Number -->
-                        <div class="form-group">
-                            <label>
-                                <input type="text" name="process_order_number" id="process_order_number" readonly>
-                                Process Order Number
-                            </label>
-                        </div>
-
-                        <!-- Subtask 1.1: Purchase Order -->
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="purchase_order_received" id="purchase_order_received">
-                                Purchase Order received
-                            </label>
-                            <br>
-                            <label style="background-color: #7cbfa0" class="upload-label"
-                                id="purchase_order_file_label">
-                                Current Purchase Order Document: <br><span id="purchase_order_filename"></span>
-                                <input type="file" name="purchase_order_document" id="purchase_order_document">
-                            </label>
-                        </div>
-
-                        <!-- Subtask 1.2: Project Schedule -->
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="project_schedule_agreed" id="project_schedule_agreed">
-                                Project schedule agreed
-                            </label>
-                            <br>
-                            <label style="background-color: #7cbfa0" class="upload-label"
-                                id="project_schedule_file_label">
-                                Current Project Schedule Document:<br> <span id="project_schedule_filename"></span>
-                                <input type="file" name="project_schedule_document" id="project_schedule_document">
-                            </label>
-                        </div>
-
-                        <!-- Subtask 1.3: Quotation -->
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="quotation" id="quotation">
-                                Quotation
-                            </label>
-                            <br>
-                            <label style="background-color: #7cbfa0" class="upload-label" id="quotation_file_label">
-                                Current Quotation Document: <br><span id="quotation_filename"></span>
-                                <input type="file" name="quotation_document" id="quotation_document">
-                            </label>
-                        </div>
-
-                        <!-- Subtask 1.4: User Requirement Specifications -->
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="verify_customer_expectations"
-                                    id="verify_customer_expectations">
-                                Verify customer expectations
-                            </label>
-                            <br>
-                            <label style="background-color: #7cbfa0" ;class="upload-label"
-                                id="user_requirements_file_label">
-                                Current User Requirement Specifications Document: <br><span
-                                    id="user_requirements_filename"></span>
-                                <input type="file" name="user_requirement_specifications_document"
-                                    id="user_requirement_specifications_document">
-                            </label>
-                        </div>
-
-                        <!-- Subtask 1.5: Pre Engineering Check -->
-                        <div class="form-group">
-                            <label>
-                                <input type="checkbox" name="project_risk_category_assessment"
-                                    id="project_risk_category_assessment">
-                                Project risk category assessment
-                            </label>
-                            <br>
-                            <label style="background-color: #7cbfa0" class="upload-label"
-                                id="pre_engineering_file_label">
-                                Current Pre Engineering Check Document:<br> <span id="pre_engineering_filename"></span>
-                                <input type="file" name="pre_engineering_check_document"
-                                    id="pre_engineering_check_document">
-                            </label>
-                        </div>
-
-                        <!-- Sign-off for Main Task 1 -->
-                        <div class="form-group">
-                            <label>
-                                Sign-off for Planning / Forward Engineering:
-                                <input type="text" name="sign_off_planning" id="sign_off_planning">
-                            </label>
-                        </div>
-
-                        <!-- Comments for Main Task 1 -->
-                        <div class="form-group">
-                            <label>
-                                Comments for Planning / Forward Engineering:
-                                <textarea name="comments_planning" id="comments_planning" rows="4" cols="50"></textarea>
-                            </label>
-                        </div>
-
-                        <!-- Submit button -->
-                        <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
-                    </fieldset>
+                    @include('planning')
                 </div>
-                <div id="manufacturingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="manufacturingFieldset" style="overflow-y:scroll;max-height:500px;display:none">
+                    @include('manufacturing')
+                </div>
                 <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px"></div>
@@ -345,6 +246,9 @@
                 <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="documentationFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="packingtransportFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="qualityFieldset" style="overflow-y:scroll;max-height:500px;display:none">
+                @include('quality')
+</div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -352,8 +256,8 @@
             <div class="modal-content">
                 <span class="close" onclick="closeglobalModal()">&times;</span>
                 <p id="global-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="width:1100px;font-size:14px"></div>
-                <div id="planningFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="engineeringFieldTable" style="width:500px;font-size:14px"></div>
+                <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
                 <div id="manufacturingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="materialpreparationFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="kittingFieldTable" style="width:1100px;font-size:14px"></div>
@@ -365,6 +269,7 @@
                 <div id="finalassemblyFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="documentationFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="packingtransportFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="qualityFieldTable" style="width:1100px;font-size:14px"></div>
             </div>
         </div>
     </div>
@@ -435,20 +340,25 @@
                     manualProcessOrder, // Adjust the URL according to your API endpoint
                 type: 'GET',
                 success: function(data) {
+                    console.log(data.length);
                     if (data.length > 0) {
                         $.each(data, function(index, item) {
-                            document.getElementById("lineItemsContainer").style.display = "block";
+                            document.getElementById("lineItemsContainer").style
+                                .display = "block";
+                            console.log(index);
                             // Populate the fields with data from the first item
                             if (index === 0) {
                                 $('#salesOrderNumber').val(item.SONum);
                                 $('#endProduct').val(item.EndProduct);
                                 $('#owner').val(item.Owner);
                                 $('#quantity').val(item.Quantity);
+                                $('#itemname').val(item.Item);
                             }
                         });
                     } else {
                         // If no data is returned
-                        $('#lineItemsContainer').html('<p>No data available</p>');
+                        document.getElementById('lineItemsContainer').style.display =
+                        'none';
                     }
                 },
                 error: function(error) {
@@ -655,7 +565,11 @@
 
         if (qualityStep === 'Planning / Forward Engineering') {
             console.log('planning');
+            console.log(userName);
             $('#planningFieldset').hide();
+            $('#qualityFieldset').hide();
+           
+            $('#manufacturingFieldset').hide();
             $('#planningFieldset').show();
             $('#sign_off_planning').val(userName);
             $('#process_order_number').val(processOrder);
@@ -678,6 +592,8 @@
                 data: formData,
                 dataType: 'json',
                 success: function(response) {
+                    resetPlanningForm();
+                    $('#sign_off_planning').val(userName);
                     // console.log(response.process_order_number);
                     if (response.data != null) {
                         console.log('yes po found');
@@ -695,7 +611,7 @@
                                 .project_risk_category_assessment === 'true');
 
                             // Other fields
-                            $('#sign_off_planning').val(item.sign_off_planning);
+                            $('#sign_off_planning').val(userName);
                             $('#comments_planning').val(item.comments_planning);
 
                             // File input fields
@@ -738,6 +654,7 @@
                     } else {
 
                         resetPlanningForm();
+                        $('#sign_off_planning').val(userName);
                         $('#planningFieldset').show();
                     }
 
@@ -761,14 +678,123 @@
 
 
         if (qualityStep === 'Manufacturing Package') {
+            console.log('manufacturing');
+            console.log(userName);
+            $('#planningFieldset').hide();
+            $('#qualityFieldset').hide();
+            $('#manufacturingFieldset').hide();
+            $('#manufacturingFieldset').show();
+            $('#sign_off_manufacturing').val(userName);
+            $('#process_order_number_manufacturing').val(processOrder);
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // Add other headers if needed
+            };
 
-            var manufacturingFieldset = generateManufacturingFieldset(processOrder, qualityStep, userName);
+            var formData = {
+                process_order_number: processOrder
+                // Add other form data if needed
+            };
 
-            $('#manufacturingFieldset').html(manufacturingFieldset);
+            // Fetch Manufacturing Form Data for the given process order
+            $.ajax({
+                url: '/getManufacturingDataByProcessOrder', // Adjust URL as needed
+                type: 'POST',
+                headers: headers,
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    resetManufacturingForm();
+                    
+                    console.log(userName);
+                    $('#sign_off_manufacturing').val(userName);
+                    $('#process_order_number_manufacturing').val(processOrder);
+                    // console.log(response.process_order_number);
+                    if (response.data != null) {
+                        console.log('yes po found');
+                        console.log(response);
+                        $.each(response, function(index, item) {
+                           
+                            console.log(item.process_order_number);
+                            $('#process_order_number_manufacturing').val(item.process_order_number);
+                            
+
+                            $('input[name="production_drawings"]').prop('checked', item
+                                .production_drawings === 'true');
+                            $('input[name="bom"]').prop('checked', item.bom === 'true');
+                            $('input[name="machine_programming_files"]').prop('checked', item
+                                .machine_programming_files === 'true');
+                            $('input[name="ndt_documentation"]').prop('checked', item
+                                .ndt_documentation === 'true');
+                            $('input[name="quality_documents"]').prop('checked', item
+                                .quality_documents === 'true');
+
+                            // Other fields
+                            $('#sign_off_manufacturing').val(userName);
+                            $('#comments_manufacturing').val(item.comments_manufacturing);
+
+                            // File input fields
+                            $('#production_drawings_filename').text(item
+                                .production_drawings_document);
+                            $('#bom_filename').text(item.bom_document);
+                            $('#machine_programming_files_filename').text(item
+                                .machine_programming_files_document);
+                            $('#ndt_documentation_filename').text(item.ndt_documentation_document);
+                            $('#quality_documents_filename').text(item.quality_documents_document);
+
+                            // Set the labels for file inputs
+                            $('#production_drawings_file_label').show();
+                            $('#bom_file_label').show();
+                            $('#machine_programming_files_file_label').show();
+                            $('#ndt_documentation_file_label').show();
+                            $('#quality_documents_file_label').show();
+
+                            // Attach handlers for file input changes
+                            $('#production_drawings_document').change(function() {
+                                $('#production_drawings_filename').text(this.files[0].name);
+                            });
+
+                            $('#bom_document').change(function() {
+                                $('#bom_filename').text(this.files[0].name);
+                            });
+
+                            $('#machine_programming_files_document').change(function() {
+                                $('#machine_programming_files_filename').text(this.files[0]
+                                    .name);
+                            });
+
+                            $('#ndt_documentation_document').change(function() {
+                                $('#ndt_documentation_filename').text(this.files[0].name);
+                            });
+
+                            $('#quality_documents_document').change(function() {
+                                $('#quality_documents_filename').text(this.files[0].name);
+                            });
+                        });
+                    } else {
+
+                        resetManufacturingForm();
+                        alert('hello');
+                        $('#process_order_number_manufacturing').val(processOrder);
+                        $('#sign_off_manufacturing').val(userName);
+                        $('#manufacturingFieldset').show();
+                    }
+
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+
         } else {
-            // Clear the fieldset content if the quality step is not "Engineering"
-            $('#manufacturingFieldset').html('');
+            // Clear the fieldset content if the quality step is not "Manufacturing"
+            $('#manufacturingFieldset').hide();
+
+
         }
+
+
+
         if (qualityStep === 'Material Preparation') {
 
             var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,
@@ -840,7 +866,7 @@
             $('#subcontractFieldset').html('');
         }
         if (qualityStep === 'Final Assembly') {
-
+            $('#qualityFieldset').hide();
             var finalassemblyFieldset = generateFinalAssemblyFieldset(processOrder, qualityStep,
                 userName);
 
@@ -870,7 +896,13 @@
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#packingtransportFieldset').html('');
         }
+        if (qualityStep === 'Quality') {
+            $('#qualityFieldset').show();
+            $('#process_order_number_quality').val(processOrder);
 
+        }else{
+            $('#qualityFieldset').hide();
+        }
 
         $('#myModal').show();
     }
@@ -896,6 +928,7 @@
         $('#finalassemblyFieldTable').hide();
         $('#documentationFieldTable').hide();
         $('#packingtransportFieldTable').hide();
+        $('#qualityFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -937,6 +970,13 @@
         } else if (qualityStep === 'Packing and Transport') {
             var packingtransportFieldsetTable = generatePackingTransportFieldTable(processOrder, qualityStep);
             $('#packingtransportFieldTable').html(packingtransportFieldsetTable).show();
+        }
+     else if (qualityStep === 'Quality') {
+console.log('yes i am in quality')
+$('#qualityFieldTable').hide();
+        var qualityFieldsetTable = generateQualityFieldTable(processOrder, qualityStep);
+            console.log(qualityFieldsetTable);
+            $('#qualityFieldTable').html(qualityFieldsetTable).show();
         }
 
 
@@ -1111,33 +1151,7 @@
     }
 
 
-    function resetPlanningForm() {
-        // Uncheck checkboxes
-        $('#purchase_order_received').prop('checked', false);
-        $('#project_schedule_agreed').prop('checked', false);
-        $('#quotation').prop('checked', false);
-        $('#verify_customer_expectations').prop('checked', false);
-        $('#project_risk_category_assessment').prop('checked', false);
-
-        // Clear text inputs
-        $('#sign_off_planning').val('');
-        $('#comments_planning').val('');
-
-        // Reset file input values
-        $('#purchase_order_filename').text('');
-        $('#project_schedule_filename').text('');
-        $('#quotation_filename').text('');
-        $('#user_requirements_filename').text('');
-        $('#pre_engineering_filename').text('');
-
-        // Reset file input values
-        $('#purchase_order_document').val('');
-        $('#project_schedule_document').val('');
-        $('#quotation_document').val('');
-        $('#user_requirement_specifications_document').val('');
-        $('#pre_engineering_check_document').val('');
-        $('#planningFieldset').show();
-    }
+   
 
     // Close the modal if the user clicks outside of it
     /* $(document).click(function(event) {

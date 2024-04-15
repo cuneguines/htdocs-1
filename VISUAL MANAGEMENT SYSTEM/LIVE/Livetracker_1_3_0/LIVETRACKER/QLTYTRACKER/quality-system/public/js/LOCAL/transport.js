@@ -5,28 +5,8 @@ function generatePackingTransportFieldset(processOrder, username) {
         <legend>Packing and Transport</legend>
 
         <!-- Subtask 13.1: Documentation Complete -->
-        <div class="form-group">
-            <label>
-                Technical File:
-                <input type="checkbox" name="technical_file_checkbox" value="1" onclick="toggleFileUpload('technical_file_upload', this)">
-            </label>
-            <div id="technical_file_upload" style="display: none;">
-                <label>Upload Technical File:</label>
-                <input type="file" name="technical_file" accept=".pdf,.doc,.docx,.txt">
-            </div>
-        </div>
-
-        <!-- Subtask 12.2: Client Hand-over documentation -->
-        <div class="form-group">
-            <label>
-                Client Hand-over documentation:
-                <input type="checkbox" name="client_handover_checkbox" value="1" onclick="toggleFileUpload('client_handover_upload', this)">
-            </label>
-            <div id="client_handover_upload" style="display: none;">
-                <label>Upload Client Hand-over Documentation:</label>
-                <input type="file" name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
-            </div>
-        </div>
+         
+       
 
         <!-- Subtask 13.2: Secure Packing -->
         <div class="form-group">
