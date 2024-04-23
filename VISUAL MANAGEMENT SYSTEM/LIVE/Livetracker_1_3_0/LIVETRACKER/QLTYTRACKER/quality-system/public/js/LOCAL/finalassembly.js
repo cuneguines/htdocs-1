@@ -4,53 +4,11 @@ function generateFinalAssemblyFieldset(processOrder, qualityStep, username) {
     <fieldset>
         <legend>Final Assembly</legend>
 
-        <!-- Subtask 11.1: Walk-down and visual inspection -->
+        <!-- Checkbox for 'Attach Part ID Labels / Name Plates' for Engineering -->
         <div class="form-group">
             <label>
-                Walk-down and visual inspection:
-                <input type="text" name="walk_down_inspection">
-            </label>
-        </div>
-
-        <!-- Subtask 11.2: Identification -->
-        <div class="form-group">
-            <label>
-                Identification:
-                <input type="text" name="identification">
-            </label>
-        </div>
-
-        <!-- Upload Images -->
-        <div class="form-group">
-            <label>
-                Upload Images:
-                <input type="file" name="images[]" id="imagesInput" multiple>
-                <!-- Upload Images button -->
-                <br>
-        <button type="button" onclick="uploadImages('${processOrder}')">Upload Images</button>
-        <br>
-            </label>
-        </div>
-
-        <!-- File Uploads for Final Assembly -->
-        <div class="form-group">
-            <label>
-                Upload File 1:
-                <input type="file" name="final_assembly_file_1" accept=".pdf,.doc,.docx,.txt">
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label>
-                Upload File 2:
-                <input type="file" name="final_assembly_file_2" accept=".pdf,.doc,.docx,.txt">
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label>
-                Upload File 3:
-                <input type="file" name="final_assembly_file_3" accept=".pdf,.doc,.docx,.txt">
+                <input type="checkbox" name="attach_part_id_labels">
+                Attach Part ID Labels / Name Plates
             </label>
         </div>
 
@@ -73,7 +31,6 @@ function generateFinalAssemblyFieldset(processOrder, qualityStep, username) {
         <!-- Submit button -->
         <button type="button" onclick="submitFinalAssemblyForm('${processOrder}')">Submit Final Assembly Form</button>
 
-        
     </fieldset>
     `;
 }
@@ -126,15 +83,15 @@ function submitFinalAssemblyForm(processOrder) {
 
     var formData = new FormData();
     formData.append('process_order_number', processOrder);
-    formData.append('walk_down_inspection', document.querySelector('[name="walk_down_inspection"]').value);
-    formData.append('identification', document.querySelector('[name="identification"]').value);
+   // formData.append('walk_down_inspection', document.querySelector('[name="walk_down_inspection"]').value);
+    formData.append('identification', document.querySelector('[name="attach_part_id_labels"]').value);
     formData.append('sign_off_final_assembly', document.querySelector('[name="sign_off_final_assembly"]').value);
     formData.append('comments_final_assembly', document.querySelector('[name="comments_final_assembly"]').value);
     //formData.append('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
 
-    formData.append('final_assembly_file_3', getFileName('final_assembly_file_3'));
-    formData.append('final_assembly_file_2', getFileName('final_assembly_file_2'));
-    formData.append('final_assembly_file_1', getFileName('final_assembly_file_1'));
+    //formData.append('final_assembly_file_3', getFileName('final_assembly_file_3'));
+    //formData.append('final_assembly_file_2', getFileName('final_assembly_file_2'));
+    //formData.append('final_assembly_file_1', getFileName('final_assembly_file_1'));
 
 
     console.log(formData);
@@ -234,15 +191,15 @@ function generateHTMLFromResponse_for_final_assembly(response) {
     html += '<thead><tr>';
     html += '<th style="width:5%;">Final Assembly ID</th>';
     html += '<th style="width:20%;">Process Order</th>';
-    html += '<th style="width:20%;">Walk-down and Visual Inspection</th>';
+   // html += '<th style="width:20%;">Walk-down and Visual Inspection</th>';
     html += '<th style="width:20%;">Identification</th>';
     html += '<th style="width:20%;">Sign-off for Final Assembly</th>';
     html += '<th style="width:20%;">Comments for Final Assembly</th>';
-    html += '<th style="width:20%;">Final Assembly File1</th>';
-    html += '<th style="width:20%;">Final Assembly File2</th>';
-    html += '<th style="width:20%;">Final Assembly File3</th>';
+    //html += '<th style="width:20%;">Final Assembly File1</th>';
+    //html += '<th style="width:20%;">Final Assembly File2</th>';
+    //html += '<th style="width:20%;">Final Assembly File3</th>';
 
-    html += '<th style="width:20%;">Submission Date</th>';
+   // html += '<th style="width:20%;">Submission Date</th>';
     html += '<th style="width:5%;">Created At</th>';
     html += '<th style="width:5%;">Updated At</th>';
     html += '</tr></thead><tbody>';
@@ -251,21 +208,21 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         html += "<tr>";
         html += "<td>" + item.id + "</td>";
         html += "<td>" + item.process_order_number + "</td>";
-        html += "<td>" + item.walk_down_inspection + "</td>";
+      //  html += "<td>" + item.walk_down_inspection + "</td>";
         html += "<td>" + item.identification + "</td>";
         html += "<td>" + item.sign_off_final_assembly + "</td>";
         html += "<td>" + item.comments_final_assembly + "</td>";
-        html += '<td>';
-        if (item.final_assembly_file_1) {
+       // html += '<td>';
+      //  if (item.final_assembly_file_1) {
            
-            var filePath = 'storage/final_assembly_tasks/' + item.process_order_number + '/' + item.final_assembly_file_1;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += downloadLink;
-        } else {
-            html += '-';
-        }
-        html += '</td>';
-        html += '<td>';
+      //      var filePath = 'storage/final_assembly_tasks/' + item.process_order_number + '/' + item.final_assembly_file_1;
+       //     var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+       //     html += downloadLink;
+       // } else {
+      //      html += '-';
+       // }
+       // html += '</td>';
+       /*  html += '<td>';
         if (item.final_assembly_file_2) {
            
             var filePath = 'storage/final_assembly_tasks/' + item.process_order_number + '/' + item.final_assembly_file_2;
@@ -285,7 +242,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
             html += '-';
         }
         html += '</td>';
-        html += "<td>" + item.submission_date + "</td>";
+        html += "<td>" + item.submission_date + "</td>"; */
         html += "<td>" + item.created_at + "</td>";
         html += "<td>" + item.updated_at + "</td>";
         html += "</tr>";
@@ -341,15 +298,19 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     html += '<input type="hidden" name="process_order_number" value="' + item.process_order_number + '"><br>';
 
     // Field for Walk-down and visual inspection
-    html += '<div class="final_assembly_field">';
-    html += '<label>Walk-down and Visual Inspection:</label>';
-    html += '<input type="text" name="walk_down_inspection" value="' + item.walk_down_inspection + '">';
-    html += '</div><br>';
+  // html += '<div class="final_assembly_field">';
+   // html += '<label>Walk-down and Visual Inspection:</label>';
+   // html += '<input type="text" name="walk_down_inspection" value="' + item.walk_down_inspection + '">';
+   // html += '</div><br>';
 
-    // Field for Identification
+  
+
     html += '<div class="final_assembly_field">';
-    html += '<label>Identification:</label>';
-    html += '<input type="text" name="identification" value="' + item.identification + '">';
+    html +=
+        '<label>Identification:part_id_labels:</label>' +
+        (item.identification === "on" ?
+            '<input type="checkbox" id="identification" name="identification" >' :
+            '<input type="checkbox" id="identification" name="identification" disabled>');
     html += '</div><br>';
 
     // Field for Sign-off for Final Assembly
@@ -364,28 +325,8 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     html += '<textarea name="comments_final_assembly">' + item.comments_final_assembly + '</textarea>';
     html += '</div><br>';
 
-    // Field for Final Assembly File 1
-    html += '<div class="final_assembly_field">';
-    html += '<label>Final Assembly File 1:</label>';
-    html += '<input type="file" name="final_assembly_file_1" accept=".pdf,.doc,.docx,.txt">';
-    html += '</div><br>';
-
-    // Field for Final Assembly File 2
-    html += '<div class="final_assembly_field">';
-    html += '<label>Final Assembly File 2:</label>';
-    html += '<input type="file" name="final_assembly_file_2" accept=".pdf,.doc,.docx,.txt">';
-    html += '</div><br>';
-
-    // Field for Final Assembly File 3
-    html += '<div class="final_assembly_field">';
-    html += '<label>Final Assembly File 3:</label>';
-    html += '<input type="file" name="final_assembly_file_3" accept=".pdf,.doc,.docx,.txt">';
-    html += '</div><br>';
-
-    // Field for Status
-    html += '<div class="final_assembly_field">';
-    html += '<label>Status:</label>';
-    // Added Status dropdown
+    
+    
     html += '<div class="fabrication_field">';
     html +=
         '<label>Status:</label>' +
@@ -456,7 +397,7 @@ function viewFinalAssemblyCompleteForm(processOrderNumber) {
         dataType: "json",
         success: function (response) {
             console.log(response);
-            displayFinalAssemblyCompleteResults(response);
+            displayFinalAssemblyCompleteResults(response.data);
         },
         error: function (error) {
             console.error(error);

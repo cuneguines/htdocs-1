@@ -31,68 +31,122 @@ function generateManufacturingFieldTable(processOrder, qualityStep) {
 }
 
 function generateHTMLFromResponse_for_manufacturing(response) {
-    var html = '<table id="common_table">';
-    html += '<thead><tr><th>ID</th><th>Production Drawings</th><th>Production Drawings Document</th><th>BOM</th><th>BOM Document</th><th>Machine Programming</th><th>Machine Programming Document</th><th>NDT Documentation</th><th>NDT Documentation Document</th><th>Quality Documents</th><th>Quality Documents Document</th><th>Sign-off</th><th>Comments</th></tr></thead><tbody>';
-
-
-    $.each(response, function (index, item) {
-        html += '<tr>';
-        html += '<td>' + item.id + '</td>';
-        html += '<td>' + (item.production_drawings === 'true' ? '✔' : '') + '</td>';
+    var html = '<form id="manufacturingForm" class="manufacturing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Engineering</legend>';
+    
+    $.each(response, function(index, item) {
+        html += '<div class="form-group">';
+        html += '<label for="id">ID:</label>';
+        html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="production_drawings">Production Drawings:</label>';
+        html += '<input type="checkbox" id="production_drawings" name="production_drawings" ' + (item.production_drawings === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="production_drawings_document">Production Drawings Document:</label>';
         if (item.production_drawings_document) {
             var filePath = 'storage/manufacturing_task/' + item.process_order_number + '/' + item.production_drawings_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<td>' + downloadLink + '</td>';
+            html += '<input type="file" id="production_drawings_document" name="production_drawings_document">';
+            html += downloadLink;
         } else {
-            html += '<td></td>';
+            html += '<input type="file" id="production_drawings_document" name="production_drawings_document">';
         }
-
-        html += '<td>' + (item.bom === 'true' ? '✔' : '') + '</td>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="bom">BOM:</label>';
+        html += '<input type="checkbox" id="bom" name="bom" ' + (item.bom === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="bom_document">BOM Document:</label>';
         if (item.bom_document) {
             var filePath = 'storage/manufacturing_task/' + item.process_order_number + '/' + item.bom_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<td>' + downloadLink + '</td>';
+            html += '<input type="file" id="bom_document" name="bom_document">';
+            html += downloadLink;
         } else {
-            html += '<td></td>';
+            html += '<input type="file" id="bom_document" name="bom_document">';
         }
-
-        html += '<td>' + (item.machine_programming_files === 'true' ? '✔' : '') + '</td>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="machine_programming_files">Machine Programming:</label>';
+        html += '<input type="checkbox" id="machine_programming_files" name="machine_programming_files" ' + (item.machine_programming_files === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="machine_programming_files_document">Machine Programming Document:</label>';
         if (item.machine_programming_files_document) {
             var filePath = 'storage/manufacturing_task/' + item.process_order_number + '/' + item.machine_programming_files_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<td>' + downloadLink + '</td>';
+            html += '<input type="file" id="machine_programming_files_document" name="machine_programming_files_document">';
+            html += downloadLink;
         } else {
-            html += '<td></td>';
+            html += '<input type="file" id="machine_programming_files_document" name="machine_programming_files_document">';
         }
-
-        html += '<td>' + (item.ndt_documentation === 'true' ? '✔' : '') + '</td>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="ndt_documentation">NDT Documentation:</label>';
+        html += '<input type="checkbox" id="ndt_documentation" name="ndt_documentation" ' + (item.ndt_documentation === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="ndt_documentation_document">NDT Documentation Document:</label>';
         if (item.ndt_documentation_document) {
             var filePath = 'storage/manufacturing_task/' + item.process_order_number + '/' + item.ndt_documentation_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<td>' + downloadLink + '</td>';
+            html += '<input type="file" id="ndt_documentation_document" name="ndt_documentation_document">';
+            html += downloadLink;
         } else {
-            html += '<td></td>';
+            html += '<input type="file" id="ndt_documentation_document" name="ndt_documentation_document">';
         }
-
-        html += '<td>' + (item.quality_documents === 'true' ? '✔' : '') + '</td>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="quality_documents">Quality Documents:</label>';
+        html += '<input type="checkbox" id="quality_documents" name="quality_documents" ' + (item.quality_documents === 'true' ? 'checked' : '') + '>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="quality_documents_document">Quality Documents Document:</label>';
         if (item.quality_documents_document) {
             var filePath = 'storage/manufacturing_task/' + item.process_order_number + '/' + item.quality_documents_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<td>' + downloadLink + '</td>';
+            html += '<input type="file" id="quality_documents_document" name="quality_documents_document">';
+            html += downloadLink;
         } else {
-            html += '<td></td>';
+            html += '<input type="file" id="quality_documents_document" name="quality_documents_document">';
         }
-
-        html += '<td>' + (item.sign_off_manufacturing || '') + '</td>';
-        html += '<td>' + (item.comments_manufacturing || '') + '</td>';
-
-        html += '</tr>';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="sign_off_manufacturing">Sign-off:</label>';
+        html += '<input type="text" id="sign_off_manufacturing" name="sign_off_manufacturing" value="' + (item.sign_off_manufacturing || '') + '">';
+        html += '</div>';
+        
+        html += '<div class="form-group">';
+        html += '<label for="comments_manufacturing">Comments:</label>';
+        html += '<textarea id="comments_manufacturing" name="comments_manufacturing">' + (item.comments_manufacturing || '') + '</textarea>';
+        html += '</div>';
+        
+        html += '<hr>'; // Add a separator between items
     });
-
-    html += '</tbody></table>';
+    
+    
+    html += '</fieldset></form>';
 
     return html;
 }
+
+
+
 
 function generateManufacturingFieldset(processOrder, qualityStep,username) {
   /*   $('#sign_off_manufacturing').val(username);
@@ -261,7 +315,7 @@ function submitManufacturingForm(processOrder) {
 
     var fileData = new FormData();
     var fileInputs = $('[type="file"]');
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_manufacturing"]').value);
 
     fileInputs.each(function (index, fileInput) {
         var files = fileInput.files;
@@ -328,4 +382,113 @@ function resetManufacturingForm() {
     // Show the manufacturing form section if it was hidden
     $('#manufacturingFieldset').show();
 }
+function Manufacturing(processOrder,userName)
+{
+console.log('manufacturing');
+            console.log(userName);
+            $('#planningFieldset').hide();
+            $('#qualityFieldset').hide();
+            $('#manufacturingFieldset').hide();
+            $('#manufacturingFieldset').show();
+            $('#sign_off_manufacturing').val(userName);
+            $('#process_order_number_manufacturing').val(processOrder);
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // Add other headers if needed
+            };
 
+            var formData = {
+                process_order_number: processOrder
+                // Add other form data if needed
+            };
+
+            // Fetch Manufacturing Form Data for the given process order
+            $.ajax({
+                url: '/getManufacturingDataByProcessOrder', // Adjust URL as needed
+                type: 'POST',
+                headers: headers,
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    resetManufacturingForm();
+
+                    console.log(userName);
+                    $('#sign_off_manufacturing').val(userName);
+                    $('#process_order_number_manufacturing').val(processOrder);
+                    // console.log(response.process_order_number);
+                    if (response.data != null) {
+                        console.log('yes po found');
+                        console.log(response);
+                        $.each(response, function(index, item) {
+
+                            console.log(item.process_order_number);
+                            $('#process_order_number_manufacturing').val(item.process_order_number);
+
+
+                            $('input[name="production_drawings"]').prop('checked', item
+                                .production_drawings === 'true');
+                            $('input[name="bom"]').prop('checked', item.bom === 'true');
+                            $('input[name="machine_programming_files"]').prop('checked', item
+                                .machine_programming_files === 'true');
+                            $('input[name="ndt_documentation"]').prop('checked', item
+                                .ndt_documentation === 'true');
+                            $('input[name="quality_documents"]').prop('checked', item
+                                .quality_documents === 'true');
+
+                            // Other fields
+                            $('#sign_off_manufacturing').val(userName);
+                            $('#comments_manufacturing').val(item.comments_manufacturing);
+
+                            // File input fields
+                            $('#production_drawings_filename').text(item
+                                .production_drawings_document);
+                            $('#bom_filename').text(item.bom_document);
+                            $('#machine_programming_files_filename').text(item
+                                .machine_programming_files_document);
+                            $('#ndt_documentation_filename').text(item.ndt_documentation_document);
+                            $('#quality_documents_filename').text(item.quality_documents_document);
+
+                            // Set the labels for file inputs
+                            $('#production_drawings_file_label').show();
+                            $('#bom_file_label').show();
+                            $('#machine_programming_files_file_label').show();
+                            $('#ndt_documentation_file_label').show();
+                            $('#quality_documents_file_label').show();
+
+                            // Attach handlers for file input changes
+                            $('#production_drawings_document').change(function() {
+                                $('#production_drawings_filename').text(this.files[0].name);
+                            });
+
+                            $('#bom_document').change(function() {
+                                $('#bom_filename').text(this.files[0].name);
+                            });
+
+                            $('#machine_programming_files_document').change(function() {
+                                $('#machine_programming_files_filename').text(this.files[0]
+                                    .name);
+                            });
+
+                            $('#ndt_documentation_document').change(function() {
+                                $('#ndt_documentation_filename').text(this.files[0].name);
+                            });
+
+                            $('#quality_documents_document').change(function() {
+                                $('#quality_documents_filename').text(this.files[0].name);
+                            });
+                        });
+                    } else {
+
+                        resetManufacturingForm();
+                        alert('hello');
+                        $('#process_order_number_manufacturing').val(processOrder);
+                        $('#sign_off_manufacturing').val(userName);
+                        $('#manufacturingFieldset').show();
+                    }
+
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }

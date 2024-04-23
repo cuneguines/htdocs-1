@@ -118,6 +118,7 @@ Route::post('/getTestingDataByProcessOrder', [TestingController::class, 'getTest
 Route::post('/getFinishingDataByProcessOrder', [FinishingController::class, 'getFinishingDataByProcessOrder']);
 Route::post('/getSubContractDataByProcessOrder', [SubContractController::class, 'getSubContractDataByProcessOrder']);
 Route::post('/getQualityDataByProcessOrder', [QualityController::class, 'getQualityDataByProcessOrder']);
+Route::post('/getQualityCompleteDataByProcessOrder', [QualityController::class, 'getQualityCompleteDataByProcessOrder']);
 
 
 Route::post('/getEngineerDataByProcessOrder', [EngineerTaableData::class, 'getEngineerDataByProcessOrder']);
@@ -134,6 +135,8 @@ Route::post('/getFinalAssemblyDataByProcessOrder', [FinalAssemblyController::cla
 
 
 Route::post('/upload', [UploadController::class, 'uploadImages']);
-Route::post('/upload_qltyimages', [UploadController::class, 'uploadImages_Quality']);
-Route::post('/getImages_qlty', [UploadController::class, 'getImages_Quality']);
+Route::post('/upload_qltyimages', [QualityController::class, 'uploadImages_Quality']);
+Route::post('/getImages_qlty', [QualityController::class, 'getImages_Quality']);
+Route::post('/upload_completeqltyimages', [QualityController::class, 'uploadImages_CompleteQuality']);
+Route::post('/getImages_completeqlty', [QualityController::class, 'getImages_CompleteQuality']);
 

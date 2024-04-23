@@ -494,69 +494,6 @@ public function uploadImages(Request $request)
     return response()->json(['message' => 'No images uploaded'], 400);
 }
 
-public function uploadImages_Quality(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'process_order_number' => 'required|numeric', // Adjust validation rules as needed
-        'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Max 2MB and allowed file types
-    ]);
-
-    $processOrder = $request->input('process_order_number');
-   // Get the maximum batch number for the process order
-  $maxBatchNumber = ImageDataQlty::where('process_order_id', $processOrder)
-  ->max('batch_number');
-
-    // Determine the new batch number
- $batchNumber = $maxBatchNumber === null ? 1 : $maxBatchNumber + 1;
-    // Check if the process order folder exists, if not, create it
-    $folderPath = 'public/images_qlty/'.$processOrder;
-    if (!\Storage::exists($folderPath)) {
-        \Storage::makeDirectory($folderPath);
-    }
-
-    if ($request->hasFile('images')) {
-        $uploadedImages = [];
-
-        foreach ($request->file('images') as $image) {
-            // Generate a unique name for the image
-            $imageName = time().'_'.$image->getClientOriginalName();
-            
-            // Store the image to the local storage
-            $image->storeAs($folderPath, $imageName);
-
-            // Save image name to the database
-            $newImage = new ImageDataQlty();
-            $newImage->process_order_id = $processOrder;
-            $newImage->filename = $imageName;
-            $newImage->batch_number = $batchNumber; 
-            $newImage->save(); 
-
-            // Keep track of uploaded image names
-            $uploadedImages[] = $imageName;
-        }
-
-        return response()->json(['message' => 'Images uploaded successfully', 'images' => $uploadedImages]);
-    }
-
-    return response()->json(['message' => 'No images uploaded'], 400);
-}
 
 
-public function getImages_Quality(Request $request)
-    {
-        $processOrderId = $request->input('id');
-
-        // Query the database to get the filenames with the highest batch number
-        $filenames = ImageDataQlty::where('process_order_id', $processOrderId)
-            ->where('batch_number', function ($query) {
-                $query->selectRaw('max(batch_number)')
-                    ->from('QUALITY_PACK.dbo.imageData_Qlty')
-                    ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_Qlty.process_order_id');
-            })
-            ->pluck('filename') // Pluck only the filenames
-            ->toArray(); // Convert the collection to an array
-    
-        return response()->json(['filenames' => $filenames]);
-    }
 }

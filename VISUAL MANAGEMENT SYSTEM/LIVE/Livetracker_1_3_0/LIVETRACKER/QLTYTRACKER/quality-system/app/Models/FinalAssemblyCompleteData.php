@@ -12,11 +12,9 @@ class FinalAssemblyCompleteData extends Model
     protected $fillable = [
         'Id',
         'process_order_number',
-        'walk_down_inspection',
+       
         'identification',
-        'final_assembly_file_1',
-        'final_assembly_file_2',
-        'final_assembly_file_3',
+       
         'status',
         'quantity',
         'sign_off_final_assembly',

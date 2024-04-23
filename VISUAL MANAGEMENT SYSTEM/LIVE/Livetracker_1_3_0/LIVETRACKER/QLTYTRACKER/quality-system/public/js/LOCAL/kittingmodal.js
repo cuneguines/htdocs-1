@@ -368,7 +368,7 @@ html += "<td>" + ((item.site_pack === "true" || item.site_pack === "on") ? "✔"
 }
 
 */
-function generateKittingFieldset(processOrder, qualityStep, username) {
+/* function generateKittingFieldset(processOrder, qualityStep, username) {
     $("#sign_off_kitting").val(username);
     return `
     <fieldset>
@@ -435,7 +435,7 @@ function generateKittingFieldset(processOrder, qualityStep, username) {
    
 </fieldset>
     `;
-}
+} */
 
 function submitKittingForm(processOrder) {
     var headers = {
@@ -451,11 +451,14 @@ function submitKittingForm(processOrder) {
     formData.append('bought_out_components', document.querySelector('[name="bought_out_components"]').checked ? "on" : "");
     formData.append('fasteners_fixings', document.querySelector('[name="fasteners_fixings"]').checked ? "on" : "");
     formData.append('site_pack', document.querySelector('[name="site_pack"]').checked ? "on" : "");
-    formData.append('kitting_file', getFileName('kitting_file'));
+    //formData.append('kitting_file', getFileName('kitting_file'));
+    formData.append('kitting_file', (document.querySelector('[name="kitting_file_document"]').files.length > 0)
+    ? document.querySelector('[name="kitting_file_document"]').files[0].name
+    : document.getElementById('kitting_file_filename').textContent.trim());
     formData.append('sign_off_kitting', document.querySelector('[name="sign_off_kitting"]').value);
     formData.append('comments_kitting', document.querySelector('[name="comments_kitting"]').value);
     formData.append('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
-    formData.append('process_order_number', processOrder);
+    formData.append('process_order_number', document.querySelector('[name="process_order_number_kitting"]').value);
     // Add other form fields accordingly
 
     // Send an AJAX request to the server
@@ -481,7 +484,7 @@ function submitKittingForm(processOrder) {
     var fileInputs = $('[type="file"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_kitting"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -582,3 +585,92 @@ function generateHTMLFromResponse_for_kitting(response) {
 
     return html;
 }
+function resetKittingForm() {
+    // Uncheck checkboxes
+    $('input[name="cut_form_mach_parts"]').prop('checked', false);
+    $('input[name="bought_out_components"]').prop('checked', false);
+    $('input[name="fasteners_fixings"]').prop('checked', false);
+    $('input[name="site_pack"]').prop('checked', false);
+
+    // Clear text inputs
+    $('input[name="sign_off_kitting"]').val('');
+    $('textarea[name="comments_kitting"]').val('');
+
+    // Reset file input values and filenames
+    $('input[name="kitting_file"]').val('');
+    $('#kitting_file_filename').text('');
+
+    // Show the kitting form section if it was hidden
+    $('#kittingFieldset').show();
+}
+
+function Kitting(processOrder, userName) {
+    console.log('Kitting');
+    console.log(processOrder);
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#engineeringFieldset').hide();
+    $('#kittingFieldset').hide();
+    $('#kittingFieldset').show();
+    $('input[name="sign_off_kitting"]').val(userName);
+    $('#process_order_number_kitting').val(processOrder);
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    var formData = {
+        process_order_number: processOrder
+        // Add other form data if needed
+    };
+
+    // Fetch Kitting Form Data for the given process order
+    $.ajax({
+        url: '/getKittingDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            resetKittingForm();
+
+            console.log(userName);
+            $('input[name="sign_off_kitting"]').val(userName);
+            if (response.data != null) {
+                console.log('yes po found');
+                console.log(response);
+                $('#process_order_number_kitting').val(processOrder);
+
+                // Set checkbox states
+                $('input[name="cut_form_mach_parts"]').prop('checked', response.data.cut_form_mach_parts === "on");
+                $('input[name="bought_out_components"]').prop('checked', response.data.bought_out_components === "on");
+                $('input[name="fasteners_fixings"]').prop('checked', response.data.fasteners_fixings === "on");
+                $('input[name="site_pack"]').prop('checked', response.data.site_pack === "on");
+
+                // Set other fields
+                $('input[name="sign_off_kitting"]').val(userName);
+                $('textarea[name="comments_kitting"]').val(response.data.comments_kitting);
+
+                // Set file input field
+                if (response.kitting_file_filename !== null) {
+                    $('#kitting_file_filename').text(response.data.kitting_file_filename);
+                }
+
+                // Attach handler for file input change
+                $('input[name="kitting_file_document"]').change(function() {
+                    $('#kitting_file_filename').text(this.files[0].name);
+                });
+            } else {
+                resetKittingForm();
+                $('#process_order_number_kitting').val(processOrder);
+                $('input[name="sign_off_kitting"]').val(userName);
+                $('#kittingFieldset').show();
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
+

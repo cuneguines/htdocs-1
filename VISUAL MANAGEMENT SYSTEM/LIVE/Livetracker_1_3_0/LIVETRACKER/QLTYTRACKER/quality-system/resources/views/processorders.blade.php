@@ -229,18 +229,29 @@
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
-                <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('engineering')
+            </div>
                 <div id="planningFieldset" style="overflow-y:scroll;max-height:500px;display:none">
                     @include('planning')
                 </div>
                 <div id="manufacturingFieldset" style="overflow-y:scroll;max-height:500px;display:none">
                     @include('manufacturing')
                 </div>
-                <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="weldingFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="testingFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('materialprep')
+            </div>
+                <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('kitting')
+            </div>
+                <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('fabrication')</div>
+                <div id="weldingFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('welding')
+            </div>
+                <div id="testingFieldset" style="overflow-y:scroll;max-height:500px">
+                @include('testing')
+            </div>
                 <div id="finishingFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="subcontractFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px"></div>
@@ -259,7 +270,7 @@
                 <div id="engineeringFieldTable" style="width:500px;font-size:14px"></div>
                 <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
                 <div id="manufacturingFieldTable" style="width:1100px;font-size:14px"></div>
-                <div id="materialpreparationFieldTable" style="width:1100px;font-size:14px"></div>
+                <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
                 <div id="kittingFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="fabricationfitupFieldTable" style="width:1100px;font-size:14px"></div>
                 <div id="weldingFieldTable" style="width:1100px;font-size:14px"></div>
@@ -555,115 +566,14 @@
         console.log('i am in openmodal', userName);
         $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
         if (qualityStep === 'Engineering') {
-            var engineeringFieldset = generateEngineeringFieldset(processOrder, qualityStep, userName);
-
-            $('#engineeringFieldset').html(engineeringFieldset);
+           Engineering(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#engineeringFieldset').html('');
+            $('#engineeringFieldset').hide();
         }
 
         if (qualityStep === 'Planning / Forward Engineering') {
-            console.log('planning');
-            console.log(userName);
-            $('#planningFieldset').hide();
-            $('#qualityFieldset').hide();
-           
-            $('#manufacturingFieldset').hide();
-            $('#planningFieldset').show();
-            $('#sign_off_planning').val(userName);
-            $('#process_order_number').val(processOrder);
-
-            var headers = {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                // Add other headers if needed
-            };
-
-            var formData = {
-                process_order_number: processOrder
-                // Add other form data if needed
-            };
-
-            // Fetch Planning Form Data for the given process order
-            $.ajax({
-                url: '/getPlanningDataByProcessOrder', // Adjust URL as needed
-                type: 'POST',
-                headers: headers,
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    resetPlanningForm();
-                    $('#sign_off_planning').val(userName);
-                    // console.log(response.process_order_number);
-                    if (response.data != null) {
-                        console.log('yes po found');
-                        $.each(response, function(index, item) {
-                            $('#process_order_number').val(item.process_order_number);
-
-                            $('input[name="purchase_order_received"]').prop('checked', item
-                                .purchase_order_received === 'true');
-                            $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
-                                .project_schedule_agreed) === 1);
-                            $('input[name="quotation"]').prop('checked', item.quotation === 'true');
-                            $('input[name="verify_customer_expectations"]').prop('checked', item
-                                .verify_customer_expectations === 'true');
-                            $('input[name="project_risk_category_assessment"]').prop('checked', item
-                                .project_risk_category_assessment === 'true');
-
-                            // Other fields
-                            $('#sign_off_planning').val(userName);
-                            $('#comments_planning').val(item.comments_planning);
-
-                            // File input fields
-                            $('#purchase_order_filename').text(item.purchase_order_document);
-                            $('#project_schedule_filename').text(item.project_schedule_document);
-                            $('#quotation_filename').text(item.quotation_document);
-                            $('#user_requirements_filename').text(item
-                                .user_requirement_specifications_document);
-                            $('#pre_engineering_filename').text(item
-                                .pre_engineering_check_document);
-
-                            // Set the labels for file inputs
-                            $('#purchase_order_file_label').show();
-                            $('#project_schedule_file_label').show();
-                            $('#quotation_file_label').show();
-                            $('#user_requirements_file_label').show();
-                            $('#pre_engineering_file_label').show();
-
-                            // Attach handlers for file input changes
-                            $('#purchase_order_document').change(function() {
-                                $('#purchase_order_filename').text(this.files[0].name);
-                            });
-
-                            $('#project_schedule_document').change(function() {
-                                $('#project_schedule_filename').text(this.files[0].name);
-                            });
-
-                            $('#quotation_document').change(function() {
-                                $('#quotation_filename').text(this.files[0].name);
-                            });
-
-                            $('#user_requirement_specifications_document').change(function() {
-                                $('#user_requirements_filename').text(this.files[0].name);
-                            });
-
-                            $('#pre_engineering_check_document').change(function() {
-                                $('#pre_engineering_filename').text(this.files[0].name);
-                            });
-                        });
-                    } else {
-
-                        resetPlanningForm();
-                        $('#sign_off_planning').val(userName);
-                        $('#planningFieldset').show();
-                    }
-
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-
+            Planning(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#planningFieldset').hide();
@@ -678,114 +588,7 @@
 
 
         if (qualityStep === 'Manufacturing Package') {
-            console.log('manufacturing');
-            console.log(userName);
-            $('#planningFieldset').hide();
-            $('#qualityFieldset').hide();
-            $('#manufacturingFieldset').hide();
-            $('#manufacturingFieldset').show();
-            $('#sign_off_manufacturing').val(userName);
-            $('#process_order_number_manufacturing').val(processOrder);
-            var headers = {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                // Add other headers if needed
-            };
-
-            var formData = {
-                process_order_number: processOrder
-                // Add other form data if needed
-            };
-
-            // Fetch Manufacturing Form Data for the given process order
-            $.ajax({
-                url: '/getManufacturingDataByProcessOrder', // Adjust URL as needed
-                type: 'POST',
-                headers: headers,
-                data: formData,
-                dataType: 'json',
-                success: function(response) {
-                    resetManufacturingForm();
-                    
-                    console.log(userName);
-                    $('#sign_off_manufacturing').val(userName);
-                    $('#process_order_number_manufacturing').val(processOrder);
-                    // console.log(response.process_order_number);
-                    if (response.data != null) {
-                        console.log('yes po found');
-                        console.log(response);
-                        $.each(response, function(index, item) {
-                           
-                            console.log(item.process_order_number);
-                            $('#process_order_number_manufacturing').val(item.process_order_number);
-                            
-
-                            $('input[name="production_drawings"]').prop('checked', item
-                                .production_drawings === 'true');
-                            $('input[name="bom"]').prop('checked', item.bom === 'true');
-                            $('input[name="machine_programming_files"]').prop('checked', item
-                                .machine_programming_files === 'true');
-                            $('input[name="ndt_documentation"]').prop('checked', item
-                                .ndt_documentation === 'true');
-                            $('input[name="quality_documents"]').prop('checked', item
-                                .quality_documents === 'true');
-
-                            // Other fields
-                            $('#sign_off_manufacturing').val(userName);
-                            $('#comments_manufacturing').val(item.comments_manufacturing);
-
-                            // File input fields
-                            $('#production_drawings_filename').text(item
-                                .production_drawings_document);
-                            $('#bom_filename').text(item.bom_document);
-                            $('#machine_programming_files_filename').text(item
-                                .machine_programming_files_document);
-                            $('#ndt_documentation_filename').text(item.ndt_documentation_document);
-                            $('#quality_documents_filename').text(item.quality_documents_document);
-
-                            // Set the labels for file inputs
-                            $('#production_drawings_file_label').show();
-                            $('#bom_file_label').show();
-                            $('#machine_programming_files_file_label').show();
-                            $('#ndt_documentation_file_label').show();
-                            $('#quality_documents_file_label').show();
-
-                            // Attach handlers for file input changes
-                            $('#production_drawings_document').change(function() {
-                                $('#production_drawings_filename').text(this.files[0].name);
-                            });
-
-                            $('#bom_document').change(function() {
-                                $('#bom_filename').text(this.files[0].name);
-                            });
-
-                            $('#machine_programming_files_document').change(function() {
-                                $('#machine_programming_files_filename').text(this.files[0]
-                                    .name);
-                            });
-
-                            $('#ndt_documentation_document').change(function() {
-                                $('#ndt_documentation_filename').text(this.files[0].name);
-                            });
-
-                            $('#quality_documents_document').change(function() {
-                                $('#quality_documents_filename').text(this.files[0].name);
-                            });
-                        });
-                    } else {
-
-                        resetManufacturingForm();
-                        alert('hello');
-                        $('#process_order_number_manufacturing').val(processOrder);
-                        $('#sign_off_manufacturing').val(userName);
-                        $('#manufacturingFieldset').show();
-                    }
-
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-
+            Manufacturing(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Manufacturing"
             $('#manufacturingFieldset').hide();
@@ -797,50 +600,34 @@
 
         if (qualityStep === 'Material Preparation') {
 
-            var materialpreparationFieldset = generateMaterialPreparationFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#materialpreparationFieldset').html(materialpreparationFieldset);
+            MaterialPrep(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#materialpreparationFieldset').html('');
+            $('#materialpreparationFieldset').hide();
         }
         if (qualityStep === 'Kitting') {
-
-            var kittingFieldset = generateKittingFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#kittingFieldset').html(kittingFieldset);
+Kitting(processOrder,userName);
+           
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#kittingFieldset').html('');
+            $('#kittingFieldset').hide();
         }
         if (qualityStep === 'Fabrication Fit-Up') {
 
-            var fabricationfitupFieldset = generateFabricationFitUpFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#fabricationfitupFieldset').html(fabricationfitupFieldset);
+            FabricationFitUp(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#fabricationfitupFieldset').html('');
+            $('#fabricationfitupFieldset').hide();
         }
         if (qualityStep === 'Welding') {
-
-            var weldingFieldset = generateWeldingFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#weldingFieldset').html(weldingFieldset);
+Welding(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#weldingFieldset').html('');
+            $('#weldingFieldset').hide();
         }
         if (qualityStep === 'Testing') {
 
-            var testingFieldset = generateTestingFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#testingFieldset').html(testingFieldset);
+          Testing(processOrder,userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#testingFieldset').html('');

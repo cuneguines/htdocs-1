@@ -1,4 +1,90 @@
+
+// Function to handle image upload
+function uploadImages_QLTY() {
+    var imagesInput = document.getElementById('imagesInput');
+    var po = document.querySelector('[name="process_order_number_quality"]').value || null;
+    console.log(po);
+
+    var formData = new FormData();
+    if (imagesInput.files.length > 0) {
+        // Append each selected image to the formData
+        for (var i = 0; i < imagesInput.files.length; i++) {
+            formData.append('images[]', imagesInput.files[i]);
+        }
+
+        // Append other form data if needed
+        formData.append('process_order_number', po);
+        formData.append('uuid', uuid);
+
+        // Send the images using AJAX
+        $.ajax({
+            url: '/upload_qltyimages',
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log('Images uploaded successfully');
+                // Handle success response if needed
+            },
+            error: function (xhr, status, error) {
+                console.error('Error uploading images:', error);
+                // Handle error if needed
+            }
+        });
+    }
+    
+
+}
+function uploadImages_CompleteQLTY() {
+    var imagesInput = document.getElementById('InputImages');
+    var po = document.querySelector('[name="process_order_number_qlty"]').value || null;
+    var uuid_qlty = document.querySelector('[name="uuidDisplay_qlty"]').innerText.trim();
+    console.log(po);
+
+    var formData = new FormData();
+    if (imagesInput.files.length > 0) {
+        // Append each selected image to the formData
+        for (var i = 0; i < imagesInput.files.length; i++) {
+            formData.append('images[]', imagesInput.files[i]);
+        }
+
+        // Append other form data if needed
+        formData.append('process_order_number', po);
+        formData.append('uuid_qlty', uuid_qlty);
+
+        // Send the images using AJAX
+        $.ajax({
+            url: '/upload_completeqltyimages',
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log('Images uploaded successfully');
+                // Handle success response if needed
+            },
+            error: function (xhr, status, error) {
+                console.error('Error uploading images:', error);
+                // Handle error if needed
+            }
+        });
+    }
+    
+
+}
 function submitQualityForm() {
+    uploadImages_QLTY();
+    // Function to handle image upload
+
+
+
     var headers = {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     };
@@ -6,9 +92,11 @@ function submitQualityForm() {
     var formData = {
         process_order_number: document.querySelector('[name="process_order_number_quality"]').value || null,
         walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? 'Yes' : 'No',
+        uuid: document.getElementById('uuidDisplay').textContent || null,
+
         // Add other form fields accordingly
     };
-
+    console.log(formData);
     // Send an AJAX request to the server
     $.ajax({
         url: '/submitQualityForm',
@@ -35,9 +123,9 @@ function generateQualityFieldTable(processOrder) {
     var formData = {
         process_order_number: processOrder,
     };
-   console.log( formData
+    console.log(formData
 
-   );
+    );
     $.ajax({
         url: "/getQualityDataByProcessOrder",
         type: "POST",
@@ -46,17 +134,14 @@ function generateQualityFieldTable(processOrder) {
         dataType: "json",
         success: function (response) {
             console.log(response);
-            if(response!==null)
-            {
-            var generatedHTML = generateHTMLFromResponse_for_quality(response);
+            if (response !== null) {
+                var generatedHTML = generateHTMLFromResponse_for_quality(response);
 
-            $("#qualityFieldTable").html(generatedHTML);
+                $("#qualityFieldTable").html(generatedHTML);
             }
-            else
-
-        {
-            $("#qualityFieldTable").html(''); 
-        }
+            else {
+                $("#qualityFieldTable").html('');
+            }
         },
         error: function (error) {
             console.error(error);
@@ -91,7 +176,7 @@ function generateHTMLFromResponse_for_quality(response) {
             html += '<td id="images_' + item.ID + '">'; // Unique ID for images container
 
             // Call fetchImages to get image URLs
-            fetchImages(item.ID, function(images) {
+            fetchImages(item.ID, function (images) {
                 if (images && images.length > 0) {
                     images.forEach(function (imageUrl) {
                         console.log(imageUrl)
@@ -117,21 +202,22 @@ function generateHTMLFromResponse_for_quality(response) {
             });
         });
     } else if (typeof response === 'object') {
-        console.log(response.ID);
+        console.log(response.uuid);
         html += "<tr>";
-        html += "<td>" + response.ID + "</td>";
+        html += "<td>" + parseInt(response.ID) + "</td>";
         html += "<td>" + response.process_order_number + "</td>";
         html += "<td>" + (response.walk_down_visual_inspection ? "Yes" : "No") + "</td>";
         html += '<td id="images_' + response.ID + '">'; // Unique ID for images container
 
         // Call fetchImages to get image URLs
-        fetchImages(response.process_order_number, function(images) {
+        fetchImages(response.process_order_number, function (images) {
             if (images && images.length > 0) {
-                
+
                 images.forEach(function (imageUrl) {
+                    console.log(imageUrl);
                     html += '<div style="display: inline-block; margin-right: 10px;">';
-                    html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + imageUrl + '" download>';
-                    html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() + '/' + imageUrl + '" style="max-width: 100px; max-height: 100px;"></a></div>';
+                    html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                    html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                 });
             } else {
                 html += '-';
@@ -147,10 +233,10 @@ function generateHTMLFromResponse_for_quality(response) {
 
             html += "</tbody></table>";
             $('#quality_table').html(html);
-            
+
         });
     }
-    return(html);
+    return (html);
 }
 // Function to fetch images for a given ID
 // Function to fetch images for a given ID
@@ -204,28 +290,50 @@ function generateQualityCompleteFieldset(processOrder, qualityStep, username) {
     });
 }
 
-function generateCompleteHTMLFromResponse_for_quality(response) {
+
+
+function generateCompleteHTMLFromResponse_for_quality(item) {
     var html = '<fieldset><legend>Quality Complete</legend>';
+
+
+     // JavaScript code to generate and display UUID
+     const uuidDisplay = document.getElementById('uuidDisplay_qlty');
+
+     // Function to generate UUID
+     function generateUUID() {
+         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+             const r = Math.random() * 16 | 0,
+                 v = c === 'x' ? r : (r & 0x3 | 0x8);
+             return v.toString(16);
+         });
+     }
+
+     // Generate and display UUID
+     const uuid = generateUUID();
+     //uuidDisplay_qlty.textContent =uuid;
     html += '<form id="quality_complete_form">';
 
-    $.each(response, function (index, item) {
+    html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
         html += '<div class="quality_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
+        html += '<label>ID: ' + item.ID + '</label><br>';
+        html += '<div class="quality_item">';
+        html += '<input name="process_order_number_qlty"type="text" value="' + item.process_order_number.trim() + '" readonly>';
 
+      
         // Walk-down and Visual Inspection
         html += '<div class="quality_field">';
         html +=
             '<label>Walk-down and Visual Inspection:</label>' +
-            (item.walk_down_visual_inspection === "Yes" ?
-                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" checked>' :
-                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection">') +
+            (item.walk_down_visual_inspection === "1" ?
+                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" >' :
+                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" disabled>') +
             '</div><br>';
 
         // Upload Images
         html += '<div class="quality_field">';
         html +=
             '<label>Upload Images:</label>' +
-            '<input type="file" name="quality_images" multiple>' +
+            '<input type="file" id="InputImages"name="quality_images" multiple>' +
             '</div><br>';
 
         // Comments
@@ -244,15 +352,17 @@ function generateCompleteHTMLFromResponse_for_quality(response) {
 
         // Submission Date (hidden)
         html += '<input type="hidden" name="submission_date" value="' + new Date().toISOString().split("T")[0] + '">';
-
+       
         html += '</div>'; // Closing div for quality_item
         html += '<hr>'; // Horizontal line for separation
-    });
+
 
     html += '<input type="button" value="Submit" onclick="submitQualityCompleteForm()">';
+    html += '<input type="button" value="View" onclick="viewQualityResults(\'' + item.process_order_number + '\')">';
     html += '</form>';
 
     html += '<div id="quality_complete_results"></div>';
+    html += '<div id="quality_images_container"></div>';
     html += '</fieldset>';
 
     return html;
@@ -261,19 +371,17 @@ function submitQualityCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
-
+    uploadImages_CompleteQLTY();
     var formData = {
         walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? "Yes" : "No",
         comments_quality: document.querySelector('[name="comments_quality"]').value,
         sign_off_quality: document.querySelector('[name="sign_off_quality"]').value,
         submission_date: document.querySelector('[name="submission_date"]').value,
-        process_order_number: 2, // Adjust as needed
+        process_order_number: document.querySelector('[name="process_order_number_qlty"]').value,
+        uuid_qlty: document.querySelector('[name="uuidDisplay_qlty"]').textContent,
     };
-
-    var files = document.querySelector('[name="quality_images"]').files;
-    if (files.length > 0) {
-        formData.quality_images = files;
-    }
+console.log(formData);
+   
 
     $.ajax({
         type: "POST",
@@ -281,8 +389,7 @@ function submitQualityCompleteForm() {
         data: formData,
         headers: headers,
         dataType: "json",
-        contentType: false,
-        processData: false,
+       
         success: function (response) {
             displayQualityResults(response);
             console.log(response);
@@ -316,5 +423,132 @@ function displayQualityResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('quality_complete_results').innerHTML = resultsHtml;
+console.log(values.data.process_order_number);
+    fetchImages_cmplt(values.data.process_order_number, function(images) {
+        //alert('yes');
+        var imagesHtml = '';
+        if (images && images.length > 0) {
+            images.forEach(function(imageUrl) {
+                console.log(imageUrl)
+                imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
+                imagesHtml += '<a href="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+            });
+        } else {
+            imagesHtml += '-';
+        }
+
+        document.getElementById('quality_images_container').innerHTML = imagesHtml;
+    });
+}
+function fetchImages_cmplt(id, callback) {
+
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+    $.ajax({
+        url: '/getImages_completeqlty', // Your API endpoint to fetch images
+        method: 'POST',
+        headers: headers, // Include CSRF token in headers
+        data: {
+            id: id
+        },
+        success: function (response) {
+            callback(response.filenames || []); // Ensure response.filenames is an array or use an empty array
+        },
+        error: function (error) {
+            console.error('Error fetching images:', error);
+            callback([]);
+        }
+    });
 }
 
+function viewQualityResults()
+{
+
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+   var po = document.querySelector('[name="process_order_number_quality"]').value || null;
+
+
+    $.ajax({
+        type: "POST",
+        url: "/getQualityCompleteDataByProcessOrder",
+        data: po,
+        headers: headers,
+        dataType: "json",
+       
+        success: function (response) {
+            displayQualityResultss(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
+function displayQualityResultss(values) {
+    var resultsHtml = '<table id="quality_results_table" style="width:100%; border-collapse: collapse; border: 1px solid #ddd; text-align: left;">';
+    resultsHtml += '<thead><tr style="background-color: #f2f2f2;"><th style="padding: 8px; border-bottom: 1px solid #ddd;">Field</th><th style="padding: 8px; border-bottom: 1px solid #ddd;">Value</th></tr></thead>';
+    resultsHtml += '<tbody>';
+
+    function buildTableRows(obj, prefix) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var value = obj[key];
+                var field = prefix ? prefix + '.' + key : key;
+                if (typeof value === 'object') {
+                    buildTableRows(value, field);
+                } else {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                }
+            }
+        }
+    }
+
+    buildTableRows(values);
+
+    resultsHtml += '</tbody></table>';
+
+    document.getElementById('quality_complete_results').innerHTML = resultsHtml;
+console.log(values.data.process_order_number.trim());
+    fetchImages_cmplt(values.data.process_order_number, function(images) {
+        //alert('yes');
+        var imagesHtml = '';
+        if (images && images.length > 0) {
+            images.forEach(function(imageUrl) {
+                console.log(imageUrl)
+                imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
+                imagesHtml += '<a href="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+            });
+        } else {
+            imagesHtml += '-';
+        }
+
+        document.getElementById('quality_images_container').innerHTML = imagesHtml;
+    });
+}
+function fetchImages_cmplt(id, callback) {
+
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+    $.ajax({
+        url: '/getImages_completeqlty', // Your API endpoint to fetch images
+        method: 'POST',
+        headers: headers, // Include CSRF token in headers
+        data: {
+            id: id
+        },
+        success: function (response) {
+            callback(response.filenames || []); // Ensure response.filenames is an array or use an empty array
+        },
+        error: function (error) {
+            console.error('Error fetching images:', error);
+            callback([]);
+        }
+    });
+}

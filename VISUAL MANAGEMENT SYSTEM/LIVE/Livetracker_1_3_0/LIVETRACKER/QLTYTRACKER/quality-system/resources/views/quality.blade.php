@@ -43,6 +43,7 @@
                         </div>
 
     <!-- Submit button -->
+    <div name="uuidDisplay"id="uuidDisplay"></div>
     <button type="submit" onclick="submitQualityForm()">Submit Quality Checks</button>
 </fieldset>
 
@@ -56,41 +57,25 @@
             }
         });
     }); */
+    
+   
 
-    // Function to handle image upload
-    function uploadImages_QLTY() {
-        var imagesInput = document.getElementById('imagesInput');
-        var po = document.querySelector('[name="process_order_number_quality"]').value || null;
-        console.log(po);
 
-        var formData = new FormData();
+        // JavaScript code to generate and display UUID
+        const uuidDisplay = document.getElementById('uuidDisplay');
 
-        // Append each selected image to the formData
-        for (var i = 0; i < imagesInput.files.length; i++) {
-            formData.append('images[]', imagesInput.files[i]);
+        // Function to generate UUID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0,
+                    v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
         }
 
-        // Append other form data if needed
-        formData.append('process_order_number', po);
-
-        // Send the images using AJAX
-        $.ajax({
-            url: '/upload_qltyimages',
-            type: 'POST',
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            processData: false,
-            contentType: false,
-            success: function (response) {
-                console.log('Images uploaded successfully');
-                // Handle success response if needed
-            },
-            error: function (xhr, status, error) {
-                console.error('Error uploading images:', error);
-                // Handle error if needed
-            }
-        });
-    }
+        // Generate and display UUID
+        const uuid = generateUUID();
+        uuidDisplay.textContent =uuid;
+  
+    
 </script>

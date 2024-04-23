@@ -151,7 +151,7 @@ function generateHTMLFromResponse_for_planning(response) {
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="project_schedule_agreed_' + index + '" style="font-weight: bold;">Project Schedule Agreed:</label>';
-        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed" value="' + (item.project_schedule_agreed === 'true' ? 'on' : '') + '" ' + (item.project_schedule_agreed === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed" value="' + (item.project_schedule_agreed === '1' ? 'on' : '') + '" ' + (item.project_schedule_agreed === '1' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -234,103 +234,6 @@ function generateHTMLFromResponse_for_planning(response) {
 }
 
 
-
-function generatePlanningFieldset(processOrder, qualityStep,username) {
-
-
-    
-  /*   $('#sign_off_planning').val(username);
-    return `
-<fieldset>
-    <legend>Main Task 1: Planning / Forward Engineering</legend>
-
-    <!-- Subtask 1.1: Purchase Order -->
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="purchase_order_received">
-            Purchase Order received
-        </label>
-        <br>
-        <label class="upload-label">
-            Upload Purchase Order Document:
-            <input type="file" name="purchase_order_document">
-        </label>
-    </div>
-
-    <!-- Subtask 1.2: Project Schedule -->
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="project_schedule_agreed">
-            Project schedule agreed
-        </label>
-        <br>
-        <label class="upload-label">
-            Upload Project Schedule Document:
-            <input type="file" name="project_schedule_document">
-        </label>
-    </div>
-
-    <!-- Subtask 1.3: Quotation -->
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="quotation">
-            Quotation
-        </label>
-        <br>
-        <label class="upload-label">
-            Upload Quotation Document:
-            <input type="file" name="quotation_document">
-        </label>
-    </div>
-
-    <!-- Subtask 1.4: User Requirement Specifications -->
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="verify_customer_expectations">
-            Verify customer expectations
-        </label>
-        <br>
-        <label class="upload-label">
-            Upload User Requirement Specifications Document:
-            <input type="file" name="user_requirement_specifications_document">
-        </label>
-    </div>
-
-    <!-- Subtask 1.5: Pre Engineering Check -->
-    <div class="form-group">
-        <label>
-            <input type="checkbox" name="project_risk_category_assessment">
-            Project risk category assessment
-        </label>
-        <br>
-        <label class="upload-label">
-            Upload Pre Engineering Check Document:
-            <input type="file" name="pre_engineering_check_document">
-        </label>
-    </div>
-
-    <!-- Sign-off for Main Task 1 -->
-    <div class="form-group">
-        <label>
-            Sign-off for Planning / Forward Engineering:
-            <input type="text" name="sign_off_planning"value="${username}">
-        </label>
-    </div>
-
-    <!-- Comments for Main Task 1 -->
-    <div class="form-group">
-        <label>
-            Comments for Planning / Forward Engineering:
-            <textarea name="comments_planning" rows="4" cols="50"></textarea>
-        </label>
-    </div>
-
-    <!-- Submit button -->
-    <button type="submit" onclick="submitPlanningForm('${processOrder}')">Submit Planning Form</button>
-</fieldset> `;
-            */
-   
-}
 
 
 
@@ -648,3 +551,106 @@ function resetPlanningForm() {
     $('#pre_engineering_check_document').val('');
     $('#planningFieldset').show();
 }
+function Planning(processOrder,userName)
+{
+console.log('planning');
+            console.log(userName);
+            $('#planningFieldset').hide();
+            $('#qualityFieldset').hide();
+
+            $('#manufacturingFieldset').hide();
+            $('#planningFieldset').show();
+            $('#sign_off_planning').val(userName);
+            $('#process_order_number').val(processOrder);
+
+            var headers = {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // Add other headers if needed
+            };
+
+            var formData = {
+                process_order_number: processOrder
+                // Add other form data if needed
+            };
+
+            // Fetch Planning Form Data for the given process order
+            $.ajax({
+                url: '/getPlanningDataByProcessOrder', // Adjust URL as needed
+                type: 'POST',
+                headers: headers,
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    resetPlanningForm();
+                    $('#sign_off_planning').val(userName);
+                    // console.log(response.process_order_number);
+                    if (response.data != null) {
+                        console.log('yes po found');
+                        $.each(response, function(index, item) {
+                            $('#process_order_number').val(item.process_order_number);
+
+                            $('input[name="purchase_order_received"]').prop('checked', item
+                                .purchase_order_received === 'true');
+                            $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
+                                .project_schedule_agreed) === 1);
+                            $('input[name="quotation"]').prop('checked', item.quotation === 'true');
+                            $('input[name="verify_customer_expectations"]').prop('checked', item
+                                .verify_customer_expectations === 'true');
+                            $('input[name="project_risk_category_assessment"]').prop('checked', item
+                                .project_risk_category_assessment === 'true');
+
+                            // Other fields
+                            $('#sign_off_planning').val(userName);
+                            $('#comments_planning').val(item.comments_planning);
+
+                            // File input fields
+                            $('#purchase_order_filename').text(item.purchase_order_document);
+                            $('#project_schedule_filename').text(item.project_schedule_document);
+                            $('#quotation_filename').text(item.quotation_document);
+                            $('#user_requirements_filename').text(item
+                                .user_requirement_specifications_document);
+                            $('#pre_engineering_filename').text(item
+                                .pre_engineering_check_document);
+
+                            // Set the labels for file inputs
+                            $('#purchase_order_file_label').show();
+                            $('#project_schedule_file_label').show();
+                            $('#quotation_file_label').show();
+                            $('#user_requirements_file_label').show();
+                            $('#pre_engineering_file_label').show();
+
+                            // Attach handlers for file input changes
+                            $('#purchase_order_document').change(function() {
+                                $('#purchase_order_filename').text(this.files[0].name);
+                               
+                            });
+
+                            $('#project_schedule_document').change(function() {
+                                $('#project_schedule_filename').text(this.files[0].name);
+                            });
+
+                            $('#quotation_document').change(function() {
+                                $('#quotation_filename').text(this.files[0].name);
+                            });
+
+                            $('#user_requirement_specifications_document').change(function() {
+                                $('#user_requirements_filename').text(this.files[0].name);
+                            });
+
+                            $('#pre_engineering_check_document').change(function() {
+                                $('#pre_engineering_filename').text(this.files[0].name);
+                            });
+                        });
+                    } else {
+
+                        resetPlanningForm();
+                        $('#sign_off_planning').val(userName);
+                        $('#planningFieldset').show();
+                    }
+
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }

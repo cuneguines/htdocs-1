@@ -1,43 +1,7 @@
 function generateFabricationFitUpFieldset(processOrder, qualityStep, username) {
     $("#sign_off_fabrication_fit_up").val(username);
     return `
-    <fieldset>
-        <legend>Fabrication Fit-Up</legend>
-
-        <!-- Subtask 6.1: Fit-up -->
-        <div class="form-group">
-            <label>Fit-up: Visual check fit up - first off</label>
-            <input type="checkbox" name="fit_up_visual_check">
-        </div>
-
-        <!-- Subtask 6.2: Dimensional check -->
-        <div class="form-group">
-            <label>Dimensional check: Dimensional check first off</label>
-            <input type="checkbox" name="dimensional_check">
-            <label class="upload-label">Link to Drawing: <input type="file" name="link_to_drawing" required></label>
-        </div>
-
-        <!-- Subtask 6.3: Weldment quantity -->
-        <div class="form-group">
-            <label>Weldment quantity: Check qty against Process Order</label>
-            <input type="checkbox" name="weldment_quantity">
-        </div>
-
-        <!-- Sign-off for Fabrication Fit-Up -->
-        <div class="form-group">
-            <label>Sign-off for Fabrication Fit-Up:</label>
-            <input type="text" name="sign_off_fabrication_fit_up" value="${username}">
-        </div>
-
-        <!-- Comments for Fabrication Fit-Up -->
-        <div class="form-group">
-            <label>Comments for Fabrication Fit-Up:</label>
-            <textarea name="comments_fabrication_fit_up" rows="4" cols="50"></textarea>
-        </div>
-
-        <!-- Submit button -->
-        <button type="submit" onclick="submitFabricationFitUpForm('${processOrder}')">Submit Fabrication Fit-Up Form</button>
-    </fieldset>
+    
     `;
 }
 
@@ -382,4 +346,92 @@ function displayFabricationFitUpResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('fabrication_fit_up_complete_results').innerHTML = resultsHtml;
+}
+
+
+function resetFabricationFitUpForm() {
+    // Uncheck checkboxes
+    $('input[name="fit_up_visual_check"]').prop('checked', false);
+    $('input[name="dimensional_check"]').prop('checked', false);
+    $('input[name="weldment_quantity"]').prop('checked', false);
+
+    // Clear text inputs
+    $('input[name="sign_off_fabrication_fit_up"]').val('');
+    $('textarea[name="comments_fabrication_fit_up"]').val('');
+
+    // Reset file input values and filenames
+    $('input[name="link_to_drawing"]').val('');
+    $('#old_drawing_filename').text('');
+
+    // Show the fabrication fit-up form section if it was hidden
+    $('#fabricationFitUpFieldset').show();
+}
+
+function FabricationFitUp(processOrder, userName) {
+    console.log('Fabrication Fit-Up');
+    console.log(processOrder);
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#engineeringFieldset').hide();
+    $('#fabricationfitupFieldset').hide();
+    $('#fabricationfitupFieldset').show();
+    $('input[name="sign_off_fabrication_fit_up"]').val(userName);
+    $('#process_order_number_fabrication_fit_up').val(processOrder);
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    var formData = {
+        process_order_number: processOrder
+        // Add other form data if needed
+    };
+
+    // Fetch Fabrication Fit-Up Form Data for the given process order
+    $.ajax({
+        url: '/getFabricationFitUpDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            resetFabricationFitUpForm();
+
+            console.log(userName);
+            $('input[name="sign_off_fabrication_fit_up"]').val(userName);
+            if (response.data != null) {
+                console.log('yes po found');
+                console.log(response);
+                $('#process_order_number_fabrication_fit_up').val(processOrder);
+
+                // Set checkbox states
+                $('input[name="fit_up_visual_check"]').prop('checked', response.data.FitUpVisualCheck === "true");
+                $('input[name="dimensional_check"]').prop('checked', response.data.DimensionalCheck === "true");
+                $('input[name="weldment_quantity"]').prop('checked', response.data.WeldmentQuantity === "true");
+
+                // Set other fields
+                $('input[name="sign_off_fabrication_fit_up"]').val(userName);
+                $('textarea[name="comments_fabrication_fit_up"]').val(response.data.Comments);
+
+                // Set file input field
+                if (response.data.LinkToDrawing !== null) {
+                    $('#old_drawing_filename').text(response.data.LinkToDrawing);
+                }
+
+                // Attach handler for file input change
+                $('input[name="link_to_drawing"]').change(function() {
+                    $('#old_drawing_filename').text(this.files[0].name);
+                });
+            } else {
+                resetFabricationFitUpForm();
+                $('#process_order_number_fabrication_fit_up').val(processOrder);
+                $('input[name="sign_off_fabrication_fit_up"]').val(userName);
+                $('#fabricationfitupFieldset').show();
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
 }

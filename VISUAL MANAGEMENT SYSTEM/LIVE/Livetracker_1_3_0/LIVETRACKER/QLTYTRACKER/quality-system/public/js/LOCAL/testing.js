@@ -1,99 +1,6 @@
 function generateTestingFieldset(processOrder, qualityStep, username) {
     $("#sign_off_testing").val(username);
-    return `
-    <fieldset>
-    <legend>Testing</legend>
-
-    <!-- Subtask 8.1: Dye Penetrant Procedure -->
-    <div class="form-group">
-        <label>
-            Dye Penetrant Procedure:
-            <input type="checkbox" name="dye_pen_test" onchange="toggleDropdown(this, 'dye_pen_document_ref')">
-            <select name="dye_pen_document_ref" disabled>
-            <option value="NULL">NULL</option>
-            
-                <option value="PED Standard">PED Standard</option>
-                <option value="ASME Standard">ASME Standard</option>
-                <option value="Leak Through Test">Leak Through Test</option>
-                <!-- Add more options as needed -->
-            </select>
-        </label>
-    </div>
-
-    <!-- Subtask 8.2: Hydrostatic Leak Test -->
-    <div class="form-group">
-        <label>
-            Hydrostatic Leak Test:
-            <input type="checkbox" name="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatic_test_document_ref')">
-            <select name="hydrostatic_test_document_ref" disabled>
-            <option value="NULL">NULL</option>
-                <option value="KS-HD-01">KS-HD-01</option>
-               
-                <!-- Add more options as needed -->
-            </select>
-        </label>
-    </div>
-
-    <!-- Subtask 8.3: Pneumatic Leak Test -->
-    <div class="form-group">
-        <label>
-            Pneumatic Leak Test:
-            <input type="checkbox" name="pneumatic_test" onchange="toggleDropdown(this, 'pneumatic_test_document_ref')">
-            <select name="pneumatic_test_document_ref" disabled>
-            <option value="NULL">NULL</option>
-                <option value="KS-PN-01">KS-PN-01</option>
-               
-                <!-- Add more options as needed -->
-            </select>
-        </label>
-    </div>
-
-    <!-- Subtask 8.4: FAT -->
-    <div class="form-group">
-        <label>
-            FAT:
-            <input type="checkbox" name="fat_protocol" onchange="toggleDropdown(this, 'fat_protocol_document_ref')">
-            <select name="fat_protocol_document_ref" disabled>
-            <option value="NULL">NULL</option>
- 
-
-
-                <option value="QF-0226">QF-0226</option>
-                <option value="Custom">Custom</option>
-                
-                <!-- Add more options as needed -->
-            </select>
-        </label>
-    </div>
-
-    <!-- Upload Testing Documents -->
-    <div class="form-group">
-        <label>
-            Upload Testing Documents:
-            <input type="file" name="testing_documents" multiple>
-        </label>
-    </div>
-
-    <!-- Sign-off for Testing -->
-    <div class="form-group">
-        <label>
-            Sign-off for Testing:
-            <input type="text" name="sign_off_testing" value="${username}">
-        </label>
-    </div>
-
-    <!-- Comments for Testing -->
-    <div class="form-group">
-        <label>
-            Comments for Testing:
-            <textarea name="comments_testing" rows="4" cols="50"></textarea>
-        </label>
-    </div>
-
-    <!-- Submit button -->
-    <button type="button" onclick="submitTestingForm('${processOrder}')">Submit Testing Form</button>
-</fieldset>
-    `;
+   
 }
 
 function toggleDropdown(checkbox, dropdownName) {
@@ -119,15 +26,21 @@ function submitTestingForm(processOrder) {
     formData.set('sign_off_testing', document.querySelector('[name="sign_off_testing"]').value);
     formData.set('comments_testing', document.querySelector('[name="comments_testing"]').value);
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
-    formData.set('process_order_number', processOrder);
-
+    formData.set('process_order_number', document.querySelector('[name="process_order_number_testing"]').value);
+    
     // Checkbox values
     formData.set('dye_pen_test', document.querySelector('[name="dye_pen_test"]').checked ? 1 : 0);
     formData.set('hydrostatic_test', document.querySelector('[name="hydrostatic_test"]').checked ? 1 : 0);
     formData.set('pneumatic_test', document.querySelector('[name="pneumatic_test"]').checked ? 1 : 0);
     formData.set('fat_protocol', document.querySelector('[name="fat_protocol"]').checked ? 1 : 0);
 
-    formData.append('testing_document_file_name', getFileName('testing_documents'));
+    var testingDocumentFileName = (document.querySelector('[name="testing_documents"]').files.length > 0)
+    ? document.querySelector('[name="testing_documents"]').files[0].name
+    : document.getElementById('old_testing_documents').textContent.trim();
+
+formData.set('testing_document_file_name', testingDocumentFileName);
+
+    
     console.log(formData);
     // Send an AJAX request to the server
     $.ajax({
@@ -152,7 +65,7 @@ function submitTestingForm(processOrder) {
     var fileInputs = $('[type="file"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_testing"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -502,4 +415,127 @@ function displayTestingCompleteResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('testing_complete_results').innerHTML = resultsHtml;
+}
+function resetTesting() {
+    // Uncheck checkboxes
+    $('input[name="dye_pen_test"]').prop("checked", false);
+    $('input[name="hydrostatic_test"]').prop("checked", false);
+    $('input[name="pneumatic_test"]').prop("checked", false);
+    $('input[name="fat_protocol"]').prop("checked", false);
+
+    // Disable dropdowns
+    $('select[name="dye_pen_document_ref"]').prop("disabled", true);
+    $('select[name="hydrostatic_test_document_ref"]').prop("disabled", true);
+    $('select[name="pneumatic_test_document_ref"]').prop("disabled", true);
+    $('select[name="fat_protocol_document_ref"]').prop("disabled", true);
+
+    // Reset text inputs
+    $('input[name="sign_off_testing"]').val("");
+    $('textarea[name="comments_testing"]').val("");
+
+    // Reset file input values and filenames
+    $('input[name="testing_documents"]').val("");
+    $("#old_testing_documents").text("Old Document Name");
+}
+
+function Testing(processOrder, userName) {
+    console.log("Testing");
+    console.log(processOrder);
+    // Hide other fieldsets
+    $("#planningFieldset").hide();
+    $("#qualityFieldset").hide();
+    $("#manufacturingFieldset").hide();
+    $("#engineeringFieldset").hide();
+    $("#kittingFieldset").hide();
+    $("#weldingFieldset").hide();
+
+    // Show Testing fieldset
+    $("#testingFieldset").show();
+
+    // Set username and process order
+    $('input[name="sign_off_testing"]').val(userName);
+    $("#process_order_number_testing").val(processOrder);
+
+    // Prepare headers and data for AJAX request
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        process_order_number: processOrder,
+    };
+
+    // Fetch Testing Form Data for the given process order
+    $.ajax({
+        url: "/getTestingDataByProcessOrder", // Adjust URL as needed
+        type: "POST",
+        headers: headers,
+        data: formData,
+        dataType: "json",
+        success: function (response) {
+            resetTesting();
+
+            console.log(userName);
+            $('input[name="sign_off_testing"]').val(userName);
+            if (response.data != null) {
+                console.log("Testing data found");
+                console.log(response);
+                $("#process_order_number_testing").val(processOrder);
+
+                // Set checkbox states
+                $('input[name="dye_pen_test"]').prop(
+                    "checked",
+                    response.data.dye_pen_test === "1"
+                );
+                $('input[name="hydrostatic_test"]').prop(
+                    "checked",
+                    response.data.hydrostatic_test === "1"
+                );
+                $('input[name="pneumatic_test"]').prop(
+                    "checked",
+                    response.data.pneumatic_test === "1"
+                );
+                $('input[name="fat_protocol"]').prop(
+                    "checked",
+                    response.data.fat_protocol === "1"
+                );
+
+                // Set other fields
+                $('input[name="sign_off_testing"]').val(userName);
+                $('textarea[name="comments_testing"]').val(
+                    response.data.comments_testing
+                );
+
+                // Set dropdown selections
+                $('select[name="dye_pen_document_ref"]').val(
+                    response.data.dye_pen_document_ref
+                );
+                $('select[name="hydrostatic_test_document_ref"]').val(
+                    response.data.hydrostatic_test_document_ref
+                );
+                $('select[name="pneumatic_test_document_ref"]').val(
+                    response.data.pneumatic_test_document_ref
+                );
+                $('select[name="fat_protocol_document_ref"]').val(
+                    response.data.fat_protocol_document_ref
+                );
+
+
+                $('#old_testing_documents').text(response.data.testing_document_file_name);
+
+                $('#testing_documents').change(function() {
+                    $('#old_testing_documents').text(this.files[0].name);
+                   
+                });
+            } else {
+                resetTesting();
+                $("#process_order_number_testing").val(processOrder);
+                $('input[name="sign_off_testing"]').val(userName);
+                $("#testingFieldset").show();
+            }
+        },
+        error: function (error) {
+            console.error(error);
+        },
+    });
 }
