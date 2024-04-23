@@ -1,97 +1,6 @@
 function generateFinishingFieldset(processOrder, qualityStep, username) {
     $("#sign_off_finishing").val(username);
-    return `
-    <fieldset>
-    <legend>Finishing</legend>
-
-    <!-- Subtask 9.1: Pickle and Passivate -->
-    <div class="form-group">
-        <label>
-            Pickle and Passivate:
-            <input type="checkbox" name="pickle_passivate_test" onchange="toggleDropdown(this, 'pickle_passivate_document_ref')">
-            <select name="pickle_passivate_document_ref" disabled>
-            <option value="NULL">NULL</option>
-                <option value="Document_REF_1">Document REF 1</option>
-                <option value="Document_REF_2">Document REF 2</option>
-                <option value="Document_REF_3">Document REF 3</option>
-                <!-- Add more options as needed -->
-            </select>
-        </label>
-    </div>
-
-    <!-- Upload Pickle and Passivate Documents -->
-    <div class="form-group">
-        <label>
-            Upload Pickle and Passivate Documents:
-            <input type="file" name="pickle_passivate_documents" multiple>
-        </label>
-    </div>
-
-    <!-- Subtask 9.2: Select Kent Finish -->
-    <div class="form-group">
-        <label>
-            Select Kent Finish:
-            <input type="checkbox" name="select_kent_finish_test" onchange="toggleDropdown(this, 'select_kent_finish_document_ref')">
-            <select name="select_kent_finish_document_ref" disabled>
-            <option value="NULL">NULL</option>
-            <option value="SOP-0312">Acid Dip Pickle and Passivate [KF1]</option>
-            <option value="SOP-0770">KF1 (B) Acid Dip and Passivation</option>
-            <option value="SOP-0313">Spray Pickle and Passivate [KF2]</option>
-            <option value="SOP-0314">Tig Mop Cleaning [KF3]</option>
-            <option value="SOP-0315">Bead Blasting [KF4]</option>
-            <option value="SOP-0316">Hot Rolled Electro-Polished [KF5]</option>
-            <option value="SOP-0317">Cold Rolled Electro-Polished [KF6]</option>
-            <option value="SOP-0318">Electro-Polished Glass Bead Blasting [KF7]</option>
-            <option value="SOP-0319">Electro-Polished Brushed 320 Grit [KF8]</option>
-            <option value="SOP-0320">320 Grit Brushed Finish [0.5 Ra] [KF9]</option>
-            <option value="Sub-Con Painted stainless steel">Painted stainless steel [KF10]</option>
-            <option value="Sub-Con Painted mild steel">Painted mild steel [KF11]</option>
-            <option value="Sub-Con Powder coated stainless steel">Powder coated stainless steel [KF12]</option>
-            <option value="Sub-Con Powder coated mild steel">Powder coated mild steel[KF13]</option>
-            <option value="Sub-Con Hot Dip Galvanising">Hot Dip Galvanising [KF14]</option>
-            <option value="Sub-Con Hot Dip Galvanised Duplex coating [powder coated]">Hot Dip Galvanised Duplex coating [powder coated] [KF15]</option>
-            <option value="Sub-Con Corten steel">Corten steel [KF16]</option>
-            <option value="SOP-0321">Welds as laid - refer to weld map [KF17]</option>
-            <option value="SOP-0322">Welds ground Flush - refer to weld map [KF18]</option>
-            <option value="SOP-0323">Welds Blended and Buffed - refer to weld map [KF19]</option>
-            <option value="SOP-0430">Waxed Bead Blasting [KF20]</option>
-            <option value="Sub-Con Anodised Aluminium">Anodised Aluminium[ KF21]</option>
-            <option value="SOP-0570">Oiled Mild Steel [KF 22]</option>
-            <option value="Sub-Con ZINGA coating mild steel">ZINGA coating mild steel [KF 23]</option>
-            <!-- Add more options as needed -->
-        </select>
-        
-        </label>
-    </div>
-
-    <!-- Upload Select Kent Finish Documents -->
-    <div class="form-group">
-        <label>
-            Upload Select Kent Finish Documents:
-            <input type="file" name="select_kent_finish_documents" multiple>
-        </label>
-    </div>
-
-    <!-- Sign-off for Finishing -->
-    <div class="form-group">
-        <label>
-            Sign-off for Finishing:
-            <input type="text" name="sign_off_finishing" value="${username}">
-        </label>
-    </div>
-
-    <!-- Comments for Finishing -->
-    <div class="form-group">
-        <label>
-            Comments for Finishing:
-            <textarea name="comments_finishing" rows="4" cols="50"></textarea>
-        </label>
-    </div>
-
-    <!-- Submit button -->
-    <button type="button" onclick="submitFinishingForm('${processOrder}')">Submit Finishing Form</button>
-</fieldset>
-    `;
+    
 }
 
 
@@ -109,14 +18,24 @@ function submitFinishingForm(processOrder) {
     var formData = new FormData();
     formData.set('pickle_passivate_test', document.querySelector('[name="pickle_passivate_test"]').checked ? 1 : 0);
     formData.set('pickle_passivate_document_ref', document.querySelector('[name="pickle_passivate_document_ref"]').value);
-    formData.set('pickle_passivate_document_file_name', getFileName('pickle_passivate_documents'));
+    //formData.set('pickle_passivate_document_file_name', getFileName('pickle_passivate_documents'));
+
+   
+    formData.set('pickle_passivate_document_file', (document.querySelector('[name="pickle_passivate_documents"]').files.length > 0)
+    ? document.querySelector('[name="pickle_passivate_documents"]').files[0].name
+    : document.getElementById('old_pickle_passivate_documents').textContent.trim());
+
     formData.set('select_kent_finish_test', document.querySelector('[name="select_kent_finish_test"]').checked ? 1 : 0);
     formData.set('select_kent_finish_document_ref', document.querySelector('[name="select_kent_finish_document_ref"]').value);
-    formData.set('select_kent_finish_document_file_name', getFileName('select_kent_finish_documents'));
+    //formData.set('select_kent_finish_document_file_name', getFileName('select_kent_finish_documents'));
+
+    formData.set('select_kent_finish_document_file', (document.querySelector('[name="select_kent_finish_documents"]').files.length > 0)
+    ? document.querySelector('[name="select_kent_finish_documents"]').files[0].name
+    : document.getElementById('old_select_kent_finish_documents').textContent.trim());
     formData.set('sign_off_finishing', document.querySelector('[name="sign_off_finishing"]').value);
     formData.set('comments_finishing', document.querySelector('[name="comments_finishing"]').value);
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
-    formData.set('process_order_number', processOrder);
+    formData.set('process_order_number', document.querySelector('[name="process_order_number_finishing"]').value);
 
     console.log(formData);
 
@@ -143,7 +62,7 @@ function submitFinishingForm(processOrder) {
     var fileInputs = $('[name="pickle_passivate_documents"], [name="select_kent_finish_documents"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_finishing"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -264,3 +183,361 @@ function generateHTMLFromResponse_for_finishing(response) {
     return html;
 }
 
+
+
+function generateFinishingFieldTable(processOrder, qualityStep) {
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        process_order_number: processOrder,
+    };
+
+    $.ajax({
+        url: "/getFinishingDataByProcessOrder",
+        type: "POST",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            var generatedHTML =
+                generateHTMLFromResponse_for_finishing(response);
+
+            $("#finishingFieldTable").html(generatedHTML);
+        },
+        error: function (error) {
+            console.error(error);
+        },
+    });
+
+    return `
+            <div>To be Done</div>
+        `;
+}
+
+function generateHTMLFromResponse_for_finishing(response) {
+    var html = '<table id="common_table" style="width:100%;">';
+    // Add table headers
+    html += '<thead><tr>';
+    // Add table header cells
+    html += '<th style="width:5%;">ID</th>';
+    html += '<th style="width:20%;">Process Order</th>';
+    html += '<th style="width:20%;">Pickle and Passivate</th>';
+    html += '<th style="width:20%;">Pickle and Passivate Documents</th>';
+    html += '<th style="width:20%;">Select Kent Finish</th>';
+    html += '<th style="width:20%;">Select Kent Finish Documents</th>';
+    html += '<th style="width:20%;">Sign-off for Finishing</th>';
+    html += '<th style="width:20%;">Comments for Finishing</th>';
+    html += '<th style="width:20%;">Submitted Date Time</th>';
+    html += '<th style="width:5%;">Created At</th>';
+    html += '<th style="width:5%;">Updated At</th>';
+    html += '</tr></thead><tbody>';
+
+    // Loop through response data and populate table rows
+    $.each(response, function (index, item) {
+        html += "<tr>";
+        html += "<td>" + item.id + "</td>";
+        html += "<td>" + item.process_order_number + "</td>";
+        html += "<td>" + item.pickle_passivate_test + "</td>";
+        html += "<td>" + item.pickle_passivate_document_file_name + "</td>";
+        html += "<td>" + item.select_kent_finish_test + "</td>";
+        html += "<td>" + item.select_kent_finish_document_file_name + "</td>";
+        html += "<td>" + item.sign_off_finishing + "</td>";
+        html += "<td>" + item.comments_finishing + "</td>";
+        html += "<td>" + item.submission_date + "</td>";
+        html += "<td>" + item.created_at + "</td>";
+        html += "<td>" + item.updated_at + "</td>";
+        html += "</tr>";
+    });
+
+    // Close table body and table
+    html += "</tbody></table>";
+
+    return html;
+}
+
+function generateFinishingCompleteFieldset(processOrder, qualityStep, username) {
+    var formData = {
+        process_order_number: processOrder,
+    };
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    $("#sign_off_finishing").val(username);
+
+    $.ajax({
+        url: "/getFinishingDataByProcessOrder",
+        type: "POST",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+
+            if (response.data !== null) {
+                var generatedHTML = generateCompleteHTMLFromResponse_for_finishing(response.data);
+                $("#finishingCompleteFieldTable").html(generatedHTML);
+            } else {
+                $("#finishingCompleteFieldTable").html('');
+            }
+        },
+        error: function (error) {
+            console.error(error);
+        },
+    });
+}
+
+function generateCompleteHTMLFromResponse_for_finishing(item) {
+    var html = '<fieldset><legend>Finishing Complete</legend>';
+    html += '<form id="finishing_complete_form">';
+
+    // Add form fields based on the response data
+    html += '<div class="finishing_item">';
+    html += '<label>ID: ' + item.id + '</label><br>';
+    html += '<input type="hidden" name="process_order_number_f" value="' + item.process_order_number + '"><br>';
+
+    // Add checkboxes for Pickle and Passivate and Select Kent Finish
+    html += '<div class="finishing_field">';
+    html +=
+        '<label>Pickle and Passivate:</label>' +
+        (item.pickle_passivate_test === "1" ?
+            '<input type="checkbox" id="pickle_passivate_test" name="pickle_passivate_test" >' :
+            '<input type="checkbox" id="pickle_passivate_test" name="pickle_passivate_test" disabled>');
+    html += '</div><br>';
+
+    html += '<div class="finishing_field">';
+    html +=
+        '<label>Select Kent Finish:</label>' +
+        (item.select_kent_finish_test === "1" ?
+            '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" >' :
+            '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" disabled>');
+    html += '</div><br>';
+
+    // Add input fields for document references and file uploads
+    html += '<div class="finishing_field">';
+    html +=
+        '<label>Pickle and Passivate Document Ref:</label>' +
+        '<input type="text" name="pickle_passivate_document_ref" value="' + item.pickle_passivate_document_ref + '" disabled>';
+    html += '</div><br>';
+
+    html += '<div class="finishing_field">';
+    html +=
+        '<label>Select Kent Finish Document Ref:</label>' +
+        '<input type="text" name="select_kent_finish_document_ref" value="' + item.select_kent_finish_document_ref + '" disabled>';
+    html += '</div><br>';
+
+    html += '<div class="finishing_field">';
+    html +=
+        '<label>Comments:</label>' +
+        '<input type="text" name="comments_finishing" value="' + item.comments_finishing + '">';
+    html += '</div><br>';
+
+ // Dropdown for status
+ html += '<div class="finishing_field">';
+ html +=
+     '<label>Status:</label>' +
+     '<select id="status" name="status">' +
+     '<option value="Completed" ' + (item.status === "Completed" ? 'selected' : '') + '>Completed</option>' +
+     '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
+     '</select>';
+ html += '</div><br>';
+
+ // Quantity Field
+ html += '<div class="finishing_field">';
+ html +=
+     '<label>Quantity:</label>' +
+     '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
+ html += '</div><br>';
+
+    html += '<input type="button" value="Submit" onclick="submitFinishingCompleteForm()">';
+    html += '  <input type="button" value="View" onclick="viewFinishingCompleteForm()">';
+    html += '</form>';
+
+    html += '<div id="finishing_complete_results"></div>';
+    html += '</fieldset>';
+
+    return html;
+}
+
+function submitFinishingCompleteForm() {
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        // Populate form data from the form fields
+        process_order_number: document.querySelector('[name="process_order_number_f"]').value,
+        pickle_passivate_test: document.querySelector('[name="pickle_passivate_test"]').checked ? "1" : "0",
+        select_kent_finish_test: document.querySelector('[name="select_kent_finish_test"]').checked ? "1" : "0",
+        pickle_passivate_document_ref: document.querySelector('[name="pickle_passivate_document_ref"]').value,
+        select_kent_finish_document_ref: document.querySelector('[name="select_kent_finish_document_ref"]').value,
+        comments_finishing: document.querySelector('[name="comments_finishing"]').value,
+        sign_off_finishing: document.querySelector('[name="sign_off_finishing"]').value,
+        submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
+
+        status: document.querySelector('#status').value, // Adding status field
+        quantity: document.querySelector('[name="quantity"]').value, // Adding quantity field
+        // Add other form fields accordingly
+    };
+console.log(formData);
+    $.ajax({
+        type: "POST",
+        url: "/submitFinishingCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+function viewFinishingCompleteForm() {
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        process_order_number: document.querySelector('[name="process_order_number"]').value,
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/viewFinishingCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            displayFinishingCompleteResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
+function displayFinishingCompleteResults(values) {
+    var resultsHtml = '<table id="complete_finishing_results_table" style="width:100%; border: 1px solid #ddd; text-align: left;">';
+    resultsHtml += '<thead><tr style="background-color: #f2f2f2;"><th style="padding: 8px; border-bottom: 1px solid #ddd;">Field</th><th style="padding: 8px; border-bottom: 1px solid #ddd;">Value</th></tr></thead>';
+    resultsHtml += '<tbody>';
+
+    function buildTableRows(obj, prefix) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var value = obj[key];
+                var field = prefix ? prefix + '.' + key : key;
+                if (typeof value === 'object') {
+                    buildTableRows(value, field);
+                } else {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                }
+            }
+        }
+    }
+
+    buildTableRows(values);
+
+    resultsHtml += '</tbody></table>';
+
+    document.getElementById('finishing_complete_results').innerHTML = resultsHtml;
+}
+
+
+function resetFinishingForm() {
+    // Uncheck checkboxes
+    $('input[name="pickle_passivate_test"]').prop('checked', false);
+    $('input[name="select_kent_finish_test"]').prop('checked', false);
+
+    // Clear text inputs
+    $('input[name="sign_off_finishing"]').val('');
+    $('textarea[name="comments_finishing"]').val('');
+
+    // Reset file input values and filenames
+    $('input[name="pickle_passivate_documents"]').val('');
+    $('#old_pickle_passivate_documents').text('');
+    $('input[name="select_kent_finish_documents"]').val('');
+    $('#old_select_kent_finish_documents').text('');
+
+    // Show the finishing form section if it was hidden
+    $('#finishingFieldset').show();
+}
+
+function Finishing(processOrder, userName) {
+    console.log('Finishing');
+    console.log(processOrder);
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#engineeringFieldset').hide();
+    $('#finishingFieldset').hide();
+    $('#finishingFieldset').show();
+    $('input[name="sign_off_finishing"]').val(userName);
+    $('#process_order_number_finishing').val(processOrder);
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    var formData = {
+        process_order_number: processOrder
+        // Add other form data if needed
+    };
+
+    // Fetch Finishing Form Data for the given process order
+    $.ajax({
+        url: '/getFinishingDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            resetFinishingForm();
+
+            console.log(userName);
+            $('input[name="sign_off_finishing"]').val(userName);
+            if (response.data != null) {
+                console.log('Finishing data found');
+                console.log(response);
+                $('#process_order_number_finishing').val(processOrder);
+
+                // Set checkbox states
+                $('input[name="pickle_passivate_test"]').prop('checked', response.data.pickle_passivate_test === "1");
+                $('input[name="select_kent_finish_test"]').prop('checked', response.data.select_kent_finish_test === "1");
+
+                // Set other fields
+                $('input[name="sign_off_finishing"]').val(userName);
+                $('textarea[name="comments_finishing"]').val(response.data.comments_finishing);
+
+                // Set file input field
+                if (response.data.pickle_passivate_document_file !== null) {
+                    $('#old_pickle_passivate_documents').text(response.data.pickle_passivate_document_file);
+                }
+                if (response.data.select_kent_finish_document_file !== null) {
+                    $('#old_select_kent_finish_documents').text(response.data.select_kent_finish_document_file);
+                }
+
+                // Attach handler for file input change
+                $('input[name="pickle_passivate_documents"]').change(function() {
+                    $('#old_pickle_passivate_documents').text(this.files[0].name);
+                });
+                $('input[name="select_kent_finish_documents"]').change(function() {
+                    $('#old_select_kent_finish_documents').text(this.files[0].name);
+                });
+            } else {
+                resetFinishingForm();
+                $('#process_order_number_finishing').val(processOrder);
+                $('input[name="sign_off_finishing"]').val(userName);
+                $('#finishingFieldset').show();
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}

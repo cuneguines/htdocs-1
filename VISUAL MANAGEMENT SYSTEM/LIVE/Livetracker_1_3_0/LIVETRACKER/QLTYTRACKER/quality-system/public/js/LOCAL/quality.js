@@ -211,6 +211,7 @@ function generateHTMLFromResponse_for_quality(response) {
 
         // Call fetchImages to get image URLs
         fetchImages(response.process_order_number, function (images) {
+           // alert('OK');
             if (images && images.length > 0) {
 
                 images.forEach(function (imageUrl) {
@@ -241,7 +242,7 @@ function generateHTMLFromResponse_for_quality(response) {
 // Function to fetch images for a given ID
 // Function to fetch images for a given ID
 function fetchImages(id, callback) {
-
+console.log(id);
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
@@ -253,6 +254,7 @@ function fetchImages(id, callback) {
             id: id
         },
         success: function (response) {
+            console.log(response);
             callback(response.filenames || []); // Ensure response.filenames is an array or use an empty array
         },
         error: function (error) {

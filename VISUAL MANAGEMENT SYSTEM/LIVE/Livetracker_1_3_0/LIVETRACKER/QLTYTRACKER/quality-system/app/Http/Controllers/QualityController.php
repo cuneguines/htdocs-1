@@ -134,6 +134,8 @@ public function getImages_Quality(Request $request)
     {
         $processOrderId = $request->input('id');
 // Query to get the UUID from the QualityFormData table
+$processOrderId = $request->input('id');
+
 $qualityData = QualityFormData::where('process_order_number', $processOrderId)
 ->orderBy('updated_at', 'desc')
 ->first();

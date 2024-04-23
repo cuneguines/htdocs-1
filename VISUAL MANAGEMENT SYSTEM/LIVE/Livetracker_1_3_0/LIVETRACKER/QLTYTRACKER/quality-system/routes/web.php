@@ -64,6 +64,9 @@ Route::post('/submitManufacturingForm', [ManufacturingController::class, 'submit
 Route::post('/submitMaterialPreparationForm', [MaterialPreparationController::class, 'submitMaterialPreparationForm']);
 Route::post('/submitMaterialCompletePreparationForm', [MaterialTableDataCompleteController::class, 'submitMaterialPreparationCompleteForm']);
 Route::post('/submitKittingCompleteForm', [KittingController::class, 'submitKittingCompleteForm']);
+Route::post('/submitFinishingCompleteForm', [FinishingController::class, 'submitFinishingCompleteForm']);
+
+
 Route::post('/submitKittingForm', [KittingController::class, 'submitKittingForm'])->name('submit.kitting.form');
 Route::post('/submitFabricationFitUpForm', [FabricationFitUpController::class, 'submitFabricationFitUpForm']);
 Route::post('/submitFabricationCompleteFitUpForm', [FabricationFitUpTableDataCompleteController::class, 'submitFabricationCompleteFitUpForm']);
@@ -100,6 +103,8 @@ Route::post('/viewFinalAssemblyCompleteForm', [FinalAssemblyController::class, '
 Route::post('/viewKittingCompleteForm', [KittingController::class, 'viewKittingCompleteForm']);
 Route::post('/viewWeldingCompleteForm', [WeldingController::class, 'viewWeldingCompleteForm']);
 Route::post('/viewTestingCompleteForm', [TestingController::class, 'viewTestingCompleteForm']);
+Route::post('/viewFinishingCompleteForm', [FinishingController::class, 'viewFinishingCompleteForm']);
+
 Route::post('/handleFileUploadEngineer', [UploadController::class, 'handleFileUploadEngineer']);
 Route::post('/handleFileUploadPlanning', [UploadController::class, 'handleFileUploadPlanning']);
 Route::post('/handleFileUploadManufacturing', [UploadController::class, 'handleFileUploadManufacturing']);

@@ -230,8 +230,8 @@
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('engineering')
-            </div>
+                    @include('engineering')
+                </div>
                 <div id="planningFieldset" style="overflow-y:scroll;max-height:500px;display:none">
                     @include('planning')
                 </div>
@@ -239,27 +239,31 @@
                     @include('manufacturing')
                 </div>
                 <div id="materialpreparationFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('materialprep')
-            </div>
+                    @include('materialprep')
+                </div>
                 <div id="kittingFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('kitting')
-            </div>
+                    @include('kitting')
+                </div>
                 <div id="fabricationfitupFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('fabrication')</div>
+                    @include('fabrication')</div>
                 <div id="weldingFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('welding')
-            </div>
+                    @include('welding')
+                </div>
                 <div id="testingFieldset" style="overflow-y:scroll;max-height:500px">
-                @include('testing')
-            </div>
-                <div id="finishingFieldset" style="overflow-y:scroll;max-height:500px"></div>
-                <div id="subcontractFieldset" style="overflow-y:scroll;max-height:500px"></div>
+                    @include('testing')
+                </div>
+                <div id="finishingFieldset" style="overflow-y:scroll;max-height:500px">
+                    @include('finishing')
+                </div>
+                <div id="subcontractFieldset" style="overflow-y:scroll;max-height:500px">
+                    @include('subcontract')
+                </div>
                 <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="documentationFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="packingtransportFieldset" style="overflow-y:scroll;max-height:500px"></div>
                 <div id="qualityFieldset" style="overflow-y:scroll;max-height:500px;display:none">
-                @include('quality')
-</div>
+                    @include('quality')
+                </div>
             </div>
         </div>
         <!-- Your table HTML -->
@@ -302,6 +306,7 @@
             <div id="finalassemblyCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             <div id="documentationCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
             <div id="packingtransportCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
+            <div id="qualityCompleteFieldTable" style="overflow-y:scroll;max-height:500px"></div>
 
         </div>
     </div>
@@ -369,7 +374,7 @@
                     } else {
                         // If no data is returned
                         document.getElementById('lineItemsContainer').style.display =
-                        'none';
+                            'none';
                     }
                 },
                 error: function(error) {
@@ -566,14 +571,14 @@
         console.log('i am in openmodal', userName);
         $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
         if (qualityStep === 'Engineering') {
-           Engineering(processOrder,userName);
+            Engineering(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#engineeringFieldset').hide();
         }
 
         if (qualityStep === 'Planning / Forward Engineering') {
-            Planning(processOrder,userName);
+            Planning(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#planningFieldset').hide();
@@ -588,7 +593,7 @@
 
 
         if (qualityStep === 'Manufacturing Package') {
-            Manufacturing(processOrder,userName);
+            Manufacturing(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Manufacturing"
             $('#manufacturingFieldset').hide();
@@ -606,51 +611,45 @@
             $('#materialpreparationFieldset').hide();
         }
         if (qualityStep === 'Kitting') {
-Kitting(processOrder,userName);
-           
+            Kitting(processOrder, userName);
+
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#kittingFieldset').hide();
         }
         if (qualityStep === 'Fabrication Fit-Up') {
 
-            FabricationFitUp(processOrder,userName);
+            FabricationFitUp(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#fabricationfitupFieldset').hide();
         }
         if (qualityStep === 'Welding') {
-Welding(processOrder,userName);
+            Welding(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#weldingFieldset').hide();
         }
         if (qualityStep === 'Testing') {
 
-          Testing(processOrder,userName);
+            Testing(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#testingFieldset').html('');
+            $('#testingFieldset').hide();
         }
         if (qualityStep === 'Finishing') {
 
-            var finishingFieldset = generateFinishingFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#finishingFieldset').html(finishingFieldset);
+            Finishing(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#finishingFieldset').html('');
+            $('#finishingFieldset').hide();
         }
         if (qualityStep === 'Sub-Contract') {
 
-            var subcontractFieldset = generateSubContractFieldset(processOrder, qualityStep,
-                userName);
-
-            $('#subcontractFieldset').html(subcontractFieldset);
+            Subcontract(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
-            $('#subcontractFieldset').html('');
+            $('#subcontractFieldset').hide();
         }
         if (qualityStep === 'Final Assembly') {
             $('#qualityFieldset').hide();
@@ -687,7 +686,7 @@ Welding(processOrder,userName);
             $('#qualityFieldset').show();
             $('#process_order_number_quality').val(processOrder);
 
-        }else{
+        } else {
             $('#qualityFieldset').hide();
         }
 
@@ -757,11 +756,10 @@ Welding(processOrder,userName);
         } else if (qualityStep === 'Packing and Transport') {
             var packingtransportFieldsetTable = generatePackingTransportFieldTable(processOrder, qualityStep);
             $('#packingtransportFieldTable').html(packingtransportFieldsetTable).show();
-        }
-     else if (qualityStep === 'Quality') {
-console.log('yes i am in quality')
-$('#qualityFieldTable').hide();
-        var qualityFieldsetTable = generateQualityFieldTable(processOrder, qualityStep);
+        } else if (qualityStep === 'Quality') {
+            console.log('yes i am in quality')
+            $('#qualityFieldTable').hide();
+            var qualityFieldsetTable = generateQualityFieldTable(processOrder, qualityStep);
             console.log(qualityFieldsetTable);
             $('#qualityFieldTable').html(qualityFieldsetTable).show();
         }
@@ -783,8 +781,12 @@ $('#qualityFieldTable').hide();
         $('#fabricationfitupCompleteFieldTable').hide();
         $('#weldingCompleteFieldTable').hide();
         $('#finalassemblyCompleteFieldTable').hide();
-        $('#documenatationCompleteFieldTable').hide();
+        $('#documentationCompleteFieldTable').hide();
         $('#packingtransportCompleteFieldTable').hide();
+        $('#finishingCompleteFieldTable').hide();
+        $('#testingCompleteFieldTable').hide();
+        $('#subcontractCompleteFieldTable').hide();
+        $('#qualityCompleteFieldTable').hide();
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {
@@ -842,6 +844,11 @@ $('#qualityFieldTable').hide();
             var documentationCompleteFieldsetTable = generateDocumentationCompleteFieldset(processOrder,
                 qualityStep);
             $('#documentationCompleteFieldTable').html(documentationCompleteFieldsetTable).show();
+        } else if (qualityStep === 'Quality') {
+
+            var qualityCompleteFieldsetTable = generateQualityCompleteFieldset(processOrder,
+                qualityStep);
+            $('#qualityCompleteFieldTable').html(qualityCompleteFieldsetTable).show();
         } else if (qualityStep === 'Packing and Transport') {
 
             var packingtransportCompleteFieldsetTable = generatePackingTransportCompleteFieldset(processOrder,
@@ -938,7 +945,7 @@ $('#qualityFieldTable').hide();
     }
 
 
-   
+
 
     // Close the modal if the user clicks outside of it
     /* $(document).click(function(event) {
@@ -960,8 +967,8 @@ $('#qualityFieldTable').hide();
             return ['Planning / Forward Engineering', 'Engineering', 'Manufacturing Package',
                 'Material Preparation', 'Kitting', 'Fabrication Fit-Up', 'Welding', 'Testing',
                 'Finishing', 'Sub-Contract', 'Final Assembly', 'Quality', 'Documentation',
-                'Packing and Transport',
-                'OFI'
+                'Packing and Transport'
+
             ];
         }
 
