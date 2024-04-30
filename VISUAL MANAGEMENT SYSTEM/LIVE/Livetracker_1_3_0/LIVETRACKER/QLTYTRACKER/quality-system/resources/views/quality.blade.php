@@ -30,7 +30,7 @@
     <div class="form-group">
                             <label>
                                 Sign-off for Quality:
-                                <input type="text" name="sign_off_quality" id="sign_off_quality">
+                                <input type="text" name="sign_off_quality" id="sign_off_quality"value="${username}">
                             </label>
                         </div>
 

@@ -1,3 +1,8 @@
+function generateMaterialPreparationFieldset(processOrder, qualityStep, username) {
+    $("#sign_off_material_preparation").val(username);
+    
+}
+
 function generateMaterialPreparationCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
         process_order_number: processOrder,
@@ -33,7 +38,7 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
     $.each(response, function (index, item) {
         html += '<div class="material_item">';
         html += '<label>ID: ' + item.id + '</label><br>';
-
+        html += '<input name="process_order_number_mp_c" type="text" value="' + item.process_order_number.trim() + '" readonly>';
         html += '<div class="material_field">';
         html +=
             '<label>Material Identification:</label>' +
@@ -139,7 +144,7 @@ if (item.deburring === "on") {
         html += '<div class="material_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_material_preparation" value="' + item.sign_off_material_preparation + '">' +
+            '<input type="text" name="sign_off_material_preparation" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="material_field">';
@@ -150,6 +155,7 @@ if (item.deburring === "on") {
 
         html += '</div>'; // Closing div for material_item
         html += '<hr>'; // Horizontal line for separation
+        html += '<input type="button" value="View" onclick="viewMaterialCompletePreparationForm(\'' + item.process_order_number + '\')">';
     });
 
     html += '<input type="button" value="Submit" onclick="submitMaterialCompletePreparationForm()">';
@@ -161,6 +167,33 @@ if (item.deburring === "on") {
     return html;
 }
 
+function viewMaterialCompletePreparationForm(po)
+{
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+    var formData = {po:document.querySelector('[name="process_order_number_mp_c"]').value};
+   
+console.log(formData);
+
+    $.ajax({
+        type: "POST",
+        url: "/viewMaterialCompletePreparationForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+       
+        success: function (response) {
+            console.log(response);
+            displayMaterialPreparationResults(response);
+            
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+ 
 
 
 
@@ -203,7 +236,7 @@ function submitMaterialCompletePreparationForm() {
             '[name="comments_material_preparation"]'
         ).value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: 2,
+        process_order_number: document.querySelector('[name="process_order_number_mp_c"]').value,
         // Add other form fields accordingly
     };
     console.log(formData);
@@ -598,8 +631,10 @@ function MaterialPrep(processOrder, userName) {
                 });
             } else {
                 resetMaterialPrepForm();
+                console.log('hete');
                 $('#sign_off_material_preparation').val(userName);
                 $('#materialpreparationFieldset').show();
+                $('#process_order_number_mp').val(processOrder);
             }
         },
         error: function (error) {

@@ -9,8 +9,7 @@
 
     <meta charset="utf-8">
     <meta name="description" content="meta description">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewpport" content="width=device-width, initial-scale = 1">
     <title>Kent Stainless</title>
     <link rel="stylesheet" href="../../../css/KS_DASH_STYLE.css">
     <script type="text/javascript" src="../../../JS/LIBS/jquery-3.4.1.js"></script>
@@ -50,7 +49,6 @@
     max-width: 70%;
     /* Set a fixed height */
     margin-top: 20px;
-
 }
 
 #table {
@@ -160,8 +158,6 @@
 <body>
     <div id="background">
         <div id="navmenu">
-
-
             <div>
                 <p id="title" id="title" onclick="location.href='../MAIN/MAIN_MENU.php'">Kent Stainless</p>
             </div>
@@ -188,59 +184,58 @@
             <div id="lastupdateholder">
             </div>
         </div>
-        <div style="background-color:white;margin:10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);border-radius: 5px;">
-            <h2 style="color:#f08787">Welcome to Quality Management Page, {{ Session::get('user_id') }}</h2>
+        <h2 style="color:#f08787">Welcome to Quality Management Page, {{ Session::get('user_id') }}</h2>
+<div>        
 
-            <div style="display: flex; align-items: center;">
-                <label for="manualProcessOrder" style="margin-right: 10px;">Enter Process Order:</label>
-                <input type="text" id="manualProcessOrder" name="manualProcessOrder" required
-                    style="width: 200px; margin-right: 10px;">
-                <button id="searchButton" style="margin-right: 10px;">Search</button>
-                <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="margin-left: auto;">
-                    @csrf
-                    <button type="submit"
-                        style="background: none; border: 2px solid #000; border-radius: 50px; padding: 5px 10px;">
-                        <i class="fas fa-sign-out-alt" style="font-size: 24px;"></i>
-                        <span style="margin-left: 5px;">Sign Out</span>
-                    </button>
-                </form>
-            </div>
-        </div>
+        <form style="margin-left: 88%;" id="logoutForm" action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button type="submit" style="background: none; border: 2px solid #000; border-radius: 50px; padding: 5px 10px;">
+        <i class="fas fa-sign-out-alt" style="font-size: 24px;"></i>
+        <span style="margin-left: 5px;">Sign Out</span>
+    </button>
+</form>
+</div>
+</form><div >
+        <label for="manualProcessOrder">Enter Process Order:</label>
+        <input type="text" id="manualProcessOrder" name="manualProcessOrder" required style="width: 200px;">
+
+        <button id="searchButton">Search</button>
+
+
+        <h3>Process Order Table</h3>
+</div>
         <div id="table-container"
-            style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);border-radius: 5px;max-height: 440px;background-color:white;overflow-y: scroll;position: relative;max-width: 84%; margin: 10px;">
-            <table id="table" style="display:none;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            style="max-height: 440px;overflow-y: scroll;position: relative;max-width: 84%; margin-top: 20px;">
+            <table id="table" style="display:none;">
 
             </table>
         </div>
 
-        <div id="lineItemsContainer"
-            style="display: none; background-color: #ffffff; margin: 10px; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <div style="display:none" id="lineItemsContainer">
             <!-- Sales Order Number -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group custom-css">
                 <label for="salesOrderNumber">Sales Order Number:</label>
                 <input type="text" id="salesOrderNumber" class="form-control" readonly>
             </div>
 
             <!-- End Product -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group custom-css">
                 <label for="endProduct">End Product:</label>
                 <input type="text" id="endProduct" class="form-control" readonly>
             </div>
 
             <!-- Owner -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group custom-css">
                 <label for="owner">Owner:</label>
                 <input type="text" id="owner" class="form-control" readonly>
             </div>
 
             <!-- Quantity -->
-            <div class="form-group" style="display: inline-block;margin-left: 50px;">
+            <div class="form-group custom-css">
                 <label for="quantity">Quantity:</label>
                 <input type="text" id="quantity" class="form-control" readonly>
             </div>
         </div>
-
-
         <!-- HTML for the modal -->
         <div style="display:none" id="myModal" class="modal">
             <div class="modal-content">
@@ -276,14 +271,14 @@
                     @include('subcontract')
                 </div>
                 <div id="finalassemblyFieldset" style="overflow-y:scroll;max-height:500px">
-                    @include('finalassembly')
-                </div>
+                @include('finalassembly')
+            </div>
                 <div id="documentationFieldset" style="overflow-y:scroll;max-height:500px">
-                    @include('documentation')
-                </div>
+                @include('documentation')
+            </div>
                 <div id="packingtransportFieldset" style="overflow-y:scroll;max-height:500px">
-                    @include('transport')
-                </div>
+                @include('transport')
+            </div>
                 <div id="qualityFieldset" style="overflow-y:scroll;max-height:500px;display:none">
                     @include('quality')
                 </div>
@@ -300,7 +295,7 @@
                 <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
                 <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
                 <div id="fabricationfitupFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+                <div id="weldingFieldTable"style="width:500px;font-size:14px;height:500px"></div>
                 <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
                 <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
                 <div id="subcontractFieldTable" style="width:500px;font-size:14px;height:500px"></div>
@@ -675,14 +670,14 @@
             $('#subcontractFieldset').hide();
         }
         if (qualityStep === 'Final Assembly') {
-            FinalAssembly(processOrder, userName);
+           Finalassembly(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#finalassemblyFieldset').hide();
         }
         if (qualityStep === 'Documentation') {
 
-            Documentation(processOrder, userName);
+           Documentation(processOrder, userName);
         } else {
             // Clear the fieldset content if the quality step is not "Engineering"
             $('#documentationFieldset').hide();
@@ -728,8 +723,8 @@
         $('#documentationFieldTable').hide();
         $('#packingtransportFieldTable').hide();
         $('#qualityFieldTable').hide();
-
-
+      
+   
 
         // Determine which content div to display based on qualityStep
         if (qualityStep === 'Engineering') {

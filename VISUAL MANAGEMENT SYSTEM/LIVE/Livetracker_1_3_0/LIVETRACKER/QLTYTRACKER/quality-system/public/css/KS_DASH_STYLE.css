@@ -6,6 +6,7 @@ body{
     background:#2a0fc5;
 }
 #background{
+    margin: -1%;
     height:100%;
     width:100%;
     background:#E8E8E8;

@@ -19,7 +19,7 @@ class TestingCompleteData extends Model
         'fat_protocol',
         'fat_protocol_document_ref',
         'testing_document_file_name',
-        'sign_off_testing',
+        'sign_off',
         'comments_testing',
         'submission_date',
         'status',

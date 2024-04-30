@@ -132,7 +132,7 @@ function generateTestingFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_testing(response) {
+function generateHTMLFromResponse_for_testing_old(response) {
     var html = '<table id="common_table" style="width:100%;">';
     html += '<thead><tr>';
     html += '<th style="width:5%;">Testing ID</th>';
@@ -188,6 +188,108 @@ function generateHTMLFromResponse_for_testing(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_testing(response) {
+    var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="testing-item">';
+        
+        html += '<label for="testing_id">Testing ID:</label>';
+        html += '<input type="text" id="testing_id" name="testing_id" value="' + item.id + '" readonly>';
+        html += '<br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="process_order_number">Process Order:</label>';
+        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="dye_pen_document_ref">Dye Penetrant Procedure Ref:</label>';
+        html += '<input type="text" id="dye_pen_document_ref" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="hydrostatic_test_document_ref">Hydrostatic Leak Test Ref:</label>';
+        html += '<input type="text" id="hydrostatic_test_document_ref" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="pneumatic_test_document_ref">Pneumatic Leak Test Ref:</label>';
+        html += '<input type="text" id="pneumatic_test_document_ref" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="fat_protocol_document_ref">FAT Ref:</label>';
+        html += '<input type="text" id="fat_protocol_document_ref" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="dye_pen_test">Dye Penetrant Test:</label>';
+        html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : '') + '>';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="hydrostatic_test">Hydrostatic Leak Test:</label>';
+        html += '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : '') + '>';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="pneumatic_test">Pneumatic Leak Test:</label>';
+        html += '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : '') + '>';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="fat_protocol">FAT Test:</label>';
+        html += '<input type="checkbox" id="fat_protocol" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : '') + '>';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="sign_off_testing">Sign-off for Testing:</label>';
+        html += '<input type="checkbox" id="sign_off_testing" name="sign_off_testing" ' + (item.sign_off_testing === "1" ? 'checked' : '') + '>';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="testing_document_file_name">Testing Files:</label>';
+        if (item.testing_document_file_name) {
+            var filePath = 'storage/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="comments_testing">Comments for Testing:</label>';
+        html += '<input type="text" id="comments_testing" name="comments_testing" value="' + item.comments_testing + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="submission_date">Submitted Date Time:</label>';
+        html += '<input type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="created_at">Created At:</label>';
+        html += '<input type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
+        html += '</div><br>';
+        
+        html += '<div class="testing-field">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html += '<input type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
+        html += '</div><br>';
+        
+        html += '</div>'; // Closing div for testing-item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+   
+    html += '</fieldset></form>';
+
+    return html;
+}
 
 function generateTestingCompleteFieldset(processOrder, qualityStep, username) {
     console.log(processOrder);
@@ -232,7 +334,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_item">';
     html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
     html += '<div class="testing_item">';
-    html += '<input type="hidden" name="process_order_number" value="' + item.process_order_number + '"><br>';
+    html += '<input type="hidden" name="process_order_number_t" value="' + item.process_order_number + '"><br>';
 
     html += '<div class="testing_field">';
     html +=
@@ -286,7 +388,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="signoff_field">';
     html +=
         '<label>Sign-off for Testing:</label>' +
-        '<input type="text" name="sign_off_testing" value="' + item.sign_off_testing+ '" >';
+        '<input type="text" name="sign_off_testing_c" value="' + userName + '" >';
     html += '</div><br>';
 
 
@@ -331,7 +433,7 @@ function submitTestingCompleteForm() {
     };
     console.log(document.querySelector('[name="process_order_number"]').value);
     var formData = {
-        sign_off: document.querySelector('[name="sign_off_testing"]').value, // Change this according to your needs
+        sign_off: document.querySelector('[name="sign_off_testing_c"]').value, // Change this according to your needs
         comments_testing: document.querySelector('[name="comments_testing"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         //process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
@@ -347,7 +449,7 @@ function submitTestingCompleteForm() {
         quantity: document.querySelector('[name="quantity"]').value,
         // Add other form fields accordingly
     };
-    console.log(document.querySelector('[name="process_order_number"]').value);
+    console.log(document.querySelector('[name="process_order_number_t"]').value);
     console.log(formData);
     $.ajax({
         type: "POST",
@@ -373,7 +475,7 @@ function viewTestingCompleteForm() {
     };
 
     var formData = {
-        process_order_number: document.querySelector('[name="process_order_number"]').value,
+        process_order_number: document.querySelector('[name="process_order_number_t"]').value,
     };
     $.ajax({
         type: "POST",

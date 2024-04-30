@@ -17,7 +17,7 @@ $fabricationFitUp->FitUpVisualCheck = $request->input('fit_up_visual_check');
 $fabricationFitUp->DimensionalCheck = $request->input('dimensional_check') ;
 $fabricationFitUp->LinkToDrawing = $request->input('link_to_drawing');
 $fabricationFitUp->WeldmentQuantity = $request->input('weldment_quantity') ;
-$fabricationFitUp->SignOffUser = $request->input('sign_off_fabrication_fit_up');
+$fabricationFitUp->SignOffUser = $request->input('signOffUser');
 $fabricationFitUp->Comments = $request->input('comments_fabrication_fit_up');
 $fabricationFitUp->ProcessOrder = $request->input('process_order_number');
 $fabricationFitUp->Quantity = $request->input('quantity');
@@ -28,5 +28,18 @@ $fabricationFitUp->save();
 
 // You can return a response or redirect as needed
 return response()->json(['data' => $fabricationFitUp]);
+    }
+
+
+    public function viewFabricationFitUpCompleteForm(Request $request)
+    {
+        $processOrderNumber = $request->input('process_order_number');
+
+        // Retrieve data based on the process order number to get the latest record
+        $data = FabrcationCompleteData::where('ProcessOrder', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+        return response()->json(['data' => $data]);
     }
 }

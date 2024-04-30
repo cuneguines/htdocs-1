@@ -23,7 +23,9 @@ function submitFabricationFitUpForm(processOrder) {
         sign_off_fabrication_fit_up: document.querySelector('[name="sign_off_fabrication_fit_up"]').value.trim() || null,
         comments_fabrication_fit_up: document.querySelector('[name="comments_fabrication_fit_up"]').value.trim() || null,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: processOrder,
+        process_order_number: (document.querySelector('[name="process_order_number_fabrication_fit_up"]').value.trim() !== "")
+        ? document.querySelector('[name="process_order_number_fabrication_fit_up"]').value.trim()
+        : null,
     };
    console.log(formData);
 
@@ -47,7 +49,7 @@ function submitFabricationFitUpForm(processOrder) {
     var fileInputs = $('[type="file"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_fabrication_fit_up"]').value.trim());
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -115,72 +117,112 @@ function generateFabricationFitUpFieldTable(processOrder, qualityStep) {
 }
 
 function generateHTMLFromResponse_for_fabrication_fit_up(response) {
-    var html = '<table id="common_table" style="width:100%;">';
-    html +=
-        '<thead><tr><th style="width:5%;">ID</th><th style="width:15%;">Fit-Up Visual Check</th><th style="width:25%;">Dimensional Check</th><th style="width:20%;">Link to Drawing</th><th style="width:15%;">Weldment Quantity</th><th style="width:15%;">Sign Off</th><th style="width:25%;">Comments</th></tr></thead><tbody>';
+    var html = '<form id="fabricationFitUpForm" class="fabrication-fit-up-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Fabrication Fit-Up</legend>';
 
-    $.each(response, function (index, item) {
-        html += "<tr>";
-        html += "<td>" + item.Id + "</td>";
+    $.each(response, function(index, item) {
+        html += '<div class="fabrication-item">';
+        html += '<label for="id">ID:</label>';
+        html += '<input type="text" id="id" name="id" value="' + item.Id + '" readonly>';
+        html += '<br>';
 
-        // Fit-Up Visual Check
-        html += '<td style="text-align:center;">';
-        if (item.FitUpVisualCheck === "true") {
-            html += "✔";
-        } else if (item.FitUpVisualCheck === null) {
-            html += "-";
-        }
-        html += "</td>";
+        html += '<div class="fabrication-field">';
+        html += '<label for="fit_up_visual_check">Fit-Up Visual Check:</label>';
+        html += '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" ' + (item.FitUpVisualCheck === 'true' ? 'checked' : '') + '>';
+        html += '</div><br>';
 
-        // Dimensional Check
-        html += '<td style="text-align:center;">';
-        if (item.DimensionalCheck === "true") {
-            html += "✔";
-        } else if (item.DimensionalCheck === null) {
-            html += "-";
-        }
-        html += "</td>";
+        html += '<div class="fabrication-field">';
+        html += '<label for="dimensional_check">Dimensional Check:</label>';
+        html += '<input type="checkbox" id="dimensional_check" name="dimensional_check" ' + (item.DimensionalCheck === 'true' ? 'checked' : '') + '>';
+        html += '</div><br>';
 
-        // Link to Drawing
-        html += '<td>';
+        html += '<div class="fabrication-field">';
+        html += '<label for="link_to_drawing">Link to Drawing:</label>';
         if (item.LinkToDrawing) {
-           
             var filePath = 'storage/fabricationfitup_task/' + item.ProcessOrder + '/' + item.LinkToDrawing;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
             html += '-';
         }
-        html += '</td>';
+        html += '</div><br>';
 
-        // Weldment Quantity
-        html += '<td style="text-align:center;">';
-        if (item.WeldmentQuantity === "true") {
-            html += "✔";
-        } else if (item.WeldmentQuantity === null) {
-            html += "-";
-        }
-        html += "</td>";
+        html += '<div class="fabrication-field">';
+        html += '<label for="weldment_quantity">Weldment Quantity:</label>';
+        html += '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" ' + (item.WeldmentQuantity === 'true' ? 'checked' : '') + '>';
+        html += '</div><br>';
 
-        // Sign Off
-        html += "<td>" + (item.SignOffUser ? item.SignOffUser : "-") + "</td>";
+        html += '<div class="fabrication-field">';
+        html += '<label for="sign_off_fabrication_fit_up">Sign Off:</label>';
+        html += '<input type="text" id="sign_off_fabrication_fit_up" name="sign_off_fabrication_fit_up" value="' + (item.SignOffUser ? item.SignOffUser : '') + '">';
+        html += '</div><br>';
 
-        // Comments
-        html += "<td>" + (item.Comments ? item.Comments : "-") + "</td>";
+        html += '<div class="fabrication-field">';
+        html += '<label for="comments_fabrication_fit_up">Comments:</label>';
+        html += '<input type="text" id="comments_fabrication_fit_up" name="comments_fabrication_fit_up" value="' + (item.Comments ? item.Comments : '') + '">';
+        html += '</div><br>';
 
-        // Design Validation Document
-       
-
-        html += "</tr>";
+        html += '</div>'; // Closing div for fabrication-item
+        html += '<hr>'; // Horizontal line for separation
     });
 
-    html += "</tbody></table>";
+    html += '<input type="button" value="Submit" onclick="submitFabricationFitUpForm()">';
+   
 
     return html;
 }
 
+function viewFabricationFitUpCompleteForm(processOrderNumber) {
+    var formData = {
+        process_order_number: processOrderNumber,
+    };
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
 
+    $.ajax({
+        url: "/viewFabricationFitUpCompleteForm",
+        type: "POST",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+            displayFabricationFitUpResults(response.data);
+        },
+        error: function (error) {
+            console.error(error);
+            alert("Error fetching Final Assembly Complete form data");
+        },
+    });
+}
 
+/* function displayFabCompleteResults(values) {
+    var resultsHtml = '<table id="final_assembly_results_table" style="width:100%; border: 1px solid #ddd; text-align: left;">';
+    resultsHtml += '<thead><tr style="background-color: #f2f2f2;"><th style="padding: 8px; border-bottom: 1px solid #ddd;">Field</th><th style="padding: 8px; border-bottom: 1px solid #ddd;">Value</th></tr></thead>';
+    resultsHtml += '<tbody>';
+
+    function buildTableRows(obj, prefix) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                var value = obj[key];
+                var field = prefix ? prefix + '.' + key : key;
+                if (typeof value === 'object') {
+                    buildTableRows(value, field);
+                } else {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                }
+            }
+        }
+    }
+
+    buildTableRows(values);
+
+    resultsHtml += '</tbody></table>';
+
+    document.getElementById('final_assembly_results_table').innerHTML = resultsHtml;
+} */
 
 function generateFabricationFitUpCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
@@ -200,8 +242,15 @@ function generateFabricationFitUpCompleteFieldset(processOrder, qualityStep, use
         dataType: "json",
         success: function (response) {
             console.log(response);
+            if (response.data!=null)
+            {
             var generatedHTML = generateCompleteHTMLFromResponse_for_fabrication_fit_up(response);
             $("#fabricationfitupCompleteFieldTable").html(generatedHTML);
+            }
+            else
+            {
+                $("#fabricationfitupCompleteFieldTable").html('');
+            }
         },
         error: function (error) {
             console.error(error);
@@ -216,21 +265,22 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
     $.each(response, function (index, item) {
         html += '<div class="fabrication_item">';
         html += '<label>ID: ' + item.id + '</label><br>';
+        html += '<input name="process_order_fabc" type="text" value="' + item.ProcessOrder + '"><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Fit-Up:</label>' +
             (item.FitUpVisualCheck === "true" || item.FitUpVisualCheck === "on" ?
-            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" >' :
-            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" disabled>') +
+            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check_c" >' :
+            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check_c" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Dimensional Check:</label>' +
             (item.DimensionalCheck === "true" || item.DimensionalCheck === "on" ?
-            '<input type="checkbox" id="dimensional_check" name="dimensional_check" >' :
-            '<input type="checkbox" id="dimensional_check" name="dimensional_check" disabled>') +
+            '<input type="checkbox" id="dimensional_check" name="dimensional_check_c" >' :
+            '<input type="checkbox" id="dimensional_check" name="dimensional_check_c" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
@@ -243,14 +293,14 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html +=
             '<label>Weldment Quantity:</label>' +
             (item.WeldmentQuantity === "true" || item.WeldmentQuantity === "on" ?
-            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" >' :
-            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" disabled>') +
+            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" >' :
+            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" disabled>') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_fabrication_fit_up" value="' + item.SignOffUser + '">' +
+            '<input type="text" name="sign_off_fabrication_fit_up_c" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
@@ -278,9 +328,12 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
 
         html += '</div>'; // Closing div for fabrication_item
         html += '<hr>'; // Horizontal line for separation
+        html += '<input type="button" value="View" onclick="viewFabricationFitUpCompleteForm(\'' + item.ProcessOrder + '\')">';
     });
 
     html += '<input type="button" value="Submit" onclick="submitFabricationCompleteFitUpForm()">';
+    //html += '<input type="button" value="View" onclick="viewFabricationFitUpCompleteForm(\'' + item.ProcessOrder + '\')">';
+    html += '</fieldset></form>';
     html += '</form>';
 
     html += '<div id="fabrication_fit_up_complete_results"></div>';
@@ -296,15 +349,16 @@ function submitFabricationCompleteFitUpForm() {
     };
 
     var formData = {
-        fit_up_visual_check: document.querySelector('[name="fit_up_visual_check"]').checked ? "on" : "",
-        dimensional_check: document.querySelector('[name="dimensional_check"]').checked ? "on" : "",
+        fit_up_visual_check: document.querySelector('[name="fit_up_visual_check_c"]').checked ? 1:0,
+        dimensional_check: document.querySelector('[name="dimensional_check_c"]').checked ? 1:0,
         link_to_drawing: document.querySelector('[name="link_to_drawing"]').value,
-        weldment_quantity: document.querySelector('[name="weldment_quantity"]').checked ? "on" : "",
-        sign_off_fabrication_fit_up: document.querySelector('[name="sign_off_fabrication_fit_up"]').value,
+        weldment_quantity: document.querySelector('[name="weldment_quantity_c"]').checked ? 1:0,
+        signOffUser: document.querySelector('[name="sign_off_fabrication_fit_up_c"]').value,
         comments_fabrication_fit_up: document.querySelector('[name="comments_fabrication_fit_up"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: 2,
+        process_order_number: document.querySelector('[name="process_order_fabc"]').value,
     };
+    console.log(formData);
 
     $.ajax({
         type: "POST",

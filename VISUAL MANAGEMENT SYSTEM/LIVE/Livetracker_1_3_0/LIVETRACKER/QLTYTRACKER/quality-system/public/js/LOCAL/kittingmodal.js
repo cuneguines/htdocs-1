@@ -81,7 +81,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
         html += '<div class="kitting_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_kitting" value="' + item.sign_off_kitting + '" disabled>';
+            '<input type="text" id="sign_off_kitting_c"name="sign_off_kitting_c" value="' + userName + '" >';
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
@@ -127,7 +127,7 @@ function submitKittingCompleteForm() {
     };
    
     var formData = {
-        sign_off_kitting: document.querySelector('[name="sign_off_kitting"]').value,
+        sign_off_kitting: document.querySelector('[name="sign_off_kitting_c"]').value.trim(),
         comments_kitting: document.querySelector('[name="comments_kitting"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="processorder"]').value, // Change this according to your needs
@@ -551,7 +551,7 @@ function generateKittingFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_kitting(response) {
+function generateHTMLFromResponse_for_kitting_old(response) {
     var html = '<table id="common_table" style="width:100%;">';
     html +=
         '<thead><tr><th style="width:5%;">Kitting_ID</th><th style="width:5%;">Process_Order</th><th style="width:20%;">Cut_Form_MachParts</th><th style="width:15%;">Bought_Out_Components</th><th style="width:15%;">Fasteners_Fixings</th><th style="width:10%;">Site_Pack</th><th style="width:50%;">Link_to_Drawing</th><th style="width:5%;">Sign_Off_Kitting</th><th style="width:15%;">Comments_Kitting</th><th style="width:15%;">Submitted_Date_Time</th><th style="width:5%;">Created At</th><th style="width:5%;">Updated_At</th></tr></thead><tbody>';
@@ -585,6 +585,87 @@ function generateHTMLFromResponse_for_kitting(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_kitting(response) {
+    var html = '<form id="kittingForm" class="kitting-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Kitting</legend>';
+
+    $.each(response, function(index, item) {
+        html += '<div class="form-group">';
+        html += '<label for="KittingID">Kitting ID:</label>';
+        html += '<input type="text" id="KittingID" name="KittingID" value="' + item.KittingID + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="ProcessOrderID">Process Order:</label>';
+        html += '<input type="text" id="ProcessOrderID" name="ProcessOrderID" value="' + item.ProcessOrderID + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="cut_form_mach_parts">Cut Formed Machine Parts:</label>';
+        html += '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="bought_out_components">Bought Out Components:</label>';
+        html += '<input type="checkbox" id="bought_out_components" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="fasteners_fixings">Fasteners and Fixings:</label>';
+        html += '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="site_pack">Site Pack:</label>';
+        html += '<input type="checkbox" id="site_pack" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked' : '') + '>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="link_to_drawing">Link to Drawing:</label>';
+        if (item.kitting_file) {
+            var filePath = 'storage/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
+            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="sign_off_kitting">Sign-off:</label>';
+        html += '<input type="text" id="sign_off_kitting" name="sign_off_kitting" value="' + (item.sign_off_kitting || '') + '">';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="comments_kitting">Comments:</label>';
+        html += '<input type="text" id="comments_kitting" name="comments_kitting" value="' + (item.comments_kitting || '') + '">';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="submitted_datetime">Submitted Date Time:</label>';
+        html += '<input type="text" id="submitted_datetime" name="submitted_datetime" value="' + (item.submitted_datetime || '') + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="created_at">Created At:</label>';
+        html += '<input type="text" id="created_at" name="created_at" value="' + (item.created_at || '') + '" readonly>';
+        html += '</div>';
+
+        html += '<div class="form-group">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html += '<input type="text" id="updated_at" name="updated_at" value="' + (item.updated_at || '') + '" readonly>';
+        html += '</div>';
+
+        html += '<hr>'; // Add a separator between items
+    });
+
+    html += '<input type="submit" value="Submit">';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
 function resetKittingForm() {
     // Uncheck checkboxes
     $('input[name="cut_form_mach_parts"]').prop('checked', false);

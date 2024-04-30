@@ -38,4 +38,6 @@ class EngineeringController extends Controller
         return response()->json(['data' => $engineeringData]);
 
     }
+
+    
 }

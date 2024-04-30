@@ -335,6 +335,11 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
         '<input type="text" name="comments_finishing" value="' + item.comments_finishing + '">';
     html += '</div><br>';
 
+    html += '<div class="finishing_field">';
+    html += '<label for="sign_off_finishing">Sign-off:</label>';
+    html += '<input type="text" id="sign_off_finishing_c" name="sign_off_finishing_c" value="' + userName + '">';
+    html += '</div><br>';
+
  // Dropdown for status
  html += '<div class="finishing_field">';
  html +=
@@ -375,7 +380,7 @@ function submitFinishingCompleteForm() {
         pickle_passivate_document_ref: document.querySelector('[name="pickle_passivate_document_ref"]').value,
         select_kent_finish_document_ref: document.querySelector('[name="select_kent_finish_document_ref"]').value,
         comments_finishing: document.querySelector('[name="comments_finishing"]').value,
-        sign_off_finishing: document.querySelector('[name="sign_off_finishing"]').value,
+        sign_off_finishing: document.querySelector('[name="sign_off_finishing_c"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
 
         status: document.querySelector('#status').value, // Adding status field
@@ -403,7 +408,7 @@ function viewFinishingCompleteForm() {
     };
 
     var formData = {
-        process_order_number: document.querySelector('[name="process_order_number"]').value,
+        process_order_number: document.querySelector('[name="process_order_number_f"]').value,
     };
 
     $.ajax({
@@ -413,7 +418,7 @@ function viewFinishingCompleteForm() {
         headers: headers,
         dataType: "json",
         success: function (response) {
-            displayFinishingCompleteResults(response);
+            displayFinishingCompleteResults(response.data);
             console.log(response);
         },
         error: function (xhr, status, error) {

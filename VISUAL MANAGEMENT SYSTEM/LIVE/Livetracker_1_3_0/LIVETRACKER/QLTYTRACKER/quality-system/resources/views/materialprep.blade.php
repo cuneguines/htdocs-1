@@ -79,7 +79,7 @@
     <div class="form-group">
         <label>
             Sign-off for Material Preparation:
-            <input type="text" name="sign_off_material_preparation" value="${username}">
+            <input type="text" id="sign_off_material_preparation" name="sign_off_material_preparation" value="${username}">
         </label>
     </div>
 

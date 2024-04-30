@@ -15,6 +15,7 @@ class PackingTransportFormData extends Model
         'process_order_number',
         'engineer',
         'technical_file',
+        'secure_packing',
         'client_handover_documentation',
         'created_at',
         'updated_at',

@@ -1,4 +1,8 @@
 
+function generateQualityFieldset(processOrder, qualityStep, username) {
+    $("#sign_off_quality").val(username);
+    
+}
 // Function to handle image upload
 function uploadImages_QLTY() {
     var imagesInput = document.getElementById('imagesInput');
@@ -153,7 +157,7 @@ function generateQualityFieldTable(processOrder) {
     `;
 }
 
-function generateHTMLFromResponse_for_quality(response) {
+function generateHTMLFromResponse_for_quality_old(response) {
     var html = '<table id="quality_table" style="width:100%;">';
     html += '<thead><tr>';
     html += '<th style="width:5%;">Quality ID</th>';
@@ -179,8 +183,11 @@ function generateHTMLFromResponse_for_quality(response) {
             fetchImages(item.ID, function (images) {
                 if (images && images.length > 0) {
                     images.forEach(function (imageUrl) {
-                        console.log(imageUrl)
-                        html += '<img src="' + imageUrl + '" style="max-width: 100px; max-height: 100px;">';
+                        console.log(imageUrl);
+                        console.log(response.uuid);
+                        html += '<div style="display: inline-block; margin-right: 10px;">';
+                        html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                        html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                     });
                 } else {
                     html += '-';
@@ -216,6 +223,9 @@ function generateHTMLFromResponse_for_quality(response) {
 
                 images.forEach(function (imageUrl) {
                     console.log(imageUrl);
+                    console.log(response.process_order_number.trim());
+                    console.log(response.uuid());
+
                     html += '<div style="display: inline-block; margin-right: 10px;">';
                     html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
                     html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
@@ -239,6 +249,149 @@ function generateHTMLFromResponse_for_quality(response) {
     }
     return (html);
 }
+function generateHTMLFromResponse_for_quality(response) {
+    var html = '<form id="qualityForm" class="quality-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Quality</legend>';
+
+    if (Array.isArray(response)) {
+        response.forEach(function (item, index) {
+            html += '<div class="quality-item">';
+            
+            html += '<div class="quality-field">';
+            html += '<label for="quality_id">Quality ID:</label>';
+            html += '<input type="text" id="quality_id" name="quality_id" value="' + item.ID + '" readonly>';
+            html += '</div><br>';
+            
+            html += '<div class="quality-field">';
+            html += '<label for="process_order_number">Process Order:</label>';
+            html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
+            html += '</div><br>';
+            
+            html += '<div class="quality-field">';
+            html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
+            html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection" value="' + (item.walk_down_visual_inspection ? "Yes" : "No") + '" readonly>';
+            html += '</div><br>';
+            
+            html += '<div class="quality-field">';
+            html += '<label for="images">Images:</label>';
+            html += '<div id="images_' + item.ID + '">'; // Unique ID for images container
+            html += '</div><br>'; // Closing div for images container
+
+            // Fetch images and append them dynamically
+            fetchImages(item.process_order_number, function (images) {
+                var imagesContainer = document.getElementById('images_' + item.ID);
+                if (images && images.length > 0) {
+                    images.forEach(function (imageUrl) {
+                        var imgElement = document.createElement('img');
+                        imgElement.src = imageUrl;
+                        imgElement.style.maxWidth = '100px';
+                        imgElement.style.maxHeight = '100px';
+                        imagesContainer.appendChild(imgElement);
+
+                        // Adding download link
+                        var downloadLink = document.createElement('a');
+                        downloadLink.href = '/storage/images_qlty/' + item.process_order_number.trim() + '/' + item.uuid + '/' + imageUrl;
+                        downloadLink.download = 'image_' + index + '.jpg'; // Setting download attribute
+                        downloadLink.innerText = 'Download Image'; // Text for download link
+                        imagesContainer.appendChild(downloadLink); // Appending download link
+                    });
+                } else {
+                    imagesContainer.innerHTML = '-';
+                }
+            });
+
+            // Remaining fields...
+            
+            html += '</div>'; // Closing div for quality-item
+            html += '<hr>'; // Horizontal line for separation
+        });
+    } else if (typeof response === 'object') {
+        // Handling for object response
+        html += '<div class="quality-item">';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="quality_id">Quality ID:</label>';
+        html += '<input type="text" id="quality_id" name="quality_id" value="' + parseInt(response.ID) + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="process_order_number">Process Order:</label>';
+        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + response.process_order_number + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
+        html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection" value="' + (response.walk_down_visual_inspection ? "Yes" : "No") + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="images">Images:</label>';
+        html += '<div id="images_' + response.ID + '">'; // Unique ID for images container
+
+        // Fetch images and append them dynamically
+        fetchImages(response.process_order_number, function (images) {
+            var imagesContainer = document.getElementById('images_' + response.ID);
+            if (images && images.length > 0) {
+                images.forEach(function (imageUrl) {
+                    var imgElement = document.createElement('img');
+                    imgElement.src = imageUrl;
+                    imgElement.style.maxWidth = '100px';
+                    imgElement.style.maxHeight = '100px';
+                    imagesContainer.appendChild(imgElement);
+
+                    // Adding download link
+                    var downloadLink = document.createElement('a');
+                    downloadLink.href = '/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/' + imageUrl;
+                    downloadLink.download = 'image.jpg'; // Setting download attribute
+                    downloadLink.innerText = 'Download Image'; // Text for download link
+                    imagesContainer.appendChild(downloadLink); // Appending download link
+                });
+            } else {
+                imagesContainer.innerHTML = '-';
+            }
+        });
+        
+        // Remaining fields...
+
+        html += '</div>'; // Closing div for images container
+        html += '</div><br>'; // Closing div for quality-field
+        
+        html += '<div class="quality-field">';
+        html += '<label for="comments_quality">Comments Quality:</label>';
+        html += '<input type="text" id="comments_quality" name="comments_quality" value="' + (response.comments_quality ? response.comments_quality : '-') + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="sign_off_quality">Sign-off Quality:</label>';
+        html += '<input type="text" id="sign_off_quality" name="sign_off_quality" value="' + (response.sign_off_quality ? response.sign_off_quality : '-') + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="submission_date">Submission Date:</label>';
+        html += '<input type="text" id="submission_date" name="submission_date" value="' + response.submission_date + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="created_at">Created At:</label>';
+        html += '<input type="text" id="created_at" name="created_at" value="' + response.created_at + '" readonly>';
+        html += '</div><br>';
+        
+        html += '<div class="quality-field">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html += '<input type="text" id="updated_at" name="updated_at" value="' + response.updated_at + '" readonly>';
+        html += '</div><br>';
+        
+        html += '</div>'; // Closing div for quality-item
+        html += '<hr>'; // Horizontal line for separation
+    }
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
 // Function to fetch images for a given ID
 // Function to fetch images for a given ID
 function fetchImages(id, callback) {
@@ -283,8 +436,12 @@ function generateQualityCompleteFieldset(processOrder, qualityStep, username) {
         dataType: "json",
         success: function (response) {
             console.log(response);
+           
             var generatedHTML = generateCompleteHTMLFromResponse_for_quality(response);
             $("#qualityCompleteFieldTable").html(generatedHTML);
+            
+               // $("#qualityCompleteFieldTable").html('');
+            
         },
         error: function (error) {
             console.error(error);
@@ -327,8 +484,8 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html +=
             '<label>Walk-down and Visual Inspection:</label>' +
             (item.walk_down_visual_inspection === "1" ?
-                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" >' :
-                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" disabled>') +
+                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection_c" >' :
+                '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection_c" disabled>') +
             '</div><br>';
 
         // Upload Images
@@ -349,7 +506,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html += '<div class="quality_field">';
         html +=
             '<label>Sign-off Quality:</label>' +
-            '<input type="text" name="sign_off_quality" value="' + (item.sign_off_quality ? item.sign_off_quality : '') + '">' +
+            '<input type="text" name="sign_off_quality_c" value="' + userName + '">' +
             '</div><br>';
 
         // Submission Date (hidden)
@@ -360,7 +517,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
 
 
     html += '<input type="button" value="Submit" onclick="submitQualityCompleteForm()">';
-    html += '<input type="button" value="View" onclick="viewQualityResults(\'' + item.process_order_number + '\')">';
+    html += '<input type="button" value="View" onclick="viewQualityResults()">';
     html += '</form>';
 
     html += '<div id="quality_complete_results"></div>';
@@ -375,10 +532,10 @@ function submitQualityCompleteForm() {
     };
     uploadImages_CompleteQLTY();
     var formData = {
-        walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? "Yes" : "No",
+        walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection_c"]').checked ? "Yes" : "No",
         comments_quality: document.querySelector('[name="comments_quality"]').value,
-        sign_off_quality: document.querySelector('[name="sign_off_quality"]').value,
-        submission_date: document.querySelector('[name="submission_date"]').value,
+        sign_off_quality: document.querySelector('[name="sign_off_quality_c"]').value,
+       // submission_date: document.querySelector('[name="submission_date"]').value,
         process_order_number: document.querySelector('[name="process_order_number_qlty"]').value,
         uuid_qlty: document.querySelector('[name="uuidDisplay_qlty"]').textContent,
     };
@@ -467,23 +624,26 @@ function fetchImages_cmplt(id, callback) {
 
 function viewQualityResults()
 {
+    //alert('yes');
 
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
-   var po = document.querySelector('[name="process_order_number_quality"]').value || null;
+    var formData = {po:document.querySelector('[name="process_order_number_qlty"]').value};
+   
 
 
     $.ajax({
         type: "POST",
         url: "/getQualityCompleteDataByProcessOrder",
-        data: po,
+        data: formData,
         headers: headers,
         dataType: "json",
        
         success: function (response) {
-            displayQualityResultss(response);
             console.log(response);
+            displayQualityResultss(response);
+            
         },
         error: function (xhr, status, error) {
             console.error("Error:", error);
@@ -515,7 +675,7 @@ function displayQualityResultss(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('quality_complete_results').innerHTML = resultsHtml;
-console.log(values.data.process_order_number.trim());
+console.log(values.data.process_order_number);
     fetchImages_cmplt(values.data.process_order_number, function(images) {
         //alert('yes');
         var imagesHtml = '';

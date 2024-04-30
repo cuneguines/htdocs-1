@@ -107,7 +107,7 @@ function generateSubContractFieldTable(processOrder, qualityStep) {
         <div>To be Done</div>
     `;
 }
-function generateHTMLFromResponse_for_sub_contract(response) {
+function generateHTMLFromResponse_for_sub_contract_old(response) {
     var html = '<table id="sub_contract_table" style="width:100%;">';
     html += '<thead><tr>';
     html += '<th style="width:5%;">Sub-Contract ID</th>';
@@ -150,6 +150,74 @@ function generateHTMLFromResponse_for_sub_contract(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_sub_contract(response) {
+    var html = '<form id="subContractForm" class="sub-contract-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Sub-Contract</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="sub-contract-item">';
+        
+        html += '<label for="sub_contract_id">Sub-Contract ID:</label>';
+        html += '<input type="text" id="sub_contract_id" name="sub_contract_id" value="' + item.id + '" readonly>';
+        html += '<br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="process_order_number">Process Order:</label>';
+        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="sub_contract_action">Sub-Contract Action:</label>';
+        html += '<input type="text" id="sub_contract_action" name="sub_contract_action" value="' + item.sub_contract_action + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="sub_contract_file">Sub-Contract File:</label>';
+        if (item.sub_contract_file) {
+            var filePath = 'storage/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
+            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="sign_off_sub_contract">Sign-off for Sub-Contract:</label>';
+        html += '<input type="text" id="sign_off_sub_contract" name="sign_off_sub_contract" value="' + item.sign_off_sub_contract + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="comments_sub_contract">Comments for Sub-Contract:</label>';
+        html += '<input type="text" id="comments_sub_contract" name="comments_sub_contract" value="' + item.comments_sub_contract + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="submission_date">Submission Date:</label>';
+        html += '<input type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="created_at">Created At:</label>';
+        html += '<input type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
+        html += '</div><br>';
+        
+        html += '<div class="sub-contract-field">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html += '<input type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
+        html += '</div><br>';
+        
+        html += '</div>'; // Closing div for sub-contract-item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+    html += '<input type="button" value="Submit" onclick="submitSubContractForm()">';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
 function generateSubContractCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
         process_order_number: processOrder,
@@ -346,7 +414,7 @@ function Subcontract(processOrder, userName) {
     $("#finishingFieldset").hide();
 
     // Show Sub-Contract fieldset
-    $("#subContractFieldset").show();
+    $("#subcontractFieldset").show();
 
     // Set username and process order
     $('input[name="sign_off_sub_contract"]').val(userName);

@@ -83,7 +83,7 @@
     <div class="form-group">
         <label>
             Sign-off for Manufacturing:
-            <input type="text" name="sign_off_manufacturing" id="sign_off_manufacturing">
+            <input type="text" name="sign_off_manufacturing" id="sign_off_manufacturing"value="${username}">
         </label>
     </div>
 

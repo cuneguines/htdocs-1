@@ -1,59 +1,10 @@
+
 function generateDocumentationFieldset(processOrder, username) {
     $("#sign_off_engineer").val(username);
-    return `
-    <fieldset>
-        <legend>Documentation</legend>
-
-        <!-- Subtask 12.1: Technical File -->
-        <div class="form-group">
-            <label>
-                Technical File:
-                <input type="checkbox" name="technical_file_checkbox" value="1" onclick="toggleFileUpload('technical_file_upload', this)">
-            </label>
-            <div id="technical_file_upload" style="display: none;">
-                <label>Upload Technical File:</label>
-                <input type="file" name="technical_file" accept=".pdf,.doc,.docx,.txt">
-            </div>
-        </div>
-
-        <!-- Subtask 12.2: Client Hand-over documentation -->
-        <div class="form-group">
-            <label>
-                Client Hand-over documentation:
-                <input type="checkbox" name="client_handover_checkbox" value="1" onclick="toggleFileUpload('client_handover_upload', this)">
-            </label>
-            <div id="client_handover_upload" style="display: none;">
-                <label>Upload Client Hand-over Documentation:</label>
-                <input type="file" name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
-            </div>
-        </div>
-
-        <!-- Engineer -->
-        <div class="form-group">
-            <label>
-                Sign_off_Engineer:
-                <input type="text" name="sign_off_engineer" value="${username}">
-            </label>
-        </div>
-
-        
-
-        <!-- Submit button -->
-        <button type="button" onclick="submitDocumentationForm('${processOrder}')">Submit Documentation Form</button>
-
-      
-    </fieldset>
-    `;
+   
 }
 
-function toggleFileUpload(elementId, checkbox) {
-    var uploadDiv = document.getElementById(elementId);
-    if (checkbox.checked) {
-        uploadDiv.style.display = "block";
-    } else {
-        uploadDiv.style.display = "none";
-    }
-}
+
 
 function submitDocumentationForm(processOrder) {
     var headers = {
@@ -65,19 +16,29 @@ function submitDocumentationForm(processOrder) {
     }
 
     var formData = new FormData();
-    formData.append('process_order_number', processOrder);
+    formData.append('process_order_number', document.querySelector('[name="process_order_number_documentation"]').value);
     formData.append('engineer', document.querySelector('[name="sign_off_engineer"]').value);
    // formData.append('link_to_file', document.querySelector('[name="link_to_file"]').value);
-
-    // Add Technical File if checkbox is checked
-    if ($('[name="technical_file_checkbox"]').is(':checked')) {
-        formData.append('technical_file', getFileName('technical_file'));
+   if ($('[name="technical_file_checkbox"]').is(':checked')) {
+    var technicalFileInput = document.querySelector('[name="technical_file"]');
+    if (technicalFileInput.files.length > 0) {
+        formData.append('technical_file', document.querySelector('[name="technical_file"]').files[0].name);
+    } else {
+        // Add old technical file name if no new file is selected
+        formData.append('technical_file', document.getElementById('old_technical_file').textContent.trim());
     }
+}
 
-    // Add Client Hand-over Documentation if checkbox is checked
-    if ($('[name="client_handover_checkbox"]').is(':checked')) {
-        formData.append('client_handover_documentation', getFileName('client_handover_documentation'));
+// Add Client Hand-over Documentation if checkbox is checked
+if ($('[name="client_handover_checkbox"]').is(':checked')) {
+    var clientHandoverInput = document.querySelector('[name="client_handover_documentation"]');
+    if (clientHandoverInput.files.length > 0) {
+        formData.append('client_handover_documentation', document.querySelector('[name="client_handover_documentation"]').files[0].name);
+    } else {
+        // Add old client handover file name if no new file is selected
+        formData.append('client_handover_documentation', document.getElementById('old_client_handover_documentation').textContent.trim());
     }
+}
 
     console.log(formData);
 
@@ -104,7 +65,7 @@ function submitDocumentationForm(processOrder) {
     var fileInputs = $('[type="file"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_documentation"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -167,7 +128,7 @@ function generateDocumentationFieldTable(processOrder) {
     `;
 }
 
-function generateHTMLFromResponse_for_documentation(response) {
+function generateHTMLFromResponse_for_documentation_old(response) {
     console.log('yes');
     var html = '<table id="common_table" style="width:100%;">';
     html +=
@@ -178,7 +139,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += "<td>" + item.id + "</td>";
 
         html += '<td>';
-        if (item.technical_file!='null') {
+        if (item.technical_file!=null) {
            
             var filePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
@@ -188,7 +149,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         }
         html += '</td>';
         html += '<td>';
-        if (item.client_handover_documentation!='null') {
+        if (item.client_handover_documentation!=null) {
            
             var filePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
@@ -211,6 +172,62 @@ function generateHTMLFromResponse_for_documentation(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_documentation(response) {
+    console.log('yes');
+    var html = '<form id="documentationForm" class="documentation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Documentation</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="documentation_item">';
+        html += '<label>ID:</label><br>';
+        html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
+
+        // Technical File
+        html += '<div class="documentation_field">';
+        if (item.technical_file) {
+            var technicalFilePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
+            html += '<a href="' + technicalFilePath + '" download>' + item.technical_file + '</a>';
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        // Client Hand-over Documentation
+        html += '<div class="documentation_field">';
+        if (item.client_handover_documentation) {
+            var clientHandoverFilePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
+            html += '<a href="' + clientHandoverFilePath + '" download>' + item.client_handover_documentation + '</a>';
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        // Sign Off Engineer
+        html += '<div class="documentation_field">';
+        html +=
+            '<label>Sign Off Engineer:</label>' +
+            '<input type="text" name="sign_off_engineer" value="' + (item.sign_off_engineer ? item.sign_off_engineer : '-') + '" readonly>' +
+            '</div><br>';
+
+        // Comments
+        html += '<div class="documentation_field">';
+        html +=
+            '<label>Comments:</label>' +
+            '<input type="text" name="comments" value="' + (item.comments ? item.comments : '-') + '" readonly>' +
+            '</div><br>';
+
+        html += '</div>'; // Closing div for documentation_item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+   
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
 
 function generateDocumentationCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
@@ -230,8 +247,16 @@ function generateDocumentationCompleteFieldset(processOrder, qualityStep, userna
         dataType: "json",
         success: function (response) {
             console.log(response);
+            if (response.data !== null) {
             var generatedHTML = generateCompleteHTMLFromResponse_for_documentation(response);
             $("#documentationCompleteFieldTable").html(generatedHTML);
+
+            }
+            else
+        {
+            $("#documentationCompleteFieldTable").html('');
+        }
+
         },
         error: function (error) {
             console.error(error);
@@ -246,6 +271,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
     $.each(response, function (index, item) {
         html += '<div class="documentation_item">';
         html += '<label>ID: ' + item.id + '</label><br>';
+        html += '<input name="process_order_number_dm" value="' + item.process_order_number + '"><br>';
 
         html += '<div class="documentation_field">';
         html +=
@@ -266,7 +292,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_documentation" value="' + item.sign_off_engineer + '">' +
+            '<input type="text" name="sign_off_documentation" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="documentation_field">';
@@ -294,7 +320,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
     html += '</div><br>';
 
         // Added Labels Attached checkbox
-        html += '<div class="documentation_field">';
+       /*  html += '<div class="documentation_field">';
         html +=
             '<label>Labels Attached:</label>' +
             (item.labels_attached === "true" || item.labels_attached === "on" ?
@@ -302,7 +328,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
             '<input type="checkbox" id="labels_attached" name="labels_attached">') +
             '</div><br>';
 
-        html += '</div>'; // Closing div for documentation_item
+        html += '</div>'; */  // Closing div for documentation_item
         html += '<hr>'; // Horizontal line for separation
     });
 
@@ -326,10 +352,10 @@ function submitDocumentationCompleteForm() {
         sign_off_documentation: document.querySelector('[name="sign_off_documentation"]').value,
         comments_documentation: document.querySelector('[name="comments_documentation"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: 2, // Adjust as needed
+        process_order_number: document.querySelector('[name="process_order_number_dm"]').value,
         status: document.querySelector('[name="status"]').value,
         quantity: document.querySelector('[name="quantity"]').value,
-        labels_attached: document.querySelector('[name="labels_attached"]').checked ? "on" : "",
+        //labels_attached: document.querySelector('[name="labels_attached"]').checked ? "on" : "",
     };
 
     $.ajax({
@@ -339,7 +365,7 @@ function submitDocumentationCompleteForm() {
         headers: headers,
         dataType: "json",
         success: function (response) {
-            displayDocumentationResults(response);
+            displayDocumentationResults(response.data);
             console.log(response);
         },
         error: function (xhr, status, error) {
@@ -373,3 +399,95 @@ function displayDocumentationResults(values) {
 
     document.getElementById('documentation_complete_results').innerHTML = resultsHtml;
 }
+function resetDocumentationForm() {
+    // Uncheck checkboxes
+    $('input[name="technical_file_checkbox"]').prop('checked', false);
+    $('input[name="client_handover_checkbox"]').prop('checked', false);
+
+    // Clear text inputs
+    $('#process_order_number_documentation').val('');
+    // Add more text inputs if needed
+
+    // Reset file input values and filenames
+    $('#technical_file').val('');
+    $('#client_handover_documentation').val('');
+
+    // Reset other elements as needed
+    $('#old_technical_file').text('');
+    $('#old_client_handover_documentation').text('');
+    // Add more elements to reset if needed
+
+    // Show the documentation form section if it was hidden
+    $('#documentationFieldset').show();
+}
+
+
+function Documentation(processOrder, userName) {
+    console.log('documentation');
+    console.log(userName);
+
+    // Hide other fieldsets if needed
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#engineeringFieldset').hide();
+
+    // Show documentation fieldset
+    $('#documentationFieldset').show();
+
+    // Set default values for process order number
+    $('#process_order_number_documentation').val(processOrder);
+
+    // Define headers for AJAX request
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    // Prepare form data
+    var formData = {
+        process_order_number: processOrder,
+        // Add other form data if needed
+    };
+
+    // Fetch Documentation Form Data for the given process order
+    $.ajax({
+        url: '/getDocumentationDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            // Reset the form first
+            resetDocumentationForm();
+            $('#process_order_number_documentation').val(processOrder);
+            $('#sign_off_engineer').val(userName);
+            // Populate form fields with response data
+            if (response.data != null) {
+                console.log('yes po found');
+                console.log(response);
+
+                // Example: Populate checkboxes
+                $('input[name="technical_file_checkbox"]').prop('checked', response.data.technical_file_checkbox === '1');
+                $('input[name="client_handover_checkbox"]').prop('checked', response.data.client_handover_checkbox === '1');
+
+                // Example: Populate file upload fields
+                $('#old_technical_file').text(response.data.technical_file);
+                $('#old_client_handover_documentation').text(response.data.client_handover_documentation);
+
+                // Example: Populate other fields
+                // $('#other_field_id').val(response.data.other_field_value);
+            } else {
+                // If no data found, reset the form or set default values
+                resetDocumentationForm();
+                $('#process_order_number_documentation').val(processOrder);
+                $('#sign_off_engineer').val(userName);
+
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
+}
+

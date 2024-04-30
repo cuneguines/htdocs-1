@@ -1,32 +1,7 @@
 function generatePackingTransportFieldset(processOrder, username) {
     $("#responsible_person").val(username);
     return `
-    <fieldset>
-        <legend>Packing and Transport</legend>
-
-        <!-- Subtask 13.1: Documentation Complete -->
-         
-       
-
-        <!-- Subtask 13.2: Secure Packing -->
-        <div class="form-group">
-            <label>
-                Secure Packing:
-                <input type="checkbox" name="secure_packing_checkbox" value="1">
-            </label>
-        </div>
-
-        <!-- Responsible Person -->
-        <div class="form-group">
-            <label>
-                Responsible Person:
-                <input type="text" name="responsible_person" value="${username}">
-            </label>
-        </div>
-
-        <!-- Submit button -->
-        <button type="button" onclick="submitPackingTransportForm('${processOrder}')">Submit Packing and Transport Form</button>
-    </fieldset>
+   
     `;
 }
 
@@ -49,8 +24,8 @@ function submitPackingTransportForm(processOrder) {
     }
 
     var formData = new FormData();
-    formData.append('process_order_number', processOrder);
-    formData.append('responsible_person', document.querySelector('[name="responsible_person"]').value);
+    formData.append('process_order_number', document.querySelector('[name="process_order_number_transport"]').value);
+    formData.append('engineer', document.querySelector('[name="responsible_person"]').value);
     // Add Technical File if checkbox is checked
     if ($('[name="technical_file_checkbox"]').is(':checked')) {
         formData.append('technical_file', getFileName('technical_file'));
@@ -88,7 +63,7 @@ function submitPackingTransportForm(processOrder) {
     var fileInputs = $('[type="file"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', processOrder);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_transport"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -150,7 +125,7 @@ function generatePackingTransportFieldTable(processOrder) {
     `;
 }
 
-function generateHTMLFromResponse_for_packing_transport(response) {
+function generateHTMLFromResponse_for_packing_transport_old(response) {
     console.log('yes');
     var html = '<table id="common_table" style="width:100%;">';
     html +=
@@ -188,6 +163,44 @@ function generateHTMLFromResponse_for_packing_transport(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_packing_transport(response) {
+    console.log('yes');
+    var html = '<form id="packingTransportForm" class="packing-transport-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Packing and Transport</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="packing_transport_item">';
+        html += '<label>ID:</label><br>';
+        html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
+
+        // Documentation Complete
+        html += '<div class="packing_transport_field">';
+        html += '<label>Documentation Complete:</label><br>';
+        html += '<input type="text" name="documentation_complete" value="' + (item.documentation_complete === "Yes" ? "Yes" : "No") + '" readonly><br>';
+        html += '</div>';
+
+        // Secure Packing
+        html += '<div class="packing_transport_field">';
+        html += '<label>Secure Packing:</label><br>';
+        html += '<input type="text" name="secure_packing" value="' + (item.secure_packing === "Yes" ? "Yes" : "No") + '" readonly><br>';
+        html += '</div>';
+
+        // Responsible Person
+        html += '<div class="packing_transport_field">';
+        html += '<label>Responsible Person:</label><br>';
+        html += '<input type="text" name="responsible_person" value="' + (item.engineer ? item.engineer : "-") + '" readonly><br>';
+        html += '</div>';
+
+        html += '</div>'; // Closing div for packing_transport_item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+
 function generatePackingTransportCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
         process_order_number: processOrder,
@@ -224,28 +237,28 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html += '<label>ID: ' + item.id + '</label><br>';
 
         // Documentation Complete
-        html += '<div class="packing_transport_field">';
+        /* html += '<div class="packing_transport_field">';
         html +=
             '<label>Documentation Complete:</label>' +
             (item.documentation_complete === "Yes" ?
-                '<input type="checkbox" id="documentation_complete" name="documentation_complete" checked>' :
-                '<input type="checkbox" id="documentation_complete" name="documentation_complete">') +
-            '</div><br>';
+                '<input type="checkbox" id="documentation_complete" name="documentation_complete">' :
+                '<input type="checkbox" id="documentation_complete" name="documentation_complete" disabled>') +
+            '</div><br>'; */
 
         // Secure Packing
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Secure Packing:</label>' +
             (item.secure_packing === "Yes" ?
-                '<input type="checkbox" id="secure_packing" name="secure_packing" checked>' :
-                '<input type="checkbox" id="secure_packing" name="secure_packing">') +
+                '<input type="checkbox" id="secure_packing" name="secure_packing" >' :
+                '<input type="checkbox" id="secure_packing" name="secure_packing"> disabled') +
             '</div><br>';
 
         // Responsible Person
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Responsible Person:</label>' +
-            '<input type="text" name="responsible_person_complete" value="' + item.responsible_person + '">' +
+            '<input type="text" name="responsible_person_complete" value="' + item.engineer + '">' +
             '</div><br>';
 
         // Comments
@@ -349,4 +362,70 @@ function displayPackingTransportResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('packing_transport_complete_results').innerHTML = resultsHtml;
+}
+function resetTransportForm() {
+    // Uncheck checkboxes or reset other input fields as needed
+    // For example:
+    $('input[name="secure_packing_checkbox"]').prop('checked', false);
+    $('input[name="responsible_person"]').val('');
+}
+
+function Transport(processOrder, userName) {
+    console.log('Transport');
+    console.log(processOrder);
+    // Hide other fieldsets and show Packing and Transport fieldset
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#engineeringFieldset').hide();
+    $('#kittingFieldset').hide();
+    $('#finalAssemblyFieldset').hide();
+    $('#packingtransportFieldset').show();
+    // Set default values if needed
+    $('input[name="responsible_person"]').val(userName);
+    $('#process_order_number_transport').val(processOrder);
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    var formData = {
+        process_order_number: processOrder
+        // Add other form data if needed
+    };
+
+    // Fetch Packing and Transport Form Data for the given process order
+    $.ajax({
+        url: '/getTransportDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            resetTransportForm();
+
+            console.log(userName);
+            $('input[name="responsible_person"]').val(userName);
+            if (response.data != null) {
+                console.log('yes process order found');
+                console.log(response);
+                $('#process_order_number_transport').val(processOrder);
+
+                // Set checkbox states or other field values
+                $('input[name="secure_packing_checkbox"]').prop('checked', response.data.secure_packing_checkbox === "1");
+                $('input[name="responsible_person"]').val(userName);
+                
+                // Handle other fields if needed
+
+            } else {
+                resetTransportForm();
+                $('#process_order_number_transport').val(processOrder);
+                $('input[name="responsible_person"]').val(userName);
+                $('#packingtransportFieldset').show();
+            }
+        },
+        error: function(error) {
+            console.error(error);
+        }
+    });
 }

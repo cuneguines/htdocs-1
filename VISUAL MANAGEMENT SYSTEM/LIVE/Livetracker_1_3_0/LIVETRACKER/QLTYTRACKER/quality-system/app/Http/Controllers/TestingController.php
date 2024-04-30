@@ -95,7 +95,7 @@ class TestingController extends Controller
         $testingData->fat_protocol = $request->input('fat_protocol');
         $testingData->fat_protocol_document_ref = $request->input('fat_protocol_document_ref');
         $testingData->testing_document_file_name = $request->input('testing_document_file_name');
-        $testingData->sign_off_testing = $request->input('sign_off_testing');
+        $testingData->sign_off = $request->input('sign_off');
         $testingData->comments_testing = $request->input('comments_testing');
         $testingData->submission_date = $request->input('submission_date');
         $testingData->status = $request->input('status');

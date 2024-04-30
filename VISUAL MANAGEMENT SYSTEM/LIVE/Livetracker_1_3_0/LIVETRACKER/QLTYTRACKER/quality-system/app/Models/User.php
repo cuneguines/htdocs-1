@@ -18,8 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'EmployeeId', 'Login', 'Password', 'Description', 'FirstName', 'LastName',
-        'IsActive', 'IsAdmin', 'IsQA',
+        'U_IIS_proEmplPwd','U_IIS_disEmpPin',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -42,5 +41,5 @@ class User extends Authenticatable
     ];
 
 
-    protected $table = 'dbo.ProcessTracker_Users';
+    protected $table = 'KENTSTAINLESS.dbo.OHEM';
 }

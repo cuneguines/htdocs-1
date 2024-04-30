@@ -164,7 +164,7 @@ function generateWeldingFieldTable(processOrder, qualityStep) {
 }
 
 // Function to generate HTML table from welding tasks response
-function generateHTMLFromResponse_for_welding(response) {
+function generateHTMLFromResponse_for_welding_old(response) {
     var html =
         '<table id="common_table" style="width:100%; border: 1px solid #ddd">';
     html += "<thead><tr>";
@@ -316,6 +316,287 @@ function generateHTMLFromResponse_for_welding(response) {
     });
 
     html += "</tbody></table>";
+
+    return html;
+}
+function generateHTMLFromResponse_for_welding(response) {
+    var html =
+        '<form id="weldingForm" class="welding-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Welding</legend>';
+
+    $.each(response, function (index, item) {
+        html += '<div class="welding-item">';
+        html += '<label for="id">ID:</label>';
+        html += '<input type="text" id="id" name="id" value="' + item.Id + '" readonly>';
+        html += '<br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="weld_map_issued">Weld Map Issued:</label>';
+        html += '<input type="text" id="weld_map_issued" name="weld_map_issued" value="' + (item.weld_map_issued ? item.weld_map_issued : '') + '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_weld_map">Link to Weld Map:</label>';
+        if (item.link_to_weld_map) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_weld_map;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html +=
+            '<label for="weld_procedure_qualification">Weld Procedure Qualification:</label>';
+        html +=
+            '<input type="text" id="weld_procedure_qualification" name="weld_procedure_qualification" value="' +
+            (item.weld_procedure_qualification
+                ? item.weld_procedure_qualification
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_pqr">Link to PQR:</label>';
+        if (item.link_to_pqr) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_pqr;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html +=
+            '<label for="weld_procedure_specifications">Weld Procedure Specifications:</label>';
+        html +=
+            '<input type="text" id="weld_procedure_specifications" name="weld_procedure_specifications" value="' +
+            (item.weld_procedure_specifications
+                ? item.weld_procedure_specifications
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_wps">Link to WPS:</label>';
+        if (item.link_to_wps) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_wps;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html +=
+            '<label for="welder_performance_qualification">Welder Performance Qualification:</label>';
+        html +=
+            '<input type="text" id="welder_performance_qualification" name="welder_performance_qualification" value="' +
+            (item.welder_performance_qualification
+                ? item.welder_performance_qualification
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_wpq">Link to WPQ:</label>';
+        if (item.link_to_wpq) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_wpq;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="welding_wire">Welding Wire:</label>';
+        html +=
+            '<input type="text" id="welding_wire" name="welding_wire" value="' +
+            (item.welding_wire ? item.welding_wire : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_wire_certificate">Link to Wire Certificate:</label>';
+        if (item.link_to_wire_certificate) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_wire_certificate;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="shielding_gas">Shielding Gas:</label>';
+        html +=
+            '<input type="text" id="shielding_gas" name="shielding_gas" value="' +
+            (item.shielding_gas ? item.shielding_gas : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_gas_data_sheet">Link to Gas Data Sheet:</label>';
+        if (item.link_to_gas_data_sheet) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_gas_data_sheet;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="pre_weld_inspection">Pre Weld Inspection:</label>';
+        html +=
+            '<input type="text" id="pre_weld_inspection" name="pre_weld_inspection" value="' +
+            (item.pre_weld_inspection ? item.pre_weld_inspection : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="inspection_during_welding">Inspection During Welding:</label>';
+        html +=
+            '<input type="text" id="inspection_during_welding" name="inspection_during_welding" value="' +
+            (item.inspection_during_welding
+                ? item.inspection_during_welding
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="post_weld_inspection">Post Weld Inspection:</label>';
+        html +=
+            '<input type="text" id="post_weld_inspection" name="post_weld_inspection" value="' +
+            (item.post_weld_inspection ? item.post_weld_inspection : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="sign_off_welding_complete">Sign Off Welding Complete:</label>';
+        html +=
+            '<input type="text" id="sign_off_welding_complete" name="sign_off_welding_complete" value="' +
+            (item.sign_off_welding_complete
+                ? item.sign_off_welding_complete
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="comments_welding_complete">Comments Welding Complete:</label>';
+        html +=
+            '<input type="text" id="comments_welding_complete" name="comments_welding_complete" value="' +
+            (item.comments_welding_complete
+                ? item.comments_welding_complete
+                : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="status">Status:</label>';
+        html +=
+            '<input type="text" id="status" name="status" value="' +
+            (item.status ? item.status : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="submission_date">Submission Date:</label>';
+        html +=
+            '<input type="text" id="submission_date" name="submission_date" value="' +
+            (item.submission_date ? item.submission_date : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="created_at">Created At:</label>';
+        html +=
+            '<input type="text" id="created_at" name="created_at" value="' +
+            (item.created_at ? item.created_at : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html +=
+            '<input type="text" id="updated_at" name="updated_at" value="' +
+            (item.updated_at ? item.updated_at : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="link_to_plant_cert">Link to Plant Cert:</label>';
+        if (item.link_to_plant_cert) {
+            var filePath =
+                'storage/welding_task/' +
+                item.ProcessOrderID +
+                '/' +
+                item.link_to_plant_cert;
+            var downloadLink =
+                '<a href="' + filePath + '" download>Download</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="process_order_id">Process Order ID:</label>';
+        html +=
+            '<input type="text" id="process_order_id" name="process_order_id" value="' +
+            (item.ProcessOrderID ? item.ProcessOrderID : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '<div class="welding-field">';
+        html += '<label for="action">Action:</label>';
+        html +=
+            '<input type="text" id="action" name="action" value="' +
+            (item.Action ? item.Action : '') +
+            '">';
+        html += '</div><br>';
+
+        html += '</div>'; // Closing div for welding-item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+    html += '<input type="button" value="Submit" onclick="submitWeldingForm()">';
+    html += '</fieldset></form>';
 
     return html;
 }
@@ -511,8 +792,8 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Sign Off:</label>" +
-            '<input type="text" name="sign_off_welding_complete" value="' +
-            item.sign_off_welding +
+            '<input type="text" name="sign_off_welding_complete_c" value="' +
+            userName +
             '">' +
             "</div><br>";
 
@@ -610,7 +891,7 @@ function submitWeldingCompleteForm() {
             ? "on"
             : "",
         sign_off_welding_complete: document.querySelector(
-            '[name="sign_off_welding_complete"]'
+            '[name="sign_off_welding_complete_c"]'
         ).value,
         comments_welding_complete: document.querySelector(
             '[name="comments_welding_complete"]'

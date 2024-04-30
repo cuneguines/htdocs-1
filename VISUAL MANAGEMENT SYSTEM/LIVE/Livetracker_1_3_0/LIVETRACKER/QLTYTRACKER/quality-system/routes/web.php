@@ -47,15 +47,18 @@ use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
 use App\Http\Controllers\Kitting;
 use App\Http\Controllers\TestingController;
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+//Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::get('/processorders', [HomeController::class, 'showProcessOrdersForm'])->name('processorders')->middleware('auth');
 
 Route::get('/get-line-items/{processOrderId}', [GetlineController::class, 'getLineItems']);
 
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::get('/processorders', [HomeController::class, 'showProcessOrdersForm']);
-Route::get('/engineer_task', [Engineer::class, 'ShowEngineerForm']);
-Route::get('/kitting_task', [Kitting::class, 'ShowKittingForm']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/login', [AuthController::class, 'login']);
+
+
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // routes/web.php
 Route::post('/submitEngineeringForm', [EngineeringController::class, 'submitEngineeringForm']);
@@ -104,6 +107,8 @@ Route::post('/viewKittingCompleteForm', [KittingController::class, 'viewKittingC
 Route::post('/viewWeldingCompleteForm', [WeldingController::class, 'viewWeldingCompleteForm']);
 Route::post('/viewTestingCompleteForm', [TestingController::class, 'viewTestingCompleteForm']);
 Route::post('/viewFinishingCompleteForm', [FinishingController::class, 'viewFinishingCompleteForm']);
+Route::post('/viewFabricationFitUpCompleteForm', [FabricationFitUpTableDataCompleteController::class, 'viewFabricationFitUpCompleteForm']);
+Route::post('/viewMaterialCompletePreparationForm', [MaterialTableDataCompleteController::class, 'viewMaterialCompletePreparationForm']);
 
 Route::post('/handleFileUploadEngineer', [UploadController::class, 'handleFileUploadEngineer']);
 Route::post('/handleFileUploadPlanning', [UploadController::class, 'handleFileUploadPlanning']);

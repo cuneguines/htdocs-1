@@ -67,7 +67,7 @@ class QualityController extends Controller
     public function getQualityCompleteDataByProcessOrder(Request $request)
     {
         // Fetch Quality Form Data based on process order number
-        $processOrder = $request->input('process_order_number');
+        $processOrder = $request->input('po');
         
         $qualityData = QualityCompleteData::where('process_order_number', $processOrder)
         ->orderBy('updated_at', 'desc')

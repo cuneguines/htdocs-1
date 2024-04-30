@@ -23,17 +23,20 @@ class AuthController extends Controller
     public function login(Request $request)
     {
        
-            $credentials = $request->only('Login', 'Password');
+            $credentials = $request->only('Login','Password');
         
             // Retrieve the user based on the login field
-            $user = User::where('Login', $credentials['Login'])->first();
-        
-            if ($user && $user->Password == $credentials['Password']) {
+            $user = User::where('U_IIS_proEmplPwd', $credentials['Login'])->first();
+            if ($user) {
+                $disEmpPin = $user->U_IIS_disEmpPin;
+            }
+            if ($user && $disEmpPin == $credentials['Password']) {
                 // Authentication successful
                 Auth::login($user);
-                Session::put('user_id', $user->Login);
+                Session::put('user_id', $user->U_IIS_proEmplPwd);
             
-                return redirect()->intended('processorders');
+               // return redirect()->route view('processorders');
+               return view('processorders');
             }
             
         // Authentication failed
@@ -46,10 +49,10 @@ class AuthController extends Controller
     
 
 
-    public function logout()
+     public function logout()
     {
         Auth::logout();
-
-        return redirect('/');
-    }
+        Session::forget('user_id');
+        return redirect('login');
+    } 
 }
