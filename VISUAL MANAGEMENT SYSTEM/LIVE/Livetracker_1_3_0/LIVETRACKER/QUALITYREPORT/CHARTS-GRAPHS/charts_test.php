@@ -2298,7 +2298,7 @@ $costCountsJSON = json_encode($costCounts);
                 maintainAspectRatio: false,
                 scales: {
                     y: {
-                        max: 20000,
+                        max: 30000,
                         beginAtZero: true,
                         stepSize: 1
                     },

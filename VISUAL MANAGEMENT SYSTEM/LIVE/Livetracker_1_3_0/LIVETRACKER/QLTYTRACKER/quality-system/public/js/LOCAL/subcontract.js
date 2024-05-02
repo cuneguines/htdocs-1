@@ -269,7 +269,7 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Sign-off for Sub-Contract:</label>' +
-        '<input type="text" name="sign_off_sub_contract" value="' + item.sign_off_sub_contract + '" >';
+        '<input type="text" name="sign_off_sub_contract_c" value="' + userName + '" >';
     html += '</div><br>';
 
     html += '<div class="sub_contract_field">';
@@ -314,7 +314,7 @@ function submitCompleteSubContractForm() {
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
         sub_contract_action: document.querySelector('[name="sub_contract_action"]').value,
-        sign_off_sub_contract: document.querySelector('[name="sign_off_sub_contract"]').value,
+        sign_off_sub_contract: document.querySelector('[name="sign_off_sub_contract_c"]').value,
         // Add other form fields accordingly
     };
 

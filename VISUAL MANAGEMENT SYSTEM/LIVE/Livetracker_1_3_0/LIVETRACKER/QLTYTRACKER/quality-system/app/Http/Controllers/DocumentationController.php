@@ -82,13 +82,13 @@ class DocumentationController extends Controller
     // Create a new instance of the DocumentationCompleteData model
     $documentationCompleteData = new DocumentationCompleteData;
     $documentationCompleteData->process_order_number = $request->input('process_order_number');
-    $documentationCompleteData->technical_file = $request->has('technical_file') ? 'on' : '';
-    $documentationCompleteData->client_handover_documentation = $request->has('client_handover_documentation') ? 'on' : '';
+    $documentationCompleteData->technical_file = $request->input('technical_file') ;
+    $documentationCompleteData->client_handover_documentation = $request->input('client_handover_documentation') ;
     $documentationCompleteData->sign_off_documentation = $request->input('sign_off_documentation');
     $documentationCompleteData->comments_documentation = $request->input('comments_documentation');
     $documentationCompleteData->status = $request->input('status');
     $documentationCompleteData->quantity = $request->input('quantity');
-    $documentationCompleteData->labelattached = $request->has('labels_attached') ? 'on' : '';
+    $documentationCompleteData->labelattached = $request->input('labels_attached') ;
     // Add other fields accordingly
 
     $documentationCompleteData->save();
@@ -96,4 +96,16 @@ class DocumentationController extends Controller
     // You can return a response or redirect as needed
     return response()->json(['data' => $documentationCompleteData]);
  }
+
+ public function viewDocumentationCompleteForm(Request $request)
+    {
+        $processOrderNumber = $request->input('process_order_number');
+
+        // Retrieve data based on the process order number to get the latest record
+        $data = DocumentationCompleteData::where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->first();
+
+        return response()->json(['data' => $data]);
+    }
 }

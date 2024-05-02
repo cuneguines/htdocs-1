@@ -18,6 +18,7 @@ class PackingTransportCompleteData extends Model
         'status',
         'quantity',
         'labels_attached',
+        'secure_packing',
         // Add other fields as needed
     ];
 

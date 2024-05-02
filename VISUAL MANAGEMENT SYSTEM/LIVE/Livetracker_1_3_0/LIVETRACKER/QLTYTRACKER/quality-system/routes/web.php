@@ -109,6 +109,8 @@ Route::post('/viewTestingCompleteForm', [TestingController::class, 'viewTestingC
 Route::post('/viewFinishingCompleteForm', [FinishingController::class, 'viewFinishingCompleteForm']);
 Route::post('/viewFabricationFitUpCompleteForm', [FabricationFitUpTableDataCompleteController::class, 'viewFabricationFitUpCompleteForm']);
 Route::post('/viewMaterialCompletePreparationForm', [MaterialTableDataCompleteController::class, 'viewMaterialCompletePreparationForm']);
+Route::post('/viewPackingTransportCompleteForm', [PackingTransportController::class, 'viewPackingTransportCompleteForm']);
+Route::post('/viewDocumentationCompleteForm', [DocumentationController::class, 'viewDocumentationCompleteForm']);
 
 Route::post('/handleFileUploadEngineer', [UploadController::class, 'handleFileUploadEngineer']);
 Route::post('/handleFileUploadPlanning', [UploadController::class, 'handleFileUploadPlanning']);

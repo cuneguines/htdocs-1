@@ -149,6 +149,10 @@
     width: 150px;
     /* Adjust input width as needed */
 }
+.active
+{
+    background-color: yellow;
+}
 </style>
 
 
@@ -495,7 +499,7 @@
         // Check if loggedInUser is admin to show all buttons
         if (loggedInUser === 'admin') {
             headerRow.append('<th>View</th>');
-            headerRow.append('<th>Update</th>');
+            //headerRow.append('<th>Update</th>');
             headerRow.append('<th>Complete</th>');
         }
 
@@ -515,7 +519,7 @@
                     var clickedRow = $(this).closest('tr');
                     var processOrderValue = clickedRow.find('td:first').text();
                     var qualityStepValue = $(this).text();
-                    openModal(processOrderValue, qualityStepValue, userName);
+                    //openModal(processOrderValue, qualityStepValue, userName);
                 }
             });
 
@@ -534,17 +538,17 @@
                     }
                 });
 
-                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
-                var qualityStepButtonWithId = $('<button>', {
-                    text: 'Update',
-                    id: 'button_' + qualitySteps[i], // Add the id based on the quality step
-                    click: function() {
-                        var qualityStepId = $(this).attr('id').split('_')[1];
+               // row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+                //var qualityStepButtonWithId = $('<button>', {
+                   // text: 'Update',
+                   // id: 'button_' + qualitySteps[i], // Add the id based on the quality step
+                   // click: function() {
+                      //  var qualityStepId = $(this).attr('id').split('_')[1];
                         // Handle button click with the quality step id
-                        console.log('Button clicked for quality step: ' + qualityStepId);
-                        openglobalUpdateModal(processOrder, qualityStepId);
-                    }
-                });
+                        //console.log('Button clicked for quality step: ' + qualityStepId);
+                        //openglobalUpdateModal(processOrder, qualityStepId);
+                   // }
+                //});
 
                 row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
 

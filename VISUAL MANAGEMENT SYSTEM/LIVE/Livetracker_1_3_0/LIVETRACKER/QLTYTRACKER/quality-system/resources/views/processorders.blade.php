@@ -44,7 +44,7 @@
 </head>
 <style>
 <style>#table-container {
-    max-height: 100px;
+    max-height: 70%;
     overflow-y: scroll;
     position: relative;
     max-width: 70%;
@@ -207,7 +207,7 @@
             </div>
         </div>
         <div id="table-container"
-            style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);border-radius: 5px;max-height: 440px;background-color:white;overflow-y: scroll;position: relative;max-width: 84%; margin: 10px;">
+            style="box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);border-radius: 5px;max-height: 66%;background-color:white;overflow-y: scroll;position: relative;max-width: 84%; margin: 10px;">
             <table id="table" style="display:none;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
 
             </table>
@@ -500,7 +500,7 @@
         // Check if loggedInUser is admin to show all buttons
         if (loggedInUser === 'admin') {
             headerRow.append('<th>View</th>');
-            headerRow.append('<th>Update</th>');
+            //headerRow.append('<th>Update</th>');
             headerRow.append('<th>Complete</th>');
         }
 
@@ -539,7 +539,7 @@
                     }
                 });
 
-                row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
+                /* row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
                 var qualityStepButtonWithId = $('<button>', {
                     text: 'Update',
                     id: 'button_' + qualitySteps[i], // Add the id based on the quality step
@@ -549,7 +549,7 @@
                         console.log('Button clicked for quality step: ' + qualityStepId);
                         openglobalUpdateModal(processOrder, qualityStepId);
                     }
-                });
+                }); */
 
                 row.append('<td style="text-align:center">').find('td:last').append(qualityStepButtonWithId);
 

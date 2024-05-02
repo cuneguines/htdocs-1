@@ -356,7 +356,7 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     // Field for Sign-off for Final Assembly
     html += '<div class="final_assembly_field">';
     html += '<label>Sign-off for Final Assembly:</label>';
-    html += '<input type="text" name="sign_off_final_assembly" value="' + item.sign_off_final_assembly + '">';
+    html += '<input type="text" name="sign_off_final_assembly" value="' + userName + '">';
     html += '</div><br>';
 
     // Field for Comments for Final Assembly

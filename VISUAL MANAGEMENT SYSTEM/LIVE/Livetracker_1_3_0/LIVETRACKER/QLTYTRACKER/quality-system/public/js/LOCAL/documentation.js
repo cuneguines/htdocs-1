@@ -274,19 +274,21 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         html += '<input name="process_order_number_dm" value="' + item.process_order_number + '"><br>';
 
         html += '<div class="documentation_field">';
+        html += '<label>Technical File:</label>';
         html +=
-            '<label>Technical File:</label>' +
-            (item.technical_file === "true" || item.technical_file === "on" ?
-            '<input type="checkbox" id="technical_file" name="technical_file" checked>' :
-            '<input type="checkbox" id="technical_file" name="technical_file">') +
+           
+        
+            '<input type="checkbox" id="technical_file" name="technical_file_c" >'
+            
             '</div><br>';
 
         html += '<div class="documentation_field">';
+        html += '<label>Client Handover Documentation:</label>';
         html +=
-            '<label>Client Hand-over Documentation:</label>' +
-            (item.client_handover_documentation === "true" || item.client_handover_documentation === "on" ?
-            '<input type="checkbox" id="client_handover_documentation" name="client_handover_documentation" checked>' :
-            '<input type="checkbox" id="client_handover_documentation" name="client_handover_documentation">') +
+            
+        
+            '<input type="checkbox" id="client_handover_documentation" name="client_handover_documentation_c" >'
+            
             '</div><br>';
 
         html += '<div class="documentation_field">';
@@ -332,7 +334,9 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         html += '<hr>'; // Horizontal line for separation
     });
 
-    html += '<input type="button" value="Submit" onclick="submitDocumentationCompleteForm()">';
+    html += '<input class="btn"type="button" value="Submit" onclick="submitDocumentationCompleteForm(this)">';
+    html += '<input class="btn"type="button" value="View" onclick="viewDocumentationCompleteForm()">';
+   
     html += '</form>';
 
     html += '<div id="documentation_complete_results"></div>';
@@ -341,14 +345,16 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
     return html;
 }
 
-function submitDocumentationCompleteForm() {
+
+function submitDocumentationCompleteForm($button) {
+   $button.classList.add("active");
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
 
     var formData = {
-        technical_file: document.querySelector('[name="technical_file"]').checked ? "on" : "",
-        client_handover_documentation: document.querySelector('[name="client_handover_documentation"]').checked ? "on" : "",
+        technical_file: document.querySelector('[name="technical_file_c"]').checked ? "on" : "",
+        client_handover_documentation: document.querySelector('[name="client_handover_documentation_c"]').checked ? "on" : "",
         sign_off_documentation: document.querySelector('[name="sign_off_documentation"]').value,
         comments_documentation: document.querySelector('[name="comments_documentation"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
@@ -398,6 +404,32 @@ function displayDocumentationResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('documentation_complete_results').innerHTML = resultsHtml;
+}
+
+
+
+function viewDocumentationCompleteForm() {
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        process_order_number: document.querySelector('[name="process_order_number_dm"]').value,
+    };
+    $.ajax({
+        type: "POST",
+        url: "/viewDocumentationCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            displayDocumentationResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
 }
 function resetDocumentationForm() {
     // Uncheck checkboxes

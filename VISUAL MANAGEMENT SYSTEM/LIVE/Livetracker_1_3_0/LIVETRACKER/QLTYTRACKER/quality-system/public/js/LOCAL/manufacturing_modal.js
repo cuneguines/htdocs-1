@@ -384,7 +384,7 @@ function resetManufacturingForm() {
 }
 function Manufacturing(processOrder,userName)
 {
-console.log('manufacturing');
+ console.log('manufacturing');
             console.log(userName);
             $('#planningFieldset').hide();
             $('#qualityFieldset').hide();

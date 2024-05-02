@@ -82,9 +82,10 @@ class PackingTransportController extends Controller
         // Create a new instance of PackingTransportCompleteData
         $packingTransportCompleteData = new PackingTransportCompleteData;
         $packingTransportCompleteData->process_order_number = $request->input('process_order_number');
+        $packingTransportCompleteData->secure_packing = $request->input('secure_packing');
         $packingTransportCompleteData->technical_file = $request->has('technical_file') ? 'on' : '';
         $packingTransportCompleteData->client_handover_documentation = $request->has('client_handover_documentation') ? 'on' : '';
-        $packingTransportCompleteData->sign_off_documentation = $request->input('sign_off_documentation');
+        $packingTransportCompleteData->sign_off_documentation = $request->input('responsible_person_complete');
         $packingTransportCompleteData->comments_documentation = $request->input('comments_documentation');
         $packingTransportCompleteData->status = $request->input('status');
         $packingTransportCompleteData->quantity = $request->input('quantity');

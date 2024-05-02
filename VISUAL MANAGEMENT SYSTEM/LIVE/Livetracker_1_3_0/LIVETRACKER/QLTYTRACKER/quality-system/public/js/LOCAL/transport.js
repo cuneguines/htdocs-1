@@ -235,7 +235,10 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
     $.each(response, function (index, item) {
         html += '<div class="packing_transport_item">';
         html += '<label>ID: ' + item.id + '</label><br>';
-
+        html += '<div class="packing_transport_item">';
+        html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
+        html += '<div class="packing_transport_item">';
+        html += '<input type="hidden" name="process_order_number_pt" value="' + item.process_order_number + '"><br>';
         // Documentation Complete
         /* html += '<div class="packing_transport_field">';
         html +=
@@ -258,7 +261,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Responsible Person:</label>' +
-            '<input type="text" name="responsible_person_complete" value="' + item.engineer + '">' +
+            '<input type="text" name="responsible_person_complete" value="' + userName + '">' +
             '</div><br>';
 
         // Comments
@@ -299,6 +302,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
     });
 
     html += '<input type="button" value="Submit" onclick="submitPackingTransportCompleteForm()">';
+    html += '<input type="button" value="View" onclick="viewPackingTransportCompleteForm()">';
     html += '</form>';
 
     html += '<div id="packing_transport_complete_results"></div>';
@@ -306,6 +310,32 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
 
     return html;
 }
+function viewPackingTransportCompleteForm()
+{
+    var headers = {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    };
+
+    var formData = {
+        process_order_number: document.querySelector('[name="process_order_number_pt"]').value,
+    };
+    console.log(formData);
+    $.ajax({
+        type: "POST",
+        url: "/viewPackingTransportCompleteForm",
+        data: formData,
+        headers: headers,
+        dataType: "json",
+        success: function (response) {
+            displayPackingTransportResults(response);
+            console.log(response);
+        },
+        error: function (xhr, status, error) {
+            console.error("Error:", error);
+        }
+    });
+}
+
 function submitPackingTransportCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -317,7 +347,7 @@ function submitPackingTransportCompleteForm() {
         responsible_person_complete: document.querySelector('[name="responsible_person_complete"]').value,
         comments_packing_transport: document.querySelector('[name="comments_packing_transport"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
-        process_order_number: 2, // Adjust as needed
+        process_order_number: document.querySelector('[name="process_order_number_pt"]').value, // Adjust as needed
         status: document.querySelector('[name="status"]').value,
         quantity: document.querySelector('[name="quantity"]').value,
         photos_attached: document.querySelector('[name="photos_attached"]').checked ? "Yes" : "No",
