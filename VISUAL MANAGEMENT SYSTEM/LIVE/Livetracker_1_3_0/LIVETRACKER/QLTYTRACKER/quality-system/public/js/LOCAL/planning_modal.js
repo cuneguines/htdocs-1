@@ -141,7 +141,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="purchase_order_document_' + index + '" style="font-weight: bold;">Purchase Order Document:</label>';
         if (item.purchase_order_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
+            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.purchase_order_document + '</a>';
             html += downloadLink;
         } else {
@@ -283,7 +283,7 @@ function submitPlanningForm() {
         sign_off_planning:document.querySelector('[name="sign_off_planning"]').value || null,
         comments_planning: document.querySelector('[name="comments_planning"]').value || null,
         // Get today's date in YYYY-MM-DD format
-        process_order_number: document.querySelector('[name="process_order_number"]').value || null,
+        process_order_number: document.querySelector('[name="process_order_number_planning"]').value || null,
         // Add other form fields accordingly
     };
     console.log(formData);
@@ -317,9 +317,9 @@ function submitPlanningForm() {
     // File uploads
     var fileData = new FormData();
     var fileInputs = $('[type="file"]');
-    console.log(document.getElementById('process_order_number').value );
+    console.log(document.getElementById('process_order_number_planning').value );
     // Add process_order_number to FormData
-    fileData.append('process_order_number',  document.getElementById('process_order_number').value );
+    fileData.append('process_order_number',  document.getElementById('process_order_number_planning').value );
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -561,7 +561,7 @@ console.log('planning');
             $('#manufacturingFieldset').hide();
             $('#planningFieldset').show();
             $('#sign_off_planning').val(userName);
-            $('#process_order_number').val(processOrder);
+            $('#process_order_number_planning').val(processOrder);
 
             var headers = {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -583,12 +583,13 @@ console.log('planning');
                 success: function(response) {
                     resetPlanningForm();
                     $('#sign_off_planning').val(userName);
+                    $('#process_order_number_planning').val(processOrder);
+
                     // console.log(response.process_order_number);
                     if (response.data != null) {
                         console.log('yes po found');
                         $.each(response, function(index, item) {
-                            $('#process_order_number').val(item.process_order_number);
-
+                            $('#process_order_number_planning').val(processOrder);
                             $('input[name="purchase_order_received"]').prop('checked', item
                                 .purchase_order_received === 'true');
                             $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
@@ -646,6 +647,7 @@ console.log('planning');
                         resetPlanningForm();
                         $('#sign_off_planning').val(userName);
                         $('#planningFieldset').show();
+                        $('#process_order_number_planning').val(processOrder);
                     }
 
                 },

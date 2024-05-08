@@ -20,6 +20,7 @@
             Current Production Drawings Document: <br>
             <span id="production_drawings_filename"></span>
             <input type="file" name="production_drawings_document" id="production_drawings_document">
+            <button type="button" onclick="clear_production_drawings_document()">Clear File</button>
         </label>
     </div>
 
@@ -34,6 +35,7 @@
             Current BOM Document: <br>
             <span id="bom_filename"></span>
             <input type="file" name="bom_document" id="bom_document">
+            <button type="button" onclick="clear_bom_document()">Clear File</button>
         </label>
     </div>
 
@@ -48,6 +50,8 @@
             Current Machine Programming Files Document: <br>
             <span id="machine_programming_files_filename"></span>
             <input type="file" name="machine_programming_files_document" id="machine_programming_files_document">
+            <button type="button" onclick="clear_machine_programming_files_document()">Clear File</button>
+            
         </label>
     </div>
 
@@ -62,6 +66,7 @@
             Current NDT Documentation Document: <br>
             <span id="ndt_documentation_filename"></span>
             <input type="file" name="ndt_documentation_document" id="ndt_documentation_document">
+            <button type="button" onclick="clear_ndt_documentation_document()">Clear File</button>
         </label>
     </div>
 
@@ -76,6 +81,7 @@
             Current Quality Documents Document: <br>
             <span id="quality_documents_filename"></span>
             <input type="file" name="quality_documents_document" id="quality_documents_document">
+            <button type="button" onclick="clear_quality_documents_document()">Clear File</button>
         </label>
     </div>
 
@@ -100,3 +106,29 @@
     <!-- Submit button -->
     <button type="submit" onclick="submitManufacturingForm()">Submit Manufacturing Form</button>
 </fieldset>
+<script>
+    function clear_production_drawings_document() {
+        document.getElementById('production_drawings_document').value = ''; // Clear the file input field
+        document.getElementById('production_drawings_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_bom_document() {
+        document.getElementById('bom_document').value = ''; // Clear the file input field
+        document.getElementById('bom_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_machine_programming_files_document() {
+        document.getElementById('machine_programming_files_document').value = ''; // Clear the file input field
+        document.getElementById('machine_programming_files_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_ndt_documentation_document() {
+        document.getElementById('ndt_documentation_document').value = ''; // Clear the file input field
+        document.getElementById('ndt_documentation_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_quality_documents_document() {
+        document.getElementById('quality_documents_document').value = ''; // Clear the file input field
+        document.getElementById('quality_documents_filename').textContent = ''; // Clear the filename display
+    }
+</script>

@@ -8,6 +8,7 @@
 
         <!-- EXTERNAL JAVASCRIPT LIBRARIES -->
         <script type = "text/javascript" src = "../../../JS/LIBS/jquery-3.4.1.js"></script>
+        <script type="text/javascript" src="./show_table.js"></script>
         <script src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
         <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
         <script type = "text/javascript">$(document).ready(function() {$.ajaxSetup({ cache: false });});</script> <!-- DISBLE AJAX CACHING SO THAT IT WILL ALWAYS READ IN JSON FROM LOCAL CACHE INSTEAD OF USING AJAX MEMORY -->
@@ -1013,6 +1014,7 @@
                     <div class = "totalgrid white bottom left" id = "innerbottomleft">
                         <p class = "totaltitle smedium">Delivered Sales For Last Year</p>
                         <p class = "totalvalue larger"><br>€<?= number_format($headline_figures["Del Last Y"]/1000000,2)." M"?></p>
+                        <button onclick="toggleTable()">Show Table</button>
                     </div>
                     <div class = "totalgrid white bottom middle" id = "innerbottommiddle">
                         <p class = "totaltitle smedium">Predicted Sales Next Four Months</p>

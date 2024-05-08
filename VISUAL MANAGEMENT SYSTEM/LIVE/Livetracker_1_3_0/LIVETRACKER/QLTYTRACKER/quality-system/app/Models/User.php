@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'U_IIS_proEmplPwd','U_IIS_disEmpPin',
+        'Login','ClockNumber'
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -41,5 +41,5 @@ class User extends Authenticatable
     ];
 
 
-    protected $table = 'KENTSTAINLESS.dbo.OHEM';
+    protected $table = 'QUALITY_PACK.dbo.User';
 }

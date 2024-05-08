@@ -12,11 +12,13 @@
     <div class="form-group">
         <label>
             Technical File:
-            <input type="checkbox" name="technical_file_checkbox" value="1" onclick="toggleFileUpload('technical_file_upload', this)">
+            <input type="checkbox" name="technical_file_checkbox" value="1" >
         </label>
-        <div id="technical_file_upload" style="display: none;">
+        
+        <div id="technical_file_upload">
             <label>Upload New Technical File:</label>
-            <input type="file" name="technical_file" accept=".pdf,.doc,.docx,.txt">
+            <input type="file" name="technical_file" id="technical_file"accept=".pdf,.doc,.docx,.txt">
+            <button type="button" onclick="clearFile_tech()">Clear File</button>
         </div>
         <div>
             <label></label>
@@ -28,15 +30,21 @@
     <div class="form-group">
         <label>
             Client Hand-over documentation:
-            <input type="checkbox" name="client_handover_checkbox" value="1" onclick="toggleFileUpload('client_handover_upload', this)">
+            <input type="checkbox" name="client_handover_checkbox" value="1">
         </label>
-        <div id="client_handover_upload" style="display: none;">
+        <div id="client_handover_upload" >
+        
             <label>Upload New Client Hand-over Documentation:</label>
-            <input type="file" name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
+            <input type="file" id="client_handover_documentation"name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
+           
         </div>
         <div>
             
             <span id="old_client_handover_documentation"></span>
+            <button type="button" onclick="clearFile_client()">Clear File</button>
+            
+       
+       
         </div>
     </div>
 
@@ -48,36 +56,25 @@
         </label>
     </div>
 
-    <!-- Process Order -->
-    <div class="form-group">
-        <label>
-            Process Order:
-            <input type="text" name="process_order" value="">
-        </label>
-    </div>
+   
 
     <!-- Submit button -->
     <button type="button" onclick="submitDocumentationForm('${processOrder}')">Submit Documentation Form</button>
 </fieldset>
 
 <script>
-    function toggleFileUpload(elementId, checkbox) {
-        var uploadDiv = document.getElementById(elementId);
-        if (checkbox.checked) {
-            uploadDiv.style.display = "block";
-        } else {
-            uploadDiv.style.display = "none";
-        }
-    }
-</script>
+  function clearFile_tech()
+  {
+    document.getElementById('technical_file').value = '';
+    document.getElementById('old_technical_file').textContent = '';
 
-    <script>
-    function toggleFileUpload(elementId, checkbox) {
-    var uploadDiv = document.getElementById(elementId);
-    if (checkbox.checked) {
-        uploadDiv.style.display = "block";
-    } else {
-        uploadDiv.style.display = "none";
-    }
+   
+
+  }
+  function clearFile_client()
+{
+    document.getElementById('client_handover_documentation').value = '';
+    document.getElementById('old_client_handover_documentation').textContent = '';
 }
+
 </script>

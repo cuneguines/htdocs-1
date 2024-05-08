@@ -4,7 +4,7 @@
                         <!-- Process Order Number -->
                         <div class="form-group">
                             <label>
-                                <input type="text" name="process_order_number" id="process_order_number" readonly>
+                                <input type="text" name="process_order_number_planning" id="process_order_number_planning" readonly>
                                 Process Order Number
                             </label>
                         </div>
@@ -20,6 +20,7 @@
                                 id="purchase_order_file_label">
                                 Current Purchase Order Document: <br><span id="purchase_order_filename"></span>
                                 <input type="file" name="purchase_order_document" id="purchase_order_document">
+                                <button type="button" onclick="clear_purchase_order_document()">Clear File</button>
                             </label>
                         </div>
 
@@ -34,6 +35,7 @@
                                 id="project_schedule_file_label">
                                 Current Project Schedule Document:<br> <span id="project_schedule_filename"></span>
                                 <input type="file" name="project_schedule_document" id="project_schedule_document">
+                                <button type="button" onclick="clear_project_schedule_document()">Clear File</button>
                             </label>
                         </div>
 
@@ -47,6 +49,7 @@
                             <label style="background-color: lightgrey" class="upload-label" id="quotation_file_label">
                                 Current Quotation Document: <br><span id="quotation_filename"></span>
                                 <input type="file" name="quotation_document" id="quotation_document">
+                                <button type="button" onclick="clear_quotation_document()">Clear File</button>
                             </label>
                         </div>
 
@@ -64,6 +67,7 @@
                                     id="user_requirements_filename"></span>
                                 <input type="file" name="user_requirement_specifications_document"
                                     id="user_requirement_specifications_document">
+                                    <button type="button" onclick="clear_user_requirement_specifications_document()">Clear File</button>
                             </label>
                         </div>
 
@@ -80,6 +84,7 @@
                                 Current Pre Engineering Check Document:<br> <span id="pre_engineering_filename"></span>
                                 <input type="file" name="pre_engineering_check_document"
                                     id="pre_engineering_check_document">
+                                    <button type="button" onclick="clear_pre_engineering_check_document()">Clear File</button>
                             </label>
                         </div>
 
@@ -102,3 +107,29 @@
                         <!-- Submit button -->
                         <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
                     </fieldset>
+                    <script>
+    function clear_purchase_order_document() {
+        document.getElementById('purchase_order_document').value = ''; // Clear the file input field
+        document.getElementById('purchase_order_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_project_schedule_document() {
+        document.getElementById('project_schedule_document').value = ''; // Clear the file input field
+        document.getElementById('project_schedule_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_quotation_document() {
+        document.getElementById('quotation_document').value = ''; // Clear the file input field
+        document.getElementById('quotation_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_user_requirement_specifications_document() {
+        document.getElementById('user_requirement_specifications_document').value = ''; // Clear the file input field
+        document.getElementById('user_requirements_filename').textContent = ''; // Clear the filename display
+    }
+
+    function clear_pre_engineering_check_document() {
+        document.getElementById('pre_engineering_check_document').value = ''; // Clear the file input field
+        document.getElementById('pre_engineering_filename').textContent = ''; // Clear the filename display
+    }
+</script>

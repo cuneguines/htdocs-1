@@ -20,6 +20,7 @@
         <label class="upload-label">Link to Drawing: <br>
             <span id="old_drawing_filename"></span> <!-- Span for old file name -->
             <input type="file" name="link_to_drawing" id="link_to_drawing" required>
+            <button type="button" onclick="clear_link_to_drawing()">Clear File</button>
         </label>
     </div>
 
@@ -45,3 +46,9 @@
     <button type="submit" onclick="submitFabricationFitUpForm('${processOrder}')">Submit Fabrication Fit-Up
         Form</button>
 </fieldset>
+<script>
+function clear_link_to_drawing() {
+    document.getElementById('link_to_drawing').value = ''; // Clear the file input field
+    document.getElementById('old_drawing_filename').textContent = ''; // Clear the filename display
+}
+</script>

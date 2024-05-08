@@ -47,6 +47,7 @@
             Current Kitting File: <br>
             <span id="kitting_file_filename"></span>
             <input type="file" name="kitting_file_document" id="kitting_file_document">
+            <button type="button" onclick="clear_kitting_file_document()">Clear File</button>
         </label>
     </div>
 
@@ -69,3 +70,9 @@
     <!-- Submit button -->
     <button type="button" onclick="submitKittingForm()">Submit Kitting Form</button>
 </fieldset>
+<script>
+    function clear_kitting_file_document() {
+        document.getElementById('kitting_file_document').value = ''; // Clear the file input field
+        document.getElementById('kitting_file_filename').textContent = ''; // Clear the filename display
+    }
+</script>

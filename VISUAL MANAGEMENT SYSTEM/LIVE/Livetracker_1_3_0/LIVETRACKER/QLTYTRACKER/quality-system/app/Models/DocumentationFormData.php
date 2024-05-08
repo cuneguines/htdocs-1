@@ -19,6 +19,8 @@ class DocumentationFormData extends Model
         'client_handover_documentation',
         'created_at',
         'updated_at',
+        'technical_file_check',
+        'client_handover_check',
     ];
 }
 

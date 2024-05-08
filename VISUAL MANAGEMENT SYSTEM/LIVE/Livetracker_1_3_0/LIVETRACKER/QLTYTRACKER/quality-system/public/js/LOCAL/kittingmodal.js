@@ -41,7 +41,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
     $.each(response, function (index, item) {
         
         html += '<div class="kitting_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
+        //html += '<label>ID: ' + item.id + '</label><br>';
         html += '<div class="kitting_item">';
         html += '<label>Process Order: ' + item.ProcessOrderID + '</label><br>';
         html += '<div class="kitting_item">';
@@ -592,8 +592,8 @@ function generateHTMLFromResponse_for_kitting(response) {
 
     $.each(response, function(index, item) {
         html += '<div class="form-group">';
-        html += '<label for="KittingID">Kitting ID:</label>';
-        html += '<input type="text" id="KittingID" name="KittingID" value="' + item.KittingID + '" readonly>';
+        //html += '<label for="KittingID">Kitting ID:</label>';
+        //html += '<input type="text" id="KittingID" name="KittingID" value="' + item.KittingID + '" readonly>';
         html += '</div>';
 
         html += '<div class="form-group">';
@@ -660,7 +660,7 @@ function generateHTMLFromResponse_for_kitting(response) {
         html += '<hr>'; // Add a separator between items
     });
 
-    html += '<input type="submit" value="Submit">';
+   //html += '<input type="submit" value="Submit">';
     html += '</fieldset></form>';
 
     return html;

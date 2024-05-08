@@ -270,8 +270,10 @@ function generateHTMLFromResponse_for_quality(response) {
             
             html += '<div class="quality-field">';
             html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-            html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection" value="' + (item.walk_down_visual_inspection ? "Yes" : "No") + '" readonly>';
+            html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (item.walk_down_visual_inspection ? 'checked' : '') + '>';
+
             html += '</div><br>';
+        
             
             html += '<div class="quality-field">';
             html += '<label for="images">Images:</label>';
@@ -322,7 +324,8 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-        html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection" value="' + (response.walk_down_visual_inspection ? "Yes" : "No") + '" readonly>';
+        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection ? 'checked' : '') + '>';
+
         html += '</div><br>';
         
         html += '<div class="quality-field">';

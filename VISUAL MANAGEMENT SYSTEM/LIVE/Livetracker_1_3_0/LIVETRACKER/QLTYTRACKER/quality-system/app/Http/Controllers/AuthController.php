@@ -26,14 +26,14 @@ class AuthController extends Controller
             $credentials = $request->only('Login','Password');
         
             // Retrieve the user based on the login field
-            $user = User::where('U_IIS_proEmplPwd', $credentials['Login'])->first();
+            $user = User::where('Login', $credentials['Login'])->first();
             if ($user) {
-                $disEmpPin = $user->U_IIS_disEmpPin;
+                $disEmpPin = $user->ClockNumber;
             }
             if ($user && $disEmpPin == $credentials['Password']) {
                 // Authentication successful
                 Auth::login($user);
-                Session::put('user_id', $user->U_IIS_proEmplPwd);
+                Session::put('user_id', $user->Login);
             
                // return redirect()->route view('processorders');
                return view('processorders');

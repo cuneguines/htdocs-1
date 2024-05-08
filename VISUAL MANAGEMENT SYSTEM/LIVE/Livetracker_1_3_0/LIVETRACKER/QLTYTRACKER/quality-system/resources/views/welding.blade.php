@@ -74,6 +74,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Weld Map: <br>
             <span id="old_weld_map_filename"></span>
             <input type="file" name="link_to_weld_map" id="link_to_weld_map" required>
+            <button type="button" onclick="clear_link_to_weld_map()">Clear File</button>
         </label>
     </div>
     
@@ -81,6 +82,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to PQR: <br>
             <span id="old_pqr_filename"></span>
             <input type="file" name="link_to_pqr" id="link_to_pqr" required>
+            <button type="button" onclick="clear_link_to_pqr()">Clear File</button>
         </label>
     </div>
     
@@ -88,6 +90,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Approved WPS: <br>
             <span id="old_wps_filename"></span>
             <input type="file" name="link_to_wps" id="link_to_wps" required>
+            <button type="button" onclick="clear_link_to_wps()">Clear File</button>
         </label>
     </div>
     
@@ -95,6 +98,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to WPQ Certificate: <br>
             <span id="old_wpq_filename"></span>
             <input type="file" name="link_to_wpq" id="link_to_wpq" required>
+            <button type="button" onclick="clear_link_to_wpq()">Clear File</button>
         </label>
     </div>
     
@@ -102,6 +106,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Material Certificate: <br>
             <span id="old_wire_certificate_filename"></span>
             <input type="file" name="link_to_wire_certificate" id="link_to_wire_certificate" required>
+            <button type="button" onclick="clear_testing_documents()">Clear File</button>
         </label>
     </div>
     
@@ -109,6 +114,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Gas Data Sheet: <br>
             <span id="old_gas_data_sheet_filename"></span>
             <input type="file" name="link_to_gas_data_sheet" id="link_to_gas_data_sheet" required>
+            <button type="button" onclick="clear_link_to_gas_data_sheet()">Clear File</button>
         </label>
     </div>
     
@@ -116,6 +122,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Plant Cert: <br>
             <span id="old_plant_cert_filename"></span>
             <input type="file" name="link_to_plant_cert" id="link_to_plant_cert" required>
+            <button type="button" onclick="clear_to_plant_cert()">Clear File</button>
         </label>
     </div>
 
@@ -134,3 +141,40 @@
     <!-- Submit button -->
     <button type="submit" onclick="submitWeldingForm('${processOrder}')">Submit Welding Form</button>
 </fieldset>
+
+<script>
+function clear_link_to_weld_map() {
+    document.getElementById('link_to_weld_map').value = ''; // Clear the file input field
+    document.getElementById('old_weld_map_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_pqr() {
+    document.getElementById('link_to_pqr').value = ''; // Clear the file input field
+    document.getElementById('old_pqr_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_wps() {
+    document.getElementById('link_to_wps').value = ''; // Clear the file input field
+    document.getElementById('old_wps_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_wpq() {
+    document.getElementById('link_to_wpq').value = ''; // Clear the file input field
+    document.getElementById('old_wpq_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_wire_certificate() {
+    document.getElementById('link_to_wire_certificate').value = ''; // Clear the file input field
+    document.getElementById('old_wire_certificate_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_gas_data_sheet() {
+    document.getElementById('link_to_gas_data_sheet').value = ''; // Clear the file input field
+    document.getElementById('old_gas_data_sheet_filename').textContent = ''; // Clear the filename display
+}
+
+function clear_link_to_plant_cert() {
+    document.getElementById('link_to_plant_cert').value = ''; // Clear the file input field
+    document.getElementById('old_plant_cert_filename').textContent = ''; // Clear the filename display
+}
+</script>

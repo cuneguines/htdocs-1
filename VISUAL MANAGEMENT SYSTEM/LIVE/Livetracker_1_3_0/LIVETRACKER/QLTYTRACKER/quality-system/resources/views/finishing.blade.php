@@ -12,8 +12,8 @@
         <label>
             Pickle and Passivate:
             <input type="checkbox" name="pickle_passivate_test"
-                onchange="toggleDropdown(this, 'pickle_passivate_document_ref')">
-            <select name="pickle_passivate_document_ref" disabled>
+                onchange="updateDropdown(this, 'pickle_passivate_document_ref')">
+            <select name="pickle_passivate_document_ref" >
                 <option value="NULL">NULL</option>
                 <option value="Document_REF_1">Document REF 1</option>
                 <option value="Document_REF_2">Document REF 2</option>
@@ -29,14 +29,15 @@
             <input type="file" name="pickle_passivate_documents" multiple>
         </label>
         <span id="old_pickle_passivate_documents">Old Document Name</span>
+        <button type="button" onclick="clear_pickle_passivate_documents()">Clear File</button>
     </div>
 
     <div class="form-group">
         <label>
             Select Kent Finish:
             <input type="checkbox" name="select_kent_finish_test"
-                onchange="toggleDropdown(this, 'select_kent_finish_document_ref')">
-            <select name="select_kent_finish_document_ref" disabled>
+                onchange="updateDropdown(this, 'select_kent_finish_document_ref')">
+            <select name="select_kent_finish_document_ref">
                 <option value="NULL">NULL</option>
                 <option value="SOP-0312">Acid Dip Pickle and Passivate [KF1]</option>
                 <option value="SOP-0770">KF1 (B) Acid Dip and Passivation</option>
@@ -73,6 +74,7 @@
             <input type="file" name="select_kent_finish_documents" multiple>
         </label>
         <span id="old_select_kent_finish_documents">Old Document Name</span>
+        <button type="button" onclick="clear_kent_finish_documents()">Clear File</button>
     </div>
 
     <div class="form-group">
@@ -91,3 +93,22 @@
 
     <button type="button" onclick="submitFinishingForm('${processOrder}')">Submit Finishing Form</button>
 </fieldset>
+<script>
+function clear_pickle_passivate_documents() {
+    document.querySelector('input[name="pickle_passivate_documents"]').value = ''; // Clear the file input field
+    document.getElementById('old_pickle_passivate_documents').textContent = ''; // Clear the filename display
+}
+
+function clear_kent_finish_documents() {
+    document.querySelector('input[name="select_kent_finish_documents"]').value = ''; // Clear the file input field
+    document.getElementById('old_select_kent_finish_documents').textContent = ''; // Clear the filename display
+}
+
+function updateDropdown(checkbox, selectName) {
+    var select = checkbox.parentElement.querySelector('select[name="' + selectName + '"]');
+    if (!checkbox.checked) {
+        select.value = "NULL";
+    }
+}
+
+</script>

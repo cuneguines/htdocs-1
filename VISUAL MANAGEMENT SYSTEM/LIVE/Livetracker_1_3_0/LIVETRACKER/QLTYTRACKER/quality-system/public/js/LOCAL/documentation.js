@@ -18,8 +18,10 @@ function submitDocumentationForm(processOrder) {
     var formData = new FormData();
     formData.append('process_order_number', document.querySelector('[name="process_order_number_documentation"]').value);
     formData.append('engineer', document.querySelector('[name="sign_off_engineer"]').value);
+    formData.append('technical_file_check', document.querySelector('[name="technical_file_checkbox"]').value);
+    formData.append('client_handover_check', document.querySelector('[name="client_handover_checkbox"]').value);
    // formData.append('link_to_file', document.querySelector('[name="link_to_file"]').value);
-   if ($('[name="technical_file_checkbox"]').is(':checked')) {
+   
     var technicalFileInput = document.querySelector('[name="technical_file"]');
     if (technicalFileInput.files.length > 0) {
         formData.append('technical_file', document.querySelector('[name="technical_file"]').files[0].name);
@@ -27,10 +29,10 @@ function submitDocumentationForm(processOrder) {
         // Add old technical file name if no new file is selected
         formData.append('technical_file', document.getElementById('old_technical_file').textContent.trim());
     }
-}
+
 
 // Add Client Hand-over Documentation if checkbox is checked
-if ($('[name="client_handover_checkbox"]').is(':checked')) {
+
     var clientHandoverInput = document.querySelector('[name="client_handover_documentation"]');
     if (clientHandoverInput.files.length > 0) {
         formData.append('client_handover_documentation', document.querySelector('[name="client_handover_documentation"]').files[0].name);
@@ -38,7 +40,7 @@ if ($('[name="client_handover_checkbox"]').is(':checked')) {
         // Add old client handover file name if no new file is selected
         formData.append('client_handover_documentation', document.getElementById('old_client_handover_documentation').textContent.trim());
     }
-}
+
 
     console.log(formData);
 
@@ -207,7 +209,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         html +=
             '<label>Sign Off Engineer:</label>' +
-            '<input type="text" name="sign_off_engineer" value="' + (item.sign_off_engineer ? item.sign_off_engineer : '-') + '" readonly>' +
+            '<input type="text" name="sign_off_engineer" value="' + (item.engineer ? item.engineer : '-') + '" readonly>' +
             '</div><br>';
 
         // Comments

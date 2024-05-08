@@ -77,6 +77,7 @@
         </label>
         </label>
     <span id="old_testing_documents">Old Document Name</span>
+    <button type="button" onclick="clear_testing_documents()">Clear File</button>
     </div>
 
     <!-- Sign-off for Testing -->
@@ -98,4 +99,16 @@
     <!-- Submit button -->
     <button type="button" onclick="submitTestingForm('${processOrder}')">Submit Testing Form</button>
 </fieldset>
+<script>
+function clear_testing_documents() {
+    var input = document.getElementById('testing_documents');
+    var oldDocuments = document.getElementById('old_testing_documents');
+
+    // Clear the file input field
+    input.value = '';
+
+    // Clear the old document display
+    oldDocuments.textContent = '';
     
+}
+</script>

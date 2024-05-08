@@ -13,33 +13,40 @@
     <div class="form-group">
         <label>
             Material Identification: Confirm grade, thickness
-            <input type="text" name="material_identification">
+            <input type="checkbox" name="material_identification">
         </label>
     </div>
 
     <!-- Subtask 4.2: Material Identification Record -->
     <div class="form-group">
         <label>
-            Material Identification Record: 3.1 Mill Test Certificate [EN 1024]
-            <input type="text" name="material_identification_record">
+            Current Material Identification Cert: <span id="old-file-name_3"></span><br>
+            Upload Material Identification Record: 3.1 Mill Test Certificate [EN 1024]
+            <input type="file" name="material_identification_record">
+            <button type="button" onclick="clear_material_identification_cert_file()">Clear File</button>
         </label>
+</div>
+        <div class="form-group">
         <label class="upload-label">
             Current Material Identification Record: <span id="old-file-name_1"></span><br>
             Upload New Material Identification Record:
             <input type="file" name="material_identification_record_file">
+            <button type="button" onclick="clear_material_identification_record_file()">Clear File</button>
         </label>
+        
     </div>
 
     <!-- Subtask 4.3: Material Traceability -->
     <div class="form-group">
         <label>
-            Material Traceability: Heat Number
-            <input type="text" name="material_traceability">
+            Material Traceability: Purchase Order Number
+            <input type="checkbox" name="material_traceability">
         </label>
         <label class="upload-label">
             Current Material Traceability Document: <span id="old-file-name_2"></span><br>
             Upload New Material Traceability Document:
             <input type="file" name="material_traceability_file">
+            <button type="button" onclick="clear_material_traceability_file()">Clear File</button>
         </label>
     </div>
 
@@ -94,3 +101,18 @@
     <!-- Submit button -->
     <button type="submit" onclick="submitMaterialPreparationForm()">Submit Material Preparation Form</button>
 </fieldset>
+<script>
+    function clear_material_identification_record_file() {
+        document.querySelector('input[name="material_identification_record_file"]').value = ''; // Clear the file input field
+        document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
+    }
+    function clear_material_identification_cert_file() {
+        document.querySelector('input[name="material_identification_record"]').value = ''; // Clear the file input field
+        document.getElementById('old-file-name_3').textContent = ''; // Clear the filename display
+    }
+
+    function clear_material_traceability_file() {
+        document.querySelector('input[name="material_traceability_file"]').value = ''; // Clear the file input field
+        document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
+    }
+</script>

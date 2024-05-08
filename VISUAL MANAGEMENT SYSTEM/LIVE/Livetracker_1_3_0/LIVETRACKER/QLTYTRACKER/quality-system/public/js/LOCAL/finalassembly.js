@@ -230,8 +230,8 @@ function generateHTMLFromResponse_for_final_assembly(response) {
     $.each(response, function (index, item) {
         html += '<div class="final-assembly-item">';
         
-        html += '<label for="final_assembly_id">Final Assembly ID:</label>';
-        html += '<input type="text" id="final_assembly_id" name="final_assembly_id" value="' + item.id + '" readonly>';
+        //html += '<label for="final_assembly_id">Final Assembly ID:</label>';
+        //html += '<input type="text" id="final_assembly_id" name="final_assembly_id" value="' + item.id + '" readonly>';
         html += '<br>';
         
         html += '<div class="final-assembly-field">';
@@ -246,9 +246,11 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         // html += '</div><br>';
         
         html += '<div class="final-assembly-field">';
-        html += '<label for="identification">Identification:</label>';
-        html += '<input type="text" id="identification" name="identification" value="' + item.identification + '">';
-        html += '</div><br>';
+html += '<label for="identification">Identification:</label>';
+html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked' : '') + '>';
+//html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : '') + '">';
+html += '</div><br>';
+
         
         html += '<div class="final-assembly-field">';
         html += '<label for="sign_off_final_assembly">Sign-off for Final Assembly:</label>';
@@ -287,7 +289,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         html += '<hr>'; // Horizontal line for separation
     });
 
-    html += '<input type="button" value="Submit" onclick="submitFinalAssemblyForm()">';
+   // html += '<input type="button" value="Submit" onclick="submitFinalAssemblyForm()">';
     html += '</fieldset></form>';
 
     return html;

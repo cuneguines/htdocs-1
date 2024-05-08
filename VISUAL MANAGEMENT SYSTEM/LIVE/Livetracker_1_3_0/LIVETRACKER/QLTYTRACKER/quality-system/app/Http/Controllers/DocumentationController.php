@@ -25,6 +25,8 @@ class DocumentationController extends Controller
         $documentation->engineer = $request->input('engineer');
         $documentation->technical_file =  $request->input('technical_file');
         $documentation->client_handover_documentation=$request->input('client_handover_documentation');
+        $documentation->technical_file_check=$request->input('technical_file_check');
+        $documentation->client_handover_check=$request->input('client_handover_check');
         
         // Save the Documentation Form Data
         $documentation->save();

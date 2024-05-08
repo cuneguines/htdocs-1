@@ -212,7 +212,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         html += '<hr>'; // Horizontal line for separation
     });
 
-    html += '<input type="button" value="Submit" onclick="submitSubContractForm()">';
+   // html += '<input type="button" value="Submit" onclick="submitSubContractForm()">';
     html += '</fieldset></form>';
 
     return html;

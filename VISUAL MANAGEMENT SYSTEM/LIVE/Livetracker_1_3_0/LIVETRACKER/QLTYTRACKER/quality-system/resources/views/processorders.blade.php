@@ -12,7 +12,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kent Stainless</title>
-    <link rel="stylesheet" href="../../../css/KS_DASH_STYLE.css">
     <script type="text/javascript" src="../../../JS/LIBS/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="../../../JS/LIBS/canvasjs.min.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/JS_menu_select.js"></script>
@@ -35,7 +34,6 @@
 
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -216,27 +214,27 @@
         <div id="lineItemsContainer"
             style="display: none; background-color: #ffffff; margin: 10px; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             <!-- Sales Order Number -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group" style="display: inline-block; margin-left: 8%;">
                 <label for="salesOrderNumber">Sales Order Number:</label>
                 <input type="text" id="salesOrderNumber" class="form-control" readonly>
             </div>
 
             <!-- End Product -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group" style="display: inline-block; margin-left: 8%;">
                 <label for="endProduct">End Product:</label>
                 <input type="text" id="endProduct" class="form-control" readonly>
             </div>
 
             <!-- Owner -->
-            <div class="form-group" style="display: inline-block; margin-left: 50px;">
+            <div class="form-group" style="display: inline-block; margin-left: 8%;">
                 <label for="owner">Owner:</label>
                 <input type="text" id="owner" class="form-control" readonly>
             </div>
 
             <!-- Quantity -->
-            <div class="form-group" style="display: inline-block;margin-left: 50px;">
-                <label for="quantity">Quantity:</label>
-                <input type="text" id="quantity" class="form-control" readonly>
+            <div class="form-group" style="display: inline-block;margin-left: 8%;">
+                <label for="customer">Customer:</label>
+                <input type="text" id="customer" class="form-control" readonly>
             </div>
         </div>
 
@@ -378,21 +376,21 @@
                 url: '/get-line-items/' +
                     manualProcessOrder, // Adjust the URL according to your API endpoint
                 type: 'GET',
-                success: function(data) {
-                    console.log(data.length);
-                    if (data.length > 0) {
-                        $.each(data, function(index, item) {
+                success: function(response) {
+                   console.log(response);
+                    if (response.data!=null) {
+                        $.each(response, function(index, item) {
                             document.getElementById("lineItemsContainer").style
                                 .display = "block";
                             console.log(index);
                             // Populate the fields with data from the first item
-                            if (index === 0) {
-                                $('#salesOrderNumber').val(item.SONum);
+                            
+                                $('#salesOrderNumber').val(item.SalesOrder);
                                 $('#endProduct').val(item.EndProduct);
-                                $('#owner').val(item.Owner);
-                                $('#quantity').val(item.Quantity);
+                                $('#owner').val(item.Engineer);
+                                $('#customer').val(item.Customer);
                                 $('#itemname').val(item.Item);
-                            }
+                            
                         });
                     } else {
                         // If no data is returned

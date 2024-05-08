@@ -42,8 +42,8 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
         html += '<div class="material_field">';
         html +=
             '<label>Material Identification:</label>' +
-            (item.material_identification === "true" ?
-            '<input type="checkbox" id="material_identification" name="material_identification" checked disabled>' :
+            (item.material_identification === "on" ?
+            '<input type="checkbox" id="material_identification" name="material_identification"  >' :
             '<input type="checkbox" id="material_identification" name="material_identification" disabled>') +
             '</div><br>';
 
@@ -61,14 +61,29 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
                 item.material_identification_record_file;
             var downloadLink =
                 '<a href="' + filePath + '" download>Download Material Identification Record</a>';
-            html += '<div class="material_field">' + downloadLink + '</div><br>';
+           // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
 
-        html += '<div class="material_field">';
+       /*  html += '<div class="material_field">';
         html +=
             '<label>Material Traceability:</label>' +
             '<input type="text" name="material_traceability" value="' + (item.material_traceability || "") + '">' +
-            '</div><br>';
+            '</div><br>'; */
+
+            if (item.material_traceability === "on") {
+                html += '<div class="material_field">';
+                html +=
+                    '<label>Material Traceability:</label>' +
+                    '<input type="checkbox" id="material_traceability" name="compl_material_traceability">' +
+                    '</div><br>';
+            } else {
+                html += '<div class="material_field">';
+                html +=
+                    '<label>Material Traceability:</label>' +
+                    '<input type="checkbox" id="material_traceability" name="compl_material_traceability" disabled>' +
+                    '</div><br>';
+            }
+            
 
         if (item.material_traceability_file) {
             var filePath =
@@ -78,7 +93,7 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
                 item.material_traceability_file;
             var downloadLink =
                 '<a href="' + filePath + '" download>Download Material Traceability Cert</a>';
-            html += '<div class="material_field">' + downloadLink + '</div><br>';
+          //  html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
 
         
@@ -218,9 +233,7 @@ function submitMaterialCompletePreparationForm() {
         material_identification_record: document.querySelector(
             '[name="material_identification_record"]'
         ).value,
-        material_traceability: document.querySelector(
-            '[name="material_traceability"]'
-        ).value,
+        material_traceability: document.querySelector('[name="compl_material_traceability"]') ? (document.querySelector('[name="compl_material_traceability"]').checked ? "on" : null) : null,
         cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
         deburring: document.querySelector('[name="compl_deburring"]') ? (document.querySelector('[name="compl_deburring"]').checked ? "on" : null) : null,
         forming: document.querySelector('[name="compl_forming"]') ? (document.querySelector('[name="compl_forming"]').checked ? "on" : null) : null,
@@ -307,19 +320,17 @@ function submitMaterialPreparationForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     var formData = {
-        material_identification: document.querySelector(
-            '[name="material_identification"]'
-        ).value,
-        material_identification_record: document.querySelector(
-            '[name="material_identification_record"]'
-        ).value,
-        material_traceability: document.querySelector(
-            '[name="material_traceability"]'
-        ).value,
+        material_identification: document.querySelector( '[name="material_identification"]').checked ? "on" : "",
+        //material_identification_record: document.querySelector('[name="material_identification_record"]).checked ? "on" : "",
+        material_traceability: document.querySelector('[name="material_traceability"]').checked ? "on" : "",
         cutting: document.querySelector('[name="cutting"]').checked ? "on" : "",
         deburring: document.querySelector('[name="deburring"]').checked ? "on" : "",
         forming: document.querySelector('[name="forming"]').checked ? "on" : "",
         machining: document.querySelector('[name="machining"]').checked ? "on" : "",
+
+        material_identification_record: (document.querySelector('[name="material_identification_record"]').files.length > 0)
+        ? document.querySelector('[name="material_identification_record"]').files[0].name
+        : document.getElementById('old-file-name_3').textContent.trim(),
 
         material_identification_record_file: (document.querySelector('[name="material_identification_record_file"]').files.length > 0)
         ? document.querySelector('[name="material_identification_record_file"]').files[0].name
@@ -459,12 +470,22 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
         html += '<div class="form-group">';
         html += '<label for="material_identification">Material Identification:</label>';
-        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
-        html += '<label for="material_identification_record">Material Identification Record:</label>';
-        html += '<input type="text" id="material_identification_record" name="material_identification_record" value="' + (item.material_identification_record || '') + '">';
+        html += '<label for="material_identification_record">Material Identification Cert:</label>';
+        //html += '<input type="text" id="material_identification_record" name="material_identification_record" value="' + (item.material_identification_record || '') + '">';
+
+
+        if (item.material_identification_record) {
+            var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record;
+            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            //html += '<input type="file" id="material_identification_record" name="material_identification_record">';
+            html += downloadLink;
+        } else {
+            html += '<label  id="material_identification_record" name="material_identification_record">';
+        }
         html += '</div>';
 
         html += '<div class="form-group">';
@@ -472,16 +493,17 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         if (item.material_identification_record_file) {
             var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
+            //html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
             html += downloadLink;
         } else {
-            html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
+            html += '<label id="material_identification_record_file" name="material_identification_record_file">';
         }
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="material_traceability">Material Traceability:</label>';
-        html += '<input type="text" id="material_traceability" name="material_traceability" value="' + (item.material_traceability || '') + '">';
+        html += '<input type="checkbox" id="material_traceability" name="material_traceability" ' + (item.material_traceability ? 'checked' : '') + '>';
+
         html += '</div>';
 
         html += '<div class="form-group">';
@@ -489,10 +511,10 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         if (item.material_traceability_file) {
             var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_traceability_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="file" id="material_traceability_file" name="material_traceability_file">';
+           // html += '<input type="file" id="material_traceability_file" name="material_traceability_file">';
             html += downloadLink;
         } else {
-            html += '<input type="file" id="material_traceability_file" name="material_traceability_file">';
+            html += '<label id="material_traceability_file" name="material_traceability_file">';
         }
         html += '</div>';
 
@@ -529,7 +551,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += '<hr>'; // Add a separator between items
     });
 
-    html += '<input type="submit" value="Submit">';
+  
     html += '</fieldset></form>';
 
     return html;
@@ -541,15 +563,18 @@ function resetMaterialPrepForm() {
     $('[name="deburring"]').prop('checked', false);
     $('[name="forming"]').prop('checked', false);
     $('[name="machining"]').prop('checked', false);
+    $('[name="material_identification"]').prop('checked', false);
+    $('[name="material_traceability"]').prop('checked', false);
 
     // Clear text inputs
-    $('[name="material_identification"]').val('');
-    $('[name="material_identification_record"]').val('');
-    $('[name="material_traceability"]').val('');
+   // $('[name="material_identification"]').val('');
+    //$('[name="material_identification_record"]').val('');
+   // $('[name="material_traceability"]').val('');
     $('[name="sign_off_material_preparation"]').val('');
     $('[name="comments_material_preparation"]').val('');
 
     // Reset file input values and old file name display
+    $('[name="material_identification_record"]').val('');
     $('[name="material_identification_record_file"]').val('');
     $('[name="material_traceability_file"]').val('');
     $('.old-file-name_1').text('');
@@ -603,6 +628,8 @@ function MaterialPrep(processOrder, userName) {
                     $('input[name="deburring"]').prop('checked', item.deburring === 'on');
                     $('input[name="forming"]').prop('checked', item.forming === 'on');
                     $('input[name="machining"]').prop('checked', item.machining === 'on');
+                    $('input[name="material_traceability"]').prop('checked', item.material_traceability === 'on');
+                    $('input[name="material_identification"]').prop('checked', item.material_identification === 'on');
 
                     // Other fields
                     $('#sign_off_material_preparation').val(userName);
@@ -610,11 +637,12 @@ function MaterialPrep(processOrder, userName) {
 
                     // File input fields
                     $('#material_identification_record').val(item.material_identification_record);
-                    $('#material_identification').val(item.material_identification);
+                    //$('#material_identification').val(item.material_identification);
                     
-                    $('#material_traceability').val(item.material_traceability);
+                   // $('#material_traceability').val(item.material_traceability);
                     $('#old-file-name_1').text(item.material_identification_record_file);
                     $('#old-file-name_2').text(item.material_traceability_file);
+                    $('#old-file-name_3').text(item.material_identification_record);
 
                     // Set the labels for file inputs
                     $('#material_identification_record_file_label').show();
@@ -627,6 +655,10 @@ function MaterialPrep(processOrder, userName) {
 
                     $('#material_traceability_file').change(function () {
                         $('#old-file-name_1').text(this.files[0].name);
+                    });
+
+                    $('#material_identification_record').change(function () {
+                        $('#old-file-name_3').text(this.files[0].name);
                     });
                 });
             } else {
