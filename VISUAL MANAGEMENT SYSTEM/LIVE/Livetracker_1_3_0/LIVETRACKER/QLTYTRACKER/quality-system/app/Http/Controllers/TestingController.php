@@ -86,14 +86,14 @@ class TestingController extends Controller
         // Create a new instance of the TestingData model
         $testingData = new TestingCompleteData;
         $testingData->process_order_number = $request->input('process_order_number');
-        $testingData->dye_pen_test = $request->input('dye_pen_test');
-        $testingData->dye_pen_document_ref = $request->input('dye_pen_document_ref');
-        $testingData->hydrostatic_test = $request->input('hydrostatic_test');
-        $testingData->hydrostatic_test_document_ref = $request->input('hydrostatic_test_document_ref');
-        $testingData->pneumatic_test = $request->input('pneumatic_test');
-        $testingData->pneumatic_test_document_ref = $request->input('pneumatic_test_document_ref');
-        $testingData->fat_protocol = $request->input('fat_protocol');
-        $testingData->fat_protocol_document_ref = $request->input('fat_protocol_document_ref');
+        $testingData->dye_pen_testing = $request->input('dye_pen_testing');
+        //$testingData->dye_pen_document_ref = $request->input('dye_pen_document_ref');
+        $testingData->hydrostatic_testing = $request->input('hydrostatic_testing');
+        //$testingData->hydrostatic_test_document_ref = $request->input('hydrostatic_test_document_ref');
+        $testingData->pneumatic_testing= $request->input('pneumatic_testing');
+       // $testingData->pneumatic_test_document_ref = $request->input('pneumatic_test_document_ref');
+        $testingData->fat_protocoll = $request->input('fat_protocoll');
+//$testingData->fat_protocol_document_ref = $request->input('fat_protocol_document_ref');
         $testingData->testing_document_file_name = $request->input('testing_document_file_name');
         $testingData->sign_off = $request->input('sign_off');
         $testingData->comments_testing = $request->input('comments_testing');

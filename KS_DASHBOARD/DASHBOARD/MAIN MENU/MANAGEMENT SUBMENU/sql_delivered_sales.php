@@ -55,7 +55,7 @@ LEFT JOIN OITM t6 ON t6.ItemCode = t1.ItemCode
 LEFT JOIN OITB t7 ON t7.ItmsGrpCod = t6.ItmsGrpCod
 LEFT JOIN OHEM t8 ON t8.empID = t3.OwnerCode
 LEFT JOIN OSLP t9 ON t9.SlpCode = t2.SlpCode
-WHERE t0.DocDate >= '01/01/2018' 
+WHERE t0.DocDate >= '01/01/2023' 
 AND t1.ItemCode <> 'TRANSPORT' AND t3.CANCELED <> 'Y' AND t0.DocStatus = 'C' 
  
  

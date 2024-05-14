@@ -91,7 +91,7 @@
            
             <input type="file" name="sample_approval_document" id="sample_approval_document">
 
-            <button type="button" onclick="claer_sample_approval_document()">Clear File</button>
+            <button type="button" onclick="clear_sample_approval_document()">Clear File</button>
         </label>
     </div>
 

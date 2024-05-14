@@ -35,8 +35,8 @@ class WeldingController extends Controller
         $weldingFormData->pre_weld_inspection = $request->input('pre_weld_inspection');
         $weldingFormData->inspection_during_welding = $request->input('inspection_during_welding');
         $weldingFormData->post_weld_inspection = $request->input('post_weld_inspection');
-        $weldingFormData->sign_off_welding_complete = $request->input('sign_off_welding_complete');
-        $weldingFormData->comments_welding_complete = $request->input('comments_welding_complete');
+        $weldingFormData->sign_off_welding_complete = $request->input('sign_off_welding');
+        $weldingFormData->comments_welding_complete = $request->input('comments_welding');
         $weldingFormData->status = $request->input('status');
         $weldingFormData->submission_date = $request->input('submission_date');
         $weldingFormData->ProcessOrderID = $request->input('process_order_number');

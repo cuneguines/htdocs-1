@@ -35,7 +35,121 @@
         <?php $top_ec_in_customers = json_decode(file_get_contents(__DIR__.'\CACHED\top_ec_in_customers.json'),true); ?>
         <?php $top_ec_mb_customers = json_decode(file_get_contents(__DIR__.'\CACHED\top_ec_mb_customers.json'),true); ?>
         <?php $top_st_customers = json_decode(file_get_contents(__DIR__.'\CACHED\top_st_customers.json'),true); ?>
+        <style>
+        .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1000;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Black w/ opacity */
+    }
 
+    /* Modal Content */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        /* Center modal on screen */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        max-height: 70%;
+        /* Set maximum height for modal */
+        overflow: auto;
+        /* Enable vertical scrolling if content exceeds height */
+    }
+
+    /* Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Table Styling */
+    #modalTable {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #modalTable th,
+    #modalTable td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Header Styles */
+    #modalTable th {
+        background-color: #7cbfa0;
+        /* Green */
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Fixed Header */
+    #modalTable thead {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    /* Scrollable Body */
+    #modalTable tbody {
+        display: block;
+        height: 300px;
+        /* Adjust as needed */
+        overflow-y: scroll;
+        width: 100%;
+
+    }
+
+    /* Even and Odd Row Coloring */
+    #modalTable tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        padding: 3px;
+    }
+
+    #modalTable tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    /* Specific Row Coloring */
+    #modalTable tbody tr.special-row {
+        background-color: #FFD700;
+        /* Yellow */
+    }
+        .banner_button_ {
+        float: left;
+        margin-left: 1%;
+        margin-right: 1%;
+        color: white;
+        font-size: 2vh;
+        position: relative;
+        top: 10%;
+        height: 80%;
+        width: 18%;
+        border-radius: 20px;
+        border: 5px solid #FACB57;
+        background-color: #FACB57;}
+    
+</style>
         <!-- CHART SETUP -->
         <!-- THIS MONTH KPIS -->
         <script type="text/javascript">
@@ -1016,6 +1130,16 @@
                         <p class = "totalvalue larger"><br>€<?= number_format($headline_figures["Del Last Y"]/1000000,2)." M"?></p>
                         <button onclick="toggleTable()">Show Table</button>
                     </div>
+
+                    <div id="myModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <table id="modalTable">
+                            <!-- Table content will be dynamically added here -->
+                        </table>
+                        <button id="exportExcel" class="banner_button_">Export to Excel</button>
+                    </div>
+                </div>
                     <div class = "totalgrid white bottom middle" id = "innerbottommiddle">
                         <p class = "totaltitle smedium">Predicted Sales Next Four Months</p>
                         <p class = "totalvalue larger"><br>€<?= number_format($headline_figures["Total Four Months"]/1000000,2)." M"?></p>

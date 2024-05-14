@@ -69,7 +69,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + item.id + '</td>'; // Access 'id' property of each item
         html += '<td>' + (item.purchase_order_received === 'true' ? '✔' : '') + '</td>'; // Show tick if 'reference_job_master_file' is 'on'
          if (item.purchase_order_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
@@ -78,7 +78,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
 
         html += '<td>' + (item.project_schedule_agreed === 'true' ? '✔' : '') + '</td>'; // Show tick if 'reference_job_master_file' is 'on'
         if (item.project_schedule_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
@@ -87,7 +87,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + (item.quotation === 'true' ? '✔' : '') + '</td>';
 
         if (item.quotation_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.quotation_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.quotation_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
@@ -98,7 +98,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + (item.verify_customer_expectations === 'true' ? '✔' : '') + '</td>';
 
         if (item.user_requirement_specifications_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
@@ -108,7 +108,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + (item.project_risk_category_assessment === 'true' ? '✔' : '') + '</td>';
 
         if (item.pre_engineering_check_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
@@ -128,20 +128,21 @@ function generateHTMLFromResponse_for_planning_old(response) {
 function generateHTMLFromResponse_for_planning(response) {
     // You can customize this function to generate HTML based on the response data
     // For example, you can iterate through the data and create form fields
+  
     var html = '<form id="planningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 1: Planning / Forward Engineering</legend>';
 
     $.each(response, function (index, item) {
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="purchase_order_received_' + index + '" style="font-weight: bold;">Purchase Order Received:</label>';
+        html += '<label for="purchase_order_received_' + index + '" style="">Purchase Order Received:</label>';
         html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received" value="' + (item.purchase_order_received === 'true' ? 'on' : '') + '" ' + (item.purchase_order_received === 'true' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="purchase_order_document_' + index + '" style="font-weight: bold;">Purchase Order Document:</label>';
+        html += '<label for="purchase_order_document_' + index + '" style="">Purchase Order Document:</label>';
         if (item.purchase_order_document) {
-            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.purchase_order_document + '</a>';
             html += downloadLink;
         } else {
@@ -150,14 +151,14 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="project_schedule_agreed_' + index + '" style="font-weight: bold;">Project Schedule Agreed:</label>';
+        html += '<label for="project_schedule_agreed_' + index + '" style="">Project Schedule Agreed:</label>';
         html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed" value="' + (item.project_schedule_agreed === '1' ? 'on' : '') + '" ' + (item.project_schedule_agreed === '1' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="project_schedule_document_' + index + '" style="font-weight: bold;">Project Schedule Document:</label>';
+        html += '<label for="project_schedule_document_' + index + '" style="">Project Schedule Document:</label>';
         if (item.project_schedule_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.project_schedule_document + '</a>';
             html += downloadLink;
         } else {
@@ -166,14 +167,14 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="quotation_' + index + '" style="font-weight: bold;">Quotation:</label>';
+        html += '<label for="quotation_' + index + '" style="">Quotation:</label>';
         html += '<input type="checkbox" id="quotation_' + index + '" name="quotation" value="' + (item.quotation === 'true' ? 'on' : '') + '" ' + (item.quotation === 'true' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="quotation_document_' + index + '" style="font-weight: bold;">Quotation Document:</label>';
+        html += '<label for="quotation_document_' + index + '" style="">Quotation Document:</label>';
         if (item.quotation_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.quotation_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.quotation_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.quotation_document + '</a>';
             html += downloadLink;
         } else {
@@ -182,14 +183,14 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="verify_customer_expectations_' + index + '" style="font-weight: bold;">Verify Customer Expectations:</label>';
+        html += '<label for="verify_customer_expectations_' + index + '" style="">Verify Customer Expectations:</label>';
         html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations" value="' + (item.verify_customer_expectations === 'true' ? 'on' : '') + '" ' + (item.verify_customer_expectations === 'true' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="user_requirement_specifications_document_' + index + '" style="font-weight: bold;">User Requirement Specifications Document:</label>';
+        html += '<label for="user_requirement_specifications_document_' + index + '" style="">User Requirement Specifications Document:</label>';
         if (item.user_requirement_specifications_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.user_requirement_specifications_document + '</a>';
             html += downloadLink;
         } else {
@@ -198,14 +199,14 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="project_risk_category_assessment_' + index + '" style="font-weight: bold;">Project Risk Category Assessment:</label>';
+        html += '<label for="project_risk_category_assessment_' + index + '" style="">Project Risk Category Assessment:</label>';
         html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment" value="' + (item.project_risk_category_assessment === 'true' ? 'on' : '') + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked' : '') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="pre_engineering_check_document_' + index + '" style="font-weight: bold;">Pre Engineering Check Document:</label>';
+        html += '<label for="pre_engineering_check_document_' + index + '" style="">Pre Engineering Check Document:</label>';
         if (item.pre_engineering_check_document) {
-            var filePath = 'storage/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
             var downloadLink = '<a href="' + filePath + '" download>' + item.pre_engineering_check_document + '</a>';
             html += downloadLink;
         } else {
@@ -214,12 +215,12 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="sign_off_planning_' + index + '" style="font-weight: bold;">Sign-off for Planning / Forward Engineering:</label>';
+        html += '<label for="sign_off_planning_' + index + '" style="">Sign-off for Planning / Forward Engineering:</label>';
         html += '<input type="text" id="sign_off_planning_' + index + '" name="sign_off_planning" value="' + (item.sign_off_planning ? item.sign_off_planning : '') + '">';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
-        html += '<label for="comments_planning_' + index + '" style="font-weight: bold;">Comments for Planning / Forward Engineering:</label>';
+        html += '<label for="comments_planning_' + index + '" style="">Comments for Planning / Forward Engineering:</label>';
         html += '<textarea id="comments_planning_' + index + '" name="comments_planning" rows="4" cols="50">' + (item.comments_planning ? item.comments_planning : '') + '</textarea>';
         html += '</div>';
     });

@@ -56,6 +56,7 @@ function submitDocumentationForm(processOrder) {
             console.log(response);
             alert("Documentation form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error("Error:", error);
@@ -143,7 +144,7 @@ function generateHTMLFromResponse_for_documentation_old(response) {
         html += '<td>';
         if (item.technical_file!=null) {
            
-            var filePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -153,7 +154,7 @@ function generateHTMLFromResponse_for_documentation_old(response) {
         html += '<td>';
         if (item.client_handover_documentation!=null) {
            
-            var filePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -182,13 +183,13 @@ function generateHTMLFromResponse_for_documentation(response) {
 
     $.each(response, function (index, item) {
         html += '<div class="documentation_item">';
-        html += '<label>ID:</label><br>';
-        html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
+        //html += '<label>ID:</label><br>';
+        //html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
 
         // Technical File
         html += '<div class="documentation_field">';
         if (item.technical_file) {
-            var technicalFilePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
+            var technicalFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
             html += '<a href="' + technicalFilePath + '" download>' + item.technical_file + '</a>';
         } else {
             html += '-';
@@ -198,7 +199,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         // Client Hand-over Documentation
         html += '<div class="documentation_field">';
         if (item.client_handover_documentation) {
-            var clientHandoverFilePath = 'storage/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
+            var clientHandoverFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
             html += '<a href="' + clientHandoverFilePath + '" download>' + item.client_handover_documentation + '</a>';
         } else {
             html += '-';
@@ -391,7 +392,7 @@ function displayDocumentationResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field =  key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {

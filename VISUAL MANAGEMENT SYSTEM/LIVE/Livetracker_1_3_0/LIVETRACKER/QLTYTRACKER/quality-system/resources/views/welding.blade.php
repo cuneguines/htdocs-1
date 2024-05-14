@@ -106,7 +106,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Material Certificate: <br>
             <span id="old_wire_certificate_filename"></span>
             <input type="file" name="link_to_wire_certificate" id="link_to_wire_certificate" required>
-            <button type="button" onclick="clear_testing_documents()">Clear File</button>
+            <button type="button" onclick="clear_link_to_wire_certificate()">Clear File</button>
         </label>
     </div>
     
@@ -122,7 +122,7 @@
         <label style="background-color: lightgrey" class="upload-label">Link to Plant Cert: <br>
             <span id="old_plant_cert_filename"></span>
             <input type="file" name="link_to_plant_cert" id="link_to_plant_cert" required>
-            <button type="button" onclick="clear_to_plant_cert()">Clear File</button>
+            <button type="button" onclick="clear_link_to_plant_cert()">Clear File</button>
         </label>
     </div>
 

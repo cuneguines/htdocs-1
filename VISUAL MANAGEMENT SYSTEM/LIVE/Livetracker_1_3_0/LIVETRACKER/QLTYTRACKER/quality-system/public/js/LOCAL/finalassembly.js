@@ -78,6 +78,7 @@ function submitFinalAssemblyForm(processOrder) {
             console.log(response);
             alert("Final Assembly form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error("Error:", error);
@@ -247,7 +248,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         
         html += '<div class="final-assembly-field">';
 html += '<label for="identification">Identification:</label>';
-html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked' : '') + '>';
+html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked disabled' : 'disabled') + '>';
 //html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : '') + '">';
 html += '</div><br>';
 

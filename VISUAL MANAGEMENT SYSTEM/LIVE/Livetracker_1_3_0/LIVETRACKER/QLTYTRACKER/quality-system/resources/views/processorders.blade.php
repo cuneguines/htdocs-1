@@ -12,6 +12,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kent Stainless</title>
+    <link rel="stylesheet" href="../../../css/KS_DASH_STYLE.css">
     <script type="text/javascript" src="../../../JS/LIBS/jquery-3.4.1.js"></script>
     <script type="text/javascript" src="../../../JS/LIBS/canvasjs.min.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/JS_menu_select.js"></script>
@@ -34,6 +35,7 @@
 
     <script type="text/javascript" src="./JS_togglecharttable.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../../CSS/KS_DASH_STYLE.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -194,6 +196,7 @@
                 <input type="text" id="manualProcessOrder" name="manualProcessOrder" required
                     style="width: 200px; margin-right: 10px;">
                 <button id="searchButton" style="margin-right: 10px;">Search</button>
+                <button  style="margin-right: 1px;" onclick="redirectToEmployee()">New User</button>
                 <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="margin-left: auto;">
                     @csrf
                     <button type="submit"
@@ -354,6 +357,12 @@
 
 
     <script>
+
+
+
+
+    
+
     var welcomeMessage = $('h2').text();
     var userName = welcomeMessage.split(',')[1].trim();
     var loggedInUser = 'admin';
@@ -479,6 +488,10 @@
 
             table.append(row);
         }
+    }
+
+    function redirectToEmployee() {
+        window.location.href = "{{ route('employees.create') }}";
     }
 
     function updateTable(processOrder, qualitySteps, userName, loggedInUser) {

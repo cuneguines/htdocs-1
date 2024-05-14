@@ -67,97 +67,97 @@ function generateHTMLFromResponse_for_eng(response) {
     
     $.each(response, function (index, item) {
         html += '<div class="form-group" >';
-        html += '<label>ID: </label>';
-        html += '<input type="text" name="id" value="' + item.id + '" readonly>';
+       // html += '<label>ID: </label>';
+       // html += '<input type="text" name="id" value="' + item.id + '" readonly>';
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Reference Job/Master File: </label>';
-        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked disabled' : 'disabled') +  '>';
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Reference Job/Master File Document: </label>';
         if (item.reference_job_master_file_document) {
-            var filePath = 'storage/engineer_task/' + item.process_order_number + '/' + item.reference_job_master_file_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="text" name="existing_reference_job_master_file_document" value="' + item.reference_job_master_file_document + '" readonly>';
-            html += '<input type="file" name="reference_job_master_file_document_new">';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.reference_job_master_file_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.reference_job_master_file_document+'</a>';
+           // html += '<input type="text" name="existing_reference_job_master_file_document" value="' + item.reference_job_master_file_document + '" readonly>';
+            //html += '<input type="file" name="reference_job_master_file_document_new">';
             html += downloadLink;
         } else {
-            html += '<input type="file" name="reference_job_master_file_document">';
+            //html += '<input type="file" name="reference_job_master_file_document">';
         }
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Concept Design & Engineering: </label>';
-        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Concept Design Document: </label>';
         if (item.concept_design_document) {
-            var filePath = 'storage/engineering_task/' + item.process_order_number + '/' + item.concept_design_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="text" name="existing_concept_design_document" value="' + item.concept_design_document + '" readonly>';
-            html += '<input type="file" name="concept_design_document_new">';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.concept_design_document+'</a>';
+           // html += '<input type="text" name="existing_concept_design_document" value="' + item.concept_design_document + '" readonly>';
+            //html += '<input type="file" name="concept_design_document_new">';
             html += downloadLink;
         } else {
-            html += '<input type="file" name="concept_design_document">';
+            //html += '<input type="file" name="concept_design_document">';
         }
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Design Sign off [calculations]: </label>';
-        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Design Validation Document: </label>';
         if (item.design_validation_document) {
-            var filePath = 'storage/engineering_task/' + item.process_order_number + '/' + item.design_validation_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="text" name="existing_design_validation_document" value="' + item.design_validation_document + '" readonly>';
-            html += '<input type="file" name="design_validation_document_new">';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.design_validation_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.design_validation_document+'</a>';
+           // html += '<input type="text" name="existing_design_validation_document" value="' + item.design_validation_document + '" readonly>';
+           // html += '<input type="file" name="design_validation_document_new">';
             html += downloadLink;
         } else {
-            html += '<input type="file" name="design_validation_document">';
+            //html += '<input type="file" name="design_validation_document">';
         }
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Customer Submittal Package: </label>';
-        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Customer Approval Document: </label>';
         if (item.customer_approval_document) {
-            var filePath = 'storage/engineering_task/' + item.process_order_number + '/' + item.customer_approval_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="text" name="existing_customer_approval_document" value="' + item.customer_approval_document + '" readonly>';
-            html += '<input type="file" name="customer_approval_document_new">';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.customer_approval_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.customer_approval_document+'</a>';
+            //html += '<input type="text" name="existing_customer_approval_document" value="' + item.customer_approval_document + '" readonly>';
+           // html += '<input type="file" name="customer_approval_document_new">';
             html += downloadLink;
         } else {
-            html += '<input type="file" name="customer_approval_document">';
+            //html += '<input type="file" name="customer_approval_document">';
         }
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Reference Approved Samples: </label>';
-        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Sample Approval Document: </label>';
         if (item.sample_approval_document) {
-            var filePath = 'storage/engineering_task/' + item.process_order_number + '/' + item.sample_approval_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
-            html += '<input type="text" name="existing_sample_approval_document" value="' + item.sample_approval_document + '" readonly>';
-            html += '<input type="file" name="sample_approval_document_new">';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.sample_approval_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.sample_approval_document+'</a>';
+            //html += '<input type="text" name="existing_sample_approval_document" value="' + item.sample_approval_document + '" readonly>';
+           // html += '<input type="file" name="sample_approval_document_new">';
             html += downloadLink;
         } else {
-            html += '<input type="file" name="sample_approval_document">';
+            //html += '<input type="file" name="sample_approval_document">';
         }
         html += '</div>';
 

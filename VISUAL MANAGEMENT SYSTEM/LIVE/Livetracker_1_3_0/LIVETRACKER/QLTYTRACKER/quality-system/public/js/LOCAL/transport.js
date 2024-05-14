@@ -52,6 +52,7 @@ function submitPackingTransportForm(processOrder) {
             console.log(response);
             alert("Packing and Transport form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error("Error:", error);
@@ -377,7 +378,7 @@ function displayPackingTransportResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field =key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {

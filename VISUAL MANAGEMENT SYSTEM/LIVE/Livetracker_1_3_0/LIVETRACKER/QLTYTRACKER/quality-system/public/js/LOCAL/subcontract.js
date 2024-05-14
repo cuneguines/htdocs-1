@@ -34,6 +34,7 @@ function submitSubContractForm(processOrder) {
             console.log(response);
             alert("Sub-Contract form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error("Error:", error);
@@ -130,7 +131,7 @@ function generateHTMLFromResponse_for_sub_contract_old(response) {
         html += '<td style="text-align:center;">';
 
         if (item.sub_contract_file) {
-            var filePath = 'storage/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -158,8 +159,8 @@ function generateHTMLFromResponse_for_sub_contract(response) {
     $.each(response, function (index, item) {
         html += '<div class="sub-contract-item">';
         
-        html += '<label for="sub_contract_id">Sub-Contract ID:</label>';
-        html += '<input type="text" id="sub_contract_id" name="sub_contract_id" value="' + item.id + '" readonly>';
+       // html += '<label for="sub_contract_id">Sub-Contract ID:</label>';
+       // html += '<input type="text" id="sub_contract_id" name="sub_contract_id" value="' + item.id + '" readonly>';
         html += '<br>';
         
         html += '<div class="sub-contract-field">';
@@ -175,7 +176,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         html += '<div class="sub-contract-field">';
         html += '<label for="sub_contract_file">Sub-Contract File:</label>';
         if (item.sub_contract_file) {
-            var filePath = 'storage/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -254,7 +255,7 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     html += '<form id="complete_sub_contract_form">';
     
     html += '<div class="sub_contract_item">';
-    html += '<label>ID: ' + item.id + '</label><br>';
+   // html += '<label>ID: ' + item.id + '</label><br>';
     html += '<div class="sub_contract_item">';
     html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
     html += '<div class="sub_contract_item">';
@@ -288,7 +289,7 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Quantity:</label>' +
-        '<input type="number" name="quantity" value="' + item.quantity + '" >';
+        '<input type="number" name="quantity_c" value="' + item.quantity + '" >';
     html += '</div><br>';
 
     html += '</div>'; // Closing div for sub_contract_item
@@ -315,6 +316,7 @@ function submitCompleteSubContractForm() {
         process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
         sub_contract_action: document.querySelector('[name="sub_contract_action"]').value,
         sign_off_sub_contract: document.querySelector('[name="sign_off_sub_contract_c"]').value,
+        quantity: document.querySelector('[name="quantity_c"]').value,
         // Add other form fields accordingly
     };
 

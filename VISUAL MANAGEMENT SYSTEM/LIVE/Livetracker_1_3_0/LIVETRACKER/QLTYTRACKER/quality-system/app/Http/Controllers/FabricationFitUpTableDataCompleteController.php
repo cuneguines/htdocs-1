@@ -20,7 +20,7 @@ $fabricationFitUp->WeldmentQuantity = $request->input('weldment_quantity') ;
 $fabricationFitUp->SignOffUser = $request->input('signOffUser');
 $fabricationFitUp->Comments = $request->input('comments_fabrication_fit_up');
 $fabricationFitUp->ProcessOrder = $request->input('process_order_number');
-$fabricationFitUp->Quantity = $request->input('quantity');
+$fabricationFitUp->Quantity = $request->input('Quantity');
 $fabricationFitUp->Status = $request->input('status');
 // Add other fabrication fit-up fields accordingly
 

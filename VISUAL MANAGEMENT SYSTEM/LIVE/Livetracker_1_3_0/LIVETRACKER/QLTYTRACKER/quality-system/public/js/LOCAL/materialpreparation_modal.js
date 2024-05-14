@@ -37,15 +37,15 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
     
     $.each(response, function (index, item) {
         html += '<div class="material_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
+        //html += '<label>ID: ' + item.id + '</label><br>';
         html += '<input name="process_order_number_mp_c" type="text" value="' + item.process_order_number.trim() + '" readonly>';
         html += '<div class="material_field">';
         html +=
-            '<label>Material Identification:</label>' +
-            (item.material_identification === "on" ?
-            '<input type="checkbox" id="material_identification" name="material_identification"  >' :
-            '<input type="checkbox" id="material_identification" name="material_identification" disabled>') +
-            '</div><br>';
+        '<label>Material Identification:</label>' +
+        (item.material_identification === "on" ?
+        '<input type="checkbox" id="compl_material_identification" name="compl_material_identification"  >' :
+        '<input type="checkbox" id="compl_material_identification" name="compl_material_identification" disabled>') +
+        '</div><br>';
 
         html += '<div class="material_field">';
         html +=
@@ -55,7 +55,7 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
 
         if (item.material_identification_record_file) {
             var filePath =
-                "storage/material_preparation_task/" +
+                "http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/" +
                 item.process_order_number +
                 "/" +
                 item.material_identification_record_file;
@@ -87,13 +87,14 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
 
         if (item.material_traceability_file) {
             var filePath =
-                "storage/material_preparation_task/" +
+                "http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/" +
                 item.process_order_number +
                 "/" +
                 item.material_traceability_file;
+                
             var downloadLink =
                 '<a href="' + filePath + '" download>Download Material Traceability Cert</a>';
-          //  html += '<div class="material_field">' + downloadLink + '</div><br>';
+           // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
 
         
@@ -228,8 +229,9 @@ function submitMaterialCompletePreparationForm() {
     }
     var formData = {
         material_identification: document.querySelector(
-            '[name="material_identification"]'
-        ).value,
+            '[name="compl_material_identification"]'
+        )? (document.querySelector(
+            '[name="compl_material_identification"]').checked ? "on" : null) : null,
         material_identification_record: document.querySelector(
             '[name="material_identification_record"]'
         ).value,
@@ -278,11 +280,21 @@ function displayMaterialPreparationResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                console.log(key);
+                var field = key;
                 if (typeof value === 'object') {
+                    console.log('YES');
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="on")
+                    {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                    }
+                    else
+                    {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    }
+
                 }
             }
         }
@@ -464,13 +476,13 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
     $.each(response, function(index, item) {
         html += '<div class="form-group">';
-        html += '<label for="id">ID:</label>';
-        html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
+       // html += '<label for="id">ID:</label>';
+        //html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="material_identification">Material Identification:</label>';
-        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
@@ -479,10 +491,11 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
 
         if (item.material_identification_record) {
-            var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.material_identification_record+'</a>';
             //html += '<input type="file" id="material_identification_record" name="material_identification_record">';
-            html += downloadLink;
+            
+            html +=downloadLink;
         } else {
             html += '<label  id="material_identification_record" name="material_identification_record">';
         }
@@ -491,10 +504,11 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += '<div class="form-group">';
         html += '<label for="material_identification_record_file">Material Identification Record File:</label>';
         if (item.material_identification_record_file) {
-            var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record_file;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.material_identification_record_file+'</a>';
             //html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
-            html += downloadLink;
+         
+            html+=downloadLink;
         } else {
             html += '<label id="material_identification_record_file" name="material_identification_record_file">';
         }
@@ -502,17 +516,18 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
         html += '<div class="form-group">';
         html += '<label for="material_traceability">Material Traceability:</label>';
-        html += '<input type="checkbox" id="material_traceability" name="material_traceability" ' + (item.material_traceability ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="material_traceability" name="material_traceability" ' + (item.material_traceability ? 'checked disabled' : 'disabled') + '>';
 
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="material_traceability_file">Material Traceability File:</label>';
         if (item.material_traceability_file) {
-            var filePath = 'storage/material_preparation_task/' + item.process_order_number + '/' + item.material_traceability_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_traceability_file;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.material_traceability_file+ '</a>';
            // html += '<input type="file" id="material_traceability_file" name="material_traceability_file">';
-            html += downloadLink;
+            
+            html +=downloadLink;
         } else {
             html += '<label id="material_traceability_file" name="material_traceability_file">';
         }
@@ -520,22 +535,22 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
         html += '<div class="form-group">';
         html += '<label for="cutting">Cutting:</label>';
-        html += '<input type="checkbox" id="cutting" name="cutting" ' + ((item.cutting === 'true' || item.cutting === 'on') && item.cutting !== null ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="cutting" name="cutting" ' + ((item.cutting === 'true' || item.cutting === 'on') && item.cutting !== null ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="deburring">De-burring:</label>';
-        html += '<input type="checkbox" id="deburring" name="deburring" ' + ((item.deburring === 'true' || item.deburring === 'on') && item.deburring !== null ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="deburring" name="deburring" ' + ((item.deburring === 'true' || item.deburring === 'on') && item.deburring !== null ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="forming">Forming:</label>';
-        html += '<input type="checkbox" id="forming" name="forming" ' + ((item.forming === 'true' || item.forming === 'on') && item.forming !== null ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="forming" name="forming" ' + ((item.forming === 'true' || item.forming === 'on') && item.forming !== null ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="machining">Machining:</label>';
-        html += '<input type="checkbox" id="machining" name="machining" ' + ((item.machining === 'true' || item.machining === 'on') && item.machining !== null ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="machining" name="machining" ' + ((item.machining === 'true' || item.machining === 'on') && item.machining !== null ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';

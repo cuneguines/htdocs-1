@@ -111,6 +111,7 @@ function submitQualityForm() {
             console.log(response);
             alert('Quality Engineering checks form submitted successfully');
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error('Error submitting Quality Engineering checks form:', error);
@@ -186,8 +187,8 @@ function generateHTMLFromResponse_for_quality_old(response) {
                         console.log(imageUrl);
                         console.log(response.uuid);
                         html += '<div style="display: inline-block; margin-right: 10px;">';
-                        html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
-                        html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                        html += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                        html += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                     });
                 } else {
                     html += '-';
@@ -227,8 +228,8 @@ function generateHTMLFromResponse_for_quality_old(response) {
                     console.log(response.uuid());
 
                     html += '<div style="display: inline-block; margin-right: 10px;">';
-                    html += '<a href="/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
-                    html += '<img src="/storage/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                    html += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                    html += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                 });
             } else {
                 html += '-';
@@ -270,7 +271,8 @@ function generateHTMLFromResponse_for_quality(response) {
             
             html += '<div class="quality-field">';
             html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-            html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (item.walk_down_visual_inspection ? 'checked' : '') + '>';
+            html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection"' + (item.walk_down_visual_inspection ? ' checked disabled' : 'disabled') + '>';
+
 
             html += '</div><br>';
         
@@ -293,7 +295,7 @@ function generateHTMLFromResponse_for_quality(response) {
 
                         // Adding download link
                         var downloadLink = document.createElement('a');
-                        downloadLink.href = '/storage/images_qlty/' + item.process_order_number.trim() + '/' + item.uuid + '/' + imageUrl;
+                        downloadLink.href = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + item.process_order_number.trim() + '/' + item.uuid + '/' + imageUrl;
                         downloadLink.download = 'image_' + index + '.jpg'; // Setting download attribute
                         downloadLink.innerText = 'Download Image'; // Text for download link
                         imagesContainer.appendChild(downloadLink); // Appending download link
@@ -324,7 +326,7 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection ? ' checked disabled' : ' disabled') + '>';
 
         html += '</div><br>';
         
@@ -345,7 +347,7 @@ function generateHTMLFromResponse_for_quality(response) {
 
                     // Adding download link
                     var downloadLink = document.createElement('a');
-                    downloadLink.href = '/storage/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/' + imageUrl;
+                    downloadLink.href = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/' + imageUrl;
                     downloadLink.download = 'image.jpg'; // Setting download attribute
                     downloadLink.innerText = 'Download Image'; // Text for download link
                     imagesContainer.appendChild(downloadLink); // Appending download link
@@ -516,9 +518,17 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html += '<input type="hidden" name="submission_date" value="' + new Date().toISOString().split("T")[0] + '">';
        
         html += '</div>'; // Closing div for quality_item
-        html += '<hr>'; // Horizontal line for separation
+         // Horizontal line for separation
 
-
+        html += '<div class="quality_field">';
+        html +=
+            '<label>Status:</label>' +
+            '<select id="status" name="status">' +
+            '<option value="Completed" ' + (item.status === "Completed" ? 'selected' : '') + '>Completed</option>' +
+            '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
+            '</select>';
+        html += '</div><br>';
+        html += '<hr>';
     html += '<input type="button" value="Submit" onclick="submitQualityCompleteForm()">';
     html += '<input type="button" value="View" onclick="viewQualityResults()">';
     html += '</form>';
@@ -541,6 +551,7 @@ function submitQualityCompleteForm() {
        // submission_date: document.querySelector('[name="submission_date"]').value,
         process_order_number: document.querySelector('[name="process_order_number_qlty"]').value,
         uuid_qlty: document.querySelector('[name="uuidDisplay_qlty"]').textContent,
+        status: document.querySelector('[name="status"]').value,
     };
 console.log(formData);
    
@@ -593,8 +604,8 @@ console.log(values.data.process_order_number);
             images.forEach(function(imageUrl) {
                 console.log(imageUrl)
                 imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                imagesHtml += '<a href="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
-                imagesHtml += '<img src="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
             });
         } else {
             imagesHtml += '-';
@@ -663,11 +674,18 @@ function displayQualityResultss(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field = key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="Yes")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }
@@ -686,8 +704,8 @@ console.log(values.data.process_order_number);
             images.forEach(function(imageUrl) {
                 console.log(imageUrl)
                 imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                imagesHtml += '<a href="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
-                imagesHtml += '<img src="/storage/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
             });
         } else {
             imagesHtml += '-';

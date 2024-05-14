@@ -37,6 +37,7 @@ function submitFabricationFitUpForm(processOrder) {
         success: function (response) {
             console.log(response);
             alert("Form submitted successfully!");
+            $(myModal).hide();
         },
         error: function (error) {
             console.error(error);
@@ -123,25 +124,25 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
 
     $.each(response, function(index, item) {
         html += '<div class="fabrication-item">';
-        html += '<label for="id">ID:</label>';
-        html += '<input type="text" id="id" name="id" value="' + item.Id + '" readonly>';
+       // html += '<label for="id">ID:</label>';
+       // html += '<input type="text" id="id" name="id" value="' + item.Id + '" readonly>';
         html += '<br>';
 
         html += '<div class="fabrication-field">';
         html += '<label for="fit_up_visual_check">Fit-Up Visual Check:</label>';
-        html += '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" ' + (item.FitUpVisualCheck === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" ' + (item.FitUpVisualCheck === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="fabrication-field">';
         html += '<label for="dimensional_check">Dimensional Check:</label>';
-        html += '<input type="checkbox" id="dimensional_check" name="dimensional_check" ' + (item.DimensionalCheck === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="dimensional_check" name="dimensional_check" ' + (item.DimensionalCheck === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="fabrication-field">';
         html += '<label for="link_to_drawing">Link to Drawing:</label>';
         if (item.LinkToDrawing) {
-            var filePath = 'storage/fabricationfitup_task/' + item.ProcessOrder + '/' + item.LinkToDrawing;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/fabricationfitup_task/' + item.ProcessOrder + '/' + item.LinkToDrawing;
+            var downloadLink = '<a href="' + filePath + '" download>' +item.LinkToDrawing +'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -150,7 +151,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
 
         html += '<div class="fabrication-field">';
         html += '<label for="weldment_quantity">Weldment Quantity:</label>';
-        html += '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" ' + (item.WeldmentQuantity === 'true' ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" ' + (item.WeldmentQuantity === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="fabrication-field">';
@@ -167,7 +168,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<hr>'; // Horizontal line for separation
     });
 
-    html += '<input type="button" value="Submit" onclick="submitFabricationFitUpForm()">';
+   // html += '<input type="button" value="Submit" onclick="submitFabricationFitUpForm()">';
    
 
     return html;
@@ -323,7 +324,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication_field">';
         html +=
             '<label>Quantity:</label>' +
-            '<input type="text" name="quantity" value="' + item.Quantity + '">' +
+            '<input type="number" name="quantity_fb" value="' + item.Quantity + '">' +
             '</div><br>';
 
         html += '</div>'; // Closing div for fabrication_item
@@ -357,6 +358,7 @@ function submitFabricationCompleteFitUpForm() {
         comments_fabrication_fit_up: document.querySelector('[name="comments_fabrication_fit_up"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_fabc"]').value,
+        Quantity: document.querySelector('[name="quantity_fb"]').value,
     };
     console.log(formData);
 
@@ -389,7 +391,19 @@ function displayFabricationFitUpResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="1")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
+                    
+                   
+
+
+
                 }
             }
         }

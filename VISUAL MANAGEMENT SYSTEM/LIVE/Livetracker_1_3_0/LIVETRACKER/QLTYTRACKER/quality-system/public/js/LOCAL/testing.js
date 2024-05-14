@@ -54,6 +54,7 @@ formData.set('testing_document_file_name', testingDocumentFileName);
             console.log(response);
             alert("Testing form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
         },
         error: function (error) {
             console.error("Error:", error);
@@ -169,7 +170,7 @@ function generateHTMLFromResponse_for_testing_old(response) {
         html += '<td style="text-align:center;">';
 
         if (item.testing_document_file_name) {
-            var filePath = 'storage/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -247,14 +248,14 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="sign_off_testing">Sign-off for Testing:</label>';
-        html += '<input type="checkbox" id="sign_off_testing" name="sign_off_testing" ' + (item.sign_off_testing === "1" ? 'checked' : '') + '>';
+        html += '<input type="text" id="sign_off_testing" name="sign_off_testing" value="' + item.sign_off_testing + '">';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="testing_document_file_name">Testing Files:</label>';
         if (item.testing_document_file_name) {
-            var filePath = 'storage/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.testing_document_file_name+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -340,8 +341,8 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html +=
         '<label>Dye Penetrant Test:</label>' +
         (item.dye_pen_test === "1" ?
-            '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" >' :
-            '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" disabled>');
+            '<input type="checkbox" id="dye_pen_test_c" name="dye_pen_test_c" >' :
+            '<input type="checkbox" id="dye_pen_test_c" name="dye_pen_test_c" disabled>');
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -354,8 +355,8 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html +=
         '<label>Hydrostatic Leak Test:</label>' +
         (item.hydrostatic_test === "1" ?
-            '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" >' :
-            '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" disabled>');
+            '<input type="checkbox" id="hydrostatic_test_c" name="hydrostatic_test_c" >' :
+            '<input type="checkbox" id="hydrostatic_test_c" name="hydrostatic_test_c" disabled>');
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -368,8 +369,8 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html +=
         '<label>Pneumatic Leak Test:</label>' +
         (item.pneumatic_test === "1" ?
-            '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" >' :
-            '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" disabled>');
+            '<input type="checkbox" id="pneumatic_test_c" name="pneumatic_test_c" >' :
+            '<input type="checkbox" id="pneumatic_test_c" name="pneumatic_test_c" disabled>');
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -382,8 +383,8 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html +=
         '<label>FAT Protocol:</label>' +
         (item.fat_protocol === "1" ?
-            '<input type="checkbox" id="fat_protocol" name="fat_protocol" >' :
-            '<input type="checkbox" id="fat_protocol" name="fat_protocol" disabled>');
+            '<input type="checkbox" id="fat_protocol_c" name="fat_protocol_c" >' :
+            '<input type="checkbox" id="fat_protocol_c" name="fat_protocol_c" disabled>');
     html += '</div><br>';
     html += '<div class="signoff_field">';
     html +=
@@ -401,7 +402,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
         '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
         '</select>';
     html += '</div><br>';
-    html += '<input  name="comments_testing" value="' + item.comments_testing + '"><br>';
+   // html += '<input  name="comments_testing" value="' + item.comments_testing + '"><br>';
     // Quantity Field
     html += '<div class="testing_field">';
     html +=
@@ -431,20 +432,20 @@ function submitTestingCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
-    console.log(document.querySelector('[name="process_order_number"]').value);
+    console.log(document.querySelector('[name="process_order_number_t"]').value);
     var formData = {
         sign_off: document.querySelector('[name="sign_off_testing_c"]').value, // Change this according to your needs
         comments_testing: document.querySelector('[name="comments_testing"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         //process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
         process_order_number: document.querySelector('[name="process"]').value,
-        dye_pen_testing: document.querySelector('[name="dye_pen_test"]').checked ? "on" : '',
+        dye_pen_testing: document.querySelector('[name="dye_pen_test_c"]').checked ? "on" : "",
         dye_pen_document_ref: document.querySelector('[name="dye_pen_document_ref"]').value,
-        hydrostatic_testing: document.querySelector('[name="hydrostatic_test"]').checked ? "on" : "",
+        hydrostatic_testing: document.querySelector('[name="hydrostatic_test_c"]').checked ? "on" : "",
         hydrostatic_test_document_ref: document.querySelector('[name="hydrostatic_test_document_ref"]').value,
-        pneumatic_testing: document.querySelector('[name="pneumatic_test"]').checked ? "on" : "",
+        pneumatic_testing: document.querySelector('[name="pneumatic_test_c"]').checked ? "on" : "",
         pneumatic_test_document_ref: document.querySelector('[name="pneumatic_test_document_ref"]').value,
-        fat_protocoll: document.querySelector('[name="fat_protocol"]').checked ? "on" : "",
+        fat_protocoll: document.querySelector('[name="fat_protocol_c"]').checked ? "on" : "",
         status: document.querySelector('#status').value,
         quantity: document.querySelector('[name="quantity"]').value,
         // Add other form fields accordingly
@@ -502,11 +503,18 @@ function displayTestingCompleteResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field = key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="on")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }

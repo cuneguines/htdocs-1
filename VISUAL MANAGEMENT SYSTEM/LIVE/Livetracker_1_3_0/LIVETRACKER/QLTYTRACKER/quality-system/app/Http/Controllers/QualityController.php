@@ -54,7 +54,7 @@ class QualityController extends Controller
         $qualityData->sign_off_quality = $request->input('sign_off_quality');
         $qualityData->submission_date = $request->input('submission_date');
         $qualityData->process_order_number = $request->input('process_order_number');
-       // $qualityData->status = $request->input('status');
+       $qualityData->status = $request->input('status');
        // $qualityData->quantity = $request->input('quantity');
         //$qualityData->photos_attached = $request->input('photos_attached') === 'Yes' ? true : false;
         $qualityData->uuid = $request->input('uuid_qlty');

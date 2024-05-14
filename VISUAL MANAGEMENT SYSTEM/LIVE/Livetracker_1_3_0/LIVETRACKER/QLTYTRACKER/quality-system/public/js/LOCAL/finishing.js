@@ -51,6 +51,8 @@ function submitFinishingForm(processOrder) {
             console.log(response);
             alert("Finishing form submitted successfully");
             // Optionally update the table or perform other actions
+            $(myModal).hide();
+
         },
         error: function (error) {
             console.error("Error:", error);
@@ -217,7 +219,7 @@ function generateFinishingFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_finishing(response) {
+/* function generateHTMLFromResponse_for_finishing(response) {
     var html = '<table id="common_table" style="width:100%;">';
     // Add table headers
     html += '<thead><tr>';
@@ -254,6 +256,103 @@ function generateHTMLFromResponse_for_finishing(response) {
 
     // Close table body and table
     html += "</tbody></table>";
+
+    return html;
+} */
+function generateHTMLFromResponse_for_finishing(response) {
+    var html = '<form id="finishingForm" class="finishing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Finishing</legend>';
+console.log(response);
+    $.each(response, function(index, item) {
+        html += '<div class="finishing-item">';
+        //html += '<label for="id">ID:</label>';
+        //html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
+        html += '<br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="process_order_number">Process Order:</label>';
+        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="pickle_passivate_test">Pickle and Passivate:</label>';
+        html += '<input type="checkbox" id="pickle_passivate_test" name="pickle_passivate_test" ' + (item.pickle_passivate_test ? 'checked disabled' : 'disabled') + '>';
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="pickle_passivate">Pickle and Passivate Ref:</label>';
+        html += '<input type="text"  value="' + item.pickle_passivate_document_ref + '" readonly>';
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="pickle_passivate_document_file_name">Pickle and Passivate Documents:</label>';
+
+
+       
+        if (item.pickle_passivate_document_file_name) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.pickle_passivate_document_file_name;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.pickle_passivate_document_file_name + '</a>';
+            html += downloadLink;
+        } else {
+            html += '';
+        }
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="select_kent_finish_test">Kent Finish:</label>';
+        html += '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" ' + (item.select_kent_finish_test ? 'checked disabled' : 'disabled') + '>';
+        html += '</div><br>';
+        html += '<div class="finishing-field">';
+        html += '<label for="pickle_passivate">Kent Finish Ref:</label>';
+        html += '<input type="text"  value="' + item.select_kent_finish_document_ref + '" readonly>';
+        html += '</div><br>';
+
+
+
+        html += '<div class="finishing-field">';
+        html += '<label for="select_kent_finish_document_file_name">Kent Finish Documents:</label>';
+        if (item.select_kent_finish_document_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.process_order_number +'/'+item.select_kent_finish_document_file;
+            var downloadLink = '<a href="' + filePath + '" download>' + item.select_kent_finish_document_file + '</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="sign_off_finishing">Sign-off for Finishing:</label>';
+        html += '<input type="text" id="sign_off_finishing" name="sign_off_finishing" value="' + (item.sign_off_finishing ? item.sign_off_finishing : '') + '">';
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="comments_finishing">Comments for Finishing:</label>';
+        html += '<input type="text" id="comments_finishing" name="comments_finishing" value="' + (item.comments_finishing ? item.comments_finishing : '') + '">';
+        html += '</div><br>';
+
+      //  html += '<div class="finishing-field">';
+       // html += '<label for="submission_date">Submitted Date Time:</label>';
+       // html += '<input type="text" id="submission_date" name="submission_date" value="' + (item.submission_date ? item.submission_date : '') + '" readonly>';
+       // html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="created_at">Created At:</label>';
+        html += '<input type="text" id="created_at" name="created_at" value="' + (item.created_at ? item.created_at : '') + '" readonly>';
+        html += '</div><br>';
+
+        html += '<div class="finishing-field">';
+        html += '<label for="updated_at">Updated At:</label>';
+        html += '<input type="text" id="updated_at" name="updated_at" value="' + (item.updated_at ? item.updated_at : '') + '" readonly>';
+        html += '</div><br>';
+
+        html += '</div>'; // Closing div for finishing-item
+        html += '<hr>'; // Horizontal line for separation
+    });
+
+    //html += '<input type="button" value="Submit" onclick="submitFinishingForm()">';
+    html += '</fieldset>'; // Closing fieldset
+    html += '</form>'; // Closing form
 
     return html;
 }
@@ -296,38 +395,38 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
 
     // Add form fields based on the response data
     html += '<div class="finishing_item">';
-    html += '<label>ID: ' + item.id + '</label><br>';
-    html += '<input type="hidden" name="process_order_number_f" value="' + item.process_order_number + '"><br>';
+    //html += '<label>ID: ' + item.id + '</label><br>';
+    html += '<input type="hidden" name="process_order_number_fc" value="' + item.process_order_number + '"><br>';
 
     // Add checkboxes for Pickle and Passivate and Select Kent Finish
     html += '<div class="finishing_field">';
     html +=
         '<label>Pickle and Passivate:</label>' +
         (item.pickle_passivate_test === "1" ?
-            '<input type="checkbox" id="pickle_passivate_test" name="pickle_passivate_test" >' :
-            '<input type="checkbox" id="pickle_passivate_test" name="pickle_passivate_test" disabled>');
+            '<input type="checkbox" id="pickle_passivate_test_c" name="pickle_passivate_test_c" >' :
+            '<input type="checkbox" id="pickle_passivate_test_c" name="pickle_passivate_test_c" disabled>');
     html += '</div><br>';
 
     html += '<div class="finishing_field">';
     html +=
         '<label>Select Kent Finish:</label>' +
         (item.select_kent_finish_test === "1" ?
-            '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" >' :
-            '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" disabled>');
+            '<input type="checkbox" id="select_kent_finish_test_c" name="select_kent_finish_test_c" >' :
+            '<input type="checkbox" id="select_kent_finish_test_c" name="select_kent_finish_test_c" disabled>');
     html += '</div><br>';
 
     // Add input fields for document references and file uploads
-    html += '<div class="finishing_field">';
-    html +=
-        '<label>Pickle and Passivate Document Ref:</label>' +
-        '<input type="text" name="pickle_passivate_document_ref" value="' + item.pickle_passivate_document_ref + '" disabled>';
-    html += '</div><br>';
+  //  html += '<div class="finishing_field">';
+   // html +=
+   //     '<label>Pickle and Passivate Document Ref:</label>' +
+    //    '<input type="text" name="pickle_passivate_document_ref" value="' + item.pickle_passivate_document_ref + '" disabled>';
+   // html += '</div><br>';
 
-    html += '<div class="finishing_field">';
-    html +=
-        '<label>Select Kent Finish Document Ref:</label>' +
-        '<input type="text" name="select_kent_finish_document_ref" value="' + item.select_kent_finish_document_ref + '" disabled>';
-    html += '</div><br>';
+   // html += '<div class="finishing_field">';
+   // html +=
+     //   '<label>Select Kent Finish Document Ref:</label>' +
+      //  '<input type="text" name="select_kent_finish_document_ref" value="' + item.select_kent_finish_document_ref + '" disabled>';
+   // html += '</div><br>';
 
     html += '<div class="finishing_field">';
     html +=
@@ -374,11 +473,11 @@ function submitFinishingCompleteForm() {
 
     var formData = {
         // Populate form data from the form fields
-        process_order_number: document.querySelector('[name="process_order_number_f"]').value,
-        pickle_passivate_test: document.querySelector('[name="pickle_passivate_test"]').checked ? "1" : "0",
-        select_kent_finish_test: document.querySelector('[name="select_kent_finish_test"]').checked ? "1" : "0",
-        pickle_passivate_document_ref: document.querySelector('[name="pickle_passivate_document_ref"]').value,
-        select_kent_finish_document_ref: document.querySelector('[name="select_kent_finish_document_ref"]').value,
+        process_order_number: document.querySelector('[name="process_order_number_fc"]').value,
+        pickle_passivate_test: document.querySelector('[name="pickle_passivate_test_c"]').checked ? "1" : "0",
+        select_kent_finish_test: document.querySelector('[name="select_kent_finish_test_c"]').checked ? "1" : "0",
+       // pickle_passivate_document_ref: document.querySelector('[name="pickle_passivate_document_ref"]').value,
+       // select_kent_finish_document_ref: document.querySelector('[name="select_kent_finish_document_ref"]').value,
         comments_finishing: document.querySelector('[name="comments_finishing"]').value,
         sign_off_finishing: document.querySelector('[name="sign_off_finishing_c"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
@@ -408,7 +507,7 @@ function viewFinishingCompleteForm() {
     };
 
     var formData = {
-        process_order_number: document.querySelector('[name="process_order_number_f"]').value,
+        process_order_number: document.querySelector('[name="process_order_number_fc"]').value,
     };
 
     $.ajax({
@@ -440,7 +539,14 @@ function displayFinishingCompleteResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="1")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }

@@ -192,12 +192,19 @@ function displayKittingCompleteResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field = key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
-                }
+                    if (value=="on")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
+                    }
             }
         }
     }
@@ -472,6 +479,7 @@ function submitKittingForm(processOrder) {
         success: function (response) {
             console.log(response);
             alert("Kitting form submitted successfully");
+            $(myModal).hide();
             // Optionally update the table or perform other actions
         },
         error: function (error) {
@@ -566,7 +574,7 @@ function generateHTMLFromResponse_for_kitting_old(response) {
         html += "<td>" + ((item.site_pack === "true" || item.site_pack === "on") ? "✔" : "") + "</td>";
         html += '<td style="text-align:center;">';
         if (item.kitting_file) {
-            var filePath = 'storage/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
             var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
             html += downloadLink;
         } else {
@@ -603,29 +611,30 @@ function generateHTMLFromResponse_for_kitting(response) {
 
         html += '<div class="form-group">';
         html += '<label for="cut_form_mach_parts">Cut Formed Machine Parts:</label>';
-        html += '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="bought_out_components">Bought Out Components:</label>';
-        html += '<input type="checkbox" id="bought_out_components" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="bought_out_components" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="fasteners_fixings">Fasteners and Fixings:</label>';
-        html += '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="site_pack">Site Pack:</label>';
-        html += '<input type="checkbox" id="site_pack" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="site_pack" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked disabled' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="link_to_drawing">Link to Drawing:</label>';
         if (item.kitting_file) {
-            var filePath = 'storage/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.kitting_file+'</a>';
+            
             html += downloadLink;
         } else {
             html += '-';

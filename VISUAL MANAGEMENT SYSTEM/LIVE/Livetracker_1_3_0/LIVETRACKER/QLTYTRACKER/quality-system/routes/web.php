@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EngineeringController;
 use App\Http\Controllers\PlanningController;
@@ -151,4 +151,5 @@ Route::post('/upload_qltyimages', [QualityController::class, 'uploadImages_Quali
 Route::post('/getImages_qlty', [QualityController::class, 'getImages_Quality']);
 Route::post('/upload_completeqltyimages', [QualityController::class, 'uploadImages_CompleteQuality']);
 Route::post('/getImages_completeqlty', [QualityController::class, 'getImages_CompleteQuality']);
-
+Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+Route::post('/employees', [EmployeeController::class, 'store'])->name('store');
