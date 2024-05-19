@@ -63,7 +63,8 @@
     define("SEQ030",  array('Wrapping',                 'Wrapping'));
     define("SEQ031",  array('Site Work',                'Site Work'));
     define("SEQ032",  array('NonChargeable Time',                'NonChargeable Time'));
-    define("SEQ",  array('LASER LABOUR [TUBE]',                'LASER LABOUR [TUBE]'));
+    define("SEQ0045",  array('LASER LABOUR [TUBE]',                'LASER LABOUR [TUBE]'));
+    define("SEQ0048",  array('LASER Machine [TUBE]',                'LASER Machine [TUBE]'));
 ?>
 
 <?php
@@ -146,8 +147,8 @@
             3 => "SEQ030",
             4 => "SEQ031",
             5 => "SEQ032",
-            6 => "SEQ",
-            7 => "",
+            6 => "SEQ0045",
+            7 => "SEQ0048",
             8 => "" 
         ))
     );

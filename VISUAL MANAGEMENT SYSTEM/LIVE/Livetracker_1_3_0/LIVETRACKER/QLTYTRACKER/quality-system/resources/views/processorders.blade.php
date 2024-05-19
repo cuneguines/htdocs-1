@@ -196,7 +196,7 @@
                 <input type="text" id="manualProcessOrder" name="manualProcessOrder" required
                     style="width: 200px; margin-right: 10px;">
                 <button id="searchButton" style="margin-right: 10px;">Search</button>
-                <button  style="margin-right: 1px;" onclick="redirectToEmployee()">New User</button>
+               <!-- // <button  style="margin-right: 1px;" onclick="redirectToEmployee()">New User</button> -->
                 <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="margin-left: auto;">
                     @csrf
                     <button type="submit"
@@ -295,20 +295,20 @@
             <div class="modal-content">
                 <span class="close" onclick="closeglobalModal()">&times;</span>
                 <p id="global-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
-                <div id="manufacturingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="fabricationfitupFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="subcontractFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="finalassemblyFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="documentationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="packingtransportFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="qualityFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+                <div id="engineeringFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="planningFieldTable" style="max-width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
+                <div id="manufacturingFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="materialpreparationFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="kittingFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="fabricationfitupFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="weldingFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="testingFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="finishingFieldTable" style="max-width:600px;font-size:14px;height:500px"></div>
+                <div id="subcontractFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="finalassemblyFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="documentationFieldTable" style="max-width:700px;font-size:14px;height:500px"></div>
+                <div id="packingtransportFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
+                <div id="qualityFieldTable" style="max-width:500px;font-size:14px;height:500px"></div>
             </div>
         </div>
     </div>
@@ -531,7 +531,7 @@
                     var clickedRow = $(this).closest('tr');
                     var processOrderValue = clickedRow.find('td:first').text();
                     var qualityStepValue = $(this).text();
-                    openModal(processOrderValue, qualityStepValue, userName);
+                    //openModal(processOrderValue, qualityStepValue, userName);
                 }
             });
 

@@ -260,8 +260,8 @@ function generateHTMLFromResponse_for_quality(response) {
             html += '<div class="quality-item">';
             
             html += '<div class="quality-field">';
-            html += '<label for="quality_id">Quality ID:</label>';
-            html += '<input type="text" id="quality_id" name="quality_id" value="' + item.ID + '" readonly>';
+            //html += '<label for="quality_id">Quality ID:</label>';
+            //html += '<input type="text" id="quality_id" name="quality_id" value="' + item.ID + '" readonly>';
             html += '</div><br>';
             
             html += '<div class="quality-field">';
@@ -315,8 +315,8 @@ function generateHTMLFromResponse_for_quality(response) {
         html += '<div class="quality-item">';
         
         html += '<div class="quality-field">';
-        html += '<label for="quality_id">Quality ID:</label>';
-        html += '<input type="text" id="quality_id" name="quality_id" value="' + parseInt(response.ID) + '" readonly>';
+      //  html += '<label for="quality_id">Quality ID:</label>';
+        //html += '<input type="text" id="quality_id" name="quality_id" value="' + parseInt(response.ID) + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
@@ -479,7 +479,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
 
     html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
         html += '<div class="quality_item">';
-        html += '<label>ID: ' + item.ID + '</label><br>';
+       // html += '<label>ID: ' + item.ID + '</label><br>';
         html += '<div class="quality_item">';
         html += '<input name="process_order_number_qlty"type="text" value="' + item.process_order_number.trim() + '" readonly>';
 

@@ -8,14 +8,19 @@
     </div>
     <!-- Subtask 6.1: Fit-up -->
     <div class="form-group">
-        <label>Fit-up: Visual check fit up - first off</label>
-        <input type="checkbox" name="fit_up_visual_check">
+        
+    <label>
+    <input type="checkbox" name="fit_up_visual_check">
+        Fit-up: Visual check fit up - first off</label>
+        
     </div>
 
     <!-- Subtask 6.2: Dimensional check -->
     <div class="form-group">
-        <label>Dimensional check: Dimensional check first off</label>
-        <input type="checkbox" name="dimensional_check">
+    <label>
+    <input type="checkbox" name="dimensional_check">
+        Dimensional check: Dimensional check first off</label>
+        
         <!-- Upload File -->
         <label class="upload-label">Link to Drawing: <br>
             <span id="old_drawing_filename"></span> <!-- Span for old file name -->
@@ -26,14 +31,18 @@
 
     <!-- Subtask 6.3: Weldment quantity -->
     <div class="form-group">
-        <label>Weldment quantity: Check qty against Process Order</label>
-        <input type="checkbox" name="weldment_quantity">
+    <label>
+    <input type="checkbox" name="weldment_quantity">
+        Weldment quantity: Check qty against Process Order</label>
+       
     </div>
 
     <!-- Sign-off for Fabrication Fit-Up -->
     <div class="form-group">
-        <label>Sign-off for Fabrication Fit-Up:</label>
-        <input type="text" name="sign_off_fabrication_fit_up" value="${username}">
+    <label>
+    <input type="text" name="sign_off_fabrication_fit_up" value="${username}">
+        Sign-off for Fabrication Fit-Up:</label>
+        
     </div>
 
     <!-- Comments for Fabrication Fit-Up -->

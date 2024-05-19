@@ -245,9 +245,8 @@ INNER JOIN (select t1.U_IIS_proPrOrder,
     SUM(t0.plannedqty) [Planned_Lab]
     FROM wor1 t0
         INNER JOIN owor t1 ON t1.DocEntry = t0.DocEntry                        
-        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode       
-        ---changed 28-02-23        
-            WHERE t2.ItemType = 'L'           and t0.U_IIS_proPrOrder is not null               
+        INNER JOIN oitm t2 ON t2.ItemCode = t0.ItemCode               
+            WHERE t2.ItemType = 'L'                      
             GROUP BY t1.U_IIS_proPrOrder) 
 t2 ON t2.U_IIS_proPrOrder = t0.PrOrder    
 
@@ -262,9 +261,10 @@ LEFT JOIN ORDR t4 ON t4.DocNum = t1.OriginNum
 LEFT JOIN RDR1 t5 ON t5.DocEntry = t4.DocENtry and t5.ItemCode = t0.EndProduct
 
 WHERE t1.CmpltQty < t1.PlannedQty AND 
-   t0.Status NOT IN ('D','C','P') AND 
-   t1.Status NOT IN ('C','L','P') AND 
-   t5.U_PP_status IN ('Live','1001')
+   t0.Status NOT IN ('D','C') AND 
+   t1.Status NOT IN ('C','L') AND 
+   (t5.U_PP_status IN ('Live','1001') or t5.U_PP_status is null)
+
 ";
 
 

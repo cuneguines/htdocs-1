@@ -300,18 +300,18 @@ console.log(response);
         html += '</div><br>';
 
         html += '<div class="finishing-field">';
-        html += '<label for="select_kent_finish_test">Kent Finish:</label>';
+        html += '<label for="select_kent_finish_test">Required Finish Applied:</label>';
         html += '<input type="checkbox" id="select_kent_finish_test" name="select_kent_finish_test" ' + (item.select_kent_finish_test ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
         html += '<div class="finishing-field">';
-        html += '<label for="pickle_passivate">Kent Finish Ref:</label>';
+        html += '<label for="pickle_passivate">Required Finish Applied Ref:</label>';
         html += '<input type="text"  value="' + item.select_kent_finish_document_ref + '" readonly>';
         html += '</div><br>';
 
 
 
         html += '<div class="finishing-field">';
-        html += '<label for="select_kent_finish_document_file_name">Kent Finish Documents:</label>';
+        html += '<label for="select_kent_finish_document_file_name">Required Finish Applied Documents:</label>';
         if (item.select_kent_finish_document_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.process_order_number +'/'+item.select_kent_finish_document_file;
             var downloadLink = '<a href="' + filePath + '" download>' + item.select_kent_finish_document_file + '</a>';
@@ -409,7 +409,7 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
 
     html += '<div class="finishing_field">';
     html +=
-        '<label>Select Kent Finish:</label>' +
+        '<label>Required Finish Applied:</label>' +
         (item.select_kent_finish_test === "1" ?
             '<input type="checkbox" id="select_kent_finish_test_c" name="select_kent_finish_test_c" >' :
             '<input type="checkbox" id="select_kent_finish_test_c" name="select_kent_finish_test_c" disabled>');

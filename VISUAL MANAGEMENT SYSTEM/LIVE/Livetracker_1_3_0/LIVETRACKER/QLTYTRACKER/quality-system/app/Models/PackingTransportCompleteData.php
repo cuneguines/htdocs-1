@@ -11,14 +11,15 @@ class PackingTransportCompleteData extends Model
 
     protected $fillable = [
         'process_order_number',
-        'technical_file',
-        'client_handover_documentation',
+     
+     
         'sign_off_documentation',
         'comments_documentation',
         'status',
         'quantity',
-        'labels_attached',
+       
         'secure_packing',
+        'photos_attached',
         // Add other fields as needed
     ];
 

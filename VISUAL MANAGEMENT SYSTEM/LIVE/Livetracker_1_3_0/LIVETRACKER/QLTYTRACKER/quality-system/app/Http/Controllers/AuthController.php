@@ -26,20 +26,33 @@ class AuthController extends Controller
             $credentials = $request->only('Login','Password');
         
             // Retrieve the user based on the login field
-            $user = User::where('login', $credentials['Login'])->first();
+            $user = User::where('Login', $credentials['Login'])->first();
+            //dd($user);
             if ($user) {
                 $disEmpPin = $user->ClockNumber;
+                $role=$user->Role;
             }
+            if ($user && $role== 'Admin' && $disEmpPin == $credentials['Password']) {
+                // Authentication successful
+                Auth::login($user);
+                Session::put('user_id', $user->Login);
+            
+               // return redirect()->route view('processorders');
+               return view('processorders_admin');
+                //return view('employees');
+            }
+            else
+           {
             if ($user && $disEmpPin == $credentials['Password']) {
                 // Authentication successful
                 Auth::login($user);
-                Session::put('user_id', $user->U_IIS_proEmplPwd);
+                Session::put('user_id', $user->Login);
             
                // return redirect()->route view('processorders');
                return view('processorders');
                 //return view('employees');
             }
-            
+        }      
         // Authentication failed
     // Authentication failed
     Session::flash('error', 'Invalid login credentials');

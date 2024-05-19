@@ -151,7 +151,54 @@
         background-color: #FFD700;
         /* Yellow */
     }
+/* Table Styling */
+#modalTable_1 { /* Ensure the ID matches your HTML */
+    width: 100%;
+    border-collapse: collapse;
+}
 
+#modalTable_1 th,
+#modalTable_1 td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Header Styles */
+#modalTable_1 th {
+    background-color: #7cbfa0; /* Green */
+    color: white;
+    font-weight: bold;
+}
+
+/* Fixed Header */
+#modalTable_1 thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Scrollable Body */
+#modalTable_1 tbody {
+    display: block;
+    height: 300px; /* Adjust as needed */
+    overflow-y: scroll;
+    width: 100%;
+}
+
+/* Even and Odd Row Coloring */
+#modalTable_1 tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#modalTable_1 tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Specific Row Coloring */
+#modalTable_1 tbody tr.special-row {
+    background-color: #FFD700; /* Yellow */
+}
     .banner_button_ {
         float: left;
         margin-left: 1%;
@@ -716,6 +763,7 @@
                     <p class="totalvalue larger"><?= $headline_figures["Released Five Week Average"]?></p>
                     <p class="totaltitle smedium">Released This Year</p>
                     <p class="totalvalue larger"><?= $headline_figures["Released Year To Date"]?></p>
+                    <button onclick="toggleTable_Year()">Show Table</button>
                 </div>
                 <div class="totalgrid white top right" id="innertopright">
                     <p class="totaltitle smedium">Open Process Orders</p>
@@ -748,7 +796,16 @@
                         <table id="modalTable">
                             <!-- Table content will be dynamically added here -->
                         </table>
-                        <button id="exportExcel" class="banner_button_">Export to Excel</button>
+                        <button onclick="export_to_excel('modalTable')" id="exportExcel" class="banner_button_">Export to Excel</button>
+                    </div>
+                </div>
+                <div id="myModal_1" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <table id="modalTable_1">
+                            <!-- Table content will be dynamically added here -->
+                        </table>
+                        <button onclick="export_to_excel('modalTable_1')" id="exportExcel_1" class="banner_button_">Export to Excel</button>
                     </div>
                 </div>
 

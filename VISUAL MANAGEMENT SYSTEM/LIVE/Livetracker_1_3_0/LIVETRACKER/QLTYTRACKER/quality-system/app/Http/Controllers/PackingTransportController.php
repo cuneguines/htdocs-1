@@ -83,13 +83,14 @@ class PackingTransportController extends Controller
         $packingTransportCompleteData = new PackingTransportCompleteData;
         $packingTransportCompleteData->process_order_number = $request->input('process_order_number');
         $packingTransportCompleteData->secure_packing = $request->input('secure_packing');
-        $packingTransportCompleteData->technical_file = $request->has('technical_file') ? 'on' : '';
-        $packingTransportCompleteData->client_handover_documentation = $request->has('client_handover_documentation') ? 'on' : '';
+        $packingTransportCompleteData->photos_attached = $request->input('photos_attached');
+        //$packingTransportCompleteData->technical_file = $request->has('technical_file') ? 'on' : '';
+        //$packingTransportCompleteData->client_handover_documentation = $request->has('client_handover_documentation') ? 'on' : '';
         $packingTransportCompleteData->sign_off_documentation = $request->input('responsible_person_complete');
         $packingTransportCompleteData->comments_documentation = $request->input('comments_documentation');
         $packingTransportCompleteData->status = $request->input('status');
         $packingTransportCompleteData->quantity = $request->input('quantity');
-        $packingTransportCompleteData->labels_attached = $request->has('labels_attached') ? 'on' : '';
+        //$packingTransportCompleteData->labels_attached = $request->has('labels_attached') ? 'on' : '';
         // Add other fields accordingly
 
         $packingTransportCompleteData->save();

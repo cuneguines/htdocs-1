@@ -22,7 +22,7 @@
 
 
         
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Reference Job / Master File Document: <br><span id="reference_job_master_file_document_filename"></span>
             
             <input type="file" name="reference_job_master_file_document" id="reference_job_master_file_document">
@@ -38,7 +38,7 @@
             Concept design & engineering details
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Concept Design Document: <br><span id="concept_design_document_filename"></span>
             
             <input type="file" name="concept_design_document" id="concept_design_document">
@@ -54,7 +54,7 @@
             Design sign off [calculations]
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Design Validation Document: <br>  <span id="design_validation_document_filename"></span>
           
             <input type="file" name="design_validation_document" id="design_validation_document">
@@ -70,7 +70,7 @@
             Customer submittal package
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Customer Approval Document: <br>   <span id="customer_approval_document_filename"></span>
          
             <input type="file" name="customer_approval_document" id="customer_approval_document">
@@ -86,7 +86,7 @@
             Reference approved samples
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Sample Approval Document: <br> <span id="sample_approval_document_filename"></span>
            
             <input type="file" name="sample_approval_document" id="sample_approval_document">

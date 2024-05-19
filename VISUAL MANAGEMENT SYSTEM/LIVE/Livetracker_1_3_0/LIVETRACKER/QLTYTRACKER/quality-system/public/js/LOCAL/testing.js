@@ -197,8 +197,8 @@ function generateHTMLFromResponse_for_testing(response) {
     $.each(response, function (index, item) {
         html += '<div class="testing-item">';
         
-        html += '<label for="testing_id">Testing ID:</label>';
-        html += '<input type="text" id="testing_id" name="testing_id" value="' + item.id + '" readonly>';
+       // html += '<label for="testing_id">Testing ID:</label>';
+        //html += '<input type="text" id="testing_id" name="testing_id" value="' + item.id + '" readonly>';
         html += '<br>';
         
         html += '<div class="testing-field">';
@@ -331,7 +331,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<form id="testing_complete_form">';
 
     html += '<div class="testing_item">';
-    html += '<label>ID: ' + item.id + '</label><br>';
+   // html += '<label>ID: ' + item.id + '</label><br>';
     html += '<div class="testing_item">';
     html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
     html += '<div class="testing_item">';

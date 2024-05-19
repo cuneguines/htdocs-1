@@ -254,8 +254,8 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html +=
             '<label>Secure Packing:</label>' +
             (item.secure_packing === "Yes" ?
-                '<input type="checkbox" id="secure_packing" name="secure_packing" >' :
-                '<input type="checkbox" id="secure_packing" name="secure_packing"> disabled') +
+                '<input type="checkbox" id="secure_packing_c" name="secure_packing_c" >' :
+                '<input type="checkbox" id="secure_packing_c" name="secure_packing_c" disabled>') +
             '</div><br>';
 
         // Responsible Person
@@ -293,9 +293,9 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Photos Attached:</label>' +
-            (item.photos_attached === "Yes" ?
-                '<input type="checkbox" id="photos_attached" name="photos_attached" checked>' :
-                '<input type="checkbox" id="photos_attached" name="photos_attached">') +
+           
+                '<input type="checkbox" id="photos_attached" name="photos_attached">' 
+                
             '</div><br>';
 
         html += '</div>'; // Closing div for packing_transport_item
@@ -343,15 +343,16 @@ function submitPackingTransportCompleteForm() {
     };
 
     var formData = {
-        documentation_complete: document.querySelector('[name="documentation_complete"]').checked ? "Yes" : "No",
-        secure_packing: document.querySelector('[name="secure_packing"]').checked ? "Yes" : "No",
+       // documentation_complete: document.querySelector('[name="documentation_complete"]').checked ? "Yes" : "No",
+        secure_packing: document.querySelector('[name="secure_packing_c"]').checked ? "Yes" : "No",
+        photos_attached: document.querySelector('[name="photos_attached"]').checked ? "Yes" : "No",
         responsible_person_complete: document.querySelector('[name="responsible_person_complete"]').value,
         comments_packing_transport: document.querySelector('[name="comments_packing_transport"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number_pt"]').value, // Adjust as needed
         status: document.querySelector('[name="status"]').value,
         quantity: document.querySelector('[name="quantity"]').value,
-        photos_attached: document.querySelector('[name="photos_attached"]').checked ? "Yes" : "No",
+        //photos_attached: document.querySelector('[name="photos_attached"]').checked ? "Yes" : "No",
     };
 
     $.ajax({

@@ -265,8 +265,8 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
     
     $.each(response, function (index, item) {
         html += '<div class="fabrication_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
-        html += '<input name="process_order_fabc" type="text" value="' + item.ProcessOrder + '"><br>';
+        //html += '<label>ID: ' + item.id + '</label><br>';
+        html += '<br><input name="process_order_fabc" type="text" value="' + item.ProcessOrder + '"><br><br>';
 
         html += '<div class="fabrication_field">';
         html +=

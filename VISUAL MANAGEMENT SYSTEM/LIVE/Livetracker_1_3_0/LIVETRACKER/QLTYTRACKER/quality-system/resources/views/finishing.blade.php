@@ -27,14 +27,15 @@
         <label>
             Upload Pickle and Passivate Documents:
             <input type="file" name="pickle_passivate_documents" multiple>
-        </label>
+        
         <span id="old_pickle_passivate_documents">Old Document Name</span>
         <button type="button" onclick="clear_pickle_passivate_documents()">Clear File</button>
+        </label>
     </div>
 
     <div class="form-group">
         <label>
-            Select Kent Finish:
+        Required Finish Applied:
             <input type="checkbox" name="select_kent_finish_test"
                 onchange="updateDropdown(this, 'select_kent_finish_document_ref')">
             <select name="select_kent_finish_document_ref">
@@ -70,11 +71,12 @@
 
     <div class="form-group">
         <label>
-            Upload Select Kent Finish Documents:
+            Required Finish Applied Documents:
             <input type="file" name="select_kent_finish_documents" multiple>
-        </label>
+       
         <span id="old_select_kent_finish_documents">Old Document Name</span>
         <button type="button" onclick="clear_kent_finish_documents()">Clear File</button>
+        </label>
     </div>
 
     <div class="form-group">

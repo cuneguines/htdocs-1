@@ -12,8 +12,9 @@
     <!-- Subtask 4.1: Material Identification -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="material_identification">
             Material Identification: Confirm grade, thickness
-            <input type="checkbox" name="material_identification">
+            
         </label>
     </div>
 
@@ -39,8 +40,9 @@
     <!-- Subtask 4.3: Material Traceability -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="material_traceability">
             Material Traceability: Purchase Order Number
-            <input type="checkbox" name="material_traceability">
+            
         </label>
         <label class="upload-label">
             Current Material Traceability Document: <span id="old-file-name_2"></span><br>
@@ -53,32 +55,36 @@
     <!-- Subtask 4.4: Cutting -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="cutting">
             Cutting: Part geometry, cut quality, part qty
-            <input type="checkbox" name="cutting">
+            
         </label>
     </div>
 
     <!-- Subtask 4.5: De-burring -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="deburring">
             De-burring: No sharp edges
-            <input type="checkbox" name="deburring">
+           
         </label>
     </div>
 
     <!-- Subtask 4.6: Forming -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="forming">
             Forming: Part geometry, part qty
-            <input type="checkbox" name="forming">
+            
         </label>
     </div>
 
     <!-- Subtask 4.7: Machining -->
     <div class="form-group">
         <label>
+        <input type="checkbox" name="machining">
             Machining: Part geometry, part qty
-            <input type="checkbox" name="machining">
+           
         </label>
     </div>
 

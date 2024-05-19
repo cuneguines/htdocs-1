@@ -367,7 +367,7 @@ function displayCompleteSubContractResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+                var field = key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {

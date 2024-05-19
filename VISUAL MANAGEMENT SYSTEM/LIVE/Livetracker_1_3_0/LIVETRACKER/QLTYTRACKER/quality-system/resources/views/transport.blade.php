@@ -15,8 +15,9 @@
         <!-- Subtask 13.2: Secure Packing -->
         <div class="form-group">
             <label>
+            <input type="checkbox" name="secure_packing_checkbox" value="1">
                 Secure Packing:
-                <input type="checkbox" name="secure_packing_checkbox" value="1">
+               
             </label>
         </div>
 

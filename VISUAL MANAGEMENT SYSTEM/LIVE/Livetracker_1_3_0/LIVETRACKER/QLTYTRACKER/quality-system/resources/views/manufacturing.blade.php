@@ -16,7 +16,7 @@
             Production Drawings
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Production Drawings Document: <br>
             <span id="production_drawings_filename"></span>
             <input type="file" name="production_drawings_document" id="production_drawings_document">
@@ -31,7 +31,7 @@
             BOM
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current BOM Document: <br>
             <span id="bom_filename"></span>
             <input type="file" name="bom_document" id="bom_document">
@@ -46,7 +46,7 @@
             Machine Programming Files
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Machine Programming Files Document: <br>
             <span id="machine_programming_files_filename"></span>
             <input type="file" name="machine_programming_files_document" id="machine_programming_files_document">
@@ -62,7 +62,7 @@
             NDT Documentation
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current NDT Documentation Document: <br>
             <span id="ndt_documentation_filename"></span>
             <input type="file" name="ndt_documentation_document" id="ndt_documentation_document">
@@ -77,7 +77,7 @@
             Quality Documents
         </label>
         <br>
-        <label style="background-color: lightgrey" class="upload-label">
+        <label  class="upload-label">
             Current Quality Documents Document: <br>
             <span id="quality_documents_filename"></span>
             <input type="file" name="quality_documents_document" id="quality_documents_document">
