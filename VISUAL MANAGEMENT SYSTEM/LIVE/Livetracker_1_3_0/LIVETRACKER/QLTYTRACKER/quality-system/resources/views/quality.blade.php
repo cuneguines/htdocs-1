@@ -30,7 +30,9 @@
     <div class="form-group">
         <label>
             Sign-off for Quality:
+            <!-- <input type="text" name="sign_off_quality_l" id="sign_off_quality_l" value="${username}"> --> -->
             <input type="text" name="sign_off_quality" id="sign_off_quality" value="${username}">
+
         </label>
     </div>
 
@@ -76,4 +78,7 @@ function generateUUID() {
 // Generate and display UUID
 const uuid = generateUUID();
 uuidDisplay.textContent = uuid;
+//$('#sign_off_quality').val(username);
+//console.log(username);
+
 </script>

@@ -1,6 +1,6 @@
 
 function generateQualityFieldset(processOrder, qualityStep, username) {
-    $("#sign_off_quality").val(username);
+    //$("#sign_off_quality").val(username);
     
 }
 // Function to handle image upload
@@ -97,7 +97,9 @@ function submitQualityForm() {
         process_order_number: document.querySelector('[name="process_order_number_quality"]').value || null,
         walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? 'Yes' : 'No',
         uuid: document.getElementById('uuidDisplay').textContent || null,
-
+        sign_off_quality: document.querySelector('[name="sign_off_quality"]').value,
+        comments_quality: document.querySelector('[name="comments_quality"]').value,
+        
         // Add other form fields accordingly
     };
     console.log(formData);
@@ -732,6 +734,88 @@ function fetchImages_cmplt(id, callback) {
         error: function (error) {
             console.error('Error fetching images:', error);
             callback([]);
+        }
+    });
+}
+
+
+function resetQualityForm() {
+    // Uncheck checkboxes
+    $('#walk_down_visual_inspection').prop('checked', false);
+
+    // Clear text inputs
+    $('#sign_off_quality').val('');
+    $('#comments_quality').val('');
+
+    // Reset file input values
+    $('#images_filename').text('');
+
+    // Reset file input values
+    $('#imagesInput').val('');
+    $('#qualityFieldset').show();
+}
+function Quality(processOrder, userName) {
+    console.log('quality');
+    console.log(userName);
+    $('#planningFieldset').hide();
+    $('#qualityFieldset').hide();
+    $('#manufacturingFieldset').hide();
+    $('#qualityFieldset').show();
+    $('#sign_off_quality').val(userName);
+    $('#process_order_number_quality').val(processOrder);
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        // Add other headers if needed
+    };
+
+    var formData = {
+        process_order_number: processOrder
+        // Add other form data if needed
+    };
+
+    // Fetch Quality Form Data for the given process order
+    $.ajax({
+        url: '/getQualityDataByProcessOrder', // Adjust URL as needed
+        type: 'POST',
+        headers: headers,
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            resetQualityForm();
+            $('#sign_off_quality').val(userName);
+            $('#process_order_number_quality').val(processOrder);
+console.log(response);
+            if (response) {
+                console.log('Quality data found');
+                $.each(response, function() {
+                    $('#process_order_number_quality').val(processOrder);
+                    $('input[name="walk_down_visual_inspection"]').prop('checked', response.walk_down_visual_inspection==="1");
+
+                    // Other fields
+                    $('#sign_off_quality').val(userName);
+                    $('#comments_quality').val(response.comments_quality);
+
+                    // File input fields
+                  //  $('#images_filename').text(item.images);
+
+                    // Set the labels for file inputs
+                    $('#images_file_label').show();
+
+                    // Attach handlers for file input changes
+                    $('#imagesInput').change(function() {
+                        $('#images_filename').text(this.files[0].name);
+                    });
+                });
+            } else {
+                resetQualityForm();
+                $('#sign_off_quality').val(userName);
+                $('#qualityFieldset').show();
+                $('#process_order_number_quality').val(processOrder);
+            }
+        },
+        error: function(error) {
+            console.error(error);
         }
     });
 }

@@ -18,8 +18,9 @@ function submitDocumentationForm(processOrder) {
     var formData = new FormData();
     formData.append('process_order_number', document.querySelector('[name="process_order_number_documentation"]').value);
     formData.append('engineer', document.querySelector('[name="sign_off_engineer"]').value);
-    formData.append('technical_file_check', document.querySelector('[name="technical_file_checkbox"]').value);
-    formData.append('client_handover_check', document.querySelector('[name="client_handover_checkbox"]').value);
+    formData.append('technical_file_check', document.querySelector('[name="technical_file_checkbox"]').checked ? 1:0);
+    formData.append('client_handover_check', document.querySelector('[name="client_handover_checkbox"]').checked ? 1:0);
+    formData.append('comments_documentation', document.querySelector('[name="comments_documentation"]').value);
    // formData.append('link_to_file', document.querySelector('[name="link_to_file"]').value);
    
     var technicalFileInput = document.querySelector('[name="technical_file"]');
@@ -189,8 +190,9 @@ function generateHTMLFromResponse_for_documentation(response) {
         // Technical File
         html += '<div class="documentation_field">';
         if (item.technical_file) {
+            '<label>Technical File:</label>' 
             var technicalFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
-            html += '<a href="' + technicalFilePath + '" download>' + item.technical_file + '</a>';
+            html +=  '<label>Technical File:</label>' +'<a href="' + technicalFilePath + '" download>' + item.technical_file + '</a>';
         } else {
             html += '-';
         }
@@ -200,7 +202,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         if (item.client_handover_documentation) {
             var clientHandoverFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
-            html += '<a href="' + clientHandoverFilePath + '" download>' + item.client_handover_documentation + '</a>';
+            html += '<label>Client Hand Over Documentation:</label>' +'<a href="' + clientHandoverFilePath + '" download>' + item.client_handover_documentation + '</a>';
         } else {
             html += '-';
         }
@@ -217,7 +219,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments" value="' + (item.comments ? item.comments : '-') + '" readonly>' +
+            '<input type="text" name="comments" value="' + (item.comments_documentation? item.comments_documentation: '-') + '" readonly>' +
             '</div><br>';
 
         html += '</div>'; // Closing div for documentation_item
@@ -273,8 +275,8 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
     
     $.each(response, function (index, item) {
         html += '<div class="documentation_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
-        html += '<input name="process_order_number_dm" value="' + item.process_order_number + '"><br>';
+        //html += '<label>ID: ' + item.id + '</label><br>';
+        html += '<input name="process_order_number_dm" value="' + item.process_order_number + '"><br><br>';
 
         html += '<div class="documentation_field">';
         html += '<label>Technical File:</label>';
@@ -283,7 +285,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         
             '<input type="checkbox" id="technical_file" name="technical_file_c" >'
             
-            '</div><br>';
+            '</div><br><br>';
 
         html += '<div class="documentation_field">';
         html += '<label>Client Handover Documentation:</label>';
@@ -292,7 +294,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         
             '<input type="checkbox" id="client_handover_documentation" name="client_handover_documentation_c" >'
             
-            '</div><br>';
+            '</div><br><br>';
 
         html += '<div class="documentation_field">';
         html +=
@@ -320,9 +322,9 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         // Field for Quantity
   
-    html += '<label>Quantity:</label>';
-    html += '<input type="number" name="quantity" value="' + item.quantity + '">';
-    html += '</div><br>';
+   // html += '<label>Quantity:</label>';
+   // html += '<input type="number" name="quantity" value="' + item.quantity + '">';
+    //html += '</div><br>';
 
         // Added Labels Attached checkbox
        /*  html += '<div class="documentation_field">';
@@ -363,7 +365,7 @@ function submitDocumentationCompleteForm($button) {
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number_dm"]').value,
         status: document.querySelector('[name="status"]').value,
-        quantity: document.querySelector('[name="quantity"]').value,
+       // quantity: document.querySelector('[name="quantity"]').value,
         //labels_attached: document.querySelector('[name="labels_attached"]').checked ? "on" : "",
     };
 
@@ -441,6 +443,7 @@ function resetDocumentationForm() {
 
     // Clear text inputs
     $('#process_order_number_documentation').val('');
+    $('#comments_documentation').val('');
     // Add more text inputs if needed
 
     // Reset file input values and filenames
@@ -503,13 +506,13 @@ function Documentation(processOrder, userName) {
                 console.log(response);
 
                 // Example: Populate checkboxes
-                $('input[name="technical_file_checkbox"]').prop('checked', response.data.technical_file_checkbox === '1');
-                $('input[name="client_handover_checkbox"]').prop('checked', response.data.client_handover_checkbox === '1');
+                $('input[name="technical_file_checkbox"]').prop('checked', response.data.technical_file_check === '1');
+                $('input[name="client_handover_checkbox"]').prop('checked', response.data.client_handover_check === '1');
 
                 // Example: Populate file upload fields
                 $('#old_technical_file').text(response.data.technical_file);
                 $('#old_client_handover_documentation').text(response.data.client_handover_documentation);
-
+                $('input[name="comments"]').val(response.data.comments_documentation);
                 // Example: Populate other fields
                 // $('#other_field_id').val(response.data.other_field_value);
             } else {

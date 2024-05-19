@@ -42,6 +42,14 @@ class EmployeeController extends Controller
         // Redirect back with success message
         //return redirect()->back()->with('success', 'Employee created successfully.');
     }
+    public function getemployee()
+    {
+      
+        $data = Employee::all();
+        
+
+        return response()->json(['data' => $data]);
+    }
 }
 
 

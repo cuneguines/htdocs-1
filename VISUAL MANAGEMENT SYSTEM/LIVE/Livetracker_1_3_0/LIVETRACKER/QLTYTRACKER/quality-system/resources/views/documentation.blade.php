@@ -62,7 +62,12 @@
                 </label>
             </div>
 
-
+            <div class="form-group">
+        <label>
+            Comments for Documentation:
+            <textarea name="comments_documentation" id="comments_documentation" rows="4" cols="50"></textarea>
+        </label>
+    </div>
 
             <!-- Submit button -->
             <button type="button" onclick="submitDocumentationForm('${processOrder}')">Submit Documentation

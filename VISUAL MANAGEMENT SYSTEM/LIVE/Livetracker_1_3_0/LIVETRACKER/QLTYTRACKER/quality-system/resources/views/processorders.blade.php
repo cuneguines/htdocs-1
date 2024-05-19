@@ -604,6 +604,7 @@
 
         console.log('i am in openmodal', userName);
         $('#modalContent').text('Process Order: ' + processOrder + ', Quality Step: ' + qualityStep);
+        console.log(qualityStep);
         if (qualityStep === 'Engineering') {
             Engineering(processOrder, userName);
         } else {
@@ -707,8 +708,11 @@
             $('#packingtransportFieldset').hide();
         }
         if (qualityStep === 'Quality') {
-            $('#qualityFieldset').show();
-            $('#process_order_number_quality').val(processOrder);
+            console.log('I a in Qulity');
+            //$('#qualityFieldset').show();
+            //$('#process_order_number_quality').val(processOrder);
+           // $('#sign_off_quality').val(userName);
+           Quality(processOrder, userName);
 
         } else {
             $('#qualityFieldset').hide();

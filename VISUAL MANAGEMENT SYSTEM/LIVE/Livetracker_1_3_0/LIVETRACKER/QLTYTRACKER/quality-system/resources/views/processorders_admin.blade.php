@@ -707,9 +707,7 @@
             $('#packingtransportFieldset').hide();
         }
         if (qualityStep === 'Quality') {
-            $('#qualityFieldset').show();
-            $('#process_order_number_quality').val(processOrder);
-
+            Quality(processOrder, userName);
         } else {
             $('#qualityFieldset').hide();
         }

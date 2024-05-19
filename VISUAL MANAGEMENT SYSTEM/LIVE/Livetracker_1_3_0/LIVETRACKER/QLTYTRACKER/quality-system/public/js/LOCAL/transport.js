@@ -172,13 +172,13 @@ function generateHTMLFromResponse_for_packing_transport(response) {
 
     $.each(response, function (index, item) {
         html += '<div class="packing_transport_item">';
-        html += '<label>ID:</label><br>';
-        html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
+        //html += '<label>ID:</label><br>';
+        //html += '<input type="text" name="id" value="' + item.id + '" readonly><br>';
 
         // Documentation Complete
         html += '<div class="packing_transport_field">';
-        html += '<label>Documentation Complete:</label><br>';
-        html += '<input type="text" name="documentation_complete" value="' + (item.documentation_complete === "Yes" ? "Yes" : "No") + '" readonly><br>';
+       // html += '<label>Documentation Complete:</label><br>';
+        //html += '<input type="text" name="documentation_complete" value="' + (item.documentation_complete === "Yes" ? "Yes" : "No") + '" readonly><br>';
         html += '</div>';
 
         // Secure Packing
@@ -235,7 +235,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
 
     $.each(response, function (index, item) {
         html += '<div class="packing_transport_item">';
-        html += '<label>ID: ' + item.id + '</label><br>';
+      //  html += '<label>ID: ' + item.id + '</label><br>';
         html += '<div class="packing_transport_item">';
         html += '<label>Process Order: ' + item.process_order_number + '</label><br>';
         html += '<div class="packing_transport_item">';

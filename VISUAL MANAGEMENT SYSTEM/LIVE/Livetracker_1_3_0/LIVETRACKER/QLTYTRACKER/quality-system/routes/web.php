@@ -153,3 +153,4 @@ Route::post('/upload_completeqltyimages', [QualityController::class, 'uploadImag
 Route::post('/getImages_completeqlty', [QualityController::class, 'getImages_CompleteQuality']);
 Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
 Route::post('/employees', [EmployeeController::class, 'store'])->name('store');
+Route::post('/getemployee', [EmployeeController::class, 'getemployee']);
