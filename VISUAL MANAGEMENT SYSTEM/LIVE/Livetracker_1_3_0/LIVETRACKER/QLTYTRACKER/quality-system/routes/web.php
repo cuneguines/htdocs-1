@@ -148,9 +148,21 @@ Route::post('/getFinalAssemblyDataByProcessOrder', [FinalAssemblyController::cla
 
 Route::post('/upload', [UploadController::class, 'uploadImages']);
 Route::post('/upload_qltyimages', [QualityController::class, 'uploadImages_Quality']);
+//Route::post('/upload_transportimages', [QualityController::class, 'uploadImages_Quality']);
+
+
 Route::post('/getImages_qlty', [QualityController::class, 'getImages_Quality']);
+
 Route::post('/upload_completeqltyimages', [QualityController::class, 'uploadImages_CompleteQuality']);
+Route::post('/upload_completetransportimages', [PackingTransportController::class, 'uploadImages_CompleteTransport']);
+
 Route::post('/getImages_completeqlty', [QualityController::class, 'getImages_CompleteQuality']);
+Route::post('/getImages_completetransport', [PackingTransportController::class, 'getImages_CompleteTransport']);
+
 Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
 Route::post('/employees', [EmployeeController::class, 'store'])->name('store');
 Route::post('/getemployee', [EmployeeController::class, 'getemployee']);
+
+Route::get('/getemployees/{id}', [EmployeeController::class, 'getemployees']);
+Route::put('/updateemployee/{id}', [EmployeeController::class, 'updateEmployee']);
+Route::delete('/deleteemployee/{id}', [EmployeeController::class, 'deleteEmployee']);

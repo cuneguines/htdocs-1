@@ -24,6 +24,7 @@ class WeldingController extends Controller
         $weldingFormData->weld_procedure_qualification = $request->input('weld_procedure_qualification');
         $weldingFormData->link_to_pqr = $request->input('link_to_pqr');
         $weldingFormData->weld_procedure_specifications = $request->input('weld_procedure_specifications');
+        $weldingFormData->weld_procedure_qualification = $request->input('weld_procedure_qualification');
         $weldingFormData->link_to_wps = $request->input('link_to_wps');
         $weldingFormData->welder_performance_qualification = $request->input('welder_performance_qualification');
         $weldingFormData->link_to_wpq = $request->input('link_to_wpq');

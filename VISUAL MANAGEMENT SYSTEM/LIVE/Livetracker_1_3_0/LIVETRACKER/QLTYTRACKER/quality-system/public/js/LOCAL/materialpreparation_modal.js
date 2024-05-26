@@ -189,6 +189,12 @@ function viewMaterialCompletePreparationForm(po)
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
     var formData = {po:document.querySelector('[name="process_order_number_mp_c"]').value};
+    var formData = {po:document.querySelector('[name="process_order_number_mp_c"]').value};
+   
+    var formData = {po:document.querySelector('[name="process_order_number_mp_c"]').value};
+   
+    var formData = {po:document.querySelector('[name="process_order_number_mp_c"]').value};
+   
    
 console.log(formData);
 

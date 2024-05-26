@@ -205,8 +205,12 @@
                 tableBody += '<th>Process Order</th>';
                 tableBody += '<th>Sales Order</th>';
                 tableBody += '<th>Customer</th>';
-                tableBody += '<th>Item code</th>';
+                tableBody += '<th>Project</th>';
+
+                tableBody += '<th>Item Group Name</th>';
                 tableBody += '<th>PlannedHours</th>';
+                tableBody += '<th></th>';
+
                // tableBody += '<th>ItemName</th>';
                 tableBody += '<th>PG1</th>';
                
@@ -215,6 +219,8 @@
                
                 tableBody += '<th>Pg3</th>';
                 tableBody += '<th>Released Date</th>';
+                tableBody += '<th>Released Year</th>';
+
                 //tableBody += '<th>Engineer</th>';
                 //tableBody += '<th>Sales Person</th>';
                 tableBody += '</tr>';
@@ -227,17 +233,20 @@
                    //tableBody += '<td>' + row['Production Order'] + '</td>';
                     tableBody += '<td>' + row['Process Order'] + '</td>';
                     tableBody += '<td>' + row['Sales Order'] + '</td>';
-                    tableBody += '<td>' + row.CardName + '</td>';
+                    tableBody += '<td>' + row.Customer + '</td>';
+                    tableBody += '<td>' + row.U_Client + '</td>';
+
                    // tableBody += '<td>' + row.U_NAME + '</td>';
-                   tableBody += '<td>' + row.ItemCode + '</td>';
-                   tableBody += '<td>' + row.Plannedhours + '</td>';
+                   tableBody += '<td>' + row.ItmsGrpNam + '</td>';
+                   tableBody += '<td>' + row['Process Planned Time'] + '</td>';
                   // tableBody += '<td>' + row.ItemName + '</td>';
                    //tableBody += '<td>' + row.Adjusted_Promise_Date+ '</td>';
                     tableBody += '<td>' + row.U_Product_Group_One + '</td>';
                     
                     tableBody += '<td>' + row.U_Product_Group_Two + '</td>';
                     tableBody += '<td>' + row.U_Product_Group_Three + '</td>';
-                    tableBody += '<td>' + row['Relased Date'] + '</td>';
+                    tableBody += '<td>' + row['Released Date'] + '</td>';
+                    tableBody += '<td>' + row['Released Year'] + '</td>';
                     //tableBody += '<td>' + row['Sales Person'] + '</td>';
                     tableBody += '</tr>';
                 });

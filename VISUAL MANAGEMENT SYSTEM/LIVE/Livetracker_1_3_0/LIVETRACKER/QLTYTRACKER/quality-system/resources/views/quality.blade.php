@@ -23,7 +23,7 @@
             <input type="file" name="images[]" id="imagesInput" multiple>
             <!-- Upload Images button -->
             <br>
-            <button type="button" onclick="uploadImages_QLTY()">Upload Images</button>
+            <!-- <button type="button" onclick="uploadImages_QLTY()">Upload Images</button> -->
             <br>
         </label>
     </div>
@@ -45,7 +45,7 @@
     </div>
 
     <!-- Submit button -->
-    <div style="display:none" name="uuidDisplay" id="uuidDisplay"></div>
+    <div  name="uuidDisplay" id="uuidDisplay"></div>
     <button type="submit" onclick="submitQualityForm()">Submit Quality Checks</button>
 </fieldset>
 

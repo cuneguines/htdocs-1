@@ -16,21 +16,40 @@
         Weld Map: Weld Map issued to production</label>
        
     </div>
-
+    <div class="form-group">
+        <label  class="upload-label">Link to Weld Map: <br>
+            <span id="old_weld_map_filename"></span>
+            <input type="file" name="link_to_weld_map" id="link_to_weld_map" required>
+            <button type="button" onclick="clear_link_to_weld_map()">Clear File</button>
+        </label>
+    </div>
     <!-- Task 7.2: Weld Procedure Qualification Record -->
     <div class="form-group">
     <label>
     <input type="checkbox" name="weld_procedure_qualification">
-        Weld Procedure Qualification Record: EN ISO 15614</label>
+        Weld Procedure Qualification Record:</label>
         
     </div>
-
+    <div class="form-group">
+        <label  class="upload-label">Link to PQR: <br>
+            <span id="old_pqr_filename"></span>
+            <input type="file" name="link_to_pqr" id="link_to_pqr" required>
+            <button type="button" onclick="clear_link_to_pqr()">Clear File</button>
+        </label>
+    </div>
     <!-- Task 7.3: Weld Procedure Specifications -->
     <div class="form-group">
     <label>
     <input type="checkbox" name="weld_procedure_specifications">
-        Weld Procedure Specifications: EN ISO 15615</label>
+        Weld Procedure Specifications:</label>
        
+    </div>
+    <div class="form-group">
+        <label  class="upload-label">Link to Approved WPS: <br>
+            <span id="old_wps_filename"></span>
+            <input type="file" name="link_to_wps" id="link_to_wps" required>
+            <button type="button" onclick="clear_link_to_wps()">Clear File</button>
+        </label>
     </div>
 
     <!-- Task 7.4: Welder Performance Qualification -->
@@ -38,22 +57,45 @@
 
     <label>
     <input type="checkbox" name="welder_performance_qualification">
-        Welder Performance Qualification: EN 9606</label>
+        Welder Performance Qualification:</label>
         
+    </div>
+    <div class="form-group">
+        <label  class="upload-label">Link to WPQ Certificate: <br>
+            <span id="old_wpq_filename"></span>
+            <input type="file" name="link_to_wpq" id="link_to_wpq" required>
+            <button type="button" onclick="clear_link_to_wpq()">Clear File</button>
+        </label>
     </div>
 
     <!-- Task 7.5: Welding Consumable - Welding Wire -->
     <div class="form-group"><label>
     <input type="checkbox" name="welding_wire">
-        Welding Consumable - Welding Wire: EN 1024 Type 3.1</label>
+        Welding Consumable - Welding Wire: </label>
         
+    </div>
+
+    <div class="form-group">
+        <label  class="upload-label">Link to Material Certificate: <br>
+            <span id="old_wire_certificate_filename"></span>
+            <input type="file" name="link_to_wire_certificate" id="link_to_wire_certificate" required>
+            <button type="button" onclick="clear_link_to_wire_certificate()">Clear File</button>
+        </label>
     </div>
 
     <!-- Task 7.6: Welding Consumable - Shielding Gas -->
     <div class="form-group"><label>
     <input type="checkbox" name="shielding_gas">
-        Welding Consumable - Shielding Gas: EN ISO 14175</label>
+        Welding Consumable - Shielding Gas: </label>
         
+    </div>
+
+    <div class="form-group">
+        <label  class="upload-label">Link to Gas Data Sheet: <br>
+            <span id="old_gas_data_sheet_filename"></span>
+            <input type="file" name="link_to_gas_data_sheet" id="link_to_gas_data_sheet" required>
+            <button type="button" onclick="clear_link_to_gas_data_sheet()">Clear File</button>
+        </label>
     </div>
 
     <!-- Task 7.7: Pre-Weld inspection -->
@@ -83,16 +125,24 @@
        
     </div>
 
-    <!-- Upload Files -->
     <div class="form-group">
+        <label  class="upload-label">Link to Plant Cert: <br>
+            <span id="old_plant_cert_filename"></span>
+            <input type="file" name="link_to_plant_cert" id="link_to_plant_cert" required>
+            <button type="button" onclick="clear_link_to_plant_cert()">Clear File</button>
+        </label>
+    </div>
+
+    <!-- !-- Upload Files -->
+    <!-- <div class="form-group">
         <label  class="upload-label">Link to Weld Map: <br>
             <span id="old_weld_map_filename"></span>
             <input type="file" name="link_to_weld_map" id="link_to_weld_map" required>
             <button type="button" onclick="clear_link_to_weld_map()">Clear File</button>
         </label>
-    </div>
+    </div> -->
     
-    <div class="form-group">
+   <!--  <div class="form-group">
         <label  class="upload-label">Link to PQR: <br>
             <span id="old_pqr_filename"></span>
             <input type="file" name="link_to_pqr" id="link_to_pqr" required>
@@ -138,8 +188,8 @@
             <input type="file" name="link_to_plant_cert" id="link_to_plant_cert" required>
             <button type="button" onclick="clear_link_to_plant_cert()">Clear File</button>
         </label>
-    </div>
-
+    </div> -->
+ 
     <!-- Sign-off for Welding Tasks -->
     <div class="form-group">
         <label>Sign-off for Welding Tasks:</label>

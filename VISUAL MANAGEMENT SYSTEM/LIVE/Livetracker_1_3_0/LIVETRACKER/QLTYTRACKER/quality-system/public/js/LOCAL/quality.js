@@ -190,7 +190,7 @@ function generateHTMLFromResponse_for_quality_old(response) {
                         console.log(response.uuid);
                         html += '<div style="display: inline-block; margin-right: 10px;">';
                         html += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
-                        html += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                        html += '<img src="http://loclahost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                     });
                 } else {
                     html += '-';
@@ -285,7 +285,7 @@ function generateHTMLFromResponse_for_quality(response) {
             html += '</div><br>'; // Closing div for images container
 
             // Fetch images and append them dynamically
-            fetchImages(item.process_order_number, function (images) {
+            fetchImages(item.process_order_number.trim(), function (images) {
                 var imagesContainer = document.getElementById('images_' + item.ID);
                 if (images && images.length > 0) {
                     images.forEach(function (imageUrl) {
@@ -337,7 +337,7 @@ function generateHTMLFromResponse_for_quality(response) {
         html += '<div id="images_' + response.ID + '">'; // Unique ID for images container
 
         // Fetch images and append them dynamically
-        fetchImages(response.process_order_number, function (images) {
+        fetchImages(response.process_order_number.trim(), function (images) {
             var imagesContainer = document.getElementById('images_' + response.ID);
             if (images && images.length > 0) {
                 images.forEach(function (imageUrl) {
@@ -402,7 +402,7 @@ function generateHTMLFromResponse_for_quality(response) {
 // Function to fetch images for a given ID
 // Function to fetch images for a given ID
 function fetchImages(id, callback) {
-console.log(id);
+console.log(id.trim());
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
@@ -587,7 +587,15 @@ function displayQualityResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                   // resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                   if (value=="Yes")
+                    {
+                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                    }
+                    else
+                    {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    }
                 }
             }
         }
@@ -729,6 +737,7 @@ function fetchImages_cmplt(id, callback) {
             id: id
         },
         success: function (response) {
+            console.log(response);
             callback(response.filenames || []); // Ensure response.filenames is an array or use an empty array
         },
         error: function (error) {

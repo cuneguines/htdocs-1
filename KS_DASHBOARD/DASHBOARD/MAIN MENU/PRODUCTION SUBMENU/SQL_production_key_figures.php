@@ -201,7 +201,7 @@ FROM WOR1 t4
 
        WHERE t7.CreateDate > DATEADD(DAY,-DATEPART(DY,GETDATE()),GETDATE())
               AND t7.Status NOT IN ('C')
-                      AND t6.ItmsGrpCod not like '%MACHINE%'
+                      AND t6.ItmsGrpNam not like '%MACHINE%'
                       AND t5.ItemType = 'L'";
 
 /* LIVE PO COUNT OLD QueRY 

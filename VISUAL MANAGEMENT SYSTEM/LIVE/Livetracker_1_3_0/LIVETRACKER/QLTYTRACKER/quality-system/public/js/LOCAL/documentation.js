@@ -146,7 +146,8 @@ function generateHTMLFromResponse_for_documentation_old(response) {
         if (item.technical_file!=null) {
            
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
+
             html += downloadLink;
         } else {
             html += '-';
@@ -156,7 +157,8 @@ function generateHTMLFromResponse_for_documentation_old(response) {
         if (item.client_handover_documentation!=null) {
            
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
+
             html += downloadLink;
         } else {
             html += '-';
@@ -192,7 +194,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         if (item.technical_file) {
             '<label>Technical File:</label>' 
             var technicalFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
-            html +=  '<label>Technical File:</label>' +'<a href="' + technicalFilePath + '" download>' + item.technical_file + '</a>';
+            html +=  '<label>Technical File:</label>' +'<a href="' + technicalFilePath + '" target="_blank">' + item.technical_file + '</a>';
         } else {
             html += '-';
         }
@@ -202,7 +204,7 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         if (item.client_handover_documentation) {
             var clientHandoverFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
-            html += '<label>Client Hand Over Documentation:</label>' +'<a href="' + clientHandoverFilePath + '" download>' + item.client_handover_documentation + '</a>';
+            html += '<label>Client Hand Over Documentation:</label>' +'<a href="' + clientHandoverFilePath + '" target="_blank">' + item.client_handover_documentation + '</a>';
         } else {
             html += '-';
         }
@@ -398,7 +400,15 @@ function displayDocumentationResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    //resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    if (value=="on")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }

@@ -203,47 +203,47 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
+        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="dye_pen_document_ref">Dye Penetrant Procedure Ref:</label>';
-        html += '<input type="text" id="dye_pen_document_ref" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '">';
+        html += '<input type="text" id="dye_pen_document_ref" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="hydrostatic_test_document_ref">Hydrostatic Leak Test Ref:</label>';
-        html += '<input type="text" id="hydrostatic_test_document_ref" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '">';
+        html += '<input type="text" id="hydrostatic_test_document_ref" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="pneumatic_test_document_ref">Pneumatic Leak Test Ref:</label>';
-        html += '<input type="text" id="pneumatic_test_document_ref" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '">';
+        html += '<input type="text" id="pneumatic_test_document_ref" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="fat_protocol_document_ref">FAT Ref:</label>';
-        html += '<input type="text" id="fat_protocol_document_ref" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '">';
+        html += '<input type="text" id="fat_protocol_document_ref" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="dye_pen_test">Dye Penetrant Test:</label>';
-        html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="hydrostatic_test">Hydrostatic Leak Test:</label>';
-        html += '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="pneumatic_test">Pneumatic Leak Test:</label>';
-        html += '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked disabled'  : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="fat_protocol">FAT Test:</label>';
-        html += '<input type="checkbox" id="fat_protocol" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : '') + '>';
+        html += '<input type="checkbox" id="fat_protocol" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';

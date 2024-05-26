@@ -233,7 +233,32 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
     var html = '<fieldset><legend>Packing and Transport Complete</legend>';
     html += '<form id="packing_transport_complete_form">';
 
+
+
+    
+     // JavaScript code to generate and display UUID
+     const uuidDisplay = document.getElementById('uuidDisplay_qlty');
+
+     // Function to generate UUID
+     function generateUUID() {
+         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+             const r = Math.random() * 16 | 0,
+                 v = c === 'x' ? r : (r & 0x3 | 0x8);
+             return v.toString(16);
+         });
+     }
+
+     // Generate and display UUID
+     const uuid = generateUUID();
+     //uuidDisplay_qlty.textContent =uuid;
+    
+       // html += '<label>ID: ' + item.ID + '</label><br>';
     $.each(response, function (index, item) {
+
+        html += '<form id="quality_complete_form">';
+
+    html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
+        html += '<div class="quality_item">';
         html += '<div class="packing_transport_item">';
       //  html += '<label>ID: ' + item.id + '</label><br>';
         html += '<div class="packing_transport_item">';
@@ -299,6 +324,15 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
             '</div><br>';
 
         html += '</div>'; // Closing div for packing_transport_item
+
+        html += '<div class="packing_transport_field">';
+        html +=
+            '<label>Upload Images:</label>' +
+            '<input type="file" id="InputImages"name="packing_transport_field_images" multiple>' +
+            '</div><br>';
+
+        // Comments
+        html += '<div class="quality_field">';
         html += '<hr>'; // Horizontal line for separation
     });
 
@@ -307,6 +341,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
     html += '</form>';
 
     html += '<div id="packing_transport_complete_results"></div>';
+    html += '<div id="quality_images_container"></div>';
     html += '</fieldset>';
 
     return html;
@@ -336,8 +371,48 @@ function viewPackingTransportCompleteForm()
         }
     });
 }
+function uploadImages_CompleteTransport() {
+    var imagesInput = document.getElementById('InputImages');
+    var po = document.querySelector('[name="process_order_number_pt"]').value || null;
+    var uuid_qlty = document.querySelector('[name="uuidDisplay_qlty"]').innerText.trim();
+    console.log(po);
 
+    var formData = new FormData();
+    if (imagesInput.files.length > 0) {
+        // Append each selected image to the formData
+        for (var i = 0; i < imagesInput.files.length; i++) {
+            formData.append('images[]', imagesInput.files[i]);
+        }
+
+        // Append other form data if needed
+        formData.append('process_order_number', po);
+        formData.append('uuid_qlty', uuid_qlty);
+
+        // Send the images using AJAX
+        $.ajax({
+            url: '/upload_completetransportimages',
+            type: 'POST',
+            data: formData,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log('Images uploaded successfully');
+                // Handle success response if needed
+            },
+            error: function (xhr, status, error) {
+                console.error('Error uploading images:', error);
+                // Handle error if needed
+            }
+        });
+    }
+    
+
+}
 function submitPackingTransportCompleteForm() {
+    uploadImages_CompleteTransport();
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
@@ -352,6 +427,8 @@ function submitPackingTransportCompleteForm() {
         process_order_number: document.querySelector('[name="process_order_number_pt"]').value, // Adjust as needed
         status: document.querySelector('[name="status"]').value,
         quantity: document.querySelector('[name="quantity"]').value,
+        uuid_qlty: document.querySelector('[name="uuidDisplay_qlty"]').textContent,
+        
         //photos_attached: document.querySelector('[name="photos_attached"]').checked ? "Yes" : "No",
     };
 
@@ -383,7 +460,17 @@ function displayPackingTransportResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    //resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                    var valueStr = String(value).trim(); // Ensure value is a string before trimming
+                if (valueStr === "Yes")
+                   
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }
@@ -394,7 +481,55 @@ function displayPackingTransportResults(values) {
     resultsHtml += '</tbody></table>';
 
     document.getElementById('packing_transport_complete_results').innerHTML = resultsHtml;
-}
+
+
+
+   // document.getElementById('quality_complete_results').innerHTML = resultsHtml;
+    console.log(values.data.process_order_number);
+        fetchImages_cmplt_tr(values.data.process_order_number, function(images) {
+            //alert('yes');
+            var imagesHtml = '';
+            if (images && images.length > 0) {
+                images.forEach(function(imageUrl) {
+                    console.log(imageUrl);
+                    console.log(values.data.process_order_number.trim());
+                    imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
+                    imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                    imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                  imagesHtml+='<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/50000/1fa98025-696b-4e6c-be49-68108d110d7b/1716740385_Pic2.jpg">';
+                                        // http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/50000/c2573be1-c302-48a9-9323-8c4efaa5a158/1716378927_Pic2.jpg
+                });
+            } else {
+                imagesHtml += '-';
+            }
+    
+            document.getElementById('quality_images_container').innerHTML = imagesHtml;
+        });
+    }
+    function fetchImages_cmplt_tr(id, callback) {
+    
+        var headers = {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        };
+        $.ajax({
+            url: '/getImages_completetransport', // Your API endpoint to fetch images
+            method: 'POST',
+            headers: headers, // Include CSRF token in headers
+            data: {
+                id: id
+            },
+            success: function (response) {
+                console.log(response);
+                callback(response.filenames || []); // Ensure response.filenames is an array or use an empty array
+            },
+            error: function (error) {
+                console.error('Error fetching images:', error);
+                callback([]);
+            }
+        });
+    }
+
+
 function resetTransportForm() {
     // Uncheck checkboxes or reset other input fields as needed
     // For example:

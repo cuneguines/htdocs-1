@@ -32,13 +32,17 @@ function submitWeldingForm(processOrder) {
 
         weld_procedure_specifications:
             document.querySelector('[name="weld_procedure_specifications"]').checked || null,
-        link_to_wpq:
-            document.querySelector('[name="link_to_wpq"]').files.length > 0
-                ? document.querySelector('[name="link_to_wpq"]').files[0].name
-                : document.getElementById("old_wpq_filename").textContent.trim(),
+            link_to_wps:
+            document.querySelector('[name="link_to_wps"]').files.length > 0
+                ? document.querySelector('[name="link_to_wps"]').files[0].name
+                : document.getElementById("old_wps_filename").textContent.trim(),
 
         welder_performance_qualification:
             document.querySelector('[name="welder_performance_qualification"]').checked || null,
+            link_to_wpq:
+            document.querySelector('[name="link_to_wpq"]').files.length > 0
+                ? document.querySelector('[name="link_to_wpq"]').files[0].name
+                : document.getElementById("old_wpq_filename").textContent.trim(),
 
        
         welding_wire:
@@ -507,14 +511,14 @@ function generateHTMLFromResponse_for_welding(response) {
             html += '</div><br>';
         html += '</div><br>';
 
-        html += '<div class="welding-field">';
-        html += '<label for="sign_off_welding_complete">Sign Off Welding Complete:</label>';
-        html +=
-            '<input type="text" id="sign_off_welding_complete" name="sign_off_welding_complete" value="'+item.sign_off_welding_complete + '">'
+    //   html += '<div class="welding-field">';
+      //  html += '<label for="sign_off_welding_complete">Sign Off Welding Complete:</label>';
+       // html +=
+         //   '<input type="text" id="sign_off_welding_complete" name="sign_off_welding_complete" value="'+item.sign_off_welding_complete + '">'
           
-        html += '</div><br>';
+       // html += '</div><br>';
 
-        html += '<div class="welding-field">';
+       html += '<div class="welding-field">';
         html += '<label for="comments_welding_complete">Comments Welding Complete:</label>';
         html +=
             '<input type="text" id="comments_welding_complete" name="comments_welding_complete" value="'+item.comments_welding_complete + '">'
@@ -635,18 +639,18 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html +=
             "<label>Weld Map:</label>" +
             (item.weld_map_issued === "true" || item.weld_map_issued === "on"
-                ? '<input type="checkbox" id="weld_map_issued" name="weld_map_issued" >'
-                : '<input type="checkbox" id="weld_map_issued" name="weld_map_issued" disabled>') +
+                ? '<input type="checkbox" id="weld_map_issued_c" name="weld_map_issued_c" >'
+                : '<input type="checkbox" id="weld_map_issued_c" name="weld_map_issued_c" disabled>') +
             "</div><br>";
 
         // Link to Weld Map
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Weld Map:</label>" +
-            '<input type="text" name="link_to_weld_map" value="' +
+            '<input type="text" name="link_to_weld_map_c" value="' +
             item.link_to_weld_map +
-            '">' +
-            "</div><br>";
+            '"disabled>' +
+            "</div><br> ";
 
         // Weld Procedure Qualification Record
         html += '<div class="welding_field">';
@@ -654,17 +658,17 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Weld Procedure Qualification Record:</label>" +
             (item.weld_procedure_qualification === "true" ||
             item.weld_procedure_qualification === "on"
-                ? '<input type="checkbox" id="weld_procedure_qualification" name="weld_procedure_qualification" >'
-                : '<input type="checkbox" id="weld_procedure_qualification" name="weld_procedure_qualification" disabled>') +
+                ? '<input type="checkbox" id="weld_procedure_qualification_c" name="weld_procedure_qualification_c" >'
+                : '<input type="checkbox" id="weld_procedure_qualification_c" name="weld_procedure_qualification_c" disabled>') +
             "</div><br>";
 
         // Link to PQR
         html += '<div class="welding_field">';
         html +=
             "<label>Link to PQR:</label>" +
-            '<input type="text" name="link_to_pqr" value="' +
+            '<input type="text" name="link_to_pqr_c" value="' +
             item.link_to_pqr +
-            '">' +
+            '"disabled>' +
             "</div><br>";
 
         // Weld Procedure Specifications
@@ -673,17 +677,17 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Weld Procedure Specifications:</label>" +
             (item.weld_procedure_specifications === "true" ||
             item.weld_procedure_specifications === "on"
-                ? '<input type="checkbox" id="weld_procedure_specifications" name="weld_procedure_specifications" >'
-                : '<input type="checkbox" id="weld_procedure_specifications" name="weld_procedure_specifications" disabled>') +
+                ? '<input type="checkbox" id="weld_procedure_specifications_c" name="weld_procedure_specifications_c" >'
+                : '<input type="checkbox" id="weld_procedure_specifications_c" name="weld_procedure_specifications_c" disabled>') +
             "</div><br>";
 
         // Link to Approved WPS
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Approved WPS:</label>" +
-            '<input type="text" name="link_to_wps" value="' +
+            '<input type="text" name="link_to_wps_c" value="' +
             item.link_to_wps +
-            '">' +
+            '"disabled>' +
             "</div><br>";
 
         // Welder Performance Qualification
@@ -692,17 +696,17 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Welder Performance Qualification:</label>" +
             (item.welder_performance_qualification === "true" ||
             item.welder_performance_qualification === "on"
-                ? '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification" >'
-                : '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification" disabled>') +
+                ? '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification_c" >'
+                : '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification_c" disabled>') +
             "</div><br>";
 
         // Link to WPQ Certificate
         html += '<div class="welding_field">';
         html +=
             "<label>Link to WPQ Certificate:</label>" +
-            '<input type="text" name="link_to_wpq" value="' +
+            '<input type="text" name="link_to_wpq_c" value="' +
             item.link_to_wpq +
-            '">' +
+            '"disabled>' +
             "</div><br>";
 
         // Welding Consumable - Welding Wire
@@ -710,17 +714,17 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html +=
             "<label>Welding Consumable - Welding Wire:</label>" +
             (item.welding_wire === "true" || item.welding_wire === "on"
-                ? '<input type="checkbox" id="welding_wire" name="welding_wire" >'
-                : '<input type="checkbox" id="welding_wire" name="welding_wire" disabled>') +
+                ? '<input type="checkbox" id="welding_wire" name="welding_wire_c" >'
+                : '<input type="checkbox" id="welding_wire" name="welding_wire_c" disabled>') +
             "</div><br>";
 
         // Link to Material Certificate
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Material Certificate:</label>" +
-            '<input type="text" name="link_to_wire_certificate" value="' +
+            '<input type="text" name="link_to_wire_certificate_c" value="' +
             item.link_to_wire_certificate +
-            '">' +
+            '"disabled>' +
             "</div><br>";
 
         // Welding Consumable - Shielding Gas
@@ -728,17 +732,17 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html +=
             "<label>Welding Consumable - Shielding Gas:</label>" +
             (item.shielding_gas === "true" || item.shielding_gas === "on"
-                ? '<input type="checkbox" id="shielding_gas" name="shielding_gas" >'
-                : '<input type="checkbox" id="shielding_gas" name="shielding_gas" disabled>') +
+                ? '<input type="checkbox" id="shielding_gas" name="shielding_gas_c" >'
+                : '<input type="checkbox" id="shielding_gas" name="shielding_gas_c" disabled>') +
             "</div><br>";
 
         // Link to Gas Data Sheet
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Gas Data Sheet:</label>" +
-            '<input type="text" name="link_to_gas_data_sheet" value="' +
+            '<input type="text" name="link_to_gas_data_sheet_c" value="' +
             item.link_to_gas_data_sheet +
-            '">' +
+            '"disabled>' +
             "</div><br>";
 
         // Pre-Weld inspection
@@ -747,8 +751,8 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Pre-Weld inspection:</label>" +
             (item.pre_weld_inspection === "true" ||
             item.pre_weld_inspection === "on"
-                ? '<input type="checkbox" id="pre_weld_inspection" name="pre_weld_inspection" >'
-                : '<input type="checkbox" id="pre_weld_inspection" name="pre_weld_inspection" disabled>') +
+                ? '<input type="checkbox" id="pre_weld_inspection" name="pre_weld_inspection_c" >'
+                : '<input type="checkbox" id="pre_weld_inspection" name="pre_weld_inspection_c" disabled>') +
             "</div><br>";
 
         // Inspection During Welding
@@ -757,8 +761,8 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Inspection During Welding:</label>" +
             (item.inspection_during_welding === "true" ||
             item.inspection_during_welding === "on"
-                ? '<input type="checkbox" id="inspection_during_welding" name="inspection_during_welding" >'
-                : '<input type="checkbox" id="inspection_during_welding" name="inspection_during_welding" disabled>') +
+                ? '<input type="checkbox" id="inspection_during_welding" name="inspection_during_welding_c" >'
+                : '<input type="checkbox" id="inspection_during_welding" name="inspection_during_welding_c" disabled>') +
             "</div><br>";
 
         // Post-Weld Inspection
@@ -767,8 +771,8 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
             "<label>Post-Weld Inspection:</label>" +
             (item.post_weld_inspection === "true" ||
             item.post_weld_inspection === "on"
-                ? '<input type="checkbox" id="post_weld_inspection" name="post_weld_inspection" >'
-                : '<input type="checkbox" id="post_weld_inspection" name="post_weld_inspection" disabled>') +
+                ? '<input type="checkbox" id="post_weld_inspection" name="post_weld_inspection_c" >'
+                : '<input type="checkbox" id="post_weld_inspection" name="post_weld_inspection_c" disabled>') +
             "</div><br>";
 
         // Sign Off
@@ -784,7 +788,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Comments:</label>" +
-            '<input type="text" name="comments_welding_complete" value="' +
+            '<input type="text" name="comments_welding_complete_c" value="' +
             item.comments_welding +
             '">' +
             "</div><br>";
@@ -822,54 +826,54 @@ function submitWeldingCompleteForm() {
     };
 
     var formData = {
-        weld_map_issued: document.querySelector('[name="weld_map_issued"]')
+        weld_map_issued: document.querySelector('[name="weld_map_issued_c"]')
             .checked
             ? "on"
             : "",
-        link_to_weld_map: document.querySelector('[name="link_to_weld_map"]')
-            .value,
+       // link_to_weld_map: document.querySelector('[name="link_to_weld_map_c"]')
+          //  .value,
         weld_procedure_qualification: document.querySelector(
-            '[name="weld_procedure_qualification"]'
+            '[name="weld_procedure_qualification_c"]'
         ).checked
             ? "on"
             : "",
-        link_to_pqr: document.querySelector('[name="link_to_pqr"]').value,
+     //   link_to_pqr: document.querySelector('[name="link_to_pqr_c"]').value,
         weld_procedure_specifications: document.querySelector(
-            '[name="weld_procedure_specifications"]'
+            '[name="weld_procedure_specifications_c"]'
         ).checked
             ? "on"
             : "",
-        link_to_wps: document.querySelector('[name="link_to_wps"]').value,
+     //   link_to_wps: document.querySelector('[name="link_to_wps_c]').value,
         welder_performance_qualification: document.querySelector(
-            '[name="welder_performance_qualification"]'
+            '[name="welder_performance_qualification_c"]'
         ).checked
             ? "on"
             : "",
-        link_to_wpq: document.querySelector('[name="link_to_wpq"]').value,
-        welding_wire: document.querySelector('[name="welding_wire"]').checked
+      //  link_to_wpq: document.querySelector('[name="link_to_wpq_c"]').value,
+        welding_wire: document.querySelector('[name="welding_wire_c"]').checked
             ? "on"
             : "",
         link_to_wire_certificate: document.querySelector(
-            '[name="link_to_wire_certificate"]'
+            '[name="link_to_wire_certificate_c"]'
         ).value,
-        shielding_gas: document.querySelector('[name="shielding_gas"]').checked
+        shielding_gas: document.querySelector('[name="shielding_gas_c"]').checked
             ? "on"
             : "",
-        link_to_gas_data_sheet: document.querySelector(
-            '[name="link_to_gas_data_sheet"]'
-        ).value,
+       // link_to_gas_data_sheet: document.querySelector(
+        //    '[name="link_to_gas_data_sheet_c"]'
+        //).value,
         pre_weld_inspection: document.querySelector(
-            '[name="pre_weld_inspection"]'
+            '[name="pre_weld_inspection_c"]'
         ).checked
             ? "on"
             : "",
         inspection_during_welding: document.querySelector(
-            '[name="inspection_during_welding"]'
+            '[name="inspection_during_welding_c"]'
         ).checked
             ? "on"
             : "",
         post_weld_inspection: document.querySelector(
-            '[name="post_weld_inspection"]'
+            '[name="post_weld_inspection_c"]'
         ).checked
             ? "on"
             : "",
@@ -877,7 +881,7 @@ function submitWeldingCompleteForm() {
             '[name="sign_off_welding_complete_c"]'
         ).value,
         comments_welding_complete: document.querySelector(
-            '[name="comments_welding_complete"]'
+            '[name="comments_welding_complete_c"]'
         ).value,
         status: document.querySelector('[name="status"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
@@ -942,12 +946,14 @@ function displayWeldingCompleteResults(values) {
                 if (typeof value === "object") {
                     buildTableRows(value, field);
                 } else {
-                    resultsHtml +=
-                        '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' +
-                        field +
-                        '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' +
-                        value +
-                        "</td></tr>";
+                    if (value=="on")
+                        {
+                        resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
+                        }
+                        else
+                        {
+                            resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + value + '</td></tr>';
+                        }
                 }
             }
         }
@@ -1085,7 +1091,7 @@ function Welding(processOrder, userName) {
                 // Set other fields
                 $('input[name="sign_off_welding"]').val(userName);
                 $('textarea[name="comments_welding"]').val(
-                    response.data.comments_welding
+                    response.data.comments_welding_complete
                 );
 
                 // Set file input field

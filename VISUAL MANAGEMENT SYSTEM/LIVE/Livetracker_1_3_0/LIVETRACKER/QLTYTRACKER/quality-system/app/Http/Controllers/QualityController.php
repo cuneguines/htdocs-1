@@ -130,7 +130,7 @@ class QualityController extends Controller
 
 
 
-public function getImages_Quality(Request $request)
+public function getImages_Quality_real(Request $request)
     {
         $processOrderId = $request->input('id');
 // Query to get the UUID from the QualityFormData table
@@ -157,7 +157,37 @@ if ($qualityData) {
         return response()->json(['filenames' => $filenames]);
     }
     }
+    public function getImages_Quality(Request $request)
+{
+    $processOrderId = (int) $request->input('id'); // Cast to integer
 
+    // Retrieve the most recent quality data for the process order
+    $qualityData = QualityFormData::where('process_order_number', $processOrderId)
+        ->orderBy('updated_at', 'desc')
+        ->first();
+
+    if ($qualityData) {
+        $uuid = $qualityData->uuid;
+
+        // Retrieve filenames with the highest batch number for the given process order and UUID
+        $filenames = ImageDataQlty::where('process_order_id', $processOrderId)
+            ->where('uuid', $uuid)
+            ->where('batch_number', function ($query) use ($processOrderId) {
+                $query->selectRaw('max(batch_number)')
+                ->from('QUALITY_PACK.dbo.imageData_Qlty')
+                ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_Qlty.process_order_id')
+                ->where('process_order_id', $processOrderId);
+            })
+            ->pluck('filename')
+            ->toArray();
+
+        return response()->json(['filenames' => $filenames]);
+    }
+
+    return response()->json(['filenames' => []]);
+}
+
+    
 
     public function uploadImages_CompleteQuality(Request $request)
     {
@@ -214,7 +244,7 @@ if ($qualityData) {
 
     public function getImages_CompleteQuality(Request $request)
     {
-        $processOrderId = $request->input('id');
+        $processOrderId = (int)$request->input('id');
 // Query to get the UUID from the QualityFormData table
 $qualityData = QualityCompleteData::where('process_order_number', $processOrderId)
 ->orderBy('updated_at', 'desc')
@@ -226,10 +256,11 @@ if ($qualityData) {
         // Query the database to get the filenames with the highest batch number
         $filenames = ImageDataCompleteQlty::where('process_order_id', $processOrderId)
         ->where('uuid', $uuid) 
-            ->where('batch_number', function ($query) {
-                $query->selectRaw('max(batch_number)')
-                    ->from('QUALITY_PACK.dbo.imageData_CompleteQlty')
-                    ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_CompleteQlty.process_order_id');
+        ->where('batch_number', function ($query) use ($processOrderId) {
+            $query->selectRaw('max(batch_number)')
+            ->from('QUALITY_PACK.dbo.imageData_CompleteQlty')
+            ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_CompleteQlty.process_order_id')
+            ->where('process_order_id', $processOrderId);
             })
             ->pluck('filename') // Pluck only the filenames
             ->toArray(); // Convert the collection to an array

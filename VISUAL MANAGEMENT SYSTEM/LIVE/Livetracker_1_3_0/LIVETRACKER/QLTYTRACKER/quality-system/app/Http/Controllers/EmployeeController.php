@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 
-
 class EmployeeController extends Controller
 {
     // Show the form for creating a new employee
@@ -17,39 +16,55 @@ class EmployeeController extends Controller
     // Store a newly created employee in the database
     public function store(Request $request)
     {
-        
+        $employee = new Employee;
+        $employee->FirstName = $request->input('first_name');
+        $employee->LastName = $request->input('last_name');
+        $employee->login = $request->input('login');
+        $employee->ClockNumber = $request->input('clock_number');
+        $employee->Department = $request->input('department');
+        $employee->Role = $request->input('role');
 
-         // Create a new instance of FinalAssemblyFormData
-         $finalAssemblyFormData = new Employee;
-         $finalAssemblyFormData->FirstName = $request->input('first_name');
-         $finalAssemblyFormData->LastName = $request->input('last_name');
-         $finalAssemblyFormData->login = $request->input('login');
-         $finalAssemblyFormData->ClockNumber = $request->input('clock_number');
-         $finalAssemblyFormData->Department = $request->input('department');
-         $finalAssemblyFormData->Role = $request->input('role');
+        $employee->save();
 
-       
- 
-         // Save the Final Assembly Form Data
-         $finalAssemblyFormData->save();
- 
-         // You can return a response or redirect as needed
-        return response()->json(['data' => $finalAssemblyFormData]);
-
-        // Create and save the employee
-        //Employee::save($request->all());
-
-        // Redirect back with success message
-        //return redirect()->back()->with('success', 'Employee created successfully.');
+        return response()->json(['data' => $employee]);
     }
+
+    // Fetch all employees
     public function getemployee()
     {
-      
-        $data = Employee::all();
-        
+        $employees = Employee::all();
+        return response()->json(['data' => $employees]);
+    }
 
-        return response()->json(['data' => $data]);
+    // Update an employee
+    public function updateEmployee(Request $request, $id)
+    {
+        $employee = Employee::findOrFail($id);
+        $employee->FirstName = $request->input('first_name');
+        $employee->LastName = $request->input('last_name');
+        $employee->Login = $request->input('login');
+        $employee->ClockNumber = $request->input('clock_number');
+        $employee->Department = $request->input('department');
+        $employee->Role = $request->input('role');
+
+        $employee->save();
+
+        return response()->json(['data' => $employee]);
+    }
+
+    // Delete an employee (change status to deleted)
+    public function deleteEmployee($id)
+    {
+        //$employee = Employee::findOrFail($id);
+       // $employee->Status = 'deleted'; // Assuming you have a status field
+       // $employee->save();
+
+       // return response()->json(['success' => 'Employee status changed to deleted successfully']);
+  
+    }
+    public function getemployees(Request $request, $id)
+    {
+        $employees = Employee::findOrFail($id);
+        return response()->json(['data' => $employees]);
     }
 }
-
-
