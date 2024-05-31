@@ -37,13 +37,14 @@ function generateKittingCompleteFieldset(processOrder, qualityStep, username) {
 function generateCompleteHTMLFromResponse_for_kitting(response) {
     var html = '<fieldset><legend>Kitting Complete</legend>';
     html += '<form id="kitting_complete_form">';
-    
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         
         html += '<div class="kitting_item">';
+        
         //html += '<label>ID: ' + item.id + '</label><br>';
         html += '<div class="kitting_item">';
-        html += '<label>Process Order: ' + item.ProcessOrderID + '</label><br>';
+        html += '<label style="width:100%">Process Order: ' + item.ProcessOrderID + '</label><br>';
         html += '<div class="kitting_item">';
         html += '<input type="hidden" name="processorder" value="' + item.ProcessOrderID + '"><br>';
         html += '<div class="kitting_field">';
@@ -81,19 +82,19 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
         html += '<div class="kitting_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" id="sign_off_kitting_c"name="sign_off_kitting_c" value="' + userName + '" >';
+            '<input style="width:100%"type="text" id="sign_off_kitting_c"name="sign_off_kitting_c" value="' + userName + '" >';
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_kitting" value="' + item.comments_kitting + '" disabled>';
+            '<input style="width:100%"type="text" name="comments_kitting" value="' + item.comments_kitting + '" disabled>';
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Kitting Process Completion:</label>' +
-            '<select id="kitting_process_completion" name="kitting_process_completion">' +
+            '<select style="width:103%"id="kitting_process_completion" name="kitting_process_completion">' +
             '<option value="Completed" ' + (item.kitting_process_completion === "Completed" ? 'selected' : '') + '>Completed</option>' +
             '<option value="Partially Completed" ' + (item.kitting_process_completion === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
             '</select>';
@@ -103,7 +104,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
         html += '<div class="kitting_field">';
         html +=
             '<label>Quantity:</label>' +
-            '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
+            '<input style="width:100%"type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
         html += '</div><br>';
 
         html += '</div>'; // Closing div for kitting_item
@@ -115,6 +116,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
     html += '</form>';
 
     html += '<div id="kitting_complete_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;

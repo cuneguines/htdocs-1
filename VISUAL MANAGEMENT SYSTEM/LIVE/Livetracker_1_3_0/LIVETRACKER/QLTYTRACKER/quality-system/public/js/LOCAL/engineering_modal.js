@@ -97,7 +97,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Concept Design Document: </label>';
         if (item.concept_design_document) {
-            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
+            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
             var downloadLink = '<a href="' + filePath + '" download>'+item.concept_design_document+'</a>';
            // html += '<input type="text" name="existing_concept_design_document" value="' + item.concept_design_document + '" readonly>';
             //html += '<input type="file" name="concept_design_document_new">';

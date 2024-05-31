@@ -39,6 +39,7 @@ class AuthController extends Controller
             
                // return redirect()->route view('processorders');
                return view('processorders_admin');
+             //return view('date');
                 //return view('employees');
             }
             else
@@ -49,7 +50,7 @@ class AuthController extends Controller
                 Session::put('user_id', $user->Login);
             
                // return redirect()->route view('processorders');
-               return view('processorders');
+               //return view('processorders');
                 //return view('employees');
             }
         }      

@@ -199,6 +199,7 @@ if ($qualityData) {
     
         $processOrder = $request->input('process_order_number');
         $uuid = $request->input('uuid_qlty');
+        $username = $request->input('username');
        // Get the maximum batch number for the process order
       $maxBatchNumber = ImageDataCompleteQlty::where('process_order_id', $processOrder)
       ->max('batch_number');
@@ -206,7 +207,7 @@ if ($qualityData) {
         // Determine the new batch number
      $batchNumber = $maxBatchNumber === null ? 1 : $maxBatchNumber + 1;
         // Check if the process order folder exists, if not, create it
-        $folderPath = 'public/images_qlty_complete/' . $processOrder . '/' . $uuid . '/';
+        $folderPath = 'public/images_qlty_complete/' . $processOrder . '/';
         if (!\Storage::exists($folderPath)) {
             \Storage::makeDirectory($folderPath);
         }
@@ -216,7 +217,7 @@ if ($qualityData) {
     
             foreach ($request->file('images') as $image) {
                 // Generate a unique name for the image
-                $imageName = time().'_'.$image->getClientOriginalName();
+                $imageName = $username.(gmdate("Y_m_d__H_i_s", time())).'_'.$image->getClientOriginalName();
                 
                 // Store the image to the local storage
                 $image->storeAs($folderPath, $imageName);
@@ -255,14 +256,10 @@ if ($qualityData) {
     $uuid = $qualityData->uuid;
         // Query the database to get the filenames with the highest batch number
         $filenames = ImageDataCompleteQlty::where('process_order_id', $processOrderId)
-        ->where('uuid', $uuid) 
-        ->where('batch_number', function ($query) use ($processOrderId) {
-            $query->selectRaw('max(batch_number)')
-            ->from('QUALITY_PACK.dbo.imageData_CompleteQlty')
-            ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_CompleteQlty.process_order_id')
-            ->where('process_order_id', $processOrderId);
-            })
-            ->pluck('filename') // Pluck only the filenames
+       // ->where('uuid', $uuid) 
+        
+            ->pluck('filename') 
+            //->pluck('uuid')// Pluck only the filenames
             ->toArray(); // Convert the collection to an array
     
         return response()->json(['filenames' => $filenames]);

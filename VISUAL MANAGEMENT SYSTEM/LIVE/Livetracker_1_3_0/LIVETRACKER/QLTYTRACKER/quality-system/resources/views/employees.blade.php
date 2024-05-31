@@ -144,7 +144,7 @@
                             <tr data-id="${employee.ID}">
                                 <td>${employee.FirstName}</td>
                                 <td>${employee.LastName}</td>
-                                <td>${employee.login}</td>
+                                <td>${employee.Login}</td>
                                 <td>${employee.ClockNumber}</td>
                                 <td>${employee.Department}</td>
                                 <td>${employee.Role}</td>

@@ -131,7 +131,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication-field">';
         html += '<label for="fit_up_visual_check">Fit-Up Visual Check:</label>';
         html += '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check" ' + (item.FitUpVisualCheck === 'true' ? 'checked disabled' : 'disabled') + '>';
-        html += '</div><br>';
+        html += '</div><br><br>';
 
         html += '<div class="fabrication-field">';
         html += '<label for="dimensional_check">Dimensional Check:</label>';

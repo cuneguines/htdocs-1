@@ -239,6 +239,20 @@
                 <label for="customer">Customer:</label>
                 <input type="text" id="customer" class="form-control" readonly>
             </div>
+
+            <div style="text-align: center;">
+            <form action="{{ route('generatePDF') }}" method="post">
+        @csrf
+        <label for="processOrderNumber">Process Order Number:</label>
+        <input type="text" id="processOrderNumber" name="processOrderNumber" required>
+        <button type="submit" style="background-color: grey; color: black; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Generate PDF</button>
+    </form>
+        <!-- <button onclick="printDiv('lineItemsContainer')" style="background-color: #d3d3d3; color: #000000; padding: 10px 20px; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); cursor: pointer; font-size: 16px;"> -->
+            
+        
+    </div>
+</div>
+
         </div>
 
 

@@ -4,8 +4,9 @@
 <!-- Process Order Number -->
 <div class="form-group">
         <label>
+        Process Order Number:
             <input type="text" name="process_order_number_subcontract" id="process_order_number_subcontract" readonly>
-            Process Order Number
+            
         </label>
     </div>
     <!-- Subtask 10.1: Sub-Contract Action -->
@@ -15,6 +16,7 @@
             <select name="sub_contract_action">
                 <option value="NULL">Select Action</option>
                 <option value="Goods In">Goods In</option>
+                <option value="Quality">Quality</option>
                 
                 <!-- Add more options as needed -->
             </select>
@@ -24,11 +26,16 @@
     <div class="form-group">
     <label>
         Upload File:
+        <br>
+        <br>
         <input type="file" id="sub_contract_file"name="sub_contract_file" accept=".pdf,.doc,.docx,.txt">
+        <br>
+        <br>
     </label>
     <span id="old_sub_contract_file">Old File Name</span>
     <button type="button" onclick="clear_sub_contract_file()">Clear File</button>
 </div>
+
     <!-- Sign-off for Sub-Contract -->
     <div class="form-group">
         <label>

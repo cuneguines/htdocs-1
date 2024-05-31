@@ -42,7 +42,7 @@ use App\Http\Controllers\WeldingController;
 use App\Http\Controllers\FinishingController;
 use App\Http\Controllers\PackingTransportController;
 
-
+use App\Http\Controllers\PDFController;
 use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
 use App\Http\Controllers\Kitting;
@@ -166,3 +166,6 @@ Route::post('/getemployee', [EmployeeController::class, 'getemployee']);
 Route::get('/getemployees/{id}', [EmployeeController::class, 'getemployees']);
 Route::put('/updateemployee/{id}', [EmployeeController::class, 'updateEmployee']);
 Route::delete('/deleteemployee/{id}', [EmployeeController::class, 'deleteEmployee']);
+//REPORT
+Route::post('/generate-pdf', [PDFController::class, 'generatePDF'])->name('generatePDF');
+Route::post('/fetch-data', [PDFController::class, 'fetchData'])->name('fetchData');

@@ -1,11 +1,12 @@
 <fieldset>
     <legend>Main Task 4: Material Preparation</legend>
-
+<div style="width:97%">
     <!-- Process Order Number -->
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_mp" id="process_order_number_mp" readonly>
-            Process Order Number
+        Process Order Number:
+            <input style="width:100%"type="text" name="process_order_number_mp" id="process_order_number_mp" readonly>
+           
         </label>
     </div>
 
@@ -21,16 +22,16 @@
     <!-- Subtask 4.2: Material Identification Record -->
     <div class="form-group">
         <label>
-            Current Material Identification Cert: <span id="old-file-name_3"></span><br>
-            Upload Material Identification Record: 3.1 Mill Test Certificate [EN 1024]
+            Current Material Identification Cert: <span id="old-file-name_3"></span><br><br>
+            Upload Material Identification Record:<br><br>
             <input type="file" name="material_identification_record">
             <button type="button" onclick="clear_material_identification_cert_file()">Clear File</button>
         </label>
 </div>
         <div class="form-group">
         <label class="upload-label">
-            Current Material Identification Record: <span id="old-file-name_1"></span><br>
-            Upload New Material Identification Record:
+            Current Material Identification Record: <span id="old-file-name_1"></span><br><br>
+            Upload New Material Identification Record:<br><br>
             <input type="file" name="material_identification_record_file">
             <button type="button" onclick="clear_material_identification_record_file()">Clear File</button>
         </label>
@@ -45,8 +46,8 @@
             
         </label>
         <label class="upload-label">
-            Current Material Traceability Document: <span id="old-file-name_2"></span><br>
-            Upload New Material Traceability Document:
+            Current Material Traceability Document: <span id="old-file-name_2"></span><br><br>
+            Upload New Material Traceability Document:<br><br>
             <input type="file" name="material_traceability_file">
             <button type="button" onclick="clear_material_traceability_file()">Clear File</button>
         </label>
@@ -92,7 +93,7 @@
     <div class="form-group">
         <label>
             Sign-off for Material Preparation:
-            <input type="text" id="sign_off_material_preparation" name="sign_off_material_preparation" value="${username}">
+            <input style="width:100%"type="text" id="sign_off_material_preparation" name="sign_off_material_preparation" value="${username}">
         </label>
     </div>
 
@@ -100,12 +101,13 @@
     <div class="form-group">
         <label>
             Comments for Material Preparation:
-            <textarea name="comments_material_preparation" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_material_preparation" rows="4" cols="50"></textarea>
         </label>
     </div>
 
     <!-- Submit button -->
     <button type="submit" onclick="submitMaterialPreparationForm()">Submit Material Preparation Form</button>
+            </div>
 </fieldset>
 <script>
     function clear_material_identification_record_file() {

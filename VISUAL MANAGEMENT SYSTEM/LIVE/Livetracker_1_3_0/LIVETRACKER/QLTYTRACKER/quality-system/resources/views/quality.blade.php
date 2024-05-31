@@ -1,9 +1,12 @@
 <fieldset>
+
     <legend>Main Task 1: Engineering Checks</legend>
+    <div style="width:97%">
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_quality" id="process_order_number_quality" readonly>
-            Process Order Number
+        Process Order Number:
+            <input style="width:100%"type="text" name="process_order_number_quality" id="process_order_number_quality" readonly>
+            
         </label>
     </div>
     <!-- Walk-down and Visual Inspection -->
@@ -19,8 +22,9 @@
     <!-- Upload Images -->
     <div class="form-group">
         <label>
+           
+            <input type="checkbox" name="upload_images" id="upload_images">
             Upload Images:
-            <input type="file" name="images[]" id="imagesInput" multiple>
             <!-- Upload Images button -->
             <br>
             <!-- <button type="button" onclick="uploadImages_QLTY()">Upload Images</button> -->
@@ -30,8 +34,8 @@
     <div class="form-group">
         <label>
             Sign-off for Quality:
-            <!-- <input type="text" name="sign_off_quality_l" id="sign_off_quality_l" value="${username}"> --> -->
-            <input type="text" name="sign_off_quality" id="sign_off_quality" value="${username}">
+            <!-- <input type="text" name="sign_off_quality_l" id="sign_off_quality_l" value="${username}"> -->
+            <input style="width:100%"type="text" name="sign_off_quality" id="sign_off_quality" value="${username}">
 
         </label>
     </div>
@@ -40,13 +44,14 @@
     <div class="form-group">
         <label>
             Comments for Quality:
-            <textarea name="comments_quality" id="comments_quality" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_quality" id="comments_quality" rows="4" cols="50"></textarea>
         </label>
     </div>
 
     <!-- Submit button -->
-    <div  name="uuidDisplay" id="uuidDisplay"></div>
+    <div style="display:none" name="uuidDisplay" id="uuidDisplay"></div>
     <button type="submit" onclick="submitQualityForm()">Submit Quality Checks</button>
+            </div>
 </fieldset>
 
 <script>

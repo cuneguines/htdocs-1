@@ -220,8 +220,15 @@ function generatePackingTransportCompleteFieldset(processOrder, qualityStep, use
         dataType: "json",
         success: function (response) {
             console.log(response);
+            if(response.data!=null)
+                {
             var generatedHTML = generateCompleteHTMLFromResponse_for_packing_transport(response);
             $("#packingtransportCompleteFieldTable").html(generatedHTML);
+                }
+                else
+                {
+                    $("#packingtransportCompleteFieldTable").html('');
+                }
         },
         error: function (error) {
             console.error(error);

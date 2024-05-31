@@ -32,9 +32,9 @@
     <!-- Subtask 6.3: Weldment quantity -->
     <div class="form-group">
     <label>
+    <br>
     <input type="checkbox" name="weldment_quantity">
         Weldment quantity: Check qty against Process Order</label>
-       
     </div>
 
     <!-- Sign-off for Fabrication Fit-Up -->

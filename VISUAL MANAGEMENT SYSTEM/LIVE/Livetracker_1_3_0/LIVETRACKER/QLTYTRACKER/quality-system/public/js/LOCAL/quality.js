@@ -47,8 +47,9 @@ function uploadImages_CompleteQLTY() {
     var imagesInput = document.getElementById('InputImages');
     var po = document.querySelector('[name="process_order_number_qlty"]').value || null;
     var uuid_qlty = document.querySelector('[name="uuidDisplay_qlty"]').innerText.trim();
+    var username = document.querySelector('[name="sign_off_quality"]').vlaue;
     console.log(po);
-
+    console.log(username);
     var formData = new FormData();
     if (imagesInput.files.length > 0) {
         // Append each selected image to the formData
@@ -189,7 +190,7 @@ function generateHTMLFromResponse_for_quality_old(response) {
                         console.log(imageUrl);
                         console.log(response.uuid);
                         html += '<div style="display: inline-block; margin-right: 10px;">';
-                        html += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                        html += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
                         html += '<img src="http://loclahost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                     });
                 } else {
@@ -230,7 +231,7 @@ function generateHTMLFromResponse_for_quality_old(response) {
                     console.log(response.uuid());
 
                     html += '<div style="display: inline-block; margin-right: 10px;">';
-                    html += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
+                    html += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/'+ imageUrl +'" download>';
                     html += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() +  '/' + response.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
                 });
             } else {
@@ -268,12 +269,12 @@ function generateHTMLFromResponse_for_quality(response) {
             
             html += '<div class="quality-field">';
             html += '<label for="process_order_number">Process Order:</label>';
-            html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
+            html += '<input style="width:98%" type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
             html += '</div><br>';
             
             html += '<div class="quality-field">';
             html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-            html += '<input type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection"' + (item.walk_down_visual_inspection ? ' checked disabled' : 'disabled') + '>';
+            html += '<input style="width:98%"type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection"' + (item.walk_down_visual_inspection ? ' checked disabled' : 'disabled') + '>';
 
 
             html += '</div><br>';
@@ -297,7 +298,8 @@ function generateHTMLFromResponse_for_quality(response) {
 
                         // Adding download link
                         var downloadLink = document.createElement('a');
-                        downloadLink.href = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + item.process_order_number.trim() + '/' + item.uuid + '/' + imageUrl;
+                        downloadLink.target = '_blank';
+                        downloadLink.href = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + item.process_order_number.trim() + '/' + imageUrl;
                         downloadLink.download = 'image_' + index + '.jpg'; // Setting download attribute
                         downloadLink.innerText = 'Download Image'; // Text for download link
                         imagesContainer.appendChild(downloadLink); // Appending download link
@@ -323,7 +325,7 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + response.process_order_number + '" readonly>';
+        html += '<input style="width:98%" type="text" id="process_order_number" name="process_order_number" value="' + response.process_order_number + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
@@ -349,6 +351,7 @@ function generateHTMLFromResponse_for_quality(response) {
 
                     // Adding download link
                     var downloadLink = document.createElement('a');
+                    downloadLink.target = '_blank'
                     downloadLink.href = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty/' + response.process_order_number.trim() + '/' + response.uuid + '/' + imageUrl;
                     downloadLink.download = 'image.jpg'; // Setting download attribute
                     downloadLink.innerText = 'Download Image'; // Text for download link
@@ -366,27 +369,27 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="comments_quality">Comments Quality:</label>';
-        html += '<input type="text" id="comments_quality" name="comments_quality" value="' + (response.comments_quality ? response.comments_quality : '-') + '" readonly>';
+        html += '<input style="width:98%" type="text" id="comments_quality" name="comments_quality" value="' + (response.comments_quality ? response.comments_quality : '-') + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="sign_off_quality">Sign-off Quality:</label>';
-        html += '<input type="text" id="sign_off_quality" name="sign_off_quality" value="' + (response.sign_off_quality ? response.sign_off_quality : '-') + '" readonly>';
+        html += '<input style="width:98%" type="text" id="sign_off_quality" name="sign_off_quality" value="' + (response.sign_off_quality ? response.sign_off_quality : '-') + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="submission_date">Submission Date:</label>';
-        html += '<input type="text" id="submission_date" name="submission_date" value="' + response.submission_date + '" readonly>';
+        html += '<input style="width:98%" type="text" id="submission_date" name="submission_date" value="' + response.submission_date + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + response.created_at + '" readonly>';
+        html += '<input style="width:98%"type="text" id="created_at" name="created_at" value="' + response.created_at + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + response.updated_at + '" readonly>';
+        html += '<input style="width:98%"type="text" id="updated_at" name="updated_at" value="' + response.updated_at + '" readonly>';
         html += '</div><br>';
         
         html += '</div>'; // Closing div for quality-item
@@ -483,7 +486,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html += '<div class="quality_item">';
        // html += '<label>ID: ' + item.ID + '</label><br>';
         html += '<div class="quality_item">';
-        html += '<input name="process_order_number_qlty"type="text" value="' + item.process_order_number.trim() + '" readonly>';
+        html += '<input style="width:98%"name="process_order_number_qlty"type="text" value="' + item.process_order_number.trim() + '" readonly>';
 
       
         // Walk-down and Visual Inspection
@@ -614,7 +617,7 @@ console.log(values.data.process_order_number);
             images.forEach(function(imageUrl) {
                 console.log(imageUrl)
                 imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
+                imagesHtml += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
                 imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
             });
         } else {
@@ -714,8 +717,8 @@ console.log(values.data.process_order_number);
             images.forEach(function(imageUrl) {
                 console.log(imageUrl)
                 imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
-                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                imagesHtml += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
             });
         } else {
             imagesHtml += '-';
