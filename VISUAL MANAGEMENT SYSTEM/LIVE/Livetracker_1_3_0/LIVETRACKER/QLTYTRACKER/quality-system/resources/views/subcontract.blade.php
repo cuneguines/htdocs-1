@@ -1,11 +1,12 @@
 
     <fieldset>
     <legend>Sub-Contract</legend>
+    <div style="width:97%">
 <!-- Process Order Number -->
 <div class="form-group">
         <label>
         Process Order Number:
-            <input type="text" name="process_order_number_subcontract" id="process_order_number_subcontract" readonly>
+            <input style="width:100%"type="text" name="process_order_number_subcontract" id="process_order_number_subcontract" readonly>
             
         </label>
     </div>
@@ -13,7 +14,7 @@
     <div class="form-group">
         <label>
             Sub-Contract Action:
-            <select name="sub_contract_action">
+            <select style="width:100%"name="sub_contract_action">
                 <option value="NULL">Select Action</option>
                 <option value="Goods In">Goods In</option>
                 <option value="Quality">Quality</option>
@@ -40,7 +41,7 @@
     <div class="form-group">
         <label>
             Sign-off for Sub-Contract:
-            <input type="text" name="sign_off_sub_contract" value="${username}">
+            <input style="width:100%"type="text" name="sign_off_sub_contract" value="${username}">
         </label>
     </div>
 
@@ -48,12 +49,13 @@
     <div class="form-group">
         <label>
             Comments for Sub-Contract:
-            <textarea name="comments_sub_contract" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_sub_contract" rows="4" cols="50"></textarea>
         </label>
     </div>
 
     <!-- Submit button -->
     <button type="button" onclick="submitSubContractForm('${processOrder}')">Submit Sub-Contract Form</button>
+            </div>
     </fieldset>
 
 <script>

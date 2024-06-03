@@ -39,7 +39,7 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
     html += '<form id="kitting_complete_form">';
     html+='<div style="width:97%">';
     $.each(response, function (index, item) {
-        
+      
         html += '<div class="kitting_item">';
         
         //html += '<label>ID: ' + item.id + '</label><br>';
@@ -599,7 +599,7 @@ function generateHTMLFromResponse_for_kitting(response) {
     var html = '<form id="kittingForm" class="kitting-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Kitting</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function(index, item) {
         html += '<div class="form-group">';
         //html += '<label for="KittingID">Kitting ID:</label>';
@@ -608,7 +608,7 @@ function generateHTMLFromResponse_for_kitting(response) {
 
         html += '<div class="form-group">';
         html += '<label for="ProcessOrderID">Process Order:</label>';
-        html += '<input type="text" id="ProcessOrderID" name="ProcessOrderID" value="' + item.ProcessOrderID + '" readonly>';
+        html += '<input style="width:100%"type="text" id="ProcessOrderID" name="ProcessOrderID" value="' + item.ProcessOrderID + '" readonly>';
         html += '</div>';
 
         html += '<div class="form-group">';
@@ -645,27 +645,27 @@ function generateHTMLFromResponse_for_kitting(response) {
 
         html += '<div class="form-group">';
         html += '<label for="sign_off_kitting">Sign-off:</label>';
-        html += '<input type="text" id="sign_off_kitting" name="sign_off_kitting" value="' + (item.sign_off_kitting || '') + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_kitting" name="sign_off_kitting" value="' + (item.sign_off_kitting || '') + '">';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="comments_kitting">Comments:</label>';
-        html += '<input type="text" id="comments_kitting" name="comments_kitting" value="' + (item.comments_kitting || '') + '">';
+        html += '<input style="width:100%"type="text" id="comments_kitting" name="comments_kitting" value="' + (item.comments_kitting || '') + '">';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="submitted_datetime">Submitted Date Time:</label>';
-        html += '<input type="text" id="submitted_datetime" name="submitted_datetime" value="' + (item.submitted_datetime || '') + '" readonly>';
+        html += '<input style="width:100%"type="text" id="submitted_datetime" name="submitted_datetime" value="' + (item.submitted_datetime || '') + '" readonly>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + (item.created_at || '') + '" readonly>';
+        html += '<input style="width:100%"type="text" id="created_at" name="created_at" value="' + (item.created_at || '') + '" readonly>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + (item.updated_at || '') + '" readonly>';
+        html += '<input style="width:100%"type="text" id="updated_at" name="updated_at" value="' + (item.updated_at || '') + '" readonly>';
         html += '</div>';
 
         html += '<hr>'; // Add a separator between items

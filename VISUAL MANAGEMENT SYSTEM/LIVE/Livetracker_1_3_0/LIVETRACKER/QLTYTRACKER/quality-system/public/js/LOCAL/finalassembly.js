@@ -54,7 +54,7 @@ function submitFinalAssemblyForm(processOrder) {
     var formData = new FormData();
     formData.append('process_order_number', document.querySelector('[name="process_order_number_finalassembly"]').value.trim());
    // formData.append('walk_down_inspection', document.querySelector('[name="walk_down_inspection"]').value);
-    formData.append('identification', document.querySelector('[name="attach_part_id_labels"]').value);
+    formData.append('identification', document.querySelector('[name="attach_part_id_labels"]').value?.checked || null);
     formData.append('sign_off_final_assembly', document.querySelector('[name="sign_off_final_assembly"]').value);
     formData.append('comments_final_assembly', document.querySelector('[name="comments_final_assembly"]').value);
     //formData.append('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
@@ -64,7 +64,7 @@ function submitFinalAssemblyForm(processOrder) {
     //formData.append('final_assembly_file_1', getFileName('final_assembly_file_1'));
 
 
-    console.log(formData);
+    console.log(formData.identification);
 
     // Send an AJAX request to the server
     $.ajax({
@@ -229,6 +229,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Final Assembly</legend>';
 
     $.each(response, function (index, item) {
+        html+='<div style="width:97%">';
         html += '<div class="final-assembly-item">';
         
         //html += '<label for="final_assembly_id">Final Assembly ID:</label>';
@@ -237,7 +238,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         
         html += '<div class="final-assembly-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
+        html += '<input style="width:100%"type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
         html += '</div><br>';
         
         // Uncomment the following lines if needed
@@ -255,12 +256,12 @@ html += '</div><br>';
         
         html += '<div class="final-assembly-field">';
         html += '<label for="sign_off_final_assembly">Sign-off for Final Assembly:</label>';
-        html += '<input type="text" id="sign_off_final_assembly" name="sign_off_final_assembly" value="' + item.sign_off_final_assembly + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_final_assembly" name="sign_off_final_assembly" value="' + item.sign_off_final_assembly + '">';
         html += '</div><br>';
         
         html += '<div class="final-assembly-field">';
         html += '<label for="comments_final_assembly">Comments for Final Assembly:</label>';
-        html += '<input type="text" id="comments_final_assembly" name="comments_final_assembly" value="' + item.comments_final_assembly + '">';
+        html += '<input style="width:100%"type="text" id="comments_final_assembly" name="comments_final_assembly" value="' + item.comments_final_assembly + '">';
         html += '</div><br>';
         
         // Uncomment the following lines if needed
@@ -278,12 +279,12 @@ html += '</div><br>';
         
         html += '<div class="final-assembly-field">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
+        html += '<input style="width:100%"type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
         html += '</div><br>';
         
         html += '<div class="final-assembly-field">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
+        html += '<input style="width:100%"type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
         html += '</div><br>';
         
         html += '</div>'; // Closing div for final-assembly-item
@@ -291,6 +292,7 @@ html += '</div><br>';
     });
 
    // html += '<input type="button" value="Submit" onclick="submitFinalAssemblyForm()">';
+   html+='</div>';
     html += '</fieldset></form>';
 
     return html;
@@ -331,6 +333,7 @@ function generateFinalAssemblyCompleteFieldset(processOrder, qualityStep, userna
 
 function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     var html = '<fieldset><legend>Final Assembly Complete</legend>';
+    html+='<div style="width:97%">';
     html += '<form id="final_assembly_complete_form">';
 
     html += '<div class="final_assembly_item">';
@@ -359,13 +362,13 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     // Field for Sign-off for Final Assembly
     html += '<div class="final_assembly_field">';
     html += '<label>Sign-off for Final Assembly:</label>';
-    html += '<input type="text" name="sign_off_final_assembly" value="' + userName + '">';
+    html += '<input style="width:100%"type="text" name="sign_off_final_assembly" value="' + userName + '">';
     html += '</div><br>';
 
     // Field for Comments for Final Assembly
     html += '<div class="final_assembly_field">';
     html += '<label>Comments for Final Assembly:</label>';
-    html += '<textarea name="comments_final_assembly">' + item.comments_final_assembly + '</textarea>';
+    html += '<textarea style="width:100%"name="comments_final_assembly">' + item.comments_final_assembly + '</textarea>';
     html += '</div><br>';
 
     
@@ -373,7 +376,7 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     html += '<div class="fabrication_field">';
     html +=
         '<label>Status:</label>' +
-        '<select name="status">' +
+        '<select style="width:100%"name="status">' +
         '<option value="partially_completed">Partially Completed</option>' +
         '<option value="completed">Completed</option>' +
         '</select>' +
@@ -383,7 +386,7 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     // Field for Quantity
     html += '<div class="final_assembly_field">';
     html += '<label>Quantity:</label>';
-    html += '<input type="number" name="quantity" value="' + item.quantity + '">';
+    html += '<input style="width:100%"type="number" name="quantity" value="' + item.quantity + '">';
     html += '</div><br>';
 
     // Submit button
@@ -392,6 +395,7 @@ function generateCompleteHTMLFromResponse_for_final_assembly(item) {
     // View button
     html += '<input type="button" value="View" onclick="viewFinalAssemblyCompleteForm(\'' + item.process_order_number + '\')">';
     html += '<div id="final_assembly_results_table"></div>';
+    html+='</div>';
     html += '</form></fieldset>';
 
     return html;

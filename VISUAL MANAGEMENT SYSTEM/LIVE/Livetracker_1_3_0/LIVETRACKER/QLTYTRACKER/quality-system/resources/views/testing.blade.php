@@ -1,10 +1,12 @@
 
     <fieldset>
     <legend>Testing</legend>
+    <div style="width:97%">
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_testing" id="process_order_number_testing" readonly>
-            Process Order Number
+        Process Order Number:
+            <input style="width:100%"type="text" name="process_order_number_testing" id="process_order_number_testing" readonly>
+          
         </label>
     </div>
     <!-- Subtask 8.1: Dye Penetrant Procedure -->
@@ -12,7 +14,7 @@
         <label>
             Dye Penetrant Procedure:
             <input type="checkbox" name="dye_pen_test" onchange="toggleDropdown(this, 'dye_pen_document_ref')">
-            <select name="dye_pen_document_ref" disabled>
+            <select style="width:100%"name="dye_pen_document_ref" disabled>
             <option value="NULL">NULL</option>
             
                 <option value="PED Standard">PED Standard</option>
@@ -28,7 +30,7 @@
         <label>
             Hydrostatic Leak Test:
             <input type="checkbox" name="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatic_test_document_ref')">
-            <select name="hydrostatic_test_document_ref" disabled>
+            <select style="width:100%"name="hydrostatic_test_document_ref" disabled>
             <option value="NULL">NULL</option>
                 <option value="KS-HD-01">KS-HD-01</option>
                
@@ -42,7 +44,7 @@
         <label>
             Pneumatic Leak Test:
             <input type="checkbox" name="pneumatic_test" onchange="toggleDropdown(this, 'pneumatic_test_document_ref')">
-            <select name="pneumatic_test_document_ref" disabled>
+            <select style="width:100%"name="pneumatic_test_document_ref" disabled>
             <option value="NULL">NULL</option>
                 <option value="KS-PN-01">KS-PN-01</option>
                
@@ -56,7 +58,7 @@
         <label>
             FAT:
             <input type="checkbox" name="fat_protocol" onchange="toggleDropdown(this, 'fat_protocol_document_ref')">
-            <select name="fat_protocol_document_ref" disabled>
+            <select style="width:100%" name="fat_protocol_document_ref" disabled>
             <option value="NULL">NULL</option>
  
 
@@ -73,7 +75,7 @@
     <div class="form-group">
         <label>
             Upload Testing Documents:
-            <input type="file" name="testing_documents" id="testing_documents"multiple>
+            <input type="file" name="testing_documents" id="testing_documents"multiple><br>
         </label>
         </label>
     <span id="old_testing_documents">Old Document Name</span>
@@ -84,7 +86,7 @@
     <div class="form-group">
         <label>
             Sign-off for Testing:
-            <input type="text" name="sign_off_testing" value="${username}">
+            <input style="width:100%"type="text" name="sign_off_testing" value="${username}">
         </label>
     </div>
 
@@ -92,12 +94,13 @@
     <div class="form-group">
         <label>
             Comments for Testing:
-            <textarea name="comments_testing" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_testing" rows="4" cols="50"></textarea>
         </label>
     </div>
 
     <!-- Submit button -->
     <button type="button" onclick="submitTestingForm('${processOrder}')">Submit Testing Form</button>
+            </div>
 </fieldset>
 <script>
 function clear_testing_documents() {

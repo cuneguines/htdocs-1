@@ -1,9 +1,10 @@
 <fieldset>
     <legend>Documentation</legend>
+    <div style="width:97%">
     <!-- Process Order Number -->
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_documentation" id="process_order_number_documentation"
+            <input style="width:100%" type="text" name="process_order_number_documentation" id="process_order_number_documentation"
                 readonly>
             Process Order Number
         </label>
@@ -18,7 +19,7 @@
 </div>
         <div class="form-group">
             <div id="technical_file_upload">
-                <label>Upload New Technical File:</label>
+                <label>Upload New Technical File:</label><br>
                 <input type="file" name="technical_file" id="technical_file" accept=".pdf,.doc,.docx,.txt">
                 <button type="button" onclick="clearFile_tech()">Clear File</button>
             </div>
@@ -34,11 +35,11 @@
                 <input type="checkbox" name="client_handover_checkbox" value="1">
                 Client Hand-over documentation:
 
-            </label>
+            </label><br>
             <div class="form-group">
                 <div id="client_handover_upload">
 
-                    <label>Upload New Client Hand-over Documentation:</label>
+                    <label>Upload New Client Hand-over Documentation:<br></label><br>
                     <input type="file" id="client_handover_documentation" name="client_handover_documentation"
                         accept=".pdf,.doc,.docx,.txt">
                     <button type="button" onclick="clearFile_client()">Clear File</button>
@@ -57,7 +58,7 @@
             <div class="form-group">
                 <label>
                     Sign_off_Engineer:
-                    <input type="text" name="sign_off_engineer" id="sign_off_engineer" value="${username}">
+                    <input style="width:100%"type="text" name="sign_off_engineer" id="sign_off_engineer" value="${username}">
 
                 </label>
             </div>
@@ -65,13 +66,14 @@
             <div class="form-group">
         <label>
             Comments for Documentation:
-            <textarea name="comments_documentation" id="comments_documentation" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_documentation" id="comments_documentation" rows="4" cols="50"></textarea>
         </label>
     </div>
 
             <!-- Submit button -->
             <button type="button" onclick="submitDocumentationForm('${processOrder}')">Submit Documentation
                 Form</button>
+            </div>
 </fieldset>
 
 <script>

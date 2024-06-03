@@ -132,7 +132,7 @@ function generateHTMLFromResponse_for_planning(response) {
     var html = '<form id="planningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 1: Planning / Forward Engineering</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="purchase_order_received_' + index + '" style="">Purchase Order Received:</label>';
@@ -216,18 +216,19 @@ function generateHTMLFromResponse_for_planning(response) {
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="sign_off_planning_' + index + '" style="">Sign-off for Planning / Forward Engineering:</label>';
-        html += '<input type="text" id="sign_off_planning_' + index + '" name="sign_off_planning" value="' + (item.sign_off_planning ? item.sign_off_planning : '') + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_planning_' + index + '" name="sign_off_planning" value="' + (item.sign_off_planning ? item.sign_off_planning : '') + '">';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="comments_planning_' + index + '" style="">Comments for Planning / Forward Engineering:</label>';
-        html += '<textarea id="comments_planning_' + index + '" name="comments_planning" rows="4" cols="50">' + (item.comments_planning ? item.comments_planning : '') + '</textarea>';
+        html += '<textarea style="width:100%"id="comments_planning_' + index + '" name="comments_planning" rows="4" cols="50">' + (item.comments_planning ? item.comments_planning : '') + '</textarea>';
         html += '</div>';
     });
 
     html += '<div class="form-group" style="margin-top: 20px;">';
   
     html += '</div>';
+    html+='</div>';
 
     html += '</fieldset></form>';
 

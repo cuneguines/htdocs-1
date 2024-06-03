@@ -1,11 +1,12 @@
 <fieldset>
                         <legend>Main Task 1: Planning / Forward Engineering</legend>
-
+                        <div style="width:97%">
                         <!-- Process Order Number -->
                         <div class="form-group">
                             <label>
-                                <input type="text" name="process_order_number_planning" id="process_order_number_planning" readonly>
-                                Process Order Number
+                            Process Order Number:
+                                <input style="width:100%"type="text" name="process_order_number_planning" id="process_order_number_planning" readonly>
+                               
                             </label>
                         </div>
 
@@ -18,7 +19,7 @@
                             <br>
                             <label class="upload-label"
                                 id="purchase_order_file_label">
-                                Current Purchase Order Document: <br><span id="purchase_order_filename"></span>
+                                Current Purchase Order Document: <br><br><span id="purchase_order_filename"></span>
                                 <input type="file" name="purchase_order_document" id="purchase_order_document">
                                 <button type="button" onclick="clear_purchase_order_document()">Clear File</button>
                             </label>
@@ -33,7 +34,7 @@
                             <br>
                             <label  class="upload-label"
                                 id="project_schedule_file_label">
-                                Current Project Schedule Document:<br> <span id="project_schedule_filename"></span>
+                                Current Project Schedule Document:<br> <br><span id="project_schedule_filename"></span>
                                 <input type="file" name="project_schedule_document" id="project_schedule_document">
                                 <button type="button" onclick="clear_project_schedule_document()">Clear File</button>
                             </label>
@@ -47,7 +48,7 @@
                             </label>
                             <br>
                             <label  class="upload-label" id="quotation_file_label">
-                                Current Quotation Document: <br><span id="quotation_filename"></span>
+                                Current Quotation Document: <br><br><span id="quotation_filename"></span>
                                 <input type="file" name="quotation_document" id="quotation_document">
                                 <button type="button" onclick="clear_quotation_document()">Clear File</button>
                             </label>
@@ -63,7 +64,7 @@
                             <br>
                             <label  ;class="upload-label"
                                 id="user_requirements_file_label">
-                                Current User Requirement Specifications Document: <br><span
+                                Current User Requirement Specifications Document: <br><br><span
                                     id="user_requirements_filename"></span>
                                 <input type="file" name="user_requirement_specifications_document"
                                     id="user_requirement_specifications_document">
@@ -81,7 +82,7 @@
                             <br>
                             <label class="upload-label"
                                 id="pre_engineering_file_label">
-                                Current Pre Engineering Check Document:<br> <span id="pre_engineering_filename"></span>
+                                Current Pre Engineering Check Document:<br><br> <span id="pre_engineering_filename"></span>
                                 <input type="file" name="pre_engineering_check_document"
                                     id="pre_engineering_check_document">
                                     <button type="button" onclick="clear_pre_engineering_check_document()">Clear File</button>
@@ -92,7 +93,7 @@
                         <div class="form-group">
                             <label>
                                 Sign-off for Planning / Forward Engineering:
-                                <input type="text" name="sign_off_planning" id="sign_off_planning">
+                                <input style="width:100%"type="text" name="sign_off_planning" id="sign_off_planning">
                             </label>
                         </div>
 
@@ -100,12 +101,13 @@
                         <div class="form-group">
                             <label>
                                 Comments for Planning / Forward Engineering:
-                                <textarea name="comments_planning" id="comments_planning" rows="4" cols="50"></textarea>
+                                <textarea style="width:100%"name="comments_planning" id="comments_planning" rows="4" cols="50"></textarea>
                             </label>
                         </div>
 
                         <!-- Submit button -->
                         <button type="submit" onclick="submitPlanningForm()">Submit Planning Form</button>
+                                </div>
                     </fieldset>
                     <script>
     function clear_purchase_order_document() {

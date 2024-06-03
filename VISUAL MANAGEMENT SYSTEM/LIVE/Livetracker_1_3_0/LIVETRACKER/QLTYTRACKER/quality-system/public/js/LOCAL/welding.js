@@ -329,7 +329,7 @@ function generateHTMLFromResponse_for_welding(response) {
         '<form id="weldingForm" class="welding-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Welding</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="welding-item">';
        // html += '<label for="id">ID:</label>';
@@ -521,7 +521,7 @@ function generateHTMLFromResponse_for_welding(response) {
        html += '<div class="welding-field">';
         html += '<label for="comments_welding_complete">Comments Welding Complete:</label>';
         html +=
-            '<input type="text" id="comments_welding_complete" name="comments_welding_complete" value="'+item.comments_welding_complete + '">'
+            '<input style="width:100%"type="text" id="comments_welding_complete" name="comments_welding_complete" value="'+item.comments_welding_complete + '">'
            
         html += '</div><br>';
 
@@ -565,7 +565,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<div class="welding-field">';
     html += '<label for="process_order_id">Process Order ID:</label>';
         html +=
-           '<input type="text" id="process_order_id" name="process_order_id" value="' +
+           '<input style="width:100%"type="text" id="process_order_id" name="process_order_id" value="' +
            (item.ProcessOrderID ? item.ProcessOrderID : '') +
             '">';
         html += '</div><br>';
@@ -581,7 +581,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '</div>'; // Closing div for welding-item
         html += '<hr>'; // Horizontal line for separation
     });
-
+    html+='</div>';
    // html += '<input type="button" value="Submit" onclick="submitWeldingForm()">';
     html += '</fieldset></form>';
 
@@ -625,7 +625,7 @@ function generateWeldingCompleteFieldset(processOrder, qualityStep, username) {
 function generateCompleteHTMLFromResponse_for_welding(response) {
     var html = "<fieldset><legend>Welding Tasks Complete</legend>";
     html += '<form id="welding_complete_form">';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="welding_item">';
        // html += "<label>ID: " + item.id + "</label><br>";
@@ -647,7 +647,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Weld Map:</label>" +
-            '<input type="text" name="link_to_weld_map_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_weld_map_c" value="' +
             item.link_to_weld_map +
             '"disabled>' +
             "</div><br> ";
@@ -666,7 +666,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to PQR:</label>" +
-            '<input type="text" name="link_to_pqr_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_pqr_c" value="' +
             item.link_to_pqr +
             '"disabled>' +
             "</div><br>";
@@ -685,7 +685,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Approved WPS:</label>" +
-            '<input type="text" name="link_to_wps_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_wps_c" value="' +
             item.link_to_wps +
             '"disabled>' +
             "</div><br>";
@@ -704,7 +704,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to WPQ Certificate:</label>" +
-            '<input type="text" name="link_to_wpq_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_wpq_c" value="' +
             item.link_to_wpq +
             '"disabled>' +
             "</div><br>";
@@ -722,7 +722,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Material Certificate:</label>" +
-            '<input type="text" name="link_to_wire_certificate_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_wire_certificate_c" value="' +
             item.link_to_wire_certificate +
             '"disabled>' +
             "</div><br>";
@@ -740,7 +740,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Link to Gas Data Sheet:</label>" +
-            '<input type="text" name="link_to_gas_data_sheet_c" value="' +
+            '<input style="width:100%"type="text" name="link_to_gas_data_sheet_c" value="' +
             item.link_to_gas_data_sheet +
             '"disabled>' +
             "</div><br>";
@@ -779,7 +779,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Sign Off:</label>" +
-            '<input type="text" name="sign_off_welding_complete_c" value="' +
+            '<input style="width:100%"type="text" name="sign_off_welding_complete_c" value="' +
             userName +
             '">' +
             "</div><br>";
@@ -788,7 +788,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Comments:</label>" +
-            '<input type="text" name="comments_welding_complete_c" value="' +
+            '<input style="width:100%"type="text" name="comments_welding_complete_c" value="' +
             item.comments_welding +
             '">' +
             "</div><br>";
@@ -797,7 +797,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
         html += '<div class="welding_field">';
         html +=
             "<label>Status:</label>" +
-            '<select name="status">' +
+            '<select style="width:100%"name="status">' +
             '<option value="partially_completed">Partially Completed</option>' +
             '<option value="completed">Completed</option>' +
             "</select>" +
@@ -814,6 +814,7 @@ function generateCompleteHTMLFromResponse_for_welding(response) {
     html += "</form>";
 
     html += '<div id="welding_complete_results"></div>';
+    html+='</div>';
     html += "</fieldset>";
 
     return html;

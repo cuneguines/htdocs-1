@@ -1,11 +1,13 @@
 
 <fieldset>
     <legend>Finishing</legend>
+    <div style="width:98%">
  <!-- Process Order Number -->
  <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_finishing" id="process_order_number_finishing" readonly>
-            Process Order Number
+        Process Order Number:
+            <input style="width:100%"type="text" name="process_order_number_finishing" id="process_order_number_finishing" readonly>
+          
         </label>
     </div>
     <div class="form-group">
@@ -13,7 +15,7 @@
             Pickle and Passivate:
             <input type="checkbox" name="pickle_passivate_test"
                 onchange="updateDropdown(this, 'pickle_passivate_document_ref')">
-            <select name="pickle_passivate_document_ref" >
+            <select style="width:100%"name="pickle_passivate_document_ref" >
                 <option value="NULL">NULL</option>
                 <option value="Document_REF_1">Document REF 1</option>
                 <option value="Document_REF_2">Document REF 2</option>
@@ -38,7 +40,7 @@
         Required Finish Applied:
             <input type="checkbox" name="select_kent_finish_test"
                 onchange="updateDropdown(this, 'select_kent_finish_document_ref')">
-            <select name="select_kent_finish_document_ref">
+            <select style="width:100%"name="select_kent_finish_document_ref">
                 <option value="NULL">NULL</option>
                 <option value="SOP-0312">Acid Dip Pickle and Passivate [KF1]</option>
                 <option value="SOP-0770">KF1 (B) Acid Dip and Passivation</option>
@@ -82,18 +84,19 @@
     <div class="form-group">
         <label>
             Sign-off for Finishing:
-            <input type="text" name="sign_off_finishing" value="${username}">
+            <input style="width:100%"type="text" name="sign_off_finishing" value="${username}">
         </label>
     </div>
 
     <div class="form-group">
         <label>
             Comments for Finishing:
-            <textarea name="comments_finishing" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_finishing" rows="4" cols="50"></textarea>
         </label>
     </div>
 
     <button type="button" onclick="submitFinishingForm('${processOrder}')">Submit Finishing Form</button>
+            </div>
 </fieldset>
 <script>
 function clear_pickle_passivate_documents() {

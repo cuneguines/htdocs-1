@@ -34,7 +34,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
     var html = '<form id="manufacturingForm" class="manufacturing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Engineering</legend>';
-    
+    html+='<div style="width:97%">';
     $.each(response, function(index, item) {
         html += '<div class="form-group">';
        // html += '<label for="id">ID:</label>';
@@ -128,18 +128,18 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="sign_off_manufacturing">Sign-off:</label>';
-        html += '<input type="text" id="sign_off_manufacturing" name="sign_off_manufacturing" value="' + (item.sign_off_manufacturing || '') + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_manufacturing" name="sign_off_manufacturing" value="' + (item.sign_off_manufacturing || '') + '">';
         html += '</div>';
         
         html += '<div class="form-group">';
         html += '<label for="comments_manufacturing">Comments:</label>';
-        html += '<textarea id="comments_manufacturing" name="comments_manufacturing">' + (item.comments_manufacturing || '') + '</textarea>';
+        html += '<textarea style="width:100%"id="comments_manufacturing" name="comments_manufacturing">' + (item.comments_manufacturing || '') + '</textarea>';
         html += '</div>';
         
         html += '<hr>'; // Add a separator between items
     });
     
-    
+    html += '</div>';
     html += '</fieldset></form>';
 
     return html;

@@ -123,6 +123,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Fabrication Fit-Up</legend>';
 
     $.each(response, function(index, item) {
+        html+='<div style="width:97%">';
         html += '<div class="fabrication-item">';
        // html += '<label for="id">ID:</label>';
        // html += '<input type="text" id="id" name="id" value="' + item.Id + '" readonly>';
@@ -156,15 +157,16 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
 
         html += '<div class="fabrication-field">';
         html += '<label for="sign_off_fabrication_fit_up">Sign Off:</label>';
-        html += '<input type="text" id="sign_off_fabrication_fit_up" name="sign_off_fabrication_fit_up" value="' + (item.SignOffUser ? item.SignOffUser : '') + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_fabrication_fit_up" name="sign_off_fabrication_fit_up" value="' + (item.SignOffUser ? item.SignOffUser : '') + '">';
         html += '</div><br>';
 
         html += '<div class="fabrication-field">';
         html += '<label for="comments_fabrication_fit_up">Comments:</label>';
-        html += '<input type="text" id="comments_fabrication_fit_up" name="comments_fabrication_fit_up" value="' + (item.Comments ? item.Comments : '') + '">';
+        html += '<input style="width:100%"type="text" id="comments_fabrication_fit_up" name="comments_fabrication_fit_up" value="' + (item.Comments ? item.Comments : '') + '">';
         html += '</div><br>';
 
         html += '</div>'; // Closing div for fabrication-item
+        html += '</div>';
         html += '<hr>'; // Horizontal line for separation
     });
 
@@ -262,11 +264,11 @@ function generateFabricationFitUpCompleteFieldset(processOrder, qualityStep, use
 function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
     var html = '<fieldset><legend>Fabrication Fit-Up Complete</legend>';
     html += '<form id="fabrication_fit_up_complete_form">';
-    
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="fabrication_item">';
-        //html += '<label>ID: ' + item.id + '</label><br>';
-        html += '<br><input name="process_order_fabc" type="text" value="' + item.ProcessOrder + '"><br><br>';
+        html += '<label>Process Order Number:</label><br>';
+        html += '<br><input name="process_order_fabc" style="width:100%"type="text" value="' + item.ProcessOrder + '"><br><br>';
 
         html += '<div class="fabrication_field">';
         html +=
@@ -287,7 +289,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication_field">';
         html +=
             '<label>Link to Drawing:</label>' +
-            '<input type="text" name="link_to_drawing" value="' + item.LinkToDrawing + '">' +
+            '<input style="width:100%"type="text" name="link_to_drawing" value="' + item.LinkToDrawing + '">' +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
@@ -301,20 +303,20 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_fabrication_fit_up_c" value="' + userName + '">' +
+            '<input style="width:100%"type="text" name="sign_off_fabrication_fit_up_c" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_fabrication_fit_up" value="' + item.Comments + '">' +
+            '<input style="width:100%"type="text" name="comments_fabrication_fit_up" value="' + item.Comments + '">' +
             '</div><br>';
 
         // Added Status dropdown
         html += '<div class="fabrication_field">';
         html +=
             '<label>Status:</label>' +
-            '<select name="status">' +
+            '<select style="width:100%"name="status">' +
             '<option value="partially_completed">Partially Completed</option>' +
             '<option value="completed">Completed</option>' +
             '</select>' +
@@ -324,7 +326,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<div class="fabrication_field">';
         html +=
             '<label>Quantity:</label>' +
-            '<input type="number" name="quantity_fb" value="' + item.Quantity + '">' +
+            '<input style="width:100%"type="number" name="quantity_fb" value="' + item.Quantity + '">' +
             '</div><br>';
 
         html += '</div>'; // Closing div for fabrication_item
@@ -338,6 +340,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
     html += '</form>';
 
     html += '<div id="fabrication_fit_up_complete_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;
@@ -387,7 +390,8 @@ function displayFabricationFitUpResults(values) {
         for (var key in obj) {
             if (obj.hasOwnProperty(key)) {
                 var value = obj[key];
-                var field = prefix ? prefix + '.' + key : key;
+               // var field = prefix ? prefix + '.' + key : key;
+               var field =  key;
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {

@@ -263,8 +263,10 @@ function generateHTMLFromResponse_for_finishing(response) {
     var html = '<form id="finishingForm" class="finishing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Finishing</legend>';
+    html+='<div style="width:97%">';
 console.log(response);
     $.each(response, function(index, item) {
+      
         html += '<div class="finishing-item">';
         //html += '<label for="id">ID:</label>';
         //html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
@@ -272,7 +274,7 @@ console.log(response);
 
         html += '<div class="finishing-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
+        html += '<input style="width:100%"type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '" readonly>';
         html += '</div><br>';
 
         html += '<div class="finishing-field">';
@@ -282,7 +284,7 @@ console.log(response);
 
         html += '<div class="finishing-field">';
         html += '<label for="pickle_passivate">Pickle and Passivate Ref:</label>';
-        html += '<input type="text"  value="' + item.pickle_passivate_document_ref + '" readonly>';
+        html += '<input style="width:100%"type="text"  value="' + item.pickle_passivate_document_ref + '" readonly>';
         html += '</div><br>';
 
         html += '<div class="finishing-field">';
@@ -305,7 +307,7 @@ console.log(response);
         html += '</div><br>';
         html += '<div class="finishing-field">';
         html += '<label for="pickle_passivate">Required Finish Applied Ref:</label>';
-        html += '<input type="text"  value="' + item.select_kent_finish_document_ref + '" readonly>';
+        html += '<input style="width:100%"type="text"  value="' + item.select_kent_finish_document_ref + '" readonly>';
         html += '</div><br>';
 
 
@@ -323,12 +325,12 @@ console.log(response);
 
         html += '<div class="finishing-field">';
         html += '<label for="sign_off_finishing">Sign-off for Finishing:</label>';
-        html += '<input type="text" id="sign_off_finishing" name="sign_off_finishing" value="' + (item.sign_off_finishing ? item.sign_off_finishing : '') + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_finishing" name="sign_off_finishing" value="' + (item.sign_off_finishing ? item.sign_off_finishing : '') + '">';
         html += '</div><br>';
 
         html += '<div class="finishing-field">';
         html += '<label for="comments_finishing">Comments for Finishing:</label>';
-        html += '<input type="text" id="comments_finishing" name="comments_finishing" value="' + (item.comments_finishing ? item.comments_finishing : '') + '">';
+        html += '<input style="width:100%"type="text" id="comments_finishing" name="comments_finishing" value="' + (item.comments_finishing ? item.comments_finishing : '') + '">';
         html += '</div><br>';
 
       //  html += '<div class="finishing-field">';
@@ -338,12 +340,12 @@ console.log(response);
 
         html += '<div class="finishing-field">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + (item.created_at ? item.created_at : '') + '" readonly>';
+        html += '<input style="width:100%"type="text" id="created_at" name="created_at" value="' + (item.created_at ? item.created_at : '') + '" readonly>';
         html += '</div><br>';
 
         html += '<div class="finishing-field">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + (item.updated_at ? item.updated_at : '') + '" readonly>';
+        html += '<input style="width:100%"type="text" id="updated_at" name="updated_at" value="' + (item.updated_at ? item.updated_at : '') + '" readonly>';
         html += '</div><br>';
 
         html += '</div>'; // Closing div for finishing-item
@@ -351,6 +353,7 @@ console.log(response);
     });
 
     //html += '<input type="button" value="Submit" onclick="submitFinishingForm()">';
+    html+='</div>';
     html += '</fieldset>'; // Closing fieldset
     html += '</form>'; // Closing form
 
@@ -392,7 +395,7 @@ function generateFinishingCompleteFieldset(processOrder, qualityStep, username) 
 function generateCompleteHTMLFromResponse_for_finishing(item) {
     var html = '<fieldset><legend>Finishing Complete</legend>';
     html += '<form id="finishing_complete_form">';
-
+    html+='<div style="width:97%">';
     // Add form fields based on the response data
     html += '<div class="finishing_item">';
     //html += '<label>ID: ' + item.id + '</label><br>';
@@ -431,19 +434,19 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
     html += '<div class="finishing_field">';
     html +=
         '<label>Comments:</label>' +
-        '<input type="text" name="comments_finishing" value="' + item.comments_finishing + '">';
+        '<input style="width:100%"type="text" name="comments_finishing" value="' + item.comments_finishing + '">';
     html += '</div><br>';
 
     html += '<div class="finishing_field">';
     html += '<label for="sign_off_finishing">Sign-off:</label>';
-    html += '<input type="text" id="sign_off_finishing_c" name="sign_off_finishing_c" value="' + userName + '">';
+    html += '<input style="width:100%"type="text" id="sign_off_finishing_c" name="sign_off_finishing_c" value="' + userName + '">';
     html += '</div><br>';
 
  // Dropdown for status
  html += '<div class="finishing_field">';
  html +=
      '<label>Status:</label>' +
-     '<select id="status" name="status">' +
+     '<select style="width:100%"id="status" name="status">' +
      '<option value="Completed" ' + (item.status === "Completed" ? 'selected' : '') + '>Completed</option>' +
      '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
      '</select>';
@@ -453,7 +456,7 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
  html += '<div class="finishing_field">';
  html +=
      '<label>Quantity:</label>' +
-     '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
+     '<input style="width:100%"type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
  html += '</div><br>';
 
     html += '<input type="button" value="Submit" onclick="submitFinishingCompleteForm()">';
@@ -461,6 +464,7 @@ function generateCompleteHTMLFromResponse_for_finishing(item) {
     html += '</form>';
 
     html += '<div id="finishing_complete_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;

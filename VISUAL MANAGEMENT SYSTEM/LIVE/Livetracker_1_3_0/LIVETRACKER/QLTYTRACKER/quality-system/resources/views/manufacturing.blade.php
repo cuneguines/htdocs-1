@@ -1,10 +1,10 @@
 <fieldset>
     <legend>Main Task 3: Manufacturing</legend>
-
+    <div style="width:98%">
     <!-- Process Order Number -->
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_manufacturing" id="process_order_number_manufacturing" readonly>
+            <input style="width:100%" type="text" name="process_order_number_manufacturing" id="process_order_number_manufacturing" readonly>
             Process Order Number
         </label>
     </div>
@@ -17,7 +17,7 @@
         </label>
         <br>
         <label  class="upload-label">
-            Current Production Drawings Document: <br>
+            Current Production Drawings Document: <br><br>
             <span id="production_drawings_filename"></span>
             <input type="file" name="production_drawings_document" id="production_drawings_document">
             <button type="button" onclick="clear_production_drawings_document()">Clear File</button>
@@ -32,7 +32,7 @@
         </label>
         <br>
         <label  class="upload-label">
-            Current BOM Document: <br>
+            Current BOM Document: <br><br>
             <span id="bom_filename"></span>
             <input type="file" name="bom_document" id="bom_document">
             <button type="button" onclick="clear_bom_document()">Clear File</button>
@@ -47,7 +47,7 @@
         </label>
         <br>
         <label  class="upload-label">
-            Current Machine Programming Files Document: <br>
+            Current Machine Programming Files Document: <br><br>
             <span id="machine_programming_files_filename"></span>
             <input type="file" name="machine_programming_files_document" id="machine_programming_files_document">
             <button type="button" onclick="clear_machine_programming_files_document()">Clear File</button>
@@ -63,7 +63,7 @@
         </label>
         <br>
         <label  class="upload-label">
-            Current NDT Documentation Document: <br>
+            Current NDT Documentation Document: <br><br>
             <span id="ndt_documentation_filename"></span>
             <input type="file" name="ndt_documentation_document" id="ndt_documentation_document">
             <button type="button" onclick="clear_ndt_documentation_document()">Clear File</button>
@@ -78,7 +78,7 @@
         </label>
         <br>
         <label  class="upload-label">
-            Current Quality Documents Document: <br>
+            Current Quality Documents Document: <br><br>
             <span id="quality_documents_filename"></span>
             <input type="file" name="quality_documents_document" id="quality_documents_document">
             <button type="button" onclick="clear_quality_documents_document()">Clear File</button>
@@ -89,7 +89,7 @@
     <div class="form-group">
         <label>
             Sign-off for Manufacturing:
-            <input type="text" name="sign_off_manufacturing" id="sign_off_manufacturing"value="${username}">
+            <input style="width:100%" type="text" name="sign_off_manufacturing" id="sign_off_manufacturing"value="${username}">
         </label>
     </div>
 
@@ -97,7 +97,7 @@
     <div class="form-group">
         <label>
             Comments for Manufacturing:
-            <textarea name="comments_manufacturing" id="comments_manufacturing" rows="4" cols="50"></textarea>
+            <textarea style="width:100%" name="comments_manufacturing" id="comments_manufacturing" rows="4" cols="50"></textarea>
         </label>
     </div>
 
@@ -105,6 +105,7 @@
 
     <!-- Submit button -->
     <button type="submit" onclick="submitManufacturingForm()">Submit Manufacturing Form</button>
+            </div>
 </fieldset>
 <script>
     function clear_production_drawings_document() {

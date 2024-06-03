@@ -193,7 +193,7 @@ function generateHTMLFromResponse_for_testing(response) {
     var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="testing-item">';
         
@@ -203,27 +203,27 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"disabled>';
+        html += '<input style="width:100%"type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="dye_pen_document_ref">Dye Penetrant Procedure Ref:</label>';
-        html += '<input type="text" id="dye_pen_document_ref" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '"disabled>';
+        html += '<input style="width:100%"type="text" id="dye_pen_document_ref" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="hydrostatic_test_document_ref">Hydrostatic Leak Test Ref:</label>';
-        html += '<input type="text" id="hydrostatic_test_document_ref" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '"disabled>';
+        html += '<input style="width:100%"type="text" id="hydrostatic_test_document_ref" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="pneumatic_test_document_ref">Pneumatic Leak Test Ref:</label>';
-        html += '<input type="text" id="pneumatic_test_document_ref" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '"disabled>';
+        html += '<input style="width:100%"type="text" id="pneumatic_test_document_ref" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="fat_protocol_document_ref">FAT Ref:</label>';
-        html += '<input type="text" id="fat_protocol_document_ref" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '"disabled>';
+        html += '<input style="width:100%"type="text" id="fat_protocol_document_ref" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '"disabled>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
@@ -248,7 +248,7 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="sign_off_testing">Sign-off for Testing:</label>';
-        html += '<input type="text" id="sign_off_testing" name="sign_off_testing" value="' + item.sign_off_testing + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_testing" name="sign_off_testing" value="' + item.sign_off_testing + '">';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
@@ -264,29 +264,29 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="comments_testing">Comments for Testing:</label>';
-        html += '<input type="text" id="comments_testing" name="comments_testing" value="' + item.comments_testing + '">';
+        html += '<input style="width:100%"type="text" id="comments_testing" name="comments_testing" value="' + item.comments_testing + '">';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="submission_date">Submitted Date Time:</label>';
-        html += '<input type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
+        html += '<input style="width:100%"type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
+        html += '<input style="width:100%"type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
+        html += '<input style="width:100%"type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
         html += '</div><br>';
         
         html += '</div>'; // Closing div for testing-item
         html += '<hr>'; // Horizontal line for separation
     });
 
-   
+    html+='</div>';
     html += '</fieldset></form>';
 
     return html;
@@ -328,6 +328,7 @@ function generateTestingCompleteFieldset(processOrder, qualityStep, username) {
 function generateCompleteHTMLFromResponse_for_testing(item) {
     console.log(item);
     var html = '<fieldset><legend>Testing Complete</legend>';
+    html+='<div style="width:97%">';
     html += '<form id="testing_complete_form">';
 
     html += '<div class="testing_item">';
@@ -348,7 +349,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_field">';
     html +=
         '<label>Dye Penetrant Document Ref:</label>' +
-        '<input type="text" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '" disabled>';
+        '<input style="width:100%"type="text" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '" disabled>';
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -362,7 +363,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_field">';
     html +=
         '<label>Hydrostatic Leak Test Document Ref:</label>' +
-        '<input type="text" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '" disabled>';
+        '<input style="width:100%"type="text" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '" disabled>';
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -376,7 +377,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_field">';
     html +=
         '<label>Pneumatic Leak Test Document Ref:</label>' +
-        '<input type="text" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '" disabled>';
+        '<input style="width:100%"type="text" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '" disabled>';
     html += '</div><br>';
 
     html += '<div class="testing_field">';
@@ -389,7 +390,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="signoff_field">';
     html +=
         '<label>Sign-off for Testing:</label>' +
-        '<input type="text" name="sign_off_testing_c" value="' + userName + '" >';
+        '<input style="width:100%"type="text" name="sign_off_testing_c" value="' + userName + '" >';
     html += '</div><br>';
 
 
@@ -397,7 +398,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_field">';
     html +=
         '<label>Status:</label>' +
-        '<select id="status" name="status">' +
+        '<select style="width:100%" id="status" name="status">' +
         '<option value="Completed" ' + (item.status === "Completed" ? 'selected' : '') + '>Completed</option>' +
         '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
         '</select>';
@@ -407,13 +408,13 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '<div class="testing_field">';
     html +=
         '<label>Quantity:</label>' +
-        '<input type="number" id="quantity" name="quantity" value="' + item.quantity + '" >';
+        '<input style="width:100%"type="number" id="quantity" name="quantity_c" value="' + item.quantity + '" >';
     html += '</div><br>';
-    html += '<div class="testing_field">';
-    html +=
-        '<label style="display:none">Quantity:</label>' +
-        '<input style="display:none"type="number" id="quantity" name="process" value="' + item.process_order_number + '" >';
-    html += '</div><br>';
+    ///html += '<div class="testing_field">';
+    //html +=
+       //// '<label style="display:none">Quantity:</label>' +
+       // '<input style="width:100%"style="display:none"type="number" id="quantity" name="process" value="' + item.process_order_number + '" >';
+    //html += '</div><br>';
 
     html += '</div>'; // Closing div for testing_item
     html += '<hr>'; // Horizontal line for separation
@@ -423,6 +424,7 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
     html += '</form>';
 
     html += '<div id="testing_complete_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;
@@ -438,7 +440,7 @@ function submitTestingCompleteForm() {
         comments_testing: document.querySelector('[name="comments_testing"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         //process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
-        process_order_number: document.querySelector('[name="process"]').value,
+        process_order_number: document.querySelector('[name="process_order_number_t"]').value,
         dye_pen_testing: document.querySelector('[name="dye_pen_test_c"]').checked ? "on" : "",
         dye_pen_document_ref: document.querySelector('[name="dye_pen_document_ref"]').value,
         hydrostatic_testing: document.querySelector('[name="hydrostatic_test_c"]').checked ? "on" : "",
@@ -447,7 +449,7 @@ function submitTestingCompleteForm() {
         pneumatic_test_document_ref: document.querySelector('[name="pneumatic_test_document_ref"]').value,
         fat_protocoll: document.querySelector('[name="fat_protocol_c"]').checked ? "on" : "",
         status: document.querySelector('#status').value,
-        quantity: document.querySelector('[name="quantity"]').value,
+        quantity: document.querySelector('[name="quantity_c"]').value,
         // Add other form fields accordingly
     };
     console.log(document.querySelector('[name="process_order_number_t"]').value);

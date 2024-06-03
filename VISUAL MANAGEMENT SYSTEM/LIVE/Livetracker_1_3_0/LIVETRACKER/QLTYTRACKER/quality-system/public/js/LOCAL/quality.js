@@ -325,11 +325,13 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="process_order_number">Process Order:</label>';
+        html+='<br>';
         html += '<input style="width:98%" type="text" id="process_order_number" name="process_order_number" value="' + response.process_order_number + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
+        html+='<br>';
         html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection ? ' checked disabled' : ' disabled') + '>';
 
         html += '</div><br>';
@@ -369,11 +371,13 @@ function generateHTMLFromResponse_for_quality(response) {
         
         html += '<div class="quality-field">';
         html += '<label for="comments_quality">Comments Quality:</label>';
+        html+='<br>';
         html += '<input style="width:98%" type="text" id="comments_quality" name="comments_quality" value="' + (response.comments_quality ? response.comments_quality : '-') + '" readonly>';
         html += '</div><br>';
         
         html += '<div class="quality-field">';
         html += '<label for="sign_off_quality">Sign-off Quality:</label>';
+        html+='<br>';
         html += '<input style="width:98%" type="text" id="sign_off_quality" name="sign_off_quality" value="' + (response.sign_off_quality ? response.sign_off_quality : '-') + '" readonly>';
         html += '</div><br>';
         
@@ -463,7 +467,7 @@ function generateQualityCompleteFieldset(processOrder, qualityStep, username) {
 
 function generateCompleteHTMLFromResponse_for_quality(item) {
     var html = '<fieldset><legend>Quality Complete</legend>';
-
+    html+='<div style="width:97%">';
 
      // JavaScript code to generate and display UUID
      const uuidDisplay = document.getElementById('uuidDisplay_qlty');
@@ -482,13 +486,13 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
      //uuidDisplay_qlty.textContent =uuid;
     html += '<form id="quality_complete_form">';
 
-    html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
+    //html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
         html += '<div class="quality_item">';
        // html += '<label>ID: ' + item.ID + '</label><br>';
         html += '<div class="quality_item">';
         html += '<input style="width:98%"name="process_order_number_qlty"type="text" value="' + item.process_order_number.trim() + '" readonly>';
-
-      
+html+='<br>';
+html+='<br>';
         // Walk-down and Visual Inspection
         html += '<div class="quality_field">';
         html +=
@@ -509,14 +513,14 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html += '<div class="quality_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_quality" value="' + (item.comments_quality ? item.comments_quality : '') + '">' +
+            '<input style="width:100%"type="text" name="comments_quality" value="' + (item.comments_quality ? item.comments_quality : '') + '">' +
             '</div><br>';
 
         // Sign-off Quality
         html += '<div class="quality_field">';
         html +=
             '<label>Sign-off Quality:</label>' +
-            '<input type="text" name="sign_off_quality_c" value="' + userName + '">' +
+            '<input style="width:100%"type="text" name="sign_off_quality_c" value="' + userName + '">' +
             '</div><br>';
 
         // Submission Date (hidden)
@@ -528,7 +532,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
         html += '<div class="quality_field">';
         html +=
             '<label>Status:</label>' +
-            '<select id="status" name="status">' +
+            '<select style="width:100%" id="status" name="status">' +
             '<option value="Completed" ' + (item.status === "Completed" ? 'selected' : '') + '>Completed</option>' +
             '<option value="Partially Completed" ' + (item.status === "Partially Completed" ? 'selected' : '') + '>Partially Completed</option>' +
             '</select>';
@@ -540,6 +544,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
 
     html += '<div id="quality_complete_results"></div>';
     html += '<div id="quality_images_container"></div>';
+    html+='<div style="width:97%">';
     html += '</fieldset>';
 
     return html;

@@ -169,7 +169,7 @@ function generateHTMLFromResponse_for_packing_transport(response) {
     var html = '<form id="packingTransportForm" class="packing-transport-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Packing and Transport</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="packing_transport_item">';
         //html += '<label>ID:</label><br>';
@@ -184,19 +184,21 @@ function generateHTMLFromResponse_for_packing_transport(response) {
         // Secure Packing
         html += '<div class="packing_transport_field">';
         html += '<label>Secure Packing:</label><br>';
-        html += '<input type="text" name="secure_packing" value="' + (item.secure_packing === "Yes" ? "Yes" : "No") + '" readonly><br>';
+        html+='<br>';
+        html += '<input style="width:100%"type="text" name="secure_packing" value="' + (item.secure_packing === "Yes" ? "Yes" : "No") + '" readonly><br>';
         html += '</div>';
-
+        html+='<br>';
         // Responsible Person
         html += '<div class="packing_transport_field">';
         html += '<label>Responsible Person:</label><br>';
-        html += '<input type="text" name="responsible_person" value="' + (item.engineer ? item.engineer : "-") + '" readonly><br>';
+        html+='<br>';
+        html += '<input style="width:100%"type="text" name="responsible_person" value="' + (item.engineer ? item.engineer : "-") + '" readonly><br>';
         html += '</div>';
-
+        html+='<br>';
         html += '</div>'; // Closing div for packing_transport_item
         html += '<hr>'; // Horizontal line for separation
     });
-
+    html+='</div>';
     html += '</fieldset></form>';
 
     return html;
@@ -238,6 +240,7 @@ function generatePackingTransportCompleteFieldset(processOrder, qualityStep, use
 
 function generateCompleteHTMLFromResponse_for_packing_transport(response) {
     var html = '<fieldset><legend>Packing and Transport Complete</legend>';
+    html+='<div style="width:97%">';
     html += '<form id="packing_transport_complete_form">';
 
 
@@ -294,21 +297,21 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Responsible Person:</label>' +
-            '<input type="text" name="responsible_person_complete" value="' + userName + '">' +
+            '<input style="width:100%"type="text" name="responsible_person_complete" value="' + userName + '">' +
             '</div><br>';
 
         // Comments
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_packing_transport" value="' + item.comments + '">' +
+            '<input style="width:100%"type="text" name="comments_packing_transport" value="' + item.comments + '">' +
             '</div><br>';
 
         // Added Status dropdown
         html += '<div class="packing_transport_field">';
         html +=
             '<label>Status:</label>' +
-            '<select name="status">' +
+            '<select style="width:100%"name="status">' +
             '<option value="partially_completed">Partially Completed</option>' +
             '<option value="completed">Completed</option>' +
             '</select>' +
@@ -318,7 +321,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
         html += '<div class="packing_transport_field">';
         // Field for Quantity
         html += '<label>Quantity:</label>';
-        html += '<input type="number" name="quantity" value="' + item.quantity + '">';
+        html += '<input style="width:100%"type="number" name="quantity" value="' + item.quantity + '">';
         html += '</div><br>';
 
         // Added Photos Attached checkbox
@@ -329,6 +332,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
                 '<input type="checkbox" id="photos_attached" name="photos_attached">' 
                 
             '</div><br>';
+            html+='<div>     <br></div>';
 
         html += '</div>'; // Closing div for packing_transport_item
 
@@ -349,6 +353,7 @@ function generateCompleteHTMLFromResponse_for_packing_transport(response) {
 
     html += '<div id="packing_transport_complete_results"></div>';
     html += '<div id="quality_images_container"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;

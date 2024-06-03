@@ -183,7 +183,7 @@ function generateHTMLFromResponse_for_documentation(response) {
     var html = '<form id="documentationForm" class="documentation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Documentation</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="documentation_item">';
         //html += '<label>ID:</label><br>';
@@ -214,21 +214,21 @@ function generateHTMLFromResponse_for_documentation(response) {
         html += '<div class="documentation_field">';
         html +=
             '<label>Sign Off Engineer:</label>' +
-            '<input type="text" name="sign_off_engineer" value="' + (item.engineer ? item.engineer : '-') + '" readonly>' +
+            '<input style="width:100%"type="text" name="sign_off_engineer" value="' + (item.engineer ? item.engineer : '-') + '" readonly>' +
             '</div><br>';
 
         // Comments
         html += '<div class="documentation_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments" value="' + (item.comments_documentation? item.comments_documentation: '-') + '" readonly>' +
+            '<input style="width:100%"type="text" name="comments" value="' + (item.comments_documentation? item.comments_documentation: '-') + '" readonly>' +
             '</div><br>';
 
         html += '</div>'; // Closing div for documentation_item
         html += '<hr>'; // Horizontal line for separation
     });
 
-   
+    html+='</div>';
     html += '</fieldset></form>';
 
     return html;
@@ -274,21 +274,22 @@ function generateDocumentationCompleteFieldset(processOrder, qualityStep, userna
 function generateCompleteHTMLFromResponse_for_documentation(response) {
     var html = '<fieldset><legend>Documentation Complete</legend>';
     html += '<form id="documentation_complete_form">';
-    
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="documentation_item">';
         //html += '<label>ID: ' + item.id + '</label><br>';
-        html += '<input name="process_order_number_dm" value="' + item.process_order_number + '"><br><br>';
+        html += '<input style="width:100%"name="process_order_number_dm" value="' + item.process_order_number + '"><br><br>';
 
         html += '<div class="documentation_field">';
         html += '<label>Technical File:</label>';
+        
         html +=
            
         
             '<input type="checkbox" id="technical_file" name="technical_file_c" >'
             
             '</div><br><br>';
-
+            html+='<div>     <br></div>';
         html += '<div class="documentation_field">';
         html += '<label>Client Handover Documentation:</label>';
         html +=
@@ -297,24 +298,24 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
             '<input type="checkbox" id="client_handover_documentation" name="client_handover_documentation_c" >'
             
             '</div><br><br>';
-
+            html+='<div>     <br></div>';
         html += '<div class="documentation_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input type="text" name="sign_off_documentation" value="' + userName + '">' +
+            '<input style="width:100%"type="text" name="sign_off_documentation" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="documentation_field">';
         html +=
             '<label>Comments:</label>' +
-            '<input type="text" name="comments_documentation" value="' + item.comments + '">' +
+            '<input style="width:100%"type="text" name="comments_documentation" value="' + item.comments + '">' +
             '</div><br>';
 
         // Added Status dropdown
         html += '<div class="documentation_field">';
         html +=
             '<label>Status:</label>' +
-            '<select name="status">' +
+            '<select style="width:100%"name="status">' +
             '<option value="partially_completed">Partially Completed</option>' +
             '<option value="completed">Completed</option>' +
             '</select>' +
@@ -347,6 +348,7 @@ function generateCompleteHTMLFromResponse_for_documentation(response) {
     html += '</form>';
 
     html += '<div id="documentation_complete_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;

@@ -66,9 +66,11 @@ function generateHTMLFromResponse_for_eng(response) {
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Engineering</legend>';
     
     $.each(response, function (index, item) {
+        html+='<div style="width:97%">';
         html += '<div class="form-group" >';
        // html += '<label>ID: </label>';
        // html += '<input type="text" name="id" value="' + item.id + '" readonly>';
+       
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -163,19 +165,19 @@ function generateHTMLFromResponse_for_eng(response) {
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Sign-off for Engineering: </label>';
-        html += '<input type="text" name="sign_off_engineering" value="' + (item.sign_off_engineering ? item.sign_off_engineering : '') + '">';
+        html += '<input style="width:100%"type="text" name="sign_off_engineering" value="' + (item.sign_off_engineering ? item.sign_off_engineering : '') + '">';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Comments for Engineering: </label>';
-        html += '<textarea name="comments_engineering">' + (item.comments_engineering ? item.comments_engineering : '') + '</textarea>';
+        html += '<textarea style="width:100%"name="comments_engineering">' + (item.comments_engineering ? item.comments_engineering : '') + '</textarea>';
         html += '</div>';
     });
     
     html += '<div class="form-group" style="margin-top: 20px;">';
   
     html += '</div>';
-
+    html+='</div>';
     html += '</fieldset></form>';
 
     return html;

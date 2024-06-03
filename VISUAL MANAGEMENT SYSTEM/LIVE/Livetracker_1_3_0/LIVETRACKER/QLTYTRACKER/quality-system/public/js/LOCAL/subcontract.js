@@ -155,7 +155,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
     var html = '<form id="subContractForm" class="sub-contract-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Sub-Contract</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="sub-contract-item">';
         
@@ -165,12 +165,12 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         
         html += '<div class="sub-contract-field">';
         html += '<label for="process_order_number">Process Order:</label>';
-        html += '<input type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
+        html += '<input style="width:100%"type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
         html += '<label for="sub_contract_action">Sub-Contract Action:</label>';
-        html += '<input type="text" id="sub_contract_action" name="sub_contract_action" value="' + item.sub_contract_action + '">';
+        html += '<input style="width:100%"type="text" id="sub_contract_action" name="sub_contract_action" value="' + item.sub_contract_action + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
@@ -186,27 +186,27 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         
         html += '<div class="sub-contract-field">';
         html += '<label for="sign_off_sub_contract">Sign-off for Sub-Contract:</label>';
-        html += '<input type="text" id="sign_off_sub_contract" name="sign_off_sub_contract" value="' + item.sign_off_sub_contract + '">';
+        html += '<input style="width:100%"type="text" id="sign_off_sub_contract" name="sign_off_sub_contract" value="' + item.sign_off_sub_contract + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
         html += '<label for="comments_sub_contract">Comments for Sub-Contract:</label>';
-        html += '<input type="text" id="comments_sub_contract" name="comments_sub_contract" value="' + item.comments_sub_contract + '">';
+        html += '<input style="width:100%"type="text" id="comments_sub_contract" name="comments_sub_contract" value="' + item.comments_sub_contract + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
         html += '<label for="submission_date">Submission Date:</label>';
-        html += '<input type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
+        html += '<input style="width:100%"type="text" id="submission_date" name="submission_date" value="' + item.submission_date + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
         html += '<label for="created_at">Created At:</label>';
-        html += '<input type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
+        html += '<input style="width:100%"type="text" id="created_at" name="created_at" value="' + item.created_at + '">';
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
         html += '<label for="updated_at">Updated At:</label>';
-        html += '<input type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
+        html += '<input style="width:100%"type="text" id="updated_at" name="updated_at" value="' + item.updated_at + '">';
         html += '</div><br>';
         
         html += '</div>'; // Closing div for sub-contract-item
@@ -252,6 +252,7 @@ function generateSubContractCompleteFieldset(processOrder, qualityStep, username
 }
 function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     var html = '<fieldset><legend>Complete Sub-Contract</legend>';
+    html+='<div style="width:97%">';
     html += '<form id="complete_sub_contract_form">';
     
     html += '<div class="sub_contract_item">';
@@ -264,32 +265,32 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Sub-Contract Action:</label>' +
-        '<input type="text" name="sub_contract_action" value="' + item.sub_contract_action + '" >';
+        '<input style="width:100%"type="text" name="sub_contract_action_c" value="' + item.sub_contract_action + '" >';
     html += '</div><br>';
 
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Sign-off for Sub-Contract:</label>' +
-        '<input type="text" name="sign_off_sub_contract_c" value="' + userName + '" >';
+        '<input style="width:100%"type="text" name="sign_off_sub_contract_c" value="' + userName + '" >';
     html += '</div><br>';
 
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Comments for Sub-Contract:</label>' +
-        '<textarea name="comments_sub_contract">' + item.comments_sub_contract + '</textarea>';
+        '<textarea style="width:100%"name="comments_sub_contract">' + item.comments_sub_contract + '</textarea>';
     html += '</div><br>';
 
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Submission Date:</label>' +
-        '<input type="text" name="submission_date" value="' + item.submission_date + '" disabled>';
+        '<input style="width:100%"type="text" name="submission_date" value="' + item.submission_date + '" disabled>';
     html += '</div><br>';
 
     // Quantity Field
     html += '<div class="sub_contract_field">';
     html +=
         '<label>Quantity:</label>' +
-        '<input type="number" name="quantity_c" value="' + item.quantity + '" >';
+        '<input style="width:100%"type="number" name="quantity_c" value="' + item.quantity + '" >';
     html += '</div><br>';
 
     html += '</div>'; // Closing div for sub_contract_item
@@ -300,6 +301,7 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
     html += '</form>';
 
     html += '<div id="complete_sub_contract_results"></div>';
+    html+='</div>';
     html += '</fieldset>';
 
     return html;
@@ -314,7 +316,7 @@ function submitCompleteSubContractForm() {
         comments_sub_contract: document.querySelector('[name="comments_sub_contract"]').value,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number"]').value, // Change this according to your needs
-        sub_contract_action: document.querySelector('[name="sub_contract_action"]').value,
+        sub_contract_action: document.querySelector('[name="sub_contract_action_c"]').value,
         sign_off_sub_contract: document.querySelector('[name="sign_off_sub_contract_c"]').value,
         quantity: document.querySelector('[name="quantity_c"]').value,
         // Add other form fields accordingly
