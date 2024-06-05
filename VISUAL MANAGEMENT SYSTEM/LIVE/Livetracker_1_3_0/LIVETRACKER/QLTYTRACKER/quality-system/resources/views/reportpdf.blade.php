@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+
+ <!DOCTYPE html>
 <html>
 <head>
     <title>Material Preparation Data</title>
@@ -11,9 +13,14 @@
         .container {
             width: 100%;
         }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px; /* Add margin to separate the rows */
+        }
         .table-container {
-            float: left;
-            width: 49%; /* Adjust width to fit both containers in a single line */
+            flex: 1;
+            min-width: 50%; /* Ensure each container takes up at least half the row */
             margin-right: 1%; /* Add margin to create space between the containers */
             border: 1px solid black;
             padding: 5px; /* Reduce padding */
@@ -38,40 +45,157 @@
         th {
             background-color: #f2f2f2;
         }
-        .clear {
-            clear: both; /* Ensure the following elements start on a new line */
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="table-container">
-            <h2>Material Preparation</h2>
-            <table>
-                @foreach ($data1 as $row)
-                    @foreach ($row as $key => $value)
+        <div class="row">
+            <div class="table-container">
+                <h2>Material Preparation</h2>
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ $key }}</td>
-                            <td>{{ $value }}</td>
+                            <th>Key</th>
+                            <th>Value (Material Preparation)</th>
+                            <th>Value (Material Complete)</th>
                         </tr>
-                    @endforeach
-                @endforeach
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        print_r($data_1);
+                        ?>
+                        @foreach ($data1 as $row1)
+                            @foreach ($row1 as $key => $value1)
+                                @if(!empty($value1))
+                                    <tr>
+                                        <th>{{ $key }}</th>
+                                        <td>{{ $value1 }}</td>
+                                        <td>
+                                            @foreach ($data_1 as $row2)
+                                                @if(isset($row2->$key) && !empty($row2->$key))
+                                                    {{ $row2->$key }}
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="table-container">
-            <h2>Material Complete</h2>
-            <table>
-                @foreach ($data2 as $row)
-                    @foreach ($row as $key => $value)
+       <div class="row">
+            <div class="table-container">
+                <h2>Welding</h2>
+                <table>
+                    <thead>
                         <tr>
-                            <td>{{ $key }}</td>
-                            <td>{{ $value }}</td>
+                            <th>Key</th>
+                            <th>Value (Welding)</th>
+                            <th>Value (Welding Complete)</th>
                         </tr>
-                    @endforeach
-                @endforeach
-            </table>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach ($data2 as $row2)
+                            @foreach ($row2 as $key => $value2)
+                                @if(!empty($value2))
+                                
+                                    <tr>
+                                        <th>{{ $key }}</th>
+                                        <td>{{ $value2 }}</td>
+                                        <td>
+                                            @foreach ($data_2 as $row_2)
+                                                @if(isset($row_2->$key) && !empty($row_2->$key) && ($row_2->$key == 'true'||$row_2->$key == 'on' || $row_2->$key == 'yes'))
+                                                    {{ $row_2->$key }}
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div class="clear"></div>
+    </div>
+    <div class="row">
+            <div class="table-container">
+                <h2>Documentation</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Value (Documentation)</th>
+                            <th>Value (Documentation Complete)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach ($data3 as $row2)
+                            @foreach ($row2 as $key => $value2)
+                                @if(!empty($value2))
+                                
+                                    <tr>
+                                        <th>{{ $key }}</th>
+                                        <td>{{ $value2 }}</td>
+                                        <td>
+                                            @foreach ($data_3 as $row_2)
+                                                @if(isset($row_2->$key) && !empty($row_2->$key))
+                                                    {{ $row_2->$key }}
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+            <div class="table-container">
+                <h2>Packing Transport</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Value (Transport)</th>
+                            <th>Value ( Complete)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach ($data6 as $row2)
+                            @foreach ($row2 as $key => $value2)
+                                @if(!empty($value2))
+                                
+                                    <tr>
+                                        <th>{{ $key }}</th>
+                                        <td>{{ $value2 }}</td>
+                                        <td>
+                                            @foreach ($data_6 as $row_2)
+                                                @if(isset($row_2->$key) && !empty($row_2->$key))
+                                                    {{ $row_2->$key }}
+                                                    @break
+                                                @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

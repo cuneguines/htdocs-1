@@ -63,7 +63,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 function generateHTMLFromResponse_for_eng(response) {
     var html = '<form id="EngineerinForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
-    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Engineering</legend>';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Engineering</legend>';
     
     $.each(response, function (index, item) {
         html+='<div style="width:97%">';
@@ -82,7 +82,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<label>Reference Job/Master File Document: </label>';
         if (item.reference_job_master_file_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.reference_job_master_file_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.reference_job_master_file_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.reference_job_master_file_document+'</a>';
            // html += '<input type="text" name="existing_reference_job_master_file_document" value="' + item.reference_job_master_file_document + '" readonly>';
             //html += '<input type="file" name="reference_job_master_file_document_new">';
             html += downloadLink;
@@ -99,7 +99,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Concept Design Document: </label>';
         if (item.concept_design_document) {
-            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
             var downloadLink = '<a href="' + filePath + '" download>'+item.concept_design_document+'</a>';
            // html += '<input type="text" name="existing_concept_design_document" value="' + item.concept_design_document + '" readonly>';
             //html += '<input type="file" name="concept_design_document_new">';
@@ -118,7 +118,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<label>Design Validation Document: </label>';
         if (item.design_validation_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.design_validation_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.design_validation_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.design_validation_document+'</a>';
            // html += '<input type="text" name="existing_design_validation_document" value="' + item.design_validation_document + '" readonly>';
            // html += '<input type="file" name="design_validation_document_new">';
             html += downloadLink;
@@ -135,8 +135,8 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Customer Approval Document: </label>';
         if (item.customer_approval_document) {
-            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.customer_approval_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.customer_approval_document+'</a>';
+            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYUPLOADS/engineer_task/' + item.process_order_number + '/' + item.customer_approval_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.customer_approval_document+'</a>';
             //html += '<input type="text" name="existing_customer_approval_document" value="' + item.customer_approval_document + '" readonly>';
            // html += '<input type="file" name="customer_approval_document_new">';
             html += downloadLink;
@@ -154,7 +154,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<label>Sample Approval Document: </label>';
         if (item.sample_approval_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.sample_approval_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.sample_approval_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.sample_approval_document+'</a>';
             //html += '<input type="text" name="existing_sample_approval_document" value="' + item.sample_approval_document + '" readonly>';
            // html += '<input type="file" name="sample_approval_document_new">';
             html += downloadLink;

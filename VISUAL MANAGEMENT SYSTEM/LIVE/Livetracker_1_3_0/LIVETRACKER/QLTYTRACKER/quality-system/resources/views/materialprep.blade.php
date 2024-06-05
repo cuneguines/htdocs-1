@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>Main Task 4: Material Preparation</legend>
+    <legend>Material Preparation</legend>
 <div style="width:97%">
     <!-- Process Order Number -->
     <div class="form-group">

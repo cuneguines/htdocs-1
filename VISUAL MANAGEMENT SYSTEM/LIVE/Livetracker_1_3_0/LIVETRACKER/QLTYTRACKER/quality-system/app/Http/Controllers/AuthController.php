@@ -50,7 +50,7 @@ class AuthController extends Controller
                 Session::put('user_id', $user->Login);
             
                // return redirect()->route view('processorders');
-               //return view('processorders');
+               return view('processorders');
                 //return view('employees');
             }
         }      

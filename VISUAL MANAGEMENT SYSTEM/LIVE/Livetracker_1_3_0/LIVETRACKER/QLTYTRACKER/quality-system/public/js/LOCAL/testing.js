@@ -19,10 +19,10 @@ function submitTestingForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     var formData = new FormData();
-    formData.set('dye_pen_document_ref', document.querySelector('[name="dye_pen_document_ref"]').value);
-    formData.set('hydrostatic_test_document_ref', document.querySelector('[name="hydrostatic_test_document_ref"]').value);
-    formData.set('pneumatic_test_document_ref', document.querySelector('[name="pneumatic_test_document_ref"]').value);
-    formData.set('fat_protocol_document_ref', document.querySelector('[name="fat_protocol_document_ref"]').value);
+    formData.set('dye_pen_document_ref', document.querySelector('[name="dyependocumentref"]').value || null);
+    formData.set('hydrostatic_test_document_ref', document.querySelector('[name="hydrostatictestdocumentref"]').value || null);
+    formData.set('pneumatic_test_document_ref', document.querySelector('[name="pneumatictestdocumentref"]').value || null);
+    formData.set('fat_protocol_document_ref', document.querySelector('[name="fatprotocoldocumentref"]').value || null);
     formData.set('sign_off_testing', document.querySelector('[name="sign_off_testing"]').value);
     formData.set('comments_testing', document.querySelector('[name="comments_testing"]').value);
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
@@ -171,7 +171,7 @@ function generateHTMLFromResponse_for_testing_old(response) {
 
         if (item.testing_document_file_name) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -255,7 +255,7 @@ function generateHTMLFromResponse_for_testing(response) {
         html += '<label for="testing_document_file_name">Testing Files:</label>';
         if (item.testing_document_file_name) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.testing_document_file_name+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.testing_document_file_name+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -387,6 +387,13 @@ function generateCompleteHTMLFromResponse_for_testing(item) {
             '<input type="checkbox" id="fat_protocol_c" name="fat_protocol_c" >' :
             '<input type="checkbox" id="fat_protocol_c" name="fat_protocol_c" disabled>');
     html += '</div><br>';
+
+    html += '<div class="testing_field">';
+    html +=
+        '<label>FAT Protocol Test Document Ref:</label>' +
+        '<input style="width:100%"type="text" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '" disabled>';
+    html += '</div><br>';
+
     html += '<div class="signoff_field">';
     html +=
         '<label>Sign-off for Testing:</label>' +
@@ -536,10 +543,10 @@ function resetTesting() {
     $('input[name="fat_protocol"]').prop("checked", false);
 
     // Disable dropdowns
-    $('select[name="dye_pen_document_ref"]').prop("disabled", true);
-    $('select[name="hydrostatic_test_document_ref"]').prop("disabled", true);
-    $('select[name="pneumatic_test_document_ref"]').prop("disabled", true);
-    $('select[name="fat_protocol_document_ref"]').prop("disabled", true);
+    $('select[name="dyependocumentref"]').val("NULL");
+    $('select[name="hydrostatictestdocumentref"]').val("NULL");
+    $('select[name="pneumatictestdocumentref"]').val("NULL");
+    $('select[name="fatprotocoldocumen_ref"]').val("NULL");
 
     // Reset text inputs
     $('input[name="sign_off_testing"]').val("");
@@ -619,18 +626,50 @@ function Testing(processOrder, userName) {
                 );
 
                 // Set dropdown selections
-                $('select[name="dye_pen_document_ref"]').val(
+                if(response.data.dye_pen_document_ref)
+                $('select[name="dyependocumentref"]').val(
                     response.data.dye_pen_document_ref
                 );
-                $('select[name="hydrostatic_test_document_ref"]').val(
+
+                else
+
+
+{
+                $('select[name="dyependocumentref"]').val("NULL");
+}
+             
+              
+           
+            if(response.data.hydrostatic_test_document_ref)
+{
+                $('select[name="hydrostatictestdocumentref"]').val(
                     response.data.hydrostatic_test_document_ref
                 );
-                $('select[name="pneumatic_test_document_ref"]').val(
+            }
+            else
+            {
+                $('select[name="hydrostatictestdocumentref"]').val("NULL"); 
+            }
+            if(response.data.pneumatic_test_document_ref)
+                {
+                $('select[name="pneumatictestdocumentref"]').val(
                     response.data.pneumatic_test_document_ref
                 );
-                $('select[name="fat_protocol_document_ref"]').val(
+            }
+            else
+            {
+                $('select[name="pneumatictestdocumentref"]').val("NULL");
+            }
+            if( response.data.fat_protocol_document_ref)
+                {
+                $('select[name="fatprotocoldocumentref"]').val(
                     response.data.fat_protocol_document_ref
                 );
+            }
+            else
+            {
+                $('select[name="fatprotocoldocumen_ref"]').val("NULL");
+            }
 
 
                 $('#old_testing_documents').text(response.data.testing_document_file_name);

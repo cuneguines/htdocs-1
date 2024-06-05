@@ -211,8 +211,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_weld_map;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -226,8 +225,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_pqr;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -241,8 +239,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_wps;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -256,8 +253,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_wpq;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -271,8 +267,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_wire_certificate;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -286,8 +281,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_gas_data_sheet;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -309,8 +303,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
                 item.ProcessOrderID +
                 "/" +
                 item.link_to_plant_cert;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download</a>';
             html += downloadLink;
         } else {
             html += "-";
@@ -349,8 +342,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_weld_map;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_weld_map+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_weld_map+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -371,8 +363,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_pqr;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_pqr+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_pqr+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -394,8 +385,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_wps;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_wps+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_wps+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -417,8 +407,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_wpq;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_wpq+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_wpq+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -439,8 +428,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_wire_certificate;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_wire_certificate+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_wire_certificate+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -461,8 +449,7 @@ function generateHTMLFromResponse_for_welding(response) {
                 item.ProcessOrderID +
                 '/' +
                 item.link_to_gas_data_sheet;
-            var downloadLink =
-                '<a href="' + filePath + '" download>'+item.link_to_gas_data_sheet+'</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_gas_data_sheet+'</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -502,8 +489,7 @@ function generateHTMLFromResponse_for_welding(response) {
                     item.ProcessOrderID +
                     '/' +
                     item.link_to_plant_cert;
-                var downloadLink =
-                    '<a href="' + filePath + '" download>'+item.link_to_plant_cert+'</a>';
+                    var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.link_to_plant_cert+'</a>';
                 html += downloadLink;
             } else {
                 html += '-';

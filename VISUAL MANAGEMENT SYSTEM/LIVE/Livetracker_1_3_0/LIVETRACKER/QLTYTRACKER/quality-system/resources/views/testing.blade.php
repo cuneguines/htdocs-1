@@ -13,11 +13,10 @@
     <div class="form-group">
         <label>
             Dye Penetrant Procedure:
-            <input type="checkbox" name="dye_pen_test" onchange="toggleDropdown(this, 'dye_pen_document_ref')">
-            <select style="width:100%"name="dye_pen_document_ref" disabled>
+            <input type="checkbox" name="dye_pen_test" onchange="Show(this, 'dyependocumentref')">
+            <select style="width:100%"name="dyependocumentref" >
             <option value="NULL">NULL</option>
-            
-                <option value="PED Standard">PED Standard</option>
+            <option value="PED Standard">PED Standard</option>
                 <option value="ASME Standard">ASME Standard</option>
                 <option value="Leak Through Test">Leak Through Test</option>
                 <!-- Add more options as needed -->
@@ -29,8 +28,8 @@
     <div class="form-group">
         <label>
             Hydrostatic Leak Test:
-            <input type="checkbox" name="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatic_test_document_ref')">
-            <select style="width:100%"name="hydrostatic_test_document_ref" disabled>
+            <input type="checkbox" name="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatictestdocumentref')">
+            <select style="width:100%"name="hydrostatictestdocumentref" >
             <option value="NULL">NULL</option>
                 <option value="KS-HD-01">KS-HD-01</option>
                
@@ -43,8 +42,8 @@
     <div class="form-group">
         <label>
             Pneumatic Leak Test:
-            <input type="checkbox" name="pneumatic_test" onchange="toggleDropdown(this, 'pneumatic_test_document_ref')">
-            <select style="width:100%"name="pneumatic_test_document_ref" disabled>
+            <input type="checkbox" name="pneumatic_test" onchange="toggleDropdown(this, 'pneumatictestdocumentref')">
+            <select style="width:100%"name="pneumatictestdocumentref" >
             <option value="NULL">NULL</option>
                 <option value="KS-PN-01">KS-PN-01</option>
                
@@ -57,8 +56,8 @@
     <div class="form-group">
         <label>
             FAT:
-            <input type="checkbox" name="fat_protocol" onchange="toggleDropdown(this, 'fat_protocol_document_ref')">
-            <select style="width:100%" name="fat_protocol_document_ref" disabled>
+            <input type="checkbox" name="fat_protocol" onchange="toggleDropdown(this, 'fatprotocoldocumentref')">
+            <select style="width:100%" name="fatprotocoldocumentref" >
             <option value="NULL">NULL</option>
  
 

@@ -50,7 +50,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         html += '<label for="production_drawings_document">Production Drawings Document:</label>';
         if (item.production_drawings_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.production_drawings_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.production_drawings_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.production_drawings_document+'</a>';
            //html += '<input type="file" id="production_drawings_document" name="production_drawings_document">';
             html += downloadLink;
         } else {
@@ -67,7 +67,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         html += '<label for="bom_document">BOM Document:</label>';
         if (item.bom_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.bom_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.bom_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.bom_document+'</a>';
             //html += '<input type="file" id="bom_document" name="bom_document">';
             html += downloadLink;
         } else {
@@ -84,7 +84,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         html += '<label for="machine_programming_files_document">Machine Programming Document:</label>';
         if (item.machine_programming_files_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.machine_programming_files_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.machine_programming_files_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.machine_programming_files_document+'</a>';
             //html += '<input type="file" id="machine_programming_files_document" name="machine_programming_files_document">';
             html += downloadLink;
         } else {
@@ -101,7 +101,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         html += '<label for="ndt_documentation_document">NDT Documentation Document:</label>';
         if (item.ndt_documentation_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.ndt_documentation_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.ndt_documentation_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.ndt_documentation_document+'</a>';
             //html += '<input type="file" id="ndt_documentation_document" name="ndt_documentation_document">';
             html += downloadLink;
         } else {
@@ -118,7 +118,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         html += '<label for="quality_documents_document">Quality Documents Document:</label>';
         if (item.quality_documents_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.quality_documents_document;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.quality_documents_document+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.quality_documents_document+'</a>';
           //  html += '<input type="file" id="quality_documents_document" name="quality_documents_document">';
             html += downloadLink;
         } else {

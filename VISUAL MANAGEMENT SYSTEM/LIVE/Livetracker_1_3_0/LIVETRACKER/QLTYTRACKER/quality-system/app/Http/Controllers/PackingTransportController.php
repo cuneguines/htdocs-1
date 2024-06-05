@@ -122,6 +122,7 @@ public function uploadImages_CompleteTransport(Request $request)
     
         $processOrder = $request->input('process_order_number');
         $uuid = $request->input('uuid_qlty');
+        $username = $request->input('username');
        // Get the maximum batch number for the process order
       $maxBatchNumber = ImageDataCompleteTransport::where('process_order_id', $processOrder)
       ->max('batch_number');
@@ -129,7 +130,7 @@ public function uploadImages_CompleteTransport(Request $request)
         // Determine the new batch number
      $batchNumber = $maxBatchNumber === null ? 1 : $maxBatchNumber + 1;
         // Check if the process order folder exists, if not, create it
-        $folderPath = 'public/images_transport_complete/' . $processOrder . '/' . $uuid . '/';
+        $folderPath = 'public/images_transport_complete/' . $processOrder . '/' ;
         if (!\Storage::exists($folderPath)) {
             \Storage::makeDirectory($folderPath);
         }
@@ -139,7 +140,7 @@ public function uploadImages_CompleteTransport(Request $request)
     
             foreach ($request->file('images') as $image) {
                 // Generate a unique name for the image
-                $imageName = time().'_'.$image->getClientOriginalName();
+                $imageName = $username.(gmdate("Y_m_d__H_i_s", time())).'_'.$image->getClientOriginalName();
                 
                 // Store the image to the local storage
                 $image->storeAs($folderPath, $imageName);
@@ -177,13 +178,8 @@ public function uploadImages_CompleteTransport(Request $request)
 
         // Retrieve filenames with the highest batch number for the given process order and UUID
         $filenames = ImageDataCompleteTransport::where('process_order_id', $processOrderId)
-            ->where('uuid', $uuid)
-            ->where('batch_number', function ($query) use ($processOrderId) {
-                $query->selectRaw('max(batch_number)')
-                ->from('QUALITY_PACK.dbo.imageData_CompleteTransport')
-                ->whereColumn('process_order_id', 'QUALITY_PACK.dbo.imageData_CompleteTransport.process_order_id')
-                ->where('process_order_id', $processOrderId);
-            })
+           // ->where('uuid', $uuid)
+            
             ->pluck('filename')
             ->toArray();
 

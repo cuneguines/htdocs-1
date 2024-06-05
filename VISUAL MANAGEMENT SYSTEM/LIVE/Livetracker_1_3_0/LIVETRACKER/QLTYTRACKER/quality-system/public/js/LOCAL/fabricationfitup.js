@@ -143,7 +143,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '<label for="link_to_drawing">Link to Drawing:</label>';
         if (item.LinkToDrawing) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/fabricationfitup_task/' + item.ProcessOrder + '/' + item.LinkToDrawing;
-            var downloadLink = '<a href="' + filePath + '" download>' +item.LinkToDrawing +'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>' +item.LinkToDrawing +'</a>';
             html += downloadLink;
         } else {
             html += '-';

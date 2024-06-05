@@ -1,5 +1,5 @@
 <fieldset>
-                        <legend>Main Task 1: Planning / Forward Engineering</legend>
+                        <legend> Planning / Forward Engineering</legend>
                         <div style="width:97%">
                         <!-- Process Order Number -->
                         <div class="form-group">

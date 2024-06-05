@@ -506,9 +506,9 @@ function displayPackingTransportResults(values) {
                     console.log(imageUrl);
                     console.log(values.data.process_order_number.trim());
                     imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                    imagesHtml += '<a href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
-                    imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
-                  imagesHtml+='<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/50000/1fa98025-696b-4e6c-be49-68108d110d7b/1716740385_Pic2.jpg">';
+                    imagesHtml += '<a target = "_blank"href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/'   + imageUrl + '" download>';
+                    imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/' + values.data.process_order_number.trim() + '/'  + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                 // imagesHtml+='<img src="http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/50000/1fa98025-696b-4e6c-be49-68108d110d7b/1716740385_Pic2.jpg">';
                                         // http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_transport_complete/50000/c2573be1-c302-48a9-9323-8c4efaa5a158/1716378927_Pic2.jpg
                 });
             } else {

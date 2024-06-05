@@ -17,6 +17,7 @@ class QualityFormData extends Model
         'sign_off_quality',
         'process_order_number',
         'uiid',
+        'uploadimages',
         
     ];
 }

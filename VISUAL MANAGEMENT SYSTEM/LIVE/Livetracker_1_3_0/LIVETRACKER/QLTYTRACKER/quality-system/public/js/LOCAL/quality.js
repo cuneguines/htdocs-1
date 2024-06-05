@@ -85,7 +85,7 @@ function uploadImages_CompleteQLTY() {
 
 }
 function submitQualityForm() {
-    uploadImages_QLTY();
+    //uploadImages_QLTY();
     // Function to handle image upload
 
 
@@ -100,7 +100,7 @@ function submitQualityForm() {
         uuid: document.getElementById('uuidDisplay').textContent || null,
         sign_off_quality: document.querySelector('[name="sign_off_quality"]').value,
         comments_quality: document.querySelector('[name="comments_quality"]').value,
-        
+        uploadimages:document.querySelector('[name="upload_images"]').checked ? 'Yes' : 'No',
         // Add other form fields accordingly
     };
     console.log(formData);
@@ -278,6 +278,14 @@ function generateHTMLFromResponse_for_quality(response) {
 
 
             html += '</div><br>';
+
+
+            html += '<div class="quality-field">';
+            html += '<label for="upload_images">Upload Images:</label>';
+            html += '<input style="width:98%"type="text" id="upload_images" name="walk_down_visual_inspection"' + (item.PhotoGrahicRecord ? ' checked disabled' : 'disabled') + '>';
+
+
+            html += '</div><br>';
         
             
             html += '<div class="quality-field">';
@@ -332,7 +340,17 @@ function generateHTMLFromResponse_for_quality(response) {
         html += '<div class="quality-field">';
         html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
         html+='<br>';
-        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection ? ' checked disabled' : ' disabled') + '>';
+        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection=="1" ? ' checked disabled' : ' disabled') + '>';
+
+        html += '</div><br>';
+
+
+        
+        html += '<div class="quality-field">';
+        html += '<label for="upload_images">Upload Images:</label>';
+        html+='<br>';
+        html += '<input type="checkbox" id="upload_images" name="walk_down_visual_inspection"' + (response.uploadimages =="1"? ' checked disabled' : 'disabled') + '>';
+
 
         html += '</div><br>';
         
@@ -486,7 +504,7 @@ function generateCompleteHTMLFromResponse_for_quality(item) {
      //uuidDisplay_qlty.textContent =uuid;
     html += '<form id="quality_complete_form">';
 
-    //html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
+    html += '<div name="uuidDisplay_qlty" id="uuidDisplay_qlty">' + uuid + '</div>';
         html += '<div class="quality_item">';
        // html += '<label>ID: ' + item.ID + '</label><br>';
         html += '<div class="quality_item">';
@@ -622,8 +640,8 @@ console.log(values.data.process_order_number);
             images.forEach(function(imageUrl) {
                 console.log(imageUrl)
                 imagesHtml += '<div style="display: inline-block; margin-right: 10px;">';
-                imagesHtml += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" download>';
-                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + values.data.uuid + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
+                imagesHtml += '<a target = "_blank" href="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() +  '/' + imageUrl + '" download>';
+                imagesHtml += '<img src="http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/images_qlty_complete/' + values.data.process_order_number.trim() + '/' + imageUrl + '" style="max-width: 50px; max-height: 50px;"></a></div>';
             });
         } else {
             imagesHtml += '-';
@@ -759,6 +777,7 @@ function fetchImages_cmplt(id, callback) {
 function resetQualityForm() {
     // Uncheck checkboxes
     $('#walk_down_visual_inspection').prop('checked', false);
+    $('#upload_images').prop('checked', false);
 
     // Clear text inputs
     $('#sign_off_quality').val('');
@@ -808,10 +827,11 @@ console.log(response);
                 $.each(response, function() {
                     $('#process_order_number_quality').val(processOrder);
                     $('input[name="walk_down_visual_inspection"]').prop('checked', response.walk_down_visual_inspection==="1");
-
+                    $('input[name="upload_images"]').prop('checked', response.uploadimages==="1");
                     // Other fields
                     $('#sign_off_quality').val(userName);
                     $('#comments_quality').val(response.comments_quality);
+                    //$('#upload_images').val(response.uploadimages);
 
                     // File input fields
                   //  $('#images_filename').text(item.images);

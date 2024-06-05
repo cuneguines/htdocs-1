@@ -577,7 +577,7 @@ function generateHTMLFromResponse_for_kitting_old(response) {
         html += '<td style="text-align:center;">';
         if (item.kitting_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -635,7 +635,7 @@ function generateHTMLFromResponse_for_kitting(response) {
         html += '<label for="link_to_drawing">Link to Drawing:</label>';
         if (item.kitting_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.kitting_file+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.kitting_file+'</a>';
             
             html += downloadLink;
         } else {

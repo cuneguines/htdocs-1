@@ -1,6 +1,6 @@
 <fieldset>
 
-    <legend>Main Task 1: Engineering Checks</legend>
+    <legend>Quality Checks</legend>
     <div style="width:97%">
     <div class="form-group">
         <label>

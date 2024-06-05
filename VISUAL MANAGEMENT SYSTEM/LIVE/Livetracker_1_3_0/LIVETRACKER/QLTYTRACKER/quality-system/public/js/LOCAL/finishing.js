@@ -294,7 +294,7 @@ console.log(response);
        
         if (item.pickle_passivate_document_file_name) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.pickle_passivate_document_file_name;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.pickle_passivate_document_file_name + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.pickle_passivate_document_file_name + '</a>';
             html += downloadLink;
         } else {
             html += '';
@@ -316,7 +316,7 @@ console.log(response);
         html += '<label for="select_kent_finish_document_file_name">Required Finish Applied Documents:</label>';
         if (item.select_kent_finish_document_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.process_order_number +'/'+item.select_kent_finish_document_file;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.select_kent_finish_document_file + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.select_kent_finish_document_file + '</a>';
             html += downloadLink;
         } else {
             html += '-';

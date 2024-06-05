@@ -61,8 +61,8 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
                 item.process_order_number +
                 "/" +
                 item.material_identification_record_file;
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download Material Identification Record</a>';
+           
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download Material Identification Record</a>';
            // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
 
@@ -94,8 +94,7 @@ function generateCompleteHTMLFromResponse_for_material_preparation(response) {
                 "/" +
                 item.material_traceability_file;
                 
-            var downloadLink =
-                '<a href="' + filePath + '" download>Download Material Traceability Cert</a>';
+                var downloadLink = '<a href="' + filePath + '" target="_blank">Download Material Traceability Cert</a>';
            // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
 
@@ -162,7 +161,7 @@ if (item.deburring === "on") {
         html += '<div class="material_field">';
         html +=
             '<label>Sign Off:</label>' +
-            '<input style="width:100%"type="text" name="sign_off_material_preparation" value="' + userName + '">' +
+            '<input style="width:100%"type="text" name="sign_off_material_preparation_c" value="' + userName + '">' +
             '</div><br>';
 
         html += '<div class="material_field">';
@@ -254,7 +253,7 @@ function submitMaterialCompletePreparationForm() {
       //  ),
         //material_traceability_file: getFileName("material_traceability_file"),
         sign_off_material_preparation: document.querySelector(
-            '[name="sign_off_material_preparation"]'
+            '[name="sign_off_material_preparation_c"]'
         ).value,
         comments_material_preparation: document.querySelector(
             '[name="comments_material_preparation"]'
@@ -482,7 +481,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
     var html = '<form id="materialPreparationForm" class="material-preparation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Material Preparation</legend>';
-
+    html+='<div style="width:97%">';
     $.each(response, function(index, item) {
         
         html += '<div class="form-group">';
@@ -505,7 +504,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
         if (item.material_identification_record) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.material_identification_record+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.material_identification_record+'</a>';
             //html += '<input type="file" id="material_identification_record" name="material_identification_record">';
             
             html +=downloadLink;
@@ -518,7 +517,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += '<label for="material_identification_record_file">Material Identification Record File:</label>';
         if (item.material_identification_record_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record_file;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.material_identification_record_file+'</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.material_identification_record_file+'</a>';
             //html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
          
             html+=downloadLink;
@@ -540,7 +539,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         }
         if (item.material_traceability_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_traceability_file;
-            var downloadLink = '<a href="' + filePath + '" download>'+item.material_traceability_file+ '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.material_traceability_file+ '</a>';
            // html += '<input type="file" id="material_traceability_file" name="material_traceability_file">';
             
             html +=downloadLink;
@@ -585,13 +584,13 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
         html += '<div class="form-group">';
         html += '<label for="comments_material_preparation">Comments:</label>';
-        html += '<textarea id="comments_material_preparation" name="comments_material_preparation">' + (item.comments_material_preparation || '') + '</textarea>';
+        html += '<textarea  style="width:100%"id="comments_material_preparation" name="comments_material_preparation">' + (item.comments_material_preparation || '') + '</textarea>';
         html += '</div>';
 
         html += '<hr>'; // Add a separator between items
     });
 
-  
+    html+='</div>';
     html += '</fieldset></form>';
 
     return html;

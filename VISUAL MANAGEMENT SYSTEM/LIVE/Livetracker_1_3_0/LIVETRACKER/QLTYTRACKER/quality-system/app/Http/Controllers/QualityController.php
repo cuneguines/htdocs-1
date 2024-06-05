@@ -22,7 +22,7 @@ class QualityController extends Controller
         $qualityData->sign_off_quality = $request->input('sign_off_quality');
         $qualityData->process_order_number = $request->input('process_order_number');
         $qualityData->uuid = $request->input('uuid');
-        
+        $qualityData->uploadimages= $request->input('uploadimages')=== 'Yes' ? true : false;
 
         $qualityData->save();
 

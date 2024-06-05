@@ -132,7 +132,7 @@ function generateHTMLFromResponse_for_sub_contract_old(response) {
 
         if (item.sub_contract_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -177,7 +177,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         html += '<label for="sub_contract_file">Sub-Contract File:</label>';
         if (item.sub_contract_file) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += downloadLink;
         } else {
             html += '-';
@@ -286,6 +286,17 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
         '<input style="width:100%"type="text" name="submission_date" value="' + item.submission_date + '" disabled>';
     html += '</div><br>';
 
+//SC 
+
+html += '<div class="sub_contract_field">';
+html +=
+    '<label>Status:</label>' +
+    '<select style="width:100%"name="status_c">' +
+    '<option value="partially_completed">Partially Completed</option>' +
+    '<option value="completed">Completed</option>' +
+    '</select>' +
+    '</div><br>';
+
     // Quantity Field
     html += '<div class="sub_contract_field">';
     html +=
@@ -319,6 +330,7 @@ function submitCompleteSubContractForm() {
         sub_contract_action: document.querySelector('[name="sub_contract_action_c"]').value,
         sign_off_sub_contract: document.querySelector('[name="sign_off_sub_contract_c"]').value,
         quantity: document.querySelector('[name="quantity_c"]').value,
+        status: document.querySelector('[name="status_c"]').value,
         // Add other form fields accordingly
     };
 

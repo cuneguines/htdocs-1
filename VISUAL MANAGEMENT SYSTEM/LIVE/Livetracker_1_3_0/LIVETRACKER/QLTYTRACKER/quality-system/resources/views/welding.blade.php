@@ -1,10 +1,10 @@
 <fieldset>
-    <legend>Main Task 3: Welding Tasks</legend>
-
+    <legend>Welding Tasks</legend>
+    <div style="width:97%">
     <!-- Process Order Number -->
     <div class="form-group">
         <label>
-            <input type="text" name="process_order_number_welding" id="process_order_number_welding" readonly>
+            <input  <input style="width:100%"type="text" name="process_order_number_welding" id="process_order_number_welding" readonly>
             Process Order Number
         </label>
     </div>
@@ -17,7 +17,7 @@
        
     </div>
     <div class="form-group">
-        <label  class="upload-label">Link to Weld Map: <br>
+        <label  class="upload-label">Link to Weld Map: <br><br>
             <span id="old_weld_map_filename"></span>
             <input type="file" name="link_to_weld_map" id="link_to_weld_map" required>
             <button type="button" onclick="clear_link_to_weld_map()">Clear File</button>
@@ -31,7 +31,7 @@
         
     </div>
     <div class="form-group">
-        <label  class="upload-label">Link to PQR: <br>
+        <label  class="upload-label">Link to PQR: <br><br>
             <span id="old_pqr_filename"></span>
             <input type="file" name="link_to_pqr" id="link_to_pqr" required>
             <button type="button" onclick="clear_link_to_pqr()">Clear File</button>
@@ -45,7 +45,7 @@
        
     </div>
     <div class="form-group">
-        <label  class="upload-label">Link to Approved WPS: <br>
+        <label  class="upload-label">Link to Approved WPS: <br><br>
             <span id="old_wps_filename"></span>
             <input type="file" name="link_to_wps" id="link_to_wps" required>
             <button type="button" onclick="clear_link_to_wps()">Clear File</button>
@@ -61,7 +61,7 @@
         
     </div>
     <div class="form-group">
-        <label  class="upload-label">Link to WPQ Certificate: <br>
+        <label  class="upload-label">Link to WPQ Certificate: <br><br>
             <span id="old_wpq_filename"></span>
             <input type="file" name="link_to_wpq" id="link_to_wpq" required>
             <button type="button" onclick="clear_link_to_wpq()">Clear File</button>
@@ -76,7 +76,7 @@
     </div>
 
     <div class="form-group">
-        <label  class="upload-label">Link to Material Certificate: <br>
+        <label  class="upload-label">Link to Material Certificate: <br><br>
             <span id="old_wire_certificate_filename"></span>
             <input type="file" name="link_to_wire_certificate" id="link_to_wire_certificate" required>
             <button type="button" onclick="clear_link_to_wire_certificate()">Clear File</button>
@@ -91,7 +91,7 @@
     </div>
 
     <div class="form-group">
-        <label  class="upload-label">Link to Gas Data Sheet: <br>
+        <label  class="upload-label">Link to Gas Data Sheet: <br><br>
             <span id="old_gas_data_sheet_filename"></span>
             <input type="file" name="link_to_gas_data_sheet" id="link_to_gas_data_sheet" required>
             <button type="button" onclick="clear_link_to_gas_data_sheet()">Clear File</button>
@@ -126,7 +126,7 @@
     </div>
 
     <div class="form-group">
-        <label  class="upload-label">Link to Plant Cert: <br>
+        <label  class="upload-label">Link to Plant Cert: <br><br>
             <span id="old_plant_cert_filename"></span>
             <input type="file" name="link_to_plant_cert" id="link_to_plant_cert" required>
             <button type="button" onclick="clear_link_to_plant_cert()">Clear File</button>
@@ -193,17 +193,18 @@
     <!-- Sign-off for Welding Tasks -->
     <div class="form-group">
         <label>Sign-off for Welding Tasks:</label>
-        <input type="text" name="sign_off_welding" id="sign_off_welding" value="${username}">
+        <input  <input style="width:100%"type="text" name="sign_off_welding" id="sign_off_welding" value="${username}">
     </div>
 
     <!-- Comments for Welding Tasks -->
     <div class="form-group">
         <label>Comments for Welding Tasks:</label>
-        <textarea name="comments_welding" id="comments_welding" rows="4" cols="50"></textarea>
+        <textarea  <input style="width:100%"name="comments_welding" id="comments_welding" rows="4" cols="50"></textarea>
     </div>
 
     <!-- Submit button -->
     <button type="submit" onclick="submitWeldingForm('${processOrder}')">Submit Welding Form</button>
+</div>
 </fieldset>
 
 <script>

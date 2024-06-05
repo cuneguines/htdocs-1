@@ -70,7 +70,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + (item.purchase_order_received === 'true' ? '✔' : '') + '</td>'; // Show tick if 'reference_job_master_file' is 'on'
          if (item.purchase_order_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
             html += '<td></td>'; // Empty cell if 'reference_job_master_file_document' is empty
@@ -79,7 +79,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
         html += '<td>' + (item.project_schedule_agreed === 'true' ? '✔' : '') + '</td>'; // Show tick if 'reference_job_master_file' is 'on'
         if (item.project_schedule_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
             html += '<td></td>'; // Empty cell if 'reference_job_master_file_document' is empty
@@ -88,7 +88,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
 
         if (item.quotation_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.quotation_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
             html += '<td></td>'; // Empty cell if 'reference_job_master_file_document' is empty
@@ -99,7 +99,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
 
         if (item.user_requirement_specifications_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
-            var downloadLink = '<a href="' + filePath + '" download>Download File</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
             html += '<td>' + downloadLink + '</td>';
         } else {
             html += '<td></td>'; // Empty cell if 'reference_job_master_file_document' is empty
@@ -131,7 +131,7 @@ function generateHTMLFromResponse_for_planning(response) {
   
     var html = '<form id="planningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
-    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 1: Planning / Forward Engineering</legend>';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;"> Planning / Forward Engineering</legend>';
     html+='<div style="width:97%">';
     $.each(response, function (index, item) {
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -143,7 +143,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<label for="purchase_order_document_' + index + '" style="">Purchase Order Document:</label>';
         if (item.purchase_order_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.purchase_order_document;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.purchase_order_document + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.purchase_order_document + '</a>';
             html += downloadLink;
         } else {
             html += 'No file uploaded';
@@ -159,7 +159,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<label for="project_schedule_document_' + index + '" style="">Project Schedule Document:</label>';
         if (item.project_schedule_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.project_schedule_document;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.project_schedule_document + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.project_schedule_document + '</a>';
             html += downloadLink;
         } else {
             html += 'No file uploaded';
@@ -175,7 +175,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<label for="quotation_document_' + index + '" style="">Quotation Document:</label>';
         if (item.quotation_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.quotation_document;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.quotation_document + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.quotation_document + '</a>';
             html += downloadLink;
         } else {
             html += 'No file uploaded';
@@ -191,7 +191,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<label for="user_requirement_specifications_document_' + index + '" style="">User Requirement Specifications Document:</label>';
         if (item.user_requirement_specifications_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.user_requirement_specifications_document;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.user_requirement_specifications_document + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.user_requirement_specifications_document + '</a>';
             html += downloadLink;
         } else {
             html += 'No file uploaded';
@@ -207,7 +207,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<label for="pre_engineering_check_document_' + index + '" style="">Pre Engineering Check Document:</label>';
         if (item.pre_engineering_check_document) {
             var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/planning_task/' + item.process_order_number + '/' + item.pre_engineering_check_document;
-            var downloadLink = '<a href="' + filePath + '" download>' + item.pre_engineering_check_document + '</a>';
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.pre_engineering_check_document + '</a>';
             html += downloadLink;
         } else {
             html += 'No file uploaded';

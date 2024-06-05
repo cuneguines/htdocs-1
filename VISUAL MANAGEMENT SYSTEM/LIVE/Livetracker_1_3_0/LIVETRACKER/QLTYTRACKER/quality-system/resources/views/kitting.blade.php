@@ -1,5 +1,5 @@
 <fieldset>
-    <legend>Main Task 3: Kitting</legend>
+    <legend> Kitting</legend>
 <div style="width:97%">
     <!-- Process Order Number -->
     <div class="form-group">
