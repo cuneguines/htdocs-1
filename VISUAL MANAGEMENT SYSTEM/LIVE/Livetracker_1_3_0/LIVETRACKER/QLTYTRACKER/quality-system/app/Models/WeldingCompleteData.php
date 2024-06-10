@@ -31,6 +31,7 @@ class WeldingCompleteData extends Model
         'comments_welding_complete',
         'status',
         'quantity',
+        'sign_offw_c',
         // Add other fields as needed
     ];
 

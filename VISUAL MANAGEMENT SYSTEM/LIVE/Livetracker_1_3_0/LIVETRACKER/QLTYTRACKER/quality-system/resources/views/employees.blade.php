@@ -35,14 +35,23 @@
         </div>
         <div>
             <label for="department">Department:</label>
-            <select id="department" name="department" required>
-                <option value="">Select Department</option>
-                <option value="01-Fabrication 1">01-Fabrication 1</option>
-                <option value="02-Material Prep">02-Material Prep</option>
-                <option value="03-HR">03-HR</option>
-                <option value="04-Supply Chain">04-Supply Chain</option>
-                <!-- Add more options as needed -->
-            </select>
+            <select name="department" id="department">
+    <option value="null">Select Department</option>
+    <option value="01-Fabrication 1">01-Fabrication 1</option>
+    <option value="02-Material Prep">02-Material Prep</option>
+    <option value="03-HR">03-HR</option>
+    <option value="04-Supply Chain">04-Supply Chain</option>
+    <option value="07-Maintenance">07-Maintenance</option>
+    <option value="13-Engineering - Bespoke Products">13-Engineering - Bespoke Products</option>
+    <option value="28-Engineering - Drainage">28-Engineering - Drainage</option>
+    <option value="29-Engineering - EC & Machine Build">29-Engineering - EC & Machine Build</option>
+    <option value="30-Engineering - R&D">30-Engineering - R&D</option>
+    <option value="31-Supply Chain 2">31-Supply Chain 2</option>
+    <option value="32-Manufacturing Team">32-Manufacturing Team</option>
+    <option value="34-Commercial Dept">34-Commercial Dept</option>
+    <option value="70-Fabrication 2">70-Fabrication 2</option>
+    <option value="Other">Other</option>
+</select>
         </div>
         <div>
             <label for="role">Role:</label>

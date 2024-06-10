@@ -24,7 +24,7 @@
         <!-- Responsible Person -->
         <div class="form-group">
             <label>
-                Responsible Person:
+                Engineer:
                 <input style="width:100%"type="text" name="responsible_person" value="${username}">
             </label>
         </div>

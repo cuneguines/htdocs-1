@@ -27,7 +27,8 @@ class UploadController extends Controller
         $processOrderNumber = $request->input('process_order_number');
 
         // Define the storage path
-        $storagePath = "C:/xampp/htdocs/VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYUPLOADS/engineer_task/{$processOrderNumber}";
+       // $storagePath = "C:/xampp/htdocs/VISUAL MANAGEMENT SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYUPLOADS/engineer_task/{$processOrderNumber}";
+       $storagePath = $uploadedFile->storeAs("public/engineer_task/{$processOrderNumber}", $name);
 
         // Check and create the directory if it doesn't exist
         if (!file_exists($storagePath)) {

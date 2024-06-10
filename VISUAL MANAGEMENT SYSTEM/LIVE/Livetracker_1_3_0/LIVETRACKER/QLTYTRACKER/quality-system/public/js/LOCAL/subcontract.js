@@ -169,7 +169,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
         html += '</div><br>';
         
         html += '<div class="sub-contract-field">';
-        html += '<label for="sub_contract_action">Sub-Contract Action:</label>';
+        html += '<label for="sub_contract_action">Sub-Contract Inspection Reponsibility:</label>';
         html += '<input style="width:100%"type="text" id="sub_contract_action" name="sub_contract_action" value="' + item.sub_contract_action + '">';
         html += '</div><br>';
         
@@ -264,7 +264,7 @@ function generateCompleteHTMLFromResponse_for_sub_contract(item) {
    
     html += '<div class="sub_contract_field">';
     html +=
-        '<label>Sub-Contract Action:</label>' +
+        '<label>Sub-Contract Inspection Responsibilty:</label>' +
         '<input style="width:100%"type="text" name="sub_contract_action_c" value="' + item.sub_contract_action + '" >';
     html += '</div><br>';
 

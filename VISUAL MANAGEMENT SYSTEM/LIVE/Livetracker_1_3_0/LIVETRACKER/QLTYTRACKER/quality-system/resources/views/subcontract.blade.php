@@ -13,7 +13,7 @@
     <!-- Subtask 10.1: Sub-Contract Action -->
     <div class="form-group">
         <label>
-            Sub-Contract Action:
+            Sub-Contract Inspection Responsibilty:
             <select style="width:100%"name="sub_contract_action">
                 <option value="NULL">Select Action</option>
                 <option value="Goods In">Goods In</option>

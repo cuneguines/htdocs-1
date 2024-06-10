@@ -62,15 +62,19 @@ class PDFController extends Controller
             ->get();
         $data2 = DB::table('QUALITY_PACK.dbo.Welding_Form_Data')
             ->where('ProcessOrderID', $processOrderNumber)
+            
             ->orderBy('updated_at', 'desc')
             ->limit(1)
             ->get();
 
-        $data_2 = DB::table('QUALITY_PACK.dbo.WeldingCompleteData')
+            $data_2 = DB::table('QUALITY_PACK.dbo.WeldingCompleteData')
             ->where('ProcessOrderID', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
+        
+            
             ->limit(1)
             ->get();
+
         $data3 = DB::table('QUALITY_PACK.dbo.DocumentationFormData')
             ->where('process_order_number', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
@@ -79,6 +83,8 @@ class PDFController extends Controller
 
         $data_3 = DB::table('QUALITY_PACK.dbo.DocumentationCompleteData')
             ->where('process_order_number', $processOrderNumber)
+            ->select('*','sign_off_documentation as engineer')
+
             ->orderBy('updated_at', 'desc')
             ->limit(1)
             ->get();
@@ -91,11 +97,13 @@ class PDFController extends Controller
         $data_4= DB::table('QUALITY_PACK.dbo.TestingCompleteData')
             ->where('process_order_number', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
+            ->select('*', 'sign_off as sign_off_testing','dye_pen_testing as dye_pen_test', 'hydrostatic_testing as hydrostatic_test', 'pneumatic_testing as pneumatic_test', 'fat_protocoll as fat_protocol') // Ensure column names are correct
             ->limit(1)
             ->get();
         $data5 = DB::table('QUALITY_PACK.dbo.KittingFormData')
             ->where('ProcessOrderID', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
+            
             ->limit(1)
             ->get();
 
@@ -113,15 +121,84 @@ class PDFController extends Controller
         $data_6 = DB::table('QUALITY_PACK.dbo.PackingTransportCompleteData')
             ->where('process_order_number', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
+            ->select('*','sign_off_documentation as resp_person')
+            ->limit(1)
+            ->get();
+            $data_qlty = DB::table('QUALITY_PACK.dbo.QualityFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
             ->limit(1)
             ->get();
 
+        $data_qlty_c = DB::table('QUALITY_PACK.dbo.QualityCompleteData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+           
+            ->limit(1)
+            ->get();
+            $data_finishing = DB::table('QUALITY_PACK.dbo.FinishingFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->limit(1)
+            ->get();
+
+        $data_finishing_c = DB::table('QUALITY_PACK.dbo.FinishingCompleteData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+           
+            ->limit(1)
+            ->get();
+            $data_fabfit = DB::table('QUALITY_PACK.dbo.FabricationFitUpFormData')
+            ->where('ProcessOrder', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->limit(1)
+            ->get();
+
+        $data_fabfit_c = DB::table('QUALITY_PACK.dbo.FabricationFitUpCompleteData')
+            ->where('ProcessOrder', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+           
+            ->limit(1)
+            ->get();
+
+            $data_subcontract = DB::table('QUALITY_PACK.dbo.subcontractFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->limit(1)
+            ->get();
+
+        $data_subcontract_c = DB::table('QUALITY_PACK.dbo.subcontractCompleteData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+           
+            ->limit(1)
+            ->get();
+            $data_engineering = DB::table('QUALITY_PACK.dbo.EngineeringFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->limit(1)
+            ->get();
+
+        $data_manufacturing= DB::table('QUALITY_PACK.dbo.ManufacturingFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+           
+            ->limit(1)
+            ->get();
+            $data_planning = DB::table('QUALITY_PACK.dbo.PlanningFormData')
+            ->where('process_order_number', $processOrderNumber)
+            ->orderBy('updated_at', 'desc')
+            ->limit(1)
+            ->get();
+
+        
+
         // Pass data to the view
-        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data2','data_2','data3','data_3','data6','data_6'));
+        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data2','data_2','data3','data_3','data4','data_4','data5','data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_subcontract','data_subcontract_c','data_engineering','data_manufacturing'));
 
         // Return the PDF for download
    // return $pdf->download('material_preparation_data.pdf');
       // return view('reportpdf');
-      return view('reportpdf', compact('data1', 'data_1', 'data2', 'data_2', 'data3', 'data_3', 'data4', 'data_4', 'data5', 'data_5','data6','data_6'));
+      return view('reportpdf', compact('data1', 'data_1', 'data2', 'data_2', 'data3', 'data_3', 'data4', 'data_4', 'data5', 'data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_subcontract','data_subcontract_c','data_engineering','data_manufacturing'));
     }
 }

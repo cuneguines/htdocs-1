@@ -190,7 +190,7 @@ function generateHTMLFromResponse_for_packing_transport(response) {
         html+='<br>';
         // Responsible Person
         html += '<div class="packing_transport_field">';
-        html += '<label>Responsible Person:</label><br>';
+        html += '<label>Engineer:</label><br>';
         html+='<br>';
         html += '<input style="width:100%"type="text" name="responsible_person" value="' + (item.engineer ? item.engineer : "-") + '" readonly><br>';
         html += '</div>';
