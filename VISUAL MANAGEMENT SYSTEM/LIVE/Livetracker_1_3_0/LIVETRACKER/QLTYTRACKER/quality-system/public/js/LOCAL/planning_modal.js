@@ -258,6 +258,17 @@ function submitPlanningForm() {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
 
+    var owners = [];
+    document.querySelectorAll('#planning tbody tr').forEach(function (row, index) {
+        if (index >=0) { // Skip the header row
+            owners.push({
+                type: row.cells[0].innerText.trim(),
+                owner: row.querySelector('[name="owner"]').value || null,
+                ndt: row.querySelector('[name="ndttype"]').value || null
+            });
+        }
+    });
+console.log(owners);
     const sign_off_planning = document.querySelector('[name="sign_off_planning"]').value;
     var formData = {
         purchase_order_received: document.querySelector('[name="purchase_order_received"]')?.checked || null,
@@ -286,8 +297,12 @@ function submitPlanningForm() {
         comments_planning: document.querySelector('[name="comments_planning"]').value || null,
         // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="process_order_number_planning"]').value || null,
+        owners:owners
         // Add other form fields accordingly
     };
+
+
+
     console.log(formData);
 
     // Send an AJAX request to the server
@@ -353,7 +368,7 @@ function submitPlanningForm() {
         }
     });
 
-    console.log('Planning form submitted!');
+   // console.log('Planning form submitted!');
 }
 function generatePlanningUpdateFieldTable(processOrder, qualityStep) {
 
@@ -587,7 +602,7 @@ console.log('planning');
                     $('#sign_off_planning').val(userName);
                     $('#process_order_number_planning').val(processOrder);
 
-                    // console.log(response.process_order_number);
+                    console.log(response);
                     if (response.data != null) {
                         console.log('yes po found');
                         $.each(response, function(index, item) {

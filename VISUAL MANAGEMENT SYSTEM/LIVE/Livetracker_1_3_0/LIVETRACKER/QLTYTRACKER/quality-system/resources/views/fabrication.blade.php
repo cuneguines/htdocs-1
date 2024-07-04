@@ -35,7 +35,7 @@
     <label>
     <br>
     <input type="checkbox" name="weldment_quantity">
-        Weldment quantity: Check qty against Process Order</label>
+        Weld Check</label>
     </div>
 
     <!-- Sign-off for Fabrication Fit-Up -->

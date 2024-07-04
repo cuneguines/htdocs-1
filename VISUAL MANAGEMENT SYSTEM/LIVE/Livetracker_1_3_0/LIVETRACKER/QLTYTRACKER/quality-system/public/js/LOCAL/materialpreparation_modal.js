@@ -245,6 +245,8 @@ function submitMaterialCompletePreparationForm() {
         ).value,
         material_traceability: document.querySelector('[name="compl_material_traceability"]') ? (document.querySelector('[name="compl_material_traceability"]').checked ? "on" : null) : null,
         cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+       
+
         deburring: document.querySelector('[name="compl_deburring"]') ? (document.querySelector('[name="compl_deburring"]').checked ? "on" : null) : null,
         forming: document.querySelector('[name="compl_forming"]') ? (document.querySelector('[name="compl_forming"]').checked ? "on" : null) : null,
         machining: document.querySelector('[name="compl_machining"]') ? (document.querySelector('[name="compl_machining"]').checked ? "on" : null) : null,
@@ -262,6 +264,33 @@ function submitMaterialCompletePreparationForm() {
         process_order_number: document.querySelector('[name="process_order_number_mp_c"]').value,
         // Add other form fields accordingly
     };
+
+    if(formData.cutting)
+        {
+   // cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+   formData.cutting_person = document.querySelector('[name="sign_off_material_preparation_c"]').value;
+
+}
+if(formData.deburring)
+    {
+// cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+formData.deburring_person = document.querySelector('[name="sign_off_material_preparation_c"]').value;
+
+}
+if(formData.machining)
+    {
+// cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+formData.machining_person = document.querySelector('[name="sign_off_material_preparation_c"]').value;
+
+}
+if(formData.forming)
+    {
+// cutting: document.querySelector('[name="compl_cutting"]') ? (document.querySelector('[name="compl_cutting"]').checked ? "on" : null) : null,
+formData.forming_person = document.querySelector('[name="sign_off_material_preparation_c"]').value;
+
+}
+
+
     console.log(formData);
     $.ajax({
         type: "POST",

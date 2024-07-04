@@ -12,7 +12,7 @@ catch(Exception $e){
 }
 //$Id = (!empty($_POST['id']) ? $_POST['id'] : '');
 try{
-$results="
+$results_old="
 SELECT 
        t0.U_IIS_proPrOrder[Process Order], 
        t0.DocNum[Production Order],
@@ -51,6 +51,18 @@ FROM OWOR t0
        AND ISNULL(CAST(t1.PlannedQty AS DECIMAL (12,0)),0) > 0
 	   order  by [Process Order]
 ";
+$results="select t11.TotalPlannedQty [Process Planned Time],t11.U_IIS_proPrOrder[Process Order] from IIS_EPC_PRO_ORDERH t10
+inner join	(select SUM(t4.PlannedQty) as  TotalPlannedQty,t4.U_IIS_proPrOrder
+FROM WOR1 t4 
+       inner join OITM t5 on t4.ItemCode=t5.ItemCode
+       inner join OITB t6 on t5.ItmsGrpCod=t6.ItmsGrpCod
+       inner join owor t7 on t4.docentry = t7.DocEntry
+
+       WHERE --t7.CreateDate > DATEADD(DAY,-DATEPART(DY,GETDATE()),GETDATE())AND 
+       t7.Status NOT IN ('C')
+                      AND t6.ItmsGrpNam not like '%MACHINE%'
+                      AND t5.ItemType = 'L'
+					  group by t4.U_IIS_proPrOrder) t11 on t11.U_IIS_proPrOrder=t10.PrOrder";
    $getResults = $conn->prepare($results);
    $getResults->execute();
    $qlty_results = $getResults->fetchAll(PDO::FETCH_BOTH);

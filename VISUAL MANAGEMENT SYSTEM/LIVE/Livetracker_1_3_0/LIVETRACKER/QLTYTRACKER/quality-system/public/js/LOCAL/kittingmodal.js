@@ -51,32 +51,32 @@ function generateCompleteHTMLFromResponse_for_kitting(response) {
         html +=
             '<label>Cut Formed Machine Parts:</label>' +
             (item.cut_form_mach_parts === "on" ?
-            '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" >' :
-            '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" disabled>');
+            '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts_c" >' :
+            '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts_c" disabled>');
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Bought Out Components:</label>' +
             (item.bought_out_components === "on" ?
-            '<input type="checkbox" id="bought_out_components" name="bought_out_components" >' :
-            '<input type="checkbox" id="bought_out_components" name="bought_out_components" disabled>');
+            '<input type="checkbox" id="bought_out_components" name="bought_out_components_c" >' :
+            '<input type="checkbox" id="bought_out_components" name="bought_out_components_c" disabled>');
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Fasteners and Fixings:</label>' +
             (item.fasteners_fixings === "on" ?
-            '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" >' :
-            '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" disabled>');
+            '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings_c" >' :
+            '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings_c" disabled>');
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
         html +=
             '<label>Site Pack:</label>' +
             (item.site_pack === "on" ?
-            '<input type="checkbox" id="site_pack" name="site_pack" >' :
-            '<input type="checkbox" id="site_pack" name="site_pack" disabled>');
+            '<input type="checkbox" id="site_pack" name="site_pack_c" >' :
+            '<input type="checkbox" id="site_pack" name="site_pack_c" disabled>');
         html += '</div><br>';
 
         html += '<div class="kitting_field">';
@@ -134,10 +134,10 @@ function submitKittingCompleteForm() {
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number: document.querySelector('[name="processorder"]').value, // Change this according to your needs
         //cutting: document.querySelector('[name="cutting"]').checked ? "on" : "",
-        cut_form_mach_parts: document.querySelector('[name="cut_form_mach_parts"]').checked ? "on" : "",
-        bought_out_components: document.querySelector('[name="bought_out_components"]').checked ? "on" : "",
-        fasteners_fixings: document.querySelector('[name="fasteners_fixings"]').checked ? "on" : "",
-        site_pack: document.querySelector('[name="site_pack"]').checked ? "on" : "",
+        cut_form_mach_parts: document.querySelector('[name="cut_form_mach_parts_c"]').checked ? "on" : "",
+        bought_out_components: document.querySelector('[name="bought_out_components_c"]').checked ? "on" : "",
+        fasteners_fixings: document.querySelector('[name="fasteners_fixings_c"]').checked ? "on" : "",
+        site_pack: document.querySelector('[name="site_pack_c"]').checked ? "on" : "",
         status: document.querySelector('[name="kitting_process_completion"]').value, // Include selected value of kitting_process_completion
         quantity: document.querySelector('[name="quantity"]').value, // Include selected value of kitting_process_completion
         // Add other form fields accordingly
@@ -691,6 +691,7 @@ function resetKittingForm() {
     // Reset file input values and filenames
     $('input[name="kitting_file"]').val('');
     $('#kitting_file_filename').text('');
+    $('#kitting_file_document').val('');
 
     // Show the kitting form section if it was hidden
     $('#kittingFieldset').show();
@@ -745,8 +746,8 @@ function Kitting(processOrder, userName) {
                 $('textarea[name="comments_kitting"]').val(response.data.comments_kitting);
 
                 // Set file input field
-                if (response.kitting_file_filename !== null) {
-                    $('#kitting_file_filename').text(response.data.kitting_file_filename);
+                if (response.data.kitting_file) {
+                    $('#kitting_file_filename').text(response.data.kitting_file);
                 }
 
                 // Attach handler for file input change

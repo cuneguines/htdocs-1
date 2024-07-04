@@ -23,6 +23,18 @@
 
 </head>
 <style>
+    <div class="card">
+    <div class="card-header">
+        <!-- Header content here -->
+    </div>
+    <div class="card-body" style="min-height: 700px; max-height: 700px; width: 100%; margin-top: -2%; position: relative;">
+        Allow Cookies
+        <a href="https://forms.office.com/r/hvUXiBMEX6" target="_blank" class="form-link">
+            Open Form in New Window
+        </a>
+    </div>
+</div>
+
     .active1,
     .btn:hover {
         background-color: rgb(198, 155, 64);
@@ -356,18 +368,17 @@
 
 
                 <div class="card">
-                    <div class="card-header">
-
-                    </div>
-                    <div class="card-body" style="min-height:700px;max-height:700px; width:100%;margin-top:-2%"><a href='http://login.microsoftonline.com'>Allow Cookies</a>
-                    <!-- https://forms.office.com/r/hvUXiBMEX6 -->
-                    <iframe width="100%" height= "50%"  src= " https://forms.office.com/r/hvUXiBMEX6" style= "border: none; width:100%; height:76vh"> </iframe>
-                        <!-- <?php include ''; ?> -->
-
-
-                    </div>
-
-                </div>
+    <div class="card-header">
+        <!-- Header content here -->
+    </div>
+    <div class="card-body" style="min-height: 700px; max-height: 700px; width: 100%; margin-top: -2%; position: relative;">
+        Allow Cookies
+        <a href="https://forms.office.com/r/hvUXiBMEX6" target="_blank" class="form-link">
+            Open Form in New Window
+        </a>
+    </div>
+</div>
+ 
                 <!-- Filter Starts here -->
 
                 <div class="filtercontainer" style="background-color: #337ab7;

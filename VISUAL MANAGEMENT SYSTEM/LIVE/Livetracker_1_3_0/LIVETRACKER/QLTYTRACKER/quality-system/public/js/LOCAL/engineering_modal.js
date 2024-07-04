@@ -276,7 +276,17 @@ function submitEngineeringForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     const sign_off_engineering = document.querySelector('[name="sign_off_engineering"]').value;
-    
+    var owners = [];
+    document.querySelectorAll('#engineering tbody tr').forEach(function (row, index) {
+        if (index >=0) { // Skip the header row
+            owners.push({
+                type: row.cells[0].innerText.trim(),
+                owner: row.querySelector('[name="owner"]').value || null,
+                ndt: row.querySelector('[name="ndttype"]').value || null
+            });
+        }
+    });
+console.log(owners);
     var formData = {
         reference_job_master_file: document.querySelector('[name="reference_job_master_file"]').checked || null,
         concept_design_engineering: document.querySelector('[name="concept_design_engineering"]').checked || null,
@@ -310,6 +320,7 @@ function submitEngineeringForm(processOrder) {
     ? document.querySelector('[name="process_order_number_engineering"]').value.trim()
     : null,
         // Add other form fields accordingly
+        owners:owners,
     };
     
     

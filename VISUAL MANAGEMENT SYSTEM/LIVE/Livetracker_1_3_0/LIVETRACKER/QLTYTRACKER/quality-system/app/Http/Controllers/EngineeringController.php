@@ -1,7 +1,7 @@
 <?php
 // app/Http/Controllers/EngineeringController.php
 namespace App\Http\Controllers;
-
+use App\Models\GlobalOwnerNdt; 
 use Illuminate\Http\Request;
 use App\Models\EngineeringFormData; // Make sure to import your Eloquent model
 
@@ -35,6 +35,18 @@ class EngineeringController extends Controller
         $engineeringData->save();
 
         // You can return a response or redirect as needed
+       
+        $owners = $request->input('owners');
+        foreach ($owners as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
+
         return response()->json(['data' => $engineeringData]);
 
     }

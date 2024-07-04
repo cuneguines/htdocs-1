@@ -22,6 +22,9 @@ $fabricationFitUp->Comments = $request->input('comments_fabrication_fit_up');
 $fabricationFitUp->ProcessOrder = $request->input('process_order_number');
 $fabricationFitUp->Quantity = $request->input('Quantity');
 $fabricationFitUp->Status = $request->input('status');
+$fabricationFitUp->fitupvisualcheck_person = $request->input('fitupvisualcheck_person');
+$fabricationFitUp->dimensionalcheck_person = $request->input('dimensionalcheck_person');
+$fabricationFitUp->weldcheck_person = $request->input('weldcheck_person');
 // Add other fabrication fit-up fields accordingly
 
 $fabricationFitUp->save();

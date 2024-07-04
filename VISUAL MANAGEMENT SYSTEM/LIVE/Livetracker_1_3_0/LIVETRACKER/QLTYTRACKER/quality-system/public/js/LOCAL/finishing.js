@@ -292,9 +292,10 @@ console.log(response);
 
 
        
-        if (item.pickle_passivate_document_file_name) {
-            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + item.pickle_passivate_document_file_name;
-            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.pickle_passivate_document_file_name + '</a>';
+        if (item.pickle_passivate_document_file) {
+            console.log('yes');
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/finishing_task/' + + item.process_order_number +'/'+item.pickle_passivate_document_file;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.pickle_passivate_document_file + '</a>';
             html += downloadLink;
         } else {
             html += '';
@@ -543,7 +544,7 @@ function displayFinishingCompleteResults(values) {
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    if (value=="1")
+                    if (value=="1"&&field!='Quantity')
                         {
                         resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
                         }

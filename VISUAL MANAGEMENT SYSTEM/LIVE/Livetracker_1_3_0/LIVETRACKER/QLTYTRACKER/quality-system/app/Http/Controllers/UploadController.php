@@ -42,7 +42,7 @@ class UploadController extends Controller
 
                 // Store the file in the specified location
                 $filePath = $storagePath . '/' . $name;
-                $file->move($storagePath, $name);
+                $file->storeAs($storagePath, $name);
 
                 $insert[] = [
                     'name' => $name,

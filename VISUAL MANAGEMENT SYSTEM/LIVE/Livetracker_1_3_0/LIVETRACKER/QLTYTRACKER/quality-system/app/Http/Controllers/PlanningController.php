@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PlanningFormData; 
+use App\Models\GlobalOwnerNdt; 
 class PlanningController extends Controller
 {
     //
@@ -32,9 +33,20 @@ class PlanningController extends Controller
         // Add other fields accordingly
 
         $planningData->save();
+        $owners = $request->input('owners');
+        foreach ($owners as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
 
-        // You can return a response or redirect as needed
         return response()->json(['data' => $planningData]);
+    }
+        // You can return a response or redirect as needed
+       // return response()->json(['data' => $planningData]);
 
-}
 }

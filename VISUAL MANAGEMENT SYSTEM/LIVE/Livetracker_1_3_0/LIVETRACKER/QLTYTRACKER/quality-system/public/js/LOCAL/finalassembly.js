@@ -54,7 +54,7 @@ function submitFinalAssemblyForm(processOrder) {
     var formData = new FormData();
     formData.append('process_order_number', document.querySelector('[name="process_order_number_finalassembly"]').value.trim());
    // formData.append('walk_down_inspection', document.querySelector('[name="walk_down_inspection"]').value);
-    formData.append('identification', document.querySelector('[name="attach_part_id_labels"]').value?.checked || null);
+    formData.append('identification', document.querySelector('[name="attach_part_id_labels"]').checked ? "on" : "");
     formData.append('sign_off_final_assembly', document.querySelector('[name="sign_off_final_assembly"]').value);
     formData.append('comments_final_assembly', document.querySelector('[name="comments_final_assembly"]').value);
     //formData.append('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format

@@ -23,6 +23,45 @@
 
 </head>
 <style>
+
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    padding: 20px;
+    width: 400px; /* Adjust width as needed */
+    max-width: 100%;
+    position: relative; /* Ensure relative positioning for absolute elements */
+}
+
+.card-body {
+    position: relative; /* Ensure relative positioning for absolute elements */
+}
+
+.form-link {
+    display: block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff; /* Example background color */
+    color: #fff; /* Text color */
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-link:hover {
+    background-color: #0056b3; /* Darker shade for hover */
+}
+
+.form-link:active {
+    transform: translateY(1px); /* Add subtle click effect */
+}
+
     .active1,
     .btn:hover {
         background-color: rgb(198, 155, 64);
@@ -356,18 +395,19 @@
 
 
                 <div class="card">
-                    <div class="card-header">
+                <div class="card">
+    <div class="card-header">
+        <!-- Header content here -->
+    </div>
+    <div class="card-body" style="min-height: 700px; max-height: 700px; width: 100%; margin-top: -2%; position: relative;">
+        Allow Cookies
+        <a href="https://forms.office.com/r/hvUXiBMEX6" target="_blank" class="form-link">
+            Open Form in New Window
+        </a>
+    </div>
+</div>
 
-                    </div>
-                    <div class="card-body" style="min-height:700px;max-height:700px; width:100%;margin-top:-2%">Allow Cookies
-                    <!-- https://forms.office.com/r/hvUXiBMEX6 -->
-                    <iframe width="100%" height= "50%"  src= " https://forms.office.com/r/hvUXiBMEX6" style= "border: none; width:100%; height:76vh"> </iframe>
-                        <!-- <?php include ''; ?> -->
 
-
-                    </div>
-
-                </div>
                 <!-- Filter Starts here -->
 
                 <div class="filtercontainer" style="background-color: #337ab7;

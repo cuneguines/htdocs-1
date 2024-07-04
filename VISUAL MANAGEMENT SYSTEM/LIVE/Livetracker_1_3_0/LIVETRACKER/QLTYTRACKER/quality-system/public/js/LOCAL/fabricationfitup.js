@@ -151,7 +151,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '</div><br>';
 
         html += '<div class="fabrication-field">';
-        html += '<label for="weldment_quantity">Weldment Quantity:</label>';
+        html += '<label for="weldment_quantity">Weld Check:</label>';
         html += '<input type="checkbox" id="weldment_quantity" name="weldment_quantity" ' + (item.WeldmentQuantity === 'true' ? 'checked disabled' : 'disabled') + '>';
         html += '</div><br>';
 
@@ -294,7 +294,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
 
         html += '<div class="fabrication_field">';
         html +=
-            '<label>Weldment Quantity:</label>' +
+            '<label>Weld Check:</label>' +
             (item.WeldmentQuantity === "true" || item.WeldmentQuantity === "on" ?
             '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" >' :
             '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" disabled>') +
@@ -363,6 +363,22 @@ function submitFabricationCompleteFitUpForm() {
         process_order_number: document.querySelector('[name="process_order_fabc"]').value,
         Quantity: document.querySelector('[name="quantity_fb"]').value,
     };
+
+    if (formData.fit_up_visual_check!=0)
+        {
+            formData.fitupvisualcheck_person=document.querySelector('[name="sign_off_fabrication_fit_up_c"]').value;
+
+        }
+        if (formData.dimensional_check!=0)
+            {
+                formData.dimensionalcheck_person=document.querySelector('[name="sign_off_fabrication_fit_up_c"]').value;
+                
+            }
+            if (formData.weldment_quantity!=0)
+                {
+                    formData.weldcheck_person=document.querySelector('[name="sign_off_fabrication_fit_up_c"]').value;
+                    
+                }
     console.log(formData);
 
     $.ajax({
@@ -392,10 +408,13 @@ function displayFabricationFitUpResults(values) {
                 var value = obj[key];
                // var field = prefix ? prefix + '.' + key : key;
                var field =  key;
+               if (key === 'WeldmentQuantity') {
+                field = 'Weldcheck';
+            }
                 if (typeof value === 'object') {
                     buildTableRows(value, field);
                 } else {
-                    if (value=="1")
+                    if (value=="1"&&field!='Quantity')
                         {
                         resultsHtml += '<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;">' + field + '</td><td style="padding: 8px; border-bottom: 1px solid #ddd;"> &#10003;</td></tr>';
                         }

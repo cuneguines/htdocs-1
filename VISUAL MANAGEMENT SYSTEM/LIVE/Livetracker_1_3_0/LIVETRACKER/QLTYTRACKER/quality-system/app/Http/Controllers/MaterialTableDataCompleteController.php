@@ -21,8 +21,14 @@ class MaterialTableDataCompleteController extends Controller
         $materialPreparation->deburring = $request->input('deburring');
         $materialPreparation->forming = $request->input('forming');
         $materialPreparation->machining = $request->input('machining');
+        $materialPreparation->cutting_person = $request->input('cutting_person');
+        $materialPreparation->forming_person = $request->input('forming_person');
+        $materialPreparation->machining_person = $request->input('machining_person');
+        $materialPreparation->deburring_person = $request->input('deburring_person');
+
         $materialPreparation->sign_off_material_complete_preparation = $request->input('sign_off_material_preparation');
         $materialPreparation->sign_off_engineer = $request->input('sign_off_engineer');
+
         
         // Add other fields accordingly
 
@@ -39,6 +45,7 @@ class MaterialTableDataCompleteController extends Controller
         $data = MaterialPreparationCompleteData::where('process_order_number', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
             ->first();
+            
 
         return response()->json(['data' => $data]);
     }

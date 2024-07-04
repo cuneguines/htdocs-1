@@ -97,6 +97,7 @@
     background-color: rgba(0, 0, 0, 0.7);
 }
 
+
 .modal-content {
     position: absolute;
     top: 50%;
@@ -196,7 +197,7 @@
                 <input type="text" id="manualProcessOrder" name="manualProcessOrder" required
                     style="width: 200px; margin-right: 10px;">
                 <button id="searchButton" style="margin-right: 10px;">Search</button>
-                <button  style="margin-right: 1px;" onclick="redirectToEmployee()">New User</button>
+                <button style="margin-right: 1px;" onclick="redirectToEmployee()">New User</button>
                 <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="margin-left: auto;">
                     @csrf
                     <button type="submit"
@@ -215,7 +216,7 @@
         </div>
 
         <div id="lineItemsContainer"
-            style="display: none; background-color: #ffffff; margin: 10px; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            style="display: none; background-color: #ffffff; margin: 10px;  border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             <!-- Sales Order Number -->
             <div class="form-group" style="display: inline-block; margin-left: 8%;">
                 <label for="salesOrderNumber">Sales Order Number:</label>
@@ -241,24 +242,35 @@
             </div>
 
             <div style="text-align: center;">
-            <form action="{{ route('generatePDF') }}" method="post">
-        @csrf
-        <label for="processOrderNumber">Process Order Number:</label>
-        <input type="text" id="processOrderNumber" name="processOrderNumber" required>
-        <button type="submit" style="background-color: grey; color: black; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Generate PDF</button>
-    </form>
-        <!-- <button onclick="printDiv('lineItemsContainer')" style="background-color: #d3d3d3; color: #000000; padding: 10px 20px; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); cursor: pointer; font-size: 16px;"> -->
-            
-        
-    </div>
-</div>
+                <form action="{{ route('generatePDF') }}" method="post">
+                    @csrf
+                    <label for="processOrderNumber">Process Order Number:</label>
+                    <input type="text" id="processOrderNumber" name="processOrderNumber" required>
+                    <button type="submit"
+                        style="background-color: grey; color: black;border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Generate
+                        PDF</button>
+                </form>
+                <form action="{{ route('generateCert') }}" method="post">
+                    @csrf
+                    <label for="processOrderNumber">Process Order Number:</label>
+                    <input type="text" id="processOrderNumber" name="processOrderNumber" required>
+                    <button type="submit"
+                        style="background-color: grey; color: black;border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">Generate
+                        Cert</button>
+                </form>
+                <!-- <button onclick="printDiv('lineItemsContainer')" style="background-color: #d3d3d3; color: #000000; padding: 10px 20px; border: none; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); cursor: pointer; font-size: 16px;"> -->
 
+
+            </div>
         </div>
 
+    </div>
 
-        <!-- HTML for the modal -->
-        <div style="display:none" id="myModal" class="modal">
-            <div class="modal-content">
+
+    <!-- HTML for the modal -->
+    <div style="display:none" id="myModal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content"style="top:10%;left:10%;width:80%;transform: translate(0);">
                 <span class="close" onclick="closeModal()">&times;</span>
                 <p id="modalContent">Modal Content Goes Here</p>
                 <div id="engineeringFieldset" style="overflow-y:scroll;max-height:500px">
@@ -304,27 +316,28 @@
                 </div>
             </div>
         </div>
-        <!-- Your table HTML -->
-        <div style="display:none" id="globalModal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeglobalModal()">&times;</span>
-                <p id="global-modal-content">Modal Content Goes Here</p>
-                <div id="engineeringFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
-                <div id="manufacturingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="fabricationfitupFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="subcontractFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="finalassemblyFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="documentationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="packingtransportFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-                <div id="qualityFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            </div>
+    </div>
+    <!-- Your table HTML -->
+    <div style="display:none" id="globalModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeglobalModal()">&times;</span>
+            <p id="global-modal-content">Modal Content Goes Here</p>
+            <div id="engineeringFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="manufacturingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="fabricationfitupFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="subcontractFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="finalassemblyFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="documentationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="packingtransportFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="qualityFieldTable" style="width:500px;font-size:14px;height:500px"></div>
         </div>
+    </div>
     </div>
     <div style="display:none" id="globalCompleteModal" class="modal">
         <div class="modal-content">
@@ -371,12 +384,6 @@
 
 
     <script>
-
-
-
-
-    
-
     var welcomeMessage = $('h2').text();
     var userName = welcomeMessage.split(',')[1].trim();
     var loggedInUser = 'admin';
@@ -400,20 +407,20 @@
                     manualProcessOrder, // Adjust the URL according to your API endpoint
                 type: 'GET',
                 success: function(response) {
-                   console.log(response);
-                    if (response.data!=null) {
+                    console.log(response);
+                    if (response.data != null) {
                         $.each(response, function(index, item) {
                             document.getElementById("lineItemsContainer").style
                                 .display = "block";
                             console.log(index);
                             // Populate the fields with data from the first item
-                            
-                                $('#salesOrderNumber').val(item.SalesOrder);
-                                $('#endProduct').val(item.EndProduct);
-                                $('#owner').val(item.Engineer);
-                                $('#customer').val(item.Customer);
-                                $('#itemname').val(item.Item);
-                            
+
+                            $('#salesOrderNumber').val(item.SalesOrder);
+                            $('#endProduct').val(item.EndProduct);
+                            $('#owner').val(item.Engineer);
+                            $('#customer').val(item.Customer);
+                            $('#itemname').val(item.Item);
+
                         });
                     } else {
                         // If no data is returned
