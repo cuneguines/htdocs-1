@@ -51,7 +51,7 @@ class CertController extends Controller
         }
 
         // Path to the prebuilt PDF template
-        $templatePath = storage_path('app/public/LK_Certificate of Compliance.pdf');
+        $templatePath = storage_path('app/public/LK_Certificate of Compliance_Rev1.pdf');
 
         // Create new FPDI object
         $pdf = new Fpdi();
@@ -72,10 +72,10 @@ class CertController extends Controller
         $pdf->SetFont('Helvetica');
 
         // Add the data to the template
-        $pdf->SetXY(45, 92); // Adjust position as needed
+        $pdf->SetXY(45, 93); // Adjust position as needed
         $pdf->Write(0,$data_sales['Customer']);
 
-        $pdf->SetXY(64, 102); // Adjust position as needed
+        $pdf->SetXY(64, 103); // Adjust position as needed
       
         $pdf->Write(0, $data_sales['SalesOrder']);
         $itemName = $data_sales['ItemName'];
@@ -87,9 +87,9 @@ $smallFontSize = 10; // Smaller font size for long text
 // Determine the font size based on the length of the item name
 if (strlen($itemName) > $maxLength) {
     $pdf->SetFont('Arial', '', 10); // Adjust to smaller font size
-    $pdf->SetXY(64, 107);
+    $pdf->SetXY(64, 108);
 } else {
-    $pdf->SetXY(64, 110);
+    $pdf->SetXY(50, 111);
     $pdf->SetFont('Arial', '', 12); // Default font size
 }
 //$pdf->SetXY(64, 110); // Adjust position as needed
@@ -99,7 +99,7 @@ $pdf->MultiCell($maxWidth, 4, $itemName);
 
         $pdf->SetFont('Helvetica','', 12);
 
-        $pdf->SetXY(44, 122); // Adjust position as needed
+        $pdf->SetXY(44, 123); // Adjust position as needed
         $pdf->Write(0,$data_sales['Quantity']);
 
        

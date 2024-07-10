@@ -43,6 +43,7 @@ class EngineeringController extends Controller
             $owner->owner = $ownerData['owner'];
             $owner->ndta = $ownerData['ndt'];
             $owner->process_order_number = $request->input('process_order_number');
+            $owner->Quality_Step = 'Engineering';
             //$owner->planning_form_data_id = $planningData->id;
             $owner->save();
         }

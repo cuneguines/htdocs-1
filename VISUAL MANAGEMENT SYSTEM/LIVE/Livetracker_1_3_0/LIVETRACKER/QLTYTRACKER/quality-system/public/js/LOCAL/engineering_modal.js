@@ -60,7 +60,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_eng(response) {
+/* function generateHTMLFromResponse_for_eng(response) {
     var html = '<form id="EngineerinForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Engineering</legend>';
@@ -182,9 +182,295 @@ function generateHTMLFromResponse_for_eng(response) {
 
     return html;
 }
+ */
+function generateHTMLFromResponse_for_eng(response) {
+
+    
+    var html = '<form id="EngineerinForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Engineering</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Iterate over each item in the response
+    $.each(response, function (index, item) {
+        // Start a new row for each item
+       
+       
+
+        
+
+        // Reference Job/Master File
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Reference Job/Master File</strong>';
+       
+        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '</td>';
+
+        // Reference Job/Master File Document
+        html += '<td style="border: 1px solid #ccc; ">Reference Job/Master File Document</strong>';
+       
+        if (item.reference_job_master_file_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.reference_job_master_file_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.reference_job_master_file_document+'</a>';
+            html += downloadLink;
+        }
+        html += '<td id="owner_1"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+        html += '<td id="ndta_1"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
 
 
 
+        fetchOwnerData(item.process_order_number, 'Reference Job / Master File if applicable', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_1').innerHTML =  ownerData.owner;
+
+                // Update ndta cell
+                document.getElementById('ndta_1').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_' + index).innerHTML = 'N/A';
+                document.getElementById('ndta_' + index).innerHTML = ' N/A';
+            }
+        });
+
+
+        // Close the row
+        html += '</tr>';
+
+        // Concept Design & Engineering
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Concept Design & Engineering</strong>';
+       
+        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '</td>';
+
+     
+
+        // Concept Design Document
+      
+        html += '<td style="border: 1px solid #ccc; ">Concept Design Document</strong>';
+      
+        if (item.concept_design_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.concept_design_document;
+            var downloadLink = '<a href="' + filePath + '" download>'+item.concept_design_document+'</a>';
+            html += downloadLink;
+        }
+        html += '<td id="owner_5"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+        html += '<td id="ndta_5"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+
+
+
+        fetchOwnerData(item.process_order_number, 'Concept design & engineering details', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_5').innerHTML =  ownerData.owner;
+
+                // Update ndta cell
+                document.getElementById('ndta_5').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_5' ).innerHTML = 'N/A';
+                document.getElementById('ndta_5' ).innerHTML = ' N/A';
+            }
+        });
+        // Close the row
+        html += '</tr>';
+
+        // Design Sign off [calculations]
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Design Sign off [calculations]</>';
+       
+        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '</td>';
+
+      
+
+        // Design Validation Document
+     
+        html += '<td style="border: 1px solid #ccc; ">Design Validation Document</>';
+       
+        if (item.design_validation_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.design_validation_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.design_validation_document+'</a>';
+            html += downloadLink;
+        }
+        html += '<td id="owner_6"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+        html += '<td id="ndta_6"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+
+
+
+        fetchOwnerData(item.process_order_number, 'Design sign off [calculations]', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_6').innerHTML =  ownerData.owner;
+
+                // Update ndta cell
+                document.getElementById('ndta_6').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_6' + index).innerHTML = 'N/A';
+                document.getElementById('ndta_6' + index).innerHTML = ' N/A';
+            }
+        });
+        // Close the row
+        html += '</tr>';
+
+        // Customer Submittal Package
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Customer Submittal Package</>';
+       
+        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '</td>';
+
+        // Close the row
+       
+
+        // Customer Approval Document
+      
+        html += '<td style="border: 1px solid #ccc; ">Customer Approval Document</>';
+      
+        if (item.customer_approval_document) {
+            var filePath = 'http://localhost/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYUPLOADS/engineer_task/' + item.process_order_number + '/' + item.customer_approval_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.customer_approval_document+'</a>';
+            html += downloadLink;
+        }
+        html += '<td id="owner_3"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+        html += '<td id="ndta_3"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+
+
+
+        fetchOwnerData(item.process_order_number, 'Customer submittal package', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_3').innerHTML =  ownerData.owner;
+
+                // Update ndta cell
+                document.getElementById('ndta_3').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_3' ).innerHTML = 'N/A';
+                document.getElementById('ndta_3' ).innerHTML = ' N/A';
+            }
+        });
+html+='</tr>';
+        // Reference Approved Samples
+    
+        html += '<td style="border: 1px solid #ccc; ">Reference Approved Samples</>';
+     
+        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '</td>';
+
+        // Close the row
+      
+
+        // Sample Approval Document
+    
+        html += '<td style="border: 1px solid #ccc;">Sample Approval Document</>';
+      
+        if (item.sample_approval_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/engineer_task/' + item.process_order_number + '/' + item.sample_approval_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.sample_approval_document+'</a>';
+            html += downloadLink;
+        }
+        html += '<td id="owner_4"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+        html += '<td id="ndta_4"colspan="2" style="border: 1px solid #ccc; ">';
+        html+='</td>';
+
+
+
+        fetchOwnerData(item.process_order_number, 'Reference approved samples', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_4').innerHTML =  ownerData.owner;
+
+                // Update ndta cell
+                document.getElementById('ndta_4').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_4' ).innerHTML = 'N/A';
+                document.getElementById('ndta_4' ).innerHTML = ' N/A';
+            }
+        });
+        // Close the row
+        html += '</tr>';
+
+        // Sign-off for Engineering
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Sign-off for Engineering</>';
+        html += '<td colspan="5" style="border: 1px solid #ccc; ">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_engineering" value="' + (item.sign_off_engineering ? item.sign_off_engineering : '') + '">';
+        html += '</td>';
+       
+        // Close the row
+        html += '</tr>';
+
+        // Comments for Engineering
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc; ">Comments for Engineering</></td>';
+        html += '<td colspan="5" style="border: 1px solid #ccc; padding: 10px;">';
+        html += '<textarea style="width: 100%;" name="comments_engineering">' + (item.comments_engineering ? item.comments_engineering : '') + '</textarea>';
+        html += '</td>';
+
+        // Close the row
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+
+    // Submit button
+    html += '<div class="form-group" style="margin-top: 20px; text-align: center;">';
+  
+    html += '</div>';
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+function fetchOwnerData(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
 /* function generateHTMLFromResponse_for_eng(response) {
     var html = '<table id="common_table">';
     html += '<thead><tr><th>ID</th><th>Reference_Job / Master_File</th><th>Reference_Job / Master_File_Document</th><th>Concept_Design</th><th>Concept_Design_Document</th><th>Design_Validation</th><th>Design_Validation_Document</th><th>Customer_Approval</th><th>Customer_Approval_Document</th><th>Sample_Approval</th><th>Sample_Approval_Document</th><th>Sign_off_Engineering</th><th>Comments_Engineering</th></tr></thead><tbody>';

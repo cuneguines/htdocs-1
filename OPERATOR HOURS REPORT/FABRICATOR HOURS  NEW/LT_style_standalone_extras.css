@@ -1,0 +1,36 @@
+#operator_hours
+{
+    font-size:2vh;
+}
+
+#operator_hours tbody td button{
+    background-color:white; color:black;
+    height:90%;
+    width:80%;
+    position:relative;
+    top:5%;
+    border:2px solid #eb3434;
+    border-radius:4px;
+    font-size:2vh;
+    transition:0.4s;
+}
+#operator_hours_table tbody td button.active{
+    background-color:#eb3434; color:white;
+    border:2px solid #FFFFFF;
+}
+
+#operator_hours_table #bottom button{
+    transition:0.2s;
+}
+#operator_hours_table #bottom button:hover:not([disabled]){
+    color:green;
+    background-color:white;
+}
+#operator_hours_table #bottom button#this_week:hover{
+    color:#9964ed;
+    background-color:white;
+}
+#operator_hours_table #bottom button:disabled{
+    background-color:#454554;
+    opacity:70%;
+}

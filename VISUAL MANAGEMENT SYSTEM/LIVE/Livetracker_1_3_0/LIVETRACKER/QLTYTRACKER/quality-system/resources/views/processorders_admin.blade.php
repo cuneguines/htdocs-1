@@ -319,11 +319,11 @@
     </div>
     <!-- Your table HTML -->
     <div style="display:none" id="globalModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content" style="top:10%;left:10%;width:80%;transform: translate(0);">
             <span class="close" onclick="closeglobalModal()">&times;</span>
             <p id="global-modal-content">Modal Content Goes Here</p>
-            <div id="engineeringFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="planningFieldTable" style="width:500px;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="engineeringFieldTable" style="width:100%;font-size:14px;height:500px"></div>
+            <div id="planningFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
             <div id="manufacturingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
             <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
             <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>

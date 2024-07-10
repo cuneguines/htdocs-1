@@ -76,21 +76,40 @@ td {
                    
                 </td>
                 <td>
-                    <select name="owner" id="owner" style="width:100%">
-                        <option value="NULL">Select Owner</option>
-                        <option value="high">Engineer</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="ndttype" id="ndttype" style="width:100%">
-                        <option value="NULL">Select NDT Type</option>
-                        <option value="manager_1">Manager 1</option>
-                        <option value="manager_2">Manager 2</option>
-                        <option value="manager_3">Manager 3</option>
-                    </select>
-                </td>
+                            <select name="owner" id="owner" style="width:100%">
+                                <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
+
+
+
+                                
+                            </select>
+                        </td>
+                        <td>
+                      
+                            <select name="ndttype" id="ndttype" style="width:100%">
+                                <option value="NULL">Select Inpection Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+                            
+                            
+                            </select>
+                        </td>
             </tr>
             <tr>
                 <td class="form-group">
@@ -106,21 +125,40 @@ td {
                   
                 </td>
                 <td>
-                    <select name="owner" id="owner" style="width:100%">
-                        <option value="">Select Owner</option>
-                        <option value="high">Engineer</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="ndttype" id="ndttype" style="width:100%">
-                        <option value="NULL">Select NDT Type</option>
-                        <option value="manager_1">Manager 1</option>
-                        <option value="manager_2">Manager 2</option>
-                        <option value="manager_3">Manager 3</option>
-                    </select>
-                </td>
+                            <select name="owner" id="owner" style="width:100%">
+                                <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
+
+
+
+                                
+                            </select>
+                        </td>
+                        <td>
+                      
+                            <select name="ndttype" id="ndttype" style="width:100%">
+                                <option value="NULL">Select Inpection Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+                            
+                            
+                            </select>
+                        </td>
             </tr>
             
             <tr>
@@ -136,23 +174,41 @@ td {
                         <button type="button" onclick="clear_quotation_document()">Clear File</button>
                    
                 </td>
+                <td>
+                            <select name="owner" id="owner" style="width:100%">
+                                <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
 
-                <td>
-                    <select name="owner" id="owner" style="width:100%">
-                        <option value="NULL">Select Owner</option>
-                        <option value="high">Engineer</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="ndttype" id="ndttype" style="width:100%">
-                        <option value="NULL">Select NDT Type</option>
-                        <option value="manager_1">Manager 1</option>
-                        <option value="manager_2">Manager 2</option>
-                        <option value="manager_3">Manager 3</option>
-                    </select>
-                </td>
+
+
+
+
+                                
+                            </select>
+                        </td>
+                        <td>
+                      
+                            <select name="ndttype" id="ndttype" style="width:100%">
+                                <option value="NULL">Select Inpection Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+                            
+                            
+                            </select>
+                        </td>
             </tr>
             <tr>
                 <td class="form-group">
@@ -168,21 +224,40 @@ td {
                     
                 </td>
                 <td>
-                    <select name="owner" id="owner" style="width:100%">
-                        <option value="NULL">Select Owner</option>
-                        <option value="high">Engineer</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="ndttype" id="ndttype" style="width:100%">
-                        <option value="NULL">Select NDT Type</option>
-                        <option value="manager_1">Manager 1</option>
-                        <option value="manager_2">Manager 2</option>
-                        <option value="manager_3">Manager 3</option>
-                    </select>
-                </td>
+                            <select name="owner" id="owner" style="width:100%">
+                                <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
+
+
+
+                                
+                            </select>
+                        </td>
+                        <td>
+                      
+                            <select name="ndttype" id="ndttype" style="width:100%">
+                                <option value="NULL">Select Inpection Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+                            
+                            
+                            </select>
+                        </td>
             </tr>
             <tr>
                 <td class="form-group">
@@ -198,21 +273,40 @@ td {
                    
                 </td>
                 <td>
-                    <select name="owner" id="owner" style="width:100%">
-                        <option value="NULL">Select Owner</option>
-                        <option value="high">Engineer</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="ndttype" id="ndttype" style="width:100%">
-                        <option value="NULL">Select NDT Type</option>
-                        <option value="manager_1">Manager 1</option>
-                        <option value="manager_2">Manager 2</option>
-                        <option value="manager_3">Manager 3</option>
-                    </select>
-                </td>
+                            <select name="owner" id="owner" style="width:100%">
+                                <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
+
+
+
+                                
+                            </select>
+                        </td>
+                        <td>
+                      
+                            <select name="ndttype" id="ndttype" style="width:100%">
+                                <option value="NULL">Select Inpection Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+                            
+                            
+                            </select>
+                        </td>
             </tr>
         </table>
         <div class="form-group">

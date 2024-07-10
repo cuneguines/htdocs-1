@@ -135,6 +135,9 @@ Route::post('/getQualityCompleteDataByProcessOrder', [QualityController::class, 
 
 
 Route::post('/getEngineerDataByProcessOrder', [EngineerTaableData::class, 'getEngineerDataByProcessOrder']);
+Route::post('/getOwnerData', [EngineerTaableData::class, 'getOwnerData']);
+
+Route::post('/getOwnerData_Planning', [PlanningTableData::class, 'getOwnerData_Planning']);
 
 Route::post('/getPlanningDataByProcessOrder', [PlanningTableData::class, 'getPlanningDataByProcessOrder']);
 Route::post('/getManufacturingDataByProcessOrder', [ManufacturingTableData::class, 'getManufacturingDataByProcessOrder']);
