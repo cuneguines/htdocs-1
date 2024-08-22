@@ -63,8 +63,11 @@
     define("SEQ030",  array('Wrapping',                 'Wrapping'));
     define("SEQ031",  array('Site Work',                'Site Work'));
     define("SEQ032",  array('NonChargeable Time',                'NonChargeable Time'));
-    define("SEQ0045",  array('LASER LABOUR [TUBE]',                'LASER LABOUR [TUBE]'));
-    define("SEQ0048",  array('LASER Machine [TUBE]',                'LASER Machine [TUBE]'));
+    
+    define("SEQ0045",  array('Laser Machine[TUBE]',                'Laser Machine[TUBE]'));
+    define("SEQ0048",  array('Laser Labour[TUBE]',                'Laser Labour[TUBE]'));
+    define("SEQ039A",  array('Pneumatic TESTING',                'Pneumatic TESTING'));
+    define("SEQ027A",  array('Machine Shop',                'Machine Shop'));
 ?>
 
 <?php
@@ -77,10 +80,10 @@
             1 => "SEQ001",
             2 => "SEQ002",
             3 => "SEQ003",
-            4 => "SEQ004",
-            5 => "SEQ005",
-            6 => "SEQ006",
-            7 => "SEQ007",
+            4 => "SEQ006",
+            5 => "SEQ0045",
+            6 => "SEQ0048",
+            7 => "SEQ004",
             8 => "SEQ008"
         )),
         2 => array(
@@ -132,8 +135,8 @@
             1 => "SEQ027",
             2 => "SEQ028",
             3 => "SEQ029",
-            4 => "",
-            5 => "",
+            4 => "SEQ039A",
+            5 => "SEQ027A",
             6 => "",
             7 => "",
             8 => "" 
@@ -147,9 +150,9 @@
             3 => "SEQ030",
             4 => "SEQ031",
             5 => "SEQ032",
-            6 => "SEQ0045",
-            7 => "SEQ0048",
-            8 => "" 
+            6 => "",
+            7 => "SEQ005",
+            8 => "SEQ007" 
         ))
     );
 ?>

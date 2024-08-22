@@ -203,9 +203,10 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Reference Job/Master File
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td style="border: 1px solid #ccc; ">Reference Job/Master File</strong>';
+        html += '<td>';
        
         html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html +='Reference Job/Master Fil';
         html += '</td>';
 
         // Reference Job/Master File Document
@@ -243,9 +244,10 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Concept Design & Engineering
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td style="border: 1px solid #ccc; ">Concept Design & Engineering</strong>';
+        html += '<td>';
        
         html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html+='Concept Design & Engineering';
         html += '</td>';
 
      
@@ -284,9 +286,10 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Design Sign off [calculations]
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td style="border: 1px solid #ccc; ">Design Sign off [calculations]</>';
+        html += '<td>';
        
         html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html+='Design Sign off [calculations]';
         html += '</td>';
 
       
@@ -325,9 +328,10 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Customer Submittal Package
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td style="border: 1px solid #ccc; ">Customer Submittal Package</>';
+        html += '<td>';
        
         html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html+='Customer Submittal Package';
         html += '</td>';
 
         // Close the row
@@ -365,9 +369,11 @@ function generateHTMLFromResponse_for_eng(response) {
 html+='</tr>';
         // Reference Approved Samples
     
-        html += '<td style="border: 1px solid #ccc; ">Reference Approved Samples</>';
+        html += '<td>';
      
         html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += 'Reference Approved Samples';
+
         html += '</td>';
 
         // Close the row

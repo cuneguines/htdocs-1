@@ -29,7 +29,7 @@ $(document).ready(function(){
     //updateTotals();
     // CALANDER CELL CLICK EVENT
     $('tbody td button').click(function(){
-        updateTotals();
+       
         // GET DETAILS OF CLCIKED CELL ON CALANDER
         day = $(this).attr('id');
         week = $(this).parent().parent().attr('week');
@@ -37,7 +37,7 @@ $(document).ready(function(){
         emp_no = $(this).parent().parent().attr('emp_no');
         console.log(emp_no);
         emp_name = $(this).parent().parent().attr('emp_name');
-        createTotalRow(week, year);
+        
         // HIDE ROWS THAT DO NOT MATCH THE SPECIFIC YEAR, WEEK, DAY OF WEEK, AND EMP NUMBER. 
         // IF TOTAL IS CLICKED DO THE EXACT SAME EXCECPT EXCLUDE DAY OF WEK FROM THE CHECK
         hours_entries.hide();
@@ -53,7 +53,7 @@ $(document).ready(function(){
         $('tbody td button').not(this).removeClass('active');
         $(this).addClass("active");
         $('#empsteps').text(emp_name + " (" + day + " Week " + week + " " + year + ")");
-        
+        createTotalRow-m(week, year);
     });
 
     // PREVIOUS WEEK EVENT
@@ -257,17 +257,23 @@ createTotalRow(this_week, this_year);
 
 
 function createTotalRow(week, year) {
-    $('#operator_hours tbody tr[week][year][lastrow').remove();
+    // Remove existing total rows if any
+    $('#total tbody tr[lastrow]').remove();
    
-    var totalRow = `<tr lastrow ='lastrow' week="${week}" year="${year}" style="position: sticky; bottom: 0; z-index: +1;">
-        <td colspan="2" style="text-align: right; border-top: 2px solid #454545;">Total:</td>
-        <td id="total-mon" class="total-mon" style="background-color: #CBCBCB;" operation='SUM_R'></td>
-        <td id="total-tue" style="background-color: #CBCBCB;"></td>
-        <td id="total-wed" style="background-color: #CBCBCB;"></td>
-        <td id="total-thu" style="background-color: #CBCBCB;"></td>
-        <td id="total-fri" style="background-color: #CBCBCB;"></td>
-        <td id="total-sat" style="background-color: #CBCBCB;"></td>
-        <td id="total-week" style="background-color: #ABABAB;"></td>
+    // Create the total row HTML dynamically
+    var totalRow = `<tr lastrow="lastrow" week="${week}" year="${year}" style="background-color: #4d79ef; position: sticky; bottom: 0; width: 100%;">
+        <td colspan="3" style="text-align: right;border:1px solid #4d79ef;">Total:</td>
+        <td id="total-mon" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-tue" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-wed" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-thu" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-fri" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-sat" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+        <td id="total-week" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
     </tr>`;
-    $('#operator_hours tbody').append(totalRow);
+
+    // Append the total row to the table body
+    $('#total tbody').append(totalRow);
 }
+
+

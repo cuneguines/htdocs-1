@@ -151,6 +151,10 @@
     width: 150px;
     /* Adjust input width as needed */
 }
+input[type=checkbox]:disabled {
+    outline: 5px solid red;
+    outline-offset: -20px;
+}
 </style>
 
 

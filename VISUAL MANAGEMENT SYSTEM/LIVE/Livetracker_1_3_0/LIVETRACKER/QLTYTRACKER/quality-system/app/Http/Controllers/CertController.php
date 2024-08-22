@@ -69,10 +69,10 @@ class CertController extends Controller
         $pdf->useTemplate($tplIdx);
 
         // Set font
-        $pdf->SetFont('Helvetica');
+        $pdf->SetFont('Arial', '', 10);
 
         // Add the data to the template
-        $pdf->SetXY(45, 93); // Adjust position as needed
+        $pdf->SetXY(64, 93); // Adjust position as needed
         $pdf->Write(0,$data_sales['Customer']);
 
         $pdf->SetXY(64, 103); // Adjust position as needed
@@ -89,17 +89,17 @@ if (strlen($itemName) > $maxLength) {
     $pdf->SetFont('Arial', '', 10); // Adjust to smaller font size
     $pdf->SetXY(64, 108);
 } else {
-    $pdf->SetXY(50, 111);
-    $pdf->SetFont('Arial', '', 12); // Default font size
+    $pdf->SetXY(64, 111);
+    $pdf->SetFont('Arial', '', 10); // Default font size
 }
 //$pdf->SetXY(64, 110); // Adjust position as needed
 $pdf->MultiCell($maxWidth, 4, $itemName);
         //$pdf->SetXY(64,112); // Adjust position as needed
         //$pdf->Write(0, $data_sales['ItemName']);
 
-        $pdf->SetFont('Helvetica','', 12);
+        $pdf->SetFont('Arial', '', 10); 
 
-        $pdf->SetXY(44, 123); // Adjust position as needed
+        $pdf->SetXY(64, 123); // Adjust position as needed
         $pdf->Write(0,$data_sales['Quantity']);
 
        

@@ -43,7 +43,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/KS_DASH_STYLE.css')}}">
 </head>
 <style>
-<style>#table-container {
+
+  
+    
+#table-container {
     max-height: 70%;
     overflow-y: scroll;
     position: relative;
@@ -113,6 +116,12 @@
     max-width: 100%;
     /* Ensure the container doesn't overflow its parent */
 }
+
+ input[type=checkbox]:disabled {
+    outline: 5px solid red;
+    outline-offset: -20px;
+}
+
 
 .modal-global-content {
     position: absolute;

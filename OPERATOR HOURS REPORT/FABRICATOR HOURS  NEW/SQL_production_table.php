@@ -1,4 +1,5 @@
 <?php
+global $sql_operator_hours_pivot, $sql_operator_entries;
 $sql_operator_hours_pivot = 
 "SELECT * FROM(
     SELECT 
@@ -41,7 +42,7 @@ $sql_operator_hours_pivot =
     ";
 
 $sql_operator_entries =
-"SELECT
+"SELECT 
 
 ISNULL(t3.SOnum,'STOCK ORDER') [Sales Order],
 t0.prorder [Process Order],

@@ -21,8 +21,14 @@ function generateMaterialPreparationCompleteFieldset(processOrder, qualityStep, 
         dataType: "json",
         success: function (response) {
             console.log(response);
+            if(response.data)
+            {
             var generatedHTML = generateCompleteHTMLFromResponse_for_material_preparation(response);
             $("#materialpreparationCompleteFieldTable").html(generatedHTML);
+            }
+            else{
+                $("#materialpreparationCompleteFieldTable").html('');
+            }
         },
         error: function (error) {
             console.error(error);

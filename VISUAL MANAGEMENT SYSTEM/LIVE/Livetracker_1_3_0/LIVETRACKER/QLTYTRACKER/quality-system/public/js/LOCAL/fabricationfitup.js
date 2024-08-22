@@ -275,7 +275,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
             '<label>Fit-Up:</label>' +
             (item.FitUpVisualCheck === "true" || item.FitUpVisualCheck === "on" ?
             '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check_c" >' :
-            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check_c" disabled>') +
+            '<input type="checkbox" id="fit_up_visual_check" name="fit_up_visual_check_c" disabled style="background-color: red; border: 1px solid red;">') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
@@ -283,7 +283,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
             '<label>Dimensional Check:</label>' +
             (item.DimensionalCheck === "true" || item.DimensionalCheck === "on" ?
             '<input type="checkbox" id="dimensional_check" name="dimensional_check_c" >' :
-            '<input type="checkbox" id="dimensional_check" name="dimensional_check_c" disabled>') +
+            '<input type="checkbox" id="dimensional_check" name="dimensional_check_c" disabled style="background-color: red; border: 1px solid red;">') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
@@ -297,7 +297,7 @@ function generateCompleteHTMLFromResponse_for_fabrication_fit_up(response) {
             '<label>Weld Check:</label>' +
             (item.WeldmentQuantity === "true" || item.WeldmentQuantity === "on" ?
             '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" >' :
-            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" disabled>') +
+            '<input type="checkbox" id="weldment_quantity" name="weldment_quantity_c" disabled style="background-color: red; border: 1px solid red;">') +
             '</div><br>';
 
         html += '<div class="fabrication_field">';
