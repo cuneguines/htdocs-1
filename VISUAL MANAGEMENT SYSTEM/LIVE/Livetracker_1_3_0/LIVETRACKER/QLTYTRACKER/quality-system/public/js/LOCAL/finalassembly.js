@@ -249,7 +249,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
         
         html += '<div class="final-assembly-field">';
 html += '<label for="identification">Identification:</label>';
-html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked disabled' : 'disabled') + '>';
+html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked' : 'disabled') + '>';
 //html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : '') + '">';
 html += '</div><br>';
 

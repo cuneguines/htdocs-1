@@ -331,7 +331,7 @@ function generateHTMLFromResponse_for_welding(response) {
 
         html += '<div class="welding-field">';
         html += '<label for="weld_map_issued">Weld Map Issued:</label>';
-        html += '<input type="checkbox" id="weld_map_issued" name="weld_map_issued"' + (item.weld_map_issued ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="weld_map_issued" name="weld_map_issued"' + (item.weld_map_issued ? 'checked' : 'disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -352,7 +352,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<div class="welding-field">';
         html +=
             '<label for="weld_procedure_qualification">Weld Procedure Qualification:</label>';
-            html += '<input type="checkbox" id="weld_procedure_qualification" name="weld_procedure_qualification"' + (item.weld_procedure_qualification ? ' checked disabled' : ' disabled') + '>';
+            html += '<input type="checkbox" id="weld_procedure_qualification" name="weld_procedure_qualification"' + (item.weld_procedure_qualification ? ' checked' : ' disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -374,7 +374,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html +=
             '<label for="weld_procedure_specifications">Weld Procedure Specifications:</label>';
         html +=
-            '<input type="checkbox" id="weld_procedure_specifications" name="weld_procedure_specifications"' + (item.weld_procedure_specifications? ' checked disabled' : ' disabled') + '>';
+            '<input type="checkbox" id="weld_procedure_specifications" name="weld_procedure_specifications"' + (item.weld_procedure_specifications? ' checked' : ' disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -396,7 +396,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html +=
             '<label for="welder_performance_qualification">Welder Performance Qualification:</label>';
         html +=
-            '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification"' + (item.welder_performance_qualification ?' checked disabled' : ' disabled') + '>';
+            '<input type="checkbox" id="welder_performance_qualification" name="welder_performance_qualification"' + (item.welder_performance_qualification ?' checked' : ' disabled') + '>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -417,7 +417,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<div class="welding-field">';
         html += '<label for="welding_wire">Welding Wire:</label>';
         html +=
-            '<input type="checkbox" id="welding_wire" name="welding_wire"' +(item.welding_wire ? 'checked disabled' : 'disabled') +'>';
+            '<input type="checkbox" id="welding_wire" name="welding_wire"' +(item.welding_wire ? 'checked' : 'disabled') +'>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -438,7 +438,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<div class="welding-field">';
         html += '<label for="shielding_gas">Shielding Gas:</label>';
         html +=
-            '<input type="checkbox" id="shielding_gas" name="shielding_gas"' +(item.shielding_gas ? 'checked disabled' : 'disabled') +'>';
+            '<input type="checkbox" id="shielding_gas" name="shielding_gas"' +(item.shielding_gas ? 'checked' : 'disabled') +'>';
         html += '</div><br>';
 
         html += '<div class="welding-field">';
@@ -460,7 +460,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<label for="pre_weld_inspection">Pre Weld Inspection:</label>';
         html +=
             '<input type="checkbox" id="pre_weld_inspection" name="pre_weld_inspection"' +
-            (item.pre_weld_inspection ? 'checked disabled' : 'disabled') +
+            (item.pre_weld_inspection ? 'checked' : 'disabled') +
             '>';
         html += '</div><br>';
 
@@ -469,7 +469,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html +=
             '<input type="checkbox" id="inspection_during_welding" name="inspection_during_welding"' +
             (item.inspection_during_welding
-                ? 'checked disabled' : 'disabled') +
+                ? 'checked' : 'disabled') +
             '>';
         html += '</div><br>';
 
@@ -477,7 +477,7 @@ function generateHTMLFromResponse_for_welding(response) {
         html += '<label for="post_weld_inspection">Post Weld Inspection:</label>';
         html +=
             '<input type="checkbox" id="post_weld_inspection" name="post_weld_inspection"' +
-            (item.post_weld_inspection ? 'checked disabled' : 'disabled') +
+            (item.post_weld_inspection ? 'checked' : 'disabled') +
             '>';
             html += '</div><br>';
 
@@ -515,7 +515,7 @@ function generateHTMLFromResponse_for_welding(response) {
         //html += '<label for="status">Status:</label>';
         //html +=
         //    '<input type="text" id="status" name="status" value="' +
-        //    (item.status ? 'checked disabled' : 'disabled') +
+        //    (item.status ? 'checked' : 'disabled') +
         //    '">';
        // html += '</div><br>';
 

@@ -75,7 +75,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Reference Job/Master File: </label>';
-        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked disabled' : 'disabled') +  '>';
+        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked' : 'disabled') +  '>';
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -93,7 +93,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Concept Design & Engineering: </label>';
-        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -111,7 +111,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Design Sign off [calculations]: </label>';
-        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -129,7 +129,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Customer Submittal Package: </label>';
-        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -147,7 +147,7 @@ function generateEngineeringFieldTable(processOrder, qualityStep) {
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
         html += '<label>Reference Approved Samples: </label>';
-        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="text-align: left; padding: 5px;">';
@@ -205,7 +205,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<tr style="border: 1px solid #ccc;">';
         html += '<td>';
        
-        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked' : 'disabled') + '>';
         html +='Reference Job/Master Fil';
         html += '</td>';
 
@@ -246,7 +246,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<tr style="border: 1px solid #ccc;">';
         html += '<td>';
        
-        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked' : 'disabled') + '>';
         html+='Concept Design & Engineering';
         html += '</td>';
 
@@ -288,7 +288,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<tr style="border: 1px solid #ccc;">';
         html += '<td>';
        
-        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked' : 'disabled') + '>';
         html+='Design Sign off [calculations]';
         html += '</td>';
 
@@ -330,7 +330,7 @@ function generateHTMLFromResponse_for_eng(response) {
         html += '<tr style="border: 1px solid #ccc;">';
         html += '<td>';
        
-        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked' : 'disabled') + '>';
         html+='Customer Submittal Package';
         html += '</td>';
 
@@ -371,7 +371,7 @@ html+='</tr>';
     
         html += '<td>';
      
-        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked' : 'disabled') + '>';
         html += 'Reference Approved Samples';
 
         html += '</td>';

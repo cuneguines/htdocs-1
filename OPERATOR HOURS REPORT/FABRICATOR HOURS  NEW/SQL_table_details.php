@@ -11,7 +11,7 @@ catch(Exception $e){
 }
 //$Id = (!empty($_POST['id']) ? $_POST['id'] : '');
 try{
-$results="  select   t1.OriginNum [Sales Order],  t0.PrOrder [Process Order], 
+$results_old="  select   t1.OriginNum [Sales Order],  t0.PrOrder [Process Order], 
 
 (case when t0.Status = 'C' then 'Closed'
 when t0.Status in ('I','S') then 'Open' else 'Cancelled' end) [Status],  
@@ -799,6 +799,100 @@ t1.U_IIS_proPrOrder>30000
 and t17.ItmsGrpNam='NON-PRODUCTIVE TIME'
 
 
+";
+
+$results="WITH BookedHours AS (
+    SELECT 
+        t0.PrOrder,
+        SUM(t0.Quantity) AS TotalBookedHours
+    FROM 
+        iis_epc_pro_ordert t0
+    GROUP BY 
+        t0.PrOrder
+),
+PlannedLab AS (
+    SELECT 
+        t1.U_IIS_proPrOrder, 
+        SUM(t0.plannedqty) AS Planned_Lab
+    FROM 
+        wor1 t0                                                     
+    INNER JOIN 
+        owor t1 ON t1.DocEntry = t0.DocEntry                                                                 
+    INNER JOIN 
+        oitm t2 ON t2.ItemCode = t0.ItemCode                                                                
+    WHERE 
+        t2.ItemType = 'L'                                                                 
+    GROUP BY 
+        t1.U_IIS_proPrOrder
+),
+MaxCreatedDate AS (
+    SELECT 
+        PrOrder,
+        MAX(Created) AS MaxCreatedDate
+    FROM 
+        iis_epc_pro_ordert
+    GROUP BY 
+        PrOrder
+)
+SELECT 
+    t1.PrOrder,
+    t1.SoNum,
+    t4.ItmsGrpNam,
+    t5.itmsGrpNam,
+    CONVERT(VARCHAR(10), t1.CreateDate, 103) AS [CreateDate],
+    YEAR(t1.CreateDate) AS [Year],
+    MONTH(t1.CreateDate) AS [Month],
+    DATEPART(iso_week, t1.CreateDate) AS [Week],
+    t2.U_Product_Group_One,
+    t2.U_Product_Group_Two,
+    t2.U_Product_Group_Three,
+    t1.Status,
+    CONVERT(VARCHAR(10), mcd.MaxCreatedDate, 103) AS [Date of Last Entry],
+    ISNULL(bh.TotalBookedHours, 0) AS [Total Hours from Subquery],
+    pl.Planned_Lab,
+    CASE 
+        WHEN pl.Planned_Lab = 0 THEN '0.00%'
+        ELSE FORMAT((CAST(ISNULL(bh.TotalBookedHours, 0) AS DECIMAL(18, 2)) / CAST(pl.Planned_Lab AS DECIMAL(18, 2))) * 100, '0.00') + '%'
+    END AS [Percentage Booked Hours]
+FROM 
+    iis_epc_pro_orderh t1
+INNER JOIN 
+    iis_epc_pro_ordert t0 ON t1.PrOrder = t0.PrOrder
+INNER JOIN 
+    oitm t2 ON t2.ItemCode = t1.EndProduct
+INNER JOIN 
+    oitb t4 ON t4.ItmsGrpCod = t2.ItmsGrpCod
+INNER JOIN 
+    oitm t10 ON t10.itemcode = t0.labourcode
+INNER JOIN 
+    oitb t5 ON t5.ItmsGrpCod = t10.ItmsGrpCod
+LEFT JOIN 
+    BookedHours bh ON bh.PrOrder = t0.PrOrder
+LEFT JOIN 
+    PlannedLab pl ON pl.U_IIS_proPrOrder = t0.PrOrder
+LEFT JOIN 
+    MaxCreatedDate mcd ON mcd.PrOrder = t0.PrOrder
+WHERE 
+    t4.ItmsGrpCod = '197'
+    AND t0.Created >= DATEADD(YEAR, -1, GETDATE())
+GROUP BY 
+    t1.PrOrder,
+    t1.SoNum,
+    t4.ItmsGrpNam,
+    bh.TotalBookedHours,
+    pl.Planned_Lab,
+    t1.CreateDate,
+    YEAR(t1.CreateDate),
+    MONTH(t1.CreateDate),
+    DATEPART(iso_week, t1.CreateDate),
+    t2.U_Product_Group_One,
+    t2.U_Product_Group_Two,
+    t2.U_Product_Group_Three,
+    t1.Status,
+    CONVERT(VARCHAR(10), mcd.MaxCreatedDate, 103),
+    t5.ItmsGrpNam;
+
+	
 ";
    $getResults = $conn->prepare($results);
    $getResults->execute();

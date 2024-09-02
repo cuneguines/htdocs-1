@@ -48,6 +48,11 @@ use App\Http\Controllers\GetlineController;
 use App\Http\Controllers\Engineer;
 use App\Http\Controllers\Kitting;
 use App\Http\Controllers\TestingController;
+
+
+use App\Http\Controllers\BatchDataController;
+
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 //Route::post('/login', [AuthController::class, 'login']);
@@ -179,3 +184,6 @@ Route::post('/fetch-data', [PDFController::class, 'fetchData'])->name('fetchData
 
 Route::post('/generateCertificate', [CertController::class, 'generateCertificate'])->name('generateCert');
 
+Route::post('/getBatchDataByProcessOrders', [BatchDataController::class, 'getBatchDataByProcessOrders']);
+
+Route::post('/getBatchCompleteDataByProcessOrders', [BatchDataController::class, 'getBatchCompleteDataByProcessOrders']);

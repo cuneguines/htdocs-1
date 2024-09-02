@@ -141,10 +141,13 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<tr>';
 
         // Purchase Order Received
-        html += '<td style=" border: 1px solid #ccc;">';
-        html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received_' + index + '" ' + (item.purchase_order_received === 'true' ? 'checked disabled' : '') + '>';
-        html += '<label for="purchase_order_received_' + index + '">Purchase Order Received</label>';
-        html += '</td>';
+        // Purchase Order Received
+            html += '<td style="border: 1px solid #ccc;">';
+            html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received_' + index + '" ' 
+                + (item.purchase_order_received === 'true' ? 'checked class="no-pointer-events"' : '') 
+                + '>';
+                html += '<label for="purchase_order_received_' + index + '" class="' + (item.purchase_order_received === 'true' ? 'no-pointer-events' : '') + '">Purchase Order Received</label>';
+                html += '</td>';
 
         // Purchase Order Document
         html += '<td style=" border: 1px solid #ccc;">';
@@ -190,7 +193,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<tr>';
 
         html += '<td style=" border: 1px solid #ccc;">';
-        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed_' + index + '" ' + (item.project_schedule_agreed === '1' ? 'checked disabled' : '') + '>';
+        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed_' + index + '" ' + (item.project_schedule_agreed === '1' ? 'checked' : '') + '>';
         html += '<label for="project_schedule_agreed_' + index + '">Project Schedule Agreed</label>';
         html += '</td>';
 
@@ -231,7 +234,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<tr>';
 
         html += '<td style=" border: 1px solid #ccc;">';
-        html += '<input type="checkbox" id="quotation_' + index + '" name="quotation_' + index + '" ' + (item.quotation === 'true' ? 'checked disabled' : '') + '>';
+        html += '<input type="checkbox" id="quotation_' + index + '" name="quotation_' + index + '" ' + (item.quotation === 'true' ? 'checked' : '') + '>';
         html += '<label for="quotation_' + index + '">Quotation</label>';
         html += '</td>';
 
@@ -273,7 +276,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<tr>';
 
         html += '<td style=" border: 1px solid #ccc;">';
-        html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations_' + index + '" ' + (item.verify_customer_expectations === 'true' ? 'checked disabled' : '') + '>';
+        html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations_' + index + '" ' + (item.verify_customer_expectations === 'true' ? 'checked' : '') + '>';
         html += '<label for="verify_customer_expectations_' + index + '">Verify Customer Expectations</label>';
         html += '</td>';
 
@@ -314,7 +317,7 @@ function generateHTMLFromResponse_for_planning(response) {
         html += '<tr>';
 
         html += '<td style="border: 1px solid #ccc;">';
-        html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment_' + index + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked disabled' : '') + '>';
+        html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment_' + index + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked' : '') + '>';
         html += '<label for="project_risk_category_assessment_' + index + '">Project Risk Category Assessment</label>';
         html += '</td>';
 
@@ -567,7 +570,7 @@ $.ajax({
     $.each(response, function (index, item) {
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="purchase_order_received_' + index + '" style="">Purchase Order Received:</label>';
-        html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received"' + (item.purchase_order_received === 'true' ? 'on' : '') + '" ' + (item.purchase_order_received === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="purchase_order_received_' + index + '" name="purchase_order_received"' + (item.purchase_order_received === 'true' ? 'on' : '') + '" ' + (item.purchase_order_received === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -583,7 +586,7 @@ $.ajax({
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="project_schedule_agreed_' + index + '" style="">Project Schedule Agreed:</label>';
-        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed"' + (item.project_schedule_agreed === '1' ? 'on' : '') + '" ' + (item.project_schedule_agreed === '1' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="project_schedule_agreed_' + index + '" name="project_schedule_agreed"' + (item.project_schedule_agreed === '1' ? 'on' : '') + '" ' + (item.project_schedule_agreed === '1' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -599,7 +602,7 @@ $.ajax({
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="quotation_' + index + '" style="">Quotation:</label>';
-        html += '<input type="checkbox" id="quotation_' + index + '" name="quotation"' + (item.quotation === 'true' ? 'on' : '') + '" ' + (item.quotation === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="quotation_' + index + '" name="quotation"' + (item.quotation === 'true' ? 'on' : '') + '" ' + (item.quotation === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -615,7 +618,7 @@ $.ajax({
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="verify_customer_expectations_' + index + '" style="">Verify Customer Expectations:</label>';
-        html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations"' + (item.verify_customer_expectations === 'true' ? 'on' : '') + '" ' + (item.verify_customer_expectations === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="verify_customer_expectations_' + index + '" name="verify_customer_expectations"' + (item.verify_customer_expectations === 'true' ? 'on' : '') + '" ' + (item.verify_customer_expectations === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
@@ -631,7 +634,7 @@ $.ajax({
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';
         html += '<label for="project_risk_category_assessment_' + index + '" style="">Project Risk Category Assessment:</label>';
-        html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment"' + (item.project_risk_category_assessment === 'true' ? 'on' : '') + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="project_risk_category_assessment_' + index + '" name="project_risk_category_assessment"' + (item.project_risk_category_assessment === 'true' ? 'on' : '') + '" ' + (item.project_risk_category_assessment === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group" style="margin-bottom: 15px;">';

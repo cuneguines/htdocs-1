@@ -121,7 +121,18 @@ class PDFController extends Controller
         mpf.forming = 'on' AND mpf.forming IS NOT NULL AND mpf.process_order_number = ?
 
     UNION ALL
-
+	SELECT 
+        mpf.updated_at,
+        'Identification' AS CheckType,
+        CONCAT(U.FirstName, ' ', U.LastName) AS UserName,
+        ROW_NUMBER() OVER (PARTITION BY mpf.process_order_number ORDER BY mpf.updated_at DESC) AS rn
+    FROM 
+        QUALITY_PACK.dbo.MaterialPreparationFormCompleteData AS mpf
+    LEFT JOIN 
+        QUALITY_PACK.dbo.[User] AS U ON U.Login = mpf.deburring_person
+    WHERE 
+        mpf.material_identification = 'on' AND mpf.material_identification IS NOT NULL AND mpf.process_order_number = ?
+UNION ALL
     SELECT 
         mpf.updated_at,
         'Deburring' AS CheckType,
@@ -166,7 +177,8 @@ SELECT
     MAX(CASE WHEN CheckType = 'Forming' THEN UserName END) AS forming,
     MAX(CASE WHEN CheckType = 'Deburring' THEN UserName END) AS deburring,
     MAX(CASE WHEN CheckType = 'Machining' THEN UserName END) AS machining,
-    MAX(CASE WHEN CheckType = 'Cutting' THEN UserName END) AS cutting
+    MAX(CASE WHEN CheckType = 'Cutting' THEN UserName END) AS cutting,
+	MAX(CASE WHEN CheckType = 'Identification' THEN UserName END) AS material_identification
 FROM 
     LatestChecks
 WHERE 

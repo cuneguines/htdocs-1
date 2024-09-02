@@ -38,107 +38,109 @@
 </head>
 <style>
 .modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1000;
-        /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Black w/ opacity */
-    }
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1000;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+}
 
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        /* Center modal on screen */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 50%;
-        max-height: 70%;
-        /* Set maximum height for modal */
-        overflow: scroll;
-        /* Enable vertical scrolling if content exceeds height */
-    }
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* Center modal on screen */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-height: 70%;
+    /* Set maximum height for modal */
+    overflow: scroll;
+    /* Enable vertical scrolling if content exceeds height */
+}
 
-    /* Close Button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
+/* Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
 
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
 
-    /* Table Styling */
-    #modalTable {
-        width: 100%;
-        border-collapse: collapse;
-    }
+/* Table Styling */
+#modalTable {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-    #modalTable th,
-    #modalTable td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        color:black;
-    }
+#modalTable th,
+#modalTable td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
 
-    /* Header Styles */
-    #modalTable th {
-        background-color: #7cbfa0;
-        /* Green */
-        color: white;
-        font-weight: bold;
-    }
+/* Header Styles */
+#modalTable th {
+    background-color: #7cbfa0;
+    /* Green */
+    color: white;
+    font-weight: bold;
+    position: sticky; /* Sticky header so it stays in place when scrolling */
+    top: 0; /* Stick to the top of the table */
+    z-index: 1; /* Ensure the header is above other table content */ 
 
-    /* Fixed Header */
-    #modalTable thead {
-        display: table;
-        width: 100%;
-        table-layout: fixed;
-    }
+}
 
-    /* Scrollable Body */
-    #modalTable tbody {
-        display: block;
-        height: 300px;
-        /* Adjust as needed */
-        overflow-y: scroll;
-        width: 100%;
+/* Fixed Header */
+#modalTable thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
 
-    }
+/* Scrollable Body */
+#modalTable tbody {
+    display: block;
+    height: 300px;
+    /* Adjust as needed */
+    overflow-y: scroll;
+    width: 100%;
 
-    /* Even and Odd Row Coloring */
-    #modalTable tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-        padding: 3px;
-    }
+}
 
-    #modalTable tbody tr:nth-child(odd) {
-        background-color: #ffffff;
-    }
+/* Even and Odd Row Coloring */
+#modalTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    padding: 3px;
+}
 
-    /* Specific Row Coloring */
-    #modalTable tbody tr.special-row {
-        background-color: #FFD700;
-        /* Yellow */
-    }
+#modalTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
 
-
+/* Specific Row Coloring */
+#modalTable tbody tr.special-row {
+    background-color: #FFD700;
+    /* Yellow */
+}
 </style>
 
 <body id="operator_hours_table">
@@ -148,8 +150,8 @@
                 <div class="table_title green">
                     <h1>BOOKED HOURS CALANDER</h1>
                 </div>
-                <div style="height:62%"id="pages_table_container" class="table_container no_scrollbar">
-                    <table style="overflow-y:scroll"id="operator_hours" class="filterable sortable searchable">
+                <div style="height:62%" id="pages_table_container" class="table_container no_scrollbar">
+                    <table style="overflow-y:scroll" id="operator_hours" class="filterable sortable searchable">
                         <thead>
                             <tr class="dark_grey wtext smedium head" style="z-index:+3;">
                                 <th width="5%">emp No</th>
@@ -205,14 +207,15 @@
 
 
                     </table>
-                    </div>
-                    <div id="total" style="border-radius: 5px;background-color:#4d79ef;top:3%; position: relative; font-size: 2.1vh;height:14%;">
-                        <table style="border:none!important;">
-                            <tbody>
-                           
-                            </tbody>
-                        </table>
-                        <button style="background-color: white;
+                </div>
+                <div id="total"
+                    style="border-radius: 5px;background-color:#4d79ef;top:3%; position: relative; font-size: 2.1vh;height:14%;">
+                    <table style="border:none!important;">
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <button style="background-color: white;
     color: black;
     
     position: relative;
@@ -220,49 +223,44 @@
     border: 2px solid #eb3434;
     border-radius: 4px;
     font-size: 2vh;
-    transition: 0.4s;"onclick="toggleTable()">Show Table</button>
-                    </div>
-                    <div id="myModal" class="modal" style="overflow-y:scroll">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <table id="modalTable">
+    transition: 0.4s;" onclick="toggleTable()">Show Table</button>
+                </div>
+                <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <table id="modalTable">
             <thead>
-               
-                <tr>
-                    <th style="width:10%">Sales Order</th>
-                    <th style="width:10%">Process Order</th>
-                    <th style="width:10%">Status</th>
-                    <th style="width:10%">Item Name</th>
-                    <th style="width:10%">Customer</th>
-                    <th style="width:10%">Project</th>
-                    <th style="width:10%">End Product</th>
-                    <th style="width:10%">Items Group Name</th>
-                    <th style="width:10%">PG1</th>
-                    <th style="width:10%">PG2</th>
-                    <th style="width:10%">PG3</th>
-                    <th style="width:10%">LastHourBooked</th>
-                    <th style="width:10%">Create Date</th>
-                    <th style="width:10%">Year Create Date</th>
-                    <th style="width:10%">Month Create Date</th>
-                    <th style="width:10%">Week Create Date</th>
-                    <th style="width:10%">Close Date</th>
-                    <th style="width:10%">Year Close Date</th>
-                    <th style="width:10%">Month Close Date</th>
-                    <th style="width:10%">Week Close Date</th>
-                    <th style="width:10%">Total Planned Hrs</th>
-                    <th style="width:10%">Total Booked Hrs</th>
-                    <th style="width:10%">Percentage</th> 
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Table rows will be filled here -->
-            </tbody>
-        </table>
-        <button style="color:red"onclick="export_to_excel('modalTable')" id="exportExcel" class="banner_button_">Export to Excel</button>
-    </div>
-</div>
+    <tr>
+        <th style="width:5%">PrOrder</th>
+        <th style="width:5%">SoNum</th>
+        <th style="width:5%">ItemsGrpNam</th>
+        <th style="width:5%">ItemName</th>
+        <th style="width:5%">EndProduct</th>
+        <th style="width:5%">CreateDate</th>
+        <th style="width:5%">Year</th>
+        <th style="width:5%">Month</th>
+        <th style="width:5%">Week</th>
+        <th style="width:10%">U_Product_Group_One</th>
+        <th style="width:10%">U_Product_Group_Two</th>
+        <th style="width:10%">U_Product_Group_Three</th>
+        <th style="width:5%">Status</th>
+        <th style="width:10%">Date of Last Entry</th>
+        <th style="width:10%">Total Hours Booked</th>
+        <th style="width:10%">Planned_Lab</th>
+        <th style="width:10%">Percentage Booked Hours</th>
+    </tr>
+</thead>
+    <tbody>
+        <!-- Table rows will be filled here -->
+    </tbody>
+</table>
 
-               
+            <button style="color:red" onclick="export_to_excel('modalTable')" id="exportExcel" class="banner_button_">Export to Excel</button>
+        </div>
+    </div>
+
+
+
             </div>
             <div style="height:100%; width:58%; float:left; margin-left:2%;">
                 <div class="table_title green">

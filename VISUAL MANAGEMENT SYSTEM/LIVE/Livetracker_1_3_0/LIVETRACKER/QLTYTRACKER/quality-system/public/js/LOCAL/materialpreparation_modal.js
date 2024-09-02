@@ -149,6 +149,7 @@ if (item.forming === "on") {
         '</div><br>';
 }
 
+
 if (item.deburring === "on") {
     html += '<div class="material_field">';
     html +=
@@ -383,16 +384,22 @@ function submitMaterialPreparationForm(processOrder) {
         forming: document.querySelector('[name="forming"]').checked ? "on" : "",
         machining: document.querySelector('[name="machining"]').checked ? "on" : "",
 
-        material_identification_record: (document.querySelector('[name="material_identification_record"]').files.length > 0)
-        ? document.querySelector('[name="material_identification_record"]').files[0].name
+        material_identification_record: (document.querySelector('[name="material_identification_record_file"]').files.length > 0)
+        ? document.querySelector('[name="material_identification_record_file"]').files[0].name
         : document.getElementById('old-file-name_3').textContent.trim(),
 
-        material_identification_record_file: (document.querySelector('[name="material_identification_record_file"]').files.length > 0)
-        ? document.querySelector('[name="material_identification_record_file"]').files[0].name
+        material_identification_record_file: (document.querySelector('[name="material_identification_record"]').files.length > 0)
+        ? document.querySelector('[name="material_identification_record"]').files[0].name
         : document.getElementById('old-file-name_1').textContent.trim(),
-        material_traceability_file: (document.querySelector('[name="material_traceability_file"]').files.length > 0)
-        ? document.querySelector('[name="material_traceability_file"]').files[0].name
-        : document.getElementById('old-file-name_2').textContent.trim(),
+
+
+        tube_laser_pack_file: (document.querySelector('[name="tube_laser_pack_file"]').files.length > 0)
+        ? document.querySelector('[name="tube_laser_pack_file"]').files[0].name
+        : document.getElementById('old-file-name_4').textContent.trim(),
+
+        laser_and_press_brake_file: (document.querySelector('[name="laser_and_press_brake_file"]').files.length > 0)
+       ? document.querySelector('[name="laser_and_press_brake_file"]').files[0].name
+       : document.getElementById('old-file-name_5').textContent.trim(),
      
         sign_off_material_preparation: document.querySelector(
             '[name="sign_off_material_preparation"]'
@@ -524,16 +531,15 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         //html += '<input type="text" id="id" name="id" value="' + item.id + '" readonly>';
         html += '</div>';
         
-        if(item.material_identification)
-        {
+      
         html += '<div class="form-group">';
         html += '<label for="material_identification">Material Identification:</label>';
-        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="material_identification" name="material_identification" ' + (item.material_identification ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="material_identification_record">Material Identification Cert:</label>';
-        }
+        
         //html += '<input type="text" id="material_identification_record" name="material_identification_record" value="' + (item.material_identification_record || '') + '">';
 
 
@@ -565,7 +571,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         {
         html += '<div class="form-group">';
         html += '<label for="material_traceability">Material Traceability:</label>';
-        html += '<input type="checkbox" id="material_traceability" name="material_traceability" ' + (item.material_traceability ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="material_traceability" name="material_traceability" ' + (item.material_traceability ? 'checked' : 'disabled') + '>';
 
         html += '</div>';
 
@@ -583,35 +589,51 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         }
         html += '</div>';
 
-        if(item.cutting)
-        {
+       
         html += '<div class="form-group">';
-        html += '<label for="cutting">Cutting:</label>';
-        html += '<input type="checkbox" id="cutting" name="cutting" ' + ((item.cutting === 'true' || item.cutting === 'on') && item.cutting !== null ? 'checked disabled' : 'disabled') + '>';
+        html += '<label for="cutting">Tube Laser Pack:</label>';
+        html += '<input type="checkbox" id="cutting" name="cutting" ' + ((item.cutting === 'true' || item.cutting === 'on') && item.cutting !== null ? 'checked' : 'disabled') + '>';
         html += '</div>';
+        
+        if (item.tube_laser_pack_file) {
+           
+            var filePath =
+                "http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/" +item.process_order_number +"/" +item.tube_laser_pack_file;
+           
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.tube_laser_pack_file+'</a>';
+                //html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
+             
+                html+=downloadLink;
+           // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
-        if(item.deburring)
-        {
         html += '<div class="form-group">';
         html += '<label for="deburring">De-burring:</label>';
-        html += '<input type="checkbox" id="deburring" name="deburring" ' + ((item.deburring === 'true' || item.deburring === 'on') && item.deburring !== null ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="deburring" name="deburring" ' + ((item.deburring === 'true' || item.deburring === 'on') && item.deburring !== null ? 'checked' : 'disabled') + '>';
         html += '</div>';
-        }
-        if(item.forming)
-        {
+       
         html += '<div class="form-group">';
-        html += '<label for="forming">Forming:</label>';
-        html += '<input type="checkbox" id="forming" name="forming" ' + ((item.forming === 'true' || item.forming === 'on') && item.forming !== null ? 'checked disabled' : 'disabled') + '>';
+        html += '<label for="forming">Laser and Press Brake Pack</label>';
+        html += '<input type="checkbox" id="forming" name="forming" ' + ((item.forming === 'true' || item.forming === 'on') && item.forming !== null ? 'checked' : 'disabled') + '>';
         html += '</div>';
+        if (item.laser_and_press_brake_file) {
+            var filePath =
+                "http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/" +
+                item.process_order_number +
+                "/" +
+                item.laser_and_press_brake_file;
+           
+                var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.laser_and_press_brake_file+'</a>';
+                //html += '<input type="file" id="material_identification_record_file" name="material_identification_record_file">';
+             
+                html+=downloadLink;
+           // html += '<div class="material_field">' + downloadLink + '</div><br>';
         }
-        if(item.machining)
-        {
         html += '<div class="form-group">';
         html += '<label for="machining">Machining:</label>';
-        html += '<input type="checkbox" id="machining" name="machining" ' + ((item.machining === 'true' || item.machining === 'on') && item.machining !== null ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="machining" name="machining" ' + ((item.machining === 'true' || item.machining === 'on') && item.machining !== null ? 'checked' : 'disabled') + '>';
         html += '</div>';
-        }
         
+    
         html += '<div class="form-group">';
         html += '<label for="sign_off_material_preparation">Sign-off:</label>';
         html += '<input style="width:100%" type="text" id="sign_off_material_preparation" name="sign_off_material_preparation" value="' + (item.sign_off_material_preparation || '') + '">';
@@ -651,8 +673,12 @@ function resetMaterialPrepForm() {
     $('[name="material_identification_record"]').val('');
     $('[name="material_identification_record_file"]').val('');
     $('[name="material_traceability_file"]').val('');
+    $('[name="tube_laser_pack_file"]').val('');
+    $('[name="laser_and_press_brake_file"]').val('');
     $('.old-file-name_1').text('');
     $('.old-file-name_2').text('');
+    $('.old-file-name_4').text('');
+    $('.old-file-name_5').text('');
 }
 function MaterialPrep(processOrder, userName) {
     console.log('Material Preparation');
@@ -717,6 +743,8 @@ function MaterialPrep(processOrder, userName) {
                     $('#old-file-name_1').text(item.material_identification_record_file);
                     $('#old-file-name_2').text(item.material_traceability_file);
                     $('#old-file-name_3').text(item.material_identification_record);
+                    $('#old-file-name_4').text(item.tube_laser_pack_file);
+                    $('#old-file-name_5').text(item.laser_and_press_brake_file);
 
                     // Set the labels for file inputs
                     $('#material_identification_record_file_label').show();
@@ -734,6 +762,14 @@ function MaterialPrep(processOrder, userName) {
                     $('#material_identification_record').change(function () {
                         $('#old-file-name_3').text(this.files[0].name);
                     });
+                    $('#tube_laser_pack_file').change(function () {
+                        $('#old-file-name_4').text(this.files[0].name);
+                    });
+                    $('#laser_and_press_brake_file').change(function () {
+                        $('#old-file-name_5').text(this.files[0].name);
+                    });
+
+
                 });
             } else {
                 resetMaterialPrepForm();

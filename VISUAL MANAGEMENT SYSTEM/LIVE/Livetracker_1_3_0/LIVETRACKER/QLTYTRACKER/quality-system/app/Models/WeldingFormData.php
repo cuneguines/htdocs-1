@@ -18,6 +18,7 @@ class WeldingFormData extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'ProcessOrderID',
         'weld_map_issued',
         'link_to_weld_map',
         'weld_procedure_qualification',

@@ -30,6 +30,8 @@
     <script type="text/javascript" src="../../../JS/LOCAL/documentation.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/transport.js"></script>
     <script type="text/javascript" src="../../../JS/LOCAL/quality.js"></script>
+    <script type="text/javascript" src="../../../JS/LOCAL/mainpagesql.js"></script>
+
 
 
 
@@ -120,8 +122,17 @@
  input[type=checkbox]:disabled {
     outline: 5px solid red;
     outline-offset: -20px;
+  
 }
-
+.no-pointer-events {
+    pointer-events: none;
+    cursor:not-allowed;
+    cursor:crosshair;
+}
+input[type=checkbox]:checked:disabled {
+            background-color: lightgray; /* Example style for checked disabled checkboxes */
+            /* You can add more styles if needed */
+        }
 
 .modal-global-content {
     position: absolute;
@@ -406,6 +417,7 @@
         // Handle click event on the search button
         $('#searchButton').click(function() {
             // Get the manually entered process order
+             $('#table').show();
             $('#table').show();
             var manualProcessOrder = $('#manualProcessOrder').val();
 
@@ -472,6 +484,7 @@
 
             // Insert cell for qualitySteps with a button to open the modal
             var qualityStepButton = $('<button>', {
+                id: 'qualityStep_' + i, 
                 text: qualitySteps[i],
                 click: function() {
                     var clickedRow = $(this).closest('tr');
@@ -557,6 +570,7 @@
             // Insert cell for qualitySteps with a button to open the modal
             var qualityStepButton = $('<button>', {
                 text: qualitySteps[i],
+                id: 'qualityStep_' + i,
                 click: function() {
                     var clickedRow = $(this).closest('tr');
                     var processOrderValue = clickedRow.find('td:first').text();
@@ -625,8 +639,13 @@
 
             table.append(row);
         }
+        fetchData(processOrder);
+        fetchCompleteData(processOrder);
     }
-
+//function fetch(processOrder)
+//{
+//console.log('I am from fetch',processOrder);
+//}
     // JavaScript functions for modal with jQuery
     function openModal(processOrder, qualityStep, userName) {
 

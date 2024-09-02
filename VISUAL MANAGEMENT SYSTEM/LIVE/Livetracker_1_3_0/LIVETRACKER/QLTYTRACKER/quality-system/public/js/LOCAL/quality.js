@@ -274,7 +274,7 @@ function generateHTMLFromResponse_for_quality(response) {
             
             html += '<div class="quality-field">';
             html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
-            html += '<input style="width:98%"type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection"' + (item.walk_down_visual_inspection ? ' checked disabled' : 'disabled') + '>';
+            html += '<input style="width:98%"type="text" id="walk_down_visual_inspection" name="walk_down_visual_inspection"' + (item.walk_down_visual_inspection ? ' checked' : 'disabled') + '>';
 
 
             html += '</div><br>';
@@ -282,7 +282,7 @@ function generateHTMLFromResponse_for_quality(response) {
 
             html += '<div class="quality-field">';
             html += '<label for="upload_images">Upload Images:</label>';
-            html += '<input style="width:98%"type="text" id="upload_images" name="walk_down_visual_inspection"' + (item.PhotoGrahicRecord ? ' checked disabled' : 'disabled') + '>';
+            html += '<input style="width:98%"type="text" id="upload_images" name="walk_down_visual_inspection"' + (item.PhotoGrahicRecord ? ' checked' : 'disabled') + '>';
 
 
             html += '</div><br>';
@@ -340,7 +340,7 @@ function generateHTMLFromResponse_for_quality(response) {
         html += '<div class="quality-field">';
         html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection:</label>';
         html+='<br>';
-        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection=="1" ? ' checked disabled' : ' disabled') + '>';
+        html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + (response.walk_down_visual_inspection=="1" ? ' checked' : ' disabled') + '>';
 
         html += '</div><br>';
 
@@ -349,7 +349,7 @@ function generateHTMLFromResponse_for_quality(response) {
         html += '<div class="quality-field">';
         html += '<label for="upload_images">Upload Images:</label>';
         html+='<br>';
-        html += '<input type="checkbox" id="upload_images" name="walk_down_visual_inspection"' + (response.uploadimages =="1"? ' checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="upload_images" name="walk_down_visual_inspection"' + (response.uploadimages =="1"? ' checked' : 'disabled') + '>';
 
 
         html += '</div><br>';

@@ -38,6 +38,13 @@
 
     <fieldset>
         <legend>Material Preparation</legend>
+        <div class="form-group">
+        <label>
+            <input style="width:100%" type="text" name="process_order_number_mp" id="process_order_number_mp"
+                readonly>
+            Process Order Number
+        </label>
+    </div>
         <div style="width: 98%">
             <table>
                 <thead>
@@ -58,6 +65,7 @@
                             </label>
                         </td>
                         <td >
+                        <span id="old-file-name_3"></span>
                             <input type="file" name="material_identification_record_file">
                             <button type="button" onclick="clear_material_identification_record_file()">Clear
                                 File</button>
@@ -103,7 +111,8 @@
                             </label>
                         </td>
                         <td >
-                            <input type="file" name="material_identification_record_heat_number">
+                        <span id="old-file-name_1"></span>
+                            <input type="file" name="material_identification_record">
                             <button type="button" onclick="clear_material_identification_record_heat_number()">Clear
                                 File</button>
                         </td>
@@ -184,6 +193,11 @@
                         </td>
 
                         <td>
+                        <span id="old-file-name_4"></span>
+                            <Label>Upload Tube Laser Pack:</label>
+                        <input type="file" name="tube_laser_pack_file">
+                            <button type="button" onclick="clear_tube_laser_pack_file()">Clear
+                                File</button>
                         </td>
                         <td>
                         <select name="owner" id="owner" style="width:100%">
@@ -272,6 +286,12 @@
 
 
                         <td>
+                        <span id="old-file-name_5"></span>
+                       
+                            <Label>Upload Laser and Press Brake:</label>
+                        <input type="file" name="laser_and_press_brake_file">
+                            <button type="button" onclick="clear_laser_and_press_brake_file()">Clear
+                                File</button>
                         </td>
                         <td>
 
@@ -423,6 +443,14 @@
 
     function clear_material_traceability_file() {
         document.querySelector('input[name="material_traceability_file"]').value = ''; // Clear the file input field
+        //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
+    }
+    function clear_laser_and_press_brake_file() {
+        document.querySelector('input[name="laser_and_press_brake_file"]').value = ''; // Clear the file input field
+        //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
+    }
+    function clear_tube_laser_pack_file() {
+        document.querySelector('input[name="tube_laser_pack_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
     </script>

@@ -613,22 +613,22 @@ function generateHTMLFromResponse_for_kitting(response) {
 
         html += '<div class="form-group">';
         html += '<label for="cut_form_mach_parts">Cut Formed Machine Parts:</label>';
-        html += '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="cut_form_mach_parts" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="bought_out_components">Bought Out Components:</label>';
-        html += '<input type="checkbox" id="bought_out_components" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="bought_out_components" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="fasteners_fixings">Fasteners and Fixings:</label>';
-        html += '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="fasteners_fixings" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';
         html += '<label for="site_pack">Site Pack:</label>';
-        html += '<input type="checkbox" id="site_pack" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="site_pack" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked' : 'disabled') + '>';
         html += '</div>';
 
         html += '<div class="form-group">';

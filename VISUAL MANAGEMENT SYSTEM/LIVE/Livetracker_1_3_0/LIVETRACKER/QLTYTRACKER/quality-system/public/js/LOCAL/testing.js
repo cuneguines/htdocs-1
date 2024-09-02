@@ -228,22 +228,22 @@ function generateHTMLFromResponse_for_testing(response) {
         
         html += '<div class="testing-field">';
         html += '<label for="dye_pen_test">Dye Penetrant Test:</label>';
-        html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="dye_pen_test" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="hydrostatic_test">Hydrostatic Leak Test:</label>';
-        html += '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="hydrostatic_test" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="pneumatic_test">Pneumatic Leak Test:</label>';
-        html += '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked disabled'  : 'disabled') + '>';
+        html += '<input type="checkbox" id="pneumatic_test" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked'  : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';
         html += '<label for="fat_protocol">FAT Test:</label>';
-        html += '<input type="checkbox" id="fat_protocol" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="fat_protocol" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : 'disabled') + '>';
         html += '</div><br>';
         
         html += '<div class="testing-field">';

@@ -26,6 +26,9 @@ class MaterialPreparationController extends Controller
         $materialPreparation->comments_material_preparation = $request->input('comments_material_preparation');
         $materialPreparation->material_identification_record_file=$request->input('material_identification_record_file');
         $materialPreparation->material_traceability_file=$request->input('material_traceability_file');
+        $materialPreparation->tube_laser_pack_file=$request->input('tube_laser_pack_file');
+        $materialPreparation->laser_and_press_brake_file=$request->input('laser_and_press_brake_file');
+     
         // Add other fields accordingly
 
         $materialPreparation->save();

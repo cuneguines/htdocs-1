@@ -23,6 +23,9 @@ class MaterialPreparationFormData extends Model
         'comments_material_preparation',
         'material_identification_record_file',
         'material_traceability_file',
+        'tube_laser_pack_file',
+        'laser_and_press_brake_file',
+
         // Add other fields here
     ];
 }

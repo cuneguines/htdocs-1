@@ -6,60 +6,43 @@ function toggleTable() {
     dataType: "json",
     success: function (response) {
       var tableBody = "";
-      //console.log(response[0]).U_Product_Group_Three;
+      console.log(response);
       response[0].forEach(function (row) {
-        console.log(row.U_Product_Group_Three);
+        // Calculate the percentage with proper formatting
+        let percentage = (row["Total Hours from Subquery"] / row["Planned_Lab"]) * 100;
+        let formattedPercentage = (isNaN(percentage) ? 0 : percentage.toFixed(2)) + '%';
+    
+        // Generate table row
         tableBody += "<tr>";
-        tableBody += '<td style="width:10%">' + row["Sales Order"] + "</td>";
-        tableBody += '<td style="width:10%">' + row["Process Order"] + "</td>";
-        tableBody += '<td style="width:10%">' + row.Status + "</td>";
-        tableBody += '<td style="width:10%">' + row.ItemName + "</td>";
-        tableBody += '<td style="width:10%">' + row.Customer + "</td>";
-        tableBody += '<td style="width:10%">' + row.Project + "</td>";
-        tableBody += '<td style="width:10%">' + row.EndProduct + "</td>";
-        tableBody += '<td style="width:10%">' + row.ItmsGrpNam + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row.U_Product_Group_One + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row.U_Product_Group_Two + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row.U_Product_Group_Three + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row["Last Hour Booked"] + "</td>";
-        tableBody += '<td style="width:10%">' + row.CreateDate + "</td>";
-        tableBody += '<td style="width:10%">' + row.Year_Cr + "</td>";
-        tableBody += '<td style="width:10%">' + row.Month_Cr + "</td>";
-        tableBody += '<td style="width:10%">' + row.Week_Cr + "</td>";
-        tableBody += '<td style="width:10%">' + row.CloseDate + "</td>";
-        tableBody += '<td style="width:10%">' + row.Year_Cl + "</td>";
-        tableBody += '<td style="width:10%">' + row.Month_Cl + "</td>";
-        tableBody += '<td style="width:10%">' + row.Week_Cl + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row["Total Planned Time"] + "</td>";
-        tableBody +=
-          '<td style="width:10%">' + row["TOTAL_BOOKED_HRS"] + "</td>";
-        //  tableBody += '<td style="width:10%">' + (row['TOTAL_BOOKED_HRS'] / row['Total Planned Hrs']).toFixed(2) + '</td>';
-     
-
-        // Calculate the percentage
-        let percentage =
-          (row["TOTAL_BOOKED_HRS"] / row["Total Planned Time"]) * 100;
-
-        // Append the percentage with a percentage sign and format it to two decimal places
-        tableBody +=
-          '<td style="width:10%">' + percentage.toFixed(2) + "%</td>";
+        tableBody += '<td style="width:5%">' + (row["PrOrder"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["SoNum"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["ItmsGrpNam"] || '') + "</td>";
+       
+        tableBody += '<td style="width:5%">' + (row["ItemName"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["EndProduct"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["CreateDate"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["Year"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["Month"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["Week"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["U_Product_Group_One"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["U_Product_Group_Two"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["U_Product_Group_Three"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["Status"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["Date of Last Entry"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["Total Hours from Subquery"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + (row["Planned_Lab"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + formattedPercentage + "</td>";
         tableBody += "</tr>";
-      });
+    });
+    // Append the table body to the modal table
+    $("#modalTable tbody").html(tableBody);
 
-      // Append the table body to the modal table
-      $("#modalTable tbody").html(tableBody);
-
-      // Display the modal
-      $("#myModal").css("display", "block");
-    },
-    error: function () {
-      alert("Error");
-    },
+    // Display the modal
+    $("#myModal").css("display", "block");
+},
+error: function () {
+    alert("Error");
+},
   });
 }
 

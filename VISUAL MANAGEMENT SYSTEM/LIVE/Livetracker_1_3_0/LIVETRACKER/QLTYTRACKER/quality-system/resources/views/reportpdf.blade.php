@@ -272,7 +272,7 @@
                 </thead>
                 <tbody>
                     <?php
-                        print_r($data_11);
+                       //print_r($data_11);
                         ?>
                     @foreach ($data1 as $row1)
                     @foreach ($row1 as $key => $value1)
@@ -543,7 +543,7 @@
                 <tbody>
                 <?php
                      //print_r($data4);
-                       print_r($data_4);
+                      // print_r($data_4);
                         ?>
                     @foreach ($data4 as $row2)
                     @foreach ($row2 as $key => $value2)
@@ -620,7 +620,7 @@
                 </thead>
                 <tbody>
                     <?php
-                print_r($data_finishing_c);
+               // print_r($data_finishing_c);
                 ?>
                     @foreach ($data_finishing as $row2)
                     @foreach ($row2 as $key => $value2)
@@ -906,8 +906,7 @@
                             @foreach ($data_6 as $row_2)
                             @if(isset($row_2->$key) && !empty($row_2->$key))
                             @php
-                            $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' ||
-                            trim($row_2->$key) === 'Yes') ? '✔' : $row_2->$key;
+                            $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' || trim($row_2->$key) === 'Yes') ? '✔' : $row_2->$key;
                             @endphp
                             {{ $tick }}
                             @break

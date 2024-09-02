@@ -43,7 +43,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="production_drawings">Production Drawings:</label>';
-        html += '<input type="checkbox" id="production_drawings" name="production_drawings" ' + (item.production_drawings === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="production_drawings" name="production_drawings" ' + (item.production_drawings === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group">';
@@ -60,7 +60,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="bom">BOM:</label>';
-        html += '<input type="checkbox" id="bom" name="bom" ' + (item.bom === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="bom" name="bom" ' + (item.bom === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group">';
@@ -77,7 +77,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="machine_programming_files">Machine Programming:</label>';
-        html += '<input type="checkbox" id="machine_programming_files" name="machine_programming_files" ' + (item.machine_programming_files === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="machine_programming_files" name="machine_programming_files" ' + (item.machine_programming_files === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group">';
@@ -94,7 +94,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="ndt_documentation">NDT Documentation:</label>';
-        html += '<input type="checkbox" id="ndt_documentation" name="ndt_documentation" ' + (item.ndt_documentation === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="ndt_documentation" name="ndt_documentation" ' + (item.ndt_documentation === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group">';
@@ -111,7 +111,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
         
         html += '<div class="form-group">';
         html += '<label for="quality_documents">Quality Documents:</label>';
-        html += '<input type="checkbox" id="quality_documents" name="quality_documents" ' + (item.quality_documents === 'true' ? 'checked disabled' : 'disabled') + '>';
+        html += '<input type="checkbox" id="quality_documents" name="quality_documents" ' + (item.quality_documents === 'true' ? 'checked' : 'disabled') + '>';
         html += '</div>';
         
         html += '<div class="form-group">';
