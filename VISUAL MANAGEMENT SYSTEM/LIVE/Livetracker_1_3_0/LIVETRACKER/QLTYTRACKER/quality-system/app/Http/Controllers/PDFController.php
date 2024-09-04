@@ -185,7 +185,7 @@ WHERE
     rn = 1
 
 "
-, [$processOrderNumber,$processOrderNumber, $processOrderNumber, $processOrderNumber]);
+, [$processOrderNumber,$processOrderNumber, $processOrderNumber, $processOrderNumber,$processOrderNumber]);
         $data2 = DB::table('QUALITY_PACK.dbo.Welding_Form_Data as mpf')
             ->where('ProcessOrderID', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_welding_complete', '=', 'u.Login')

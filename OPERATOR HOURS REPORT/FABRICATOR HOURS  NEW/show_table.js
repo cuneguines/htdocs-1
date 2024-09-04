@@ -1,3 +1,9 @@
+
+$(document).ready(function() {
+  console.log($('.date_holder').text());
+  $('.operator').text($('.date_holder').text());
+
+});
 function toggleTable() {
   $.ajax({
     type: "POST",
@@ -11,14 +17,17 @@ function toggleTable() {
         // Calculate the percentage with proper formatting
         let percentage = (row["Total Hours from Subquery"] / row["Planned_Lab"]) * 100;
         let formattedPercentage = (isNaN(percentage) ? 0 : percentage.toFixed(2)) + '%';
-    
+        let plannedLab = parseFloat(row["Planned_Lab"]) || 0;
+        let totalHours = parseFloat(row["Total Hours from Subquery"]) || 0;
+        let delta = plannedLab - totalHours;
+        let formattedDelta = delta.toFixed(2);
         // Generate table row
         tableBody += "<tr>";
         tableBody += '<td style="width:5%">' + (row["PrOrder"] || '') + "</td>";
         tableBody += '<td style="width:5%">' + (row["SoNum"] || '') + "</td>";
         tableBody += '<td style="width:5%">' + (row["ItmsGrpNam"] || '') + "</td>";
        
-        tableBody += '<td style="width:5%">' + (row["ItemName"] || '') + "</td>";
+        tableBody += '<td style="width:5%">' + (row["Itemname"] || '') + "</td>";
         tableBody += '<td style="width:5%">' + (row["EndProduct"] || '') + "</td>";
         tableBody += '<td style="width:5%">' + (row["CreateDate"] || '') + "</td>";
         tableBody += '<td style="width:5%">' + (row["Year"] || '') + "</td>";
@@ -31,6 +40,7 @@ function toggleTable() {
         tableBody += '<td style="width:10%">' + (row["Date of Last Entry"] || '') + "</td>";
         tableBody += '<td style="width:10%">' + (row["Total Hours from Subquery"] || '') + "</td>";
         tableBody += '<td style="width:10%">' + (row["Planned_Lab"] || '') + "</td>";
+        tableBody += '<td style="width:10%">' + formattedDelta + "</td>";
         tableBody += '<td style="width:10%">' + formattedPercentage + "</td>";
         tableBody += "</tr>";
     });

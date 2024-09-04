@@ -349,12 +349,12 @@ function updateDropdown(checkbox, selectName) {
             </table>
             <div class="form-group">
                 <label>Sign-off for Finishing:
-                    <input style="width:100%" type="text" name="sign_off_finishing" value="${username}">
+                    <input style="width:100%" type="text" name="sign_off_finishing_m" value="${username}">
                 </label>
             </div>
             <div class="form-group">
                 <label>Comments for Finishing:
-                    <textarea style="width:100%" name="comments_finishing" rows="4" cols="50"></textarea>
+                    <textarea style="width:100%" name="comments_finishing_m" rows="4" cols="50"></textarea>
                 </label>
             </div>
             <button type="button" onclick="submitFinishingForm('${processOrder}')">Submit Finishing Form</button>

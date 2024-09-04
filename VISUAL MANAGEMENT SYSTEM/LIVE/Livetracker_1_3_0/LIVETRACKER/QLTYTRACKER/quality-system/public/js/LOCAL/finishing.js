@@ -1,5 +1,5 @@
 function generateFinishingFieldset(processOrder, qualityStep, username) {
-    $("#sign_off_finishing").val(username);
+    $("#sign_off_finishing_m").val(username);
     
 }
 
@@ -32,8 +32,8 @@ function submitFinishingForm(processOrder) {
     formData.set('select_kent_finish_document_file', (document.querySelector('[name="select_kent_finish_documents"]').files.length > 0)
     ? document.querySelector('[name="select_kent_finish_documents"]').files[0].name
     : document.getElementById('old_select_kent_finish_documents').textContent.trim());
-    formData.set('sign_off_finishing', document.querySelector('[name="sign_off_finishing"]').value);
-    formData.set('comments_finishing', document.querySelector('[name="comments_finishing"]').value);
+    formData.set('sign_off_finishing', document.querySelector('[name="sign_off_finishing_m"]').value);
+    formData.set('comments_finishing', document.querySelector('[name="comments_finishing_m"]').value);
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
     formData.set('process_order_number', document.querySelector('[name="process_order_number_finishing"]').value);
 
@@ -571,8 +571,8 @@ function resetFinishingForm() {
     $('input[name="select_kent_finish_test"]').prop('checked', false);
 
     // Clear text inputs
-    $('input[name="sign_off_finishing"]').val('');
-    $('textarea[name="comments_finishing"]').val('');
+    $('input[name="sign_off_finishing_m"]').val('');
+    $('textarea[name="comments_finishing_m"]').val('');
 
     // Reset file input values and filenames
     $('input[name="pickle_passivate_documents"]').val('');
@@ -593,8 +593,8 @@ function Finishing(processOrder, userName) {
     $('#engineeringFieldset').hide();
     $('#finishingFieldset').hide();
     $('#finishingFieldset').show();
-    $('input[name="sign_off_finishing"]').val(userName);
-    $('#process_order_number_finishing').val(processOrder);
+    $('input[name="sign_off_finishing_m"]').val(userName);
+    $('#process_order_number_finishing_m)').val(processOrder);
     var headers = {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         // Add other headers if needed
@@ -627,8 +627,8 @@ function Finishing(processOrder, userName) {
                 $('input[name="select_kent_finish_test"]').prop('checked', response.data.select_kent_finish_test === "1");
 
                 // Set other fields
-                $('input[name="sign_off_finishing"]').val(userName);
-                $('textarea[name="comments_finishing"]').val(response.data.comments_finishing);
+                $('input[name="sign_off_finishing_m"]').val(userName);
+                $('textarea[name="comments_finishing_m"]').val(response.data.comments_finishing);
 
                 // Set file input field
                 if (response.data.pickle_passivate_document_file !== null) {
@@ -648,7 +648,7 @@ function Finishing(processOrder, userName) {
             } else {
                 resetFinishingForm();
                 $('#process_order_number_finishing').val(processOrder);
-                $('input[name="sign_off_finishing"]').val(userName);
+                $('input[name="sign_off_finishing_m"]').val(userName);
                 $('#finishingFieldset').show();
             }
         },

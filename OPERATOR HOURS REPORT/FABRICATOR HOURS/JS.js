@@ -55,7 +55,7 @@ $(document).ready(function(){
         $('#this_week').attr('go_to_week', this_week);
         $('#this_week').attr('go_to_year', this_year);
         $('.date_holder').text('Week ' + this_week + ' ' + this_year);
-
+        
         // FILTER CALANDER ROWS FOR NEW YEAR AND WEEK NUMBER
         hours_calander.hide();
         hours_calander.filter("[year = " + this_year + "][week = " + this_week + "]").show();

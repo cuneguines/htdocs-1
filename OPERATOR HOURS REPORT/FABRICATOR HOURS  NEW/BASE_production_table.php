@@ -14,6 +14,8 @@
     <!-- PAGE SPECIFIC JS -->
     <script type="text/javascript" src="./JS.js"></script>
     <script type="text/javascript" src="./show_table.js"></script>
+    <script type="text/javascript" src="./show_operator_table.js"></script>
+
     <!-- STYLEING -->
     <link rel="stylesheet" href="./LT_STYLE.css">
     <link rel="stylesheet" href="./LT_style_standalone_extras.css">
@@ -103,9 +105,12 @@
     /* Green */
     color: white;
     font-weight: bold;
-    position: sticky; /* Sticky header so it stays in place when scrolling */
-    top: 0; /* Stick to the top of the table */
-    z-index: 1; /* Ensure the header is above other table content */ 
+    position: sticky;
+    /* Sticky header so it stays in place when scrolling */
+    top: 0;
+    /* Stick to the top of the table */
+    z-index: 1;
+    /* Ensure the header is above other table content */
 
 }
 
@@ -138,6 +143,67 @@
 
 /* Specific Row Coloring */
 #modalTable tbody tr.special-row {
+    background-color: #FFD700;
+    /* Yellow */
+}
+/* Table Styling */
+#anotherModalTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#anotherModalTable th,
+#anotherModalTable td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: black;
+}
+
+/* Header Styles */
+#anotherModalTable th {
+    background-color: #7cbfa0;
+    /* Green */
+    color: white;
+    font-weight: bold;
+    position: sticky;
+    /* Sticky header so it stays in place when scrolling */
+    top: 0;
+    /* Stick to the top of the table */
+    z-index: 1;
+    /* Ensure the header is above other table content */
+
+}
+
+/* Fixed Header */
+#anotherModalTable thead {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+/* Scrollable Body */
+#anotherModalTable tbody {
+    display: block;
+    height: 300px;
+    /* Adjust as needed */
+    overflow-y: scroll;
+    width: 100%;
+
+}
+
+/* Even and Odd Row Coloring */
+#anotherModalTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    padding: 3px;
+}
+
+#anotherModalTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+/* Specific Row Coloring */
+#anotherModalTable tbody tr.special-row {
     background-color: #FFD700;
     /* Yellow */
 }
@@ -223,42 +289,86 @@
     border: 2px solid #eb3434;
     border-radius: 4px;
     font-size: 2vh;
-    transition: 0.4s;" onclick="toggleTable()">Show Table</button>
+    transition: 0.4s;
+    margin-left: 25px;" onclick="toggleTable()">Details Table</button>
+                    <button style="background-color: white;
+    color: black;
+    margin-left: 40px;
+    position: relative;
+    top: 5%;
+    border: 2px solid #eb3434;
+    border-radius: 4px;
+    font-size: 2vh;
+    transition: 0.4s;" class='ooperator' onclick="toggleTable_operator_details()">
+
+                        OperatorsTable</button></td>
                 </div>
+
                 <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <table id="modalTable">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <table id="modalTable">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%">PrOrder</th>
+                                    <th style="width:5%">SoNum</th>
+                                    <th style="width:5%">ItemsGrpNam</th>
+                                    <th style="width:5%">ItemName</th>
+                                    <th style="width:5%">EndProduct</th>
+                                    <th style="width:5%">CreateDate</th>
+                                    <th style="width:5%">Year</th>
+                                    <th style="width:5%">Month</th>
+                                    <th style="width:5%">Week</th>
+                                    <th style="width:10%">U_Product_Group_One</th>
+                                    <th style="width:10%">U_Product_Group_Two</th>
+                                    <th style="width:10%">U_Product_Group_Three</th>
+                                    <th style="width:5%">Status</th>
+                                    <th style="width:10%">Date of Last Entry</th>
+                                    <th style="width:10%">Total Hours Booked</th>
+                                    <th style="width:10%">Planned_Lab</th>
+                                    <th style="width:10%">Delta</th>
+                                    <th style="width:10%">Percentage Booked Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Table rows will be filled here -->
+                            </tbody>
+                        </table>
+
+                        <button style="color:red" onclick="export_to_excel('modalTable')" id="exportExcel"
+                            class="banner_button_">Export to Excel</button>
+                    </div>
+                </div>
+<!-- New Modal -->
+<div id="anotherModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <table  id="anotherModalTable">
             <thead>
-    <tr>
-        <th style="width:5%">PrOrder</th>
-        <th style="width:5%">SoNum</th>
-        <th style="width:5%">ItemsGrpNam</th>
-        <th style="width:5%">ItemName</th>
-        <th style="width:5%">EndProduct</th>
-        <th style="width:5%">CreateDate</th>
-        <th style="width:5%">Year</th>
-        <th style="width:5%">Month</th>
-        <th style="width:5%">Week</th>
-        <th style="width:10%">U_Product_Group_One</th>
-        <th style="width:10%">U_Product_Group_Two</th>
-        <th style="width:10%">U_Product_Group_Three</th>
-        <th style="width:5%">Status</th>
-        <th style="width:10%">Date of Last Entry</th>
-        <th style="width:10%">Total Hours Booked</th>
-        <th style="width:10%">Planned_Lab</th>
-        <th style="width:10%">Percentage Booked Hours</th>
-    </tr>
-</thead>
-    <tbody>
-        <!-- Table rows will be filled here -->
-    </tbody>
-</table>
+                <tr>
+                <tr>
+                <tr>
+                    <th style="width:5%">Year</th>
+                    <th style="width:5%">Week</th>
+                    <th style="width:5%">Created</th>
+                    <th style="width:5%">UserId</th>
+                    <th style="width:5%">Employee</th>
+                    <th style="width:10%">Item Name</th>
+                    <th style="width:10%">Labour Name</th>
+                    <th style="width:10%">Hours Booked</th>
+                </tr>
+                </tr>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be filled here -->
+            </tbody>
+        </table>
 
-            <button style="color:red" onclick="export_to_excel('modalTable')" id="exportExcel" class="banner_button_">Export to Excel</button>
-        </div>
+        <button style="color:red" onclick="export_to_excel('anotherModalTable')" id="exportExcel2"
+            class="banner_button_">Export to Excel</button>
     </div>
-
+</div>
 
 
             </div>

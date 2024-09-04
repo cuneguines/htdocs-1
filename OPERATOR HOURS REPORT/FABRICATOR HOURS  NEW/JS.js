@@ -84,6 +84,8 @@ createTotalRow(this_week, this_year);
         $('#this_week').attr('go_to_week', this_week);
         $('#this_week').attr('go_to_year', this_year);
         $('.date_holder').text('Week ' + this_week + ' ' + this_year);
+        $('.operator').text('Week ' + this_week + ' ' + this_year);
+
 
         // FILTER CALANDER ROWS FOR NEW YEAR AND WEEK NUMBER
         hours_calander.hide();
@@ -139,6 +141,7 @@ createTotalRow(this_week, this_year);
         $('#this_week').attr('go_to_week', this_week);
         $('#this_week').attr('go_to_year', this_year);
         $('.date_holder').text('Week ' + this_week + ' ' + this_year);
+        $('.operator').text('Week ' + this_week + ' ' + this_year);
 
         // FILTER CALANDER ROWS FOR NEW YEAR AND WEEK NUMBER
         hours_calander.hide();
@@ -270,10 +273,12 @@ function createTotalRow(week, year) {
         <td id="total-fri" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
         <td id="total-sat" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
         <td id="total-week" style="background-color: #4d79ef;border:1px solid #4d79ef;"></td>
+      
     </tr>`;
 
     // Append the total row to the table body
     $('#total tbody').append(totalRow);
+  
 }
 
 

@@ -35,7 +35,9 @@
         <label>
             Sign-off for Quality:
             <!-- <input type="text" name="sign_off_quality_l" id="sign_off_quality_l" value="${username}"> -->
-            <input style="width:100%"type="text" name="sign_off_quality" id="sign_off_quality" value="${username}">
+            <input style="width:100%" type="text" name="sign_off_quality_m" value="${username}" id="sign_off_quality">
+
+           
 
         </label>
     </div>
@@ -44,7 +46,7 @@
     <div class="form-group">
         <label>
             Comments for Quality:
-            <textarea style="width:100%"name="comments_quality" id="comments_quality" rows="4" cols="50"></textarea>
+            <textarea style="width:100%"name="comments_quality_m" id="comments_quality" rows="4" cols="50"></textarea>
         </label>
     </div>
 
@@ -83,7 +85,7 @@ function generateUUID() {
 // Generate and display UUID
 const uuid = generateUUID();
 uuidDisplay.textContent = uuid;
-//$('#sign_off_quality').val(username);
-//console.log(username);
+//$('#sign_off_quality_m').val(username);
+console.log(username);
 
 </script>

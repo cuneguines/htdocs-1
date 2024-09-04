@@ -98,8 +98,8 @@ function submitQualityForm() {
         process_order_number: document.querySelector('[name="process_order_number_quality"]').value || null,
         walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? 'Yes' : 'No',
         uuid: document.getElementById('uuidDisplay').textContent || null,
-        sign_off_quality: document.querySelector('[name="sign_off_quality"]').value,
-        comments_quality: document.querySelector('[name="comments_quality"]').value,
+        sign_off_quality: document.querySelector('[name="sign_off_quality_m"]').value,
+        comments_quality: document.querySelector('[name="comments_quality_m"]').value,
         uploadimages:document.querySelector('[name="upload_images"]').checked ? 'Yes' : 'No',
         // Add other form fields accordingly
     };
@@ -780,8 +780,8 @@ function resetQualityForm() {
     $('#upload_images').prop('checked', false);
 
     // Clear text inputs
-    $('#sign_off_quality').val('');
-    $('#comments_quality').val('');
+    $('#sign_off_quality_m').val('');
+    $('#comments_quality_m').val('');
 
     // Reset file input values
     $('#images_filename').text('');
@@ -797,7 +797,7 @@ function Quality(processOrder, userName) {
     $('#qualityFieldset').hide();
     $('#manufacturingFieldset').hide();
     $('#qualityFieldset').show();
-    $('#sign_off_quality').val(userName);
+    $('#sign_off_quality_m').val(userName);
     $('#process_order_number_quality').val(processOrder);
 
     var headers = {
@@ -829,8 +829,8 @@ console.log(response);
                     $('input[name="walk_down_visual_inspection"]').prop('checked', response.walk_down_visual_inspection==="1");
                     $('input[name="upload_images"]').prop('checked', response.uploadimages==="1");
                     // Other fields
-                    $('#sign_off_quality').val(userName);
-                    $('#comments_quality').val(response.comments_quality);
+                    $('#sign_off_quality_m').val(userName);
+                    $('#comments_quality_m').val(response.comments_quality);
                     //$('#upload_images').val(response.uploadimages);
 
                     // File input fields
@@ -846,7 +846,7 @@ console.log(response);
                 });
             } else {
                 resetQualityForm();
-                $('#sign_off_quality').val(userName);
+                $('#sign_off_quality_m').val(userName);
                 $('#qualityFieldset').show();
                 $('#process_order_number_quality').val(processOrder);
             }

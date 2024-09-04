@@ -792,7 +792,9 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <?php
+                print_r($data_qlty);
+?>
                     @foreach ($data_qlty as $row2)
                     @foreach ($row2 as $key => $value2)
                     @if (!empty($value2) && $key != 'ID' && $key != 'id'&&$key != 'KittingID'&&$key != 'uuid')

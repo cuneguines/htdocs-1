@@ -801,44 +801,12 @@ and t17.ItmsGrpNam='NON-PRODUCTIVE TIME'
 
 ";
 
-$results="WITH BookedHours AS (
-    SELECT 
-        t0.PrOrder,
-        SUM(t0.Quantity) AS TotalBookedHours
-    FROM 
-        iis_epc_pro_ordert t0
-    GROUP BY 
-        t0.PrOrder
-),
-PlannedLab AS (
-    SELECT 
-        t1.U_IIS_proPrOrder, 
-        SUM(t0.plannedqty) AS Planned_Lab
-    FROM 
-        wor1 t0                                                     
-    INNER JOIN 
-        owor t1 ON t1.DocEntry = t0.DocEntry                                                                 
-    INNER JOIN 
-        oitm t2 ON t2.ItemCode = t0.ItemCode                                                                
-    WHERE 
-        t2.ItemType = 'L'                                                                 
-    GROUP BY 
-        t1.U_IIS_proPrOrder
-),
-MaxCreatedDate AS (
-    SELECT 
-        PrOrder,
-        MAX(Created) AS MaxCreatedDate
-    FROM 
-        iis_epc_pro_ordert
-    GROUP BY 
-        PrOrder
-)
-SELECT 
+$results="SELECT 
     t1.PrOrder,
     t1.SoNum,
     t4.ItmsGrpNam,
-    t5.itmsGrpNam,
+	t2.Itemname,
+	t1.EndProduct,
     CONVERT(VARCHAR(10), t1.CreateDate, 103) AS [CreateDate],
     YEAR(t1.CreateDate) AS [Year],
     MONTH(t1.CreateDate) AS [Month],
@@ -847,40 +815,70 @@ SELECT
     t2.U_Product_Group_Two,
     t2.U_Product_Group_Three,
     t1.Status,
-    CONVERT(VARCHAR(10), mcd.MaxCreatedDate, 103) AS [Date of Last Entry],
-    ISNULL(bh.TotalBookedHours, 0) AS [Total Hours from Subquery],
-    pl.Planned_Lab,
+    CONVERT(VARCHAR(10), maxDateSubquery.MaxCreatedDate, 103) AS [Date of Last Entry], -- Format date as DD/MM/YYYY
+    ISNULL(agg.TotalBookedHours, 0) AS [Total Hours from Subquery],
+    t9.Planned_Lab,
+    -- Calculate the percentage of booked hours to planned hours with 2 decimal places and a percentage sign
     CASE 
-        WHEN pl.Planned_Lab = 0 THEN '0.00%'
-        ELSE FORMAT((CAST(ISNULL(bh.TotalBookedHours, 0) AS DECIMAL(18, 2)) / CAST(pl.Planned_Lab AS DECIMAL(18, 2))) * 100, '0.00') + '%'
+        WHEN t9.Planned_Lab = 0 THEN '0.00%'
+        ELSE FORMAT((CAST(ISNULL(agg.TotalBookedHours, 0) AS DECIMAL(18, 2)) / CAST(t9.Planned_Lab AS DECIMAL(18, 2))) * 100, '0.00') + '%'
     END AS [Percentage Booked Hours]
 FROM 
-    iis_epc_pro_orderh t1
-INNER JOIN 
-    iis_epc_pro_ordert t0 ON t1.PrOrder = t0.PrOrder
+    iis_epc_pro_orderh t1 
 INNER JOIN 
     oitm t2 ON t2.ItemCode = t1.EndProduct
 INNER JOIN 
     oitb t4 ON t4.ItmsGrpCod = t2.ItmsGrpCod
+
 INNER JOIN 
-    oitm t10 ON t10.itemcode = t0.labourcode
+    (
+        SELECT 
+            t0.PrOrder,
+            ISNULL(SUM(t0.Quantity), 0) AS TotalBookedHours
+        FROM 
+            iis_epc_pro_ordert t0
+
+                                WHERE
+                                t0.Created >= DATEADD(YEAR, -1, GETDATE()) 
+        GROUP BY 
+            t0.PrOrder
+    ) agg ON agg.PrOrder = t1.PrOrder
 INNER JOIN 
-    oitb t5 ON t5.ItmsGrpCod = t10.ItmsGrpCod
-LEFT JOIN 
-    BookedHours bh ON bh.PrOrder = t0.PrOrder
-LEFT JOIN 
-    PlannedLab pl ON pl.U_IIS_proPrOrder = t0.PrOrder
-LEFT JOIN 
-    MaxCreatedDate mcd ON mcd.PrOrder = t0.PrOrder
+    (
+        SELECT 
+            t1.U_IIS_proPrOrder, 
+            SUM(t0.plannedqty) AS [Planned_Lab]                                                  
+        FROM 
+            wor1 t0                                                     
+        INNER JOIN 
+            owor t1 ON t1.DocEntry = t0.DocEntry                                                                 
+        INNER JOIN 
+            oitm t2 ON t2.ItemCode = t0.ItemCode                                                                
+        WHERE 
+            t2.ItemType = 'L'                                                                 
+        GROUP BY 
+            t1.U_IIS_proPrOrder
+    ) t9 ON t9.U_IIS_proPrOrder = t1.PrOrder
+INNER JOIN 
+    (
+        SELECT 
+            PrOrder,
+            MAX(Created) AS MaxCreatedDate
+        FROM 
+            iis_epc_pro_ordert
+        GROUP BY 
+            PrOrder
+    ) maxDateSubquery ON maxDateSubquery.PrOrder = t1.PrOrder
 WHERE 
-    t4.ItmsGrpCod = '197'
-    AND t0.Created >= DATEADD(YEAR, -1, GETDATE())
+    t4.ItmsGrpCod='197'
+	and t2.ItemName not like '%training%'
+  --and t1.PrOrder=56414
 GROUP BY 
     t1.PrOrder,
     t1.SoNum,
     t4.ItmsGrpNam,
-    bh.TotalBookedHours,
-    pl.Planned_Lab,
+    agg.TotalBookedHours,
+    t9.Planned_Lab,
     t1.CreateDate,
     YEAR(t1.CreateDate),
     MONTH(t1.CreateDate),
@@ -889,14 +887,72 @@ GROUP BY
     t2.U_Product_Group_Two,
     t2.U_Product_Group_Three,
     t1.Status,
-    CONVERT(VARCHAR(10), mcd.MaxCreatedDate, 103),
-    t5.ItmsGrpNam;
+    CONVERT(VARCHAR(10), maxDateSubquery.MaxCreatedDate, 103),
+		t2.Itemname,
+	t1.EndProduct
+               --t10.ItemName
+
 
 	
 ";
+$results_operator_entries="SELECT 
+
+ISNULL(t3.SOnum,'STOCK ORDER') [Sales Order],
+t0.prorder [Process Order],
+CAST(t0.Quantity AS DECIMAL (12,2))[Hours],
+t0.Created [Date of Entry],
+DATEPART (ISO_WEEK, t0.Created) [Week no.],
+datepart (ISO_WEEK, getdate()) [This week No.], 
+CASE
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 2 THEN 'mon'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 3 THEN 'tue'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 4 THEN 'wed'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 5 THEN 'thu'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 6 THEN 'fri'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 7 THEN 'sat'
+    WHEN DATEPART(WEEKDAY,t0.CREATED) = 1 THEN 'sun'
+END[Weekday],
+t0.labourcode,
+t2.ItemName [Labour Name],
+t3.EndProduct, 
+(case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end) as 'Operator', t0.UserId [Employee Number],
+t0.RecId,
+t4.ItemName,
+t44.CardName,
+(case when t3.endproduct = '1000000' then t0.Quantity else '0' end) [NP Time],
+t5.Name,
+DATEPART (YEAR, t0.Created) [Year]
+
+
+FROM IIS_EPC_PRO_ORDERT t0
+
+RIGHT JOIN ohem t1 on t0.userid = t1.empid
+JOIN oitm t2 on t0.labourcode = t2.ItemCode 
+JOIN IIS_EPC_PRO_ORDERH t3 on t0.prorder = t3.PrOrder
+
+
+LEFT JOIN(
+    SELECT t1.itemcode, t1.ItemName FROM OITM t1
+) t4 ON t3.endproduct = t4.itemcode
+LEFT JOIN(
+    SELECT t11.CardName,t11.DocNum FROM ordr t11
+) t44 ON t44.DocNum =t3.SONum
+
+LEFT JOIN oubr t5 on t5.Code = t1.branch
+INNER JOIN 
+    oitb t_4 ON t_4.ItmsGrpCod = t2.ItmsGrpCod
+--inner join owor t1 on t1.U_IIS_proPrOrder = t0.PrOrder and t1.ItemCode = t0.EndProduct  
+WHERE t0.userid is not null and t1.U_IIS_disEmpPin <> '505' and t1.U_IIS_disEmpPin <> '514' and t0.LabourCode <> '3000004' and t0.LabourCode <> '2999999' AND t0.Created > DATEADD(WEEK,-10,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE()))
+and t_4.ItmsGrpCod='197' and  t2.itemname not like '%training%'
+GROUP BY  t0.prorder , t3.SONum , t0.Quantity, t0.Created, t0.labourcode, t44.CardName,t2.ItemName , t3.EndProduct, (case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end), t0.UserId, t4.ItemName, t0.recid, t5.Name
+
+ORDER BY [Date of Entry] DESC";
    $getResults = $conn->prepare($results);
    $getResults->execute();
    $qlty_results = $getResults->fetchAll(PDO::FETCH_BOTH);
+//$getResults = $conn->prepare($results_operator_entries);
+  // $getResults_operator->execute();
+   //$results_operator = $getResults_operator->fetchAll(PDO::FETCH_BOTH);
    //$json_array = array();
    //var_dump($production_exceptions_results);
    echo json_encode(array($qlty_results));

@@ -60,7 +60,7 @@ function fetchData(processOrderNumber) {
                 $('#qualityStep_12').css('background-color', '#7cbfa0');
             }
           
-            if (response.data.packingandTransportData) {
+            if (response.data.packingAndTransportData) {
                 $('#qualityStep_13').css('background-color', '#7cbfa0');
             } 
         },

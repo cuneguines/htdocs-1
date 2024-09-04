@@ -18,8 +18,18 @@ $sql_operator_hours_pivot =
         END[WeekDay],
         CAST(ISNULL(t0.Quantity,0) AS DECIMAL(12,2)) [Hours]
         FROM IIS_EPC_PRO_ORDERT t0
+        JOIN oitm t2 on t0.labourcode = t2.ItemCode 
+        INNER JOIN 
+    oitb t_4 ON t_4.ItmsGrpCod = t2.ItmsGrpCod
         LEFT JOIN OHEM t1 ON t0.UserId = t1.empID
-            WHERE t0.Created > DATEADD(WEEK,-$week_hist,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE())) and t0.LabourCode ='3000623'
+		JOIN IIS_EPC_PRO_ORDERH t3 on t0.prorder = t3.PrOrder
+
+
+LEFT JOIN(
+    SELECT t1.itemcode, t1.ItemName FROM OITM t1
+) t4 ON t3.endproduct = t4.itemcode
+	
+            WHERE t0.Created > DATEADD(WEEK,-10,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE())) and t_4.ItmsGrpCod='197' and t4.ItemName not like '%training%'
     ) t0
     
     PIVOT
@@ -86,10 +96,11 @@ LEFT JOIN(
 ) t44 ON t44.DocNum =t3.SONum
 
 LEFT JOIN oubr t5 on t5.Code = t1.branch
-
+INNER JOIN 
+    oitb t_4 ON t_4.ItmsGrpCod = t2.ItmsGrpCod
 --inner join owor t1 on t1.U_IIS_proPrOrder = t0.PrOrder and t1.ItemCode = t0.EndProduct  
 WHERE t0.userid is not null and t1.U_IIS_disEmpPin <> '505' and t1.U_IIS_disEmpPin <> '514' and t0.LabourCode <> '3000004' and t0.LabourCode <> '2999999' AND t0.Created > DATEADD(WEEK,-$week_hist,DATEADD(DAY,-DATEPART(WEEKDAY,GETDATE()),GETDATE()))
-and t0.Labourcode='3000623'
+and t_4.ItmsGrpCod='197' and t4.ItemName not like '%training%'
 GROUP BY  t0.prorder , t3.SONum , t0.Quantity, t0.Created, t0.labourcode, t44.CardName,t2.ItemName , t3.EndProduct, (case when t0.userid is not null then  (t1.firstname + ' ' + t1.lastname) else 'Unknown' end), t0.UserId, t4.ItemName, t0.recid, t5.Name
 
 ORDER BY [Date of Entry] DESC
