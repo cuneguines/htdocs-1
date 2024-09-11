@@ -49,6 +49,11 @@
                     <div id = 'grouping_buttons' class = 'fw light_grey'>
                         <div id = 'margin'>
                             <div class = "grouping_category">
+                                <button class = "stage_ok quarter medium light_blue wtext rounded-top" stage = "9-submitted-to-planning"><?php echo $pre_production_exceptions_counters[SUBMITTED][PPE_SELF]." (".$pre_production_exceptions_counters[SUBMITTED][OK].")"; ?></button>
+                                <button class = "stage_name half medium dark_grey wtext" stage = "All">Submitted to Planning</button>
+                                <button class = "stage_not_ok quarter medium red wtext rounded-bottom" stage = "9-submitted-to-planning-expired"><?php echo $pre_production_exceptions_counters[SUBMITTED][LATE];?></button>
+                            </div><!--
+                            --><div class = "grouping_category">
                                 <button class = "stage_ok quarter medium light_blue wtext rounded-top" stage = "1-drawings-approved"><?php echo $pre_production_exceptions_counters[DRAWINGS_APPROVED][PPE_SELF]." (".$pre_production_exceptions_counters[DRAWINGS_APPROVED][OK].")"; ?></button>
                                 <button class = "stage_name half medium dark_grey wtext" stage = "All">Drawings Approved</button>
                                 <button class = "stage_not_ok quarter medium red wtext rounded-bottom" stage = "1-drawings-approved-expired"><?php echo $pre_production_exceptions_counters[DRAWINGS_APPROVED][LATE];?></button>
@@ -83,11 +88,7 @@
                                 <button class = "stage_name half medium dark_grey wtext" stage = "All">Design Concept</button>
                                 <button class = "stage_not_ok quarter medium red wtext rounded-bottom" stage = "8-design-concept-expired"><?php echo $pre_production_exceptions_counters[CONCEPT][LATE];?></button>
                             </div><!--
-                            --><div class = "grouping_category">
-                                <button class = "stage_ok quarter medium light_blue wtext rounded-top" stage = "All">0</button>
-                                <button class = "stage_name half medium dark_grey wtext" stage = "All">UNUSED</button>
-                                <button class = "stage_not_ok quarter medium red wtext rounded-bottom" stage = "All">0</button>
-                            </div><!--
+                            
                             --><div class = "grouping_category">
                                 <button class = "stage_ok quarter medium light_blue wtext rounded-top" stage = "All">0</button>
                                 <button class = "stage_name half medium dark_grey wtext" stage = "All">UNUSED</button>
@@ -149,6 +150,11 @@
                                     else if($row["Stage"] == "8. Design Concept"){
                                         $stage = "8-design-concept";
                                         $row["Weeks Overdue"] > 0 ? $stage = "8-design-concept-expired" : $stage = $stage;
+                                        
+                                    }
+                                    else if($row["Stage"] == "9. Submitted to Planning"){
+                                        $stage = "9-submitted-to-planning";
+                                        $row["Weeks Overdue"] > 0 ? $stage = "9-submitted-to-planning-expired" : $stage = $stage;
                                     }
                                     else{
                                         $stage = "";

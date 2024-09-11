@@ -85,6 +85,16 @@ $pre_production_exceptions =
                 WHEN t1.U_Est_Prod_Hrs < 20  THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $concept_E_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52)
                 ELSE DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $concept_NA_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52) 
             END) 
+            WHEN (case when t4.U_stages is null then t1.U_PP_Stage else t4.U_stages end) LIKE '9. Submitted to Planning' THEN 
+           (CASE 
+                WHEN t1.U_Est_Prod_Hrs >= 750 THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_S_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52) 
+                WHEN t1.U_Est_Prod_Hrs < 750 AND t1.U_Est_Prod_Hrs >= 250 THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_A_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52) 
+                WHEN t1.U_Est_Prod_Hrs < 250 AND t1.U_Est_Prod_Hrs >= 100 THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_B_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52)  
+                WHEN t1.U_Est_Prod_Hrs < 100 AND t1.U_Est_Prod_Hrs >= 40 THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_C_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52)  
+                WHEN t1.U_Est_Prod_Hrs < 40 AND t1.U_Est_Prod_Hrs >= 20 THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_D_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52)   
+                WHEN t1.U_Est_Prod_Hrs < 20  THEN DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_E_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52)  
+                ELSE DATEPART(iso_week, GETDATE()) - DATEPART(iso_week,t1.U_Promise_Date) + $drawings_approved_NA_limit + ((DATEPART(year, GETDATE())-DATEPART(year, t1.U_Promise_Date))*52) 
+            END)
         ELSE 0 
     END) [Weeks Overdue], 
     (case when t4.U_stages is null then t1.U_PP_Stage else t4.U_stages end) [Stage],

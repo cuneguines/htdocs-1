@@ -6,6 +6,7 @@
     define("ENGINEER_DRAWING", 4);
     define("AWAITING_FURTHER_INFORMATION", 5);
     define("CONCEPT", 6);
+    define("SUBMITTED",7);
 
     define("PPE_SELF", 0);
     define("LATE", 1);
@@ -20,7 +21,7 @@
     $getResults = $conn->prepare($pre_production_exceptions);
     $getResults->execute();
     $pre_production_exceptions_results = $getResults->fetchAll(PDO::FETCH_BOTH);
-    $pre_production_exceptions_counters = array_fill(0,7,array_fill(0,4,0));
+    $pre_production_exceptions_counters = array_fill(0,8,array_fill(0,4,0));
 
     // EACH SAP LINEITEM (FROM QUERY)
     foreach($pre_production_exceptions_results  as $row){
@@ -80,5 +81,13 @@
             }
             $pre_production_exceptions_counters[CONCEPT][OK] = $pre_production_exceptions_counters[CONCEPT][PPE_SELF] - $pre_production_exceptions_counters[CONCEPT][LATE];    
         }
+        if($row["Stage"] == "9. Submitted to Planning"){
+            $pre_production_exceptions_counters[SUBMITTED][PPE_SELF]++;
+            if($row["Weeks Overdue"] > 0){
+                $pre_production_exceptions_counters[SUBMITTED][LATE]++;
+            }
+            $pre_production_exceptions_counters[SUBMITTED][OK] = $pre_production_exceptions_counters[SUBMITTED][PPE_SELF] - $pre_production_exceptions_counters[SUBMITTED][LATE];    
+        }
+
     }
 ?>

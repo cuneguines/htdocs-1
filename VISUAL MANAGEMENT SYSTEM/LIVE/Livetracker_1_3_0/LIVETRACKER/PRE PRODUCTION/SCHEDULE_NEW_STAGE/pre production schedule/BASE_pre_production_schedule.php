@@ -232,6 +232,7 @@
                         <p class = "smedium">Stage</p>
                         <h2 class = "inner seventh medium">Nothing Selected</h2>
                         <br>
+                
                         <p class = "smedium">Production</p>
                         <h2 class = "inner eighth medium">Nothing Selected</h2>
                         <br>
@@ -321,22 +322,22 @@
                                             $btn_color = "style = 'background-color:#5e86FF'";
                                         }
                                         if($results[$i]["Stage"] == "4. Awaiting Sample Approval"){
-                                            $btn_color = "style = 'background-color:#4d79FF'";
+                                            $btn_color = "style = 'background-color:#82a1FF'";
                                         }
                                         if($results[$i]["Stage"] == "5. Engineer Drawing (Approval Drawings)" || $results[$i]["Stage"] == "5. Engineer Drawing ( Approval Drawings)"){
-                                            $btn_color = "style = 'background-color:#456ce5'";
+                                            $btn_color = "style = 'background-color:#82a1FF'";
                                         }
                                         if($results[$i]["Stage"] == "6. Awaiting Further Instructions" || $results[$i]["Stage"] == "6. Awaiting Further Instruction"){
                                             $btn_color = "style = 'background-color:#3d60cc'";
                                         }
                                         if($results[$i]["Stage"] == "7. Bought In Item"){
-                                            $btn_color = "style = 'background-color:#3554b2'";
+                                            $btn_color = "style = 'background-color:#82a1FF'";
                                         }
                                        
                                         if($results[$i]["Stage"] == "8. Design Concept"){
-                                            $btn_color = "style = 'background-color:#26fcf5'";} // Red for "Design Concept"
+                                            $btn_color = "style = 'background-color:#82a1FF'";} // Red for "Design Concept"
                                         if($results[$i]["Stage"] == "9. Submitted to Planning") {
-                                            $btn_color = "style = 'background-color:#97ff95'";}
+                                            $btn_color = "style = 'background-color:#97ff95;border-style: solid;border-color: black';";}
                                         ////////////////////////////////////
                                         
                                             // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING
@@ -345,6 +346,7 @@
                                             id = 'eng_btn'
                                             class = 'project_item rounded spaced' 
                                             sales_order = '".($results[$i]["Sales Order"] == NULL ? "NO SO" : $results[$i]["Sales Order"])."'
+                                             process_order = '".($results[$i]["prOrder"] == NULL ? "NO PO" : $results[$i]["prOrder"])."'
                                             customer = '".$results[$i]["Customer"]."'
                                             engineer = '".$results[$i]["Engineer"]."'
                                             engineer_nsp = '".str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]))."'
@@ -399,50 +401,50 @@
                             </div><!--
                         --><div class = "subdividor light_grey" id = "pp">
                                 <div class = "half">
-                                    <div class = "textholder"><p>3. Revised Drawings Required</p></div>
+                                    <div class = "textholder"><p>3.Submitted to Planning</p></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#5e86FF"></button></div></div>
-                                </div>
-                            </div><!--
-                        --><div class = "subdividor light_grey" id = "pp">
-                                <div class = "half">
-                                    <div class = "textholder"><p>4. Awaiting Sample Approval</p></div>
-                                </div>
-                                <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#4d79FF"></button></div></div>
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#97ff95"></button></div></div>
                                 </div>
                             </div><!--
                         --><div class = "subdividor light_grey" id = "pp">
                                 <div class = "half">
-                                    <div class = "textholder"><p>5. Engineer Drawing</p></div>
+                                    <div class = "textholder"><p>               </p></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#456Ce5"></button></div></div>
-                                </div>
-                            </div><!--
-                        --><div class = "subdividor light_grey" id = "pp">
-                                <div class = "half">
-                                    <div class = "textholder"><p>6. Awaiting Further Instructions</p></div>
-                                </div>
-                                <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#3D60CC"></button></div></div>
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#dcdcdc"></button></div></div>
                                 </div>
                             </div><!--
                         --><div class = "subdividor light_grey" id = "pp">
                                 <div class = "half">
-                                    <div class = "textholder"><p>7. Bought In Item</p></div>
+                                    <div class = "textholder"><p>           </p></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#3554B2"></button></div></div>
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#dcdcdc"></button></div></div>
+                                </div>
+                            </div><!--
+                        --><div class = "subdividor light_grey" id = "pp">
+                                <div class = "half">
+                                    <div class = "textholder"><p>              </p></div>
+                                </div>
+                                <div class = "half">
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#dcdcdc"></button></div></div>
+                                </div>
+                            </div><!--
+                        --><div class = "subdividor light_grey" id = "pp">
+                                <div class = "half">
+                                    <div class = "textholder"><p>          </p></div>
+                                </div>
+                                <div class = "half">
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#dcdcdc"></button></div></div>
                                 </div>
                             </div><!--
                         --><div class = "subdividor light_grey rounded-right" id = "pp">
                                 <div class = "half">
-                                    <div class = "textholder"><p>8. Design Concept</p></div>
+                                    <div class = "textholder"><p>         </p></div>
                                 </div>
                                 <div class = "half">
-                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#26fcf5"></button></div></div>
+                                    <div class = "textholder"><div class = "button_holder"><button style = "background-color:#dcdcdc"></button></div></div>
                                 </div>
                             </div>
                         </div>
