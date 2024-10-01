@@ -41,6 +41,28 @@
        // $sales_margin = json_decode(file_get_contents(__DIR__ . '\CACHE\salesmargin.json'), true); 
 ?>
     <?php
+
+    // Function to determine if a date is older than 30 days
+    function isOlderThan30Days($date) {
+        // Create DateTime objects for the current date and the provided date
+        $currentDate = new DateTime();
+        $futureDate = new DateTime($date);
+    
+        // Check if the futureDate is indeed in the future
+        if ($futureDate <= $currentDate) {
+            return false;
+        }
+    
+        // Calculate the difference between the future date and the current date
+        $interval = $currentDate->diff($futureDate);
+    
+        // Return true if the difference in days is more than 30
+        return $interval->days > 30;
+    }
+
+
+// Check if the date is older than 30 days
+
 /* require 'vendor/autoload.php';
 Predis\Autoloader::register();
 
@@ -150,7 +172,9 @@ $sales_margin = json_decode($retrieved_data, true);
 .styling::before {
     content: '\2193\00a0'; /* Unicode for arrow and non-breaking space */
 }
-
+.highlight {
+            background-color: #ff5722;
+        }
     </style>
 
 <body>
@@ -305,23 +329,56 @@ $sales_margin = json_decode($retrieved_data, true);
                             <td class='lefttext'><?= $sales_order["cardname"] ?></td>
                             <td style="color:<?=$cell_color_margin?>;">
                                 <?php
-                        if ($sales_order["SO Sales Value EUR"] != 0){
-                                 $value = number_format(($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100, 2);
-                                    if ($value < 40) {
-                                echo '<span class="styling">'. $value . '%</span>';
-                                        } else {
-                                    echo $value . '%';
-                                                 }
-                                    } else {
-                                echo '<span></span><span style="color:red;font-weight:bold"> N/A</span>';
-                                    }
+                        
+                        if ($sales_order["SO Sales Value EUR"] != 0) {
+                            // Calculate the margin percentage
+                            $margin_percentage = ($sales_order["Proj Margin"] / $sales_order["SO Sales Value EUR"]) * 100;
+                            
+                            // Format the margin percentage with no decimal places
+                            $formatted_value = number_format($margin_percentage, 0);
+                        
+                            // Determine the display value and styling
+                            if ($margin_percentage < -20) {
+                                $display_value = '-20%'; // Display -20% if margin is less than -20%
+                                $styling_class = 'styling'; // Apply styling class
+                            } else {
+                                $display_value = $formatted_value . '%'; // Display formatted margin percentage
+                                $styling_class = ($margin_percentage < 40) ? 'styling' : ''; // Apply styling class if margin is less than 40%
+                            }
+                            
+                            echo '<span class="' . $styling_class . '">' . $display_value . '</span>';
+                        } else {
+                            // Handle the case where SO Sales Value EUR is 0
+                            echo '<span></span><span style="color:red;font-weight:bold">N/A</span>';
+                        }
+                        
+                        
                             ?></td>
 
                             <td><?=$sales_order["PP Status"]?></td>
                             <td class='lefttext'><?= $sales_order["Dscription"] ?></td>
                             <td><?= $sales_order["Del Status"] ?></td>
-                            <td><?= $sales_order["floor_date"] ?></td>
-                            <td><?= $sales_order["Planned Margin"] ?></td>
+                            <td class="<?= isOlderThan30Days($sales_order["floor_date"]) ? 'highlight' : $sales_order["floor_date"] ?>">
+                <?= htmlspecialchars($sales_order["floor_date"]) ?>
+            </td>
+                            <td>
+<?php
+// Retrieve and cast the Euro value to a float for accurate processing
+$euro_value = (float)$sales_order["Planned Margin"];
+
+// Remove decimals using intval() or floor()
+$euro_value_int = intval($euro_value); // Or use floor($euro_value) if you prefer rounding down
+
+// Format the Euro value without decimals
+$formatted_value = number_format($euro_value_int, 0, ',', '.');
+
+// Determine the cell color
+$cell_color = ($euro_value <= 0) ? 'style="color:red;font-weight:bold;"' : ''; // Red color for zero or negative values
+
+// Display the formatted Euro value with the € sign and conditional styling
+echo '<span ' . $cell_color . '>' . '€' . $formatted_value . '</span>';
+?>
+</td>
                             <td><?= $sales_order["Engineer"] ?></td>
                             <td style="display:none"><?= $sales_order["Sales Person"] ?></td>
                             

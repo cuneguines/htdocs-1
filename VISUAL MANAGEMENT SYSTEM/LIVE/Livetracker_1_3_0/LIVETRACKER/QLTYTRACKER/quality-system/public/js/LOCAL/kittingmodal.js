@@ -470,6 +470,35 @@ function submitKittingForm(processOrder) {
     formData.append('process_order_number', document.querySelector('[name="process_order_number_kitting"]').value);
     // Add other form fields accordingly
 
+
+
+
+   
+
+
+
+    var owners_kit = [];
+document.querySelectorAll('#kitting tbody tr').forEach(function (row, index) {
+    console.log('yes');
+    if (index >= 0) { // Skip the header row
+        var owner = row.querySelector('[name="owner_kit"]').value || null;
+        var ndt = row.querySelector('[name="ndttype_kit"]').value || null;
+console.log(owner);
+console.log(ndt);
+        // Push the owner data to the array
+        owners_kit.push({
+            type: row.cells[0].innerText.trim(),
+            owner: owner,
+            ndt: ndt
+        });
+
+        // Append each owner and NDT as separate entries
+        formData.append('owners_kit[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+        formData.append('owners_kit[' + (index - 1) + '][owner]', owner);
+        formData.append('owners_kit[' + (index - 1) + '][ndt]', ndt);
+    }
+});
+    //formData.append('owners_kit', JSON.stringify(owners_kit)); 
     // Send an AJAX request to the server
     $.ajax({
         url: "/submitKittingForm",
@@ -595,7 +624,7 @@ function generateHTMLFromResponse_for_kitting_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_kitting(response) {
+function generateHTMLFromResponse_for_kitting_old(response) {
     var html = '<form id="kittingForm" class="kitting-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Kitting</legend>';
@@ -676,6 +705,172 @@ function generateHTMLFromResponse_for_kitting(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_kitting(response) {
+    var html = '<form id="kittingForm" class="kitting-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 1: Kitting</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Document</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    $.each(response, function(index, item) {
+        // Cut Formed Machine Parts
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="cut_form_mach_parts_' + index + '" name="cut_form_mach_parts" ' + ((item.cut_form_mach_parts === 'true' || item.cut_form_mach_parts === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="cut_form_mach_parts_' + index + '">Cut Formed Machine Parts</label>';
+        html += '</div>';
+        html += '</td>';
+        html+='<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Kitting(item.ProcessOrderID, 'Cut Formed Machine Parts Details about cutting formed machine parts', function(ownerData) {
+            console.log(ownerData);
+            document.getElementById('owner_1' ).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+    
+        // Bought Out Components
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="bought_out_components_' + index + '" name="bought_out_components" ' + ((item.bought_out_components === 'true' || item.bought_out_components === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="bought_out_components_' + index + '">Bought Out Components</label>';
+        html += '</div>';
+        html += '</td>';
+        html+='<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_kit_2"  style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_kit_2" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Kitting(item.ProcessOrderID, 'Bought Out Components Details about bought out components', function(ownerData) {
+            document.getElementById('owner_kit_2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_kit_2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+    
+        // Fasteners and Fixings
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="fasteners_fixings_' + index + '" name="fasteners_fixings" ' + ((item.fasteners_fixings === 'true' || item.fasteners_fixings === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="fasteners_fixings_' + index + '">Fasteners and Fixings</label>';
+        html += '</div>';
+        html += '</td>';
+        html+='<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_kit_3"  style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_kit_3" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Kitting(item.ProcessOrderID, 'Fasteners and Fixings Details about fasteners and fixings', function(ownerData) {
+            document.getElementById('owner_kit_3').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_kit_3').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+    
+        // Site Pack
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="site_pack_' + index + '" name="site_pack" ' + ((item.site_pack === 'true' || item.site_pack === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="site_pack_' + index + '">Site Pack</label>';
+        html += '</div>';
+        html += '</td>';
+        html+='<td style="border: 1px solid #ccc;></td>';
+        html += '<td id="owner_kit_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_kit_4" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Kitting(item.ProcessOrderID, 'SitePAck Details about site pack', function(ownerData) {
+            document.getElementById('owner_kit_4').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_kit_4').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+    
+        // Kitting File
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<label for="kitting_file_' + index + '">Current File:</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;" colspan="3">';
+    
+        // Single Kitting File Row
+        if (item.kitting_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/kitting_task/' + item.ProcessOrderID + '/' + item.kitting_file;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.kitting_file + '</a>';
+            html += 'Current Kitting File: ' + downloadLink;
+        } else {
+            html += 'No file chosen';
+        }
+    
+        html += '</td>';
+        html += '</tr>';
+    
+        // Sign-off
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_kitting" value="' + (item.sign_off_kitting || '') + '">';
+        html += '</td>';
+        html += '</tr>';
+    
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+        html += '<textarea style="width: 100%;" name="comments_kitting">' + (item.comments_kitting || '') + '</textarea>';
+        html += '</td>';
+        html += '</tr>';
+    });
+    
+    // Close table
+    html += '</table>';
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+
+function fetchOwnerData_Kitting(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_kit',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
 
 function resetKittingForm() {
     // Uncheck checkboxes

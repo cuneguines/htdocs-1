@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
 use App\Models\MaterialPreparationFormData; 
+use App\Models\GlobalOwnerNdt; 
 
 class MaterialPreparationController extends Controller
 {
@@ -31,10 +32,28 @@ class MaterialPreparationController extends Controller
      
         // Add other fields accordingly
 
+
+
         $materialPreparation->save();
+        $owners_mat = $request->input('owners_mat');
+        foreach ($owners_mat as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            $owner->Quality_Step = 'MaterialPrep';
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
+
+
+       
 
         // You can return a response or redirect as needed
         return response()->json(['data' => $materialPreparation]);
     }
+
+    
 }
 

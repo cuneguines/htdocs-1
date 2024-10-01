@@ -208,7 +208,7 @@
             department: $('#update_department').val(),
             role: $('#update_role').val(),
         };
-
+console.log(data);
         $.ajax({
             url: `/updateemployee/${id}`,
             type: 'PUT',

@@ -224,7 +224,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
 
 
-        fetchOwnerData(item.process_order_number, 'Reference Job / Master File if applicable', function (ownerData) {
+        fetchOwnerData_eng(item.process_order_number, 'Reference Job / Master File if applicable', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
                 document.getElementById('owner_1').innerHTML =  ownerData.owner;
@@ -268,7 +268,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
 
 
-        fetchOwnerData(item.process_order_number, 'Concept design & engineering details', function (ownerData) {
+        fetchOwnerData_eng(item.process_order_number, 'Concept design & engineering details', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
                 document.getElementById('owner_5').innerHTML =  ownerData.owner;
@@ -310,7 +310,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
 
 
-        fetchOwnerData(item.process_order_number, 'Design sign off [calculations]', function (ownerData) {
+        fetchOwnerData_eng(item.process_order_number, 'Design sign off [calculations]', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
                 document.getElementById('owner_6').innerHTML =  ownerData.owner;
@@ -353,7 +353,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
 
 
-        fetchOwnerData(item.process_order_number, 'Customer submittal package', function (ownerData) {
+        fetchOwnerData_eng(item.process_order_number, 'Customer submittal package', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
                 document.getElementById('owner_3').innerHTML =  ownerData.owner;
@@ -395,7 +395,7 @@ html+='</tr>';
 
 
 
-        fetchOwnerData(item.process_order_number, 'Reference approved samples', function (ownerData) {
+        fetchOwnerData_eng(item.process_order_number, 'Reference approved samples', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
                 document.getElementById('owner_4').innerHTML =  ownerData.owner;
@@ -446,7 +446,7 @@ html+='</tr>';
 }
 
 
-function fetchOwnerData(id,Type,callback)
+function fetchOwnerData_eng(id,Type,callback)
 {
 
     var headers = {
@@ -868,7 +868,7 @@ function Engineering(processOrder, userName) {
                     $('#sign_off_engineering').val(userName);
                     $('#comments_engineering').val(item.comments_engineering);
 
-                    // File input fields
+                    // File input fieldsfetc
                     $('#reference_job_master_file_document_filename').text(item
                         .reference_job_master_file_document);
                     $('#concept_design_document_filename').text(item.concept_design_document);

@@ -17,7 +17,7 @@ function submitFinishingForm(processOrder) {
 
     var formData = new FormData();
     formData.set('pickle_passivate_test', document.querySelector('[name="pickle_passivate_test"]').checked ? 1 : 0);
-    formData.set('pickle_passivate_document_ref', document.querySelector('[name="pickle_passivate_document_ref"]').value);
+    //formData.set('pickle_passivate_document_ref', document.querySelector('[name="pickle_passivate_document_ref"]').value);
     //formData.set('pickle_passivate_document_file_name', getFileName('pickle_passivate_documents'));
 
    
@@ -25,8 +25,8 @@ function submitFinishingForm(processOrder) {
     ? document.querySelector('[name="pickle_passivate_documents"]').files[0].name
     : document.getElementById('old_pickle_passivate_documents').textContent.trim());
 
-    formData.set('select_kent_finish_test', document.querySelector('[name="select_kent_finish_test"]').checked ? 1 : 0);
-    formData.set('select_kent_finish_document_ref', document.querySelector('[name="select_kent_finish_document_ref"]').value);
+   formData.set('select_kent_finish_test', document.querySelector('[name="select_kent_finish_test"]').checked ? 1 : 0);
+   // formData.set('select_kent_finish_document_ref', document.querySelector('[name="select_kent_finish_document_ref"]').value);
     //formData.set('select_kent_finish_document_file_name', getFileName('select_kent_finish_documents'));
 
     formData.set('select_kent_finish_document_file', (document.querySelector('[name="select_kent_finish_documents"]').files.length > 0)
@@ -35,7 +35,7 @@ function submitFinishingForm(processOrder) {
     formData.set('sign_off_finishing', document.querySelector('[name="sign_off_finishing_m"]').value);
     formData.set('comments_finishing', document.querySelector('[name="comments_finishing_m"]').value);
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
-    formData.set('process_order_number', document.querySelector('[name="process_order_number_finishing"]').value);
+    formData.set('process_order_number', document.querySelector('[name="process_order_number_finishing_m"]').value);
 
     console.log(formData);
 
@@ -594,7 +594,7 @@ function Finishing(processOrder, userName) {
     $('#finishingFieldset').hide();
     $('#finishingFieldset').show();
     $('input[name="sign_off_finishing_m"]').val(userName);
-    $('#process_order_number_finishing_m)').val(processOrder);
+    $('input[name="process_order_number_finishing_m"]').val(processOrder);
     var headers = {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         // Add other headers if needed

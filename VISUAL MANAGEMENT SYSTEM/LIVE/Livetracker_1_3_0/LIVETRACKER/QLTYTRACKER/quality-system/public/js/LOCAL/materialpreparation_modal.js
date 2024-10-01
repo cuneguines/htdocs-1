@@ -375,6 +375,21 @@ function submitMaterialPreparationForm(processOrder) {
         var fileInput = document.querySelector('[name="' + inputName + '"]');
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
+
+
+    var owners_mat = [];
+    document.querySelectorAll('#materialprep tbody tr').forEach(function (row, index) {
+        if (index >= 0) { // Skip the header row
+            var ownerElement = row.querySelector('[name="owner_mat"]');
+            var ndtElement = row.querySelector('[name="ndttype_mat"]');
+    
+            owners_mat.push({
+                type: row.cells[0].innerText.trim(),
+                owner: ownerElement ? ownerElement.value || null : null,
+                ndt: ndtElement ? ndtElement.value || null : null
+            });
+        }
+    });
     var formData = {
         material_identification: document.querySelector( '[name="material_identification"]').checked ? "on" : "",
         //material_identification_record: document.querySelector('[name="material_identification_record"]).checked ? "on" : "",
@@ -412,6 +427,8 @@ function submitMaterialPreparationForm(processOrder) {
         ? document.querySelector('[name="process_order_number_mp"]').value.trim()
         : null,
         // Add other form fields accordingly
+        owners_mat:owners_mat,
+
     };
     console.log(formData);
     // Send an AJAX request to the server
@@ -519,7 +536,7 @@ function generateMaterialPreparationFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_material_preparation(response) {
+function generateHTMLFromResponse_for_material_preparation_old(response) {
     var html = '<form id="materialPreparationForm" class="material-preparation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Material Preparation</legend>';
@@ -653,6 +670,312 @@ function generateHTMLFromResponse_for_material_preparation(response) {
     return html;
 }
 
+function generateHTMLFromResponse_for_material_preparation(response) {
+    var html = '<form id="materialPreparationForm" class="material-preparation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Material Preparation</legend>';
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+    html += '<thead>';
+    html += '<tr>';
+    html += '<th style="border: 1px solid #ddd; padding: 8px;">Description</th>';
+    html += '<th style="border: 1px solid #ddd; padding: 8px;">File Link</th>';
+    html += '</tr>';
+    html += '</thead>';
+    html += '<tbody>';
+    
+    $.each(response, function(index, item) {
+        // Material Identification
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="material_identification_' + index + '" name="material_identification" ' + (item.material_identification ? 'checked' : 'disabled') + '>';
+        html += ' Material Identification:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        if (item.material_identification_record) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record;
+            html += '<a href="' + filePath + '" target="_blank">' + item.material_identification_record + '</a>';
+        } else {
+            html += 'N/A';
+        }
+        html += '</td>';
+
+
+        html += '</td>';
+        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Upload Material Identification Mill Cert', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_1').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_1').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_1').innerHTML = 'N/A';
+                document.getElementById('ndt_1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Material Identification Record File
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="material_identification_record_file_' + index + '" name="material_identification_record_file" ' + (item.material_identification_record_file ? 'checked' : 'disabled') + '>';
+        html += ' Material Identification Record File:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        if (item.material_identification_record_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_identification_record_file;
+            html += '<a href="' + filePath + '" target="_blank">' + item.material_identification_record_file + '</a>';
+        } else {
+            html += 'N/A';
+        }
+        html += '</td>';
+
+        html += '</td>';
+        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Upload Material Identification Heat Number', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_2').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_2').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_2').innerHTML = 'N/A';
+                document.getElementById('ndt_2').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Material Traceability
+        if (item.material_traceability) {
+            html += '<tr>';
+            html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+            html += '<input type="checkbox" id="material_traceability_' + index + '" name="material_traceability" ' + (item.material_traceability ? 'checked' : 'disabled') + '>';
+            html += ' Material Traceability:';
+            html += '</td>';
+            html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+            if (item.material_traceability_file) {
+                var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.material_traceability_file;
+                html += '<a href="' + filePath + '" target="_blank">' + item.material_traceability_file + '</a>';
+            } else {
+                html += 'N/A';
+            }
+            html += '</td>';
+            html += '</td>';
+        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Material Traceability', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_3').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_3').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_3').innerHTML = 'N/A';
+                document.getElementById('ndt_3').innerHTML = 'N/A';
+            }
+        });
+            html += '</tr>';
+        }
+
+        // Tube Laser Pack
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="cutting_' + index + '" name="cutting" ' + ((item.cutting === 'true' || item.cutting === 'on') && item.cutting !== null ? 'checked' : 'disabled') + '>';
+        html += ' Tube Laser Pack:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        if (item.tube_laser_pack_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.tube_laser_pack_file;
+            html += '<a href="' + filePath + '" target="_blank">' + item.tube_laser_pack_file + '</a>';
+        } else {
+            html += 'N/A';
+        }
+        html += '</td>';
+        html += '</td>';
+        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Cutting Part geometry, cut quality, part qty', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_4').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_4').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_4').innerHTML = 'N/A';
+                document.getElementById('ndt_4').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // De-burring
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="deburring_' + index + '" name="deburring" ' + ((item.deburring === 'true' || item.deburring === 'on') && item.deburring !== null ? 'checked' : 'disabled') + '>';
+        html += ' De-burring:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">N/A</td>';
+        html += '<td id="owner_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_5" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'De-burring', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_5').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_5').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_5').innerHTML = 'N/A';
+                document.getElementById('ndt_5').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Laser and Press Brake Pack
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="forming_' + index + '" name="forming" ' + ((item.forming === 'true' || item.forming === 'on') && item.forming !== null ? 'checked' : 'disabled') + '>';
+        html += ' Laser and Press Brake Pack:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        if (item.laser_and_press_brake_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/material_preparation_task/' + item.process_order_number + '/' + item.laser_and_press_brake_file;
+            html += '<a href="' + filePath + '" target="_blank">' + item.laser_and_press_brake_file + '</a>';
+        } else {
+            html += 'N/A';
+        }
+        html += '</td>';
+        html += '</td>';
+        html += '<td id="owner_6" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_6" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Forming', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_6').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_6').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_6').innerHTML = 'N/A';
+                document.getElementById('ndt_6').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Machining
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += '<input type="checkbox" id="machining_' + index + '" name="machining" ' + ((item.machining === 'true' || item.machining === 'on') && item.machining !== null ? 'checked' : 'disabled') + '>';
+        html += ' Machining:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">N/A</td>';
+        html += '</td>';
+        html += '<td id="owner_7" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_7" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_mat(item.process_order_number, 'Machining', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_7').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_7').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_7').innerHTML = 'N/A';
+                document.getElementById('ndt_7').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Sign-off
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += 'Sign-off:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;" colspan="4"><input style="width:100%" type="text" id="sign_off_material_preparation_' + index + '" name="sign_off_material_preparation" value="' + (item.sign_off_material_preparation || '') + '"></td>';
+        html += '</td>';
+       
+
+       
+        html += '</tr>';
+
+        // Comments
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;">';
+        html += 'Comments:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ddd; padding: 8px;" colspan="4"><textarea style="width:100%" id="comments_material_preparation_' + index + '" name="comments_material_preparation">' + (item.comments_material_preparation || '') + '</textarea></td>';
+        html += '</td>';
+       
+
+       
+        html += '</tr>';
+        
+         // Add a separator between items
+    });
+
+    html += '</tbody>';
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+
+
+function fetchOwnerData_mat(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_mat',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
+
+
 function resetMaterialPrepForm() {
     // Uncheck checkboxes
     $('[name="cutting"]').prop('checked', false);
@@ -679,6 +1002,13 @@ function resetMaterialPrepForm() {
     $('.old-file-name_2').text('');
     $('.old-file-name_4').text('');
     $('.old-file-name_5').text('');
+    $('#old-file-name_1').text('');
+    $('#old-file-name_2').text('');
+    $('#old-file-name_4').text('');
+    $('#old-file-name_5').text('');
+    // Reset owner and NDT selects
+    $('select[name="owner_mat"]').val('NULL');
+    $('select[name="ndttype_mat"]').val('NULL');
 }
 function MaterialPrep(processOrder, userName) {
     console.log('Material Preparation');
@@ -725,10 +1055,37 @@ function MaterialPrep(processOrder, userName) {
 
                     // Set checkbox values
                     $('input[name="cutting"]').prop('checked', item.cutting === 'on');
+                    fetchOwnerData_mat(processOrder, 'Cutting Part geometry, cut quality, part qty', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="Cutting"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="Cutting"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="Cutting"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="Cutting"]`).val('NULL');
+                        }
+                    });
+                  
                     $('input[name="deburring"]').prop('checked', item.deburring === 'on');
                     $('input[name="forming"]').prop('checked', item.forming === 'on');
                     $('input[name="machining"]').prop('checked', item.machining === 'on');
                     $('input[name="material_traceability"]').prop('checked', item.material_traceability === 'on');
+
+
+                    fetchOwnerData_mat(processOrder, 'Material Traceability', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="Material Traceability"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="Material Traceability"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="Material Traceability"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="Material Traceability"]`).val('NULL');
+                        }
+                    });
                     $('input[name="material_identification"]').prop('checked', item.material_identification === 'on');
 
                     // Other fields

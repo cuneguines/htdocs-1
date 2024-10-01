@@ -143,6 +143,11 @@ Route::post('/getEngineerDataByProcessOrder', [EngineerTaableData::class, 'getEn
 Route::post('/getOwnerData', [EngineerTaableData::class, 'getOwnerData']);
 
 Route::post('/getOwnerData_Planning', [PlanningTableData::class, 'getOwnerData_Planning']);
+Route::post('/getOwnerData_Manufacturing', [ManufacturingTableData::class, 'getOwnerData_Manufacturing']);
+Route::post('/getOwnerData_mat', [MaterialTableDataCompleteController::class, 'getOwnerData_mat']);
+Route::post('/getOwnerData_kit', [KittingController::class, 'getOwnerData_kit']);
+Route::post('/getOwnerData_fab', [FabricationFitUpTableDataCompleteController::class, 'getOwnerData_fab']);
+
 
 Route::post('/getPlanningDataByProcessOrder', [PlanningTableData::class, 'getPlanningDataByProcessOrder']);
 Route::post('/getManufacturingDataByProcessOrder', [ManufacturingTableData::class, 'getManufacturingDataByProcessOrder']);

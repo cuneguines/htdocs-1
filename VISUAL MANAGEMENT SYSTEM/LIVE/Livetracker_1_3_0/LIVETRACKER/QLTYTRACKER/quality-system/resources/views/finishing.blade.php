@@ -184,8 +184,8 @@ function updateDropdown(checkbox, selectName) {
                     <tr>
                         <td>Process Order Number:</td>
                         <td colspan="6">
-                            <input style="width:100%" type="text" name="process_order_number_finishing"
-                                id="process_order_number_finishing" readonly>
+                            <input style="width:100%" type="text" name="process_order_number_finishing_m"
+                                id="process_order_number_finishing_m" >
                         </td>
                     </tr>
                     <tr>
@@ -316,6 +316,16 @@ function updateDropdown(checkbox, selectName) {
                             </select>
                         </td>
                         <td>
+
+                        
+            <label>
+                Required Finish Applied Documents:
+                <input type="file" name="select_kent_finish_documents" multiple>
+
+                <span id="old_select_kent_finish_documents">Old Document Name</span>
+                <button type="button" onclick="clear_kent_finish_documents()">Clear File</button>
+            </label>
+        
                         </td>
                         <td>
                             <select style="width:100%" name="select_kent_finish_owner">

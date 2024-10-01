@@ -30,7 +30,7 @@ function generateManufacturingFieldTable(processOrder, qualityStep) {
         `;
 }
 
-function generateHTMLFromResponse_for_manufacturing(response) {
+function generateHTMLFromResponse_for_manufacturing_form(response) {
     var html = '<form id="manufacturingForm" class="manufacturing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Engineering</legend>';
@@ -145,6 +145,418 @@ function generateHTMLFromResponse_for_manufacturing(response) {
     return html;
 }
 
+function generateHTMLFromResponse_for_manufacturing(response) {
+    var html = '<form id="manufacturingForm" class="manufacturing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Manufacturing</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Document</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    // Iterate over each item in the response
+    $.each(response, function(index, item) {
+        // Production Drawings
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.production_drawings === 'true' ? 'checked' : '') + '>';
+        html += ' Production Drawings';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.production_drawings_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.production_drawings_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.production_drawings_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Production Drawings', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_1').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_1').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_1').innerHTML = 'N/A';
+                document.getElementById('ndt_1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // BOM
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.bom === 'true' ? 'checked' : '') + '>';
+        html += ' BOM';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.bom_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.bom_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.bom_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'BOM', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_2').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_2').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_2').innerHTML = 'N/A';
+                document.getElementById('ndt_2').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Machine Programming
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.machine_programming_files === 'true' ? 'checked' : '') + '>';
+        html += ' Machine Programming';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.machine_programming_files_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.machine_programming_files_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.machine_programming_files_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Machine Programming Files', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_3').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_3').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_3').innerHTML = 'N/A';
+                document.getElementById('ndt_3').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // NDT Documentation
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.ndt_documentation === 'true' ? 'checked' : '') + '>';
+        html += ' NDT Documentation';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.ndt_documentation_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.ndt_documentation_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.ndt_documentation_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'NDT Documentation', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_4').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_4').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_4').innerHTML = 'N/A';
+                document.getElementById('ndt_4').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Quality Documents
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.quality_documents === 'true' ? 'checked' : '') + '>';
+        html += ' Quality Documents';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.quality_documents_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.quality_documents_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.quality_documents_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_5" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Quality Documents', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_5').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_5').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_5').innerHTML = 'N/A';
+                document.getElementById('ndt_5').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Sign-off
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_manufacturing" value="' + (item.sign_off_manufacturing || '') + '">';
+        html += '</td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+        html += '<textarea style="width: 100%;" name="comments_manufacturing">' + (item.comments_manufacturing || '') + '</textarea>';
+        html += '</td>';
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+function generateHTMLFromResponse_for_manufacturing_old(response) {
+    var html = '<form id="manufacturingForm" class="manufacturing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task 2: Manufacturing</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+   
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Document</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    // Iterate over each item in the response
+    $.each(response, function(index, item) {
+        // Production Drawings
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.production_drawings === 'true' ? 'checked' : '') + '>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">Production Drawings</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.production_drawings_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.production_drawings_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.production_drawings_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Production Drawings', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_1').innerHTML = ownerData.owner;
+
+                // Update ndt cell
+                document.getElementById('ndt_1').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_1').innerHTML = 'N/A';
+                document.getElementById('ndt_1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // BOM
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.bom === 'true' ? 'checked' : '') + '>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">BOM</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.bom_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.bom_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.bom_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'BOM', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_2').innerHTML = ownerData.owner;
+
+                // Update ndt cell
+                document.getElementById('ndt_2').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_2').innerHTML = 'N/A';
+                document.getElementById('ndt_2').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Machine Programming
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.machine_programming_files === 'true' ? 'checked' : '') + '>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">Machine Programming</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.machine_programming_files_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.machine_programming_files_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.machine_programming_files_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Machine Programming Files', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_3').innerHTML = ownerData.owner;
+
+                // Update ndt cell
+                document.getElementById('ndt_3').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_3').innerHTML = 'N/A';
+                document.getElementById('ndt_3').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // NDT Documentation
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.ndt_documentation === 'true' ? 'checked' : '') + '>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">NDT Documentation</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.ndt_documentation_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.ndt_documentation_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.ndt_documentation_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'NDT Documentation', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_4').innerHTML = ownerData.owner;
+
+                // Update ndt cell
+                document.getElementById('ndt_4').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_4').innerHTML = 'N/A';
+                document.getElementById('ndt_4').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // CE Marking
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.ce_marking === 'true' ? 'checked' : '') + '>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">CE Marking</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.ce_marking_document) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/manufacturing_task/' + item.process_order_number + '/' + item.ce_marking_document;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.ce_marking_document + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_5" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'CE Marking', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_5').innerHTML = ownerData.owner;
+
+                // Update ndt cell
+                document.getElementById('ndt_5').innerHTML = ownerData.ndta;
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_5').innerHTML = 'N/A';
+                document.getElementById('ndt_5').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+    });
+
+    // End table
+    html += '</table>';
+    html += '</fieldset>';
+    html += '</form>';
+
+    return html;
+}
+
+
+function fetchOwnerData_Manufacturing(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_Manufacturing',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
 
 
 
@@ -261,6 +673,18 @@ function submitManufacturingForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
     const sign_off_manufacturing = document.querySelector('[name="sign_off_manufacturing"]').value;
+
+    var owners_manu = [];
+    document.querySelectorAll('#manufacturing tbody tr').forEach(function (row, index) {
+        if (index >=0) { // Skip the header row
+            owners_manu.push({
+                type: row.cells[0].innerText.trim(),
+                owner: row.querySelector('[name="owner_manu"]').value || null,
+                ndt: row.querySelector('[name="ndttype_manu"]').value || null
+            });
+        }
+    });
+console.log(owners_manu);
     var formData = {
         production_drawings: document.querySelector('[name="production_drawings"]').checked || null,
         bom: document.querySelector('[name="bom"]').checked || null,
@@ -289,14 +713,14 @@ function submitManufacturingForm(processOrder) {
     
     quality_documents_document: (document.querySelector('[name="quality_documents_document"]').files.length > 0)
         ? document.querySelector('[name="quality_documents_document"]').files[0].name
-        : document.getElementById('quality_documents_filename').textContent.trim()
+        : document.getElementById('quality_documents_filename').textContent.trim(),
 
-
+        owners_manu:owners_manu,
 
         // Add other file inputs accordingly
     };
+    console.log(formData);
     
-
     $.ajax({
         url: '/submitManufacturingForm',
         type: 'POST',

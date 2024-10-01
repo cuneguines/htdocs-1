@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KittingFormData; 
+use App\Models\GlobalOwnerNdt; 
 use App\Models\Kitting_tableData; 
 use App\Models\KittingCompleteData; 
+use Illuminate\Support\Facades\DB;
 class KittingController extends Controller
 {
     //
@@ -30,6 +32,37 @@ class KittingController extends Controller
     // Add other kitting fields accordingly
 
     $kittingFormData->save();
+
+
+// Validate the input data
+$request->validate([
+    'owners_kit' => 'required|array',
+    'owners_kit.*.type' => 'required|string',
+    'owners_kit.*.owner' => 'required|string',
+    'owners_kit.*.ndt' => 'required|string',
+    'process_order_number' => 'required|string',
+]);
+
+// Check if owners_kit is present and not null
+$owners = $request->input('owners_kit', []);
+
+if (empty($owners)) {
+    return response()->json(['message' => 'No owners data provided.'], 400);
+}
+
+
+
+    $owners = $request->input('owners_kit');
+    foreach ($owners as $ownerData) {
+        $owner = new GlobalOwnerNdt();
+        $owner->Type = $ownerData['type'];
+        $owner->owner = $ownerData['owner'];
+        $owner->ndta = $ownerData['ndt'];
+        $owner->process_order_number = $request->input('process_order_number');
+        $owner->Quality_Step = 'Kitting';
+        //$owner->planning_form_data_id = $planningData->id;
+        $owner->save();
+    }
 
     // You can return a response or redirect as needed
     return response()->json(['data' => $kittingFormData]);
@@ -90,6 +123,28 @@ class KittingController extends Controller
     
             return response()->json(['data' => $data]);
         }
-    
+        public function getOwnerData_kit(Request $request)
+        {
+            //$processOrderNumber = $request->input('process_order_number');
+        
+            $processOrderNumber = $request->input('process_order_number');
+            $Type = $request->input('Type');
+        
+            // Query to fetch the latest record based on process_order_number, Quality_Step = 'Engineering', and Type
+            $data = DB::select(
+                'SELECT TOP 1 * FROM QUALITY_PACK.dbo.Planning_Owner_NDT WHERE process_order_number = ? AND Quality_Step = ? AND Type = ? ORDER BY updated_at DESC',
+                [$processOrderNumber, 'Kitting',$Type]
+            );
+        
+            // Check if data is found
+            if (empty($data)) {
+                // Return an appropriate response if no data found
+                return response()->json(['error' => 'No data found for the given parameters.'], 404);
+            }
+        
+            // Return JSON response with the fetched data
+            return response()->json(['data' => $data]);
+        }
+        
 
 }

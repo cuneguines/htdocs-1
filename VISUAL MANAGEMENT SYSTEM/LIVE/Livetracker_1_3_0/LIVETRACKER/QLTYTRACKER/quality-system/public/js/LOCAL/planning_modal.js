@@ -1003,6 +1003,8 @@ function resetPlanningForm() {
     $('#planningFieldset').show();
 }
 function Planning(processOrder, userName) {
+
+    
     console.log('planning');
     console.log(userName);
     $('#planningFieldset').hide();

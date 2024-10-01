@@ -39,14 +39,14 @@
     <fieldset>
         <legend>Material Preparation</legend>
         <div class="form-group">
-        <label>
-            <input style="width:100%" type="text" name="process_order_number_mp" id="process_order_number_mp"
-                readonly>
-            Process Order Number
-        </label>
-    </div>
+            <label>
+                <input style="width:100%" type="text" name="process_order_number_mp" id="process_order_number_mp"
+                    readonly>
+                Process Order Number
+            </label>
+        </div>
         <div style="width: 98%">
-            <table>
+            <table id="materialprep">
                 <thead>
                     <tr>
                         <th>Task</th>
@@ -60,12 +60,12 @@
                     <tr>
                         <td>
                             <label>
-                              
+
                                 Upload Material Identification Mill Cert
                             </label>
                         </td>
-                        <td >
-                        <span id="old-file-name_3"></span>
+                        <td>
+                            <span id="old-file-name_3"></span>
                             <input type="file" name="material_identification_record_file">
                             <button type="button" onclick="clear_material_identification_record_file()">Clear
                                 File</button>
@@ -73,7 +73,7 @@
 
                         <td>
 
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -87,17 +87,17 @@
                                 <option value="Goods Out">Goods Out</option>
                                 <option value="Client">Client</option>
                             </select>
-</td>
-<td>
-    <select name="ndttype_cutting" style="width: 100%">
-        <option value="NULL">Select NDT Type</option>
-        <option value="Approve">Approve</option>
-        <option value="Inspect">Inspect</option>
-        <option value="Review">Review</option>
-        <option value="Record">Record</option>
-        <!-- Add other options as needed -->
-    </select>
-</td>
+                        </td>
+                        <td>
+                            <select name="ndttype_mat" style="width: 100%">
+                                <option value="NULL">Select NDT Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <!-- Add other options as needed -->
+                            </select>
+                        </td>
 
 
 
@@ -106,12 +106,12 @@
                     <tr>
                         <td>
                             <label>
-                              
+
                                 Upload Material Identification Heat Number
                             </label>
                         </td>
-                        <td >
-                        <span id="old-file-name_1"></span>
+                        <td>
+                            <span id="old-file-name_1"></span>
                             <input type="file" name="material_identification_record">
                             <button type="button" onclick="clear_material_identification_record_heat_number()">Clear
                                 File</button>
@@ -120,7 +120,7 @@
 
                         <td>
 
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -136,7 +136,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_cutting" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -149,14 +149,14 @@
                     <tr>
                         <td>
                             <label>
-                                <input type="checkbox" name="material_traceability">
+                                <input type="checkbox" name="material_traceability" >
                                 Material Traceability
                             </label>
                         </td>
                         <td>
                         <td>
 
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" data-task="Material Traceability"style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -170,17 +170,17 @@
                                 <option value="Goods Out">Goods Out</option>
                                 <option value="Client">Client</option>
                             </select>
-</td>
-<td>
-    <select name="ndttype_cutting" style="width: 100%">
-        <option value="NULL">Select NDT Type</option>
-        <option value="Approve">Approve</option>
-        <option value="Inspect">Inspect</option>
-        <option value="Review">Review</option>
-        <option value="Record">Record</option>
-        <!-- Add other options as needed -->
-    </select>
-</td>
+                        </td>
+                        <td>
+                            <select name="ndttype_mat" style="width: 100%"data-task="Material Traceability">
+                                <option value="NULL">Select NDT Type</option>
+                                <option value="Approve">Approve</option>
+                                <option value="Inspect">Inspect</option>
+                                <option value="Review">Review</option>
+                                <option value="Record">Record</option>
+                                <!-- Add other options as needed -->
+                            </select>
+                        </td>
                         </td>
                     </tr>
                     <tr>
@@ -193,14 +193,14 @@
                         </td>
 
                         <td>
-                        <span id="old-file-name_4"></span>
+                            <span id="old-file-name_4"></span>
                             <Label>Upload Tube Laser Pack:</label>
-                        <input type="file" name="tube_laser_pack_file">
+                            <input type="file" name="tube_laser_pack_file">
                             <button type="button" onclick="clear_tube_laser_pack_file()">Clear
                                 File</button>
                         </td>
                         <td>
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" data-task="Cutting"style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -216,7 +216,7 @@
                             </select>
                         </td>
                         <td>
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="ndttype_mat" id="owner"data-task="Cutting" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -244,9 +244,9 @@
 
                         <td>
                         </td>
-<td>
+                        <td>
 
-<select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -260,10 +260,10 @@
                                 <option value="Goods Out">Goods Out</option>
                                 <option value="Client">Client</option>
                             </select>
-                        </select>
+                            </select>
                         </td>
                         <td>
-                            <select name="ndttype_cutting" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -286,16 +286,16 @@
 
 
                         <td>
-                        <span id="old-file-name_5"></span>
-                       
+                            <span id="old-file-name_5"></span>
+
                             <Label>Upload Laser and Press Brake:</label>
-                        <input type="file" name="laser_and_press_brake_file">
+                            <input type="file" name="laser_and_press_brake_file">
                             <button type="button" onclick="clear_laser_and_press_brake_file()">Clear
                                 File</button>
                         </td>
                         <td>
 
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -315,7 +315,7 @@
 
 
                         <td>
-                            <select name="ndttype_cutting" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -339,7 +339,7 @@
                         <td>
                         </td>
                         <td>
-                        <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -355,7 +355,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_cutting" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -379,7 +379,7 @@
                         </td>
 
                         <td>
-                           <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -395,7 +395,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_material_identification" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -435,9 +435,10 @@
         //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
     }
 
-    function clear_material_identification_record_heat_number(){
+    function clear_material_identification_record_heat_number() {
         alert('yes');
-        document.querySelector('input[name="material_identification_record_heat_number"]').value = ''; // Clear the file input field
+        document.querySelector('input[name="material_identification_record_heat_number"]').value =
+        ''; // Clear the file input field
         //document.getElementById('old-file-name_3').textContent = ''; // Clear the filename display
     }
 
@@ -445,10 +446,12 @@
         document.querySelector('input[name="material_traceability_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
+
     function clear_laser_and_press_brake_file() {
         document.querySelector('input[name="laser_and_press_brake_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
+
     function clear_tube_laser_pack_file() {
         document.querySelector('input[name="tube_laser_pack_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display

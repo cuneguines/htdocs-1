@@ -102,7 +102,7 @@ function clear_link_to_drawing() {
     <fieldset>
         <legend>Fabrication Fit-Up</legend>
         <div style="width: 98%">
-            <table>
+            <table id="fabrication">
                 <thead>
                 <tr>
                     <td>Process Order Number:</td>
@@ -128,7 +128,7 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about fit-up visual check</td>
                         <td>
-                            <select name="owner_fit_up_visual_check" style="width: 100%">
+                            <select name="owner_fab" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -138,7 +138,7 @@ function clear_link_to_drawing() {
                             </select>
                         </td>
                         <td>
-                            <select name="inspection_fit_up_visual_check" style="width: 100%">
+                            <select name="ndttype_fab" style="width: 100%">
                                 <option value="NULL">Select Inspection</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -159,7 +159,7 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about dimensional check</td>
                         <td>
-                            <select name="owner_dimensional_check" style="width: 100%">
+                            <select name="owner_fab" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -169,7 +169,7 @@ function clear_link_to_drawing() {
                             </select>
                         </td>
                         <td>
-                            <select name="inspection_dimensional_check" style="width: 100%">
+                            <select name="ndttype_fab" style="width: 100%">
                                 <option value="NULL">Select Inspection</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -190,7 +190,7 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about weld check</td>
                         <td>
-                            <select name="owner_weldment_quantity" style="width: 100%">
+                            <select name="owner_fab" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -200,7 +200,7 @@ function clear_link_to_drawing() {
                             </select>
                         </td>
                         <td>
-                            <select name="inspection_weldment_quantity" style="width: 100%">
+                            <select name="ndttype_fab" style="width: 100%">
                                 <option value="NULL">Select Inspection</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -220,7 +220,7 @@ function clear_link_to_drawing() {
                             <button type="button" onclick="clear_link_to_drawing()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_link_to_drawing" style="width: 100%">
+                            <select name="owner_fab" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -230,7 +230,7 @@ function clear_link_to_drawing() {
                             </select>
                         </td>
                         <td>
-                            <select name="inspection_link_to_drawing" style="width: 100%">
+                            <select name="ndttype_fab" style="width: 100%">
                                 <option value="NULL">Select Inspection</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

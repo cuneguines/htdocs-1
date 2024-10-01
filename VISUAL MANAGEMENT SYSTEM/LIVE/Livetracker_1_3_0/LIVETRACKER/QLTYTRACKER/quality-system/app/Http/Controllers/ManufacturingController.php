@@ -1,7 +1,7 @@
 <?php
 // app/Http/Controllers/ManufacturingController.php
 namespace App\Http\Controllers;
-
+use App\Models\GlobalOwnerNdt; 
 use Illuminate\Http\Request;
 use App\Models\ManufacturingFormData; // Make sure to import your Manufacturing model
 
@@ -30,6 +30,17 @@ class ManufacturingController extends Controller
         // Add other fields accordingly
 
         $manufacturingData->save();
+        $owners_manu = $request->input('owners_manu');
+        foreach ($owners_manu as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            $owner->Quality_Step = 'Manufacturing';
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
 
         // You can return a response or redirect as needed
         return response()->json(['data' => $manufacturingData]);

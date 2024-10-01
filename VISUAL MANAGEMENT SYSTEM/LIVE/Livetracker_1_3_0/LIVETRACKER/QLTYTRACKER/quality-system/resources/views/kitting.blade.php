@@ -123,7 +123,7 @@ function clear_kitting_file_document() {
     <fieldset>
         <legend>Kitting</legend>
         <div style="width: 98%">
-            <table>
+            <table >
                 <tr>
                     <td>Process Order Number:</td>
                     <td colspan="4">
@@ -132,7 +132,7 @@ function clear_kitting_file_document() {
                     </td>
                 </tr>
             </table>
-            <table>
+            <table id="kitting">
                 <thead>
                     <tr>
                         <th>1</th>
@@ -154,7 +154,7 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_cut_form_mach_parts" style="width: 100%">
+                            <select name="owner_kit" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -164,7 +164,7 @@ function clear_kitting_file_document() {
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_cut_form_mach_parts" style="width: 100%">
+                            <select name="ndttype_kit" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -187,7 +187,7 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_bought_out_components" style="width: 100%">
+                            <select name="owner_kit" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -197,7 +197,7 @@ function clear_kitting_file_document() {
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_bought_out_components" style="width: 100%">
+                            <select name="ndttype_kit" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -220,7 +220,7 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_fasteners_fixings" style="width: 100%">
+                            <select name="owner_kit" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -230,7 +230,7 @@ function clear_kitting_file_document() {
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_fasteners_fixings" style="width: 100%">
+                            <select name="ndttype_kit" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -254,7 +254,7 @@ function clear_kitting_file_document() {
                             <td>
 </td>
 <td>
-<select name="owner_site_pack" style="width: 100%">
+<select name="owner_kit" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -264,7 +264,7 @@ function clear_kitting_file_document() {
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_site_pack" style="width: 100%">
+                            <select name="ndttype_kit" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -290,7 +290,7 @@ function clear_kitting_file_document() {
                                 <button type="button" onclick="clear_kitting_file_document()">Clear File</button>
                             </label></td>
                         <td>
-                            <select name="owner_site_pack" style="width: 100%">
+                            <select name="owner_kit" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -300,7 +300,7 @@ function clear_kitting_file_document() {
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_site_pack" style="width: 100%">
+                            <select name="ndttype_kit" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

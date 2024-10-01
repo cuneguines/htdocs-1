@@ -344,10 +344,10 @@ input[type=checkbox]:checked:disabled {
             <p id="global-modal-content">Modal Content Goes Here</p>
             <div id="engineeringFieldTable" style="width:100%;font-size:14px;height:500px"></div>
             <div id="planningFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
-            <div id="manufacturingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="materialpreparationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="kittingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="fabricationfitupFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="manufacturingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="materialpreparationFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="kittingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="fabricationfitupFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
             <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
             <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
             <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>

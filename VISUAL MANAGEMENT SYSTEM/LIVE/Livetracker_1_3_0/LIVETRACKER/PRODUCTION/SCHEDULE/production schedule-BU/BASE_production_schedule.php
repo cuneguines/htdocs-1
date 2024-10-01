@@ -41,6 +41,9 @@
         
     </head>
     <style>
+        .lime_green{
+            background-color:#97ff95;
+        }
         .box {
 
             width: 15%;
@@ -146,9 +149,7 @@
         .container:hover input~.checkmark {
             background-color: #ccc;
         }
-        .lime_green{
-            background-color:#97ff95;
-        }
+
         /*/////////////////////////////////////////////////////////////////////////*/
         .loader {
             border: 16px solid #f3f3f3;
@@ -194,8 +195,6 @@
             float: left;
         }
         .bred{border: 1px solid #eb3434;
-
-            
 }
 
         /*/////////////////////////////////////////////////////////////////////////*/
@@ -251,7 +250,7 @@
                 </div><!--
              --><div id = "sched_right">
                     <div class = "table_title green">
-                        <h1>PRODUCTION SCHEDULE</h1>
+                        <h1>PRODUCTION SCHEDULE BY BuSINESS UNIT</h1>
                     </div>
                     <div id = "pages_schedule_container" class = "table_container" style = "overflow-y:scroll">
                         <table id = "production_schedule" class = "filterable searchable">
@@ -292,12 +291,12 @@
                                             $engineers_str = implode(" ",$project_engineers_buffer);
         
                                             // PRINT BREAKDOWN ROW WITH BUTTONS FROM BUFFER OF ACTIVE PROJECT
-                                            echo "<tr class = 'row white smedium' productgp = '".$productgp."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
+                                            echo "<tr class = 'row white smedium' business = '".$business."'productgp = '".$productgp."'customer = '".$customer."' project = '".$project."' engineers = '".$engineers_str."' sales_person = '".$sales_person."' promise_week_due = '".$promise_week_due."' type =  breakdown>";
                                                 echo "<td style = 'border-right:1px solid #454545;'>".$customer_unp."<br><br>".$project_unp."</td>";
                                                 print_values_2($project_button_buffer,$start_range,$end_range);
                                             echo"</tr>";
                                             // PRINT SUM ROW WITH SUM ARRAY FOR CURRENT ACTIVE PROJECT
-                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
+                                            echo "<tr class = 'row smedium' style = 'background-color:#DCDCDC;' type = 'data' business = '".$business."'customer = '".$customer."' engineers = '".$engineers_str."' project = '".$project."' sales_person = '".$sales_person."'><td style = 'background-color:#454545;color:white;'>".$project_unp."</td>";
                                                 print_values_2($sum,$start_range,$end_range);
                                             echo "</tr>";
         
@@ -323,7 +322,7 @@
                                             $engineer = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Engineer"]));
                                             $sales_person = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Sales Person"]));
                                             $productgp = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["Product Group"]));
-                                            
+                                            $business = str_replace(' ','',preg_replace("/[^A-Za-z0-9 ]/", '', $results[$i]["U_Dimension1"]));
                                             $promise_week_due = $results[$i]["Promise Week Due"];
                                             $project_unp = $results[$i]["Project"];
                                             $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
@@ -334,7 +333,7 @@
                                         if($results[$i]["Stage"] == "8. Design Concept"){
                                             $base_color = "lime_blue";
                                         }
-                                        if($results[$i]["Stage"] == "9. Submitted to Planning"){
+                                        if($results[$i]["Stage"] == "9. Submitted to Planning" && $results[$i]["Status"] !='Live'){
                                             $base_color = "lime_green";
                                         }
                                         else if($results[$i]["Non Deliverable"] == 'yes'){
@@ -557,12 +556,12 @@
                                     </div>
                                     <div class = "filter">
                                         <div class = "text">
-                                            <button class = "fill red medium wtext">Sales Person</button>
+                                            <button class = "fill red medium wtext">Business</button>
                                         </div>
                                         <div class = "content">
-                                            <select id = "select_sales_person" class = "selector fill medium">
+                                            <select id = "select_business" class = "selector fill medium">
                                                 <option value = "All" selected>All</option>
-                                                <?php generate_filter_options($results,"Sales Person"); ?>
+                                                <?php generate_filter_options($results,"U_Dimension1"); ?>
                                             </select>
                                         </div>
                                     </div>

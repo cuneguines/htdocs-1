@@ -15,10 +15,28 @@ function submitFabricationFitUpForm(processOrder) {
         var fileInput = document.querySelector('[name="' + inputName + '"]');
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
+
+
+
+    var owners_fab = [];
+    document.querySelectorAll('#fabrication tbody tr').forEach(function (row, index) {
+        if (index >=0 && index <=3) { // Skip the header row
+            console.log(index);
+            owners_fab.push({
+                type: row.cells[0].innerText.trim(),
+                owner: row.querySelector('[name="owner_fab"]').value || null,
+                ndt: row.querySelector('[name="ndttype_fab"]').value || null
+            });
+        }
+    });
+console.log(owners_fab);
     var formData = {
         fit_up_visual_check: document.querySelector('[name="fit_up_visual_check"]')?.checked || null,
         dimensional_check: document.querySelector('[name="dimensional_check"]')?.checked || null,
-        link_to_drawing: getFileName('link_to_drawing') || null,
+
+
+
+       // link_to_drawing: getFileName('link_to_drawing') || null,
         weldment_quantity: document.querySelector('[name="weldment_quantity"]')?.checked || null,
         sign_off_fabrication_fit_up: document.querySelector('[name="sign_off_fabrication_fit_up"]').value.trim() || null,
         comments_fabrication_fit_up: document.querySelector('[name="comments_fabrication_fit_up"]').value.trim() || null,
@@ -26,6 +44,10 @@ function submitFabricationFitUpForm(processOrder) {
         process_order_number: (document.querySelector('[name="process_order_number_fabrication_fit_up"]').value.trim() !== "")
         ? document.querySelector('[name="process_order_number_fabrication_fit_up"]').value.trim()
         : null,
+        link_to_drawing: (document.querySelector('[name="link_to_drawing"]').files.length > 0)
+        ? document.querySelector('[name="link_to_drawing"]').files[0].name
+        : document.getElementById('old_drawing_filename').textContent.trim(),
+        owners_fab:owners_fab,
     };
    console.log(formData);
 
@@ -117,7 +139,7 @@ function generateFabricationFitUpFieldTable(processOrder, qualityStep) {
     `;
 }
 
-function generateHTMLFromResponse_for_fabrication_fit_up(response) {
+function generateHTMLFromResponse_for_fabrication_fit_up_old(response) {
     var html = '<form id="fabricationFitUpForm" class="fabrication-fit-up-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Fabrication Fit-Up</legend>';
@@ -175,7 +197,152 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_fabrication_fit_up(response) {
+    var html = '<form id="fabricationFitUpForm" class="fabrication-fit-up-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Fabrication Fit-Up</legend>';
 
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+    
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Document</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    $.each(response, function(index, item) {
+        // Fit-Up Visual Check
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="fit_up_visual_check_' + index + '" name="fit_up_visual_check" ' + (item.FitUpVisualCheck === 'true' ? 'checked' : 'disabled') + '>';
+        html += '<label for="fit_up_visual_check_' + index + '">Fit-Up Visual Check</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Fabrication(item.ProcessOrder, 'Fit-up: Visual check fit up - first off',function(ownerData) {
+            document.getElementById('owner_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Dimensional Check
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="dimensional_check_' + index + '" name="dimensional_check" ' + (item.DimensionalCheck === 'true' ? 'checked' : 'disabled') + '>';
+        html += '<label for="dimensional_check_' + index + '">Dimensional Check</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Fabrication(item.ProcessOrder,'Dimensional check: Dimensional check first off' ,function(ownerData) {
+            document.getElementById('owner_2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Link to Drawing
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Link to Drawing</td>';
+        html += '<td style="border: 1px solid #ccc;" >';
+        if (item.LinkToDrawing) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/fabricationfitup_task/' + item.ProcessOrder + '/' + item.LinkToDrawing;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
+            html += downloadLink + ' ' + item.LinkToDrawing;
+        } else {
+            html += 'No file chosen';
+        }
+        html += '</td>';
+        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Fabrication(item.ProcessOrder, 'Weld Check',function(ownerData) {
+            document.getElementById('owner_3').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_3').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+
+        html += '</tr>';
+
+        // Weld Check
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_check_' + index + '" name="weld_check" ' + (item.WeldmentQuantity === 'true' ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_check_' + index + '">Weld Check</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Fabrication(item.ProcessOrder, 'Link to Drawing',function(ownerData) {
+            document.getElementById('owner_4').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_4').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Sign Off
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign Off:</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_fabrication_fit_up" value="' + (item.SignOffUser || '') + '">';
+        html += '</td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments:</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<textarea style="width: 100%;" name="comments_fabrication_fit_up">' + (item.Comments || '') + '</textarea>';
+        html += '</td>';
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+
+function fetchOwnerData_Fabrication(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_fab',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
 function viewFabricationFitUpCompleteForm(processOrderNumber) {
     var formData = {
         process_order_number: processOrderNumber,
