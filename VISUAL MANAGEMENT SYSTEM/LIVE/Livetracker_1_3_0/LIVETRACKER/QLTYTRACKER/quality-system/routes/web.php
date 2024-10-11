@@ -147,6 +147,15 @@ Route::post('/getOwnerData_Manufacturing', [ManufacturingTableData::class, 'getO
 Route::post('/getOwnerData_mat', [MaterialTableDataCompleteController::class, 'getOwnerData_mat']);
 Route::post('/getOwnerData_kit', [KittingController::class, 'getOwnerData_kit']);
 Route::post('/getOwnerData_fab', [FabricationFitUpTableDataCompleteController::class, 'getOwnerData_fab']);
+Route::post('/getOwnerData_weld', [WeldingController::class, 'getOwnerData_weld']);
+Route::post('/getOwnerData_subcontract', [SubContractController::class, 'getOwnerData_subcontract']);
+Route::post('/getOwnerData_final', [FinalAssemblyController::class, 'getOwnerData_final']);
+Route::post('/getOwnerData_docu', [DocumentationController::class, 'getOwnerData_docu']);
+Route::post('/getOwnerData_testing', [TestingController::class, 'getOwnerData_testing']);
+Route::post('/getOwnerData_finishing', [FinishingController::class, 'getOwnerData_finishing']);
+Route::post('/getOwnerData_transport', [PackingTransportController::class, 'getOwnerData_transport']);
+Route::post('/getOwnerData_quality', [QualityController::class, 'getOwnerData_quality']);
+
 
 
 Route::post('/getPlanningDataByProcessOrder', [PlanningTableData::class, 'getPlanningDataByProcessOrder']);

@@ -76,7 +76,7 @@
     <fieldset>
         <legend>Final Assembly</legend>
         <div style="width: 98%">
-            <table id="final_assembly">
+            <table id="final">
                 <thead>
                     
                 </thead>
@@ -103,7 +103,7 @@
                         </td>
                         
                         <td>
-                            <select style="width:100%" name="attach_part_id_labels_owner">
+                            <select style="width:100%" name="owner_final">
                             <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -121,7 +121,7 @@
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="attach_part_id_labels_inspection_type">
+                            <select style="width:100%" name="ndttype_final">
                                 <option value="NULL">Select Inspection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -155,10 +155,7 @@
         }
     }
 
-    function submitFinalAssemblyForm(processOrder) {
-        // Implement your form submission logic here
-        console.log('Submitting Final Assembly Form for Process Order: ' + processOrder);
-    }
+    
     </script>
 </body>
 </html>

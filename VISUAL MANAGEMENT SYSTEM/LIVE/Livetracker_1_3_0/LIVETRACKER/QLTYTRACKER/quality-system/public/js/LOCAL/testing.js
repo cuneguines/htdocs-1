@@ -39,7 +39,28 @@ function submitTestingForm(processOrder) {
     : document.getElementById('old_testing_documents').textContent.trim();
 
 formData.set('testing_document_file_name', testingDocumentFileName);
+var owners_test = [];
+document.querySelectorAll('#testing tbody tr').forEach(function (row, index) {
+    console.log('yes');
+    console.log(index);
+    if (index >= 0 && index<4) { // Skip the header row
+        var owner = row.querySelector('[name="owner_test"]').value || null;
+        var ndt = row.querySelector('[name="ndt_test"]').value || null;
+console.log(owner);
+console.log(ndt);
+        // Push the owner data to the array
+        owners_test.push({
+            type: row.cells[0].innerText.trim(),
+            owner: owner,
+            ndt: ndt
+        });
 
+        // Append each owner and NDT as separate entries
+        formData.append('owners_test[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+        formData.append('owners_test[' + (index - 1) + '][owner]', owner);
+        formData.append('owners_test[' + (index - 1) + '][ndt]', ndt);
+    }
+});
     
     console.log(formData);
     // Send an AJAX request to the server
@@ -189,7 +210,7 @@ function generateHTMLFromResponse_for_testing_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_testing(response) {
+function generateHTMLFromResponse_for_testing_old(response) {
     var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
@@ -291,6 +312,644 @@ function generateHTMLFromResponse_for_testing(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_testing_oldd(response) {
+    var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+    
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Field</th>';
+    html += '<th style="border: 1px solid #ccc;">Value</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    $.each(response, function (index, item) {
+        // Process Order
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="process_order_' + index + '" name="process_order" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '>';
+        html += '<label for="process_order_' + index + '">Process Order:</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="process_order_number" value="' + item.process_order_number + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test0"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test0"></td>';
+        
+       
+        html += '</tr>';
+
+        // Dye Penetrant Procedure Ref
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Dye Penetrant Procedure Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test1"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test1"></td>';
+
+
+        fetchOwnerData_Testing(item.process_order_number, 'Dye Penetrant Procedure', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test0').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test0').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test0').innerHTML = 'N/A';
+                document.getElementById('ndt_test0').innerHTML = 'N/A';
+            }
+        });
+
+        html += '</tr>';
+
+        // Hydrostatic Leak Test Ref
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Hydrostatic Leak Test Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test2"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test2"></td>';
+        fetchOwnerData_Testing(item.process_order_number, '', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test2').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test2').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test2').innerHTML = 'N/A';
+                document.getElementById('ndt_test2').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Pneumatic Leak Test Ref
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Pneumatic Leak Test Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Production Drawings', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_man1').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_man1').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_man1').innerHTML = 'N/A';
+                document.getElementById('ndt_man1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // FAT Ref
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">FAT Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+
+        fetchOwnerData_Manufacturing(item.process_order_number, 'Production Drawings', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_man1').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_man1').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_man1').innerHTML = 'N/A';
+                document.getElementById('ndt_man1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        // Checkbox Fields
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Dye Penetrant Test:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input type="checkbox" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Hydrostatic Leak Test:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input type="checkbox" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : 'disabled') + '></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Pneumatic Leak Test:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input type="checkbox" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : 'disabled') + '></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">FAT Test:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input type="checkbox" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : 'disabled') + '></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Sign-off Testing
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off for Testing:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="sign_off_testing" value="' + item.sign_off_testing + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Testing Files
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Testing Files:</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.testing_document_file_name) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.testing_document_file_name + '</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments for Testing:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="comments_testing" value="' + item.comments_testing + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Submitted Date Time
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Submitted Date Time:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="submission_date" value="' + item.submission_date + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Created At
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Created At:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="created_at" value="' + item.created_at + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Updated At
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Updated At:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="updated_at" value="' + item.updated_at + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr><td colspan="4"><hr></td></tr>'; // Separator
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+function fetchOwnerData_Testing(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_testing',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
+
+function generateHTMLFromResponse_for_testing_nnno(response) {
+    var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+    
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Field</th>';
+    html += '<th style="border: 1px solid #ccc;">Value</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    $.each(response, function (index, item) {
+        // Process Order
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Process Order:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="process_order_number" value="' + item.process_order_number + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Document References
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Dye Penetrant Procedure Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test1"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test1"></td>';
+
+
+        fetchOwnerData_Testing(item.process_order_number, 'Dye Penetrant Procedure', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test1').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test1').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test1').innerHTML = 'N/A';
+                document.getElementById('ndt_test1').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Hydrostatic Leak Test Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Pneumatic Leak Test Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">FAT Ref:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Checkbox Fields
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Dye Penetrant Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Hydrostatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Pneumatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : 'disabled') + '>';
+        html += ' FAT Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Sign-off Testing
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off for Testing:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="sign_off_testing" value="' + item.sign_off_testing + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Testing Files
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Testing Files:</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.testing_document_file_name) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.testing_document_file_name + '</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments for Testing:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="comments_testing" value="' + item.comments_testing + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Submitted Date Time
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Submitted Date Time:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="submission_date" value="' + item.submission_date + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Created At
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Created At:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="created_at" value="' + item.created_at + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        // Updated At
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Updated At:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="updated_at" value="' + item.updated_at + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_' + index + '"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_' + index + '"></td>';
+        html += '</tr>';
+
+        html += '<tr><td colspan="4"><hr></td></tr>'; // Separator
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+function generateHTMLFromResponse_for_testing(response) {
+    var html = '<form id="testingForm" class="testing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Testing</legend>';
+
+    
+
+    $.each(response, function (index, item) {
+        // Process Order
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Process Order:</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="process_order_number" value="' + item.process_order_number + '" disabled></td>';
+        
+        
+        html += '</tr>';
+// Start table
+html += '<table style="width: 100%; border-collapse: collapse;">';
+    
+// Table headers
+html += '<tr style="border: 1px solid #ccc;">';
+html += '<th style="border: 1px solid #ccc;">Field</th>';
+html += '<th style="border: 1px solid #ccc;">Value</th>';
+html += '<th style="border: 1px solid #ccc;">Owner</th>';
+html += '<th style="border: 1px solid #ccc;">NDT</th>';
+html += '</tr>';
+        // Document References
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Dye Penetrant Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="dye_pen_document_ref" value="' + item.dye_pen_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test2"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test2"></td>';
+
+
+        fetchOwnerData_Testing(item.process_order_number, 'Dye Penetrant Procedure', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test2').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test2').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test2').innerHTML = 'N/A';
+                document.getElementById('ndt_test2').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Hydrostatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="hydrostatic_test_document_ref" value="' + item.hydrostatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test3"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test3"></td>';
+        fetchOwnerData_Testing(item.process_order_number, 'Hydrostatic Leak Test', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test3').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test3').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test3').innerHTML = 'N/A';
+                document.getElementById('ndt_test3').innerHTML = 'N/A';
+            }
+        });
+
+
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Pneumatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="pneumatic_test_document_ref" value="' + item.pneumatic_test_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test4"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test4"></td>';
+
+        fetchOwnerData_Testing(item.process_order_number, 'Pneumatic Leak Test', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test4').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test4').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test4').innerHTML = 'N/A';
+                document.getElementById('ndt_test4').innerHTML = 'N/A';
+            }
+        });
+       
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : 'disabled') + '>';
+        html += ' FAT Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="fat_protocol_document_ref" value="' + item.fat_protocol_document_ref + '" disabled></td>';
+        html += '<td style="border: 1px solid #ccc;" id="owner_test5"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_test5"></td>';
+
+        fetchOwnerData_Testing(item.process_order_number, 'FAT', function (ownerData) {
+            if (ownerData) {
+                // Update owner cell
+                document.getElementById('owner_test5').innerHTML = ownerData.owner.trim();
+
+                // Update ndt cell
+                document.getElementById('ndt_test5').innerHTML = ownerData.ndta.trim();
+            } else {
+                // Handle case where no owner data is retrieved
+                document.getElementById('owner_test5').innerHTML = 'N/A';
+                document.getElementById('ndt_test5').innerHTML = 'N/A';
+            }
+        });
+        html += '</tr>';
+
+       /*  // Checkbox Fields
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="dye_pen_test" ' + (item.dye_pen_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Dye Penetrant Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_6"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_6"></td>';
+
+
+
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="hydrostatic_test" ' + (item.hydrostatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Hydrostatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_7"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_7"></td>';
+
+
+       
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="pneumatic_test" ' + (item.pneumatic_test === "1" ? 'checked' : 'disabled') + '>';
+        html += ' Pneumatic Leak Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_8"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_8"></td>';
+        html += '</tr>';
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" name="fat_protocol" ' + (item.fat_protocol === "1" ? 'checked' : 'disabled') + '>';
+        html += ' FAT Test:';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>'; // Value column empty for checkboxes
+        html += '<td style="border: 1px solid #ccc;" id="owner_9"></td>';
+        html += '<td style="border: 1px solid #ccc;" id="ndt_9"></td>';
+        html += '</tr>'; */
+  // Testing Files
+  html += '<tr style="border: 1px solid #ccc;">';
+  html += '<td style="border: 1px solid #ccc;">Testing Files:</td>';
+  html += '<td colspan="3"style="border: 1px solid #ccc;">';
+  if (item.testing_document_file_name) {
+      var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/testing_task/' + item.process_order_number + '/' + item.testing_document_file_name;
+      var downloadLink = '<a href="' + filePath + '" target="_blank">' + item.testing_document_file_name + '</a>';
+      html += downloadLink;
+  } else {
+      html += '-';
+  }
+  html += '</td>';
+  
+  html += '</tr>';
+
+        // Sign-off Testing
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off for Testing:</td>';
+        html += '<td colspan="3"style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="sign_off_testing" value="' + item.sign_off_testing + '"></td>';
+       
+        html += '</tr>';
+
+      
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments for Testing:</td>';
+        html += '<td colspan="3"style="border: 1px solid #ccc;"><input style="width: 100%;" type="text" name="comments_testing" value="' + item.comments_testing + '"></td>';
+        
+        html += '</tr>';
+
+        
+
+        html += '<tr><td colspan="4"><hr></td></tr>'; // Separator
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
 
 function generateTestingCompleteFieldset(processOrder, qualityStep, username) {
     console.log(processOrder);

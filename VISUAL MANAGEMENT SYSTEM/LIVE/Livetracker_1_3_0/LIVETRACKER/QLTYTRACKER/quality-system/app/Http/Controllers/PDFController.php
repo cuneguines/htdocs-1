@@ -197,7 +197,9 @@ WHERE
             ->limit(1)
             ->get();
 
-            $data_2 = /* DB::table('QUALITY_PACK.dbo.WeldingCompleteData as mpf')
+         //  $data3=DB::select() ;
+
+             /* DB::table('QUALITY_PACK.dbo.WeldingCompleteData as mpf')
             ->where('ProcessOrderID', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_welding_complete', '=', 'u.Login')
@@ -208,7 +210,7 @@ WHERE
             ->limit(1)
             ->get(); */
 
-            DB::select("
+            $data_2 = DB::select("
             SELECT TOP 1
             mpw.ProcessOrderID [process order number],
             mpw.*,
@@ -744,6 +746,20 @@ $data_4_c=DB::select("WITH LatestChecks AS (
             ->limit(1)
             ->get();
 
+            $data_engineering_o=DB::select("SELECT top 7*,
+case when Type = 'Customer submittal package' then 'Customer approval document' 
+
+ when Type='Reference approved samples' then 'Reference approved samples'
+ when Type='Concept design & engineering details' then 'Concept design engineering'
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Engineering' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
+            
+
         $data_manufacturing= DB::table('QUALITY_PACK.dbo.ManufacturingFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_manufacturing', '=', 'u.Login')
@@ -801,11 +817,11 @@ if (!empty($result)) {
 
 
         // Pass data to the view
-        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data_11','data2','data_2','data_2_c','data3','data_3','data4','data_4','data_4_c','data5','data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
+        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data_11','data2','data_2','data_2_c','data3','data_3','data4','data_4','data_4_c','data5','data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
 
         // Return the PDF for download
    // return $pdf->download('material_preparation_data.pdf');
       // return view('reportpdf');
-      return view('reportpdf', compact('data1', 'data_1' ,'data_11','data2', 'data_2', 'data_2_c','data3', 'data_3', 'data4', 'data_4', 'data_4_c','data5', 'data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
+      return view('reportpdf', compact('data1', 'data_1' ,'data_11','data2', 'data_2', 'data_2_c','data3', 'data_3', 'data4', 'data_4', 'data_4_c','data5', 'data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
     }
 }

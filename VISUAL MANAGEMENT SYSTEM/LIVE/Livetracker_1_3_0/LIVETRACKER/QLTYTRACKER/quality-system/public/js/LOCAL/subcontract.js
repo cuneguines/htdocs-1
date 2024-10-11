@@ -22,6 +22,32 @@ function submitSubContractForm(processOrder) {
     formData.set('submission_date', new Date().toISOString().split("T")[0]); // Get today's date in YYYY-MM-DD format
     formData.set('process_order_number', document.querySelector('[name="process_order_number_subcontract"]').value);
     //formData.append('testing_document_file_name', getFileName('testing_documents'));
+
+
+
+
+    var owners_sub = [];
+    document.querySelectorAll('#subcontract tbody tr').forEach(function (row, index) {
+        console.log('yes');
+        if (index >= 0 && index <=1) { // Skip the header row
+            var owner = row.querySelector('[name="owner_sub"]').value || null;
+            var ndt = row.querySelector('[name="ndttype_sub"]').value || null;
+    console.log(owner);
+    console.log(ndt);
+            // Push the owner data to the array
+            owners_sub.push({
+                type: row.cells[0].innerText.trim(),
+                owner: owner,
+                ndt: ndt
+            });
+    
+            // Append each owner and NDT as separate entries
+            formData.append('owners_sub[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+            formData.append('owners_sub[' + (index - 1) + '][owner]', owner);
+            formData.append('owners_sub[' + (index - 1) + '][ndt]', ndt);
+        }
+    });
+
     // Send an AJAX request to the server
     $.ajax({
         url: "/submitSubContractForm",
@@ -151,7 +177,7 @@ function generateHTMLFromResponse_for_sub_contract_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_sub_contract(response) {
+function generateHTMLFromResponse_for_sub_contract_old(response) {
     var html = '<form id="subContractForm" class="sub-contract-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Sub-Contract</legend>';
@@ -217,6 +243,121 @@ function generateHTMLFromResponse_for_sub_contract(response) {
     html += '</fieldset></form>';
 
     return html;
+}
+function generateHTMLFromResponse_for_sub_contract(response) {
+    var html = '<form id="subContractForm" class="sub-contract-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Sub-Contract</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+   
+    // Iterate over each item in the response
+    $.each(response, function (index, item) {
+        // Process Order
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="process_order_number">Process Order:</label></td>';
+        html += '<td  colspan="4" style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"></td>';
+       // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Field</th>';
+    html += '<th style="border: 1px solid #ccc;">Value</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+        // Fetch owner data here if needed
+       /*  fetchOwnerData_SubContract(item.process_order_number, '',function (ownerData) {
+            document.getElementById('owner_sub1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_sub1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        }); */
+        html += '</tr>';
+
+        // Sub-Contract Inspection Responsibility
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="sub_contract_action">Sub-Contract Inspection Responsibility:</label></td>';
+        html += '<td style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="sub_contract_action" name="sub_contract_action" value="' + item.sub_contract_action + '"></td>';
+        html += '<td id="owner_sub2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_sub2" style="border: 1px solid #ccc;"></td>';
+        // Fetch owner data here if needed
+         fetchOwnerData_SubContract(item.process_order_number, 'SUB CON ACTION:',function (ownerData) {
+            document.getElementById('owner_sub2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_sub2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        }); 
+        html += '</tr>';
+
+        // Sub-Contract File
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="sub_contract_file">Sub-Contract File:</label></td>';
+        html += '<td colspan="4" style="border: 1px solid #ccc;">';
+        if (item.sub_contract_file) {
+            var filePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/subcontract_task/' + item.process_order_number + '/' + item.sub_contract_file;
+            var downloadLink = '<a href="' + filePath + '" target="_blank">Download File</a>';
+            html += downloadLink;
+        } else {
+            html += '-';
+        }
+        html += '</td>';
+      //  html += '<td colspan="4" style="border: 1px solid #ccc;"></td>'; // Placeholder for Owner and NDT
+        html += '</tr>';
+
+        // Sign-off for Sub-Contract
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="sign_off_sub_contract">Sign-off for Sub-Contract:</label></td>';
+        html += '<td colspan="4"style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="sign_off_sub_contract" name="sign_off_sub_contract" value="' + item.sign_off_sub_contract + '"></td>';
+        // Placeholder for Owner and NDT
+        html += '</tr>';
+
+        // Comments for Sub-Contract
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="comments_sub_contract">Comments for Sub-Contract:</label></td>';
+        html += '<td colspan="4" style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="comments_sub_contract" name="comments_sub_contract" value="' + item.comments_sub_contract + '"></td>';
+      
+        html += '</tr>';
+
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+
+
+function fetchOwnerData_SubContract(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_subcontract',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
 }
 
 function generateSubContractCompleteFieldset(processOrder, qualityStep, username) {
@@ -317,6 +458,7 @@ html +=
 
     return html;
 }
+
 function submitCompleteSubContractForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

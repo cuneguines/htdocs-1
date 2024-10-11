@@ -200,7 +200,7 @@
                                 File</button>
                         </td>
                         <td>
-                            <select name="owner_mat" id="owner" data-task="Cutting"style="width:100%">
+                            <select name="owner_mat" id="owner" data-task="Cutting"style="width:100%" data-task="cutting">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -216,8 +216,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_mat" id="owner"data-task="Cutting" style="width:100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="ndttype_mat" id="owner"data-task="Cutting" style="width:100%" data-task="cutting">
+                                <option value="NULL">Select NDT type</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
@@ -236,7 +236,7 @@
                     <tr>
                         <td>
                             <label>
-                                <input type="checkbox" name="deburring">
+                                <input type="checkbox" name="deburring" >
                                 De-burring
                             </label>
                         </td>
@@ -246,7 +246,7 @@
                         </td>
                         <td>
 
-                            <select name="owner_mat" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%" data-task="deburring">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -263,7 +263,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_mat" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%" data-task="deburring">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -295,7 +295,7 @@
                         </td>
                         <td>
 
-                            <select name="owner_mat" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%" data-task="forming">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -315,7 +315,7 @@
 
 
                         <td>
-                            <select name="ndttype_mat" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%" data-task="forming">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -339,7 +339,7 @@
                         <td>
                         </td>
                         <td>
-                            <select name="owner_mat" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%" data-task="machining">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -355,7 +355,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_mat" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%" data-task="machining">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -379,7 +379,7 @@
                         </td>
 
                         <td>
-                            <select name="owner_mat" id="owner" style="width:100%">
+                            <select name="owner_mat" id="owner" style="width:100%" data-task="material_identification">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -395,7 +395,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_mat" style="width: 100%">
+                            <select name="ndttype_mat" style="width: 100%" data-task="material_identification">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

@@ -129,7 +129,7 @@ function generateHTMLFromResponse_for_planning_old(response) {
 
 
 function generateHTMLFromResponse_for_planning(response) {
-    var html = '<form id="PlanningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    var html = '<form id="PlanningForm" class="planning-form" style="font-family: Arial, sans-serif; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Engineering</legend>';
 

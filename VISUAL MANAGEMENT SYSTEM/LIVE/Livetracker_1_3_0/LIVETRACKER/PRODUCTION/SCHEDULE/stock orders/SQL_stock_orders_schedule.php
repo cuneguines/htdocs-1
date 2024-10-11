@@ -11,11 +11,11 @@ DATEPART(ISO_WEEK, t0.CreateDate) [Week Opened],
 DATEDIFF(WEEK, t0.CreateDate, GETDATE()) [Weeks Open],
 DATEDIFF(month, GETDATE(), t0.DueDate) [Month Difference],
 CASE 
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
-    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
-    ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.DueDate),".($start_range-1).")
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") < ".$start_range." THEN ".($start_range -1)."
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") > ".$end_range." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") < ".($end_range + 13)." THEN ".($end_range +1)."
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") >= ".($end_range+13)." AND ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") < ".($end_range + 26)." THEN ".($end_range +2)."
+    WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
+    ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t77.[Earliest Promise Date]),".($start_range-1).")
 END [Promise Diff Week],
 
 /* SALES ORDER ITEMS RELATED CONTENT (SELF DEFINED OR USES PRODUCTION ORDER DETAILS IN THIS CASE)*/
@@ -23,11 +23,11 @@ t5.ItemName[Dscription],
 (CASE WHEN (t6.ItmsGrpNam LIKE 'LABOUR SITE' OR t6.ItmsGrpNam LIKE 'TRAINING' OR t6.ItmsGrpNam LIKE 'Documents & Manuals' OR t6.ItmsGrpNam LIKE 'Contract Phased Sale') THEN 'yes' ELSE 'no' END) [Non Deliverable],
 CAST(t0.plannedqty AS DECIMAL (12,1)) [Quantity],
 CAST(t5.OnHand AS DECIMAL (12,1)) [OnHand],
-CONVERT(DATE,(t0.DueDate)) [Promise Date],
+CONVERT(DATE,(t77.[Earliest Promise Date])) [Promise Date],
 (CASE 
-    WHEN DATEPART(iso_week,t0.DueDate) = 53 THEN 52 
-    WHEN DATEPART(iso_week,t0.DueDate) IS NULL THEN 52
-    ELSE DATEPART(iso_week,t0.DueDate) 
+    WHEN DATEPART(iso_week,t77.[Earliest Promise Date]) = 53 THEN 52 
+    WHEN DATEPART(iso_week,t77.[Earliest Promise Date]) IS NULL THEN 52
+    ELSE DATEPART(iso_week,t77.[Earliest Promise Date]) 
 END) [Promise Week Due],
 t2.U_NAME [Engineer],
 NULL [risk],
@@ -75,7 +75,62 @@ LEFT JOIN
             WHERE t2.ItemType = 'L'                         
             GROUP BY t1.U_IIS_proPrOrder,t1.ItemCode
 ) t11 ON t11.U_IIS_proPrOrder = t0.U_IIS_proPrOrder and t11.ItemCode = t0.ItemCode
- 
+ left join(select t0.ItemCode, t0.itemname, t2.U_IIS_proPrOrder, t2.DocNum [Prod Ord], 
+case 
+when t1.[Earliest Promise Date SO] is null and t3.[Earliest Prom Date] is null then t2.DueDate
+when t1.[Earliest Promise Date SO] is not null and t3.[Earliest Prom Date] is null then t1.[Earliest Promise Date SO]
+when t1.[Earliest Promise Date SO] is null and t3.[Earliest Prom Date] is not null then t3.[Earliest Prom Date]
+when t1.[Earliest Promise Date SO] is not null and t3.[Earliest Prom Date] is not null and t3.[Earliest Prom Date] <= t1.[Earliest Promise Date SO] then t3.[Earliest Prom Date]
+else t3.[Earliest Prom Date] end [Earliest Promise Date],
+case 
+when t1.[Earliest Promise Date SO] is null and t3.[Earliest Prom Date] is null then 'Own Prod Order'
+when t1.[Earliest Promise Date SO] is not null and t3.[Earliest Prom Date] is null then 'Sales Order Line Item'
+when t1.[Earliest Promise Date SO] is null and t3.[Earliest Prom Date] is not null then 'Sales Order Sub BOM'
+when t1.[Earliest Promise Date SO] is not null and t3.[Earliest Prom Date] is not null and t3.[Earliest Prom Date] <= t1.[Earliest Promise Date SO] then 'Sales Order Sub BOM'
+else 'Sales Order Line Item' end [Promise Date Source]
+
+
+
+from oitm t0
+inner join (select t0.ItemCode, t0.U_IIS_proPrOrder, t0.DocNum, t0.DueDate
+
+                                                                from owor t0 
+                                                                inner join iis_epc_pro_orderh t1 on t1.PrOrder = t0.U_IIS_proPrOrder
+
+                                                                where t0.Status not in ('C','L')
+                                                                and t0.OriginNum is null) t2 on t2.ItemCode = t0.ItemCode
+
+---- promise date when on sales order
+left join (select t0.ItemCode, min(t0.U_promise_date) [Earliest Promise Date SO]
+
+                                                from rdr1 t0
+                                                inner join [@PRE_PROD_STATUS] t3 on t3.Code = t0.U_PP_Status
+                                                inner join oitm t1 on t1.ItemCode = t0.ItemCode
+                                                inner join oitb t2 on t2.ItmsGrpCod = t1.ItmsGrpCod
+                                                where t0.LineStatus = 'o'
+                                                                                                and t1.PrcrmntMtd = 'M'
+                                                                                                and t3.Name = 'Live'
+
+                                                                group by t0.ItemCode) t1 on t1.ItemCode = t0.ItemCode
+
+---- promise date when sub component
+left join (select t0.ItemCode, min(t4.U_promise_date) [Earliest Prom Date]
+
+                                                from oitm t0
+                                                inner join wor1 t1 on t1.ItemCode = t0.ItemCode
+                                                inner join owor t2 on t2.DocEntry = t1.DocEntry
+                                                inner join iis_epc_pro_orderh t3 on t3.PrOrder = t2.U_IIS_proPrOrder
+                                                inner join rdr1 t4 on t4.ItemCode = t3.EndProduct 
+                                                inner join ordr t5 on t5.DocEntry = t4.DocEntry and t5.docnum = t3.SONum
+                                                inner join [@PRE_PROD_STATUS] t6 on t6.Code = t4.U_PP_Status
+
+                                                where t4.LineStatus = 'o'
+                                                and t6.Name = 'Live'
+                                                and t0.PrcrmntMtd = 'M'
+                                                group by t0.ItemCode) t3 on t3.ItemCode = t0.ItemCode) t77 on t77.U_IIS_proPrOrder=t0.U_IIS_proPrOrder
+
+
+
 WHERE t0.Status not in ('D','L','C')
 and t0.OriginNum is null
  

@@ -348,14 +348,14 @@ input[type=checkbox]:checked:disabled {
             <div id="materialpreparationFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
             <div id="kittingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
             <div id="fabricationfitupFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
-            <div id="weldingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="testingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="finishingFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="subcontractFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="finalassemblyFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="documentationFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="packingtransportFieldTable" style="width:500px;font-size:14px;height:500px"></div>
-            <div id="qualityFieldTable" style="width:500px;font-size:14px;height:500px"></div>
+            <div id="weldingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="testingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="finishingFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="subcontractFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="finalassemblyFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="documentationFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="packingtransportFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
+            <div id="qualityFieldTable" style="width:100%;font-size:14px;overflow-y:scroll;height:500px"></div>
         </div>
     </div>
     </div>

@@ -43,6 +43,8 @@ function uploadImages(po) {
     });
 }
 function submitFinalAssemblyForm(processOrder) {
+
+    alert('yes');
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     };
@@ -63,7 +65,25 @@ function submitFinalAssemblyForm(processOrder) {
     //formData.append('final_assembly_file_2', getFileName('final_assembly_file_2'));
     //formData.append('final_assembly_file_1', getFileName('final_assembly_file_1'));
 
-
+    var owners_final = []; // Initialize the owners array
+    document.querySelectorAll('#final tbody tr').forEach(function (row, index) {
+        if (index >= 2) { // Skip the header row
+            var owner = row.querySelector('[name="owner_final"]').value || null;
+            var ndt = row.querySelector('[name="ndttype_final"]').value || null;
+    
+            // Push the owner data to the array
+            owners_final.push({
+                type: row.cells[0].innerText.trim(),
+                owner: owner,
+                ndt: ndt
+            });
+    
+            // Append each owner and NDT as separate entries
+            formData.append('owners_final[' + index + '][type]', row.cells[0].innerText.trim());
+            formData.append('owners_final[' + index + '][owner]', owner);
+            formData.append('owners_final[' + index + '][ndt]', ndt);
+        }
+    });
     console.log(formData.identification);
 
     // Send an AJAX request to the server
@@ -223,7 +243,7 @@ function generateHTMLFromResponse_for_final_assembly_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_final_assembly(response) {
+function generateHTMLFromResponse_for_final_assembly_old(response) {
     var html = '<form id="finalAssemblyForm" class="final-assembly-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Final Assembly</legend>';
@@ -296,6 +316,105 @@ html += '</div><br>';
     html += '</fieldset></form>';
 
     return html;
+}
+
+function generateHTMLFromResponse_for_final_assembly(response) {
+    var html = '<form id="finalAssemblyForm" class="final-assembly-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Final Assembly</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    
+
+    // Iterate over each item in the response
+    $.each(response, function (index, item) {
+        // Process Order
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="process_order_number">Process Order:</label></td>';
+        html += '<td colspan="3"style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"></td>';
+        
+        html += '</tr>';
+
+
+        // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Field</th>';
+    html += '<th style="border: 1px solid #ccc;">Value</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+        // Identification
+        html += '<tr style="border: 1px solid #ccc;">';
+      
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" id="identification" name="identification" ' + (item.identification === 'on' ? 'checked' : '') + '>';
+        html += ' <label for="identification">Identification</label>'; // Label for checkbox
+        html += '</td>';
+        html += '<td  style="border: 1px solid #ccc;"></td>'; // Placeholder for Owner and NDT
+
+        html += '<td id="owner_fa_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fa_1" style="border: 1px solid #ccc;"></td>';
+        // Fetch owner data if needed
+         fetchOwnerData_FinalAssembly(item.process_order_number,'Attach Part ID Labels / Name Plates:', function (ownerData) {
+            document.getElementById('owner_fa_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fa_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });  
+        html += '</tr>';
+
+        // Sign-off for Final Assembly
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="sign_off_final_assembly">Sign-off for Final Assembly:</label></td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="sign_off_final_assembly" name="sign_off_final_assembly" value="' + item.sign_off_final_assembly + '"></td>';
+        
+
+        // Comments for Final Assembly
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="comments_final_assembly">Comments for Final Assembly:</label></td>';
+        html += '<td colspan="3"style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="comments_final_assembly" name="comments_final_assembly" value="' + item.comments_final_assembly + '"></td>';
+     
+        html += '</tr>';
+
+      
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+function fetchOwnerData_FinalAssembly(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_final',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
 }
 
 

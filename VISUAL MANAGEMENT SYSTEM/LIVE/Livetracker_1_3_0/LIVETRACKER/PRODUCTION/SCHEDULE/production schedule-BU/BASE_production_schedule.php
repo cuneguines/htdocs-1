@@ -196,6 +196,7 @@
         }
         .bred{border: 1px solid #eb3434;
 }
+.brblack{  border:3px solid black}
 
         /*/////////////////////////////////////////////////////////////////////////*/
     </style>
@@ -335,6 +336,7 @@
                                         }
                                         if($results[$i]["Stage"] == "9. Submitted to Planning" && $results[$i]["Status"] !='Live'){
                                             $base_color = "lime_green";
+                                            $border_color="brblack";
                                         }
                                         else if($results[$i]["Non Deliverable"] == 'yes'){
                                             $base_color = 'pink';

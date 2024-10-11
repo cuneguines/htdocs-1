@@ -1,5 +1,4 @@
-
-   <!-- <fieldset>
+<!-- <fieldset>
     <legend>Testing</legend>
     <div style="width:97%">
     <div class="form-group">
@@ -117,33 +116,41 @@ function clear_testing_documents() {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Testing</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse; 
-            font-size: 13px;
-        }
-        td, th {
-            padding: 10px;
-            text-align: left; /* Align content to the left */
-            border: 1px solid black;
-        }
-        .form-group {
-            display: flex; 
-            align-items: center;
-            border:none;
-        }
-        .form-group input[type="checkbox"] {
-            margin-right: 10px;
-        }
-        .form-group label {
-            flex: 1;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    td,
+    th {
+        padding: 10px;
+        text-align: left;
+        /* Align content to the left */
+        border: 1px solid black;
+    }
+
+    .form-group {
+        display: flex;
+        align-items: center;
+        border: none;
+    }
+
+    .form-group input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .form-group label {
+        flex: 1;
+    }
     </style>
 </head>
+
 <body>
     <fieldset>
         <legend>Testing:</legend>
@@ -152,7 +159,8 @@ function clear_testing_documents() {
                 <tr>
                     <td>Process Order Number:</td>
                     <td colspan="4">
-                        <input style="width:100%" type="text" name="process_order_number_testing" id="process_order_number_testing" readonly>
+                        <input style="width:100%" type="text" name="process_order_number_testing"
+                            id="process_order_number_testing" readonly>
                     </td>
                 </tr>
             </table>
@@ -161,7 +169,7 @@ function clear_testing_documents() {
                     <tr>
                         <th>Task</th>
                         <th>Description</th>
-                        <th>Document Upload</th>
+                       
                         <th>Owner Type</th>
                         <th>Inspection Type</th>
                     </tr>
@@ -170,7 +178,8 @@ function clear_testing_documents() {
                     <!-- Subtask 8.1: Dye Penetrant Procedure -->
                     <tr>
                         <td class="form-group">
-                            <input type="checkbox" name="dye_pen_test" id="dye_pen_test" onchange="Show(this, 'dyependocumentref')">
+                            <input type="checkbox" name="dye_pen_test" id="dye_pen_test"
+                                onchange="Show(this, 'dyependocumentref')">
                             Dye Penetrant Procedure
                         </td>
                         <td>
@@ -182,13 +191,9 @@ function clear_testing_documents() {
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
+                        
                         <td>
-                            <input type="file" name="dye_pen_testing_documents" id="dye_pen_testing_documents" multiple>
-                            <span id="old_dye_pen_testing_documents">Old Document Name</span>
-                            <button type="button" onclick="clear_dye_pen_testing_documents()">Clear File</button>
-                        </td>
-                        <td>
-                            <select style="width:100%" name="owner">
+                            <select style="width:100%" name="owner_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -205,7 +210,7 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="inspectiontype">
+                            <select style="width:100%" name="ndt_test">
                                 <option value="NULL">Select Inspection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -219,7 +224,8 @@ function clear_testing_documents() {
                     <!-- Subtask 8.2: Hydrostatic Leak Test -->
                     <tr>
                         <td class="form-group">
-                            <input type="checkbox" name="hydrostatic_test" id="hydrostatic_test" onchange="toggleDropdown(this, 'hydrostatictestdocumentref')">
+                            <input type="checkbox" name="hydrostatic_test" id="hydrostatic_test"
+                                onchange="toggleDropdown(this, 'hydrostatictestdocumentref')">
                             Hydrostatic Leak Test
                         </td>
                         <td>
@@ -229,13 +235,9 @@ function clear_testing_documents() {
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
+                       
                         <td>
-                            <input type="file" name="hydrostatic_testing_documents" id="hydrostatic_testing_documents" multiple>
-                            <span id="old_hydrostatic_testing_documents">Old Document Name</span>
-                            <button type="button" onclick="clear_hydrostatic_testing_documents()">Clear File</button>
-                        </td>
-                        <td>
-                            <select style="width:100%" name="owner">
+                            <select style="width:100%" name="owner_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -252,7 +254,7 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="inspectiontype">
+                            <select style="width:100%" name="ndt_test">
                                 <option value="NULL">Select Inspection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -266,7 +268,8 @@ function clear_testing_documents() {
                     <!-- Subtask 8.3: Pneumatic Leak Test -->
                     <tr>
                         <td class="form-group">
-                            <input type="checkbox" name="pneumatic_test" id="pneumatic_test" onchange="toggleDropdown(this, 'pneumatictestdocumentref')">
+                            <input type="checkbox" name="pneumatic_test" id="pneumatic_test"
+                                onchange="toggleDropdown(this, 'pneumatictestdocumentref')">
                             Pneumatic Leak Test
                         </td>
                         <td>
@@ -276,13 +279,9 @@ function clear_testing_documents() {
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
+                      
                         <td>
-                            <input type="file" name="pneumatic_testing_documents" id="pneumatic_testing_documents" multiple>
-                            <span id="old_pneumatic_testing_documents">Old Document Name</span>
-                            <button type="button" onclick="clear_pneumatic_testing_documents()">Clear File</button>
-                        </td>
-                        <td>
-                            <select style="width:100%" name="owner">
+                            <select style="width:100%" name="owner_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -299,7 +298,7 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="inspectiontype">
+                            <select style="width:100%" name="ndt_test">
                                 <option value="NULL">Select Inspection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -313,23 +312,21 @@ function clear_testing_documents() {
                     <!-- Subtask 8.4: FAT -->
                     <tr>
                         <td class="form-group">
-                            <input type="checkbox" name="fat_protocol" id="fat_protocol" onchange="toggleDropdown(this, 'fatprotocoldocumentref')">
+                            <input type="checkbox" name="fat_protocol" id="fat_protocol"
+                                onchange="toggleDropdown(this, 'fatprotocoldocumentref')">
                             FAT
                         </td>
                         <td>
                             <select style="width:100%" name="fatprotocoldocumentref">
                                 <option value="NULL">NULL</option>
                                 <option value="QF-0226">QF-0226</option>
+                                <option value="Custom">Custom</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
+                       
                         <td>
-                            <input type="file" name="fat_protocol_documents" id="fat_protocol_documents" multiple>
-                            <span id="old_fat_protocol_documents">Old Document Name</span>
-                            <button type="button" onclick="clear_fat_protocol_documents()">Clear File</button>
-                        </td>
-                        <td>
-                            <select style="width:100%" name="owner">
+                            <select style="width:100%" name="owner_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -346,7 +343,7 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="inspectiontype">
+                        <select style="width:100%" name="ndt_test">
                                 <option value="NULL">Select Inspection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -357,17 +354,32 @@ function clear_testing_documents() {
                             </select>
                         </td>
                     </tr>
+
+                    <tr>
+<td>
+    <label>Upload Files :
+</label>
+</td>
+
+                    <td colspan="3">
+                            <input type="file" name="testing_documents" id="testing_documents" multiple>
+                            <span id="old_testing_documents">Old Document Name</span>
+                            <button type="button" onclick="clear_fat_protocol_documents()">Clear File</button>
+                        </td>
+</tr>
                     <!-- Repeat similar rows for other testing tasks -->
                 </tbody>
             </table>
             <div class="form-group">
                 <label>Sign-off for Testing:
-                    <input style="width:100%" type="text" name="sign_off_testing" id="sign_off_testing" value="${username}">
+                    <input style="width:100%" type="text" name="sign_off_testing" id="sign_off_testing"
+                        value="${username}">
                 </label>
             </div>
             <div class="form-group">
                 <label>Comments for Testing:
-                    <textarea style="width:100%" name="comments_testing" id="comments_testing" rows="4" cols="50"></textarea>
+                    <textarea style="width:100%" name="comments_testing" id="comments_testing" rows="4"
+                        cols="50"></textarea>
                 </label>
             </div>
             <div>
@@ -377,33 +389,28 @@ function clear_testing_documents() {
     </fieldset>
 
     <script>
-        function clear_dye_pen_testing_documents() {
-            document.getElementById('dye_pen_testing_documents').value = ''; // Clear the file input field
-            document.getElementById('old_dye_pen_testing_documents').textContent = ''; // Clear the filename display
-        }
+    function clear_dye_pen_testing_documents() {
+        document.getElementById('dye_pen_testing_documents').value = ''; // Clear the file input field
+        document.getElementById('old_dye_pen_testing_documents').textContent = ''; // Clear the filename display
+    }
 
-        function clear_hydrostatic_testing_documents() {
-            document.getElementById('hydrostatic_testing_documents').value = ''; // Clear the file input field
-            document.getElementById('old_hydrostatic_testing_documents').textContent = ''; // Clear the filename display
-        }
+    function clear_hydrostatic_testing_documents() {
+        document.getElementById('hydrostatic_testing_documents').value = ''; // Clear the file input field
+        document.getElementById('old_hydrostatic_testing_documents').textContent = ''; // Clear the filename display
+    }
 
-        function clear_pneumatic_testing_documents() {
-            document.getElementById('pneumatic_testing_documents').value = ''; // Clear the file input field
-            document.getElementById('old_pneumatic_testing_documents').textContent = ''; // Clear the filename display
-        }
+    function clear_pneumatic_testing_documents() {
+        document.getElementById('pneumatic_testing_documents').value = ''; // Clear the file input field
+        document.getElementById('old_pneumatic_testing_documents').textContent = ''; // Clear the filename display
+    }
 
-        function clear_fat_protocol_documents() {
-            document.getElementById('fat_protocol_documents').value = ''; // Clear the file input field
-            document.getElementById('old_fat_protocol_documents').textContent = ''; // Clear the filename display
-        }
+    function clear_fat_protocol_documents() {
+        document.getElementById('testing_documents').value = ''; // Clear the file input field
+        document.getElementById('old_testing_documents').textContent = ''; // Clear the filename display
+    }
 
-        // Add similar functions for other document clear buttons as needed
-
-        function submitTestingForm(processOrder) {
-            // Add your form submission logic here
-            console.log('Submitting Testing Form for Process Order: ' + processOrder);
-            // Example: You can use AJAX to submit form data
-        }
+    // Add similar functions for other document clear buttons as needed
     </script>
 </body>
+
 </html>

@@ -38,6 +38,30 @@ function submitPackingTransportForm(processOrder) {
     // Add Secure Packing status
     formData.append('secure_packing', $('[name="secure_packing_checkbox"]').is(':checked') ? "Yes" : "No");
 
+    var owners_transport = [];
+    document.querySelectorAll('#transport tbody tr').forEach(function (row, index) {
+        console.log('yes');
+        console.log(index);
+        if (index >= 0 && index<1) { // Skip the header row
+            var owner = row.querySelector('[name="owner_transport"]').value || null;
+            var ndt = row.querySelector('[name="ndttype_transport"]').value || null;
+    console.log(owner);
+    console.log(ndt);
+            // Push the owner data to the array
+            owners_transport.push({
+                type: row.cells[0].innerText.trim(),
+                owner: owner,
+                ndt: ndt
+            });
+
+        // Append each owner and NDT as separate entries
+        formData.append('owners_transport[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+        formData.append('owners_transport[' + (index - 1) + '][owner]', owner);
+        formData.append('owners_transport[' + (index - 1) + '][ndt]', ndt);
+    }
+});
+
+
     console.log(formData);
 
     // Send an AJAX request to the server
@@ -164,7 +188,7 @@ function generateHTMLFromResponse_for_packing_transport_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_packing_transport(response) {
+function generateHTMLFromResponse_for_packing_transport_old(response) {
     console.log('yes');
     var html = '<form id="packingTransportForm" class="packing-transport-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
@@ -203,6 +227,123 @@ function generateHTMLFromResponse_for_packing_transport(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_packing_transport(response) {
+    console.log('Generating packing and transport documentation...');
+    var html = '<form id="packingTransportForm" class="packing-transport-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Packing and Transport</legend>';
+    html += '<div style="width:97%">';
+    
+    // Start of the table
+    html += '<table style="width:100%; border-collapse: collapse;">';
+    
+    html += '<tbody>';
+
+    $.each(response, function (index, item) {
+
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;"><label for="process_order_number">Process Order:</label></td>';
+        html += '<td  colspan="4" style="border: 1px solid #ccc;"><input style="width:100%" type="text" id="process_order_number" name="process_order_number" value="' + item.process_order_number + '"></td>';
+
+        html += '<tr>';
+
+
+
+     
+    html += '<tr>';
+    html += '<th style="border: 1px solid #ccc; padding: 8px;">Tasks</th>';
+    html += '<th style="border: 1px solid #ccc; padding: 8px;">Files</th>';
+    html += '<th style="border: 1px solid #ccc; padding: 8px;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc; padding: 8px;">NDT</th>';
+    html += '</tr>';
+
+        // Tasks column
+        html += '<td style="border: 1px solid #ccc; padding: 8px;">';
+        html += '<label>Secure Packing:</label><br>';
+        html += '<input style="width:100%" type="text" name="secure_packing" value="' + (item.secure_packing === "Yes" ? "Yes" : "No") + '" readonly><br>';
+        html += '</td>';
+
+        // Files column
+        html += '<td style="border: 1px solid #ccc; padding: 8px;">';
+        html += '<label>Documentation:</label><br>';
+        if (item.documentation_file) {
+            var filePath = 'http://vms/path_to_your_files/' + item.documentation_file;
+            html += '<a href="' + filePath + '" target="_blank">' + item.documentation_file + '</a>';
+        } else {
+            html += '-';
+        }
+        html += '</td>';
+
+
+
+        html += '<td id="owner_trans_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_trans_1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Transport(item.process_order_number, 'Secure Packing:', function(ownerData) {
+            document.getElementById('owner_trans_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_trans_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        // Owner and NDT columns
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ccc; padding: 8px;" >'; // Combine Owner and NDT in one cell
+        html += '<label>Engineer:</label><br>';
+        html+='</td>';
+        html += '<td colspan="3">';
+        html += (item.engineer ? item.engineer : '-') + '<br>';
+        html += '</td>';
+      
+       
+        
+        html += '</tr>'; // End of row
+
+        // New row for NDT
+        html += '<tr>';
+        html += '<td style="border: 1px solid #ccc; padding: 8px;">';
+        html += '<label>Comments:</label><br>';
+        html += (item.comments ? item.comments : '-') + '<br>';
+        html += '</td>';
+        html += '</tr>'; // End of NDT row
+    });
+
+    html += '</tbody>';
+    html += '</table>'; // End of table
+
+    html += '</div>'; // Closing div
+    html += '</fieldset></form>';
+
+    return html;
+}
+function fetchOwnerData_Transport(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_transport',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
 
 function generatePackingTransportCompleteFieldset(processOrder, qualityStep, username) {
     var formData = {
@@ -234,6 +375,7 @@ function generatePackingTransportCompleteFieldset(processOrder, qualityStep, use
         },
         error: function (error) {
             console.error(error);
+
         },
     });
 }

@@ -39,7 +39,7 @@
     <fieldset>
     <legend>Packing and Transport</legend>
     <div style="width:97%">
-        <table id="packing_transport">
+        <table id="transport">
             <thead>
                 <tr>
                     <th colspan="3">Process Order Number:</th>
@@ -78,7 +78,7 @@
                         </select>
                     </td>
                     <td>
-                        <select name="ndt_type_transport" style="width: 100%">
+                        <select name="ndttype_transport" style="width: 100%">
                             <option value="NULL">Select NDT Type</option>
                             <option value="Approve">Approve</option>
                             <option value="Inspect">Inspect</option>

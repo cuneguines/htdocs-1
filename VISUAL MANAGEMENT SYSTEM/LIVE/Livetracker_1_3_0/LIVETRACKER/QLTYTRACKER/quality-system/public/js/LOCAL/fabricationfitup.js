@@ -223,11 +223,11 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '</div>';
         html += '</td>';
         html += '<td style="border: 1px solid #ccc;"></td>';
-        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_fab1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fab1" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Fabrication(item.ProcessOrder, 'Fit-up: Visual check fit up - first off',function(ownerData) {
-            document.getElementById('owner_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
-            document.getElementById('ndt_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            document.getElementById('owner_fab1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fab1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
         });
         html += '</tr>';
 
@@ -240,11 +240,11 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '</div>';
         html += '</td>';
         html += '<td style="border: 1px solid #ccc;"></td>';
-        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_fab2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fab2" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Fabrication(item.ProcessOrder,'Dimensional check: Dimensional check first off' ,function(ownerData) {
-            document.getElementById('owner_2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
-            document.getElementById('ndt_2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            document.getElementById('owner_fab2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fab2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
         });
         html += '</tr>';
 
@@ -260,11 +260,11 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
             html += 'No file chosen';
         }
         html += '</td>';
-        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_fab3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fab3" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Fabrication(item.ProcessOrder, 'Weld Check',function(ownerData) {
-            document.getElementById('owner_3').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
-            document.getElementById('ndt_3').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            document.getElementById('owner_fab3').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fab3').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
         });
 
         html += '</tr>';
@@ -278,11 +278,11 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
         html += '</div>';
         html += '</td>';
         html += '<td style="border: 1px solid #ccc;"></td>';
-        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_fab4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fab4" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Fabrication(item.ProcessOrder, 'Link to Drawing',function(ownerData) {
-            document.getElementById('owner_4').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
-            document.getElementById('ndt_4').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            document.getElementById('owner_fab4').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fab4').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
         });
         html += '</tr>';
 

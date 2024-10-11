@@ -203,7 +203,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Reference Job/Master File
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td>';
+        html += '<td style="border: 1px solid #ccc;">';
        
         html += '<input type="checkbox" name="reference_job_master_file" ' + (item.reference_job_master_file === 'true' ? 'checked' : 'disabled') + '>';
         html +='Reference Job/Master Fil';
@@ -217,9 +217,9 @@ function generateHTMLFromResponse_for_eng(response) {
             var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.reference_job_master_file_document+'</a>';
             html += downloadLink;
         }
-        html += '<td id="owner_1"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="owner_eng1"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
-        html += '<td id="ndta_1"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="ndta_eng1"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
 
 
@@ -227,14 +227,14 @@ function generateHTMLFromResponse_for_eng(response) {
         fetchOwnerData_eng(item.process_order_number, 'Reference Job / Master File if applicable', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_1').innerHTML =  ownerData.owner;
+                document.getElementById('owner_eng1').innerHTML =  ownerData.owner;
 
                 // Update ndta cell
-                document.getElementById('ndta_1').innerHTML = ownerData.ndta;
+                document.getElementById('ndta_eng1').innerHTML = ownerData.ndta;
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_' + index).innerHTML = 'N/A';
-                document.getElementById('ndta_' + index).innerHTML = ' N/A';
+                document.getElementById('owner_eng1').innerHTML = 'N/A';
+                document.getElementById('ndta_eng1').innerHTML = ' N/A';
             }
         });
 
@@ -244,7 +244,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Concept Design & Engineering
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td>';
+        html += '<td style="border: 1px solid #ccc;">';
        
         html += '<input type="checkbox" name="concept_design_engineering" ' + (item.concept_design_engineering === 'true' ? 'checked' : 'disabled') + '>';
         html+='Concept Design & Engineering';
@@ -261,9 +261,9 @@ function generateHTMLFromResponse_for_eng(response) {
             var downloadLink = '<a href="' + filePath + '" download>'+item.concept_design_document+'</a>';
             html += downloadLink;
         }
-        html += '<td id="owner_5"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="owner_eng5"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
-        html += '<td id="ndta_5"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="ndta_eng5"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
 
 
@@ -271,14 +271,14 @@ function generateHTMLFromResponse_for_eng(response) {
         fetchOwnerData_eng(item.process_order_number, 'Concept design & engineering details', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_5').innerHTML =  ownerData.owner;
+                document.getElementById('owner_eng5').innerHTML =  ownerData.owner;
 
                 // Update ndta cell
-                document.getElementById('ndta_5').innerHTML = ownerData.ndta;
+                document.getElementById('ndta_eng5').innerHTML = ownerData.ndta;
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_5' ).innerHTML = 'N/A';
-                document.getElementById('ndta_5' ).innerHTML = ' N/A';
+                document.getElementById('owner_eng5' ).innerHTML = 'N/A';
+                document.getElementById('ndta_eng5' ).innerHTML = ' N/A';
             }
         });
         // Close the row
@@ -286,7 +286,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Design Sign off [calculations]
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td>';
+        html += '<td style="border: 1px solid #ccc;">';
        
         html += '<input type="checkbox" name="design_validation_sign_off" ' + (item.design_validation_sign_off === 'true' ? 'checked' : 'disabled') + '>';
         html+='Design Sign off [calculations]';
@@ -303,9 +303,9 @@ function generateHTMLFromResponse_for_eng(response) {
             var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.design_validation_document+'</a>';
             html += downloadLink;
         }
-        html += '<td id="owner_6"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="owner_eng6"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
-        html += '<td id="ndta_6"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="ndta_eng6"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
 
 
@@ -313,14 +313,14 @@ function generateHTMLFromResponse_for_eng(response) {
         fetchOwnerData_eng(item.process_order_number, 'Design sign off [calculations]', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_6').innerHTML =  ownerData.owner;
+                document.getElementById('owner_eng6').innerHTML =  ownerData.owner;
 
                 // Update ndta cell
-                document.getElementById('ndta_6').innerHTML = ownerData.ndta;
+                document.getElementById('ndta_eng6').innerHTML = ownerData.ndta;
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_6' + index).innerHTML = 'N/A';
-                document.getElementById('ndta_6' + index).innerHTML = ' N/A';
+                document.getElementById('owner_eng6' + index).innerHTML = 'N/A';
+                document.getElementById('ndta_eng6' + index).innerHTML = ' N/A';
             }
         });
         // Close the row
@@ -328,7 +328,7 @@ function generateHTMLFromResponse_for_eng(response) {
 
         // Customer Submittal Package
         html += '<tr style="border: 1px solid #ccc;">';
-        html += '<td>';
+        html += '<td style="border: 1px solid #ccc;">';
        
         html += '<input type="checkbox" name="customer_submittal_package" ' + (item.customer_submittal_package === 'true' ? 'checked' : 'disabled') + '>';
         html+='Customer Submittal Package';
@@ -346,9 +346,9 @@ function generateHTMLFromResponse_for_eng(response) {
             var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.customer_approval_document+'</a>';
             html += downloadLink;
         }
-        html += '<td id="owner_3"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="owner_eng3"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
-        html += '<td id="ndta_3"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="ndta_eng3"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
 
 
@@ -356,20 +356,20 @@ function generateHTMLFromResponse_for_eng(response) {
         fetchOwnerData_eng(item.process_order_number, 'Customer submittal package', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_3').innerHTML =  ownerData.owner;
+                document.getElementById('owner_eng3').innerHTML =  ownerData.owner;
 
                 // Update ndta cell
-                document.getElementById('ndta_3').innerHTML = ownerData.ndta;
+                document.getElementById('ndta_eng3').innerHTML = ownerData.ndta;
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_3' ).innerHTML = 'N/A';
-                document.getElementById('ndta_3' ).innerHTML = ' N/A';
+                document.getElementById('owner_eng3' ).innerHTML = 'N/A';
+                document.getElementById('ndta_eng3' ).innerHTML = ' N/A';
             }
         });
 html+='</tr>';
         // Reference Approved Samples
     
-        html += '<td>';
+        html += '<td style="border: 1px solid #ccc;">';
      
         html += '<input type="checkbox" name="reference_approved_samples" ' + (item.reference_approved_samples === 'true' ? 'checked' : 'disabled') + '>';
         html += 'Reference Approved Samples';
@@ -388,9 +388,9 @@ html+='</tr>';
             var downloadLink = '<a href="' + filePath + '" target="_blank">'+item.sample_approval_document+'</a>';
             html += downloadLink;
         }
-        html += '<td id="owner_4"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="owner_eng4"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
-        html += '<td id="ndta_4"colspan="2" style="border: 1px solid #ccc; ">';
+        html += '<td id="ndta_eng4"colspan="2" style="border: 1px solid #ccc; ">';
         html+='</td>';
 
 
@@ -398,14 +398,14 @@ html+='</tr>';
         fetchOwnerData_eng(item.process_order_number, 'Reference approved samples', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_4').innerHTML =  ownerData.owner;
+                document.getElementById('owner_eng4').innerHTML =  ownerData.owner;
 
                 // Update ndta cell
-                document.getElementById('ndta_4').innerHTML = ownerData.ndta;
+                document.getElementById('ndta_eng4').innerHTML = ownerData.ndta;
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_4' ).innerHTML = 'N/A';
-                document.getElementById('ndta_4' ).innerHTML = ' N/A';
+                document.getElementById('owner_eng4' ).innerHTML = 'N/A';
+                document.getElementById('ndta_eng4' ).innerHTML = ' N/A';
             }
         });
         // Close the row

@@ -121,7 +121,7 @@
                 </tr>
             </table>
 
-            <table id="documentation_checks">
+            <table id="docu">
                 <thead>
                     <tr>
                         <th>Documentation Type</th>
@@ -151,7 +151,7 @@
                             </div>
                         </td>
                         <td>
-                            <select name="owner_technical_file" style="width: 100%">
+                            <select name="owner_docu" style="width: 100%" data-task="technical_file_checkbox">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -161,7 +161,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndt_type_technical_file" style="width: 100%">
+                            <select name="ndttype_docu" style="width: 100%" data-task="technical_file_checkbox">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -178,7 +178,7 @@
                     <tr>
                         <td class="form-group">
                             <label>
-                                <input type="checkbox" name="client_handover_checkbox" value="1">
+                                <input type="checkbox" name="client_handover_checkbox" value="1" >
                                 Client Hand-over documentation:
                             </label>
                         </td>
@@ -196,7 +196,7 @@
 
 
                         <td>
-                            <select name="owner_client_handover" style="width: 100%">
+                            <select name="owner_docu" style="width: 100%" data-task="client_handover_checkbox">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -206,7 +206,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndt_type_client_handover" style="width: 100%">
+                            <select name="ndttype_docu" style="width: 100%" data-task="client_handover_checkbox">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

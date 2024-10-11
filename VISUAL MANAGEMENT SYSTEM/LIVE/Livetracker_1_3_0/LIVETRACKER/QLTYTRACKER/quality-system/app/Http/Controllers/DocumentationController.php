@@ -7,6 +7,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DocumentationFormData;
 use App\Models\DocumentationCompleteData;
+use App\Models\GlobalOwnerNdt; 
+
+use Illuminate\Support\Facades\DB;
 class DocumentationController extends Controller
 {
     /**
@@ -28,6 +31,19 @@ class DocumentationController extends Controller
         $documentation->technical_file_check=$request->input('technical_file_check');
         $documentation->client_handover_check=$request->input('client_handover_check');
         $documentation->comments_documentation=$request->input('comments_documentation');
+
+
+        $owners = $request->input('owners_docu');
+        foreach ($owners as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            $owner->Quality_Step = 'Documentation';
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
         
         // Save the Documentation Form Data
         $documentation->save();
@@ -111,4 +127,28 @@ class DocumentationController extends Controller
 
         return response()->json(['data' => $data]);
     }
+
+
+    public function getOwnerData_docu(Request $request)
+{
+    //$processOrderNumber = $request->input('process_order_number');
+
+    $processOrderNumber = $request->input('process_order_number');
+    $Type = $request->input('Type');
+
+    // Query to fetch the latest record based on process_order_number, Quality_Step = 'Engineering', and Type
+    $data = DB::select(
+        'SELECT TOP 1 * FROM QUALITY_PACK.dbo.Planning_Owner_NDT WHERE process_order_number = ? AND Quality_Step = ? AND Type = ? ORDER BY updated_at DESC',
+        [$processOrderNumber, 'Documentation',$Type]
+    );
+
+    // Check if data is found
+    if (empty($data)) {
+        // Return an appropriate response if no data found
+        return response()->json(['error' => 'No data found for the given parameters.'], 404);
+    }
+
+    // Return JSON response with the fetched data
+    return response()->json(['data' => $data]);
+}
 }

@@ -24,7 +24,7 @@
             $end_range = 30;
         ?>
 
-        <?php include '../../../../PHP LIBS/PHP FUNCTIONS/php_functions.php';?>
+        <?php include './PHP FUNCTIONS/php_functions.php';?>
         <?php include '../../../../SQL CONNECTIONS/conn.php'; ?>
         <?php include './SQL_stock_orders_schedule.php';?>
         <?php $results = get_sap_data($conn, $tsql, DEFAULT_DATA);?>

@@ -227,7 +227,7 @@ function updateDropdown(checkbox, selectName) {
                             <button type="button" onclick="clear_pickle_passivate_documents()">Clear File</button>
                         </td>
                         <td>
-                            <select style="width:100%" name="pickle_passivate_owner">
+                            <select style="width:100%" name="owner_finishing">
 
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
@@ -246,7 +246,7 @@ function updateDropdown(checkbox, selectName) {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="pickle_passivate_inspection_type">
+                            <select style="width:100%" name="ndttype_finishing">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -328,7 +328,7 @@ function updateDropdown(checkbox, selectName) {
         
                         </td>
                         <td>
-                            <select style="width:100%" name="select_kent_finish_owner">
+                            <select style="width:100%" name="owner_finishing">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -344,7 +344,7 @@ function updateDropdown(checkbox, selectName) {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="select_kent_finish_inspection_type">
+                            <select style="width:100%" name="ndttype_finishing">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

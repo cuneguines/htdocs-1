@@ -43,6 +43,28 @@ function submitDocumentationForm(processOrder) {
     }
 
 
+    var owners_docu = [];
+document.querySelectorAll('#docu tbody tr').forEach(function (row, index) {
+    console.log(index);
+    if (index >= 0 && index <=1) { // Skip the header row
+        var owner = row.querySelector('[name="owner_docu"]').value || null;
+        var ndt = row.querySelector('[name="ndttype_docu"]').value || null;
+console.log(owner);
+console.log(ndt);
+        // Push the owner data to the array
+        owners_docu.push({
+            type: row.cells[0].innerText.trim(),
+            owner: owner,
+            ndt: ndt
+        });
+
+        // Append each owner and NDT as separate entries
+        formData.append('owners_docu[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+        formData.append('owners_docu[' + (index - 1) + '][owner]', owner);
+        formData.append('owners_docu[' + (index - 1) + '][ndt]', ndt);
+    }
+});
+
     console.log(formData);
 
     // Send an AJAX request to the server
@@ -178,7 +200,7 @@ function generateHTMLFromResponse_for_documentation_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_documentation(response) {
+function generateHTMLFromResponse_for_documentation_old(response) {
     console.log('yes');
     var html = '<form id="documentationForm" class="documentation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
@@ -232,6 +254,138 @@ function generateHTMLFromResponse_for_documentation(response) {
     html += '</fieldset></form>';
 
     return html;
+}
+function generateHTMLFromResponse_for_documentation(response) {
+    console.log('Generating welding documentation...');
+    var html = '<form id="weldingDocumentationForm" class="documentation-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Welding Documentation</legend>';
+    html += '<div style="width:97%">';
+    
+    
+
+    $.each(response, function (index, item) {
+        html += '<tr>';
+
+        // Tasks column
+        html += '<td style="border: 1px solid #000; padding: 8px;">';
+        html += '<label>Process Order Number:</label><br>';
+        html += '<input style="width:100%" name="process_order_number_dm" value="' + item.process_order_number + '" readonly><br>';
+        html += '</td>';
+// Start of the table
+html += '<table style="width:100%; border-collapse: collapse;">';
+html += '<thead>';
+html += '<tr>';
+html += '<th style="border: 1px solid #000; padding: 8px;">Tasks</th>';
+html += '<th style="border: 1px solid #000; padding: 8px;">Files</th>';
+html += '<th style="border: 1px solid #000; padding: 8px;">Owner</th>';
+html += '<th style="border: 1px solid #000; padding: 8px;">NDT</th>';
+html += '</tr>';
+html += '</thead>';
+html += '<tbody>';
+html+='<tr>';
+        // Files column
+        html += '<td style="border: 1px solid #000; padding: 8px;">';
+        html += '<div class="documentation_field">';
+        if (item.technical_file) {
+            var technicalFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.technical_file;
+            html += '<label>Technical File:</label><br>';
+            html += '<a href="' + technicalFilePath + '" target="_blank">' + item.technical_file + '</a><br>';
+        } else {
+            html += '-';
+        }
+        html += '</div>';
+
+        html+='<td>';
+        html += '</td>';
+        html += '<td id="owner_doc_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_doc_1" style="border: 1px solid #ccc;"></td>';
+
+        fetchOwnerData_Documentation(item.process_order_number, 'Technical File:',function (ownerData) {
+            document.getElementById('owner_doc_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_doc_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+
+        html+='</tr>';
+        html+='<tr>';
+        html += '<td style="border: 1px solid #000; padding: 8px;">';
+        html += '<div class="documentation_field">';
+        if (item.client_handover_documentation) {
+            var clientHandoverFilePath = 'http://vms/VISUAL%20MANAGEMENT%20SYSTEM/LIVE/Livetracker_1_3_0/LIVETRACKER/QLTYTRACKER/quality-system/storage/app/public/documentation_tasks/' + item.process_order_number + '/' + item.client_handover_documentation;
+            html += '<label>Client Hand Over Documentation:</label><br>';
+            html += '<a href="' + clientHandoverFilePath + '" target="_blank">' + item.client_handover_documentation + '</a><br>';
+        } else {
+            html += '-';
+        }
+        html += '</div>';
+        html += '</td>';
+html+='<td>';
+html += '</td>';
+
+        html += '<td id="owner_process_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_process_' + index + '" style="border: 1px solid #ccc;"></td>';
+        // Fetch owner data here if needed
+        fetchOwnerData_Documentation(item.process_order_number, 'Client Hand-over documentation:',function (ownerData) {
+            document.getElementById('owner_process_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_process_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html+='</tr>';
+        // Owner column
+        html += '<tr>';
+        html += '<td style="border: 1px solid #000; padding: 8px;">';
+        html += '<label>Owner:</label><br>';
+        html += '</td>';
+        html += '<td>';
+        html += (item.engineer ? item.engineer : '-') + '<br>';
+        html += '</td>';
+      
+        // NDT column
+        html += '<tr>';
+        html += '<td style="border: 1px solid #000; padding: 8px;">';
+        html += '<label>Comments:</label><br>';
+        html += '</td>';
+        html += '<td>';
+        html += (item.comments_documentation ? item.comments_documentation : '-') + '<br>';
+        html += '</td>';
+
+        html += '</tr>'; // End of row
+    });
+    html += '</div>'; // Closing div
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+function fetchOwnerData_Documentation(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_docu',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
 }
 
 
@@ -469,6 +623,9 @@ function resetDocumentationForm() {
 
     // Show the documentation form section if it was hidden
     $('#documentationFieldset').show();
+       // Reset owner and NDT selects
+       $('select[name="owner_docu"]').val('NULL');
+       $('select[name="ndttype_docu"]').val('NULL');
 }
 
 
@@ -519,8 +676,35 @@ function Documentation(processOrder, userName) {
 
                 // Example: Populate checkboxes
                 $('input[name="technical_file_checkbox"]').prop('checked', response.data.technical_file_check === '1');
+
+                fetchOwnerData_Documentation(processOrder, 'Technical File:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_docu"][data-task="technical_file_checkbox"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_docu"][data-task="technical_file_checkbox"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_docu"][data-task="technical_file_checkbox"]`).val('NULL');
+                        $(`select[name="ndttype_docu"][data-task="technical_file_checkbox"]`).val('NULL');
+                    }
+                });
+
+                
                 $('input[name="client_handover_checkbox"]').prop('checked', response.data.client_handover_check === '1');
 
+                fetchOwnerData_Documentation(processOrder, 'Client Hand-over documentation:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_docu"][data-task="client_handover_checkbox"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_docu"][data-task="client_handover_checkbox"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_docu"][data-task="client_handover_checkbox"]`).val('NULL');
+                        $(`select[name="ndttype_docu"][data-task="client_handover_checkbox"]`).val('NULL');
+                    }
+                });
                 // Example: Populate file upload fields
                 $('#old_technical_file').text(response.data.technical_file);
                 $('#old_client_handover_documentation').text(response.data.client_handover_documentation);

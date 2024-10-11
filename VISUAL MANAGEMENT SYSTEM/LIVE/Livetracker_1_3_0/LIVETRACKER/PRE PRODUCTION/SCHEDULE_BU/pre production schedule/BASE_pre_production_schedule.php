@@ -337,7 +337,7 @@
                                         if($results[$i]["Stage"] == "8. Design Concept"){
                                             $btn_color = "style = 'background-color:#26fcf5'";} // Red for "Design Concept"
                                         if($results[$i]["Stage"] == "9. Submitted to Planning") {
-                                            $btn_color = "style = 'background-color:#97ff95'";}
+                                            $btn_color = "style = background-color:#97ff95;border-style: solid;border-color: black";}
                                         ////////////////////////////////////
                                         
                                             // ASSIGN A BUTTON WITH ALL ATTRIUTES OF THE JOB TO A STRING

@@ -114,7 +114,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="form-group">
+                        <td class="form-group">SUB CON ACTION:
                             <label>
                                 <select style="width: 100%" name="sub_contract_action">
                                     <option value="NULL">Select Action</option>
@@ -127,7 +127,7 @@
                         <td>
                         </td>
                         <td>
-                            <select name="owner_sub_contract" style="width: 100%">
+                            <select name="owner_sub" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -138,7 +138,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndt_type_sub_contract" style="width: 100%">
+                            <select name="ndttype_sub" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -152,7 +152,7 @@
 
                     <!-- File Upload for Sub-Contract in a separate row -->
                     <tr>
-                        <td><label>Current File:</lable>
+                        <td><label>Current File:</label>
                         </td>
                         <td colspan="3" class="form-group">
                             <label>
@@ -170,7 +170,7 @@
 
 
                         <td>
-                            <select name="owner_sub_contract" style="width: 100%">
+                            <select name="owner_sub" style="width: 100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -181,7 +181,7 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndt_type_sub_contract" style="width: 100%">
+                            <select name="ndttype_sub" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

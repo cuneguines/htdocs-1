@@ -206,7 +206,7 @@ SELECT
            FROM iis_epc_pro_ordert t0  
                    inner join iis_epc_pro_orderh t1 on t1.PrOrder = t0.PrOrder
            GROUP BY t0.PrOrder, t1.EndProduct
-   ) t10 ON t10.PrOrder = t0.U_IIS_proProrder and t10.EndProduct = t0.ItemCode
+   ) t10 ON t10.PrOrder = t0.U_IIS_proProrder and t10.EndProduct = t0.ItemCodec
    LEFT JOIN 
    (SELECT t1.U_IIS_proPrOrder, t1.ItemCode,
            SUM(t0.plannedqty) [Planned_Lab]

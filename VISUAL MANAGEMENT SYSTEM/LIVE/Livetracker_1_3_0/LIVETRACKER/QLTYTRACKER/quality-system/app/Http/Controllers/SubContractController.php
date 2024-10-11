@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubContractFormData;
 use App\Models\SubContractCompleteData;
-
+use App\Models\GlobalOwnerNdt; 
+use Illuminate\Support\Facades\DB;
 class SubContractController extends Controller
 {
     /**
@@ -30,6 +31,20 @@ class SubContractController extends Controller
 
         // Save the Subcontract Form Data
         $subcontractFormData->save();
+
+        $owners = $request->input('owners_sub');
+        foreach ($owners as $ownerData) {
+            $owner = new GlobalOwnerNdt();
+            $owner->Type = $ownerData['type'];
+            $owner->owner = $ownerData['owner'];
+            $owner->ndta = $ownerData['ndt'];
+            $owner->process_order_number = $request->input('process_order_number');
+            $owner->Quality_Step = 'SubContract';
+            //$owner->planning_form_data_id = $planningData->id;
+            $owner->save();
+        }
+
+
 
         // You can return a response or redirect as needed
         return response()->json(['data' => $subcontractFormData]);
@@ -111,5 +126,29 @@ public function viewSubContractCompleteForm(Request $request)
        ->first();
 
    return response()->json(['data' => $data]);
+}
+
+
+public function getOwnerData_subcontract(Request $request)
+{
+    //$processOrderNumber = $request->input('process_order_number');
+
+    $processOrderNumber = $request->input('process_order_number');
+    $Type = $request->input('Type');
+
+    // Query to fetch the latest record based on process_order_number, Quality_Step = 'Engineering', and Type
+    $data = DB::select(
+        'SELECT TOP 1 * FROM QUALITY_PACK.dbo.Planning_Owner_NDT WHERE process_order_number = ? AND Quality_Step = ? AND Type = ? ORDER BY updated_at DESC',
+        [$processOrderNumber, 'SubContract',$Type]
+    );
+
+    // Check if data is found
+    if (empty($data)) {
+        // Return an appropriate response if no data found
+        return response()->json(['error' => 'No data found for the given parameters.'], 404);
+    }
+
+    // Return JSON response with the fetched data
+    return response()->json(['data' => $data]);
 }
 }

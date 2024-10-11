@@ -290,7 +290,7 @@ function clear_link_to_plant_cert() {
     <fieldset>
         <legend>Welding Tasks</legend>
         <div style="width:98%">
-            <table>
+            <table id ="welding">
                 <tr>
                     <td>Process Order Number:</td>
                     <td colspan="4">
@@ -322,7 +322,7 @@ function clear_link_to_plant_cert() {
 
 
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -345,7 +345,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -372,7 +372,7 @@ function clear_link_to_plant_cert() {
                     </td>
 
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -395,7 +395,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -424,7 +424,7 @@ function clear_link_to_plant_cert() {
                     </td>
 
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -447,7 +447,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -473,7 +473,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -496,7 +496,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -522,7 +522,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -545,7 +545,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -571,7 +571,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -594,7 +594,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -614,7 +614,7 @@ function clear_link_to_plant_cert() {
 
                     <td ></td>
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -637,7 +637,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -660,7 +660,7 @@ function clear_link_to_plant_cert() {
 
 
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -683,7 +683,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -711,7 +711,7 @@ function clear_link_to_plant_cert() {
 
 
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -734,7 +734,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -755,7 +755,7 @@ function clear_link_to_plant_cert() {
                     <td ></td>
 
                     <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -778,7 +778,7 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
+                            <select name="ndttype_weld" id="ndttype" style="width:100%">
                                 <option value="NULL">Select Inpection Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>

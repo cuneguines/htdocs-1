@@ -15,6 +15,20 @@ function submitWeldingForm(processOrder) {
         return fileInput.files.length > 0 ? fileInput.files[0].name : null;
     }
 
+    var owners_weld = [];
+    document.querySelectorAll('#welding tbody tr').forEach(function (row, index) {
+        if (index >= 0) { // Skip the header row
+            var ownerElement = row.querySelector('[name="owner_weld"]');
+            var ndtElement = row.querySelector('[name="ndttype_weld"]');
+    
+            owners_weld.push({
+                type: row.cells[0].innerText.trim(),
+                owner: ownerElement ? ownerElement.value || null : null,
+                ndt: ndtElement ? ndtElement.value || null : null
+            });
+        }
+    });
+
     var formData = {
         weld_map_issued:
             document.querySelector('[name="weld_map_issued"]').checked || null,
@@ -80,6 +94,8 @@ function submitWeldingForm(processOrder) {
             null,
         submission_date: new Date().toISOString().split("T")[0], // Get today's date in YYYY-MM-DD format
         process_order_number:  document.querySelector('[name="process_order_number_welding"]').value || null,
+
+        owners_weld:owners_weld,
     };
 
     $.ajax({
@@ -317,7 +333,7 @@ function generateHTMLFromResponse_for_welding_old(response) {
 
     return html;
 }
-function generateHTMLFromResponse_for_welding(response) {
+function generateHTMLFromResponse_for_welding_oldd(response) {
     var html =
         '<form id="weldingForm" class="welding-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
@@ -573,6 +589,420 @@ function generateHTMLFromResponse_for_welding(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_welding_test(response) {
+    var html = '<form id="weldingForm" class="welding-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Welding Tasks</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Tasks</th>';
+    html += '<th style="border: 1px solid #ccc;">Files</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    $.each(response, function(index, item) {
+        // Weld Map Issued
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_map_issued_' + index + '" name="weld_map_issued" ' + ((item.weld_map_issued === 'true' || item.weld_map_issued === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_map_issued_' + index + '">Weld Map Issued</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_weld_map ? '<a href="' + item.link_to_weld_map + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_weld_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Map: Weld Map issued to production', function(ownerData) {
+            document.getElementById('owner_weld_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Weld Procedure Qualification
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_procedure_qualification_' + index + '" name="weld_procedure_qualification" ' + ((item.weld_procedure_qualification === 'true' || item.weld_procedure_qualification === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_procedure_qualification_' + index + '">Weld Procedure Qualification</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_pqr ? '<a href="' + item.link_to_pqr + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_weld_pqr_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_pqr_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Procedure Qualification Record:', function(ownerData) {
+            document.getElementById('owner_weld_pqr_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_pqr_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Weld Procedure Specifications
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_procedure_specifications_' + index + '" name="weld_procedure_specifications" ' + ((item.weld_procedure_specifications === 'true' || item.weld_procedure_specifications === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_procedure_specifications_' + index + '">Weld Procedure Specifications</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wps ? '<a href="' + item.link_to_wps + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_weld_wps_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_wps_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Procedure Specifications:', function(ownerData) {
+            document.getElementById('owner_weld_wps_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_wps_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Welder Performance Qualification
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="welder_performance_qualification_' + index + '" name="welder_performance_qualification" ' + ((item.welder_performance_qualification === 'true' || item.welder_performance_qualification === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="welder_performance_qualification_' + index + '">Welder Performance Qualification</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wpq ? '<a href="' + item.link_to_wpq + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_welder_wpq_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_welder_wpq_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welder Performance Qualification:', function(ownerData) {
+            document.getElementById('owner_welder_wpq_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_welder_wpq_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Welding Wire
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="welding_wire_' + index + '" name="welding_wire" ' + ((item.welding_wire === 'true' || item.welding_wire === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="welding_wire_' + index + '">Welding Wire</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wire_certificate ? '<a href="' + item.link_to_wire_certificate + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_welding_wire_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_welding_wire_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welding Consumable - Welding Wire:', function(ownerData) {
+            document.getElementById('owner_welding_wire_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_welding_wire_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Shielding Gas
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="shielding_gas_' + index + '" name="shielding_gas" ' + ((item.shielding_gas === 'true' || item.shielding_gas === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="shielding_gas_' + index + '">Shielding Gas</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_gas_data_sheet ? '<a href="' + item.link_to_gas_data_sheet + '" target="_blank">Link</a>' : '') + '</td>';
+        html += '<td id="owner_shielding_gas_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_shielding_gas_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welding Consumable - Shielding Gas:', function(ownerData) {
+            document.getElementById('owner_shielding_gas_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_shielding_gas_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Pre Weld Inspection
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="pre_weld_inspection_' + index + '" name="pre_weld_inspection" ' + ((item.pre_weld_inspection === 'true' || item.pre_weld_inspection === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="pre_weld_inspection_' + index + '">Pre Weld Inspection</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_pre_weld_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_pre_weld_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Pre-Weld inspection: Check weld joint preparation against WPS', function(ownerData) {
+            document.getElementById('owner_pre_weld_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_pre_weld_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Inspection During Welding
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="inspection_during_welding_' + index + '" name="inspection_during_welding" ' + ((item.inspection_during_welding === 'true' || item.inspection_during_welding === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="inspection_during_welding_' + index + '">Inspection During Welding</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_inspection_during_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_inspection_during_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Inspection During Welding: Check requirements of the WPS', function(ownerData) {
+            document.getElementById('owner_inspection_during_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_inspection_during_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Post Weld Inspection
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="post_weld_inspection_' + index + '" name="post_weld_inspection" ' + ((item.post_weld_inspection === 'true' || item.post_weld_inspection === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="post_weld_inspection_' + index + '">Post Weld Inspection</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_post_weld_' + index + '" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_post_weld_' + index + '" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Post-Weld Inspection: Visual weld inspection - All Welds', function(ownerData) {
+            document.getElementById('owner_post_weld_' + index).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_post_weld_' + index).innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+function generateHTMLFromResponse_for_welding(response) {
+    var html = '<form id="weldingForm" class="welding-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Welding Tasks</legend>';
+
+    
+    $.each(response, function(index, item) {
+        // Weld Map Issued
+
+        // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+
+    html += '<tr style="border: 1px solid #ccc;">';
+    html+='<td>'+item.ProcessOrderID +'</td>';
+    html += '</tr>';
+    html += '<th style="border: 1px solid #ccc;">Tasks</th>';
+    html += '<th style="border: 1px solid #ccc;">Files</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+       
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_map_issued_' + index + '" name="weld_map_issued" ' + ((item.weld_map_issued === 'true' || item.weld_map_issued === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_map_issued_' + index + '">Weld Map Issued</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_weld_map ? '<a href="' + item.link_to_weld_map + '" target="_blank">' + item.link_to_weld_map.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_weld_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Map: Weld Map issued to production', function(ownerData) {
+            document.getElementById('owner_weld_1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Weld Procedure Qualification
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_procedure_qualification_' + index + '" name="weld_procedure_qualification" ' + ((item.weld_procedure_qualification === 'true' || item.weld_procedure_qualification === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_procedure_qualification_' + index + '">Weld Procedure Qualification</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_pqr ? '<a href="' + item.link_to_pqr + '" target="_blank">' + item.link_to_pqr.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_weld_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_2" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Procedure Qualification Record:', function(ownerData) {
+            document.getElementById('owner_weld_2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Weld Procedure Specifications
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="weld_procedure_specifications_' + index + '" name="weld_procedure_specifications" ' + ((item.weld_procedure_specifications === 'true' || item.weld_procedure_specifications === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="weld_procedure_specifications_' + index + '">Weld Procedure Specifications</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wps ? '<a href="' + item.link_to_wps + '" target="_blank">' + item.link_to_wps.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_weld_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_3" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Weld Procedure Specifications:', function(ownerData) {
+            document.getElementById('owner_weld_3').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_3').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Welder Performance Qualification
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="welder_performance_qualification_' + index + '" name="welder_performance_qualification" ' + ((item.welder_performance_qualification === 'true' || item.welder_performance_qualification === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="welder_performance_qualification_' + index + '">Welder Performance Qualification</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wpq ? '<a href="' + item.link_to_wpq + '" target="_blank">' + item.link_to_wpq.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_welder_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_welder_4" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welder Performance Qualification:', function(ownerData) {
+            document.getElementById('owner_welder_4').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_welder_4').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Welding Wire
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="welding_wire_' + index + '" name="welding_wire" ' + ((item.welding_wire === 'true' || item.welding_wire === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="welding_wire_' + index + '">Welding Wire</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_wire_certificate ? '<a href="' + item.link_to_wire_certificate + '" target="_blank">' + item.link_to_wire_certificate.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_weld_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_5" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welding Consumable - Welding Wire:', function(ownerData) {
+            document.getElementById('owner_weld_5').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_5').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Shielding Gas
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="shielding_gas_' + index + '" name="shielding_gas" ' + ((item.shielding_gas === 'true' || item.shielding_gas === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="shielding_gas_' + index + '">Shielding Gas</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">' + (item.link_to_gas_data_sheet ? '<a href="' + item.link_to_gas_data_sheet + '" target="_blank">' + item.link_to_gas_data_sheet.split('/').pop() + '</a>' : '') + '</td>';
+        html += '<td id="owner_weld_6" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_6" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Welding Consumable - Shielding Gas:', function(ownerData) {
+            document.getElementById('owner_weld_6').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_6').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Pre Weld Inspection
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="pre_weld_inspection_' + index + '" name="pre_weld_inspection" ' + ((item.pre_weld_inspection === 'true' || item.pre_weld_inspection === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="pre_weld_inspection_' + index + '">Pre Weld Inspection</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_weld_7" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_7" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Pre-Weld inspection: Check weld joint preparation against WPS', function(ownerData) {
+            document.getElementById('owner_weld_7').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_7').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Inspection During Welding
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="inspection_during_welding_' + index + '" name="inspection_during_welding" ' + ((item.inspection_during_welding === 'true' || item.inspection_during_welding === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="inspection_during_welding_' + index + '">Inspection During Welding</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_weld_8" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_8" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Inspection During Welding: Check requirements of the WPS', function(ownerData) {
+            document.getElementById('owner_weld_8').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_8').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Post Weld Inspection
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<div class="form-group">';
+        html += '<input type="checkbox" id="post_weld_inspection_' + index + '" name="post_weld_inspection" ' + ((item.post_weld_inspection === 'true' || item.post_weld_inspection === 'on') ? 'checked' : 'disabled') + '>';
+        html += '<label for="post_weld_inspection_' + index + '">Post Weld Inspection</label>';
+        html += '</div>';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_weld_9" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_weld_9" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Welding(item.ProcessOrderID, 'Post-Weld Inspection: Visual weld inspection - All Welds', function(ownerData) {
+            document.getElementById('owner_weld_9').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_weld_9').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+
+
+
+        // Sign-off
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_welding" value="' + (item.sign_off_welding || '') + '">';
+        html += '</td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+        html += '<textarea style="width: 100%;" name="comments_welding">' + (item.comments_welding || '') + '</textarea>';
+        html += '</td>';
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+
+function fetchOwnerData_Welding(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_weld',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
 
 // Function to generate the welding tasks completion form
 function generateWeldingCompleteFieldset(processOrder, qualityStep, username) {

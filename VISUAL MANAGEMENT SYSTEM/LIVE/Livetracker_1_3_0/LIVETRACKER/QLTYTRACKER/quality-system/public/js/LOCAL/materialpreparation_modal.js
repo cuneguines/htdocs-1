@@ -679,6 +679,8 @@ function generateHTMLFromResponse_for_material_preparation(response) {
     html += '<tr>';
     html += '<th style="border: 1px solid #ddd; padding: 8px;">Description</th>';
     html += '<th style="border: 1px solid #ddd; padding: 8px;">File Link</th>';
+    html += '<th style="border: 1px solid #ddd; padding: 8px;">Owner</th>';
+    html += '<th style="border: 1px solid #ddd; padding: 8px;">NDT</th>';
     html += '</tr>';
     html += '</thead>';
     html += '<tbody>';
@@ -701,20 +703,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
 
 
         html += '</td>';
-        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat1" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Upload Material Identification Mill Cert', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_1').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat1').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_1').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat1').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_1').innerHTML = 'N/A';
-                document.getElementById('ndt_1').innerHTML = 'N/A';
+                document.getElementById('owner_mat1').innerHTML = 'N/A';
+                document.getElementById('ndt_mat1').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -735,20 +737,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += '</td>';
 
         html += '</td>';
-        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat2" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Upload Material Identification Heat Number', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_2').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat2').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_2').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat2').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_2').innerHTML = 'N/A';
-                document.getElementById('ndt_2').innerHTML = 'N/A';
+                document.getElementById('owner_mat2').innerHTML = 'N/A';
+                document.getElementById('ndt_mat2').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -769,20 +771,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
             }
             html += '</td>';
             html += '</td>';
-        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat3" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Material Traceability', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_3').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat3').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_3').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat3').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_3').innerHTML = 'N/A';
-                document.getElementById('ndt_3').innerHTML = 'N/A';
+                document.getElementById('owner_mat3').innerHTML = 'N/A';
+                document.getElementById('ndt_mat3').innerHTML = 'N/A';
             }
         });
             html += '</tr>';
@@ -803,20 +805,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         }
         html += '</td>';
         html += '</td>';
-        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat4" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Cutting Part geometry, cut quality, part qty', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_4').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat4').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_4').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat4').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_4').innerHTML = 'N/A';
-                document.getElementById('ndt_4').innerHTML = 'N/A';
+                document.getElementById('owner_mat4').innerHTML = 'N/A';
+                document.getElementById('ndt_mat4').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -828,20 +830,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += ' De-burring:';
         html += '</td>';
         html += '<td style="border: 1px solid #ddd; padding: 8px;">N/A</td>';
-        html += '<td id="owner_5" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat5" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'De-burring', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_5').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat5').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_5').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat5').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_5').innerHTML = 'N/A';
-                document.getElementById('ndt_5').innerHTML = 'N/A';
+                document.getElementById('owner_mat5').innerHTML = 'N/A';
+                document.getElementById('ndt_mat5').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -861,20 +863,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         }
         html += '</td>';
         html += '</td>';
-        html += '<td id="owner_6" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_6" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat6" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat6" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Forming', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_6').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat6').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_6').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat6').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_6').innerHTML = 'N/A';
-                document.getElementById('ndt_6').innerHTML = 'N/A';
+                document.getElementById('owner_mat6').innerHTML = 'N/A';
+                document.getElementById('ndt_mat6').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -887,20 +889,20 @@ function generateHTMLFromResponse_for_material_preparation(response) {
         html += '</td>';
         html += '<td style="border: 1px solid #ddd; padding: 8px;">N/A</td>';
         html += '</td>';
-        html += '<td id="owner_7" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_7" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_mat7" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_mat7" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_mat(item.process_order_number, 'Machining', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_7').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_mat7').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_7').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_mat7').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_7').innerHTML = 'N/A';
-                document.getElementById('ndt_7').innerHTML = 'N/A';
+                document.getElementById('owner_mat7').innerHTML = 'N/A';
+                document.getElementById('ndt_mat7').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -1069,8 +1071,49 @@ function MaterialPrep(processOrder, userName) {
                     });
                   
                     $('input[name="deburring"]').prop('checked', item.deburring === 'on');
+
+                    fetchOwnerData_mat(processOrder, 'De-burring', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="deburring"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="deburring"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="deburring"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="deburring"]`).val('NULL');
+                        }
+                    });
                     $('input[name="forming"]').prop('checked', item.forming === 'on');
+                    fetchOwnerData_mat(processOrder, 'Forming', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="forming"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="forming"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="forming"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="forming"]`).val('NULL');
+                        }
+                    });
+
                     $('input[name="machining"]').prop('checked', item.machining === 'on');
+
+                    fetchOwnerData_mat(processOrder, 'Machining', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="machining"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="machining"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="machining"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="machining"]`).val('NULL');
+                        }
+                    });
+
+
                     $('input[name="material_traceability"]').prop('checked', item.material_traceability === 'on');
 
 
@@ -1087,6 +1130,21 @@ function MaterialPrep(processOrder, userName) {
                         }
                     });
                     $('input[name="material_identification"]').prop('checked', item.material_identification === 'on');
+
+                    fetchOwnerData_mat(processOrder, 'Material Identification Confirm grade, thickness', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_mat"][data-task="material_identification"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_mat"][data-task="material_identification"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_mat"][data-task="material_identification"]`).val('NULL');
+                            $(`select[name="ndttype_mat"][data-task="material_identification"]`).val('NULL');
+                        }
+                    });
+
+
 
                     // Other fields
                     $('#sign_off_material_preparation').val(userName);

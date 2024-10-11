@@ -167,57 +167,86 @@
         <div class="table-container">
             <h3>Engineering</h3>
             <table>
-                <thead>
+              
+    <thead>
+        <tr>
+            <th>Step</th>
+            <th>Required</th>
+            <th>Completed By</th>
+            <th>Owner</th>
+            <th>NDT Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($data_engineering as $row2)
+            @foreach ($row2 as $key => $value2)
+                @if (!empty($value2) && $key != 'ID' && $key != 'id' && $key != 'KittingID')
                     <tr>
-                        <th>Step</th>
-                        <th>Required</th>
-                        <th>Completed By</th>
-                        <!-- <th>Testing Complete</th> -->
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach ($data_engineering as $row2)
-                    @foreach ($row2 as $key => $value2)
-                    @if (!empty($value2) && $key != 'ID' && $key != 'id' && $key != 'KittingID')
-
-                    <tr>
-                        <th> @php
-                            $formattedKey = ucfirst(str_replace('_', ' ', $key));
-                            @endphp
-                            {{ $formattedKey }}</th>
-                        <td>@php
-                            $value2_tick = ($value2 === '1' || $value2 === 'true' || $value2 === 'on' || $value2 ===
-                            'yes') ? '✔' : $value2;
-                            @endphp
-                            {{ $value2_tick }}</td>
-                            <td>
+                        <th>
                             @php
-                            $foundNonEmptyValue = false;
+                                $formattedKey = ucfirst(str_replace('_', ' ', $key));
+                            @endphp
+                            {{ $formattedKey }}
+                        </th>
+                        <td>
+                            @php
+                                $value2_tick = ($value2 === '1' || $value2 === 'true' || $value2 === 'on' || $value2 === 'yes') ? '✔' : $value2;
+                            @endphp
+                            {{ $value2_tick }}
+                        </td>
+                        <td>
+                            @php
+                                $foundNonEmptyValue = false;
                             @endphp
 
                             @foreach ($data_engineering_c as $row_2)
-                            @if(isset($row_2->$key) && !empty($row_2->$key))
-                            @php
-                            $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' ||
-                            $row_2->$key === 'yes') ? '✔' : $row_2->$key;
-                            $foundNonEmptyValue = true;
-                            @endphp
-                            {{ $tick }}
-                            @break
-                            @endif
+                                @if (isset($row_2->$key) && !empty($row_2->$key))
+                                    @php
+                                        $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' || $row_2->$key === 'yes') ? '✔' : $row_2->$key;
+                                        $foundNonEmptyValue = true;
+                                    @endphp
+                                    {{ $tick }}
+                                    @break
+                                @endif
                             @endforeach
 
                             @if (!$foundNonEmptyValue)
-                            <div class="grey-background">-</div>
+                                <div class="grey-background">-</div>
                             @endif
                         </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_engineering_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_engineering_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
+        @endforeach
+    </tbody>
+</table>
 
-</tr>
-                        @endif
-                        @endforeach
-                        @endforeach
-                </tbody>
             </table>
         </div>
     </div>
@@ -467,7 +496,8 @@
                         ?>
                     @foreach ($data2 as $row2)
                     @foreach ($row2 as $key => $value2)
-                    @if (!empty($value2) && $key != 'ID' && $key != 'Id'&&$key != 'KittingID'&&$key != 'ProcessOrderID'&&$key != 'submission_date')
+                    @if (!empty($value2) && $key != 'ID' && $key != 'Id'&&$key != 'KittingID'&&$key !=
+                    'ProcessOrderID'&&$key != 'submission_date')
 
                     <tr>
                         <th> @php
@@ -493,7 +523,7 @@
                             @endforeach
                         </td>
                         <td>
-                        
+
                             @php
                             $foundNonEmptyValue = false;
                             @endphp
@@ -518,7 +548,7 @@
                             @if (!$foundNonEmptyValue)
                             <div class="grey-background">-</div>
                             @endif
-                        
+
                         </td>
                     </tr>
                     @endif
@@ -541,7 +571,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
+                    <?php
                      //print_r($data4);
                       // print_r($data_4);
                         ?>
@@ -684,7 +714,7 @@
             </table>
         </div>
     </div>
-     
+
     <div class="row sub">
         <div class="table-container">
             <h3>Subcontract</h3>
@@ -814,7 +844,7 @@
                             @if(isset($row_2->$key) && !empty($row_2->$key))
                             @php
                             $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' ||
-                            $row_2->$key === 'Yes') ? '✔' :  ($row_2->$key === 'No' ? '✘' : $row_2->$key);
+                            $row_2->$key === 'Yes') ? '✔' : ($row_2->$key === 'No' ? '✘' : $row_2->$key);
                             @endphp
                             {{ $tick }}
                             @break
@@ -908,7 +938,8 @@
                             @foreach ($data_6 as $row_2)
                             @if(isset($row_2->$key) && !empty($row_2->$key))
                             @php
-                            $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' || trim($row_2->$key) === 'Yes') ? '✔' : $row_2->$key;
+                            $tick = ($row_2->$key === '1' || $row_2->$key === 'true' || $row_2->$key === 'on' ||
+                            trim($row_2->$key) === 'Yes') ? '✔' : $row_2->$key;
                             @endphp
                             {{ $tick }}
                             @break
@@ -923,34 +954,22 @@
             </table>
         </div>
     </div>
-   
-    
 
 
-   
-    
-    
-   
-    
-    
-    
-   
-
-    
-    
-
-  
-    
 
 
-    </div>
 
 
-    </div>
 
-    </div>
 
-    </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -958,7 +977,19 @@
     </div>
 
 
+    </div>
 
-</body>
+    </div>
+
+    </div>
+
+
+
+
+    </div>
+
+
+
+    </body>
 
 </html>

@@ -731,12 +731,12 @@ function generateHTMLFromResponse_for_kitting(response) {
         html += '</div>';
         html += '</td>';
         html+='<td style="border: 1px solid #ccc;"></td>';
-        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_kit1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_kit1" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Kitting(item.ProcessOrderID, 'Cut Formed Machine Parts Details about cutting formed machine parts', function(ownerData) {
             console.log(ownerData);
-            document.getElementById('owner_1' ).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
-            document.getElementById('ndt_1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            document.getElementById('owner_kit1' ).innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_kit1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
         });
         html += '</tr>';
     
@@ -782,7 +782,7 @@ function generateHTMLFromResponse_for_kitting(response) {
         html += '<label for="site_pack_' + index + '">Site Pack</label>';
         html += '</div>';
         html += '</td>';
-        html+='<td style="border: 1px solid #ccc;></td>';
+        html += '<td style="border: 1px solid #ccc;"></td>';
         html += '<td id="owner_kit_4" style="border: 1px solid #ccc;"></td>';
         html += '<td id="ndt_kit_4" style="border: 1px solid #ccc;"></td>';
         fetchOwnerData_Kitting(item.ProcessOrderID, 'SitePAck Details about site pack', function(ownerData) {

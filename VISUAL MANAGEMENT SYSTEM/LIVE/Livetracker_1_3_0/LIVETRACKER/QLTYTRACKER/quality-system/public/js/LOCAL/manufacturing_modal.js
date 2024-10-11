@@ -176,20 +176,20 @@ function generateHTMLFromResponse_for_manufacturing(response) {
             html += downloadLink;
         }
         html += '</td>';
-        html += '<td id="owner_1" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_man1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_man1" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_Manufacturing(item.process_order_number, 'Production Drawings', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_1').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_man1').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_1').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_man1').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_1').innerHTML = 'N/A';
-                document.getElementById('ndt_1').innerHTML = 'N/A';
+                document.getElementById('owner_man1').innerHTML = 'N/A';
+                document.getElementById('ndt_man1').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -207,20 +207,20 @@ function generateHTMLFromResponse_for_manufacturing(response) {
             html += downloadLink;
         }
         html += '</td>';
-        html += '<td id="owner_2" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_man2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_man2" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_Manufacturing(item.process_order_number, 'BOM', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_2').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_man2').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_2').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_man2').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_2').innerHTML = 'N/A';
-                document.getElementById('ndt_2').innerHTML = 'N/A';
+                document.getElementById('owner_man2').innerHTML = 'N/A';
+                document.getElementById('ndt_man2').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -238,20 +238,20 @@ function generateHTMLFromResponse_for_manufacturing(response) {
             html += downloadLink;
         }
         html += '</td>';
-        html += '<td id="owner_3" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_man3" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_man3" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_Manufacturing(item.process_order_number, 'Machine Programming Files', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_3').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_man3').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_3').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_man3').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_3').innerHTML = 'N/A';
-                document.getElementById('ndt_3').innerHTML = 'N/A';
+                document.getElementById('owner_man3').innerHTML = 'N/A';
+                document.getElementById('ndt_man3').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -269,20 +269,20 @@ function generateHTMLFromResponse_for_manufacturing(response) {
             html += downloadLink;
         }
         html += '</td>';
-        html += '<td id="owner_4" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_man4" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_man4" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_Manufacturing(item.process_order_number, 'NDT Documentation', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_4').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_man4').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_4').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_man4').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_4').innerHTML = 'N/A';
-                document.getElementById('ndt_4').innerHTML = 'N/A';
+                document.getElementById('owner_man4').innerHTML = 'N/A';
+                document.getElementById('ndt_man4').innerHTML = 'N/A';
             }
         });
         html += '</tr>';
@@ -300,20 +300,20 @@ function generateHTMLFromResponse_for_manufacturing(response) {
             html += downloadLink;
         }
         html += '</td>';
-        html += '<td id="owner_5" style="border: 1px solid #ccc;"></td>';
-        html += '<td id="ndt_5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="owner_man5" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_man5" style="border: 1px solid #ccc;"></td>';
 
         fetchOwnerData_Manufacturing(item.process_order_number, 'Quality Documents', function (ownerData) {
             if (ownerData) {
                 // Update owner cell
-                document.getElementById('owner_5').innerHTML = ownerData.owner.trim();
+                document.getElementById('owner_man5').innerHTML = ownerData.owner.trim();
 
                 // Update ndt cell
-                document.getElementById('ndt_5').innerHTML = ownerData.ndta.trim();
+                document.getElementById('ndt_man5').innerHTML = ownerData.ndta.trim();
             } else {
                 // Handle case where no owner data is retrieved
-                document.getElementById('owner_5').innerHTML = 'N/A';
-                document.getElementById('ndt_5').innerHTML = 'N/A';
+                document.getElementById('owner_man5').innerHTML = 'N/A';
+                document.getElementById('ndt_man5').innerHTML = 'N/A';
             }
         });
         html += '</tr>';

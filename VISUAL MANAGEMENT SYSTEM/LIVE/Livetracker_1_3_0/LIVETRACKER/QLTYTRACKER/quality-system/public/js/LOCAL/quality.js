@@ -94,6 +94,20 @@ function submitQualityForm() {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     };
 
+    var owners_quality = [];
+    document.querySelectorAll('#quality tbody tr').forEach(function (row, index) {
+        if (index >=0 && index <1) {
+            console.log(index); // Skip the header row;
+            owners_quality.push({
+                type: row.cells[0].innerText.trim(),
+                owner: row.querySelector('[name="owner_quality"]').value || null,
+                ndt: row.querySelector('[name="ndttype_quality"]').value || null
+                
+            });
+           
+        }
+    });
+
     var formData = {
         process_order_number: document.querySelector('[name="process_order_number_quality"]').value || null,
         walk_down_visual_inspection: document.querySelector('[name="walk_down_visual_inspection"]').checked ? 'Yes' : 'No',
@@ -101,8 +115,17 @@ function submitQualityForm() {
         sign_off_quality: document.querySelector('[name="sign_off_quality_m"]').value,
         comments_quality: document.querySelector('[name="comments_quality_m"]').value,
         uploadimages:document.querySelector('[name="upload_images"]').checked ? 'Yes' : 'No',
+
+owners_quality:owners_quality,
+
+
+
         // Add other form fields accordingly
     };
+
+
+
+
     console.log(formData);
     // Send an AJAX request to the server
     $.ajax({
@@ -253,7 +276,7 @@ function generateHTMLFromResponse_for_quality_old(response) {
     }
     return (html);
 }
-function generateHTMLFromResponse_for_quality(response) {
+function generateHTMLFromResponse_for_quality_old(response) {
     var html = '<form id="qualityForm" class="quality-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Quality</legend>';
@@ -423,6 +446,177 @@ function generateHTMLFromResponse_for_quality(response) {
     return html;
 }
 
+function generateHTMLFromResponse_for_quality(response) {
+    var html = '<form id="qualityForm" class="quality-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Quality Tasks</legend>';
+
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
+
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Files</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    if (Array.isArray(response)) {
+        response.forEach(function (item, index) {
+            // Walk-down and Visual Inspection
+            html += '<tr style="border: 1px solid #ccc;">';
+            html += '<td style="border: 1px solid #ccc;">';
+            html += '<div class="form-group">';
+            html += '<input type="checkbox" id="walk_down_visual_inspection_' + index + '" name="walk_down_visual_inspection" ' + ((item.walk_down_visual_inspection === "1"|| item.walk_down_visual_inspection === 'on') ? 'checked' : 'disabled') + '>';
+            html += '<label for="walk_down_visual_inspection_' + index + '">Walk-down and Visual Inspection</label>';
+            html += '</div>';
+            html += '</td>';
+            html += '<td style="border: 1px solid #ccc;">' + (item.link_to_inspection ? '<a href="' + item.link_to_inspection + '" target="_blank">' + item.link_to_inspection.split('/').pop() + '</a>' : '') + '</td>';
+            html += '<td id="owner_quality1" style="border: 1px solid #ccc;"></td>';
+            html += '<td id="ndt_quality1" style="border: 1px solid #ccc;"></td>';
+
+
+            fetchOwnerData_Quality(item.process_order_number, 'Walk-down and Visual Inspection', function(ownerData) {
+                document.getElementById('owner_quality1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+                document.getElementById('ndt_quality1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+            });
+
+           
+            html += '</tr>';
+
+            // Upload Images
+            html += '<tr style="border: 1px solid #ccc;">';
+            html += '<td style="border: 1px solid #ccc;">';
+            html += '<div class="form-group">';
+            html += '<input type="checkbox" id="upload_images_' + index + '" name="upload_images" ' + ((item.upload_images === "1" || item.upload_images === 'on') ? 'checked' : 'disabled') + '>';
+            html += '<label for="upload_images_' + index + '">Upload Images</label>';
+            html += '</div>';
+            html += '</td>';
+            html += '<td style="border: 1px solid #ccc;">' + (item.link_to_images ? '<a href="' + item.link_to_images + '" target="_blank">' + item.link_to_images.split('/').pop() + '</a>' : '') + '</td>';
+            html += '<td id="owner_quality_' + index + '_upload" style="border: 1px solid #ccc;"></td>';
+            html += '<td id="ndt_quality_' + index + '_upload" style="border: 1px solid #ccc;"></td>';
+            
+            html += '</tr>';
+
+            // Additional rows can be added here for more quality tasks...
+
+            // Comments
+            html += '<tr style="border: 1px solid #ccc;">';
+            html += '<td style="border: 1px solid #ccc;">Comments</td>';
+            html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+            html += '<textarea style="width: 100%;" name="comments_quality">' + (item.comments_quality || '') + '</textarea>';
+            html += '</td>';
+            html += '</tr>';
+
+            // Sign-off
+            html += '<tr style="border: 1px solid #ccc;">';
+            html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+            html += '<td colspan="3" style="border: 1px solid #ccc;">';
+            html += '<input style="width: 100%;" type="text" name="sign_off_quality" value="' + (item.sign_off_quality || '') + '">';
+            html += '</td>';
+            html += '</tr>';
+        });
+    }
+ else if (typeof response === 'object') {
+
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<td style="border: 1px solid #ccc;">';
+    html += '<div class="form-group">';
+    html += '<input type="checkbox" id="walk_down_visual_inspection" name="walk_down_visual_inspection" ' + ((response.walk_down_visual_inspection === "1"|| response.walk_down_visual_inspection === 'on') ? 'checked' : 'disabled') + '>';
+    html += '<label for="walk_down_visual_inspection">Walk-down and Visual Inspection</label>';
+    html += '</div>';
+    html += '</td>';
+    html += '<td style="border: 1px solid #ccc;">' + (response.link_to_inspection ? '<a href="' + response.link_to_inspection + '" target="_blank">' + response.link_to_inspection.split('/').pop() + '</a>' : '') + '</td>';
+    html += '<td id="owner_quality1" style="border: 1px solid #ccc;"></td>';
+    html += '<td id="ndt_quality1" style="border: 1px solid #ccc;"></td>';
+
+
+    fetchOwnerData_Quality(response.process_order_number, 'Walk-down and Visual Inspection', function(ownerData) {
+        document.getElementById('owner_quality1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+        document.getElementById('ndt_quality1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+    });
+
+   
+    html += '</tr>';
+
+    // Upload Images
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<td style="border: 1px solid #ccc;">';
+    html += '<div class="form-group">';
+    html += '<input type="checkbox" id="upload_images" name="upload_images" ' + ((response.uploadimages === "1") ? 'checked' : 'disabled') + '>';
+    html += '<label for="upload_images">Upload Images</label>';
+    html += '</div>';
+    html += '</td>';
+    html += '<td style="border: 1px solid #ccc;">' + (response.link_to_images ? '<a href="' + response.link_to_images + '" target="_blank">' + response.link_to_images.split('/').pop() + '</a>' : '') + '</td>';
+   
+    
+
+    
+    html += '</tr>';
+
+    // Additional rows can be added here for more quality tasks...
+
+    // Comments
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<td style="border: 1px solid #ccc;">Comments</td>';
+    html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+    html += '<textarea style="width: 100%;" name="comments_quality">' + (response.comments_quality || '') + '</textarea>';
+    html += '</td>';
+    html += '</tr>';
+
+    // Sign-off
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+    html += '<td colspan="3" style="border: 1px solid #ccc;">';
+    html += '<input style="width: 100%;" type="text" name="sign_off_quality" value="' + (response.sign_off_quality || '') + '">';
+    html += '</td>';
+    html += '</tr>';
+
+}
+
+
+
+
+    // Close table
+    html += '</table>';
+    html += '</fieldset></form>';
+
+    return html;
+}
+function fetchOwnerData_Quality(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_quality',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
+
+
 
 // Function to fetch images for a given ID
 // Function to fetch images for a given ID
@@ -567,6 +761,9 @@ html+='<br>';
 
     return html;
 }
+
+
+
 function submitQualityCompleteForm() {
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

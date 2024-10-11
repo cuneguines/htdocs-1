@@ -39,6 +39,33 @@ function submitFinishingForm(processOrder) {
 
     console.log(formData);
 
+
+    var owners_finishing = [];
+document.querySelectorAll('#finishing tbody tr').forEach(function (row, index) {
+    console.log('yes');
+    console.log(index );
+    if (index >= 2 && index <=3) { // Skip the header row
+        var owner = row.querySelector('[name="owner_finishing"]').value || null;
+        var ndt = row.querySelector('[name="ndttype_finishing"]').value || null;
+console.log(owner);
+console.log(ndt);
+        // Push the owner data to the array
+        owners_finishing.push({
+            type: row.cells[0].innerText.trim(),
+            owner: owner,
+            ndt: ndt
+        });
+
+        // Append each owner and NDT as separate entries
+        formData.append('owners_finishing[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+        formData.append('owners_finishing[' + (index - 1) + '][owner]', owner);
+        formData.append('owners_finishing[' + (index - 1) + '][ndt]', ndt);
+    }
+});
+console.log(owners_finishing);
+console.log(formData);
+
+
     // Send an AJAX request to the server
     $.ajax({
         url: "/submitFinishingForm",
@@ -64,7 +91,7 @@ function submitFinishingForm(processOrder) {
     var fileInputs = $('[name="pickle_passivate_documents"], [name="select_kent_finish_documents"]');
 
     // Add process_order_number to FormData
-    fileData.append('process_order_number', document.querySelector('[name="process_order_number_finishing"]').value);
+    fileData.append('process_order_number', document.querySelector('[name="process_order_number_finishing_m"]').value);
 
     // Iterate over each file input and append files to FormData
     fileInputs.each(function (index, fileInput) {
@@ -129,7 +156,7 @@ function generateFinishingFieldTable(processOrder, qualityStep) {
     `;
 }
 
-function generateHTMLFromResponse_for_finishing(response) {
+function generateHTMLFromResponse_for_finishing_old(response) {
     var html = '<table id="common_table" style="width:100%;">';
     html += '<thead><tr>';
     html += '<th style="width:5%;">Finishing ID</th>';
@@ -184,8 +211,122 @@ function generateHTMLFromResponse_for_finishing(response) {
 
     return html;
 }
+function generateHTMLFromResponse_for_finishing(response) {
+    var html = '<form id="finishingForm" class="finishing-Form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
+    html += '<fieldset style="margin-bottom: 20px;">';
+    html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Main Task: Finishing</legend>';
 
+    // Start table
+    html += '<table style="width: 100%; border-collapse: collapse;">';
 
+    // Table headers
+    html += '<tr style="border: 1px solid #ccc;">';
+    html += '<th style="border: 1px solid #ccc;">Task</th>';
+    html += '<th style="border: 1px solid #ccc;">Document</th>';
+    html += '<th style="border: 1px solid #ccc;">Owner</th>';
+    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '</tr>';
+
+    // Iterate over each item in the response
+    $.each(response, function (index, item) {
+        // Pickle Passivate Document
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.pickle_passivate_test === "1" ? 'checked' : '') + '>';
+        html += ' Pickle Passivate Document';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.pickle_passivate_document_file) {
+            var picklePassivateFilePath = 'storage/finishing_task/' + item.process_order_number + '/' + item.pickle_passivate_document_file;
+            var downloadLink = '<a href="' + picklePassivateFilePath + '" download>' + item.pickle_passivate_document_file + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_fin1" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fin1" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Finishing(item.process_order_number, 'Pickle and Passivate:', function (ownerData) {
+            document.getElementById('owner_fin1').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fin1').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Select Kent Finish Document
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">';
+        html += '<input type="checkbox" ' + (item.select_kent_finish_test === "1" ? 'checked' : '') + '>';
+        html += ' Select Kent Finish Document';
+        html += '</td>';
+        html += '<td style="border: 1px solid #ccc;">';
+        if (item.select_kent_finish_document_file) {
+            var selectKentFinishFilePath = 'storage/finishing_task/' + item.process_order_number + '/' + item.select_kent_finish_document_file;
+            var downloadLink = '<a href="' + selectKentFinishFilePath + '" download>' + item.select_kent_finish_document_file + '</a>';
+            html += downloadLink;
+        }
+        html += '</td>';
+        html += '<td id="owner_fin2" style="border: 1px solid #ccc;"></td>';
+        html += '<td id="ndt_fin2" style="border: 1px solid #ccc;"></td>';
+        fetchOwnerData_Finishing(item.process_order_number, 'Required Finish Applied:', function (ownerData) {
+            document.getElementById('owner_fin2').innerHTML = ownerData ? ownerData.owner.trim() : 'N/A';
+            document.getElementById('ndt_fin2').innerHTML = ownerData ? ownerData.ndta.trim() : 'N/A';
+        });
+        html += '</tr>';
+
+        // Sign-off
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Sign-off</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc;">';
+        html += '<input style="width: 100%;" type="text" name="sign_off_finishing" value="' + (item.sign_off_finishing || '') + '">';
+        html += '</td>';
+        html += '</tr>';
+
+        // Comments
+        html += '<tr style="border: 1px solid #ccc;">';
+        html += '<td style="border: 1px solid #ccc;">Comments</td>';
+        html += '<td colspan="3" style="border: 1px solid #ccc; padding: 10px;">';
+        html += '<textarea style="width: 100%;" name="comments_finishing">' + (item.comments_finishing || '') + '</textarea>';
+        html += '</td>';
+        html += '</tr>';
+    });
+
+    // Close table
+    html += '</table>';
+
+    html += '</fieldset></form>';
+
+    return html;
+}
+
+function fetchOwnerData_Finishing(id,Type,callback)
+{
+
+    var headers = {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Replace with the actual CSRF token
+        // Include other headers if needed
+    };
+    var formData = {
+        process_order_number: id,
+       Type:Type
+    };
+    
+$.ajax({
+    url: '/getOwnerData_finishing',
+    type: 'POST',
+    data: formData,
+    headers: headers,
+    dataType: 'json',
+    success: function (response) {
+
+        console.log(response);
+        
+        callback(response.data[0]);
+       
+    },
+    error: function (error) {
+        // Handle the error response if needed
+        console.error(error);
+    }
+});
+}
 
 function generateFinishingFieldTable(processOrder, qualityStep) {
     var headers = {
@@ -259,7 +400,8 @@ function generateFinishingFieldTable(processOrder, qualityStep) {
 
     return html;
 } */
-function generateHTMLFromResponse_for_finishing(response) {
+function generateHTMLFromResponse_for_finishing_oll(response) {
+    console.log('yes');
     var html = '<form id="finishingForm" class="finishing-form" style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">';
     html += '<fieldset style="margin-bottom: 20px;">';
     html += '<legend style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">Finishing</legend>';

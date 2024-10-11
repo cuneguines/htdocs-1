@@ -135,7 +135,7 @@ console.log(username);
                 </tr>
             </table>
 
-            <table id="quality_checks">
+            <table id="quality">
                 <thead>
                     <tr>
                         <th>Quality Check</th>
@@ -164,7 +164,7 @@ console.log(username);
                             </select>
                         </td>
                         <td>
-                            <select name="ndt_type_quality" style="width: 100%">
+                            <select name="ndttype_quality" style="width: 100%">
                                 <option value="NULL">Select NDT Type</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
@@ -193,7 +193,7 @@ console.log(username);
                                 Sign_off_quality:
                             </label>
                         <td>
-                            <input style="width: 100%" type="text" name="sign_off_quality" value="${username}" id="sign_off_quality">
+                            <input style="width: 100%" type="text" name="sign_off_quality_m" value="${username}" id="sign_off_quality">
                         </td>
     </tr>
     <tr>
@@ -202,7 +202,7 @@ console.log(username);
                                Comments:
                            </label>
                         <td>
-                            <textarea style="width: 100%" name="comments_quality" id="comments_quality" rows="2" cols="50"></textarea>
+                            <textarea style="width: 100%" name="comments_quality_m" id="comments_quality" rows="2" cols="50"></textarea>
                         </td>
                     </tr>
                 </tbody>
