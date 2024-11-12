@@ -22,7 +22,13 @@ WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 WHEN ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).") >= ".($end_range+26)." THEN ".($end_range +3)."
 ELSE ISNULL(DATEDIFF(WEEK,GETDATE(),t0.[Promise Date UNP]),".($start_range-1).")
 END [Promise Diff Week],
-
+CASE 
+        WHEN CHARINDEX('ASSEMBLY PACK', UPPER(Dscription)) > 0 
+             AND CHARINDEX('REF:', UPPER(Dscription)) > 0 THEN 'Yes'
+			 WHEN CHARINDEX('SITE PACK', UPPER(Dscription)) > 0 
+             AND CHARINDEX('REF:', UPPER(Dscription)) > 0 THEN 'Yes'
+       
+    END AS Project_Assembly_Site,
 t0.[Dscription],
 t0.[Non Deliverable],
 t0.[Quantity],

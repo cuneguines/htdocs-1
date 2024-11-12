@@ -172,8 +172,8 @@ function generateHTMLFromResponse_for_planning(response) {
         fetchOwnerData_Planning_1(item.process_order_number, 'Purchase Order received', 0,function (ownerData_Planning) {
             console.log('i am inside '.ownerData_Planning);
             if (ownerData_Planning) {
-                alert('yes');
-                alert(ownerData_Planning.owner);
+               // alert('yes');
+                //alert(ownerData_Planning.owner);
                 // Update owner cell
                 document.getElementById('ownerp_1').innerHTML = ownerData_Planning.owner;
 
@@ -697,8 +697,8 @@ function submitPlanningForm() {
         if (index >= 0) { // Skip the header row
             owners.push({
                 type: row.cells[0].innerText.trim(),
-                owner: row.querySelector('[name="owner"]').value || null,
-                ndt: row.querySelector('[name="ndttype"]').value || null
+                owner: row.querySelector('[name="owner_plan"]').value || null,
+                ndt: row.querySelector('[name="ndttype_plan"]').value || null
             });
         }
     });
@@ -1000,6 +1000,11 @@ function resetPlanningForm() {
     $('#quotation_document').val('');
     $('#user_requirement_specifications_document').val('');
     $('#pre_engineering_check_document').val('');
+
+
+    $('select[name="owner_plan"]').val('NULL');
+    $('select[name="ndttype_plan"]').val('NULL');
+
     $('#planningFieldset').show();
 }
 function Planning(processOrder, userName) {
@@ -1044,13 +1049,88 @@ function Planning(processOrder, userName) {
                     $('#process_order_number_planning').val(processOrder);
                     $('input[name="purchase_order_received"]').prop('checked', item
                         .purchase_order_received === 'true');
+
+                        fetchOwnerData_Planning_1 (item.process_order_number, 'Purchase Order received', 0,function (ownerData)  {
+                            if (ownerData) {
+                                console.log(ownerData);
+                                // Update owner cell
+                                $(`select[name="owner_plan"][data-task="purchase_order_received"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_plan"][data-task="purchase_order_received"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_plan"][data-task="purchase_order_received"]`).val('NULL');
+                                $(`select[name="ndttype_plan"][data-task="purchase_order_received"]`).val('NULL');
+                            }
+                        });
+
                     $('input[name="project_schedule_agreed"]').prop('checked', parseInt(item
                         .project_schedule_agreed) === 1);
+
+
+                        fetchOwnerData_Planning_2 (item.process_order_number, 'Project schedule agreed', 1,function (ownerData)  {
+                            if (ownerData) {
+                                console.log(ownerData);
+                                // Update owner cell
+                                $(`select[name="owner_plan"][data-task="project_schedule_agreed"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_plan"][data-task="project_schedule_agreed"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_plan"][data-task="project_schedule_agreed"]`).val('NULL');
+                                $(`select[name="ndttype_plan"][data-task="project_schedule_agreed"]`).val('NULL');
+                            }
+                        });
                     $('input[name="quotation"]').prop('checked', item.quotation === 'true');
+
+
+                    fetchOwnerData_Planning_3(item.process_order_number, 'Quotation', 2,function (ownerData)  {
+                        if (ownerData) {
+                            console.log(ownerData);
+                            // Update owner cell
+                            $(`select[name="owner_plan"][data-task="quotation"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_plan"][data-task="quotation"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_plan"][data-task="quotation"]`).val('NULPL');
+                            $(`select[name="ndttype_plan"][data-task="quotation"]`).val('NULL');
+                        }
+                    });
                     $('input[name="verify_customer_expectations"]').prop('checked', item
                         .verify_customer_expectations === 'true');
+
+
+                        fetchOwnerData_Planning_4 (item.process_order_number, 'Verify customer expectations', 3,function (ownerData)  {
+                            if (ownerData) {
+                                console.log(ownerData);
+                                // Update owner cell
+                                $(`select[name="owner_plan"][data-task="verify_customer_expectations"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_plan"][data-task="verify_customer_expectations"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_plan"][data-task="verify_customer_expectations"]`).val('NULL');
+                                $(`select[name="ndttype_plan"][data-task="verify_customer_expectations"]`).val('NULL');
+                            }
+                        });
                     $('input[name="project_risk_category_assessment"]').prop('checked', item
                         .project_risk_category_assessment === 'true');
+
+
+                        fetchOwnerData_Planning_5(item.process_order_number, 'Project risk category assessment', 4,function (ownerData)  {
+                            if (ownerData) {
+                                console.log(ownerData);
+                                // Update owner cell
+                                $(`select[name="owner_plan"][data-task="project_risk_category_assessment"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_plan"][data-task="project_risk_category_assessment"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_plan"][data-task="project_risk_category_assessment"]`).val('NULL');
+                                $(`select[name="ndttype_plan"][data-task="project_risk_category_assessment"]`).val('NULL');
+                            }
+                        });
 
                     // Other fields
                     $('#sign_off_planning').val(userName);

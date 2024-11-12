@@ -52,7 +52,7 @@
                         <th>Task</th>
                         <th>Details</th>
                         <th>Owner</th>
-                        <th>NDT Type</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,11 +90,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -137,11 +138,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -173,11 +175,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%"data-task="Material Traceability">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -217,7 +220,7 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" id="owner"data-task="Cutting" style="width:100%" data-task="cutting">
-                                <option value="NULL">Select NDT type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
@@ -264,11 +267,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%" data-task="deburring">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -316,11 +320,12 @@
 
                         <td>
                             <select name="ndttype_mat" style="width: 100%" data-task="forming">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -356,11 +361,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%" data-task="machining">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -396,11 +402,12 @@
                         </td>
                         <td>
                             <select name="ndttype_mat" style="width: 100%" data-task="material_identification">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add other options as needed -->
                             </select>
                         </td>
@@ -430,30 +437,200 @@
 
     <script>
     function clear_material_identification_record_file() {
-        document.querySelector('input[name="material_identification_record_file"]').value =
+
+
+        const processOrderNumber = document.getElementById('process_order_number_mp').value;
+       // const fileName = document.getElementById('customer_approval_document_filename').textContent; // Changed to textContent
+       const tablename = "MaterialPreparationFormData";
+       const filetype = "material_identification_record_file";
+       const foldername="material_preparation_task";
+
+       const foldername="material_preparation_task";
+        if (processOrderNumber ) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="material_identification_record_file"]').value =''; // Clear the file input field
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            
+        //document.querySelector('input[name="material_identification_record_file"]').value =
+            ''; // Clear the file input field
+        //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
+    }
+    }
+    function clear_material_identification_record_heat_number() {
+
+        const processOrderNumber = document.getElementById('process_order_number_mp').value;
+        alert('yes');
+        const tablename = "MaterialPreparationFormData";
+        const filetype = "material_identification_record_file";
+        const foldername="material_preparation_task";
+
+        if (processOrderNumber ) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="material_identification_record_heat_number"]').value =''; // Clear the file input field // Clear the file input field
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            
+        //document.querySelector('input[name="material_identification_record_file"]').value =
+            ''; // Clear the file input field
+        //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
+    }
+    }
+
+
+       // document.querySelector('input[name="material_identification_record_heat_number"]').value =
+       // ''; // Clear the file input field
+        //document.getElementById('old-file-name_3').textContent = ''; // Clear the filename display
+    
+
+    function clear_material_traceability_file() {
+        const processOrderNumber = document.getElementById('process_order_number_mp').value;
+        const tablename = "MaterialPreparationFormData";
+        const filetype = "material_traceability_file";
+        const foldername="material_preparation_task";
+
+        if (processOrderNumber ) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="material_traceability_file"]').value = '';  // Clear the file input field // Clear the file input field
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            
+        //document.querySelector('input[name="material_identification_record_file"]').value =
             ''; // Clear the file input field
         //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
     }
 
-    function clear_material_identification_record_heat_number() {
-        alert('yes');
-        document.querySelector('input[name="material_identification_record_heat_number"]').value =
-        ''; // Clear the file input field
-        //document.getElementById('old-file-name_3').textContent = ''; // Clear the filename display
-    }
 
-    function clear_material_traceability_file() {
-        document.querySelector('input[name="material_traceability_file"]').value = ''; // Clear the file input field
+        
+      //  document.querySelector('input[name="material_traceability_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
 
     function clear_laser_and_press_brake_file() {
-        document.querySelector('input[name="laser_and_press_brake_file"]').value = ''; // Clear the file input field
+
+        const processOrderNumber = document.getElementById('process_order_number_mp').value;
+
+        const tablename = "MaterialPreparationFormData";
+        const filetype = "laser_and_press_brake_file";
+
+        const foldername="material_preparation_task";
+        if (processOrderNumber ) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="laser_and_press_brake_file"]').value = '';  // Clear the file input field // Clear the file input field
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            
+        //document.querySelector('input[name="material_identification_record_file"]').value =
+            ''; // Clear the file input field
+        //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
+    }
+
+
+       // document.querySelector('input[name="laser_and_press_brake_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
 
     function clear_tube_laser_pack_file() {
-        document.querySelector('input[name="tube_laser_pack_file"]').value = ''; // Clear the file input field
+
+        const processOrderNumber = document.getElementById('process_order_number_mp').value;
+        const tablename = "MaterialPreparationFormData";
+        const filetype = "tube_laser_pack_file";
+
+
+        const foldername="material_preparation_task";
+        if (processOrderNumber ) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="tube_laser_pack_file"]').value = '';  // Clear the file input field // Clear the file input field
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            
+        //document.querySelector('input[name="material_identification_record_file"]').value =
+            ''; // Clear the file input field
+        //document.getElementById('old-file-name_1').textContent = ''; // Clear the filename display
+    }
+
+        
+      //  document.querySelector('input[name="tube_laser_pack_file"]').value = ''; // Clear the file input field
         //document.getElementById('old-file-name_2').textContent = ''; // Clear the filename display
     }
     </script>

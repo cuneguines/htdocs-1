@@ -158,7 +158,7 @@ function generateHTMLFromResponse_for_manufacturing(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Document</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     // Iterate over each item in the response
@@ -356,7 +356,7 @@ function generateHTMLFromResponse_for_manufacturing_old(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Document</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     // Iterate over each item in the response
@@ -803,7 +803,8 @@ function resetManufacturingForm() {
     $('#previous_machine_programming_files_link').attr('href', '');
     $('#previous_ndt_documentation_link').attr('href', '');
     $('#previous_quality_documents_link').attr('href', '');
-
+    $('select[name="owner_manu"]').val('NULL');
+    $('select[name="ndttype_manu"]').val('NULL');
     // Show the manufacturing form section if it was hidden
     $('#manufacturingFieldset').show();
 }
@@ -847,18 +848,90 @@ function Manufacturing(processOrder,userName)
                         $.each(response, function(index, item) {
 
                             console.log(item.process_order_number);
-                            $('#process_order_number_manufacturing').val(item.process_order_number);
-
+                            
 
                             $('input[name="production_drawings"]').prop('checked', item
                                 .production_drawings === 'true');
+
+                                fetchOwnerData_Manufacturing(processOrder, 'Production Drawings', function (ownerData) {
+                                    if (ownerData) {
+                                        // Update owner cell
+                                        $(`select[name="owner_manu"][data-task="production_drawings"]`).val(ownerData.owner.trim());
+                                        // Update NDT cell
+                                        $(`select[name="ndttype_manu"][data-task="production_drawings"]`).val(ownerData.ndta.trim());
+                                    } else {
+                                        // Handle case where no owner data is retrieved
+                                        $(`select[name="owner_manu"][data-task="production_drawings"]`).val('NULL');
+                                        $(`select[name="ndttype_manu"][data-task="production_drawings"]`).val('NULL');
+                                    }
+                                });
+                
+
                             $('input[name="bom"]').prop('checked', item.bom === 'true');
+
+                            fetchOwnerData_Manufacturing(processOrder, 'BOM', function (ownerData) {
+                                if (ownerData) {
+                                    // Update owner cell
+                                    $(`select[name="owner_manu"][data-task="bom"]`).val(ownerData.owner.trim());
+                                    // Update NDT cell
+                                    $(`select[name="ndttype_manu"][data-task="bom"]`).val(ownerData.ndta.trim());
+                                } else {
+                                    // Handle case where no owner data is retrieved
+                                    $(`select[name="owner_manu"][data-task="bom"]`).val('NULL');
+                                    $(`select[name="ndttype_manu"][data-task="bom"]`).val('NULL');
+                                }
+                            });
+            
                             $('input[name="machine_programming_files"]').prop('checked', item
                                 .machine_programming_files === 'true');
+
+                                fetchOwnerData_Manufacturing(processOrder, 'Machine Programming Files', function (ownerData) {
+                                    if (ownerData) {
+                                        // Update owner cell
+                                        $(`select[name="owner_manu"][data-task="machine_programming_files"]`).val(ownerData.owner.trim());
+                                        // Update NDT cell
+                                        $(`select[name="ndttype_manu"][data-task="machine_programming_files"]`).val(ownerData.ndta.trim());
+                                    } else {
+                                        // Handle case where no owner data is retrieved
+                                        $(`select[name="owner_manu"][data-task="machine_programming_files"]`).val('NULL');
+                                        $(`select[name="ndttype_manu"][data-task="machine_programming_files"]`).val('NULL');
+                                    }
+                                });
+                
                             $('input[name="ndt_documentation"]').prop('checked', item
                                 .ndt_documentation === 'true');
+
+                                fetchOwnerData_Manufacturing(processOrder, 'NDT Documentation', function (ownerData) {
+                                    if (ownerData) {
+                                        // Update owner cell
+                                        $(`select[name="owner_manu"][data-task="ndt_documentation"]`).val(ownerData.owner.trim());
+                                        // Update NDT cell
+                                        $(`select[name="ndttype_manu"][data-task="ndt_documentation"]`).val(ownerData.ndta.trim());
+                                    } else {
+                                        // Handle case where no owner data is retrieved
+                                        $(`select[name="owner_manu"][data-task="ndt_documentation"]`).val('NULL');
+                                        $(`select[name="ndttype_manu"][data-task="ndt_documentation"]`).val('NULL');
+                                    }
+                                });
+                
                             $('input[name="quality_documents"]').prop('checked', item
                                 .quality_documents === 'true');
+
+
+
+                                fetchOwnerData_Manufacturing(processOrder, 'Quality Documents', function (ownerData) {
+                                    if (ownerData) {
+                                        // Update owner cell
+                                        $(`select[name="owner_manu"][data-task="quality_documents"]`).val(ownerData.owner.trim());
+                                        // Update NDT cell
+                                        $(`select[name="ndttype_manu"][data-task="quality_documents"]`).val(ownerData.ndta.trim());
+                                    } else {
+                                        // Handle case where no owner data is retrieved
+                                        $(`select[name="owner_manu"][data-task="quality_documents"]`).val('NULL');
+                                        $(`select[name="ndttype_manu"][data-task="quality_documents"]`).val('NULL');
+                                    }
+                                });
+                
 
                             // Other fields
                             $('#sign_off_manufacturing').val(userName);

@@ -279,7 +279,7 @@ html += '<tr>';
 html += '<th style="border: 1px solid #000; padding: 8px;">Tasks</th>';
 html += '<th style="border: 1px solid #000; padding: 8px;">Files</th>';
 html += '<th style="border: 1px solid #000; padding: 8px;">Owner</th>';
-html += '<th style="border: 1px solid #000; padding: 8px;">NDT</th>';
+html += '<th style="border: 1px solid #000; padding: 8px;">Action</th>';
 html += '</tr>';
 html += '</thead>';
 html += '<tbody>';

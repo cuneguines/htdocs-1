@@ -52,14 +52,11 @@ td {
     <table id="planning">
         <thead>
             <tr>
-            <th>1
-    </th>
-    <th>2
-    </th>
-    <th>3
-    </th>
-    <th>4
-    </th>
+            <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
+    
     </tr>
     </thead>
             <tr>
@@ -76,7 +73,7 @@ td {
                    
                 </td>
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_plan" id="owner" style="width:100%"data-task="purchase_order_received">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -99,8 +96,8 @@ td {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_plan" id="ndttype" style="width:100%"data-task="purchase_order_received">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -125,7 +122,7 @@ td {
                   
                 </td>
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_plan" id="owner" style="width:100%"data-task="project_schedule_agreed">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -148,8 +145,8 @@ td {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_plan" id="ndttype" style="width:100%"data-task="project_schedule_agreed">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -175,7 +172,7 @@ td {
                    
                 </td>
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_plan" id="owner" style="width:100%"data-task="quotation">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -198,8 +195,8 @@ td {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_plan" id="ndttype" style="width:100%"data-task="quotation">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -224,7 +221,7 @@ td {
                     
                 </td>
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_plan" id="owner" style="width:100%"data-task="verify_customer_expectations">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -247,8 +244,8 @@ td {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_plan" id="ndttype" style="width:100%"data-task="verify_customer_expectations">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -273,7 +270,7 @@ td {
                    
                 </td>
                 <td>
-                            <select name="owner" id="owner" style="width:100%">
+                            <select name="owner_plan" id="owner" style="width:100%"data-task="project_risk_category_assessment">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -296,8 +293,8 @@ td {
                         </td>
                         <td>
                       
-                            <select name="ndttype" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_plan" id="ndttype" style="width:100%"data-task="project_risk_category_assessment">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -327,31 +324,286 @@ td {
 
     <script>
         function clear_purchase_order_document() {
+
+            const processOrderNumber = document.getElementById('process_order_number_planning').value;
+        const fileName = document.getElementById('purchase_order_filename').textContent; // Changed to textContent
+        
+        const tablename = "PlanningFormData";
+        const filetype = "purchase_order_document";
+
+
+        const foldername="planning_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('purchase_order_document').value = ''; // Clear the file input field
+                    document.getElementById('purchase_order_filename').textContent = '';
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
+       
+        
+
+
             document.getElementById('purchase_order_document').value = ''; // Clear the file input field
             document.getElementById('purchase_order_filename').textContent = ''; // Clear the filename display
         }
+        }
 
         function clear_project_schedule_document() {
-            document.getElementById('project_schedule_document').value = ''; // Clear the file input field
-            document.getElementById('project_schedule_filename').textContent = ''; // Clear the filename display
+
+
+
+
+          //  document.getElementById('project_schedule_document').value = ''; // Clear the file input field
+          //  document.getElementById('project_schedule_filename').textContent = ''; 
+           // 
+            
+            
+            const processOrderNumber = document.getElementById('process_order_number_planning').value;
+        const fileName = document.getElementById('project_schedule_filename').textContent; // Changed to textContent
+        const tablename = "PlanningFormData";
+        const filetype = "project_schedule_document";
+
+
+        const foldername="planning_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('project_schedule_document').value = ''; // Clear the file input field
+                    document.getElementById('project_schedule_filename').textContent = ''; 
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
+       
+        
+
+
+   document.getElementById('project_schedule_document').value = ''; // Clear the file input field
+   document.getElementById('project_schedule_filename').textContent = ''; 
+        }
+            
+            
+            
+            
+            // Clear the filename display
         }
 
         function clear_quotation_document() {
-            document.getElementById('quotation_document').value = ''; // Clear the file input field
-            document.getElementById('quotation_filename').textContent = ''; // Clear the filename display
-        }
+          //  document.getElementById('quotation_document').value = ''; // Clear the file input field
+        //    document.getElementById('quotation_filename').textContent = ''; // Clear the filename display
+//
 
+            const processOrderNumber = document.getElementById('process_order_number_planning').value;
+        const fileName = document.getElementById('quotation_filename').textContent; // Changed to textContent
+
+        const tablename = "PlanningFormData";
+        const filetype = "quotation_document";
+
+        const foldername="planning_task";
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('quotation_document').value = ''; // Clear the file input field
+                    document.getElementById('quotation_filename').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
+       
+        
+
+
+   document.getElementById('quotation_document').value = ''; // Clear the file input field
+   document.getElementById('quotation_filename').textContent = ''; // Clear the filename display
+
+
+
+        }
+    }
         function clear_user_requirement_specifications_document() {
+            const processOrderNumber = document.getElementById('process_order_number_planning').value;
+        const fileName = document.getElementById('user_requirements_filename').textContent; // Changed to textContent
+        const tablename = "PlanningFormData";
+        const filetype = "user_requirement_specifications_document";
+        const foldername="planning_task";
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('user_requirement_specifications_document').value = ''; // Clear the file input field
+                    document.getElementById('user_requirements_filename').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
+       
+        
+
+
+ 
+
+
+
+        
+
             document.getElementById('user_requirement_specifications_document').value = ''; // Clear the file input field
             document.getElementById('user_requirements_filename').textContent = ''; // Clear the filename display
+
+        }
+
         }
 
         function clear_pre_engineering_check_document() {
+
+
+            const processOrderNumber = document.getElementById('process_order_number_planning').value;
+        const fileName = document.getElementById('pre_engineering_filename').textContent; // Changed to textContent
+        const tablename = "PlanningFormData";
+        const filetype = "pre_engineering_check_document";
+
+        const foldername="planning_task";
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('pre_engineering_check_document').value = ''; // Clear the file input field
+                    document.getElementById('pre_engineering_filename').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
+       
+        
+
+
+  
+
+
+
             document.getElementById('pre_engineering_check_document').value = ''; // Clear the file input field
             document.getElementById('pre_engineering_filename').textContent = ''; // Clear the filename display
         }
 
-        
+    }
     </script>
 </body>
 </html>

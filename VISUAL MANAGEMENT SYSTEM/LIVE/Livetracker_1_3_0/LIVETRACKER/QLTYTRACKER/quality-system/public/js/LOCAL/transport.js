@@ -254,14 +254,15 @@ function generateHTMLFromResponse_for_packing_transport(response) {
     html += '<th style="border: 1px solid #ccc; padding: 8px;">Tasks</th>';
     html += '<th style="border: 1px solid #ccc; padding: 8px;">Files</th>';
     html += '<th style="border: 1px solid #ccc; padding: 8px;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc; padding: 8px;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc; padding: 8px;">Action</th>';
     html += '</tr>';
 
-        // Tasks column
-        html += '<td style="border: 1px solid #ccc; padding: 8px;">';
-        html += '<label>Secure Packing:</label><br>';
-        html += '<input style="width:100%" type="text" name="secure_packing" value="' + (item.secure_packing === "Yes" ? "Yes" : "No") + '" readonly><br>';
-        html += '</td>';
+     // Tasks column
+html += '<td style="border: 1px solid #ccc; padding: 8px;">';
+html += '<input type="checkbox" name="secure_packing" ' + (item.secure_packing === "Yes" ? 'checked' : 'disabled') + '>';
+html += '<label style="display: inline-block;">Secure Packing:</label>';
+
+html += '</td>';
 
         // Files column
         html += '<td style="border: 1px solid #ccc; padding: 8px;">';
@@ -689,6 +690,10 @@ function resetTransportForm() {
     // For example:
     $('input[name="secure_packing_checkbox"]').prop('checked', false);
     $('input[name="responsible_person"]').val('');
+
+
+    $('select[name="owner_transport"]').val('NULL');
+    $('select[name="ndttype_transport"]').val('NULL');
 }
 
 function Transport(processOrder, userName) {
@@ -717,7 +722,7 @@ function Transport(processOrder, userName) {
 
     // Fetch Packing and Transport Form Data for the given process order
     $.ajax({
-        url: '/getTransportDataByProcessOrder', // Adjust URL as needed
+        url: '/getPackingTransportDataByProcessOrder', // Adjust URL as needed
         type: 'POST',
         headers: headers,
         data: formData,
@@ -733,7 +738,21 @@ function Transport(processOrder, userName) {
                 $('#process_order_number_transport').val(processOrder);
 
                 // Set checkbox states or other field values
-                $('input[name="secure_packing_checkbox"]').prop('checked', response.data.secure_packing_checkbox === "1");
+                $('input[name="secure_packing_checkbox"]').prop('checked', response.data.secure_packing === "Yes");
+
+                fetchOwnerData_Transport(processOrder, 'Secure Packing:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_transport"][data-task="secure_packing"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_transport"][data-task="secure_packing"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_transport"][data-task="secure_packing"]`).val('NULL');
+                        $(`select[name="ndttype_transport"][data-task="secure_packing"]`).val('NULL');
+                    }
+                });
+
                 $('input[name="responsible_person"]').val(userName);
                 
                 // Handle other fields if needed

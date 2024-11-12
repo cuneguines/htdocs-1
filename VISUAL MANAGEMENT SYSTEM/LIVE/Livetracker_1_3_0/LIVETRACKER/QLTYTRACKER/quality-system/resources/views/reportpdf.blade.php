@@ -134,6 +134,8 @@
                     <tr>
                         <th>Step</th>
                         <th>Required</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                         <!-- <th>Testing Complete</th> -->
                     </tr>
                 </thead>
@@ -152,7 +154,35 @@
                             $value2_tick = ($value2 === '1' || $value2 === 'true' || $value2 === 'on' || $value2 ===
                             'yes') ? '✔' : $value2;
                             @endphp
-                            {{ $value2_tick }}</td>
+                            {{ $value2_tick }}
+                        </td>
+                        <td>
+                        
+                        @php
+                            $owner = '-'; // Default value if not found
+                            // Check against the last array
+                            foreach ($data_planning_o as $last_row) {
+                                if ($last_row->TYPE_NEW === $formattedKey) {
+                                    $owner = $last_row->owner ?? '-';
+                                    break; // Exit loop once found
+                                }
+                            }
+                        @endphp
+                        {{ $owner }}
+                    </td>
+                    <td>
+                        @php
+                            $owner = '-'; // Default value if not found
+                            // Check against the last array
+                            foreach ($data_planning_o as $last_row) {
+                                if ($last_row->TYPE_NEW === $formattedKey) {
+                                    $owner = $last_row->ndta ?? '-';
+                                    break; // Exit loop once found
+                                }
+                            }
+                        @endphp
+                        {{ $owner }}
+                    </td>
 
 
 
@@ -174,7 +204,7 @@
             <th>Required</th>
             <th>Completed By</th>
             <th>Owner</th>
-            <th>NDT Type</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -258,6 +288,10 @@
                     <tr>
                         <th>Step</th>
                         <th>Required</th>
+                        <th>Owner</th>
+                        <th>Action</th>
+
+
                         <!-- <th>Testing Complete</th> -->
                     </tr>
                 </thead>
@@ -276,8 +310,34 @@
                             $value2_tick = ($value2 === '1' || $value2 === 'true' || $value2 === 'on' || $value2 ===
                             'yes') ? '✔' : $value2;
                             @endphp
-                            {{ $value2_tick }}</td>
-
+                            {{ $value2_tick }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_manufacturing_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_manufacturing_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
 
 
                         @endif
@@ -297,6 +357,8 @@
                         <th>Required</th>
                         <th>Complete</th>
                         <th>Completed By</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -350,6 +412,36 @@
                             <div class="grey-background">-</div>
                             @endif
                         </td>
+
+
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_2_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_2_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
                     </tr>
                     @endif
                     @endforeach
@@ -367,6 +459,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th>Complete</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -398,6 +492,38 @@
                             @endif
                             @endforeach
                         </td>
+
+                        <td>
+                        
+                        @php
+                            $owner = '-'; // Default value if not found
+                            // Check against the last array
+                            foreach ($data_5_o as $last_row) {
+                                if ($last_row->TYPE_NEW === $formattedKey) {
+                                    $owner = $last_row->owner ?? '-';
+                                    break; // Exit loop once found
+                                }
+                            }
+                        @endphp
+                        {{ $owner }}
+                    </td>
+                    <td>
+                        @php
+                            $owner = '-'; // Default value if not found
+                            // Check against the last array
+                            foreach ($data_5_o as $last_row) {
+                                if ($last_row->TYPE_NEW === $formattedKey) {
+                                    $owner = $last_row->ndta ?? '-';
+                                    break; // Exit loop once found
+                                }
+                            }
+                        @endphp
+                        {{ $owner }}
+                    </td>
+
+
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -416,6 +542,8 @@
                         <th>Required</th>
                         <th>Complete</th>
                         <th> Completed By</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -469,6 +597,35 @@
                             @endif
                         </td>
 
+<td>
+                        
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_fabfit_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_fabfit_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -487,6 +644,9 @@
                         <th>Required</th>
                         <th>Complete</th>
                         <th>Completed By</th>
+                        <th>Owner</th>
+                        <th>Action</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -550,6 +710,35 @@
                             @endif
 
                         </td>
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_2_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_2_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -568,6 +757,8 @@
                         <th>Required</th>
                         <th>Complete</th>
                         <th>Completed By</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -628,6 +819,36 @@
                             <div class="grey-background">-</div>
                             @endif
                         </td>
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_4_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_4_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -646,6 +867,9 @@
                         <th>Required</th>
                         <th> Complete</th>
                         <th> Competed By</th>
+                        <th>Owner</th>
+                        <th>Action
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -706,6 +930,38 @@
                             @endif
                         </td>
                         </td>
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_finishing_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_finishing_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -724,6 +980,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th> Complete</th>
+                        <th> Owner</th>
+                        <th> NDT Type</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -755,6 +1013,34 @@
                             @endif
                             @endforeach
                         </td>
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_subcontract_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_subcontract_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
                     </tr>
                     @endif
                     @endforeach
@@ -772,6 +1058,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th>Complete</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -802,6 +1090,37 @@
                             @endif
                             @endforeach
                         </td>
+
+
+
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_final_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_final_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
                     </tr>
                     @endif
                     @endforeach
@@ -819,6 +1138,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th>Complete</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -852,6 +1173,36 @@
                             @endif
                             @endforeach
                         </td>
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_qlty_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_qlty_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -869,6 +1220,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th>Complete</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -899,6 +1252,36 @@
                             @endif
                             @endforeach
                         </td>
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_3_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_3_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+
+
                     </tr>
                     @endif
                     @endforeach
@@ -916,6 +1299,8 @@
                         <th>Step</th>
                         <th>Required</th>
                         <th> Complete</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -945,6 +1330,35 @@
                             @break
                             @endif
                             @endforeach
+                        </td>
+
+
+
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_6_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->owner ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
+                        </td>
+                        <td>
+                            @php
+                                $owner = '-'; // Default value if not found
+                                // Check against the last array
+                                foreach ($data_6_o as $last_row) {
+                                    if ($last_row->TYPE_NEW === $formattedKey) {
+                                        $owner = $last_row->ndta ?? '-';
+                                        break; // Exit loop once found
+                                    }
+                                }
+                            @endphp
+                            {{ $owner }}
                         </td>
                     </tr>
                     @endif

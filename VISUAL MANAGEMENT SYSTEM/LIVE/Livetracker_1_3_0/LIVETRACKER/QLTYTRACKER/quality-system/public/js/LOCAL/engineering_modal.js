@@ -573,8 +573,8 @@ function submitEngineeringForm(processOrder) {
         if (index >=0) { // Skip the header row
             owners.push({
                 type: row.cells[0].innerText.trim(),
-                owner: row.querySelector('[name="owner"]').value || null,
-                ndt: row.querySelector('[name="ndttype"]').value || null
+                owner: row.querySelector('[name="owner_eng"]').value || null,
+                ndt: row.querySelector('[name="ndttype_eng"]').value || null
             });
         }
     });
@@ -806,7 +806,8 @@ console.log(owners);
     $('#design_validation_document').val('');
     $('#customer_approval_document').val('');
     $('#sample_approval_document').val('');
-
+    $('select[name="owner_eng"]').val('NULL');
+    $('select[name="ndttype_eng"]').val('NULL');
     // Show the engineering form section if it was hidden
     $('#engineeringFieldset').show();
 }
@@ -855,14 +856,87 @@ function Engineering(processOrder, userName) {
 
                     $('input[name="reference_job_master_file"]').prop('checked', item
                         .reference_job_master_file === 'true');
+
+
+
+                        fetchOwnerData_eng(processOrder, 'Reference Job / Master File if applicable', function (ownerData) {
+                            if (ownerData) {
+                                // Update owner cell
+                                $(`select[name="owner_eng"][data-task="reference_job_master_file"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_eng"][data-task="reference_job_master_file"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_eng"][data-task="reference_job_master_file"]`).val('NULL');
+                                $(`select[name="ndttype_eng"][data-task="reference_job_master_file"]`).val('NULL');
+                            }
+                        });
                     $('input[name="concept_design_engineering"]').prop('checked', item
                         .concept_design_engineering === 'true');
+
+
+                        fetchOwnerData_eng(processOrder, 'Concept design & engineering details', function (ownerData) {
+                            if (ownerData) {
+                                // Update owner cell
+                                $(`select[name="owner_eng"][data-task="concept_design_engineering"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_eng"][data-task="concept_design_engineering"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_eng"][data-task="concept_design_engineering"]`).val('NULL');
+                                $(`select[name="ndttype_eng"][data-task="concept_design_engineering"]`).val('NULL');
+                            }
+                        });
                     $('input[name="design_validation_sign_off"]').prop('checked', item
                         .design_validation_sign_off === 'true');
+
+
+
+                        fetchOwnerData_eng(processOrder, 'Design sign off [calculations]', function (ownerData) {
+                            if (ownerData) {
+                                // Update owner cell
+                                $(`select[name="owner_eng"][data-task="design_validation_sign_off"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_eng"][data-task="design_validation_sign_off"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_eng"][data-task="design_validation_sign_off"]`).val('NULL');
+                                $(`select[name="ndttype_eng"][data-task="design_validation_sign_off"]`).val('NULL');
+                            }
+                        });
                     $('input[name="customer_submittal_package"]').prop('checked', item
                         .customer_submittal_package === 'true');
+
+
+                        fetchOwnerData_eng(processOrder, 'Customer submittal package', function (ownerData) {
+                            if (ownerData) {
+                                // Update owner cell
+                                $(`select[name="owner_eng"][data-task="customer_submittal_package"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_eng"][data-task="customer_submittal_package"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_eng"][data-task="customer_submittal_package"]`).val('NULL');
+                                $(`select[name="ndttype_eng"][data-task="customer_submittal_package"]`).val('NULL');
+                            }
+                        });
                     $('input[name="reference_approved_samples"]').prop('checked', item
                         .reference_approved_samples === 'true');
+
+
+
+                        fetchOwnerData_eng(processOrder, 'Reference approved samples', function (ownerData) {
+                            if (ownerData) {
+                                // Update owner cell
+                                $(`select[name="owner_eng"][data-task="reference_approved_samples"]`).val(ownerData.owner.trim());
+                                // Update NDT cell
+                                $(`select[name="ndttype_eng"][data-task="reference_approved_samples"]`).val(ownerData.ndta.trim());
+                            } else {
+                                // Handle case where no owner data is retrieved
+                                $(`select[name="owner_eng"][data-task="reference_approved_samples"]`).val('NULL');
+                                $(`select[name="ndttype_eng"][data-task="reference_approved_samples"]`).val('NULL');
+                            }
+                        });
 
                     // Other fields
                     $('#sign_off_engineering').val(userName);

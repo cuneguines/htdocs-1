@@ -32,17 +32,18 @@ function submitSubContractForm(processOrder) {
         if (index >= 0 && index <=1) { // Skip the header row
             var owner = row.querySelector('[name="owner_sub"]').value || null;
             var ndt = row.querySelector('[name="ndttype_sub"]').value || null;
-    console.log(owner);
-    console.log(ndt);
+           var type= 'SUB CON ACTION:'+index;
+            console.log(owner);
+             console.log(ndt);
             // Push the owner data to the array
             owners_sub.push({
-                type: row.cells[0].innerText.trim(),
+                type: 'SUB CON ACTION:'+index,
                 owner: owner,
                 ndt: ndt
             });
     
             // Append each owner and NDT as separate entries
-            formData.append('owners_sub[' + (index - 1) + '][type]', row.cells[0].innerText.trim());
+            formData.append('owners_sub[' + (index - 1) + '][type]', type);
             formData.append('owners_sub[' + (index - 1) + '][owner]', owner);
             formData.append('owners_sub[' + (index - 1) + '][ndt]', ndt);
         }
@@ -264,7 +265,7 @@ function generateHTMLFromResponse_for_sub_contract(response) {
     html += '<th style="border: 1px solid #ccc;">Field</th>';
     html += '<th style="border: 1px solid #ccc;">Value</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
         // Fetch owner data here if needed
@@ -556,6 +557,10 @@ function resetsubcontract() {
 
     // Clear the comments for sub-contract
     $('textarea[name="comments_sub_contract"]').val('');
+    $('select[name="owner_sub"]').val('NULL');
+    $('select[name="ndttype_sub"]').val('NULL');
+
+
 }
 
 function Subcontract(processOrder, userName) {
@@ -607,6 +612,23 @@ function Subcontract(processOrder, userName) {
 
                 // Set sub-contract action dropdown value
                 $('select[name="sub_contract_action"]').val(response.data.sub_contract_action);
+
+                fetchOwnerData_SubContract(processOrder, 'SUB CON ACTION:0', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_sub"][data-task="sub_contract_action"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_sub"][data-task="sub_contract_action"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_sub"][data-task="sub_contract_action"]`).val('NULL');
+                        $(`select[name="ndttype_sub"][data-task="sub_contract_action"]`).val('NULL');
+                    }
+                });
+
+
+
+
 
                 // Set file input field
                 if (response.data.sub_contract_file !== null) {

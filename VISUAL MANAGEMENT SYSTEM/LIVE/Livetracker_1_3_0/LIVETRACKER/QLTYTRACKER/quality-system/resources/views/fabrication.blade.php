@@ -111,10 +111,10 @@ function clear_link_to_drawing() {
                     </td>
                 </tr>
                     <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
+                    <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,22 +128,32 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about fit-up visual check</td>
                         <td>
-                            <select name="owner_fab" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_fab" style="width: 100%" data-task="fit_up_visual_check">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_fab" style="width: 100%">
-                                <option value="NULL">Select Inspection</option>
+                            <select name="ndttype_fab" style="width: 100%"data-task="fit_up_visual_check">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -159,22 +169,32 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about dimensional check</td>
                         <td>
-                            <select name="owner_fab" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_fab" style="width: 100%" data-task="dimensional_check">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_fab" style="width: 100%">
-                                <option value="NULL">Select Inspection</option>
+                            <select name="ndttype_fab" style="width: 100%"data-task="dimensional_check">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -190,22 +210,33 @@ function clear_link_to_drawing() {
                         </td>
                         <td>Details about weld check</td>
                         <td>
-                            <select name="owner_fab" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_fab" style="width: 100%"data-task="dimensional_check">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_fab" style="width: 100%">
-                                <option value="NULL">Select Inspection</option>
+                            <select name="ndttype_fab" style="width: 100%"data-task="dimensional_check">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -220,22 +251,32 @@ function clear_link_to_drawing() {
                             <button type="button" onclick="clear_link_to_drawing()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_fab" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_fab" style="width: 100%"data-task="weldment_quantity">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_fab" style="width: 100%">
-                                <option value="NULL">Select Inspection</option>
+                            <select name="ndttype_fab" style="width: 100%"data-task="weldment_quantity">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -266,9 +307,51 @@ function clear_link_to_drawing() {
 
     <script>
         function clear_link_to_drawing() {
+
+
+
+            
+            const processOrderNumber = document.getElementById('process_order_number_fabrication_fit_up').value;
+        const fileName = document.getElementById('old_drawing_filename').textContent; // Changed to textContent
+        const tablename = "FabricationFitUpFormData";
+        const filetype = "link_to_drawing";
+        const foldername="fabricationfitup_task";
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_drawing').value = '';
+                    document.getElementById('old_drawing_filename').textContent = '';
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+            //document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+            //document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+    //}
             document.getElementById('link_to_drawing').value = '';
             document.getElementById('old_drawing_filename').textContent = '';
         }
+    }
 
         
     </script>

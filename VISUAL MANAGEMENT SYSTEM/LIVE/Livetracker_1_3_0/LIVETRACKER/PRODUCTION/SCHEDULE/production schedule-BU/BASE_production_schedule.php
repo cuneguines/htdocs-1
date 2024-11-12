@@ -329,11 +329,13 @@
                                             $customer_unp = $results[$i]["Project"] == '000_NO PROJECT_000' && $first == 1 ? '000_NO_PROJECT_000' : $results[$i]["Customer"];
                                             $first = 0;
                                         }
-                                        
+                                       
 
                                         if($results[$i]["Stage"] == "8. Design Concept"){
                                             $base_color = "lime_blue";
                                         }
+
+                                        
                                         if($results[$i]["Stage"] == "9. Submitted to Planning" && $results[$i]["Status"] !='Live'){
                                             $base_color = "lime_green";
                                             $border_color="brblack";
@@ -379,6 +381,8 @@
                                         else if($results[$i]["risk"] == 'R3'){
                                             $overwrite = "redshadow";
                                         }
+                                        if ($results[$i]["Project_Assembly_Site"] == "Yes")
+                                        $base_color="red";
                                        
                                         $comments = $results[$i]["Comments"] == "" ? "NONE" : $results[$i]["Comments"];
                                         $comments_2 = $results[$i]["Comments_2"] == "" ? "NONE" : $results[$i]["Comments_2"];

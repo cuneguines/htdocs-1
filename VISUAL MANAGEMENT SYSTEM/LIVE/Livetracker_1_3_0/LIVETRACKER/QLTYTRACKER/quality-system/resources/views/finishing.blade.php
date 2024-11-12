@@ -189,10 +189,10 @@ function updateDropdown(checkbox, selectName) {
                         </td>
                     </tr>
                     <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
+                    <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                         <th>5</th>
 
 
@@ -227,7 +227,7 @@ function updateDropdown(checkbox, selectName) {
                             <button type="button" onclick="clear_pickle_passivate_documents()">Clear File</button>
                         </td>
                         <td>
-                            <select style="width:100%" name="owner_finishing">
+                            <select style="width:100%" name="owner_finishing"data-task="pickle_passivate_test">
 
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
@@ -246,8 +246,8 @@ function updateDropdown(checkbox, selectName) {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndttype_finishing">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select style="width:100%" name="ndttype_finishing"data-task="pickle_passivate_test">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -328,7 +328,7 @@ function updateDropdown(checkbox, selectName) {
         
                         </td>
                         <td>
-                            <select style="width:100%" name="owner_finishing">
+                            <select style="width:100%" name="owner_finishing"data-task="select_kent_finish_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -344,8 +344,8 @@ function updateDropdown(checkbox, selectName) {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndttype_finishing">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select style="width:100%" name="ndttype_finishing"data-task="select_kent_finish_test">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -373,9 +373,49 @@ function updateDropdown(checkbox, selectName) {
 
     <script>
     function clear_pickle_passivate_documents() {
+
+        const processOrderNumber = document.getElementById('process_order_number_finishing_m').value;
+        const fileName = document.getElementById('old_pickle_passivate_documents').textContent; // Changed to textContent
+        const tablename = "FinishingFormData";
+        const filetype = "pickle_passivate_documents";
+
+        const foldername="finishing_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.querySelector('input[name="pickle_passivate_documents"]').value = '';
+                    document.getElementById('old_pickle_passivate_documents').textContent = '';
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+              //  document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+       // }
+           // document.getElementById('customer_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('customer_approval_document_filename').textContent = ''; // Clear the filename display
+        //}
+   // }
+
         document.querySelector('input[name="pickle_passivate_documents"]').value = '';
         document.getElementById('old_pickle_passivate_documents').textContent = '';
     }
+}
 
     function updateDropdown(checkbox, selectName) {
         var select = checkbox.parentElement.parentElement.querySelector('select[name="' + selectName + '"]');

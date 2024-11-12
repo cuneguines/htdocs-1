@@ -170,8 +170,8 @@ function clear_testing_documents() {
                         <th>Task</th>
                         <th>Description</th>
                        
-                        <th>Owner Type</th>
-                        <th>Inspection Type</th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -183,7 +183,7 @@ function clear_testing_documents() {
                             Dye Penetrant Procedure
                         </td>
                         <td>
-                            <select style="width:100%" name="dyependocumentref">
+                            <select style="width:100%" name="dyependocumentref" >
                                 <option value="NULL">NULL</option>
                                 <option value="PED Standard">PED Standard</option>
                                 <option value="ASME Standard">ASME Standard</option>
@@ -193,7 +193,7 @@ function clear_testing_documents() {
                         </td>
                         
                         <td>
-                            <select style="width:100%" name="owner_test">
+                            <select style="width:100%" name="owner_test"data-task="dye_pen_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -210,8 +210,8 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndt_test">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select style="width:100%" name="ndttype_test"data-task="dye_pen_test">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -237,7 +237,7 @@ function clear_testing_documents() {
                         </td>
                        
                         <td>
-                            <select style="width:100%" name="owner_test">
+                            <select style="width:100%" name="owner_test"data-task="hydrostatic_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -254,8 +254,8 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndt_test">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select style="width:100%" name="ndttype_test"data-task="hydrostatic_test">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -281,7 +281,7 @@ function clear_testing_documents() {
                         </td>
                       
                         <td>
-                            <select style="width:100%" name="owner_test">
+                            <select style="width:100%" name="owner_test"data-task="pneumatic_test">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -298,8 +298,8 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndt_test">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select style="width:100%" name="ndttype_test"data-task="pneumatic_test">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -326,7 +326,7 @@ function clear_testing_documents() {
                         </td>
                        
                         <td>
-                            <select style="width:100%" name="owner_test">
+                            <select style="width:100%" name="owner_test"data-task="fat_protocol">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -343,8 +343,8 @@ function clear_testing_documents() {
                             </select>
                         </td>
                         <td>
-                        <select style="width:100%" name="ndt_test">
-                                <option value="NULL">Select Inspection Type</option>
+                        <select style="width:100%" name="ndttype_test"data-task="fat_protocol">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -389,24 +389,54 @@ function clear_testing_documents() {
     </fieldset>
 
     <script>
-    function clear_dye_pen_testing_documents() {
-        document.getElementById('dye_pen_testing_documents').value = ''; // Clear the file input field
-        document.getElementById('old_dye_pen_testing_documents').textContent = ''; // Clear the filename display
-    }
-
-    function clear_hydrostatic_testing_documents() {
-        document.getElementById('hydrostatic_testing_documents').value = ''; // Clear the file input field
-        document.getElementById('old_hydrostatic_testing_documents').textContent = ''; // Clear the filename display
-    }
-
-    function clear_pneumatic_testing_documents() {
-        document.getElementById('pneumatic_testing_documents').value = ''; // Clear the file input field
-        document.getElementById('old_pneumatic_testing_documents').textContent = ''; // Clear the filename display
-    }
+    
 
     function clear_fat_protocol_documents() {
-        document.getElementById('testing_documents').value = ''; // Clear the file input field
+       
+alert('yes');
+         const processOrderNumber = document.getElementById('process_order_number_testing').value;
+        const fileName = document.getElementById('old_testing_documents').textContent;
+        const tablename = "TestingFormDatas";
+        const filetype = "testing_document_file_name";
+
+        const foldername="testing_task";
+console.log(fileName);
+console.log(tablename);
+
+console.log(filetype);
+
+
+       // .textContent; // Changed to textContent
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('testing_documents').value = ''; // Clear the file input field
         document.getElementById('old_testing_documents').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('testing_documents').value = ''; // Clear the file input field
+        document.getElementById('old_testing_documents').textContent = ''; // Clear the filename display
+        }
+ 
+
+
     }
 
     // Add similar functions for other document clear buttons as needed

@@ -109,7 +109,7 @@
                         <th>Sub-Contract Action</th>
                         <th>Files</yh>
                         <th>Owner</th>
-                        <th>NDT Type</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,24 +127,30 @@
                         <td>
                         </td>
                         <td>
-                            <select name="owner_sub" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_sub" style="width: 100%" data-task="sub_contract_action">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
                                 <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_sub" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_sub" style="width: 100%" data-task="sub_contract_action">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
-                                <option value="None">None</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -171,23 +177,29 @@
 
                         <td>
                             <select name="owner_sub" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
                                 <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
                             <select name="ndttype_sub" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
-                                <option value="None">None</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -221,9 +233,45 @@
 
     <script>
     function clear_sub_contract_file() {
-        document.getElementById('sub_contract_file').value = ''; // Clear the file input field
+        //document.getElementById('sub_contract_file').value = ''; // Clear the file input field
+       // document.getElementById('old_sub_contract_file').textContent = ''; // Clear the filename display
+
+
+
+        const processOrderNumber = document.getElementById('process_order_number_subcontract').value;
+        const fileName = document.getElementById('old_sub_contract_file').value;
+        .textContent; // Changed to textContent
+        const tablename = "subcontractFormData";
+        const filetype = "sub_contract_file";
+        const foldername="subcontract_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('sub_contract_file').value = ''; // Clear the file input field
         document.getElementById('old_sub_contract_file').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('sub_contract_file').value = ''; // Clear the file input field
+            document.getElementById('old_sub_contract_file').textContent = ''; // Clear the filename display
+        }
     }
+    
     </script>
 </body>
 

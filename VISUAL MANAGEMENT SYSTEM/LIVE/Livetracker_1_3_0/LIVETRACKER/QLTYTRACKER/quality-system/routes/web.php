@@ -104,6 +104,8 @@ Route::post('/submitPackingTransportCompleteForm', [PackingTransportController::
 Route::post('/getPackingTransportDataByProcessOrder', [PackingTransportController::class, 'getPackingTransportDataByProcessOrder']);
 
 Route::post('/handleFileUploadPackingTransport', [UploadController::class, 'handleFileUploadPackingTransport']);
+Route::post('/clear-file/{processOrderNumber}', [UploadController::class, 'clear'])->name('file.clear');
+
 
 
 
@@ -137,6 +139,10 @@ Route::post('/getFinishingDataByProcessOrder', [FinishingController::class, 'get
 Route::post('/getSubContractDataByProcessOrder', [SubContractController::class, 'getSubContractDataByProcessOrder']);
 Route::post('/getQualityDataByProcessOrder', [QualityController::class, 'getQualityDataByProcessOrder']);
 Route::post('/getQualityCompleteDataByProcessOrder', [QualityController::class, 'getQualityCompleteDataByProcessOrder']);
+
+
+
+
 
 
 Route::post('/getEngineerDataByProcessOrder', [EngineerTaableData::class, 'getEngineerDataByProcessOrder']);

@@ -224,7 +224,7 @@ function generateHTMLFromResponse_for_finishing(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Document</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     // Iterate over each item in the response
@@ -721,7 +721,8 @@ function resetFinishingForm() {
     $('#old_pickle_passivate_documents').text('');
     $('input[name="select_kent_finish_documents"]').val('');
     $('#old_select_kent_finish_documents').text('');
-
+    $('select[name="owner_finishing"]').val('NULL');
+    $('select[name="ndttype_finishing"]').val('NULL');
     // Show the finishing form section if it was hidden
     $('#finishingFieldset').show();
 }
@@ -766,7 +767,31 @@ function Finishing(processOrder, userName) {
 
                 // Set checkbox states
                 $('input[name="pickle_passivate_test"]').prop('checked', response.data.pickle_passivate_test === "1");
+                fetchOwnerData_Finishing(processOrder, 'Pickle and Passivate:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_finishing"][data-task="pickle_passivate_test"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_finishing"][data-task="pickle_passivate_test"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_finishing"][data-task="pickle_passivate_test"]`).val('NULL');
+                        $(`select[name="ndttype_finishing"][data-task="pickle_passivate_test"]`).val('NULL');
+                    }
+                });
                 $('input[name="select_kent_finish_test"]').prop('checked', response.data.select_kent_finish_test === "1");
+                fetchOwnerData_Finishing(processOrder, 'Required Finish Applied:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_finishing"][data-task="select_kent_finish_test"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_finishing"][data-task="select_kent_finish_test"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_finishing"][data-task="select_kent_finish_test"]`).val('NULL');
+                        $(`select[name="ndttype_finishing"][data-task="select_kent_finish_test"]`).val('NULL');
+                    }
+                });
 
                 // Set other fields
                 $('input[name="sign_off_finishing_m"]').val(userName);

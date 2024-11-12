@@ -459,7 +459,7 @@ function generateHTMLFromResponse_for_quality(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Files</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     if (Array.isArray(response)) {
@@ -986,6 +986,10 @@ function resetQualityForm() {
     // Reset file input values
     $('#imagesInput').val('');
     $('#qualityFieldset').show();
+
+
+    $('select[name="owner_quality"]').val('NULL');
+    $('select[name="ndttype_quality"]').val('NULL');
 }
 function Quality(processOrder, userName) {
     console.log('quality');
@@ -1024,6 +1028,19 @@ console.log(response);
                 $.each(response, function() {
                     $('#process_order_number_quality').val(processOrder);
                     $('input[name="walk_down_visual_inspection"]').prop('checked', response.walk_down_visual_inspection==="1");
+
+                    fetchOwnerData_Quality(processOrder, 'Walk-down and Visual Inspection', function (ownerData) {
+                        if (ownerData) {
+                            // Update owner cell
+                            $(`select[name="owner_quality"][data-task="walk_down_visual_inspection"]`).val(ownerData.owner.trim());
+                            // Update NDT cell
+                            $(`select[name="ndttype_quality"][data-task="walk_down_visual_inspection"]`).val(ownerData.ndta.trim());
+                        } else {
+                            // Handle case where no owner data is retrieved
+                            $(`select[name="owner_quality"][data-task="walk_down_visual_inspection"]`).val('NULL');
+                            $(`select[name="ndttype_quality"][data-task="walk_down_visual_inspection"]`).val('NULL');
+                        }
+                    });
                     $('input[name="upload_images"]').prop('checked', response.uploadimages==="1");
                     // Other fields
                     $('#sign_off_quality_m').val(userName);

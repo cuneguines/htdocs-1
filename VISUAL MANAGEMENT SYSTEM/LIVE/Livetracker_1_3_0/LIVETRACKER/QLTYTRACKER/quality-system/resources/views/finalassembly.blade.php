@@ -89,11 +89,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>1</th>
-                        
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
+                    <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                     <tr>
                     <td>Attach Part ID Labels / Name Plates:</td>
@@ -103,7 +102,7 @@
                         </td>
                         
                         <td>
-                            <select style="width:100%" name="owner_final">
+                            <select style="width:100%" name="owner_final" data-task="attach_part_id_labels">
                             <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -121,11 +120,13 @@
                             </select>
                         </td>
                         <td>
-                            <select style="width:100%" name="ndttype_final">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select style="width:100%" name="ndttype_final"data-task="attach_part_id_labels">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
+
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>

@@ -94,7 +94,7 @@ try {
     try {
         // Prepare the update statement for marking employee as deleted
         $deleteQuery = "
-            UPDATE [QUALITY_PACK].[dbo].[User]
+            UPDAT
             SET
                 Status = 'deleted'  -- Assuming you have a 'Status' field
             WHERE

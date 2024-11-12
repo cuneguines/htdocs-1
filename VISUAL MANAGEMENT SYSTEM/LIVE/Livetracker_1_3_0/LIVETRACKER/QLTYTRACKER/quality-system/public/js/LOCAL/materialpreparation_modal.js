@@ -680,7 +680,7 @@ function generateHTMLFromResponse_for_material_preparation(response) {
     html += '<th style="border: 1px solid #ddd; padding: 8px;">Description</th>';
     html += '<th style="border: 1px solid #ddd; padding: 8px;">File Link</th>';
     html += '<th style="border: 1px solid #ddd; padding: 8px;">Owner</th>';
-    html += '<th style="border: 1px solid #ddd; padding: 8px;">NDT</th>';
+    html += '<th style="border: 1px solid #ddd; padding: 8px;">Action</th>';
     html += '</tr>';
     html += '</thead>';
     html += '<tbody>';

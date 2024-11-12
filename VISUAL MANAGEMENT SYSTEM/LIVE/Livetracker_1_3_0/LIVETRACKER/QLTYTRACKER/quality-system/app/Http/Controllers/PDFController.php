@@ -32,6 +32,7 @@ class PDFController extends Controller
             ->where('process_order_number', $processOrderNumber)
             ->limit(1000)
             ->get();
+         
 
         // Render the fetched data in a view and return it as HTML for the modal
         return view('data.modal-content', compact('data1', 'data2', 'processOrderNumber'))->render();
@@ -186,6 +187,31 @@ WHERE
 
 "
 , [$processOrderNumber,$processOrderNumber, $processOrderNumber, $processOrderNumber,$processOrderNumber]);
+
+
+
+
+
+
+$data_mat_o=DB::select("SELECT top 8*,
+                        case when Type = 'Material Identification Confirm grade, thickness' then 'Material identification' 
+
+                      when Type = 'Machining' then 'Machining' 
+                          when Type = 'Forming' then 'Forming'
+						   when Type = 'De-burring' then 'Deburring'
+						    when Type = 'Cutting Part geometry, cut quality, part qty' then 'Cutting'
+							when Type = 'Material Traceability' then 'Material traceability'
+                        
+                        end[TYPE_NEW]
+                        
+                        
+                                    FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+                                    WHERE 
+									Quality_Step = 'MaterialPrep' and 
+									process_order_number=?
+                                    ORDER BY created_at DESC
+",[$processOrderNumber]);
+
         $data2 = DB::table('QUALITY_PACK.dbo.Welding_Form_Data as mpf')
             ->where('ProcessOrderID', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_welding_complete', '=', 'u.Login')
@@ -290,6 +316,24 @@ WHERE
                 rn = 1", [$processOrderNumber, $processOrderNumber,$processOrderNumber]);
 
 
+/*Welding Owner ,NDT*/
+
+$data_2_o=DB::select("SELECT top 10*,
+                        case when Type = 'Weld Map: Weld Map issued to production' then 'Weld map issued' 
+
+                      when Type = 'Weld Procedure Qualification Record:' then 'Weld procedure qualification' 
+                          when Type = 'Weld Procedure Specifications:' then 'Weld procedure specifications'
+						   when Type = 'Welder Performance Qualification:' then 'Welder performance qualification'
+						    when Type = 'Welding Consumable - Welding Wire:' then 'Welding wire'
+                        
+                        end[TYPE_NEW]
+                        
+                        
+                                    FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+                                    WHERE Quality_Step = 'Welding' and process_order_number=?
+                                    ORDER BY created_at DESC
+",[$processOrderNumber]);
+
 
         $data3 = DB::table('QUALITY_PACK.dbo.DocumentationFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
@@ -316,6 +360,27 @@ WHERE
             ->orderBy('updated_at', 'desc')
             ->limit(1)
             ->get();
+
+
+
+            /* documentation */
+            $data_3_o=DB::select("SELECT top 2
+*,
+case when Type = 'Client Hand-over documentation:' then 'Client handover check' 
+ when Type = 'Technical File:' then 'Technical file check' 
+
+
+
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Documentation' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
+            
+
+
         $data4 = DB::table('QUALITY_PACK.dbo.TestingFormDatas as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_testing', '=', 'u.Login')
@@ -437,6 +502,24 @@ $data_4_c=DB::select("WITH LatestChecks AS (
                     LatestChecks
                 WHERE 
                     rn = 1",[$processOrderNumber, $processOrderNumber,$processOrderNumber,$processOrderNumber]);
+
+
+
+
+$data_4_o=DB::select("SELECT top 4*,
+case when Type = 'FAT' then 'Fat protocol' 
+ when Type = 'Dye Penetrant Procedure' then 'Dye pen test' 
+ when Type = 'Hydrostatic Leak Test' then 'Hydrostatic test' 
+ when Type = 'Pneumatic Leak Test' then 'Pneumatic test' 
+
+
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Testing' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
         
         $data5 = DB::table('QUALITY_PACK.dbo.KittingFormData as mpf')
             ->where('ProcessOrderID', $processOrderNumber)
@@ -459,6 +542,21 @@ $data_4_c=DB::select("WITH LatestChecks AS (
             ])
             ->limit(1)
             ->get();
+
+
+            $data_5_o=DB::select("SELECT top 5
+*,
+case when Type = 'Cut Formed Machine Parts Details about cutting formed machine parts' then 'Cut form mach parts' 
+
+
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Kitting' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
+
         $data6 = DB::table('QUALITY_PACK.dbo.PackingTransportFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.engineer', '=', 'u.Login')
@@ -482,9 +580,21 @@ $data_4_c=DB::select("WITH LatestChecks AS (
             ->limit(1)
             ->get();
 
+            
 
-
-
+                        $data_6_o=DB::select("SELECT top 1*,
+                        case when Type = 'Secure Packing:' then 'Secure packing' 
+                        
+                         
+                        
+                        end[TYPE_NEW]
+                        
+                        
+                                    FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+                                    WHERE Quality_Step = 'Transport' and process_order_number=?
+                                    ORDER BY created_at DESC
+                        ",[$processOrderNumber]); 
+                        
 
             $data_qlty = DB::table('QUALITY_PACK.dbo.QualityFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
@@ -508,6 +618,18 @@ $data_4_c=DB::select("WITH LatestChecks AS (
            
             ->limit(1)
             ->get();
+
+
+
+            $data_qlty_o=DB::select("SELECT top 1*,
+case when Type = 'Walk-down and Visual Inspection' then 'Walk down visual inspection' 
+
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Quality' and process_order_number=?
+            ORDER BY created_at DESC
+            ",[$processOrderNumber]);
             $data_final = DB::table('QUALITY_PACK.dbo.FinalAssemblyFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_final_assembly', '=', 'u.Login')
@@ -530,6 +652,18 @@ $data_4_c=DB::select("WITH LatestChecks AS (
            
             ->limit(1)
             ->get();
+
+            $data_final_o=DB::select("SELECT top 1*,
+            case when Type = 'Attach Part ID Labels / Name Plates:' then 'Identification' 
+            
+            
+            end [TYPE_NEW]
+                        FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+                        WHERE Quality_Step = 'Final' and process_order_number=?
+                        ORDER BY created_at DESC
+            ",[$processOrderNumber]);
+            
+
             $data_finishing = DB::table('QUALITY_PACK.dbo.FinishingFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_finishing', '=', 'u.Login')
@@ -608,6 +742,19 @@ $data_4_c=DB::select("WITH LatestChecks AS (
                 LatestChecks
             WHERE 
                 rn = 1", [$processOrderNumber, $processOrderNumber]);
+
+
+
+$data_finishing_o=DB::select("SELECT top 2*,
+case when Type = 'Pickle and Passivate:' then 'Pickle passivate test' 
+
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Finishing' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
 
             $data_fabfit = /* DB::table('QUALITY_PACK.dbo.FabricationFitUpFormData')
             ->where('ProcessOrder', $processOrderNumber)
@@ -701,6 +848,23 @@ $data_4_c=DB::select("WITH LatestChecks AS (
         rn = 1
 ", [$processOrderNumber, $processOrderNumber, $processOrderNumber]);
 
+$data_fabfit_o=DB::select("SELECT top 4*,
+case when Type = 'SUB CON ACTION:0' then 'LinkToDrawing' 
+
+ when Type='Weld Check'then 'Weld Check'
+when Type='Dimensional check: Dimensional check first off'then 'DimensionalCheck'
+ when Type='Fit-up: Visual check fit up - first off'then 'FitUpVisualCheck'
+
+end[TYPE_NEW]
+
+
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Fabrication' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]); 
+
+
+
             $data_subcontract = DB::table('QUALITY_PACK.dbo.subcontractFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->orderBy('updated_at', 'desc')
@@ -723,6 +887,18 @@ $data_4_c=DB::select("WITH LatestChecks AS (
            
             ->limit(1)
             ->get();
+
+$data_subcontract_o=DB::select("SELECT top 2*,
+case when Type = 'SUB CON ACTION:0' then 'Sub contract action' end[TYPE_NEW]
+
+
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Subcontract' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]); 
+
+
+
             $data_engineering = DB::table('QUALITY_PACK.dbo.EngineeringFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_engineering', '=', 'u.Login')
@@ -748,9 +924,11 @@ $data_4_c=DB::select("WITH LatestChecks AS (
 
             $data_engineering_o=DB::select("SELECT top 7*,
 case when Type = 'Customer submittal package' then 'Customer approval document' 
-
+when Type='Reference Job / Master File if applicable' then 'Reference job master file'
  when Type='Reference approved samples' then 'Reference approved samples'
  when Type='Concept design & engineering details' then 'Concept design engineering'
+
+ when Type='Design sign off [calculations]'then 'Design validation sign off'
 
 end [TYPE_NEW]
             FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
@@ -770,6 +948,26 @@ end [TYPE_NEW]
             ])
             ->limit(1)
             ->get();
+
+            $data_manufacturing_o=DB::select("SELECT top 5*,
+            case when Type = 'Machine Programming Files' then 'Machine programming files' 
+
+          when Type = 'NDT Documentation' then 'Ndt documentation' 
+              when Type = 'Quality documents' then 'Quality documents'
+               when Type = 'BOM' then 'Bom'
+                when Type = 'Production Drawings' then 'Production drawings'
+            
+            end[TYPE_NEW]
+            
+            
+                        FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+                        WHERE Quality_Step = 'Manufacturing' and process_order_number=?
+                        
+                        ORDER BY created_at DESC
+",[$processOrderNumber]);
+
+
+
             $data_planning = DB::table('QUALITY_PACK.dbo.PlanningFormData as mpf')
             ->where('process_order_number', $processOrderNumber)
             ->join('QUALITY_PACK.dbo.User as u', 'mpf.sign_off_planning', '=', 'u.Login')
@@ -781,6 +979,27 @@ end [TYPE_NEW]
             ->orderBy('updated_at', 'desc')
             ->limit(1)
             ->get();
+
+
+            $data_planning_o=DB::select("SELECT top 5*,
+case when Type = 'Project risk category assessment' then 'Project risk category assessment' 
+when Type='Verify customer expectations' then 'Verify customer expectations'
+ when Type='Quotation' then 'Quotation'
+ when Type='Project schedule agreed' then 'Project schedule agreed'
+
+ when Type='Purchase Order received'then 'Purchase order received'
+
+end [TYPE_NEW]
+            FROM [QUALITY_PACK].[dbo].[Planning_Owner_Ndt]
+            WHERE Quality_Step = 'Planning' and process_order_number=?
+            ORDER BY created_at DESC
+",[$processOrderNumber]);
+
+
+
+
+
+
 
         $sql="select
   distinct t0.DocNum [SalesOrder],
@@ -817,11 +1036,11 @@ if (!empty($result)) {
 
 
         // Pass data to the view
-        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data_11','data2','data_2','data_2_c','data3','data_3','data4','data_4','data_4_c','data5','data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
+        $pdf = PDF::loadView('reportpdf', compact('data1', 'data_1','data_11','data2','data_2','data_2_c','data_2_o','data3','data_3','data_3_o','data4','data_4','data_4_c','data_4_o','data5','data_5', 'data_5_o','data6','data_6','data_6_o','data_qlty','data_qlty_c','data_qlty_o','data_planning','data_planning_o','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_fabfit_o','data_subcontract','data_subcontract_c','data_subcontract_o','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_manufacturing_o','data_sales','data_finishing','data_finishing_c','data_finishing_o','data_finishing_cc','data_final','data_final_c','data_final_o'));
 
         // Return the PDF for download
    // return $pdf->download('material_preparation_data.pdf');
       // return view('reportpdf');
-      return view('reportpdf', compact('data1', 'data_1' ,'data_11','data2', 'data_2', 'data_2_c','data3', 'data_3', 'data4', 'data_4', 'data_4_c','data5', 'data_5','data6','data_6','data_qlty','data_qlty_c','data_planning','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_subcontract','data_subcontract_c','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_final','data_final_c'));
+      return view('reportpdf', compact('data1', 'data_1' ,'data_11','data2', 'data_2', 'data_2_c','data_2_o','data3', 'data_3', 'data_3_o','data4', 'data_4', 'data_4_o','data_4_c','data5', 'data_5_o','data_5','data6','data_6','data_6_o','data_qlty','data_qlty_c','data_qlty_o','data_planning','data_planning_o','data_finishing','data_finishing_c','data_fabfit','data_fabfit_c','data_fabfit_cc','data_fabfit_o','data_subcontract','data_subcontract_c','data_subcontract_o','data_engineering','data_engineering_c','data_engineering_o','data_manufacturing','data_manufacturing_o','data_sales','data_finishing','data_finishing_c','data_finishing_cc','data_finishing_o','data_final','data_final_c','data_final_o'));
     }
 }

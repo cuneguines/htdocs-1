@@ -55,7 +55,7 @@
                 <tr>
                     <th>Task</th>
                     <th>Owner</th>
-                    <th>NDT Type</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,22 +68,30 @@
                         </label>
                     </td>
                     <td>
-                        <select name="owner_transport" style="width: 100%">
-                            <option value="NULL">Select Owner</option>
-                            <option value="PM">PM</option>
-                            <option value="QA">QA</option>
-                            <option value="Planning">Planning</option>
-                            <option value="Operator">Operator</option>
+                        <select name="owner_transport" style="width: 100%" data-task="secure_packing">
+                        <option value="NULL">Select Owner</option>
+                                <option value="PM">PM</option>
+                                <option value="QA">QA</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                             <!-- Add more options as needed -->
                         </select>
                     </td>
                     <td>
-                        <select name="ndttype_transport" style="width: 100%">
-                            <option value="NULL">Select NDT Type</option>
+                        <select name="ndttype_transport" style="width: 100%"data-task="secure_packing">
+                            <option value="NULL">Select Action</option>
                             <option value="Approve">Approve</option>
                             <option value="Inspect">Inspect</option>
                             <option value="Review">Review</option>
                             <option value="Record">Record</option>
+                            <option value="Record">Hold</option>
                             <!-- Add more options as needed -->
                         </select>
                     </td>

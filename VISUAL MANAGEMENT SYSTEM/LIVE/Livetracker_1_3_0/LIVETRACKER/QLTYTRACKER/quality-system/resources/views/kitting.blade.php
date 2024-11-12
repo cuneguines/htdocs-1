@@ -135,10 +135,10 @@ function clear_kitting_file_document() {
             <table id="kitting">
                 <thead>
                     <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
+                    <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                    
                     </tr>
                 </thead>
@@ -154,22 +154,33 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_kit" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_kit" style="width: 100%"data-task="cut_form_mach_parts">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_kit" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_kit" style="width: 100%"data-task="cut_form_mach_parts">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -187,22 +198,30 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_kit" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_kit" style="width: 100%"data-task="bought_out_components">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_kit" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_kit" style="width: 100%"data-task="bought_out_components">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -220,22 +239,30 @@ function clear_kitting_file_document() {
                         <td>
 </td>
                         <td>
-                            <select name="owner_kit" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_kit" style="width: 100%"data-task="fasteners_fixings">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_kit" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_kit" style="width: 100%"data-task="fasteners_fixings">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -254,22 +281,30 @@ function clear_kitting_file_document() {
                             <td>
 </td>
 <td>
-<select name="owner_kit" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+<select name="owner_kit" style="width: 100%"data-task="site_pack">
+<option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_kit" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_kit" style="width: 100%"data-task="site_pack">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -291,21 +326,30 @@ function clear_kitting_file_document() {
                             </label></td>
                         <td>
                             <select name="owner_kit" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
                             <select name="ndttype_kit" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
@@ -332,9 +376,49 @@ function clear_kitting_file_document() {
 
     <script>
      function clear_kitting_file_document() {
+
+        const processOrderNumber = document.getElementById('process_order_number_kitting').value;
+        const fileName = document.getElementById('kitting_file_filename').textContent; // Changed to textContent
+        const tablename = "KittingFormData";
+        const filetype = "kitting_file";
+        const foldername="kitting_task";
+
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('kitting_file_document').value = ''; // Clear the file input field
+        document.getElementById('kitting_file_filename').textContent = ''; // Clear the filename display
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+               // document.getElementById('technical_file').value = '';
+           // document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+        //}
+           // document.getElementById('sample_approval_document').value = ''; // Clear the file input field
+           // document.getElementById('sample_approval_document_filename').textContent = ''; // Clear the filename display
+      //  }
+
         document.getElementById('kitting_file_document').value = ''; // Clear the file input field
         document.getElementById('kitting_file_filename').textContent = ''; // Clear the filename display
     }
+}
     </script>
 </body>
 

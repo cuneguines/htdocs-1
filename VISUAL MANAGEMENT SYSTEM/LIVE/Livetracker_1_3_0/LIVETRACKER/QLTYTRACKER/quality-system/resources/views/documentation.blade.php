@@ -84,27 +84,27 @@
     <meta charset="UTF-8">
     <title>Documentation</title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
 
-        td,
-        th {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid black;
-        }
+    td,
+    th {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid black;
+    }
 
-        .form-group {
-            display: flex;
-            align-items: center;
-        }
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
 
-        .form-group label {
-            flex: 1;
-        }
+    .form-group label {
+        flex: 1;
+    }
     </style>
 </head>
 
@@ -116,7 +116,8 @@
                 <tr>
                     <td>Process Order Number:</td>
                     <td colspan="3">
-                        <input style="width: 100%" type="text" name="process_order_number_documentation" id="process_order_number_documentation" readonly>
+                        <input style="width: 100%" type="text" name="process_order_number_documentation"
+                            id="process_order_number_documentation" readonly>
                     </td>
                 </tr>
             </table>
@@ -127,7 +128,7 @@
                         <th>Documentation Type</th>
                         <th>Files </th>
                         <th>Owner</th>
-                        <th>NDT Type</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -140,11 +141,14 @@
                             </label>
                         </td>
 
-                        <td >
+                        <td>
                             <div id="technical_file_upload">
                                 <label>Upload New Technical File:</label><br>
-                                <input type="file" name="technical_file" id="technical_file" accept=".pdf,.doc,.docx,.txt">
+                                <input type="file" name="technical_file" id="technical_file"
+                                    accept=".pdf,.doc,.docx,.txt">
                                 <button type="button" onclick="clearFile_tech()">Clear File</button>
+
+
                             </div>
                             <div>
                                 <span id="old_technical_file"></span>
@@ -157,12 +161,21 @@
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
                             <select name="ndttype_docu" style="width: 100%" data-task="technical_file_checkbox">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -171,28 +184,29 @@
                             </select>
                         </td>
                     </tr>
-                    
-                       
-                  
+
+
+
                     <!-- Client Hand-over Documentation -->
                     <tr>
                         <td class="form-group">
                             <label>
-                                <input type="checkbox" name="client_handover_checkbox" value="1" >
+                                <input type="checkbox" name="client_handover_checkbox" value="1">
                                 Client Hand-over documentation:
                             </label>
                         </td>
-                        <td >
+                        <td>
                             <div id="client_handover_upload">
                                 <label>Upload New Client Hand-over Documentation:</label><br>
-                                <input type="file" id="client_handover_documentation" name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
+                                <input type="file" id="client_handover_documentation"
+                                    name="client_handover_documentation" accept=".pdf,.doc,.docx,.txt">
                                 <button type="button" onclick="clearFile_client()">Clear File</button>
                             </div>
                             <div>
                                 <span id="old_client_handover_documentation"></span>
                             </div>
                         </td>
-                    
+
 
 
                         <td>
@@ -202,22 +216,32 @@
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
                                 <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
+
+
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
                             <select name="ndttype_docu" style="width: 100%" data-task="client_handover_checkbox">
-                                <option value="NULL">Select NDT Type</option>
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Record</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                     </tr>
-                   
-                        
+
+
 
                     <!-- Sign-off Engineer -->
                     <tr>
@@ -225,7 +249,8 @@
                             Sign-off Engineer:
                         </td>
                         <td colspan="2">
-                            <input style="width: 100%" type="text" name="sign_off_engineer" id="sign_off_engineer" value="${username}">
+                            <input style="width: 100%" type="text" name="sign_off_engineer" id="sign_off_engineer"
+                                value="${username}">
                         </td>
                     </tr>
 
@@ -235,7 +260,8 @@
                             Comments for Documentation:
                         </td>
                         <td colspan="2">
-                            <textarea style="width: 100%" name="comments_documentation" id="comments_documentation" rows="2" cols="50"></textarea>
+                            <textarea style="width: 100%" name="comments_documentation" id="comments_documentation"
+                                rows="2" cols="50"></textarea>
                         </td>
                     </tr>
                 </tbody>
@@ -246,33 +272,79 @@
     </fieldset>
 
     <script>
-        function clearFile_tech() {
-            document.getElementById('technical_file').value = '';
-            document.getElementById('old_technical_file').textContent = '';
-        }
+    function clearFile_tech() {
+        const processOrderNumber = document.getElementById('process_order_number_documentation').value;
+        const fileName = document.getElementById('old_technical_file').textContent; // Changed to textContent
+        const tablename = "DocumentationFormData";
+        const filetype="technical_file"
+        const foldername="documentation_tasks";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype:filetype,
+                    foldername:foldername
 
-        function clearFile_client() {
-            document.getElementById('client_handover_documentation').value = '';
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('technical_file').value = '';
+                    document.getElementById('old_technical_file').textContent = '';
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+                document.getElementById('technical_file').value = '';
+            document.getElementById('old_technical_file').textContent = '';
+            //alert('Please enter a valid Process Order Number and file name.');
+        }
+    }
+
+
+    function clearFile_client() {
+
+        const processOrderNumber = document.getElementById('process_order_number_documentation').value;
+        const fileName = document.getElementById('old_client_handover_documentation')
+            .textContent; // Changed to textContent
+const tablename = "DocumentationFormData";
+        const filetype="client_handover_documentation";
+        const foldername="documentation_tasks";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype:filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('client_handover_documentation').value = '';
+                    document.getElementById('old_client_handover_documentation').textContent = '';
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+                document.getElementById('client_handover_documentation').value = '';
             document.getElementById('old_client_handover_documentation').textContent = '';
         }
+    }
     </script>
 </body>
 
 </html>
-
-
-
-<script>
-function clearFile_tech() {
-    document.getElementById('technical_file').value = '';
-    document.getElementById('old_technical_file').textContent = '';
-
-
-
-}
-
-function clearFile_client() {
-    document.getElementById('client_handover_documentation').value = '';
-    document.getElementById('old_client_handover_documentation').textContent = '';
-}
-</script>

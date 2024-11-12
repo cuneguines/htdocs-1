@@ -45,7 +45,7 @@ document.querySelectorAll('#testing tbody tr').forEach(function (row, index) {
     console.log(index);
     if (index >= 0 && index<4) { // Skip the header row
         var owner = row.querySelector('[name="owner_test"]').value || null;
-        var ndt = row.querySelector('[name="ndt_test"]').value || null;
+        var ndt = row.querySelector('[name="ndttype_test"]').value || null;
 console.log(owner);
 console.log(ndt);
         // Push the owner data to the array
@@ -759,7 +759,7 @@ html += '<tr style="border: 1px solid #ccc;">';
 html += '<th style="border: 1px solid #ccc;">Field</th>';
 html += '<th style="border: 1px solid #ccc;">Value</th>';
 html += '<th style="border: 1px solid #ccc;">Owner</th>';
-html += '<th style="border: 1px solid #ccc;">NDT</th>';
+html += '<th style="border: 1px solid #ccc;">Action</th>';
 html += '</tr>';
         // Document References
         html += '<tr style="border: 1px solid #ccc;">';
@@ -1214,6 +1214,10 @@ function resetTesting() {
     // Reset file input values and filenames
     $('input[name="testing_documents"]').val("");
     $("#old_testing_documents").text("Old Document Name");
+
+
+    $('select[name="owner_test"]').val('NULL');
+    $('select[name="ndttype_test"]').val('NULL');
 }
 
 function Testing(processOrder, userName) {
@@ -1265,18 +1269,79 @@ function Testing(processOrder, userName) {
                     "checked",
                     response.data.dye_pen_test === "1"
                 );
+                fetchOwnerData_Testing(processOrder, 'Dye Penetrant Procedure', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_test"][data-task="dye_pen_test"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_test"][data-task="dye_pen_test"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_test"][data-task="dye_pen_test"]`).val('NULL');
+                        $(`select[name="ndttype_test"][data-task="dye_pen_test"]`).val('NULL');
+                    }
+                });
+
+
+
                 $('input[name="hydrostatic_test"]').prop(
                     "checked",
                     response.data.hydrostatic_test === "1"
                 );
+
+                fetchOwnerData_Testing(processOrder, 'Hydrostatic Leak Test', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_test"][data-task="hydrostatic_test"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_test"][data-task="hydrostatic_test"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_test"][data-task="hydrostatic_test"]`).val('NULL');
+                        $(`select[name="ndttype_test"][data-task="hydrostatic_test"]`).val('NULL');
+                    }
+                });
+
+
+
                 $('input[name="pneumatic_test"]').prop(
                     "checked",
                     response.data.pneumatic_test === "1"
                 );
+
+                fetchOwnerData_Testing(processOrder, 'Pneumatic Leak Test', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_test"][data-task="pneumatic_test"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_test"][data-task="pneumatic_test"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_test"][data-task="pneumatic_test"]`).val('NULL');
+                        $(`select[name="ndttype_test"][data-task="pneumatic_test"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="fat_protocol"]').prop(
                     "checked",
                     response.data.fat_protocol === "1"
                 );
+
+
+                fetchOwnerData_Testing(processOrder, 'FAT', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_test"][data-task="fat_protocol"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_test"][data-task="fat_protocol"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_test][data-task="fat_protocol"]`).val('NULL');
+                        $(`select[name="ndttype_test"][data-task="fat_protocol"]`).val('NULL');
+                    }
+                });
+
 
                 // Set other fields
                 $('input[name="sign_off_testing"]').val(userName);

@@ -718,7 +718,7 @@ function generateHTMLFromResponse_for_kitting(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Document</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     $.each(response, function(index, item) {
@@ -888,6 +888,9 @@ function resetKittingForm() {
     $('#kitting_file_filename').text('');
     $('#kitting_file_document').val('');
 
+    $('select[name="owner_kit"]').val('NULL');
+    $('select[name="ndttype_kit"]').val('NULL');
+
     // Show the kitting form section if it was hidden
     $('#kittingFieldset').show();
 }
@@ -932,9 +935,62 @@ function Kitting(processOrder, userName) {
 
                 // Set checkbox states
                 $('input[name="cut_form_mach_parts"]').prop('checked', response.data.cut_form_mach_parts === "on");
+                fetchOwnerData_Kitting(processOrder, 'Cut Formed Machine Parts Details about cutting formed machine parts', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_kit"][data-task="cut_form_mach_parts"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_kit"][data-task="cut_form_mach_parts"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_kit"][data-task="cut_form_mach_parts"]`).val('NULL');
+                        $(`select[name="ndttype_kit"][data-task="cut_form_mach_parts"]`).val('NULL');
+                    }
+                });
+
                 $('input[name="bought_out_components"]').prop('checked', response.data.bought_out_components === "on");
+
+
+                fetchOwnerData_Kitting(processOrder, 'Bought Out Components Details about bought out components', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_kit"][data-task="bought_out_components"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_kit"][data-task="bought_out_components"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_kit"][data-task="bought_out_components"]`).val('NULL');
+                        $(`select[name="ndttype_kit"][data-task="bought_out_components"]`).val('NULL');
+                    }
+                });
                 $('input[name="fasteners_fixings"]').prop('checked', response.data.fasteners_fixings === "on");
+
+                fetchOwnerData_Kitting(processOrder, 'Fasteners and Fixings Details about fasteners and fixings', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_kit"][data-task="fasteners_fixings"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_kit"][data-task="fasteners_fixings"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_kit"][data-task="fasteners_fixings"]`).val('NULL');
+                        $(`select[name="ndttype_kit"][data-task="fasteners_fixings"]`).val('NULL');
+                    }
+                });
                 $('input[name="site_pack"]').prop('checked', response.data.site_pack === "on");
+
+                fetchOwnerData_Kitting(processOrder, 'SitePAck Details about site pack', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_kit"][data-task="site_pack"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_kit"][data-task="site_pack"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_kit"][data-task="site_pack"]`).val('NULL');
+                        $(`select[name="ndttype_kit"][data-task="site_pack"]`).val('NULL');
+                    }
+                });
 
                 // Set other fields
                 $('input[name="sign_off_kitting"]').val(userName);

@@ -73,10 +73,10 @@
             <table id="manufacturing">
                 <thead>
                     <tr>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
-                        <th>4</th>
+                    <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,7 +91,7 @@
                             <button type="button" onclick="clear_production_drawings_document()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_manu" id="owner" style="width:100%">
+                            <select name="owner_manu" id="owner" style="width:100%" data-task="production_drawings">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -107,8 +107,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_manu" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select name="ndttype_manu" id="ndttype" style="width:100%"data-task="production_drawings">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -128,7 +128,7 @@
                             <button type="button" onclick="clear_bom_document()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_manu" id="owner" style="width:100%">
+                            <select name="owner_manu" id="owner" style="width:100%"data-task="bom">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -144,8 +144,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_manu" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select name="ndttype_manu" id="ndttype" style="width:100%"data-task="bom">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -165,7 +165,7 @@
                             <button type="button" onclick="clear_machine_programming_files_document()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_manu" id="owner" style="width:100%">
+                            <select name="owner_manu" id="owner" style="width:100%"data-task="machine_programming_files">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -181,8 +181,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_manu" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select name="ndttype_manu" id="ndttype" style="width:100%"data-task="machine_programming_files">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -202,7 +202,7 @@
                             <button type="button" onclick="clear_ndt_documentation_document()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_manu" id="owner" style="width:100%">
+                            <select name="owner_manu" id="owner" style="width:100%"data-task="ndt_documentation">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -218,8 +218,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_manu" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select name="ndttype_manu" id="ndttype" style="width:100%"data-task="ndt_documentation">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -239,7 +239,7 @@
                             <button type="button" onclick="clear_quality_documents_document()">Clear File</button>
                         </td>
                         <td>
-                            <select name="owner_manu" id="owner" style="width:100%">
+                            <select name="owner_manu" id="owner" style="width:100%"data-task="quality_documents">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -255,8 +255,8 @@
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_manu" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inspection Type</option>
+                            <select name="ndttype_manu" id="ndttype" style="width:100%"data-task="quality_documents">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>

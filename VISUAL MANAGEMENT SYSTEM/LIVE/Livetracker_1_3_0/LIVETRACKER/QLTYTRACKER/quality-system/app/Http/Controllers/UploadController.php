@@ -7,11 +7,65 @@ use Illuminate\Http\Request;
 use App\Models\FileModel;
 use App\Models\ImageData;
 use App\Models\ImageDataQlty;
-
+use DB;
 
 use Illuminate\Support\Facades\Storage;
 class UploadController extends Controller
 {
+
+    public function clear(Request $request, $processOrderNumber)
+{
+    // Validate the request to ensure 'file_name' is provided
+    $request->validate([
+        'file_name' => 'required|string',
+    ]);
+
+    try {
+        $tablename=$request->input('tablename');
+        $filetype=$request->input('filetype');
+        $foldername = trim($request->input('foldername'), '/');
+        // Execute the delete query
+        //$deletedRows = DB::delete('DELETE FROM [QUALITY_PACK].[dbo].[$tablename] WHERE process_order_number = ? AND technical_file = ?', [$processOrderNumber, $request->input('file_name')]);
+        $updatedRows = DB::table('QUALITY_PACK.dbo.' . $tablename)
+    ->where('process_order_number', $processOrderNumber)
+    ->where($filetype, $request->input('file_name'))
+    ->update([$filetype => null]);
+
+
+        // Check if any rows were deleted
+        if ($updatedRows === 0) {
+            return back()->with('error', 'File not found in the database.');
+        }
+
+        // Construct the file path using the process order number
+        $filePath = 'public/' . $foldername . '/' . $processOrderNumber . '/' . $request->input('file_name');
+
+        // Debugging: Log the file path
+        \Log::info('Attempting to delete file at: ' . $filePath);
+
+        // Check if the file exists in storage
+        if (Storage::exists($filePath)) {
+            // Delete the file from storage
+            Storage::delete($filePath);
+
+            // Confirm deletion
+            \Log::info('File deleted successfully: ' . $filePath);
+
+            return back()->with('success', 'File cleared from storage and database.');
+        } else {
+            // Log if the file doesn't exist
+            \Log::warning('File does not exist in storage: ' . $filePath);
+            return back()->with('error', 'File does not exist in storage.');
+        }
+    } catch (\Exception $e) {
+        // Log the error for debugging
+        \Log::error('Error clearing file: ' . $e->getMessage());
+
+        return back()->with('error', 'An error occurred while clearing the file.');
+    }
+}
+
+
     public function handleFileUploadEngineer(Request $request)
 {
     // Validate the request to ensure 'process_order_number' is present and files are valid

@@ -210,7 +210,7 @@ function generateHTMLFromResponse_for_fabrication_fit_up(response) {
     html += '<th style="border: 1px solid #ccc;">Task</th>';
     html += '<th style="border: 1px solid #ccc;">Document</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
     $.each(response, function(index, item) {
@@ -621,8 +621,14 @@ function resetFabricationFitUpForm() {
     $('input[name="link_to_drawing"]').val('');
     $('#old_drawing_filename').text('');
 
+    $('select[name="owner_fab"]').val('NULL');
+    $('select[name="ndttype_fab"]').val('NULL');
+
     // Show the fabrication fit-up form section if it was hidden
     $('#fabricationFitUpFieldset').show();
+
+
+    
 }
 
 function FabricationFitUp(processOrder, userName) {
@@ -665,8 +671,49 @@ function FabricationFitUp(processOrder, userName) {
 
                 // Set checkbox states
                 $('input[name="fit_up_visual_check"]').prop('checked', response.data.FitUpVisualCheck === "true");
+
+                fetchOwnerData_Fabrication(processOrder, 'Fit-up: Visual check fit up - first off', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_fab"][data-task="fit_up_visual_check"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_fab"][data-task="fit_up_visual_check"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_fab"][data-task="fit_up_visual_check"]`).val('NULL');
+                        $(`select[name="ndttype_fab"][data-task="fit_up_visual_check"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="dimensional_check"]').prop('checked', response.data.DimensionalCheck === "true");
+
+
+                fetchOwnerData_Fabrication(processOrder, 'Dimensional check: Dimensional check first off', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_fab"][data-task="dimensional_check"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_fab"][data-task="dimensional_check"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_fab"][data-task="dimensional_check"]`).val('NULL');
+                        $(`select[name="ndttype_fab"][data-task="dimensional_check"]`).val('NULL');
+                    }
+                });
                 $('input[name="weldment_quantity"]').prop('checked', response.data.WeldmentQuantity === "true");
+                fetchOwnerData_Fabrication(processOrder, 'Weld Check', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_fab"][data-task="weldment_quantity"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_fab"][data-task="weldment_quantity"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_fab"][data-task="weldment_quantity"]`).val('NULL');
+                        $(`select[name="ndttype_fab"][data-task="weldment_quantity"]`).val('NULL');
+                    }
+                });
 
                 // Set other fields
                 $('input[name="sign_off_fabrication_fit_up"]').val(userName);

@@ -299,11 +299,10 @@ function clear_link_to_plant_cert() {
                     </td>
                 </tr>
                 <tr>
-                    <th>1</th>
-
-                    <th>2</th>
-                    <th>3</th>
-                    <th>4</th>
+                <th>Tasks</th>
+                        <th>Files </th>
+                        <th>Owner</th>
+                        <th>Action</th>
                 </tr>
                 <tr>
                     <td class="form-group">
@@ -322,7 +321,7 @@ function clear_link_to_plant_cert() {
 
 
                 <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%" data-task="weld_map_issued">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -345,8 +344,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="weld_map_issued">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -372,7 +371,7 @@ function clear_link_to_plant_cert() {
                     </td>
 
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="weld_procedure_qualification">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -395,8 +394,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="weld_procedure_qualification">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -424,7 +423,7 @@ function clear_link_to_plant_cert() {
                     </td>
 
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="weld_procedure_specifications">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -447,8 +446,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="weld_procedure_specifications">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -473,7 +472,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="welder_performance_qualification">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -496,8 +495,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="welder_performance_qualification">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -522,7 +521,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="welding_wire">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -545,8 +544,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="welding_wire">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -571,7 +570,7 @@ function clear_link_to_plant_cert() {
                         </label>
                     </td>
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="shielding_gas">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -594,8 +593,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="shielding_gas">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -614,7 +613,7 @@ function clear_link_to_plant_cert() {
 
                     <td ></td>
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="pre_weld_inspection">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -637,8 +636,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="pre_weld_inspection">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -660,7 +659,7 @@ function clear_link_to_plant_cert() {
 
 
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="inspection_during_welding">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -683,8 +682,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="inspection_during_welding">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -711,7 +710,7 @@ function clear_link_to_plant_cert() {
 
 
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="post_weld_inspection">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -734,8 +733,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="post_weld_inspection">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -755,7 +754,7 @@ function clear_link_to_plant_cert() {
                     <td ></td>
 
                     <td>
-                            <select name="owner_weld" id="owner" style="width:100%">
+                            <select name="owner_weld" id="owner" style="width:100%"data-task="welding_plant_calibration_certificate">
                                 <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
@@ -778,8 +777,8 @@ function clear_link_to_plant_cert() {
                         </td>
                         <td>
                       
-                            <select name="ndttype_weld" id="ndttype" style="width:100%">
-                                <option value="NULL">Select Inpection Type</option>
+                            <select name="ndttype_weld" id="ndttype" style="width:100%"data-task="welding_plant_calibration_certificate">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
@@ -811,37 +810,338 @@ function clear_link_to_plant_cert() {
 
     <script>
     function clear_link_to_weld_map() {
-        document.getElementById('link_to_weld_map').value = ''; // Clear the file input field
+
+
+
+
+       
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+       const fileName = document.getElementById('old_weld_map_filename') .textContent; // Changed to textContent
+
+       const tablename = "Welding_Form_Data";
+       const filetype = "slink_to_weld_map";
+       const foldername="welding_task";
+       
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_weld_map').value = ''; // Clear the file input field
         document.getElementById('old_weld_map_filename').textContent = ''; // Clear the filename display
+
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_weld_map').value = ''; // Clear the file input field
+        document.getElementById('old_weld_map_filename').textContent = ''; // Clear the filename display
+
+
+        }
+
+
+
+        
     }
 
     function clear_link_to_pqr() {
-        document.getElementById('link_to_pqr').value = ''; // Clear the file input field
+       
+
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+       const fileName = document.getElementById('old_pqr_filename').textContent; // Changed to textContent
+       const tablename = "Welding_Form_Data";
+       const filetype = "link_to_pqr";
+       const foldername="welding_task";
+       
+       const foldername="welding_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_pqr').value = ''; // Clear the file input field
         document.getElementById('old_pqr_filename').textContent = ''; // Clear the filename display
+
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_pqr').value = ''; // Clear the file input field
+        document.getElementById('old_pqr_filename').textContent = ''; // Clear the filename display
+
+
+
+
+        }
+
+
+
+
     }
 
     function clear_link_to_wps() {
-        document.getElementById('link_to_wps').value = ''; // Clear the file input field
-        document.getElementById('old_wps_filename').textContent = ''; // Clear the filename display
+        
+
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+     const fileName = document.getElementById('old_wps_filename').textContent; // Changed to textContent
+
+
+       const tablename = "Welding_Form_Data";
+       const filetype = "link_to_wps";
+       const foldername="welding_task";
+       const foldername="welding_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_wps').value = ''; // Clear the file input field
+                    document.getElementById('old_wps_filename').textContent = ''; // Clear the filename display
+
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_wps').value = ''; // Clear the file input field
+            document.getElementById('old_wps_filename').textContent = ''; // Clear the filename display
+
+
+
+
+        }
+
+
+
+
     }
 
     function clear_link_to_wpq() {
-        document.getElementById('link_to_wpq').value = ''; // Clear the file input field
+       
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+       const fileName = document.getElementById('old_wpq_filename').textContent; // Changed to textContent
+       const tablename = "Welding_Form_Data";
+       const filetype = "link_to_wpq";
+       const foldername="welding_task";
+     
+
+       const foldername="welding_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_wpq').value = ''; // Clear the file input field
+                    document.getElementById('old_wpq_filename').textContent = ''; // Clear the filename display
+
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_wpq').value = ''; // Clear the file input field
         document.getElementById('old_wpq_filename').textContent = ''; // Clear the filename display
+
+
+
+
+
+
+
     }
+}
 
     function clear_link_to_wire_certificate() {
-        document.getElementById('link_to_wire_certificate').value = ''; // Clear the file input field
+       
+
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+       const fileName = document.getElementById('old_wire_certificate_filename').textContent; // Changed to textContent
+       const foldername="welding_task";
+
+
+       const tablename = "Welding_Form_Data";
+       const filetype = "link_to_wire_certificate";
+       const foldername="welding_task";
+     
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_wire_certificate').value = ''; // Clear the file input field
+                    document.getElementById('old_wire_certificate_filename').textContent = ''; // Clear the filename display
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_wire_certificate').value = ''; // Clear the file input field
         document.getElementById('old_wire_certificate_filename').textContent = ''; // Clear the filename display
+
+
+
+
+
+
+    }
+
+
+
+
     }
 
     function clear_link_to_gas_data_sheet() {
-        document.getElementById('link_to_gas_data_sheet').value = ''; // Clear the file input field
+      
+
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+       const fileName = document.getElementById('old_gas_data_sheet_filename').textContent; // Changed to textContent
+       const tablename = "Welding_Form_Data";
+       const filetype = "link_to_gas_data_sheet";
+       const foldername="welding_task";
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName,
+                    tablename: tablename,
+                    filetype: filetype,
+                    foldername:foldername
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_gas_data_sheet').value = ''; // Clear the file input field
         document.getElementById('old_gas_data_sheet_filename').textContent = ''; // Clear the filename display
+
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_gas_data_sheet').value = ''; // Clear the file input field
+        document.getElementById('old_gas_data_sheet_filename').textContent = ''; // Clear the filename display
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
     }
 
     function clear_link_to_plant_cert() {
-        document.getElementById('link_to_plant_cert').value = ''; // Clear the file input field
+       
+
+
+        const processOrderNumber = document.getElementById('process_order_number_welding').value;
+        const fileName = document.getElementById('old_plant_cert_filename') .textContent; // Changed to textContent
+
+       const tablename = "Welding_Form_Data";
+       const filetype = "llink_to_plant_cert";
+       const foldername="welding_task";
+
+        if (processOrderNumber && fileName) {
+            $.ajax({
+                url: "{{ url('clear-file') }}/" + processOrderNumber,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    file_name: fileName
+                },
+                success: function(response) {
+                    alert("File cleared successfully!");
+                    document.getElementById('link_to_plant_cert').value = ''; // Clear the file input field
+                    document.getElementById('old_plant_cert_filename').textContent = ''; // Clear the filename display
+
+                },
+                error: function(xhr) {
+                    alert("Error clearing file: " + xhr.responseText);
+                    console.error(xhr); // Log the full error for debugging
+                }
+            });
+        } else {
+            if (!fileName)
+            document.getElementById('link_to_plant_cert').value = ''; // Clear the file input field
         document.getElementById('old_plant_cert_filename').textContent = ''; // Clear the filename display
+
+
+
+
+
+
+
+    }
+
+
+
+
+
     }
     </script>

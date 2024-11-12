@@ -343,7 +343,7 @@ function generateHTMLFromResponse_for_final_assembly(response) {
     html += '<th style="border: 1px solid #ccc;">Field</th>';
     html += '<th style="border: 1px solid #ccc;">Value</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
         // Identification
         html += '<tr style="border: 1px solid #ccc;">';
@@ -611,6 +611,9 @@ function resetFinalAssemblyForm() {
     $('input[name="attach_part_id_labels"]').prop('checked', false);
     $('input[name="sign_off_final_assembly"]').val('');
     $('textarea[name="comments_final_assembly"]').val('');
+    $('select[name="owner_final"]').val('NULL');
+    $('select[name="ndttype_final"]').val('NULL');
+
 }
 
 function FinalAssembly(processOrder, userName) {
@@ -655,6 +658,20 @@ function FinalAssembly(processOrder, userName) {
 
                 // Set checkbox states or other field values
                 $('input[name="attach_part_id_labels"]').prop('checked', response.data.identification === "on");
+
+
+                fetchOwnerData_FinalAssembly(processOrder, 'Attach Part ID Labels / Name Plates:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_final"][data-task="attach_part_id_labels"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_final"][data-task="attach_part_id_labels"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_final"][data-task="attach_part_id_labels"]`).val('NULL');
+                        $(`select[name="ndttype_final"][data-task="attach_part_id_labels"]`).val('NULL');
+                    }
+                });
                 $('input[name="sign_off_final_assembly"]').val(userName);
                 $('textarea[name="comments_final_assembly"]').val(response.data.comments_final_assembly);
                 

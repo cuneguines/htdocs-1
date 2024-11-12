@@ -787,7 +787,7 @@ function generateHTMLFromResponse_for_welding(response) {
     html += '<th style="border: 1px solid #ccc;">Tasks</th>';
     html += '<th style="border: 1px solid #ccc;">Files</th>';
     html += '<th style="border: 1px solid #ccc;">Owner</th>';
-    html += '<th style="border: 1px solid #ccc;">NDT</th>';
+    html += '<th style="border: 1px solid #ccc;">Action</th>';
     html += '</tr>';
 
        
@@ -1418,6 +1418,12 @@ function resetWeldingForm() {
     $("#old_gas_data_sheet_filename").text("");
     $('input[name="link_to_plant_cert"]').val("");
     $("#old_plant_cert_filename").text("");
+
+
+
+    
+    $('select[name="owner_weld"]').val('NULL');
+    $('select[name="ndttype_weld"]').val('NULL');
 }
 
 function Welding(processOrder, userName) {
@@ -1437,6 +1443,8 @@ function Welding(processOrder, userName) {
     $('input[name="sign_off_welding"]').val(userName);
     $("#process_order_number_welding").val(processOrder);
 
+
+    
     // Prepare headers and data for AJAX request
     var headers = {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -1468,42 +1476,187 @@ function Welding(processOrder, userName) {
                     "checked",
                     response.data.weld_map_issued === "true"
                 );
+
+                fetchOwnerData_Welding(processOrder, 'Weld Map: Weld Map issued to production', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="weld_map_issued"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="weld_map_issued"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="weld_map_issued"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="weld_map_issued"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="weld_procedure_qualification"]').prop(
                     "checked",
                     response.data.weld_procedure_qualification === "true"
                 );
+
+                fetchOwnerData_Welding(processOrder, 'Weld Procedure Qualification Record:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="weld_procedure_qualification"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="weld_procedure_qualification"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="weld_procedure_qualification"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="weld_procedure_qualification"]`).val('NULL');
+                    }
+                });
+
+
+
                 $('input[name="weld_procedure_specifications"]').prop(
                     "checked",
                     response.data.weld_procedure_specifications === "true"
                 );
+                fetchOwnerData_Welding(processOrder, 'Weld Procedure Specifications:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="weld_procedure_specifications"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="weld_procedure_specifications"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="weld_procedure_specifications"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="weld_procedure_specifications"]`).val('NULL');
+                    }
+                });
+
+                
                 $('input[name="welder_performance_qualification"]').prop(
                     "checked",
                     response.data.welder_performance_qualification === "true"
                 );
+                fetchOwnerData_Welding(processOrder, 'Welder Performance Qualification:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="welder_performance_qualification"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="welder_performance_qualification"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="welder_performance_qualification"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="welder_performance_qualification"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="welding_wire"]').prop(
                     "checked",
                     response.data.welding_wire === "true"
                 );
+                fetchOwnerData_Welding(processOrder, 'Welding Consumable - Welding Wire:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="welding_wire"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="welding_wire"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="welding_wire"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="welding_wire"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="shielding_gas"]').prop(
                     "checked",
                     response.data.shielding_gas === "true"
                 );
+                fetchOwnerData_Welding(processOrder, 'Welding Consumable - Shielding Gas:', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="shielding_gas"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="shielding_gas"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="shielding_gas"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="shielding_gas"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="pre_weld_inspection"]').prop(
                     "checked",
                     response.data.pre_weld_inspection === "true"
                 );
+
+
+                fetchOwnerData_Welding(processOrder, 'Pre-Weld inspection: Check weld joint preparation against WPS', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="pre_weld_inspection"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="pre_weld_inspection"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="pre_weld_inspection"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="pre_weld_inspection"]`).val('NULL');
+                    }
+                });
                 $('input[name="inspection_during_welding"]').prop(
                     "checked",
                     response.data.inspection_during_welding === "true"
                 );
+                fetchOwnerData_Welding(processOrder, 'Inspection During Welding: Check requirements of the WPS', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="inspection_during_welding"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="inspection_during_welding"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="inspection_during_welding"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="inspection_during_welding"]`).val('NULL');
+                    }
+                });
+
+
+
                 $('input[name="post_weld_inspection"]').prop(
                     "checked",
                     response.data.post_weld_inspection === "true"
                 );
+
+                fetchOwnerData_Welding(processOrder, 'Post-Weld Inspection: Visual weld inspection - All Welds', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="post_weld_inspection"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="post_weld_inspection"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="post_weld_inspection"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="post_weld_inspection"]`).val('NULL');
+                    }
+                });
+
+
                 $('input[name="welding_plant_calibration_certificate"]').prop(
                     "checked",
                     response.data.welding_plant_calibration_certificate === "true"
                 );
+
+
+                fetchOwnerData_Welding(processOrder, 'Welding Plant Calibration Certificate: Check weld log for welding plant number', function (ownerData) {
+                    if (ownerData) {
+                        // Update owner cell
+                        $(`select[name="owner_weld"][data-task="welding_plant_calibration_certificate"]`).val(ownerData.owner.trim());
+                        // Update NDT cell
+                        $(`select[name="ndttype_weld"][data-task="welding_plant_calibration_certificate"]`).val(ownerData.ndta.trim());
+                    } else {
+                        // Handle case where no owner data is retrieved
+                        $(`select[name="owner_weld"][data-task="welding_plant_calibration_certificate"]`).val('NULL');
+                        $(`select[name="ndttype_weld"][data-task="welding_plant_calibration_certificate"]`).val('NULL');
+                    }
+                });
 
                 // Set other fields
                 $('input[name="sign_off_welding"]').val(userName);

@@ -140,7 +140,7 @@ console.log(username);
                     <tr>
                         <th>Quality Check</th>
                         <th>Owner</th>
-                        <th>NDT Type</th>
+                        <th>Action</th>
                      
                     </tr>
                 </thead>
@@ -154,22 +154,31 @@ console.log(username);
                             </label>
                         </td>
                         <td>
-                            <select name="owner_quality" style="width: 100%">
-                                <option value="NULL">Select Owner</option>
+                            <select name="owner_quality" style="width: 100%" data-task="walk_down_visual_inspection">
+                            <option value="NULL">Select Owner</option>
                                 <option value="PM">PM</option>
                                 <option value="QA">QA</option>
                                 <option value="Planning">Planning</option>
+                                <option value="Operator">Operator</option>
+                                <option value="Kitting">Kitting</option>
+                                <option value="Fabricator">Fabricator</option>
+                                <option value="Supervisor">Supervisor</option>
+                                <option value="RWC">RWC</option>
+                                <option value="Goods In">Goods In</option>
+                                <option value="Goods Out">Goods Out</option>
+                                <option value="Client">Client</option>
                                 <option value="Operator">Operator</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
                         <td>
-                            <select name="ndttype_quality" style="width: 100%">
-                                <option value="NULL">Select NDT Type</option>
+                            <select name="ndttype_quality" style="width: 100%"data-task="walk_down_visual_inspection">
+                                <option value="NULL">Select Action</option>
                                 <option value="Approve">Approve</option>
                                 <option value="Inspect">Inspect</option>
                                 <option value="Review">Review</option>
                                 <option value="Record">Record</option>
+                                <option value="Hold">Hold</option>
                                 <!-- Add more options as needed -->
                             </select>
                         </td>
